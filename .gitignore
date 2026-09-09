@@ -1,0 +1,38 @@
+node_modules/
+.env
+.env.local
+.DS_Store
+.next/
+dist/
+build/
+*.log
+
+# autonomous-loop local state (created at runtime, never committed)
+# cooldown.json holds per-agent rate-limit reset times; lock files coordinate
+# task claims; shots/ + reject/ are mobile-approval artifacts.
+.harness/
+current_tasks/*.lock
+current.md
+
+# Agent local configs & shared skills
+/.agents/*
+!/.agents/skills/
+# 행동 스펙은 프로젝트가 소유하고 리뷰하는 계약이다 — 무시하면 배포되지 않는다.
+!/.agents/behaviors/
+
+# local runtime logs & test artifacts
+logs/
+*.bundle
+**/test-results/
+**/playwright-report/
+
+# pro-study 학습 사이트 런타임 산출물
+work/
+data/progress.json
+data/progress.json.tmp
+
+# Android build & local settings
+android-app/.gradle/
+android-app/build/
+android-app/local.properties
+android-app/**/build/

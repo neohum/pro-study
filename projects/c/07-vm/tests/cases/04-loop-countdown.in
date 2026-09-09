@@ -1,0 +1,12 @@
+push 3
+loop:
+dup
+print
+push 1
+sub
+dup
+jz done
+jmp loop
+done:
+pop
+halt

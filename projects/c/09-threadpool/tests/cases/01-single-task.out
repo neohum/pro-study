@@ -1,0 +1,5 @@
+pool created: threads=2, queue=4
+submitted 10
+result 10: 55
+done: 1 tasks
+pool shutdown

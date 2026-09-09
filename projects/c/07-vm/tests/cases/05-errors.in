@@ -1,0 +1,16 @@
+pop
+run
+reset
+push 1
+push 0
+div
+run
+reset
+push 5
+push 0
+mod
+run
+reset
+push 1
+add
+run

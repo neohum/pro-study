@@ -1,0 +1,11 @@
+pool created: threads=3, queue=6
+submitted 1
+submitted 2
+submitted 3
+submitted 4
+result 1: dlrow_olleh
+result 2: 15
+result 3: racecar
+result 4: 610
+done: 4 tasks
+pool shutdown

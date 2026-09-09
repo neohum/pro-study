@@ -1,0 +1,13 @@
+{
+  "id": "c/09-threadpool",
+  "title": "스레드풀 작업 큐",
+  "summary": "POSIX pthread 조건 변수와 뮤텍스를 활용해 생산자-소비자 패턴의 작업 큐를 병렬 처리하고 결과를 안전하게 취합하는 스레드풀",
+  "lang": "c",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": ["스레드풀", "POSIX pthread", "뮤텍스와 조건 변수", "작업 큐(FIFO)", "생산자-소비자 패턴", "C23 constexpr·nullptr", "결과 동기화"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

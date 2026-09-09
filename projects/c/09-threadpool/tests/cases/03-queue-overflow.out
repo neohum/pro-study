@@ -1,0 +1,15 @@
+pool created: threads=2, queue=2
+submitted 1
+submitted 2
+submitted 3
+submitted 4
+submitted 5
+submitted 6
+result 1: 15
+result 2: 21
+result 3: 28
+result 4: 36
+result 5: 45
+result 6: 55
+done: 6 tasks
+pool shutdown

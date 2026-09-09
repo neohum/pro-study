@@ -1,0 +1,9 @@
+set user1 10
+set user2 20
+set user3 30
+del user2
+get user1
+get user2
+get user3
+len
+del user2

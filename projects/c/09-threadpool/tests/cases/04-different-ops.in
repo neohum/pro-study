@@ -1,0 +1,7 @@
+pool 3 6
+submit 1 reverse hello_world
+submit 2 prime 50
+submit 3 reverse racecar
+submit 4 fib 15
+wait
+shutdown

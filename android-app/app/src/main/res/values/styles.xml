@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ProStudyEink" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/eink_bg</item>
+        <item name="android:colorBackground">@color/eink_bg</item>
+        <item name="colorSurface">@color/eink_surface</item>
+        <item name="colorPrimary">@color/eink_text_primary</item>
+        <item name="colorOnPrimary">@color/eink_bg</item>
+        <item name="colorSecondary">@color/eink_text_secondary</item>
+        <item name="android:textColorPrimary">@color/eink_text_primary</item>
+        <item name="android:textColorSecondary">@color/eink_text_secondary</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="EinkCard">
+        <item name="android:background">@drawable/bg_eink_card</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="EinkButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/eink_text_primary</item>
+        <item name="strokeColor">@color/eink_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="EinkButton.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/eink_text_primary</item>
+        <item name="android:textColor">@color/eink_bg</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+</resources>

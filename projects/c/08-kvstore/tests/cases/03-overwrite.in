@@ -1,0 +1,7 @@
+set a 10
+get a
+set a 20
+get a
+set a 30
+get a
+len

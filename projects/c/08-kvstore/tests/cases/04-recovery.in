@@ -1,0 +1,9 @@
+set user bob
+set theme dark
+del theme
+set lang c23
+reopen
+get user
+get theme
+get lang
+len

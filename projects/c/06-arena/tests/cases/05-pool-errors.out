@@ -1,0 +1,10 @@
+pool: init 2 chunks of 16 bytes
+pool alloc: chunk 0
+pool alloc: chunk 1
+error: pool full
+pool free: chunk 0
+error: invalid chunk
+error: invalid chunk
+error: invalid chunk
+pool alloc: chunk 0
+pool: used 2 / 2 chunks

@@ -1,0 +1,32 @@
+{{define "layout"}}<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}} · pro-study</title>
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="stylesheet" href="/static/vendor/github.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="/static/vendor/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body data-page="{{.Page}}">
+<header class="topbar">
+  <a class="brand" href="/" aria-label="pro-study 홈">
+    <img src="/static/logo.svg" alt="" width="28" height="28">
+    <span>pro-study</span>
+    <small>C23 · Go 프로젝트로 배우기</small>
+  </a>
+  <nav class="topnav">
+    <a href="/#c">C23</a>
+    <a href="/#go">Go</a>
+    <a href="/doctor">환경 점검</a>
+  </nav>
+</header>
+<main class="page page-{{.Page}}">
+{{template "content" .}}
+</main>
+<div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+<script src="/static/vendor/highlight.min.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>{{end}}

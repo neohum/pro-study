@@ -1,0 +1,13 @@
+{
+  "id": "go/02-wordfreq",
+  "title": "단어 빈도 분석기",
+  "summary": "bufio.Scanner와 strings·unicode로 텍스트 스트림을 정규화하고 빈도 순으로 정렬하는 CLI 도구",
+  "lang": "go",
+  "order": 2,
+  "difficulty": 2,
+  "concepts": ["bufio.Scanner", "strings와 unicode", "map과 빈도 집계", "slices.SortFunc와 랭킹", "테이블 주도 테스트", "io.Reader 스트림 처리"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

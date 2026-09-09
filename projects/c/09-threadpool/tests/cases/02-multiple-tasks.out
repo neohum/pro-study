@@ -1,0 +1,11 @@
+pool created: threads=4, queue=8
+submitted 1
+submitted 2
+submitted 3
+submitted 4
+result 1: 55
+result 2: 6765
+result 3: 5050
+result 4: 8
+done: 4 tasks
+pool shutdown

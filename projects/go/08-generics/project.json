@@ -1,0 +1,13 @@
+{
+  "id": "go/08-generics",
+  "title": "제네릭 컬렉션 라이브러리",
+  "summary": "Stack, Queue, PriorityQueue, LRU 캐시를 제네릭과 iter.Seq 이터레이터로 구현하는 범용 자료구조 모음",
+  "lang": "go",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": ["제네릭 타입과 제약", "cmp.Ordered", "Go 1.23+ iter.Seq", "우선순위 큐(이진 힙)", "LRU 캐시와 이중 연결 리스트"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

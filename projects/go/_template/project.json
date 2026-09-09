@@ -1,0 +1,13 @@
+{
+  "id": "go/_template",
+  "title": "(템플릿) 프로젝트 제목",
+  "summary": "카드에 보이는 한 줄 요약",
+  "lang": "go",
+  "order": 99,
+  "difficulty": 1,
+  "concepts": ["개념 1", "개념 2"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

@@ -1,0 +1,12 @@
+push 100
+push 7
+div
+print
+push 100
+push 7
+mod
+print
+push 15
+neg
+print
+halt

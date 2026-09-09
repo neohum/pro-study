@@ -1,0 +1,11 @@
+set x 1
+set x 2
+set x 3
+set y 100
+del y
+compact
+get x
+get y
+reopen
+get x
+len

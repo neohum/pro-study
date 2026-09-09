@@ -1,0 +1,7 @@
+textkit — 텍스트 처리 통합 CLI 도구
+
+사용법:
+  textkit help                    도움말 출력
+  textkit wc [file...]            줄 수, 단어 수, 바이트 수 집계
+  textkit grep [-i] [-n] <pat> [file...]   패턴 검색
+  textkit sort [-r] [file...]     줄 단위 정렬

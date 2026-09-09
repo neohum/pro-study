@@ -1,0 +1,10 @@
+foo
+set
+set key
+set key notanumber
+get
+get missing
+del
+del missing
+len extra
+cap extra

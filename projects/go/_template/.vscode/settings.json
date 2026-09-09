@@ -1,0 +1,8 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "go.toolsManagement.autoUpdate": true,
+  "go.lintOnSave": "package",
+  "go.vetOnSave": "package",
+  "files.exclude": { "build/": true }
+}

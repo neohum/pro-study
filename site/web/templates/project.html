@@ -1,0 +1,68 @@
+{{define "content"}}
+<div class="project" data-lang="{{.P.Lang}}" data-slug="{{.P.Slug}}" data-entry="{{.P.Entry}}"
+     data-work-exists="{{.WorkExists}}" data-has-solution="{{.HasSolution}}" data-has-tests="{{.HasTests}}">
+
+<header class="project-head">
+  <div class="crumbs"><a href="/#{{.P.Lang}}">{{.P.LangName}}</a> <span>/</span> <span>{{printf "%02d" .P.Order}}</span></div>
+  <h1>{{.P.Title}}</h1>
+  <p class="lead">{{.P.Summary}}</p>
+  <div class="project-meta">
+    <span class="stars" title="난이도 {{.P.Difficulty}}/5">{{.P.Stars}}</span>
+    <span id="status-badge" class="badge badge-{{.Progress.Status}}">{{statusLabel .Progress.Status}}</span>
+    <ul class="concepts">{{range .P.Concepts}}<li>{{.}}</li>{{end}}</ul>
+  </div>
+</header>
+
+<div class="project-grid">
+  <aside class="toc">
+    <h2>목차</h2>
+    <ol>{{range .Guide.TOC}}<li class="toc-l{{.Level}}"><a href="#{{.ID}}">{{.Text}}</a></li>{{end}}</ol>
+    <nav class="prevnext">
+      {{if .Prev}}<a href="/p/{{.Prev.Lang}}/{{.Prev.Slug}}">← {{.Prev.Title}}</a>{{end}}
+      {{if .Next}}<a href="/p/{{.Next.Lang}}/{{.Next.Slug}}">{{.Next.Title}} →</a>{{end}}
+    </nav>
+  </aside>
+
+  <article class="guide">{{.Guide.HTML}}</article>
+
+  <section class="viewer" aria-label="코드 뷰어">
+    <div class="viewer-tabs" role="tablist">
+      <button class="vtab active" data-area="starter">starter</button>
+      {{if .HasTests}}<button class="vtab" data-area="tests">tests</button>{{end}}
+      <button class="vtab" data-area="work" {{if not .WorkExists}}disabled title="먼저 VS Code에서 열기를 누르세요"{{end}}>내 작업</button>
+      {{if .HasSolution}}<button class="vtab vtab-solution" data-area="solution">solution</button>{{end}}
+    </div>
+    <div class="viewer-body">
+      <ul class="filetree" id="filetree"></ul>
+      <div class="code-pane">
+        <div class="code-path" id="code-path">파일을 선택하세요</div>
+        <div id="solution-gate" class="solution-gate" hidden>
+          <p>정답을 보기 전에 스스로 한 번 끝까지 시도해 보세요. 막힌 단계의 힌트는 가이드의 <a href="#막혔을-때">막혔을 때</a>에 있습니다.</p>
+          <button class="btn btn-secondary" id="reveal-solution">그래도 정답 보기</button>
+        </div>
+        <pre id="code-pre"><code id="code" class="hljs"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="runpanel" aria-label="실행 패널">
+    <div class="run-actions">
+      <button class="btn btn-primary" id="btn-open">VS Code에서 열기</button>
+      <button class="btn btn-secondary" id="btn-build" {{if not .WorkExists}}disabled{{end}}>빌드</button>
+      <button class="btn btn-secondary" id="btn-run" {{if not .WorkExists}}disabled{{end}}>실행</button>
+      <button class="btn btn-secondary" id="btn-test" {{if not .WorkExists}}disabled{{end}}>테스트</button>
+      <button class="btn btn-danger" id="btn-reset" {{if not .WorkExists}}disabled{{end}} title="작업 폴더를 starter로 되돌립니다">초기화</button>
+      <span class="run-cmds" title="빌드: {{.BuildCmd}}&#10;실행: {{.RunCmd}}">작업 폴더 <code>{{.WorkDir}}</code></span>
+    </div>
+    <details class="stdin-box">
+      <summary>실행 시 표준 입력</summary>
+      <label for="stdin">실행 버튼이 프로그램에 넣어 줄 stdin (대화형 프로그램은 VS Code 터미널에서 직접 실행하세요)</label>
+      <textarea id="stdin" rows="3" spellcheck="false"></textarea>
+    </details>
+    <div class="run-status" id="run-status"></div>
+    <ul class="cases" id="cases"></ul>
+    <pre class="output" id="output" aria-live="polite"></pre>
+  </section>
+</div>
+</div>
+{{end}}

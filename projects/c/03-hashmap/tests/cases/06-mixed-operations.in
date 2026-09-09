@@ -1,0 +1,11 @@
+len
+cap
+
+set apple 1000
+set banana 2000
+del apple
+set cherry 3000
+len
+get apple
+get banana
+get cherry

@@ -1,0 +1,8 @@
+pool 2 4
+submit 10 sum 20
+submit 20 fib 12
+wait
+submit 30 prime 10
+submit 40 reverse multiround
+wait
+shutdown

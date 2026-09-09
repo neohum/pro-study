@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Pure E-ink Monochromatic Palette -->
+    <color name="eink_bg">#FFFFFF</color>
+    <color name="eink_text_primary">#000000</color>
+    <color name="eink_text_secondary">#424242</color>
+    <color name="eink_border">#000000</color>
+    <color name="eink_border_light">#9E9E9E</color>
+    <color name="eink_surface">#FFFFFF</color>
+    <color name="eink_surface_card">#F7F7F7</color>
+    <color name="eink_ink_black">#000000</color>
+    <color name="eink_ghost_text">#757575</color>
+    <color name="eink_ruled_line">#E0E0E0</color>
+</resources>

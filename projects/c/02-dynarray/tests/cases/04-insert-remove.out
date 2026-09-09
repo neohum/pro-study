@@ -1,0 +1,9 @@
+1 2 3 4 5 6
+error: index out of range
+1
+4
+2 3 5 6
+error: index out of range
+error: index out of range
+16
+4

@@ -1,0 +1,13 @@
+{
+  "id": "go/03-logparse",
+  "title": "웹 서버 로그 파서",
+  "summary": "io.Reader 파이프라인과 커스텀 에러 래핑(errors.Is/As), text/template으로 액세스 로그 통계를 생성하는 분석기",
+  "lang": "go",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": ["io.Reader 파이프라인", "정규식과 문자열 파싱", "커스텀 에러와 에러 래핑", "errors.Is와 errors.As", "text/template 리포트", "테이블 주도 테스트"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

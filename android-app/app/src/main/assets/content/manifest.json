@@ -1,0 +1,366 @@
+{
+  "projects": [
+    {
+      "id": "c/01-calc",
+      "lang": "c",
+      "order": 1,
+      "title": "재귀 하강 계산기",
+      "summary": "토크나이저와 재귀 하강 파서로 우선순위·괄호·C23 숫자 리터럴을 처리하는 정수 계산기",
+      "difficulty": 1,
+      "concepts": [
+        "토큰화",
+        "재귀 하강 파서",
+        "constexpr",
+        "nullptr",
+        "auto",
+        "[[nodiscard]]",
+        "0b·자리 구분자"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_01_calc.json"
+    },
+    {
+      "id": "c/02-dynarray",
+      "lang": "c",
+      "order": 2,
+      "title": "제네릭 동적 배열·문자열 빌더",
+      "summary": "realloc으로 자라는 동적 배열을 typeof 매크로로 일반화해 int 배열과 문자열 빌더를 같은 코드로 만드는 명령 처리기",
+      "difficulty": 1,
+      "concepts": [
+        "malloc·realloc·free",
+        "분할 상환 성장",
+        "memmove",
+        "typeof",
+        "제네릭 매크로",
+        "_Generic",
+        "[[maybe_unused]]"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_02_dynarray.json"
+    },
+    {
+      "id": "c/03-hashmap",
+      "lang": "c",
+      "order": 3,
+      "title": "오픈 어드레싱 해시맵",
+      "summary": "FNV-1a 해시, 선형 탐사 개방 주소법, 툼스톤 삭제와 동적 리사이즈를 구현하는 키-값 명령 처리기",
+      "difficulty": 2,
+      "concepts": [
+        "FNV-1a 해시",
+        "개방 주소법",
+        "선형 탐사",
+        "툼스톤 삭제",
+        "동적 리사이즈",
+        "constexpr",
+        "nullptr"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_03_hashmap.json"
+    },
+    {
+      "id": "c/04-textkit",
+      "lang": "c",
+      "order": 4,
+      "title": "wc·grep·sort 텍스트 도구함",
+      "summary": "C23 #embed로 도움말을 내장하고 서브커맨드(wc, grep, sort)와 스트림·파일 처리를 통합한 CLI 도구",
+      "difficulty": 2,
+      "concepts": [
+        "#embed",
+        "서브커맨드 파싱",
+        "파일 I/O와 스트림",
+        "동적 라인 버퍼",
+        "qsort와 함수 포인터",
+        "errno 에러 처리"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_04_textkit.json"
+    },
+    {
+      "id": "c/05-json",
+      "lang": "c",
+      "order": 5,
+      "title": "재귀 하강 JSON 파서·직렬화기",
+      "summary": "태그드 유니언과 재귀 하강 파서로 JSON 6대 타입을 파싱하고 직렬화·포맷팅하는 도구",
+      "difficulty": 3,
+      "concepts": [
+        "태그드 유니언",
+        "재귀 하강 파서",
+        "JSON 직렬화",
+        "문자열 이스케이프",
+        "재귀 메모리 해제",
+        "constexpr",
+        "nullptr"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_05_json.json"
+    },
+    {
+      "id": "c/06-arena",
+      "lang": "c",
+      "order": 6,
+      "title": "아레나·풀 메모리 할당자",
+      "summary": "alignas/alignof 정렬을 고려한 고속 블록 할당, 일괄 리셋 아레나와 프리리스트 기반 풀 할당자",
+      "difficulty": 3,
+      "concepts": [
+        "아레나 할당자",
+        "풀 할당자",
+        "alignas/alignof",
+        "포인터 산술",
+        "메모리 정렬",
+        "라이프사이클 관리"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_06_arena.json"
+    },
+    {
+      "id": "c/07-vm",
+      "lang": "c",
+      "order": 7,
+      "title": "스택 기반 바이트코드 가상 머신",
+      "summary": "enum : uint8_t 기반 바이트코드 디스패치 루프와 어셈블러를 갖춘 스택 기반 가상 머신",
+      "difficulty": 3,
+      "concepts": [
+        "바이트코드 VM",
+        "스택 머신",
+        "enum : uint8_t",
+        "명령어 디스패치",
+        "어셈블러 파서",
+        "[[nodiscard]]"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_07_vm.json"
+    },
+    {
+      "id": "c/08-kvstore",
+      "lang": "c",
+      "order": 8,
+      "title": "파일 기반 Key-Value 저장소",
+      "summary": "Append-only 로그와 인메모리 해시 인덱스, 크래시 복구 및 컴팩션을 지원하는 영속 KV 저장소",
+      "difficulty": 4,
+      "concepts": [
+        "Append-only 로그",
+        "인메모리 해시 인덱스",
+        "바이너리 직렬화",
+        "크래시 복구",
+        "컴팩션",
+        "_BitInt"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_08_kvstore.json"
+    },
+    {
+      "id": "c/09-threadpool",
+      "lang": "c",
+      "order": 9,
+      "title": "스레드풀 작업 큐",
+      "summary": "POSIX pthread 조건 변수와 뮤텍스를 활용해 생산자-소비자 패턴의 작업 큐를 병렬 처리하고 결과를 안전하게 취합하는 스레드풀",
+      "difficulty": 4,
+      "concepts": [
+        "스레드풀",
+        "POSIX pthread",
+        "뮤텍스와 조건 변수",
+        "작업 큐(FIFO)",
+        "생산자-소비자 패턴",
+        "C23 constexpr·nullptr",
+        "결과 동기화"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_09_threadpool.json"
+    },
+    {
+      "id": "c/10-http-server",
+      "lang": "c",
+      "order": 10,
+      "title": "HTTP/1.1 웹 서버",
+      "summary": "Winsock 소켓 프로그래밍과 HTTP/1.1 프로토콜 파서를 구현해 정적 응답·REST 엔드포인트를 서비스하는 웹 서버",
+      "difficulty": 4,
+      "concepts": [
+        "HTTP/1.1 프로토콜",
+        "소켓 프로그래밍(Winsock2)",
+        "요청 라인·헤더 파싱",
+        "상태 코드 및 응답 생성",
+        "REST 라우팅",
+        "C23 constexpr·nullptr"
+      ],
+      "entry": "main.c",
+      "assetFile": "content/c_10_http_server.json"
+    },
+    {
+      "id": "go/01-todo-cli",
+      "lang": "go",
+      "order": 1,
+      "title": "JSON 저장 TODO CLI",
+      "summary": "구조체·슬라이스·플래그와 encoding/json으로 할 일 목록을 파일에 영속화하는 명령줄 도구",
+      "difficulty": 1,
+      "concepts": [
+        "모듈과 패키지",
+        "struct와 메서드",
+        "슬라이스와 slices 패키지",
+        "flag.FlagSet",
+        "encoding/json",
+        "원자적 파일 쓰기"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_01_todo_cli.json"
+    },
+    {
+      "id": "go/02-wordfreq",
+      "lang": "go",
+      "order": 2,
+      "title": "단어 빈도 분석기",
+      "summary": "bufio.Scanner와 strings·unicode로 텍스트 스트림을 정규화하고 빈도 순으로 정렬하는 CLI 도구",
+      "difficulty": 2,
+      "concepts": [
+        "bufio.Scanner",
+        "strings와 unicode",
+        "map과 빈도 집계",
+        "slices.SortFunc와 랭킹",
+        "테이블 주도 테스트",
+        "io.Reader 스트림 처리"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_02_wordfreq.json"
+    },
+    {
+      "id": "go/03-logparse",
+      "lang": "go",
+      "order": 3,
+      "title": "웹 서버 로그 파서",
+      "summary": "io.Reader 파이프라인과 커스텀 에러 래핑(errors.Is/As), text/template으로 액세스 로그 통계를 생성하는 분석기",
+      "difficulty": 2,
+      "concepts": [
+        "io.Reader 파이프라인",
+        "정규식과 문자열 파싱",
+        "커스텀 에러와 에러 래핑",
+        "errors.Is와 errors.As",
+        "text/template 리포트",
+        "테이블 주도 테스트"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_03_logparse.json"
+    },
+    {
+      "id": "go/04-crawler",
+      "lang": "go",
+      "order": 4,
+      "title": "동시 링크 크롤러",
+      "summary": "goroutine, 채널, worker pool과 context 타임아웃으로 웹 페이지 링크를 동시 수집하는 안전한 크롤러",
+      "difficulty": 3,
+      "concepts": [
+        "goroutine과 채널",
+        "Worker Pool 패턴",
+        "sync.WaitGroup과 sync.Mutex",
+        "context.WithTimeout",
+        "net/http와 httptest",
+        "경쟁 상태(race) 방지"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_04_crawler.json"
+    },
+    {
+      "id": "go/05-rest-api",
+      "lang": "go",
+      "order": 5,
+      "title": "메모 REST API",
+      "summary": "Go 1.22+ net/http 내장 라우팅, JSON CRUD 핸들러, 로깅·패닉 복구 미들웨어, httptest 단위 테스트",
+      "difficulty": 3,
+      "concepts": [
+        "net/http ServeMux 라우팅",
+        "PathValue 경로 매개변수",
+        "JSON 인코딩과 디코딩",
+        "HTTP 상태 코드와 헤더",
+        "미들웨어 패턴",
+        "httptest 단위 테스트"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_05_rest_api.json"
+    },
+    {
+      "id": "go/06-kvstore",
+      "lang": "go",
+      "order": 6,
+      "title": "WAL 기반 Key-Value 저장소",
+      "summary": "sync.RWMutex 동시성 제어, Write-Ahead Log(WAL) 파일 영속화, 스냅샷 생성 및 시작 시 무결성 복구",
+      "difficulty": 3,
+      "concepts": [
+        "sync.RWMutex 동시성 제어",
+        "Write-Ahead Log(WAL) 설계",
+        "바이너리/텍스트 레코드 직렬화",
+        "스냅샷 생성과 로그 압축",
+        "비정상 종료 후 무결성 복구",
+        "원자적 파일 교체"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_06_kvstore.json"
+    },
+    {
+      "id": "go/07-chat",
+      "lang": "go",
+      "order": 7,
+      "title": "TCP 브로드캐스트 채팅 서버",
+      "summary": "net.Listen 기반 TCP 서버, 고루틴별 클라이언트 처리, Hub 브로드캐스트 채널, graceful shutdown",
+      "difficulty": 4,
+      "concepts": [
+        "net.Listener TCP 소켓 프로그래밍",
+        "연결당 고루틴 생명주기 관리",
+        "채널과 select 다중화",
+        "브로드캐스트 Hub 패턴",
+        "동시성 안전한 클라이언트 맵",
+        "context 및 시그널 graceful shutdown"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_07_chat.json"
+    },
+    {
+      "id": "go/08-generics",
+      "lang": "go",
+      "order": 8,
+      "title": "제네릭 컬렉션 라이브러리",
+      "summary": "Stack, Queue, PriorityQueue, LRU 캐시를 제네릭과 iter.Seq 이터레이터로 구현하는 범용 자료구조 모음",
+      "difficulty": 4,
+      "concepts": [
+        "제네릭 타입과 제약",
+        "cmp.Ordered",
+        "Go 1.23+ iter.Seq",
+        "우선순위 큐(이진 힙)",
+        "LRU 캐시와 이중 연결 리스트"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_08_generics.json"
+    },
+    {
+      "id": "go/09-interp",
+      "lang": "go",
+      "order": 9,
+      "title": "소형 스크립트 언어 인터프리터",
+      "summary": "렉서, 재귀 하강 파서, AST, 환경 스코프, 트리 평가기로 변수와 조건문/반복문을 실행하는 스크립트 인터프리터",
+      "difficulty": 5,
+      "concepts": [
+        "어휘 분석(Lexer)",
+        "재귀 하강 파서(Parser)",
+        "추상 구문 트리(AST)",
+        "환경(Environment)과 스코프",
+        "트리 워크 인터프리터(Evaluator)"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_09_interp.json"
+    },
+    {
+      "id": "go/10-metrics-dashboard",
+      "lang": "go",
+      "order": 10,
+      "title": "런타임 메트릭 대시보드 서버",
+      "summary": "runtime/metrics로 Go 런타임 통계를 수집하고 SSE 스트리밍 및 웹 대시보드로 실시간 시각화하는 서버",
+      "difficulty": 4,
+      "concepts": [
+        "runtime/metrics",
+        "Server-Sent Events(SSE)",
+        "html/template",
+        "동시성 안전 시계열 버퍼",
+        "net/http REST/스트리밍 API"
+      ],
+      "entry": "main.go",
+      "assetFile": "content/go_10_metrics_dashboard.json"
+    }
+  ]
+}

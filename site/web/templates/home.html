@@ -1,0 +1,53 @@
+{{define "content"}}
+<section class="hero">
+  <h1>프로젝트를 만들며 C23과 Go를 배웁니다</h1>
+  <p>가이드를 읽고, <strong>VS Code에서 열기</strong>로 코딩하고, 돌아와서 <strong>테스트</strong>로 결과를 확인하세요.
+     각 언어 10개, 앞 프로젝트의 코드가 뒤 프로젝트의 부품이 됩니다.</p>
+</section>
+
+{{if .Problems}}
+<section class="problems" role="alert">
+  <h2>제외된 프로젝트</h2>
+  <ul>{{range .Problems}}<li><code>{{.Path}}</code> — {{.Err}}</li>{{end}}</ul>
+</section>
+{{end}}
+
+<div class="lang-tabs" role="tablist">
+{{range .Langs}}
+  <button class="lang-tab" role="tab" data-lang="{{.Key}}" aria-controls="lang-{{.Key}}">{{.Name}}
+    <span class="tab-progress">{{.Summary.Passed}}/{{.Summary.Total}}</span></button>
+{{end}}
+</div>
+
+{{range .Langs}}
+<section id="lang-{{.Key}}" class="lang-panel" data-lang="{{.Key}}" role="tabpanel" hidden>
+  <div class="lang-head">
+    <h2>{{.Name}} 프로젝트</h2>
+    <div class="progress-bar" aria-label="{{.Name}} 진행률">
+      <div class="progress-fill" style="width: {{pct .Summary.Passed .Summary.Total}}%"></div>
+    </div>
+    <span class="progress-text">{{.Summary.Passed}} 통과 · {{.Summary.InProgress}} 진행 중 · 총 {{.Summary.Total}}</span>
+  </div>
+  {{if not .Projects}}
+  <p class="empty">아직 프로젝트가 없습니다. <code>projects/{{.Key}}/</code> 아래에 <code>project.json</code>을 추가하세요.</p>
+  {{end}}
+  <div class="cards">
+  {{range .Projects}}
+    <a class="card status-{{.Progress.Status}}" href="/p/{{.Lang}}/{{.Slug}}">
+      <div class="card-top">
+        <span class="card-num">{{printf "%02d" .Order}}</span>
+        <span class="badge badge-{{.Progress.Status}}">{{statusLabel .Progress.Status}}</span>
+      </div>
+      <h3>{{.Title}}</h3>
+      <p class="card-summary">{{.Summary}}</p>
+      <div class="card-meta">
+        <span class="stars" title="난이도 {{.Difficulty}}/5">{{.Stars}}</span>
+        {{if .Progress.Total}}<span class="card-tests">{{.Progress.Passed}}/{{.Progress.Total}} 테스트</span>{{end}}
+      </div>
+      <ul class="concepts">{{range .Concepts}}<li>{{.}}</li>{{end}}</ul>
+    </a>
+  {{end}}
+  </div>
+</section>
+{{end}}
+{{end}}

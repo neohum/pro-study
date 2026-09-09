@@ -1,0 +1,5 @@
+alloc: offset 0 size 1 align 1
+alloc: offset 4 size 4 align 4
+alloc: offset 8 size 1 align 1
+alloc: offset 16 size 8 align 8
+arena: used 24 / 1024 bytes

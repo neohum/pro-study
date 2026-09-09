@@ -1,0 +1,19 @@
+set k0 0
+set k1 1
+set k2 2
+set k3 3
+set k4 4
+set k5 5
+set k6 6
+set k7 7
+set k8 8
+set k9 9
+set k10 10
+set k11 11
+set k12 12
+set k13 13
+len
+cap
+get k0
+get k7
+get k13

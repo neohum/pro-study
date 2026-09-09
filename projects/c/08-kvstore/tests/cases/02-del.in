@@ -1,0 +1,7 @@
+set k1 v1
+set k2 v2
+del k1
+get k1
+del k1
+get k2
+len

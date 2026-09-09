@@ -1,0 +1,6 @@
+arena_alloc 1000 8
+arena_alloc 100 8
+arena_stats
+arena_reset
+arena_alloc 500 8
+arena_stats

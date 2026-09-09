@@ -1,0 +1,13 @@
+push 10
+push 20
+add
+print
+push 50
+push 15
+sub
+print
+push 6
+push 7
+mul
+print
+halt

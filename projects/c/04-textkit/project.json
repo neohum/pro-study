@@ -1,0 +1,13 @@
+{
+  "id": "c/04-textkit",
+  "title": "wc·grep·sort 텍스트 도구함",
+  "summary": "C23 #embed로 도움말을 내장하고 서브커맨드(wc, grep, sort)와 스트림·파일 처리를 통합한 CLI 도구",
+  "lang": "c",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": ["#embed", "서브커맨드 파싱", "파일 I/O와 스트림", "동적 라인 버퍼", "qsort와 함수 포인터", "errno 에러 처리"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

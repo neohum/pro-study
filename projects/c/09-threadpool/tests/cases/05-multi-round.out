@@ -1,0 +1,12 @@
+pool created: threads=2, queue=4
+submitted 10
+submitted 20
+result 10: 210
+result 20: 144
+done: 2 tasks
+submitted 30
+submitted 40
+result 30: 4
+result 40: dnuoritlum
+done: 2 tasks
+pool shutdown
