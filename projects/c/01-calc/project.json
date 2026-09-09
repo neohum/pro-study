@@ -1,0 +1,13 @@
+{
+  "id": "c/01-calc",
+  "title": "재귀 하강 계산기",
+  "summary": "토크나이저와 재귀 하강 파서로 우선순위·괄호·C23 숫자 리터럴을 처리하는 정수 계산기",
+  "lang": "c",
+  "order": 1,
+  "difficulty": 1,
+  "concepts": ["토큰화", "재귀 하강 파서", "constexpr", "nullptr", "auto", "[[nodiscard]]", "0b·자리 구분자"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}
