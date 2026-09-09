@@ -30,3 +30,9 @@ logs/
 work/
 data/progress.json
 data/progress.json.tmp
+
+# Android build & local settings
+android-app/.gradle/
+android-app/build/
+android-app/local.properties
+android-app/**/build/

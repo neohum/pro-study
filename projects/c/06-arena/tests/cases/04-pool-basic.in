@@ -1,0 +1,10 @@
+pool_init 32 4
+pool_stats
+pool_alloc
+pool_alloc
+pool_alloc
+pool_stats
+pool_free 1
+pool_stats
+pool_alloc
+pool_stats

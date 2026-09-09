@@ -1,0 +1,20 @@
+{
+  "id": "go/06-kvstore",
+  "title": "WAL 기반 Key-Value 저장소",
+  "summary": "sync.RWMutex 동시성 제어, Write-Ahead Log(WAL) 파일 영속화, 스냅샷 생성 및 시작 시 무결성 복구",
+  "lang": "go",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": [
+    "sync.RWMutex 동시성 제어",
+    "Write-Ahead Log(WAL) 설계",
+    "바이너리/텍스트 레코드 직렬화",
+    "스냅샷 생성과 로그 압축",
+    "비정상 종료 후 무결성 복구",
+    "원자적 파일 교체"
+  ],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

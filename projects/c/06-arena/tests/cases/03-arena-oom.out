@@ -1,0 +1,6 @@
+alloc: offset 0 size 1000 align 8
+error: out of memory
+arena: used 1000 / 1024 bytes
+arena: reset
+alloc: offset 0 size 500 align 8
+arena: used 500 / 1024 bytes

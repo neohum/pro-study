@@ -1,0 +1,9 @@
+push 100
+print
+halt
+run
+reset
+push 200
+print
+halt
+run

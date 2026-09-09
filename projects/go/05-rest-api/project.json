@@ -1,0 +1,20 @@
+{
+  "id": "go/05-rest-api",
+  "title": "메모 REST API",
+  "summary": "Go 1.22+ net/http 내장 라우팅, JSON CRUD 핸들러, 로깅·패닉 복구 미들웨어, httptest 단위 테스트",
+  "lang": "go",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": [
+    "net/http ServeMux 라우팅",
+    "PathValue 경로 매개변수",
+    "JSON 인코딩과 디코딩",
+    "HTTP 상태 코드와 헤더",
+    "미들웨어 패턴",
+    "httptest 단위 테스트"
+  ],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

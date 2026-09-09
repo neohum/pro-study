@@ -1,0 +1,5 @@
+arena_alloc 16 8
+arena_alloc 32 16
+arena_stats
+arena_reset
+arena_stats

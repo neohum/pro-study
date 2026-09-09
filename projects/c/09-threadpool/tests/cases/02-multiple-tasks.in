@@ -1,0 +1,7 @@
+pool 4 8
+submit 1 fib 10
+submit 2 fib 20
+submit 3 sum 100
+submit 4 prime 20
+wait
+shutdown

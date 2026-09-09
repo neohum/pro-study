@@ -1,0 +1,20 @@
+{
+  "id": "go/07-chat",
+  "title": "TCP 브로드캐스트 채팅 서버",
+  "summary": "net.Listen 기반 TCP 서버, 고루틴별 클라이언트 처리, Hub 브로드캐스트 채널, graceful shutdown",
+  "lang": "go",
+  "order": 7,
+  "difficulty": 4,
+  "concepts": [
+    "net.Listener TCP 소켓 프로그래밍",
+    "연결당 고루틴 생명주기 관리",
+    "채널과 select 다중화",
+    "브로드캐스트 Hub 패턴",
+    "동시성 안전한 클라이언트 맵",
+    "context 및 시그널 graceful shutdown"
+  ],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

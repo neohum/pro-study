@@ -1,0 +1,13 @@
+{
+  "id": "go/09-interp",
+  "title": "소형 스크립트 언어 인터프리터",
+  "summary": "렉서, 재귀 하강 파서, AST, 환경 스코프, 트리 평가기로 변수와 조건문/반복문을 실행하는 스크립트 인터프리터",
+  "lang": "go",
+  "order": 9,
+  "difficulty": 5,
+  "concepts": ["어휘 분석(Lexer)", "재귀 하강 파서(Parser)", "추상 구문 트리(AST)", "환경(Environment)과 스코프", "트리 워크 인터프리터(Evaluator)"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

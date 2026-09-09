@@ -1,0 +1,2 @@
+bench arena: 100 allocations (6400 bytes) ok
+bench malloc: 100 allocations (6400 bytes) ok

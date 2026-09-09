@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">pro-study E-ink</string>
+    <string name="tab_c">C23 (10)</string>
+    <string name="tab_go">Go (10)</string>
+    <string name="tab_guide">가이드</string>
+    <string name="tab_starter">스켈레톤(Starter)</string>
+    <string name="tab_solution">정답(Solution)</string>
+    <string name="btn_trace_mode">스타일러스 따라쓰기</string>
+    <string name="btn_clear_ink">필기 지우기</string>
+    <string name="btn_refresh_screen">화면 새로고침</string>
+    <string name="btn_pen">펜</string>
+    <string name="btn_eraser">지우개</string>
+    <string name="tracing_instruction">전용 펜으로 회색 코드를 따라 쓰며 문법을 익히세요. 손가락으로 스크롤할 수 있습니다.</string>
+</resources>

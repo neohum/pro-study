@@ -1,0 +1,8 @@
+frobnicate 1
+push
+push abc
+insert 0
+pop
+get 0
+remove 0
+sum

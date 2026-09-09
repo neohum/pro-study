@@ -1,0 +1,9 @@
+pool 2 2
+submit 1 sum 5
+submit 2 sum 6
+submit 3 sum 7
+submit 4 sum 8
+submit 5 sum 9
+submit 6 sum 10
+wait
+shutdown

@@ -1,0 +1,13 @@
+{
+  "id": "c/05-json",
+  "title": "재귀 하강 JSON 파서·직렬화기",
+  "summary": "태그드 유니언과 재귀 하강 파서로 JSON 6대 타입을 파싱하고 직렬화·포맷팅하는 도구",
+  "lang": "c",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": ["태그드 유니언", "재귀 하강 파서", "JSON 직렬화", "문자열 이스케이프", "재귀 메모리 해제", "constexpr", "nullptr"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

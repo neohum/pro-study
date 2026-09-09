@@ -1,0 +1,13 @@
+{
+  "id": "c/10-http-server",
+  "title": "HTTP/1.1 웹 서버",
+  "summary": "Winsock 소켓 프로그래밍과 HTTP/1.1 프로토콜 파서를 구현해 정적 응답·REST 엔드포인트를 서비스하는 웹 서버",
+  "lang": "c",
+  "order": 10,
+  "difficulty": 4,
+  "concepts": ["HTTP/1.1 프로토콜", "소켓 프로그래밍(Winsock2)", "요청 라인·헤더 파싱", "상태 코드 및 응답 생성", "REST 라우팅", "C23 constexpr·nullptr"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c", "-lws2_32"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

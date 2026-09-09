@@ -1,0 +1,13 @@
+{
+  "id": "c/08-kvstore",
+  "title": "파일 기반 Key-Value 저장소",
+  "summary": "Append-only 로그와 인메모리 해시 인덱스, 크래시 복구 및 컴팩션을 지원하는 영속 KV 저장소",
+  "lang": "c",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": ["Append-only 로그", "인메모리 해시 인덱스", "바이너리 직렬화", "크래시 복구", "컴팩션", "_BitInt"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c", "map.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

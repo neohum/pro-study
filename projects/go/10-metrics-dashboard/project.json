@@ -1,0 +1,13 @@
+{
+  "id": "go/10-metrics-dashboard",
+  "title": "런타임 메트릭 대시보드 서버",
+  "summary": "runtime/metrics로 Go 런타임 통계를 수집하고 SSE 스트리밍 및 웹 대시보드로 실시간 시각화하는 서버",
+  "lang": "go",
+  "order": 10,
+  "difficulty": 4,
+  "concepts": ["runtime/metrics", "Server-Sent Events(SSE)", "html/template", "동시성 안전 시계열 버퍼", "net/http REST/스트리밍 API"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

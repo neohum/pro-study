@@ -1,0 +1,13 @@
+{
+  "id": "go/04-crawler",
+  "title": "동시 링크 크롤러",
+  "summary": "goroutine, 채널, worker pool과 context 타임아웃으로 웹 페이지 링크를 동시 수집하는 안전한 크롤러",
+  "lang": "go",
+  "order": 4,
+  "difficulty": 3,
+  "concepts": ["goroutine과 채널", "Worker Pool 패턴", "sync.WaitGroup과 sync.Mutex", "context.WithTimeout", "net/http와 httptest", "경쟁 상태(race) 방지"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

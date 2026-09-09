@@ -1,0 +1,13 @@
+{
+  "id": "c/03-hashmap",
+  "title": "오픈 어드레싱 해시맵",
+  "summary": "FNV-1a 해시, 선형 탐사 개방 주소법, 툼스톤 삭제와 동적 리사이즈를 구현하는 키-값 명령 처리기",
+  "lang": "c",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": ["FNV-1a 해시", "개방 주소법", "선형 탐사", "툼스톤 삭제", "동적 리사이즈", "constexpr", "nullptr"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

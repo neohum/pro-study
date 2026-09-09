@@ -1,0 +1,4 @@
+pool 2 4
+submit 10 sum 10
+wait
+shutdown

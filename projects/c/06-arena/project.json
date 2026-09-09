@@ -1,0 +1,13 @@
+{
+  "id": "c/06-arena",
+  "title": "아레나·풀 메모리 할당자",
+  "summary": "alignas/alignof 정렬을 고려한 고속 블록 할당, 일괄 리셋 아레나와 프리리스트 기반 풀 할당자",
+  "lang": "c",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": ["아레나 할당자", "풀 할당자", "alignas/alignof", "포인터 산술", "메모리 정렬", "라이프사이클 관리"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

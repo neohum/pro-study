@@ -1,0 +1,13 @@
+{
+  "id": "go/01-todo-cli",
+  "title": "JSON 저장 TODO CLI",
+  "summary": "구조체·슬라이스·플래그와 encoding/json으로 할 일 목록을 파일에 영속화하는 명령줄 도구",
+  "lang": "go",
+  "order": 1,
+  "difficulty": 1,
+  "concepts": ["모듈과 패키지", "struct와 메서드", "슬라이스와 slices 패키지", "flag.FlagSet", "encoding/json", "원자적 파일 쓰기"],
+  "entry": "main.go",
+  "build": ["go", "build", "-o", "build/app.exe", "."],
+  "run": ["build/app.exe"],
+  "test": { "kind": "go-test" }
+}

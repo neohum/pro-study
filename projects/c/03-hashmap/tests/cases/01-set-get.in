@@ -1,0 +1,6 @@
+set alpha 100
+set beta 200
+get alpha
+get beta
+len
+cap

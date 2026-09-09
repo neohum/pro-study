@@ -1,0 +1,13 @@
+{
+  "id": "c/02-dynarray",
+  "title": "제네릭 동적 배열·문자열 빌더",
+  "summary": "realloc으로 자라는 동적 배열을 typeof 매크로로 일반화해 int 배열과 문자열 빌더를 같은 코드로 만드는 명령 처리기",
+  "lang": "c",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": ["malloc·realloc·free", "분할 상환 성장", "memmove", "typeof", "제네릭 매크로", "_Generic", "[[maybe_unused]]"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

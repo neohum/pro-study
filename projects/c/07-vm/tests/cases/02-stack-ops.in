@@ -1,0 +1,7 @@
+push 42
+dup
+dump
+pop
+dump
+print
+halt

@@ -1,0 +1,10 @@
+pool: init 4 chunks of 32 bytes
+pool: used 0 / 4 chunks
+pool alloc: chunk 0
+pool alloc: chunk 1
+pool alloc: chunk 2
+pool: used 3 / 4 chunks
+pool free: chunk 1
+pool: used 2 / 4 chunks
+pool alloc: chunk 1
+pool: used 3 / 4 chunks

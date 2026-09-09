@@ -1,0 +1,13 @@
+{
+  "id": "c/07-vm",
+  "title": "스택 기반 바이트코드 가상 머신",
+  "summary": "enum : uint8_t 기반 바이트코드 디스패치 루프와 어셈블러를 갖춘 스택 기반 가상 머신",
+  "lang": "c",
+  "order": 7,
+  "difficulty": 3,
+  "concepts": ["바이트코드 VM", "스택 머신", "enum : uint8_t", "명령어 디스패치", "어셈블러 파서", "[[nodiscard]]"],
+  "entry": "main.c",
+  "build": ["gcc", "-std=c23", "-Wall", "-Wextra", "-g", "-o", "build/app.exe", "main.c"],
+  "run": ["build/app.exe"],
+  "test": { "kind": "stdio-cases", "dir": "tests/cases" }
+}

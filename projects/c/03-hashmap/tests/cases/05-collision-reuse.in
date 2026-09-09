@@ -1,0 +1,9 @@
+set score 10
+get score
+set score 99
+get score
+del score
+get score
+set score -42
+get score
+len

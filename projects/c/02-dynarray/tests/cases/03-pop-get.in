@@ -1,0 +1,11 @@
+push 10
+push 20
+push 30
+get 1
+get 3
+pop
+pop
+print
+pop
+pop
+print
