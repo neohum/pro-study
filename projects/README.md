@@ -30,6 +30,10 @@ projects/<lang>/<NN-slug>/
 
 ### test.kind
 
+테스트 직전에 `tests/` 전체가 작업 폴더의 `tests/`로 복사된다(항상 원본으로 덮어씀). 그래서
+C 프로젝트도 `.args`에 `tests/fixtures/input.txt`처럼 픽스처 경로를 쓸 수 있고, Go 테스트
+파일은 코드와 같은 패키지 디렉터리에 놓인다.
+
 - **stdio-cases** — `tests/cases/<name>.out`마다 케이스 하나. `<name>.in`이 stdin, `<name>.args`(공백 구분)가 인자.
   stdout을 `.out`과 비교한다(CRLF/LF, 줄 끝 공백, 마지막 개행은 무시).
 - **go-test** — `tests/*_test.go`를 작업 폴더로 복사(항상 덮어씀)한 뒤 `go vet ./...` → `go test ./... -json`.

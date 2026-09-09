@@ -7,8 +7,6 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
-
-	"pro-study/site/internal/workspace"
 )
 
 // ---- stdio-cases: tests/cases/NN.out 마다 NN.in을 stdin으로, NN.args를 인자로 ----
@@ -93,10 +91,6 @@ type goTestEvent struct {
 }
 
 func (r *Runner) testGo(job *Job, workDir string) Result {
-	if err := workspace.SyncTests(job.Project, workDir); err != nil {
-		job.line("test", "sys", "테스트 파일 동기화 실패: "+err.Error())
-		return Result{}
-	}
 	job.line("test", "sys", "$ go vet ./...")
 	vet := r.exec(job, "test", workDir, []string{"go", "vet", "./..."}, nil, false)
 	if vet.code != 0 || vet.err != nil {

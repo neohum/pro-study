@@ -225,8 +225,14 @@ func (r *Runner) execute(job *Job, workDir, stdin string) {
 		return
 	}
 
-	// 3. 테스트
+	// 3. 테스트 — tests/는 종류와 무관하게 작업 폴더로 동기화한다(항상 원본으로 덮어씀).
+	// C 프로젝트는 .args로 tests/fixtures/... 를 참조할 수 있고, Go 테스트는 같은 패키지에 놓인다.
 	job.emit(Event{Type: "stage", Stage: "test", Status: "running"})
+	if err := workspace.SyncTests(p, workDir); err != nil {
+		job.line("test", "sys", "테스트 파일 동기화 실패: "+err.Error())
+		job.emit(Event{Type: "stage", Stage: "test", Status: "error"})
+		return
+	}
 	switch p.Test.Kind {
 	case "stdio-cases":
 		res = r.testStdioCases(job, workDir)
