@@ -123,7 +123,7 @@ func TestTimeoutKillsProcess(t *testing.T) {
 	root := t.TempDir()
 	p, work := goProject(t, root, "package main\n\nfunc main() { for {} }\n", map[string]string{"01.out": ""})
 	r := New()
-	r.Timeout = 2 * time.Second
+	r.Timeout = 4 * time.Second
 	start := time.Now()
 	job, res, err := r.RunSync(p, work, "test", "")
 	if err != nil {

@@ -67,7 +67,7 @@ button { font: inherit; }
 .topnav a:hover { color: var(--fg); }
 
 .page { max-width: 1180px; margin: 0 auto; padding: calc(var(--unit) * 6) clamp(16px, 4vw, 32px) calc(var(--unit) * 16); }
-.page-project { max-width: 1400px; }
+.page-project { max-width: min(1840px, 96vw); }
 
 /* ---- 버튼 ---- */
 .btn {
@@ -136,7 +136,7 @@ button { font: inherit; }
 .project-meta { display: flex; align-items: center; gap: calc(var(--unit) * 3); flex-wrap: wrap; }
 .project-grid {
   display: grid; gap: calc(var(--unit) * 5);
-  grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 200px minmax(320px, 1fr) minmax(500px, 2.2fr);
   grid-template-areas: "toc guide viewer" "toc run run";
 }
 .toc { grid-area: toc; position: sticky; top: 76px; align-self: start; font-size: .9rem; }
@@ -151,7 +151,17 @@ button { font: inherit; }
 .guide h2 { margin-top: calc(var(--unit) * 8); padding-bottom: var(--unit); border-bottom: 1px solid var(--border); }
 .guide h2:first-child { margin-top: 0; }
 .guide h3 { margin-top: calc(var(--unit) * 6); }
-.guide pre { background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--unit) * 3); overflow-x: auto; }
+.guide pre {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: calc(var(--unit) * 3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
 .guide table { border-collapse: collapse; width: 100%; font-size: .92rem; }
 .guide th, .guide td { border: 1px solid var(--border); padding: calc(var(--unit) * 1.5) calc(var(--unit) * 2); text-align: left; vertical-align: top; }
 .guide blockquote { border-left: 3px solid var(--accent); margin: 0; padding: var(--unit) calc(var(--unit) * 4); color: var(--muted); }
@@ -163,7 +173,7 @@ button { font: inherit; }
 .vtab.active { color: var(--fg); border-bottom-color: var(--accent); }
 .vtab:disabled { opacity: .4; cursor: not-allowed; }
 .vtab-solution { margin-left: auto; color: var(--warn); }
-.viewer-body { display: grid; grid-template-columns: 180px minmax(0, 1fr); min-height: 320px; flex: 1; overflow: hidden; }
+.viewer-body { display: grid; grid-template-columns: 160px minmax(0, 1fr); min-height: 320px; flex: 1; overflow: hidden; }
 .filetree { list-style: none; margin: 0; padding: calc(var(--unit) * 2); border-right: 1px solid var(--border); overflow: auto; font-family: var(--font-mono); font-size: .82rem; }
 .filetree ul { list-style: none; padding-left: calc(var(--unit) * 3); margin: 0; }
 .filetree li > span, .filetree li > button { display: block; width: 100%; text-align: left; background: none; border: 0; color: var(--muted); padding: 2px var(--unit); border-radius: var(--radius-sm); cursor: pointer; font: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -172,8 +182,25 @@ button { font: inherit; }
 .filetree .empty { padding: var(--unit); }
 .code-pane { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
 .code-path { font-family: var(--font-mono); font-size: .8rem; color: var(--muted); padding: var(--unit) calc(var(--unit) * 3); border-bottom: 1px solid var(--border); }
-#code-pre { margin: 0; padding: calc(var(--unit) * 3); overflow: auto; flex: 1; font-size: .85rem; line-height: 1.5; tab-size: 4; }
-#code-pre code { background: transparent; }
+#code-pre {
+  margin: 0;
+  padding: calc(var(--unit) * 3);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  font-size: .85rem;
+  line-height: 1.6;
+  tab-size: 4;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+#code-pre code {
+  background: transparent;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
 .solution-gate { padding: calc(var(--unit) * 6); text-align: center; color: var(--muted); }
 
 /* ---- 실행 패널 ---- */
@@ -215,7 +242,12 @@ button { font: inherit; }
 .toast.error { border-left-color: var(--danger); }
 
 /* ---- 반응형 ---- */
-@media (max-width: 1100px) {
+@media (max-width: 1300px) and (min-width: 1041px) {
+  .project-grid {
+    grid-template-columns: 180px minmax(280px, 1fr) minmax(400px, 1.8fr);
+  }
+}
+@media (max-width: 1040px) {
   .project-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "toc" "guide" "viewer" "run"; }
   .toc { position: static; }
   .toc ol { display: flex; flex-wrap: wrap; gap: calc(var(--unit) * 2); }
