@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   pro-study 로컬 웹 서버를 백그라운드로 띄우고 크롬 앱(--app) 모드로 접속한다.
 #>
@@ -30,9 +30,23 @@ function Test-ServerListening([string]$Address, [int]$CheckPort) {
 }
 
 $isListening = Test-ServerListening "127.0.0.1" $Port
+$exePath = Join-Path $root "build\pro-study.exe"
+
+# 실행 중인 기존 프로세스가 있더라도, 새 빌드 파일이 더 최신이면 프로세스를 자동 재기동
+if ($isListening -and (Test-Path $exePath)) {
+  $runningProc = Get-Process -Name "pro-study" -ErrorAction SilentlyContinue
+  if ($runningProc) {
+    $exeTime = (Get-Item $exePath).LastWriteTime
+    $procTime = $runningProc[0].StartTime
+    if ($exeTime -gt $procTime) {
+      $runningProc | Stop-Process -Force -ErrorAction SilentlyContinue
+      Start-Sleep -Milliseconds 300
+      $isListening = $false
+    }
+  }
+}
 
 if (-not $isListening) {
-  $exePath = Join-Path $root "build\pro-study.exe"
   if (-not (Test-Path $exePath)) {
     Write-Verbose "빌드 실행 파일이 없어 새로 빌드합니다..."
     & go -C "$root\site" build -o "$root\build\pro-study.exe" .
