@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   pro-study 로컬 웹 서버를 백그라운드로 띄우고 크롬 앱(--app) 모드로 접속한다.
 #>
@@ -53,11 +53,13 @@ if (-not $isListening) {
   }
 
   if (Test-Path $exePath) {
-    # 백그라운드로 서버 프로세스 실행 (콘솔 창 숨김)
-    Start-Process -FilePath $exePath `
-      -ArgumentList @("-root", $root, "-addr", "127.0.0.1:$Port", "-open=false") `
-      -WorkingDirectory $root `
-      -WindowStyle Hidden
+    # WMI(Win32_Process)를 통해 부모 셸과 완전히 독립된 백그라운드 프로세스로 기동
+    $cmd = "`"$exePath`" -root `"$root`" -addr `"127.0.0.1:$Port`" -open=false"
+    try {
+      Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $cmd; CurrentDirectory = $root } | Out-Null
+    } catch {
+      ([wmiclass]'Win32_Process').Create($cmd, $root, $null) | Out-Null
+    }
 
     # 서버 준비 대기 (최대 5초)
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
