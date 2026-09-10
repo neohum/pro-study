@@ -158,7 +158,7 @@
     selectArea("starter");
 
     // ---- 목차 현재 위치 ----
-    const tocLinks = $$(".toc a[href^='#']");
+    const tocLinks = $$(".top-toc a[href^='#'], .toc a[href^='#']");
     if (tocLinks.length && "IntersectionObserver" in window) {
       const map = new Map(tocLinks.map(a => [decodeURIComponent(a.getAttribute("href").slice(1)), a]));
       const io = new IntersectionObserver(entries => {
@@ -173,151 +173,40 @@
       map.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
     }
 
-    // ---- 실행 패널 ----
-    const btnOpen = $("#btn-open"), btnBuild = $("#btn-build"), btnRun = $("#btn-run"),
-      btnTest = $("#btn-test"), btnReset = $("#btn-reset");
-    const statusEl = $("#run-status"), casesEl = $("#cases"), outEl = $("#output");
+    // ---- VS Code 열기 ----
+    const btnOpen = $("#btn-open");
     const badge = $("#status-badge");
     const workTab = $$(".vtab").find(t => t.dataset.area === "work");
-    let current = null; // EventSource
 
     function setWorkExists() {
       root.dataset.workExists = "true";
-      [btnBuild, btnRun, btnTest, btnReset].forEach(b => { b.disabled = false; });
       if (workTab) { workTab.disabled = false; workTab.title = ""; }
     }
 
-    function busy(on) {
-      [btnOpen, btnBuild, btnRun, btnTest, btnReset].forEach(b => {
-        if (on) b.dataset.wasDisabled = b.disabled ? "1" : "";
-        b.disabled = on ? true : b.dataset.wasDisabled === "1";
+    if (btnOpen) {
+      btnOpen.addEventListener("click", async () => {
+        btnOpen.classList.add("loading");
+        try {
+          const r = await api("POST", `/api/open/${lang}/${slug}`);
+          setWorkExists();
+          if (r.created) toast("작업 폴더를 만들었습니다: " + r.dir);
+          if (r.opened) {
+            toast("VS Code를 열었습니다.");
+          } else {
+            toast("code CLI를 쓰지 못해 vscode:// 링크로 엽니다. " + (r.error || ""), true);
+            window.location.href = r.url;
+          }
+          if (badge && badge.classList.contains("badge-not-started")) {
+            badge.className = "badge badge-in-progress"; badge.textContent = "진행 중";
+          }
+          if (area === "work") loadTree(true);
+        } catch (e) {
+          toast("열기 실패: " + e.message, true);
+        } finally {
+          btnOpen.classList.remove("loading");
+        }
       });
     }
-
-    btnOpen.addEventListener("click", async () => {
-      btnOpen.classList.add("loading");
-      try {
-        const r = await api("POST", `/api/open/${lang}/${slug}`);
-        setWorkExists();
-        if (r.created) toast("작업 폴더를 만들었습니다: " + r.dir);
-        if (r.opened) {
-          toast("VS Code를 열었습니다. 코딩 후 돌아와서 [테스트]를 누르세요.");
-        } else {
-          toast("code CLI를 쓰지 못해 vscode:// 링크로 엽니다. " + (r.error || ""), true);
-          window.location.href = r.url;
-        }
-        if (badge.classList.contains("badge-not-started")) {
-          badge.className = "badge badge-in-progress"; badge.textContent = "진행 중";
-        }
-        if (area === "work") loadTree(true);
-      } catch (e) {
-        toast("열기 실패: " + e.message, true);
-      } finally {
-        btnOpen.classList.remove("loading");
-      }
-    });
-
-    btnReset.addEventListener("click", async () => {
-      if (!confirm("작업 폴더의 모든 변경을 버리고 starter 상태로 되돌립니다. 계속할까요?")) return;
-      try {
-        await api("POST", `/api/reset/${lang}/${slug}`);
-        toast("초기화했습니다.");
-        if (area === "work") loadTree(true);
-      } catch (e) {
-        toast("초기화 실패: " + e.message, true);
-      }
-    });
-
-    function stagePill(stage, status, extra) {
-      let el = $(`.stage[data-stage="${stage}"]`, statusEl);
-      if (!el) {
-        el = document.createElement("span");
-        el.className = "stage";
-        el.dataset.stage = stage;
-        statusEl.appendChild(el);
-      }
-      const names = { build: "빌드", run: "실행", test: "테스트" };
-      const labels = { running: "진행 중", ok: "성공", fail: "실패", error: "오류", timeout: "시간 초과" };
-      el.className = "stage stage-" + status;
-      el.textContent = `${names[stage] || stage}: ${labels[status] || status}${extra || ""}`;
-    }
-
-    function appendLine(ev) {
-      const span = document.createElement("span");
-      span.className = ev.stream || "stdout";
-      span.textContent = ev.text + "\n";
-      outEl.appendChild(span);
-      outEl.scrollTop = outEl.scrollHeight;
-    }
-
-    function appendCase(ev) {
-      const li = document.createElement("li");
-      li.className = ev.pass ? "pass" : "fail";
-      const head = document.createElement("div");
-      head.textContent = `${ev.pass ? "✅" : "❌"} ${ev.name}${ev.millis ? ` · ${ev.millis}ms` : ""}${!ev.pass && (ev.status === "timeout" || ev.status === "error") ? ` · ${ev.status}` : ""}`;
-      li.appendChild(head);
-      if (!ev.pass && (ev.expected !== undefined || ev.actual)) {
-        const d = document.createElement("details");
-        const s = document.createElement("summary");
-        s.textContent = "기대값 / 실제값";
-        d.appendChild(s);
-        if (ev.expected !== undefined && ev.expected !== "") {
-          const p1 = document.createElement("pre"); p1.className = "diff-exp"; p1.textContent = "기대:\n" + ev.expected; d.appendChild(p1);
-        }
-        const p2 = document.createElement("pre"); p2.className = "diff-act"; p2.textContent = "실제:\n" + (ev.actual || "(출력 없음)"); d.appendChild(p2);
-        li.appendChild(d);
-      }
-      casesEl.appendChild(li);
-    }
-
-    async function run(stage) {
-      if (current) { current.close(); current = null; }
-      statusEl.innerHTML = ""; casesEl.innerHTML = ""; outEl.innerHTML = "";
-      busy(true);
-      let id;
-      try {
-        const r = await api("POST", `/api/run/${lang}/${slug}`, { stage, stdin: $("#stdin").value });
-        id = r.id;
-      } catch (e) {
-        busy(false);
-        toast(e.message, true);
-        return;
-      }
-      const es = new EventSource(`/api/events/${id}`);
-      current = es;
-      es.onmessage = (m) => {
-        const ev = JSON.parse(m.data);
-        switch (ev.type) {
-          case "stage": {
-            let extra = "";
-            if (ev.stage === "test" && ev.status !== "running") extra = ` ${ev.passed}/${ev.total}`;
-            if (ev.millis) extra += ` (${(ev.millis / 1000).toFixed(1)}s)`;
-            stagePill(ev.stage, ev.status, extra);
-            break;
-          }
-          case "line": appendLine(ev); break;
-          case "case": appendCase(ev); break;
-          case "done": {
-            es.close(); current = null; busy(false);
-            if (stage === "test") {
-              if (ev.status === "ok") {
-                badge.className = "badge badge-passed"; badge.textContent = "통과";
-                toast(`모든 테스트 통과! (${ev.passed}/${ev.total})`);
-              } else if (!badge.classList.contains("badge-passed")) {
-                badge.className = "badge badge-in-progress"; badge.textContent = "진행 중";
-              }
-            }
-            if (area === "work") loadTree(false);
-            break;
-          }
-        }
-      };
-      es.onerror = () => { es.close(); current = null; busy(false); appendLine({ stream: "sys", text: "연결이 끊겼습니다." }); };
-    }
-
-    btnBuild.addEventListener("click", () => run("build"));
-    btnRun.addEventListener("click", () => run("run"));
-    btnTest.addEventListener("click", () => run("test"));
     void base;
   }
 
