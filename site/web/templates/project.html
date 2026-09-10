@@ -3,26 +3,37 @@
      data-work-exists="{{.WorkExists}}" data-has-solution="{{.HasSolution}}" data-has-tests="{{.HasTests}}">
 
 <header class="project-head">
-  <div class="crumbs"><a href="/#{{.P.Lang}}">{{.P.LangName}}</a> <span>/</span> <span>{{printf "%02d" .P.Order}}</span></div>
-  <h1>{{.P.Title}}</h1>
-  <p class="lead">{{.P.Summary}}</p>
-  <div class="project-meta">
-    <span class="stars" title="난이도 {{.P.Difficulty}}/5">{{.P.Stars}}</span>
-    <span id="status-badge" class="badge badge-{{.Progress.Status}}">{{statusLabel .Progress.Status}}</span>
-    <ul class="concepts">{{range .P.Concepts}}<li>{{.}}</li>{{end}}</ul>
+  <div class="project-head-main">
+    <div class="crumbs"><a href="/#{{.P.Lang}}">{{.P.LangName}}</a> <span>/</span> <span>{{printf "%02d" .P.Order}}</span></div>
+    <h1>{{.P.Title}}</h1>
+    <p class="lead">{{.P.Summary}}</p>
+    <div class="project-meta">
+      <span class="stars" title="난이도 {{.P.Difficulty}}/5">{{.P.Stars}}</span>
+      <span id="status-badge" class="badge badge-{{.Progress.Status}}">{{statusLabel .Progress.Status}}</span>
+      <ul class="concepts">{{range .P.Concepts}}<li>{{.}}</li>{{end}}</ul>
+    </div>
+  </div>
+  <div class="project-head-actions">
+    <button class="btn btn-primary" id="btn-open">VS Code에서 열기</button>
   </div>
 </header>
 
-<div class="project-grid">
-  <aside class="toc">
-    <h2>목차</h2>
-    <ol>{{range .Guide.TOC}}<li class="toc-l{{.Level}}"><a href="#{{.ID}}">{{.Text}}</a></li>{{end}}</ol>
-    <nav class="prevnext">
-      {{if .Prev}}<a href="/p/{{.Prev.Lang}}/{{.Prev.Slug}}">← {{.Prev.Title}}</a>{{end}}
-      {{if .Next}}<a href="/p/{{.Next.Lang}}/{{.Next.Slug}}">{{.Next.Title}} →</a>{{end}}
-    </nav>
-  </aside>
+<nav class="top-toc" aria-label="문서 목차">
+  <div class="top-toc-inner">
+    <span class="top-toc-label">목차</span>
+    <ol class="top-toc-list">
+      {{range .Guide.TOC}}
+      <li class="top-toc-item top-toc-l{{.Level}}"><a href="#{{.ID}}">{{.Text}}</a></li>
+      {{end}}
+    </ol>
+    <div class="top-toc-nav">
+      {{if .Prev}}<a class="btn-prevnext" href="/p/{{.Prev.Lang}}/{{.Prev.Slug}}" title="{{.Prev.Title}}">← 이전</a>{{end}}
+      {{if .Next}}<a class="btn-prevnext" href="/p/{{.Next.Lang}}/{{.Next.Slug}}" title="{{.Next.Title}}">다음 →</a>{{end}}
+    </div>
+  </div>
+</nav>
 
+<div class="project-grid">
   <article class="guide">{{.Guide.HTML}}</article>
 
   <section class="viewer" aria-label="코드 뷰어">
@@ -43,25 +54,6 @@
         <pre id="code-pre"><code id="code" class="hljs"></code></pre>
       </div>
     </div>
-  </section>
-
-  <section class="runpanel" aria-label="실행 패널">
-    <div class="run-actions">
-      <button class="btn btn-primary" id="btn-open">VS Code에서 열기</button>
-      <button class="btn btn-secondary" id="btn-build" {{if not .WorkExists}}disabled{{end}}>빌드</button>
-      <button class="btn btn-secondary" id="btn-run" {{if not .WorkExists}}disabled{{end}}>실행</button>
-      <button class="btn btn-secondary" id="btn-test" {{if not .WorkExists}}disabled{{end}}>테스트</button>
-      <button class="btn btn-danger" id="btn-reset" {{if not .WorkExists}}disabled{{end}} title="작업 폴더를 starter로 되돌립니다">초기화</button>
-      <span class="run-cmds" title="빌드: {{.BuildCmd}}&#10;실행: {{.RunCmd}}">작업 폴더 <code>{{.WorkDir}}</code></span>
-    </div>
-    <details class="stdin-box">
-      <summary>실행 시 표준 입력</summary>
-      <label for="stdin">실행 버튼이 프로그램에 넣어 줄 stdin (대화형 프로그램은 VS Code 터미널에서 직접 실행하세요)</label>
-      <textarea id="stdin" rows="3" spellcheck="false"></textarea>
-    </details>
-    <div class="run-status" id="run-status"></div>
-    <ul class="cases" id="cases"></ul>
-    <pre class="output" id="output" aria-live="polite"></pre>
   </section>
 </div>
 </div>
