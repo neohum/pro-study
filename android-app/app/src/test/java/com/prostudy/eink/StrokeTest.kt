@@ -38,4 +38,26 @@ class StrokeTest {
         // 300, 300 지점은 멀리 떨어져 있으므로 false
         assertFalse(stroke.intersects(300f, 300f, 10f))
     }
+
+    @Test
+    fun testStrokeBoundsAndVisibility() {
+        val stroke = Stroke()
+        stroke.addPoint(InkPoint(50f, 100f))
+        stroke.addPoint(InkPoint(120f, 250f))
+        stroke.addPoint(InkPoint(80f, 180f))
+
+        assertEquals(50f, stroke.minX, 0.001f)
+        assertEquals(100f, stroke.minY, 0.001f)
+        assertEquals(120f, stroke.maxX, 0.001f)
+        assertEquals(250f, stroke.maxY, 0.001f)
+
+        // 뷰포트 범위 0..80: maxY(250) >= 0 이지만 minY(100) > 80 이므로 false
+        assertFalse(stroke.isVisibleIn(0f, 80f))
+        // 뷰포트 범위 300..400: maxY(250) < 300 이므로 false
+        assertFalse(stroke.isVisibleIn(300f, 400f))
+        // 뷰포트 범위 50..150: 100..250과 교차하므로 true
+        assertTrue(stroke.isVisibleIn(50f, 150f))
+        // 뷰포트 범위 200..300: 100..250과 교차하므로 true
+        assertTrue(stroke.isVisibleIn(200f, 300f))
+    }
 }

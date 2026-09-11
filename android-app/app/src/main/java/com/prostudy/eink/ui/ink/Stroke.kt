@@ -38,9 +38,41 @@ data class Stroke(
     @Transient
     private var cachedPath: Path? = null
 
+    @Transient
+    var minX: Float = Float.MAX_VALUE
+        private set
+    @Transient
+    var minY: Float = Float.MAX_VALUE
+        private set
+    @Transient
+    var maxX: Float = Float.MIN_VALUE
+        private set
+    @Transient
+    var maxY: Float = Float.MIN_VALUE
+        private set
+
+    init {
+        for (p in points) {
+            updateBounds(p.x, p.y)
+        }
+    }
+
+    private fun updateBounds(x: Float, y: Float) {
+        if (x < minX) minX = x
+        if (y < minY) minY = y
+        if (x > maxX) maxX = x
+        if (y > maxY) maxY = y
+    }
+
     fun addPoint(p: InkPoint) {
         points.add(p)
         cachedPath = null
+        updateBounds(p.x, p.y)
+    }
+
+    fun isVisibleIn(top: Float, bottom: Float): Boolean {
+        if (points.isEmpty()) return false
+        return maxY >= top && minY <= bottom
     }
 
     fun toPath(): Path {
