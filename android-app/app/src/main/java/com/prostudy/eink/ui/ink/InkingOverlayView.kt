@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -35,9 +37,19 @@ class InkingOverlayView @JvmOverloads constructor(
 
     private var activeStroke: Stroke? = null
     private var isStylusActive = false
+    private val activePath = Path()
+    private var lastPointX = 0f
+    private var lastPointY = 0f
+    private val dirtyRect = Rect()
+
+    init {
+        // E-ink 하드웨어 최적화: 소프트웨어 파이프라인으로 dirty rect 부분 갱신 레이턴시 최소화
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
+    }
 
     private val inkPaint = Paint().apply {
-        isAntiAlias = true
+        isAntiAlias = false
+        isDither = false
         color = Color.BLACK
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
@@ -46,10 +58,34 @@ class InkingOverlayView @JvmOverloads constructor(
     }
 
     private val eraserIndicatorPaint = Paint().apply {
-        isAntiAlias = true
+        isAntiAlias = false
         color = Color.GRAY
         style = Paint.Style.STROKE
         strokeWidth = 2.0f
+    }
+
+    private fun addQuadSegment(x: Float, y: Float) {
+        val midX = (lastPointX + x) / 2f
+        val midY = (lastPointY + y) / 2f
+        activePath.quadTo(lastPointX, lastPointY, midX, midY)
+        lastPointX = x
+        lastPointY = y
+    }
+
+    @Suppress("DEPRECATION")
+    private fun invalidateStroke(minX: Float, minY: Float, maxX: Float, maxY: Float) {
+        val pad = (currentPenWidth + 12f).toInt()
+        dirtyRect.set(
+            (minX - pad).toInt().coerceAtLeast(0),
+            (minY - pad).toInt().coerceAtLeast(0),
+            (maxX + pad).toInt().coerceAtMost(width),
+            (maxY + pad).toInt().coerceAtMost(height)
+        )
+        if (dirtyRect.width() > 0 && dirtyRect.height() > 0) {
+            invalidate(dirtyRect)
+        } else {
+            invalidate()
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -89,6 +125,11 @@ class InkingOverlayView @JvmOverloads constructor(
                         invalidate()
                     }
                 } else {
+                    activePath.reset()
+                    activePath.moveTo(x, y)
+                    lastPointX = x
+                    lastPointY = y
+
                     val stroke = Stroke(
                         color = currentPenColor,
                         baseWidth = currentPenWidth,
@@ -96,7 +137,7 @@ class InkingOverlayView @JvmOverloads constructor(
                     )
                     stroke.addPoint(InkPoint(x, y, pressure))
                     activeStroke = stroke
-                    invalidate()
+                    invalidateStroke(x, y, x, y)
                 }
                 return true
             }
@@ -118,14 +159,30 @@ class InkingOverlayView @JvmOverloads constructor(
                     if (changed) invalidate()
                 } else {
                     activeStroke?.let { stroke ->
+                        var minX = lastPointX
+                        var maxX = lastPointX
+                        var minY = lastPointY
+                        var maxY = lastPointY
+
                         for (h in 0 until historySize) {
                             val hx = event.getHistoricalX(pointerIndex, h)
                             val hy = event.getHistoricalY(pointerIndex, h)
                             val hp = event.getHistoricalPressure(pointerIndex, h)
+                            addQuadSegment(hx, hy)
                             stroke.addPoint(InkPoint(hx, hy, hp))
+                            if (hx < minX) minX = hx
+                            if (hx > maxX) maxX = hx
+                            if (hy < minY) minY = hy
+                            if (hy > maxY) maxY = hy
                         }
+                        addQuadSegment(x, y)
                         stroke.addPoint(InkPoint(x, y, pressure))
-                        invalidate()
+                        if (x < minX) minX = x
+                        if (x > maxX) maxX = x
+                        if (y < minY) minY = y
+                        if (y > maxY) maxY = y
+
+                        invalidateStroke(minX, minY, maxX, maxY)
                     }
                 }
                 return true
@@ -137,9 +194,11 @@ class InkingOverlayView @JvmOverloads constructor(
 
                 if (!effectiveEraser) {
                     activeStroke?.let { stroke ->
+                        addQuadSegment(x, y)
                         stroke.addPoint(InkPoint(x, y, pressure))
                         strokeManager.addStroke(stroke)
                         activeStroke = null
+                        activePath.reset()
                         invalidate()
                     }
                 }
@@ -161,17 +220,18 @@ class InkingOverlayView @JvmOverloads constructor(
             canvas.drawPath(stroke.toPath(), inkPaint)
         }
 
-        // 현재 그리는 중인 실시간 획 렌더링 (지연 없는 즉시 렌더링)
-        activeStroke?.let { stroke ->
-            inkPaint.color = stroke.color
-            inkPaint.strokeWidth = stroke.baseWidth
-            canvas.drawPath(stroke.toPath(), inkPaint)
+        // 현재 그리는 중인 실시간 획 렌더링 (증분 Path로 딜레이 없는 즉시 렌더링)
+        if (activeStroke != null && !activePath.isEmpty) {
+            inkPaint.color = activeStroke?.color ?: currentPenColor
+            inkPaint.strokeWidth = activeStroke?.baseWidth ?: currentPenWidth
+            canvas.drawPath(activePath, inkPaint)
         }
     }
 
     fun clearAll() {
         strokeManager.clear()
         activeStroke = null
+        activePath.reset()
         invalidate()
     }
 }

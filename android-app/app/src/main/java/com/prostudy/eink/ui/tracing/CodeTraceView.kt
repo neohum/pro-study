@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Rect
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -14,6 +16,7 @@ import com.prostudy.eink.ui.ink.InkPoint
 import com.prostudy.eink.ui.ink.Stroke
 import com.prostudy.eink.ui.ink.StrokeManager
 import kotlin.math.max
+import kotlin.math.min
 
 /**
  * CodeTraceView
@@ -66,9 +69,9 @@ class CodeTraceView @JvmOverloads constructor(
     private val paddingLeftPx = 16f * density
     private val paddingTopPx = 24f * density
 
-    // 페인트
+    // 페인트 (E-ink 고속 렌더링 최적화: 불필요한 안티에일리어싱/디더링 제거)
     private val lineNumPaint = Paint().apply {
-        isAntiAlias = true
+        isAntiAlias = false
         color = Color.parseColor("#9E9E9E")
         textSize = 14f * density
         typeface = Typeface.MONOSPACE
@@ -76,11 +79,13 @@ class CodeTraceView @JvmOverloads constructor(
     }
 
     private val separatorPaint = Paint().apply {
+        isAntiAlias = false
         color = Color.parseColor("#E0E0E0")
         strokeWidth = 1f * density
     }
 
     private val ruledLinePaint = Paint().apply {
+        isAntiAlias = false
         color = Color.parseColor("#EEEEEE")
         strokeWidth = 1f * density
     }
@@ -93,7 +98,8 @@ class CodeTraceView @JvmOverloads constructor(
     }
 
     private val inkPaint = Paint().apply {
-        isAntiAlias = true
+        isAntiAlias = false
+        isDither = false
         color = Color.BLACK
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
@@ -103,6 +109,41 @@ class CodeTraceView @JvmOverloads constructor(
 
     private var activeStroke: Stroke? = null
     private var isStylusActive = false
+    private val activePath = Path()
+    private var lastPointX = 0f
+    private var lastPointY = 0f
+    private val dirtyRect = Rect()
+
+    init {
+        // E-ink 하드웨어 최적화: 소프트웨어 파이프라인으로 dirty rect 부분 갱신 레이턴시 최소화
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
+    }
+
+    private fun addQuadSegment(x: Float, y: Float) {
+        val midX = (lastPointX + x) / 2f
+        val midY = (lastPointY + y) / 2f
+        activePath.quadTo(lastPointX, lastPointY, midX, midY)
+        lastPointX = x
+        lastPointY = y
+    }
+
+    @Suppress("DEPRECATION")
+    private fun invalidateStroke(minDocX: Float, minDocY: Float, maxDocX: Float, maxDocY: Float) {
+        val pad = (inkPaint.strokeWidth + 12f).toInt()
+        val screenMinY = minDocY + scrollYOffset
+        val screenMaxY = maxDocY + scrollYOffset
+        dirtyRect.set(
+            (minDocX - pad).toInt().coerceAtLeast(0),
+            (screenMinY - pad).toInt().coerceAtLeast(0),
+            (maxDocX + pad).toInt().coerceAtMost(width),
+            (screenMaxY + pad).toInt().coerceAtMost(height)
+        )
+        if (dirtyRect.width() > 0 && dirtyRect.height() > 0) {
+            invalidate(dirtyRect)
+        } else {
+            invalidate()
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
@@ -176,11 +217,17 @@ class CodeTraceView @JvmOverloads constructor(
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 isStylusActive = true
+                parent?.requestDisallowInterceptTouchEvent(true)
                 if (effectiveEraser) {
                     if (strokeManager.removeStrokesNear(docX, docY)) {
                         invalidate()
                     }
                 } else {
+                    activePath.reset()
+                    activePath.moveTo(docX, docY)
+                    lastPointX = docX
+                    lastPointY = docY
+
                     val stroke = Stroke(
                         color = Color.BLACK,
                         baseWidth = 3.5f,
@@ -188,7 +235,7 @@ class CodeTraceView @JvmOverloads constructor(
                     )
                     stroke.addPoint(InkPoint(docX, docY, pressure))
                     activeStroke = stroke
-                    invalidate()
+                    invalidateStroke(docX, docY, docX, docY)
                 }
                 return true
             }
@@ -206,14 +253,30 @@ class CodeTraceView @JvmOverloads constructor(
                     if (changed) invalidate()
                 } else {
                     activeStroke?.let { stroke ->
+                        var minX = lastPointX
+                        var maxX = lastPointX
+                        var minY = lastPointY
+                        var maxY = lastPointY
+
                         for (h in 0 until historySize) {
                             val hx = event.getHistoricalX(pointerIndex, h)
                             val hy = event.getHistoricalY(pointerIndex, h) - scrollYOffset
                             val hp = event.getHistoricalPressure(pointerIndex, h)
+                            addQuadSegment(hx, hy)
                             stroke.addPoint(InkPoint(hx, hy, hp))
+                            if (hx < minX) minX = hx
+                            if (hx > maxX) maxX = hx
+                            if (hy < minY) minY = hy
+                            if (hy > maxY) maxY = hy
                         }
+                        addQuadSegment(docX, docY)
                         stroke.addPoint(InkPoint(docX, docY, pressure))
-                        invalidate()
+                        if (docX < minX) minX = docX
+                        if (docX > maxX) maxX = docX
+                        if (docY < minY) minY = docY
+                        if (docY > maxY) maxY = docY
+
+                        invalidateStroke(minX, minY, maxX, maxY)
                     }
                 }
                 return true
@@ -221,11 +284,14 @@ class CodeTraceView @JvmOverloads constructor(
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isStylusActive = false
+                parent?.requestDisallowInterceptTouchEvent(false)
                 if (!effectiveEraser) {
                     activeStroke?.let { stroke ->
+                        addQuadSegment(docX, docY)
                         stroke.addPoint(InkPoint(docX, docY, pressure))
                         strokeManager.addStroke(stroke)
                         activeStroke = null
+                        activePath.reset()
                         invalidate()
                     }
                 }
@@ -266,13 +332,19 @@ class CodeTraceView @JvmOverloads constructor(
         canvas.save()
         canvas.translate(0f, scrollYOffset)
 
+        val viewportTop = -scrollYOffset
+        val viewportBottom = -scrollYOffset + height
+
         // 1. 세로 구분선 (줄 번호 영역과 코드 영역 구분)
         val sepX = lineNumberWidthPx + paddingLeftPx
         val totalHeight = (codeLines.size + 2) * lineHeightPx + paddingTopPx
         canvas.drawLine(sepX, 0f, sepX, totalHeight, separatorPaint)
 
-        // 2. 가로 노트선(Ruled Line), 줄 번호, Ghost 소스 코드 렌더링
-        for (i in codeLines.indices) {
+        // 2. 가로 노트선(Ruled Line), 줄 번호, Ghost 소스 코드 렌더링 - 뷰포트 내 가시 영역만 렌더링
+        val firstVisible = max(0, ((viewportTop - paddingTopPx) / lineHeightPx).toInt())
+        val lastVisible = min(codeLines.size - 1, ((viewportBottom - paddingTopPx) / lineHeightPx).toInt() + 1)
+
+        for (i in firstVisible..lastVisible) {
             val y = paddingTopPx + (i + 1) * lineHeightPx
             val baseline = y - 10f * density
 
@@ -288,18 +360,22 @@ class CodeTraceView @JvmOverloads constructor(
             }
         }
 
-        // 3. 사용자 필기 획 렌더링 (문서 좌표계에 그려져 스크롤과 완벽 동기화)
+        // 3. 사용자 필기 획 렌더링 (뷰포트에 걸치는 획만 필터링하여 렌더링)
         for (stroke in strokeManager.getStrokes()) {
             if (stroke.isEraser) continue
+            if (!stroke.isVisibleIn(viewportTop, viewportBottom)) continue
             inkPaint.color = stroke.color
             inkPaint.strokeWidth = stroke.baseWidth
             canvas.drawPath(stroke.toPath(), inkPaint)
         }
 
-        activeStroke?.let { stroke ->
-            inkPaint.color = stroke.color
-            inkPaint.strokeWidth = stroke.baseWidth
-            canvas.drawPath(stroke.toPath(), inkPaint)
+        // 4. 현재 입력 중인 실시간 획 (증분 Path로 렌더링하여 재계산 오버헤드 0화)
+        if (activeStroke != null && !activePath.isEmpty) {
+            activeStroke?.let { stroke ->
+                inkPaint.color = stroke.color
+                inkPaint.strokeWidth = stroke.baseWidth
+            }
+            canvas.drawPath(activePath, inkPaint)
         }
 
         canvas.restore()
