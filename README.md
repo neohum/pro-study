@@ -20,7 +20,28 @@
   ```
   *(바탕화면에 생성된 바로가기를 더블 클릭하면 웹 서버가 백그라운드로 자동 실행되고 크롬 앱 모드로 열립니다.)*
 
-### ② E-ink Book 전용 Android 애플리케이션 (`android-app/`)
+### ② 내부 네트워크(LAN / Wi-Fi) 디바이스 APK 다운로드 웹 페이지 (`/apk`)
+- 동일 Wi-Fi에 연결된 스마트폰이나 태블릿(Onyx Boox, Galaxy Tab 등)에서 PC 웹 서버에 접속하여 **APK를 직접 다운로드 및 설치**할 수 있습니다.
+- **QR 코드 지원**: PC 화면의 QR 코드를 태블릿 카메라로 비추면 바로 다운로드 페이지로 이동.
+- **원클릭 APK 빌드**: 웹 화면에서 [최신 소스로 APK 다시 빌드]를 누르면 백엔드에서 에셋 패키징과 Gradle 빌드를 자동 수행하며 실시간 터미널 로그를 스트리밍.
+- **내부망 서버 실행**:
+  ```bash
+  # Windows
+  pwsh scripts/serve-lan.ps1
+
+  # macOS / Linux
+  bash scripts/serve-lan.sh
+  ```
+- **터미널에서 직접 APK 빌드**:
+  ```bash
+  # Windows
+  pwsh scripts/build-apk.ps1
+
+  # macOS / Linux
+  bash scripts/build-apk.sh
+  ```
+
+### ③ E-ink Book 전용 Android 애플리케이션 (`android-app/`)
 - Onyx Boox, Likebook, Galaxy Tab S-Pen 등 **E-ink 전자책 단말기 특화 안드로이드 앱**.
 - **손/펜 입력 분리 (Palm Rejection)**:
   - **손가락 터치**: 본문 및 소스코드 부드러운 스크롤(Scroll / Pan).

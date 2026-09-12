@@ -60,41 +60,42 @@ class CodeTraceView @JvmOverloads constructor(
     private var lastTouchY: Float = 0f
     private var isDragging = false
 
-    // 레이아웃 수치
-    private val lineHeightDp = 38f
-    private val lineNumberWidthDp = 50f
+    // 레이아웃 수치 (글자 크기 1.5배 대응)
+    private val lineHeightDp = 48f
+    private val lineNumberWidthDp = 54f
     private val density = resources.displayMetrics.density
     private val lineHeightPx = lineHeightDp * density
     private val lineNumberWidthPx = lineNumberWidthDp * density
     private val paddingLeftPx = 16f * density
     private val paddingTopPx = 24f * density
 
-    // 페인트 (E-ink 고속 렌더링 최적화: 불필요한 안티에일리어싱/디더링 제거)
+    // 페인트 (E-ink 고속 렌더링 및 고대비 가시성 최적화)
     private val lineNumPaint = Paint().apply {
-        isAntiAlias = false
-        color = Color.parseColor("#9E9E9E")
-        textSize = 14f * density
+        isAntiAlias = true
+        color = Color.parseColor("#555555")
+        textSize = 15f * density
         typeface = Typeface.MONOSPACE
         textAlign = Paint.Align.RIGHT
     }
 
     private val separatorPaint = Paint().apply {
         isAntiAlias = false
-        color = Color.parseColor("#E0E0E0")
-        strokeWidth = 1f * density
+        color = Color.parseColor("#9E9E9E")
+        strokeWidth = 2f * density
     }
 
     private val ruledLinePaint = Paint().apply {
         isAntiAlias = false
-        color = Color.parseColor("#EEEEEE")
-        strokeWidth = 1f * density
+        color = Color.parseColor("#CCCCCC")
+        strokeWidth = 1.2f * density
     }
 
     private val ghostCodePaint = Paint().apply {
         isAntiAlias = true
-        color = Color.parseColor("#757575") // E-ink 고대비 Ghost 텍스트
-        textSize = 17f * density
+        color = Color.parseColor("#1A1A1A") // E-ink 고대비 진한 Ghost 텍스트 (날아가지 않고 선명하게 노출)
+        textSize = 21f * density // 1.5배 확대 유지
         typeface = Typeface.MONOSPACE
+        isFakeBoldText = true // 획을 살짝 두껍게 하여 E-ink 패널에서 매우 선명하게 표시
     }
 
     private val inkPaint = Paint().apply {
@@ -104,7 +105,7 @@ class CodeTraceView @JvmOverloads constructor(
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
-        strokeWidth = 3.5f
+        strokeWidth = 4.5f // 따라쓰기 획을 또렷하게 구분
     }
 
     private var activeStroke: Stroke? = null
@@ -147,9 +148,8 @@ class CodeTraceView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
-        val contentHeight = ((codeLines.size + 4) * lineHeightPx + paddingTopPx).toInt()
-        val minHeight = MeasureSpec.getSize(heightMeasureSpec)
-        setMeasuredDimension(width, max(contentHeight, minHeight))
+        val height = MeasureSpec.getSize(heightMeasureSpec)
+        setMeasuredDimension(width, height)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -303,13 +303,15 @@ class CodeTraceView @JvmOverloads constructor(
     }
 
     private fun scrollByOffset(dy: Float) {
-        val maxScroll = max(0f, (codeLines.size * lineHeightPx + paddingTopPx * 2) - height)
+        val totalHeight = (codeLines.size + 4) * lineHeightPx + paddingTopPx
+        val maxScroll = max(0f, totalHeight - height)
         scrollYOffset = (scrollYOffset + dy).coerceIn(-maxScroll, 0f)
         invalidate()
     }
 
     private fun fling(yVelocity: Float) {
-        val maxScroll = max(0f, (codeLines.size * lineHeightPx + paddingTopPx * 2) - height)
+        val totalHeight = (codeLines.size + 4) * lineHeightPx + paddingTopPx
+        val maxScroll = max(0f, totalHeight - height)
         scroller.fling(
             0, (-scrollYOffset).toInt(),
             0, yVelocity.toInt(),
@@ -329,6 +331,22 @@ class CodeTraceView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        // 흰색 배경 명시적 보장 (E-ink 패널 투명/회색 버퍼링 방지)
+        canvas.drawColor(Color.WHITE)
+
+        val sepX = lineNumberWidthPx + paddingLeftPx
+
+        if (codeLines.isEmpty()) {
+            val emptyPaint = Paint().apply {
+                isAntiAlias = true
+                color = Color.parseColor("#555555")
+                textSize = 18f * density
+                textAlign = Paint.Align.CENTER
+            }
+            canvas.drawText("따라 쓸 코드를 불러오는 중입니다...", width / 2f, height / 2f, emptyPaint)
+            return
+        }
+
         canvas.save()
         canvas.translate(0f, scrollYOffset)
 
@@ -336,17 +354,16 @@ class CodeTraceView @JvmOverloads constructor(
         val viewportBottom = -scrollYOffset + height
 
         // 1. 세로 구분선 (줄 번호 영역과 코드 영역 구분)
-        val sepX = lineNumberWidthPx + paddingLeftPx
-        val totalHeight = (codeLines.size + 2) * lineHeightPx + paddingTopPx
+        val totalHeight = max(height.toFloat(), (codeLines.size + 4) * lineHeightPx + paddingTopPx)
         canvas.drawLine(sepX, 0f, sepX, totalHeight, separatorPaint)
 
         // 2. 가로 노트선(Ruled Line), 줄 번호, Ghost 소스 코드 렌더링 - 뷰포트 내 가시 영역만 렌더링
-        val firstVisible = max(0, ((viewportTop - paddingTopPx) / lineHeightPx).toInt())
-        val lastVisible = min(codeLines.size - 1, ((viewportBottom - paddingTopPx) / lineHeightPx).toInt() + 1)
+        val firstVisible = max(0, ((viewportTop - paddingTopPx) / lineHeightPx).toInt() - 1)
+        val lastVisible = min(codeLines.size - 1, ((viewportBottom - paddingTopPx) / lineHeightPx).toInt() + 2)
 
         for (i in firstVisible..lastVisible) {
             val y = paddingTopPx + (i + 1) * lineHeightPx
-            val baseline = y - 10f * density
+            val baseline = y - 12f * density
 
             // 가로 공책 밑선
             canvas.drawLine(sepX, y, width.toFloat(), y, ruledLinePaint)
@@ -355,7 +372,7 @@ class CodeTraceView @JvmOverloads constructor(
             canvas.drawText("${i + 1}", sepX - 10f * density, baseline, lineNumPaint)
 
             // 따라쓸 Ghost 코드
-            if (showGhostText) {
+            if (showGhostText && i in codeLines.indices) {
                 canvas.drawText(codeLines[i], sepX + 16f * density, baseline, ghostCodePaint)
             }
         }

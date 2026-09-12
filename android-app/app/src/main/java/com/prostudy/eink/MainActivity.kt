@@ -39,9 +39,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvDetailTitle: TextView
     private lateinit var btnPenToggle: Button
     private lateinit var btnClearDetailInk: Button
-    private lateinit var btnViewGuide: Button
-    private lateinit var btnViewStarter: Button
-    private lateinit var btnViewSolution: Button
     private lateinit var btnViewTrace: Button
     private lateinit var tvReaderBody: TextView
     private lateinit var inkingOverlay: InkingOverlayView
@@ -56,11 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     private var currentLang = "c"
     private var currentProject: ProjectDetail? = null
-    private var currentDetailMode = DetailMode.GUIDE
-
-    private enum class DetailMode {
-        GUIDE, STARTER, SOLUTION
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,9 +80,6 @@ class MainActivity : AppCompatActivity() {
         tvDetailTitle = findViewById(R.id.tv_detail_title)
         btnPenToggle = findViewById(R.id.btn_pen_toggle)
         btnClearDetailInk = findViewById(R.id.btn_clear_detail_ink)
-        btnViewGuide = findViewById(R.id.btn_view_guide)
-        btnViewStarter = findViewById(R.id.btn_view_starter)
-        btnViewSolution = findViewById(R.id.btn_view_solution)
         btnViewTrace = findViewById(R.id.btn_view_trace)
         tvReaderBody = findViewById(R.id.tv_reader_body)
         inkingOverlay = findViewById(R.id.inking_overlay)
@@ -154,11 +143,6 @@ class MainActivity : AppCompatActivity() {
             inkingOverlay.clearAll()
         }
 
-        // 상세 하위 탭 전환
-        btnViewGuide.setOnClickListener { switchDetailMode(DetailMode.GUIDE) }
-        btnViewStarter.setOnClickListener { switchDetailMode(DetailMode.STARTER) }
-        btnViewSolution.setOnClickListener { switchDetailMode(DetailMode.SOLUTION) }
-
         // 따라쓰기 화면 열기
         btnViewTrace.setOnClickListener {
             openTraceMode()
@@ -203,43 +187,12 @@ class MainActivity : AppCompatActivity() {
         containerTracing.visibility = View.GONE
 
         tvDetailTitle.text = "[${detail.lang.uppercase()}] ${detail.title}"
-        switchDetailMode(DetailMode.GUIDE)
+        tvReaderBody.text = detail.readme
+        tvReaderBody.typeface = android.graphics.Typeface.DEFAULT
 
         // 이전 세션 필기 복원
         inkingOverlay.strokeManager.loadFromFile("detail_${detail.id}")
         inkingOverlay.invalidate()
-    }
-
-    private fun switchDetailMode(mode: DetailMode) {
-        currentDetailMode = mode
-        val p = currentProject ?: return
-
-        // 탭 스타일 초기화
-        btnViewGuide.setBackgroundColor(if (mode == DetailMode.GUIDE) Color.BLACK else Color.TRANSPARENT)
-        btnViewGuide.setTextColor(if (mode == DetailMode.GUIDE) Color.WHITE else Color.BLACK)
-
-        btnViewStarter.setBackgroundColor(if (mode == DetailMode.STARTER) Color.BLACK else Color.TRANSPARENT)
-        btnViewStarter.setTextColor(if (mode == DetailMode.STARTER) Color.WHITE else Color.BLACK)
-
-        btnViewSolution.setBackgroundColor(if (mode == DetailMode.SOLUTION) Color.BLACK else Color.TRANSPARENT)
-        btnViewSolution.setTextColor(if (mode == DetailMode.SOLUTION) Color.WHITE else Color.BLACK)
-
-        when (mode) {
-            DetailMode.GUIDE -> {
-                tvReaderBody.text = p.readme
-                tvReaderBody.typeface = android.graphics.Typeface.DEFAULT
-            }
-            DetailMode.STARTER -> {
-                val code = p.starterCode[p.entry] ?: p.starterCode.values.firstOrNull() ?: "(스켈레톤 코드 없음)"
-                tvReaderBody.text = code
-                tvReaderBody.typeface = android.graphics.Typeface.MONOSPACE
-            }
-            DetailMode.SOLUTION -> {
-                val code = p.solutionCode[p.entry] ?: p.solutionCode.values.firstOrNull() ?: "(정답 코드 없음)"
-                tvReaderBody.text = code
-                tvReaderBody.typeface = android.graphics.Typeface.MONOSPACE
-            }
-        }
     }
 
     private fun openTraceMode() {
@@ -247,19 +200,53 @@ class MainActivity : AppCompatActivity() {
         containerDetail.visibility = View.GONE
         containerTracing.visibility = View.VISIBLE
 
-        tvTraceTitle.text = "따라쓰기: ${p.title} (${p.entry})"
-
-        val rawCode = p.solutionCode[p.entry]
+        // 1. 완성 소스 코드 (solutionCode -> starterCode)
+        // 2. 가이드 내 코드 블록
+        // 3. 폴백
+        var rawCode = p.solutionCode[p.entry]
+            ?: p.solutionCode.entries.find { it.key.endsWith(p.entry) || p.entry.endsWith(it.key) }?.value
             ?: p.starterCode[p.entry]
+            ?: p.starterCode.entries.find { it.key.endsWith(p.entry) || p.entry.endsWith(it.key) }?.value
             ?: p.solutionCode.values.firstOrNull()
-            ?: "int main() {\n    return 0;\n}"
+            ?: p.starterCode.values.firstOrNull()
+            ?: ""
 
-        val lines = rawCode.lines()
+        if (rawCode.isBlank()) {
+            val codeBlocks = extractCodeBlocks(p.readme)
+            rawCode = if (codeBlocks.isNotEmpty()) {
+                codeBlocks.joinToString("\n\n// ----------------------------------------\n\n")
+            } else {
+                "// ${p.title} (${p.entry})\n// 따라쓸 코드가 없습니다."
+            }
+        }
+
+        // 탭(\t) 문자를 공백 4개로 변환 (Canvas.drawText에서 탭 문자가 뭉개지거나 안 보이는 문제 방지)
+        val lines = rawCode.lines().map { line ->
+            line.replace("\t", "    ")
+        }
+        tvTraceTitle.text = "따라쓰기: ${p.title} (${lines.size}줄)"
         codeTraceView.codeLines = lines
+        codeTraceView.showGhostText = true
+        btnTraceToggleGhost.text = "원문 토글 (ON)"
+        codeTraceView.isEraserMode = false
+        btnTraceEraser.text = "지우개"
 
         // 따라쓰기 필기 복원
         codeTraceView.strokeManager.loadFromFile("trace_${p.id}")
         codeTraceView.invalidate()
+    }
+
+    private fun extractCodeBlocks(markdown: String): List<String> {
+        val blocks = mutableListOf<String>()
+        val regex = Regex("```(?:[a-zA-Z0-9_-]+)?\\s*\\r?\\n([\\s\\S]*?)```")
+        val matches = regex.findAll(markdown)
+        for (m in matches) {
+            val code = m.groupValues[1].trimEnd()
+            if (code.isNotBlank()) {
+                blocks.add(code)
+            }
+        }
+        return blocks
     }
 
     private fun showCatalog() {

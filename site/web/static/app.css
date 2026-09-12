@@ -322,3 +322,345 @@ button { font: inherit; }
   .brand small { display: none; }
   .run-cmds { margin-left: 0; width: 100%; }
 }
+
+/* ---- 홈 E-ink 배너 ---- */
+.eink-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--unit) * 6);
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: calc(var(--unit) * 6);
+  margin-bottom: calc(var(--unit) * 8);
+}
+.eink-banner-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: calc(var(--unit) * 1);
+}
+.eink-banner-content h2 {
+  margin: 0 0 calc(var(--unit) * 2);
+  font-size: 1.25rem;
+}
+.eink-banner-content p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.eink-banner-action {
+  flex-shrink: 0;
+}
+
+/* ---- APK 다운로드 페이지 ---- */
+.apk-hero {
+  margin-bottom: calc(var(--unit) * 6);
+}
+.hero-badge {
+  margin-bottom: calc(var(--unit) * 2);
+}
+.apk-container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--unit) * 6);
+}
+.apk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--unit) * 6);
+}
+.apk-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: calc(var(--unit) * 6);
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: calc(var(--unit) * 4);
+  padding-bottom: calc(var(--unit) * 3);
+  border-bottom: 1px solid var(--border);
+}
+.card-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.apk-meta-box {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--unit) * 2);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: calc(var(--unit) * 3) calc(var(--unit) * 4);
+  margin-bottom: calc(var(--unit) * 6);
+}
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.92rem;
+}
+.meta-label {
+  color: var(--muted);
+}
+.meta-val {
+  font-weight: 500;
+}
+.code-val {
+  font-family: var(--font-mono);
+}
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--unit) * 3);
+}
+.btn-large {
+  font-size: 1.05rem;
+  padding: calc(var(--unit) * 3) calc(var(--unit) * 5);
+  justify-content: center;
+  font-weight: 600;
+}
+.btn-icon {
+  flex-shrink: 0;
+}
+.lan-warning-box {
+  margin-top: calc(var(--unit) * 5);
+  padding: calc(var(--unit) * 3);
+  background: rgba(255, 180, 84, 0.08);
+  border: 1px dashed var(--warn);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--fg);
+}
+.lan-warning-box p {
+  margin: calc(var(--unit) * 1) 0 0;
+  color: var(--muted);
+}
+.lan-warning-box code {
+  color: var(--warn);
+}
+
+/* ---- QR 카드 ---- */
+.qr-desc {
+  margin: 0 0 calc(var(--unit) * 4);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.qr-display-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--unit) * 4);
+}
+.qr-wrapper {
+  background: #ffffff;
+  padding: calc(var(--unit) * 3);
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.qr-wrapper img {
+  display: block;
+}
+.qr-url-box {
+  width: 100%;
+}
+.qr-url-box label {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: calc(var(--unit) * 1);
+}
+.copy-input-group {
+  display: flex;
+  gap: calc(var(--unit) * 2);
+}
+.copy-input-group input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: var(--radius-sm);
+  padding: calc(var(--unit) * 2) calc(var(--unit) * 3);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+.ip-hint {
+  display: block;
+  margin-top: calc(var(--unit) * 2);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+/* ---- 빌드 로그 터미널 ---- */
+.build-console-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.console-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--unit) * 2) calc(var(--unit) * 4);
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid var(--border);
+}
+.console-title {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--unit) * 2);
+  font-size: 0.88rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.terminal-dot.red { background: #ff5f56; }
+.terminal-dot.yellow { background: #ffbd2e; }
+.terminal-dot.green { background: #27c93f; }
+.console-actions {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--unit) * 3);
+}
+.console-status {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.console-status.active {
+  color: var(--warn);
+}
+.spin-icon {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+.console-output {
+  margin: 0;
+  padding: calc(var(--unit) * 4);
+  background: #0d0f14;
+  color: #c9d1d9;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  height: 260px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ---- 가이드 카드 ---- */
+.guide-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: calc(var(--unit) * 6);
+}
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(var(--unit) * 4);
+  margin: calc(var(--unit) * 5) 0;
+}
+.guide-step {
+  display: flex;
+  gap: calc(var(--unit) * 3);
+}
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+.step-body h3 {
+  font-size: 0.95rem;
+  margin: 0 0 calc(var(--unit) * 1);
+}
+.step-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.guide-devices-box {
+  border-top: 1px solid var(--border);
+  padding-top: calc(var(--unit) * 4);
+  margin-top: calc(var(--unit) * 4);
+}
+.guide-devices-box h3 {
+  font-size: 0.95rem;
+  margin-bottom: calc(var(--unit) * 2);
+}
+.guide-devices-box ul {
+  margin: 0;
+  padding-left: calc(var(--unit) * 5);
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.guide-devices-box li {
+  margin-bottom: calc(var(--unit) * 1);
+}
+
+.guide-conflict-alert {
+  display: flex;
+  gap: calc(var(--unit) * 3);
+  background: rgba(255, 180, 84, 0.08);
+  border: 1px solid var(--warn);
+  border-left: 4px solid var(--warn);
+  border-radius: var(--radius-sm);
+  padding: calc(var(--unit) * 4);
+  margin: calc(var(--unit) * 4) 0;
+  color: var(--fg);
+}
+.guide-conflict-alert .alert-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.guide-conflict-alert .alert-body strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--warn);
+  margin-bottom: calc(var(--unit) * 1);
+}
+.guide-conflict-alert .alert-body p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--fg);
+}
+.guide-conflict-alert code {
+  color: var(--warn);
+}
+
+@media (max-width: 900px) {
+  .apk-grid { grid-template-columns: 1fr; }
+  .guide-steps { grid-template-columns: 1fr 1fr; }
+  .eink-banner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .guide-steps { grid-template-columns: 1fr; }
+}
+
