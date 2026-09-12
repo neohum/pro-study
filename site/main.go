@@ -24,6 +24,7 @@ import (
 	"sync"
 	"time"
 
+	"pro-study/site/internal/apk"
 	"pro-study/site/internal/catalog"
 	"pro-study/site/internal/doctor"
 	"pro-study/site/internal/guide"
@@ -35,16 +36,39 @@ import (
 )
 
 func main() {
-	addr := flag.String("addr", "127.0.0.1:8787", "바인딩 주소 (루프백만 허용)")
+	addr := flag.String("addr", "127.0.0.1:8787", "바인딩 주소 (기본: 루프백, -lan 시 0.0.0.0 바인딩)")
 	root := flag.String("root", "", "저장소 루트 (기본: projects/가 있는 현재 또는 상위 디렉터리)")
 	openBrowser := flag.Bool("open", true, "기동 후 브라우저 열기")
+	allowLAN := flag.Bool("lan", false, "내부 네트워크(LAN) 접속 허용 및 기기 APK 다운로드 지원")
 	flag.Parse()
+
+	if *allowLAN && *addr == "127.0.0.1:8787" {
+		*addr = "0.0.0.0:8787"
+	}
+	if strings.HasPrefix(*addr, "0.0.0.0:") || strings.HasPrefix(*addr, ":") {
+		*allowLAN = true
+	}
 
 	r, err := findRoot(*root)
 	if err != nil {
 		log.Fatal(err)
 	}
-	srv, err := newServer(r)
+
+	ln, err := net.Listen("tcp", *addr)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if !*allowLAN && !isLoopback(ln.Addr()) {
+		log.Fatalf("루프백 주소에만 바인딩할 수 있습니다: %s (-lan 플래그를 추가하면 내부 네트워크에서 접속 가능합니다)", ln.Addr())
+	}
+
+	_, port, err := net.SplitHostPort(ln.Addr().String())
+	if err != nil {
+		port = "8787"
+	}
+
+	srv, err := newServer(r, port, *allowLAN)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -53,15 +77,20 @@ func main() {
 	}
 	log.Printf("루트: %s, 프로젝트 %d개", r, len(srv.cat.All()))
 
-	ln, err := net.Listen("tcp", *addr)
-	if err != nil {
-		log.Fatal(err)
+	localURL := "http://localhost:" + port + "/"
+	log.Printf("로컬 학습 사이트: %s", localURL)
+
+	if *allowLAN || !isLoopback(ln.Addr()) {
+		log.Printf("📱 [내부 네트워크 모드 활성화]")
+		log.Printf("   디바이스 APK 다운로드 페이지: http://%s:%s/apk", srv.lanInfo.PrimaryIP, port)
+		for _, ip := range srv.lanInfo.AllIPs {
+			if ip != srv.lanInfo.PrimaryIP {
+				log.Printf("   (대체 IP): http://%s:%s/apk", ip, port)
+			}
+		}
+	} else {
+		log.Printf("💡 팁: 동일 Wi-Fi 모바일 기기에서 접속하려면 -lan 옵션을 사용하세요: go run ./site -lan")
 	}
-	if !isLoopback(ln.Addr()) {
-		log.Fatalf("루프백 주소에만 바인딩할 수 있습니다: %s", ln.Addr())
-	}
-	url := "http://" + ln.Addr().String() + "/"
-	log.Printf("사이트: %s", url)
 
 	httpSrv := &http.Server{Handler: srv.routes(), ReadHeaderTimeout: 10 * time.Second}
 	go func() {
@@ -70,7 +99,7 @@ func main() {
 		}
 	}()
 	if *openBrowser {
-		launchBrowser(url)
+		launchBrowser(localURL)
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
@@ -127,10 +156,20 @@ type server struct {
 	mu       sync.RWMutex
 	cat      *catalog.Catalog
 	problems []catalog.Problem
+	apkMgr   *apk.Manager
+	port     string
+	lanInfo  apk.LANIPInfo
+	allowLAN bool
 }
 
-func newServer(root string) (*server, error) {
-	s := &server{root: root}
+func newServer(root string, port string, allowLAN bool) (*server, error) {
+	s := &server{
+		root:     root,
+		port:     port,
+		allowLAN: allowLAN,
+		apkMgr:   apk.NewManager(root),
+		lanInfo:  apk.DetectLANIPs(),
+	}
 	if err := s.reload(); err != nil {
 		return nil, err
 	}
@@ -155,7 +194,7 @@ func newServer(root string) (*server, error) {
 		},
 	}
 	s.tmpl = map[string]*template.Template{}
-	for _, page := range []string{"home", "project", "doctor"} {
+	for _, page := range []string{"home", "project", "doctor", "apk"} {
 		t, err := template.New("layout").Funcs(funcs).ParseFS(web.Templates, "templates/layout.html", "templates/"+page+".html")
 		if err != nil {
 			return nil, err
@@ -201,6 +240,12 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /{$}", s.handleHome)
 	mux.HandleFunc("GET /p/{lang}/{slug}", s.handleProject)
 	mux.HandleFunc("GET /doctor", s.handleDoctor)
+	mux.HandleFunc("GET /apk", s.handleAPK)
+	mux.HandleFunc("GET /api/apk/status", s.handleAPKStatus)
+	mux.HandleFunc("GET /api/apk/download", s.handleAPKDownload)
+	mux.HandleFunc("GET /api/apk/qr", s.handleAPKQR)
+	mux.HandleFunc("POST /api/apk/build", s.handleAPKBuild)
+	mux.HandleFunc("GET /api/apk/events", s.handleAPKEvents)
 	mux.HandleFunc("GET /api/tree/{lang}/{slug}/{area}", s.handleTree)
 	mux.HandleFunc("GET /api/file/{lang}/{slug}/{area}/{path...}", s.handleFile)
 	mux.HandleFunc("GET /api/events/{id}", s.handleEvents)
@@ -208,19 +253,22 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("POST /api/open/{lang}/{slug}", s.handleOpen)
 	mux.HandleFunc("POST /api/reset/{lang}/{slug}", s.handleReset)
 	mux.HandleFunc("POST /api/run/{lang}/{slug}", s.handleRun)
-	return guard(mux)
+	return s.guard(mux)
 }
 
-// guard는 DNS 리바인딩과 교차 출처 POST를 막는다. 사이트는 로컬 전용이라
-// 브라우저의 다른 탭이 이 서버로 명령을 보내는 경로만 잘라내면 된다.
-func guard(next http.Handler) http.Handler {
+// guard는 DNS 리바인딩과 교차 출처 POST를 막는다.
+// LAN 허용 모드에서는 동일 서브넷(사설망 IP) 및 .local 호스트명을 허용한다.
+func (s *server) guard(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		host := r.Host
 		if h, _, err := net.SplitHostPort(host); err == nil {
 			host = h
 		}
-		if ip := net.ParseIP(host); host != "localhost" && (ip == nil || !ip.IsLoopback()) {
-			http.Error(w, "허용되지 않는 Host", http.StatusForbidden)
+		ip := net.ParseIP(host)
+		isLocal := host == "localhost" || (ip != nil && ip.IsLoopback())
+		isLanAllowed := s.allowLAN && (strings.HasSuffix(host, ".local") || (ip != nil && (apk.IsPrivateIPv4(ip.To4()) || ip.IsLinkLocalUnicast())))
+		if !isLocal && !isLanAllowed {
+			http.Error(w, "허용되지 않는 Host (내부망 기기 접속은 -lan 옵션이 필요합니다)", http.StatusForbidden)
 			return
 		}
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
@@ -228,6 +276,15 @@ func guard(next http.Handler) http.Handler {
 			origin := r.Header.Get("Origin")
 			sameOrigin := site == "same-origin" || site == "none" ||
 				(site == "" && (origin == "" || strings.EqualFold(origin, "http://"+r.Host)))
+			if !sameOrigin {
+				// 내부망 IP 접속 시 Origin 호스트 일치 여부 확인
+				if origin != "" {
+					origHost := strings.TrimPrefix(strings.TrimPrefix(origin, "http://"), "https://")
+					if strings.EqualFold(origHost, r.Host) {
+						sameOrigin = true
+					}
+				}
+			}
 			if !sameOrigin {
 				http.Error(w, "교차 출처 요청은 허용하지 않습니다", http.StatusForbidden)
 				return
@@ -330,6 +387,133 @@ func (s *server) handleDoctor(w http.ResponseWriter, r *http.Request) {
 		"Root":     s.root,
 	})
 }
+
+func (s *server) handleAPK(w http.ResponseWriter, r *http.Request) {
+	st := s.apkMgr.Status()
+
+	host := r.Host
+	if h, _, err := net.SplitHostPort(host); err == nil {
+		if h == "localhost" || h == "127.0.0.1" {
+			host = fmt.Sprintf("%s:%s", s.lanInfo.PrimaryIP, s.port)
+		}
+	} else if host == "localhost" || host == "127.0.0.1" {
+		host = fmt.Sprintf("%s:%s", s.lanInfo.PrimaryIP, s.port)
+	}
+
+	apkURL := fmt.Sprintf("http://%s/apk", host)
+	downloadURL := fmt.Sprintf("http://%s/api/apk/download", host)
+	qrURL := fmt.Sprintf("/api/apk/qr?text=%s", apkURL)
+
+	s.render(w, "apk", map[string]any{
+		"Title":       "Android E-ink 앱 (APK) 다운로드",
+		"Status":      st,
+		"LANInfo":     s.lanInfo,
+		"Port":        s.port,
+		"AllowLAN":    s.allowLAN,
+		"APKURL":      apkURL,
+		"DownloadURL": downloadURL,
+		"QRURL":       qrURL,
+	})
+}
+
+func (s *server) handleAPKStatus(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, 200, s.apkMgr.Status())
+}
+
+func (s *server) handleAPKDownload(w http.ResponseWriter, r *http.Request) {
+	apkPath := s.apkMgr.APKPath()
+	st, err := os.Stat(apkPath)
+	if err != nil || st.IsDir() {
+		jsonError(w, 404, "APK 파일이 아직 빌드되지 않았습니다. 웹 페이지에서 빌드를 먼저 실행해주세요.")
+		return
+	}
+	w.Header().Set("Content-Disposition", "attachment; filename=\"pro-study.apk\"")
+	w.Header().Set("Content-Type", "application/vnd.android.package-archive")
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", st.Size()))
+	http.ServeFile(w, r, apkPath)
+}
+
+func (s *server) handleAPKQR(w http.ResponseWriter, r *http.Request) {
+	text := r.URL.Query().Get("text")
+	if text == "" {
+		host := r.Host
+		if h, _, err := net.SplitHostPort(host); err == nil {
+			if h == "localhost" || h == "127.0.0.1" {
+				host = fmt.Sprintf("%s:%s", s.lanInfo.PrimaryIP, s.port)
+			}
+		} else if host == "localhost" || host == "127.0.0.1" {
+			host = fmt.Sprintf("%s:%s", s.lanInfo.PrimaryIP, s.port)
+		}
+		text = fmt.Sprintf("http://%s/apk", host)
+	}
+	pngData, err := apk.GenerateQRPNG(text, 256)
+	if err != nil {
+		http.Error(w, "QR 코드 생성 실패: "+err.Error(), 500)
+		return
+	}
+	w.Header().Set("Content-Type", "image/png")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Write(pngData)
+}
+
+func (s *server) handleAPKBuild(w http.ResponseWriter, r *http.Request) {
+	if s.apkMgr.IsBuilding() {
+		jsonError(w, 409, "이미 APK 빌드가 진행 중입니다.")
+		return
+	}
+	go func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+		defer cancel()
+		if err := s.apkMgr.Build(ctx); err != nil {
+			log.Printf("APK 빌드 에러: %v", err)
+		}
+	}()
+	writeJSON(w, 202, map[string]string{"status": "building"})
+}
+
+func (s *server) handleAPKEvents(w http.ResponseWriter, r *http.Request) {
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		http.Error(w, "streaming unsupported", 500)
+		return
+	}
+	w.Header().Set("Content-Type", "text/event-stream")
+	w.Header().Set("Cache-Control", "no-cache")
+	w.Header().Set("X-Accel-Buffering", "no")
+
+	logs, unsub := s.apkMgr.SubscribeLogs()
+	defer unsub()
+
+	ticker := time.NewTicker(3 * time.Second)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case line, ok := <-logs:
+			if !ok {
+				return
+			}
+			data, _ := json.Marshal(map[string]any{
+				"line":       line,
+				"isBuilding": s.apkMgr.IsBuilding(),
+			})
+			fmt.Fprintf(w, "data: %s\n\n", data)
+			flusher.Flush()
+		case <-ticker.C:
+			// 연결 유지용 heartbeat 및 상태 업데이트
+			data, _ := json.Marshal(map[string]any{
+				"heartbeat":  true,
+				"isBuilding": s.apkMgr.IsBuilding(),
+				"status":     s.apkMgr.Status(),
+			})
+			fmt.Fprintf(w, "data: %s\n\n", data)
+			flusher.Flush()
+		case <-r.Context().Done():
+			return
+		}
+	}
+}
+
 
 func (s *server) render(w http.ResponseWriter, page string, data map[string]any) {
 	data["Page"] = page

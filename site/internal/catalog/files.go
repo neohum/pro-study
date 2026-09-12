@@ -29,6 +29,9 @@ func SafeJoin(base, rel string) (string, error) {
 	if strings.HasPrefix(rel, "/") || strings.HasPrefix(rel, `\`) {
 		return "", ErrOutside
 	}
+	if len(rel) >= 2 && rel[1] == ':' && ((rel[0] >= 'a' && rel[0] <= 'z') || (rel[0] >= 'A' && rel[0] <= 'Z')) {
+		return "", ErrOutside
+	}
 	rel = filepath.FromSlash(rel)
 	if filepath.IsAbs(rel) || filepath.VolumeName(rel) != "" {
 		return "", ErrOutside
