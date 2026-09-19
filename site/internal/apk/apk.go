@@ -90,6 +90,65 @@ func (m *Manager) Status() Status {
 	}
 }
 
+// BookeinkDir는 Bookeink 프로젝트 디렉토리 경로를 반환한다.
+func (m *Manager) BookeinkDir() string {
+	if env := os.Getenv("BOOKEINK_ROOT"); env != "" {
+		return env
+	}
+	cand := filepath.Join(m.root, "..", "bookeink")
+	if st, err := os.Stat(cand); err == nil && st.IsDir() {
+		return cand
+	}
+	return cand
+}
+
+// BookeinkAPKPath는 Bookeink APK 빌드 산출물 파일의 절대 경로를 반환한다.
+// Release 빌드가 있으면 우선 반환하고, 없으면 Debug 빌드를 반환한다.
+func (m *Manager) BookeinkAPKPath() string {
+	bDir := m.BookeinkDir()
+	relPath := filepath.Join(bDir, "app", "build", "outputs", "apk", "release", "app-release.apk")
+	if st, err := os.Stat(relPath); err == nil && !st.IsDir() && st.Size() > 0 {
+		return relPath
+	}
+	return filepath.Join(bDir, "app", "build", "outputs", "apk", "debug", "app-debug.apk")
+}
+
+// BookeinkStatus는 현재 Bookeink APK 파일의 상태를 반환한다.
+func (m *Manager) BookeinkStatus() Status {
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+
+	apkPath := m.BookeinkAPKPath()
+	st, err := os.Stat(apkPath)
+	if err != nil || st.IsDir() {
+		return Status{
+			Exists:     false,
+			FileName:   "bookeink.apk",
+			FilePath:   apkPath,
+			IsBuilding: m.isBuilding,
+			LastError:  m.lastError,
+		}
+	}
+
+	loc, _ := time.LoadLocation("Asia/Seoul")
+	if loc == nil {
+		loc = time.Local
+	}
+	modTime := st.ModTime().In(loc)
+
+	return Status{
+		Exists:           true,
+		FileName:         "bookeink.apk",
+		FilePath:         apkPath,
+		SizeBytes:        st.Size(),
+		SizeFormatted:    formatBytes(st.Size()),
+		ModTime:          modTime,
+		ModTimeFormatted: modTime.Format("2006-01-02 15:04:05"),
+		IsBuilding:       m.isBuilding,
+		LastError:        m.lastError,
+	}
+}
+
 // IsBuilding은 현재 빌드가 진행 중인지 확인한다.
 func (m *Manager) IsBuilding() bool {
 	m.mu.RLock()
@@ -198,6 +257,51 @@ func (m *Manager) Build(ctx context.Context) error {
 
 	m.broadcastLog("=== APK 빌드 성공 완료! ===")
 	status := m.Status()
+	m.broadcastLog(fmt.Sprintf("생성 파일: %s (%s)", status.FileName, status.SizeFormatted))
+	return nil
+}
+
+// BuildBookeink는 Bookeink 앱의 gradle APK 빌드를 수행한다.
+func (m *Manager) BuildBookeink(ctx context.Context) error {
+	m.mu.Lock()
+	if m.isBuilding {
+		m.mu.Unlock()
+		return fmt.Errorf("이미 빌드가 진행 중입니다")
+	}
+	m.isBuilding = true
+	m.lastError = ""
+	m.lastLog = nil
+	m.mu.Unlock()
+
+	defer func() {
+		m.mu.Lock()
+		m.isBuilding = false
+		m.mu.Unlock()
+	}()
+
+	m.broadcastLog("=== [Bookeink] Gradle APK 빌드 시작 (assembleDebug) ===")
+	bookeinkDir := m.BookeinkDir()
+	var gradleBin string
+	if runtime.GOOS == "windows" {
+		gradleBin = filepath.Join(bookeinkDir, "gradlew.bat")
+	} else {
+		gradleBin = filepath.Join(bookeinkDir, "gradlew")
+		_ = os.Chmod(gradleBin, 0755)
+	}
+
+	gradleCmd := exec.CommandContext(ctx, gradleBin, "assembleDebug", "--no-daemon")
+	gradleCmd.Dir = bookeinkDir
+	if err := m.runCommandWithPipe(gradleCmd); err != nil {
+		errStr := fmt.Sprintf("Bookeink APK 빌드 실패: %v", err)
+		m.broadcastLog(errStr)
+		m.mu.Lock()
+		m.lastError = errStr
+		m.mu.Unlock()
+		return err
+	}
+
+	m.broadcastLog("=== Bookeink APK 빌드 성공 완료! ===")
+	status := m.BookeinkStatus()
 	m.broadcastLog(fmt.Sprintf("생성 파일: %s (%s)", status.FileName, status.SizeFormatted))
 	return nil
 }

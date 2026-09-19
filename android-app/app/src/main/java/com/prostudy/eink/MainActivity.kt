@@ -16,8 +16,8 @@ import com.prostudy.eink.data.ContentRepository
 import com.prostudy.eink.data.model.ProjectDetail
 import com.prostudy.eink.data.model.ProjectSummary
 import com.prostudy.eink.ui.catalog.ProjectAdapter
-import com.prostudy.eink.ui.ink.InkingOverlayView
-import com.prostudy.eink.ui.tracing.CodeTraceView
+import com.prostudy.eink.ui.code.CodeViewer
+import com.prostudy.eink.util.EinkHelper
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     // 컨테이너들
     private lateinit var containerCatalog: LinearLayout
     private lateinit var containerDetail: LinearLayout
-    private lateinit var containerTracing: LinearLayout
+    private lateinit var containerCode: LinearLayout
 
     // 카탈로그 뷰
     private lateinit var btnTabC: Button
@@ -37,25 +37,20 @@ class MainActivity : AppCompatActivity() {
     // 상세 뷰
     private lateinit var btnDetailBack: Button
     private lateinit var tvDetailTitle: TextView
-    private lateinit var btnPenToggle: Button
-    private lateinit var btnClearDetailInk: Button
-    private lateinit var btnViewTrace: Button
+    private lateinit var btnViewCode: Button
     private lateinit var tvReaderBody: TextView
-    private lateinit var inkingOverlay: InkingOverlayView
 
-    // 따라쓰기 뷰
-    private lateinit var btnTraceBack: Button
-    private lateinit var tvTraceTitle: TextView
-    private lateinit var btnTraceToggleGhost: Button
-    private lateinit var btnTraceEraser: Button
-    private lateinit var btnTraceClear: Button
-    private lateinit var codeTraceView: CodeTraceView
+    // 소스 코드 뷰
+    private lateinit var btnCodeBack: Button
+    private lateinit var tvCodeTitle: TextView
+    private lateinit var codeViewer: CodeViewer
 
     private var currentLang = "c"
     private var currentProject: ProjectDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        EinkHelper.applyActivityOptimizations(this)
         setContentView(R.layout.activity_main)
 
         repository = ContentRepository(this)
@@ -70,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindViews() {
         containerCatalog = findViewById(R.id.container_catalog)
         containerDetail = findViewById(R.id.container_detail)
-        containerTracing = findViewById(R.id.container_tracing)
+        containerCode = findViewById(R.id.container_code)
 
         btnTabC = findViewById(R.id.btn_tab_c)
         btnTabGo = findViewById(R.id.btn_tab_go)
@@ -78,18 +73,12 @@ class MainActivity : AppCompatActivity() {
 
         btnDetailBack = findViewById(R.id.btn_detail_back)
         tvDetailTitle = findViewById(R.id.tv_detail_title)
-        btnPenToggle = findViewById(R.id.btn_pen_toggle)
-        btnClearDetailInk = findViewById(R.id.btn_clear_detail_ink)
-        btnViewTrace = findViewById(R.id.btn_view_trace)
+        btnViewCode = findViewById(R.id.btn_view_code)
         tvReaderBody = findViewById(R.id.tv_reader_body)
-        inkingOverlay = findViewById(R.id.inking_overlay)
 
-        btnTraceBack = findViewById(R.id.btn_trace_back)
-        tvTraceTitle = findViewById(R.id.tv_trace_title)
-        btnTraceToggleGhost = findViewById(R.id.btn_trace_toggle_ghost)
-        btnTraceEraser = findViewById(R.id.btn_trace_eraser)
-        btnTraceClear = findViewById(R.id.btn_trace_clear)
-        codeTraceView = findViewById(R.id.code_trace_view)
+        btnCodeBack = findViewById(R.id.btn_code_back)
+        tvCodeTitle = findViewById(R.id.tv_code_title)
+        codeViewer = findViewById(R.id.code_viewer)
 
         rvProjects.layoutManager = LinearLayoutManager(this)
         adapter = ProjectAdapter { item ->
@@ -132,44 +121,14 @@ class MainActivity : AppCompatActivity() {
             showCatalog()
         }
 
-        // 상세 펜/지우개 전환
-        btnPenToggle.setOnClickListener {
-            inkingOverlay.isEraserMode = !inkingOverlay.isEraserMode
-            btnPenToggle.text = if (inkingOverlay.isEraserMode) "지우개" else "펜"
+        // 소스 코드 화면 열기
+        btnViewCode.setOnClickListener {
+            openCodeMode()
         }
 
-        // 상세 필기 전체 지우기
-        btnClearDetailInk.setOnClickListener {
-            inkingOverlay.clearAll()
-        }
-
-        // 따라쓰기 화면 열기
-        btnViewTrace.setOnClickListener {
-            openTraceMode()
-        }
-
-        // 따라쓰기 뒤로가기
-        btnTraceBack.setOnClickListener {
-            containerTracing.visibility = View.GONE
-            containerDetail.visibility = View.VISIBLE
-        }
-
-        // 따라쓰기 원문 토글
-        btnTraceToggleGhost.setOnClickListener {
-            codeTraceView.showGhostText = !codeTraceView.showGhostText
-            btnTraceToggleGhost.text = if (codeTraceView.showGhostText) "원문 토글 (ON)" else "원문 토글 (OFF)"
-        }
-
-        // 따라쓰기 지우개 토글
-        btnTraceEraser.setOnClickListener {
-            codeTraceView.isEraserMode = !codeTraceView.isEraserMode
-            btnTraceEraser.text = if (codeTraceView.isEraserMode) "펜으로 전환" else "지우개"
-        }
-
-        // 따라쓰기 전체 삭제
-        btnTraceClear.setOnClickListener {
-            codeTraceView.strokeManager.clear()
-            codeTraceView.invalidate()
+        // 소스 코드 뒤로가기
+        btnCodeBack.setOnClickListener {
+            closeCodeMode()
         }
     }
 
@@ -184,25 +143,18 @@ class MainActivity : AppCompatActivity() {
 
         containerCatalog.visibility = View.GONE
         containerDetail.visibility = View.VISIBLE
-        containerTracing.visibility = View.GONE
+        containerCode.visibility = View.GONE
 
         tvDetailTitle.text = "[${detail.lang.uppercase()}] ${detail.title}"
         tvReaderBody.text = detail.readme
         tvReaderBody.typeface = android.graphics.Typeface.DEFAULT
-
-        // 이전 세션 필기 복원
-        inkingOverlay.strokeManager.loadFromFile("detail_${detail.id}")
-        inkingOverlay.invalidate()
     }
 
-    private fun openTraceMode() {
+    private fun openCodeMode() {
         val p = currentProject ?: return
         containerDetail.visibility = View.GONE
-        containerTracing.visibility = View.VISIBLE
+        containerCode.visibility = View.VISIBLE
 
-        // 1. 완성 소스 코드 (solutionCode -> starterCode)
-        // 2. 가이드 내 코드 블록
-        // 3. 폴백
         var rawCode = p.solutionCode[p.entry]
             ?: p.solutionCode.entries.find { it.key.endsWith(p.entry) || p.entry.endsWith(it.key) }?.value
             ?: p.starterCode[p.entry]
@@ -216,24 +168,21 @@ class MainActivity : AppCompatActivity() {
             rawCode = if (codeBlocks.isNotEmpty()) {
                 codeBlocks.joinToString("\n\n// ----------------------------------------\n\n")
             } else {
-                "// ${p.title} (${p.entry})\n// 따라쓸 코드가 없습니다."
+                "// ${p.title} (${p.entry})\n// 표시할 코드가 없습니다."
             }
         }
 
-        // 탭(\t) 문자를 공백 4개로 변환 (Canvas.drawText에서 탭 문자가 뭉개지거나 안 보이는 문제 방지)
+        // 탭(\t) 문자를 공백 4개로 변환
         val lines = rawCode.lines().map { line ->
             line.replace("\t", "    ")
         }
-        tvTraceTitle.text = "따라쓰기: ${p.title} (${lines.size}줄)"
-        codeTraceView.codeLines = lines
-        codeTraceView.showGhostText = true
-        btnTraceToggleGhost.text = "원문 토글 (ON)"
-        codeTraceView.isEraserMode = false
-        btnTraceEraser.text = "지우개"
+        tvCodeTitle.text = "소스 코드: ${p.title} (${lines.size}줄)"
+        codeViewer.codeLines = lines
+    }
 
-        // 따라쓰기 필기 복원
-        codeTraceView.strokeManager.loadFromFile("trace_${p.id}")
-        codeTraceView.invalidate()
+    private fun closeCodeMode() {
+        containerCode.visibility = View.GONE
+        containerDetail.visibility = View.VISIBLE
     }
 
     private fun extractCodeBlocks(markdown: String): List<String> {
@@ -250,23 +199,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCatalog() {
-        // 필기 저장
-        currentProject?.let { p ->
-            inkingOverlay.strokeManager.saveToFile("detail_${p.id}")
-            codeTraceView.strokeManager.saveToFile("trace_${p.id}")
-        }
-
         containerCatalog.visibility = View.VISIBLE
         containerDetail.visibility = View.GONE
-        containerTracing.visibility = View.GONE
+        containerCode.visibility = View.GONE
     }
 
     private fun setupBackNavigation() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (containerTracing.visibility == View.VISIBLE) {
-                    containerTracing.visibility = View.GONE
-                    containerDetail.visibility = View.VISIBLE
+                if (containerCode.visibility == View.VISIBLE) {
+                    closeCodeMode()
                 } else if (containerDetail.visibility == View.VISIBLE) {
                     showCatalog()
                 } else {
@@ -286,13 +228,5 @@ class MainActivity : AppCompatActivity() {
             root.setBackgroundColor(Color.WHITE)
             root.invalidate()
         }, 120)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        currentProject?.let { p ->
-            inkingOverlay.strokeManager.saveToFile("detail_${p.id}")
-            codeTraceView.strokeManager.saveToFile("trace_${p.id}")
-        }
     }
 }
