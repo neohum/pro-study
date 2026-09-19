@@ -11,8 +11,8 @@ android {
         applicationId = "com.prostudy.eink"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 8
+        versionName = "1.0.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,6 +46,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    packaging {
+        jniLibs.pickFirsts += "lib/*/libc++_shared.so"
     }
 
     testOptions {

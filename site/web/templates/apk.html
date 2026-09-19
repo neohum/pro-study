@@ -10,56 +10,103 @@
 <div class="apk-container">
   <!-- 1. 다운로드 및 QR 연결 카드 -->
   <div class="apk-grid">
-    <!-- 좌측: 다운로드 및 빌드 액션 -->
-    <div class="apk-card action-card">
-      <div class="card-header">
-        <h2><i class="icon-download"></i> APK 다운로드</h2>
-        <span id="apkBadge" class="badge {{if .Status.Exists}}badge-passed{{else}}badge-in-progress{{end}}">
-          {{if .Status.IsBuilding}}빌드 진행 중{{else if .Status.Exists}}설치 파일 준비됨{{else}}빌드 필요{{end}}
-        </span>
-      </div>
-
-      <div class="apk-meta-box">
-        <div class="meta-row">
-          <span class="meta-label">패키지 파일</span>
-          <span class="meta-val code-val">pro-study.apk</span>
+    <!-- 좌측: 다운로드 및 빌드 액션 컬럼 -->
+    <div class="apk-col" style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <!-- 1. pro-study 전용 앱 -->
+      <div class="apk-card action-card">
+        <div class="card-header">
+          <h2><i class="icon-download"></i> pro-study 학습 앱</h2>
+          <span id="apkBadge" class="badge {{if .Status.Exists}}badge-passed{{else}}badge-in-progress{{end}}">
+            {{if .Status.IsBuilding}}빌드 진행 중{{else if .Status.Exists}}설치 파일 준비됨{{else}}빌드 필요{{end}}
+          </span>
         </div>
-        <div class="meta-row">
-          <span class="meta-label">파일 크기</span>
-          <span class="meta-val" id="apkSize">{{if .Status.Exists}}{{.Status.SizeFormatted}}{{else}}-{{end}}</span>
+
+        <div class="apk-meta-box">
+          <div class="meta-row">
+            <span class="meta-label">패키지 파일</span>
+            <span class="meta-val code-val">pro-study.apk</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">파일 크기</span>
+            <span class="meta-val" id="apkSize">{{if .Status.Exists}}{{.Status.SizeFormatted}}{{else}}-{{end}}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">최근 빌드 시각</span>
+            <span class="meta-val" id="apkTime">{{if .Status.Exists}}{{.Status.ModTimeFormatted}}{{else}}-{{end}}</span>
+          </div>
         </div>
-        <div class="meta-row">
-          <span class="meta-label">최근 빌드 시각</span>
-          <span class="meta-val" id="apkTime">{{if .Status.Exists}}{{.Status.ModTimeFormatted}}{{else}}-{{end}}</span>
+
+        <div class="action-buttons">
+          <a id="btnDownload" href="/api/apk/download" class="btn btn-primary btn-large {{if not .Status.Exists}}disabled{{end}}" {{if not .Status.Exists}}aria-disabled="true" tabindex="-1"{{end}}>
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="btnDownloadText">{{if .Status.Exists}}pro-study APK 다운로드 ({{.Status.SizeFormatted}}){{else}}APK 빌드 필요{{end}}</span>
+          </a>
+
+          <button id="btnBuild" class="btn btn-secondary" type="button" {{if .Status.IsBuilding}}disabled{{end}}>
+            <svg class="btn-icon spin-target" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span>pro-study APK 다시 빌드</span>
+          </button>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <a id="btnDownload" href="/api/apk/download" class="btn btn-primary btn-large {{if not .Status.Exists}}disabled{{end}}" {{if not .Status.Exists}}aria-disabled="true" tabindex="-1"{{end}}>
-          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span id="btnDownloadText">{{if .Status.Exists}}APK 다운로드 ({{.Status.SizeFormatted}}){{else}}APK 빌드 필요{{end}}</span>
-        </a>
+      <!-- 2. Bookeink 전자책 필기 도구 -->
+      <div class="apk-card action-card">
+        <div class="card-header">
+          <h2><i class="icon-edit"></i> 북잉크 (Bookeink 필기 오버레이)</h2>
+          <span id="bookeinkBadge" class="badge {{if .BookeinkStatus.Exists}}badge-passed{{else}}badge-in-progress{{end}}">
+            {{if .BookeinkStatus.IsBuilding}}빌드 진행 중{{else if .BookeinkStatus.Exists}}설치 파일 준비됨{{else}}빌드 필요{{end}}
+          </span>
+        </div>
 
-        <button id="btnBuild" class="btn btn-secondary" type="button" {{if .Status.IsBuilding}}disabled{{end}}>
-          <svg class="btn-icon spin-target" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 4 23 10 17 10"></polyline>
-            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-          </svg>
-          <span>최신 소스로 APK 다시 빌드</span>
-        </button>
-      </div>
+        <div class="apk-meta-box">
+          <div class="meta-row">
+            <span class="meta-label">패키지 파일</span>
+            <span class="meta-val code-val">bookeink.apk</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">파일 크기</span>
+            <span class="meta-val" id="bookeinkSize">{{if .BookeinkStatus.Exists}}{{.BookeinkStatus.SizeFormatted}}{{else}}-{{end}}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">최근 빌드 시각</span>
+            <span class="meta-val" id="bookeinkTime">{{if .BookeinkStatus.Exists}}{{.BookeinkStatus.ModTimeFormatted}}{{else}}-{{end}}</span>
+          </div>
+        </div>
 
-      {{if not .AllowLAN}}
-      <div class="lan-warning-box">
-        <strong>💡 내부 네트워크(Wi-Fi) 기기 접속 팁</strong>
-        <p>외부 디바이스(태블릿/스마트폰)에서 직접 이 페이지에 접속하려면 서버 실행 시 <code>-lan</code> 옵션을 사용하세요:<br>
-        <code>go run ./site -lan</code> 또는 <code>pwsh scripts/serve-lan.ps1</code></p>
+        <div class="action-buttons">
+          <a id="btnDownloadBookeink" href="/api/apk/download/bookeink" class="btn btn-primary btn-large {{if not .BookeinkStatus.Exists}}disabled{{end}}" {{if not .BookeinkStatus.Exists}}aria-disabled="true" tabindex="-1"{{end}}>
+            <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="btnDownloadBookeinkText">{{if .BookeinkStatus.Exists}}북잉크 APK 다운로드 ({{.BookeinkStatus.SizeFormatted}}){{else}}APK 빌드 필요{{end}}</span>
+          </a>
+
+          <button id="btnBuildBookeink" class="btn btn-secondary" type="button" {{if .BookeinkStatus.IsBuilding}}disabled{{end}}>
+            <svg class="btn-icon spin-target" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            <span>북잉크 APK 다시 빌드</span>
+          </button>
+        </div>
+
+        {{if not .AllowLAN}}
+        <div class="lan-warning-box" style="margin-top: 1rem;">
+          <strong>💡 내부 네트워크(Wi-Fi) 기기 접속 팁</strong>
+          <p>외부 디바이스(태블릿/스마트폰)에서 직접 이 페이지에 접속하려면 서버 실행 시 <code>-lan</code> 옵션을 사용하세요:<br>
+          <code>go run ./site -lan</code></p>
+        </div>
+        {{end}}
       </div>
-      {{end}}
     </div>
 
     <!-- 우측: 모바일 기기 QR 코드 및 내부망 접속 안내 -->
@@ -173,6 +220,14 @@
   const apkBadge = document.getElementById('apkBadge');
   const apkSize = document.getElementById('apkSize');
   const apkTime = document.getElementById('apkTime');
+
+  const btnBuildBookeink = document.getElementById('btnBuildBookeink');
+  const btnDownloadBookeink = document.getElementById('btnDownloadBookeink');
+  const btnDownloadBookeinkText = document.getElementById('btnDownloadBookeinkText');
+  const bookeinkBadge = document.getElementById('bookeinkBadge');
+  const bookeinkSize = document.getElementById('bookeinkSize');
+  const bookeinkTime = document.getElementById('bookeinkTime');
+
   const buildSection = document.getElementById('buildConsoleSection');
   const buildOutput = document.getElementById('buildOutput');
   const buildSpinner = document.getElementById('buildSpinner');
@@ -204,31 +259,46 @@
     });
   }
 
-  // 빌드 트리거
+  function startBuild(app, btn) {
+    if (btn && btn.disabled) return;
+    if (btnBuild) btnBuild.disabled = true;
+    if (btnBuildBookeink) btnBuildBookeink.disabled = true;
+
+    buildSection.style.display = 'block';
+    buildSpinner.classList.add('active');
+    buildStatusText.textContent = (app === 'bookeink' ? '북잉크' : 'pro-study') + ' 빌드 준비 중…';
+    buildOutput.textContent = '>>> ' + (app === 'bookeink' ? '북잉크' : 'pro-study') + ' APK 빌드 시작 요청을 서버로 전송합니다...\n';
+
+    const url = app === 'bookeink' ? '/api/apk/build?app=bookeink' : '/api/apk/build';
+    fetch(url, { method: 'POST' })
+      .then(function(res) {
+        if (!res.ok) {
+          return res.json().then(function(d) { throw new Error(d.error || '빌드 시작 실패'); });
+        }
+        return res.json();
+      })
+      .then(function(data) {
+        buildStatusText.textContent = (app === 'bookeink' ? '북잉크' : 'pro-study') + ' 빌드 진행 중…';
+      })
+      .catch(function(err) {
+        buildOutput.textContent += '❌ 에러: ' + err.message + '\n';
+        buildStatusText.textContent = '빌드 실패';
+        if (btnBuild) btnBuild.disabled = false;
+        if (btnBuildBookeink) btnBuildBookeink.disabled = false;
+      });
+  }
+
+  // pro-study 빌드 트리거
   if (btnBuild) {
     btnBuild.addEventListener('click', function() {
-      if (btnBuild.disabled) return;
-      btnBuild.disabled = true;
-      buildSection.style.display = 'block';
-      buildSpinner.classList.add('active');
-      buildStatusText.textContent = '빌드 준비 중…';
-      buildOutput.textContent = '>>> APK 빌드 시작 요청을 서버로 전송합니다...\n';
+      startBuild('prostudy', btnBuild);
+    });
+  }
 
-      fetch('/api/apk/build', { method: 'POST' })
-        .then(function(res) {
-          if (!res.ok) {
-            return res.json().then(function(d) { throw new Error(d.error || '빌드 시작 실패'); });
-          }
-          return res.json();
-        })
-        .then(function(data) {
-          buildStatusText.textContent = '빌드 진행 중…';
-        })
-        .catch(function(err) {
-          buildOutput.textContent += '❌ 에러: ' + err.message + '\n';
-          buildStatusText.textContent = '빌드 실패';
-          btnBuild.disabled = false;
-        });
+  // bookeink 빌드 트리거
+  if (btnBuildBookeink) {
+    btnBuildBookeink.addEventListener('click', function() {
+      startBuild('bookeink', btnBuildBookeink);
     });
   }
 
@@ -254,11 +324,13 @@
             buildSection.style.display = 'block';
             buildSpinner.classList.add('active');
             buildStatusText.textContent = '빌드 진행 중…';
-            btnBuild.disabled = true;
+            if (btnBuild) btnBuild.disabled = true;
+            if (btnBuildBookeink) btnBuildBookeink.disabled = true;
           } else {
             buildSpinner.classList.remove('active');
             buildStatusText.textContent = '빌드 대기 중';
-            btnBuild.disabled = false;
+            if (btnBuild) btnBuild.disabled = false;
+            if (btnBuildBookeink) btnBuildBookeink.disabled = false;
             fetchStatus();
           }
         }
@@ -279,28 +351,30 @@
   }
 
   function updateStatus(st) {
-    if (st.isBuilding) {
+    // 1. pro-study 상태 갱신
+    const pSt = st.prostudy || st;
+    if (pSt.isBuilding) {
       apkBadge.className = 'badge badge-in-progress';
       apkBadge.textContent = '빌드 진행 중';
-      btnBuild.disabled = true;
-    } else if (st.exists) {
+      if (btnBuild) btnBuild.disabled = true;
+    } else if (pSt.exists) {
       apkBadge.className = 'badge badge-passed';
       apkBadge.textContent = '설치 파일 준비됨';
-      btnBuild.disabled = false;
+      if (btnBuild) btnBuild.disabled = false;
       if (btnDownload) {
         btnDownload.classList.remove('disabled');
         btnDownload.removeAttribute('aria-disabled');
         btnDownload.removeAttribute('tabindex');
       }
       if (btnDownloadText) {
-        btnDownloadText.textContent = 'APK 다운로드 (' + st.sizeFormatted + ')';
+        btnDownloadText.textContent = 'pro-study APK 다운로드 (' + pSt.sizeFormatted + ')';
       }
-      if (apkSize) apkSize.textContent = st.sizeFormatted;
-      if (apkTime) apkTime.textContent = st.modTimeFormatted;
+      if (apkSize) apkSize.textContent = pSt.sizeFormatted;
+      if (apkTime) apkTime.textContent = pSt.modTimeFormatted;
     } else {
       apkBadge.className = 'badge badge-in-progress';
       apkBadge.textContent = '빌드 필요';
-      btnBuild.disabled = false;
+      if (btnBuild) btnBuild.disabled = false;
       if (btnDownload) {
         btnDownload.classList.add('disabled');
         btnDownload.setAttribute('aria-disabled', 'true');
@@ -309,6 +383,42 @@
       if (btnDownloadText) btnDownloadText.textContent = 'APK 빌드 필요';
       if (apkSize) apkSize.textContent = '-';
       if (apkTime) apkTime.textContent = '-';
+    }
+
+    // 2. bookeink 상태 갱신
+    const bSt = st.bookeink;
+    if (bSt && bookeinkBadge) {
+      if (bSt.isBuilding) {
+        bookeinkBadge.className = 'badge badge-in-progress';
+        bookeinkBadge.textContent = '빌드 진행 중';
+        if (btnBuildBookeink) btnBuildBookeink.disabled = true;
+      } else if (bSt.exists) {
+        bookeinkBadge.className = 'badge badge-passed';
+        bookeinkBadge.textContent = '설치 파일 준비됨';
+        if (btnBuildBookeink) btnBuildBookeink.disabled = false;
+        if (btnDownloadBookeink) {
+          btnDownloadBookeink.classList.remove('disabled');
+          btnDownloadBookeink.removeAttribute('aria-disabled');
+          btnDownloadBookeink.removeAttribute('tabindex');
+        }
+        if (btnDownloadBookeinkText) {
+          btnDownloadBookeinkText.textContent = '북잉크 APK 다운로드 (' + bSt.sizeFormatted + ')';
+        }
+        if (bookeinkSize) bookeinkSize.textContent = bSt.sizeFormatted;
+        if (bookeinkTime) bookeinkTime.textContent = bSt.modTimeFormatted;
+      } else {
+        bookeinkBadge.className = 'badge badge-in-progress';
+        bookeinkBadge.textContent = '빌드 필요';
+        if (btnBuildBookeink) btnBuildBookeink.disabled = false;
+        if (btnDownloadBookeink) {
+          btnDownloadBookeink.classList.add('disabled');
+          btnDownloadBookeink.setAttribute('aria-disabled', 'true');
+          btnDownloadBookeink.setAttribute('tabindex', '-1');
+        }
+        if (btnDownloadBookeinkText) btnDownloadBookeinkText.textContent = 'APK 빌드 필요';
+        if (bookeinkSize) bookeinkSize.textContent = '-';
+        if (bookeinkTime) bookeinkTime.textContent = '-';
+      }
     }
   }
 

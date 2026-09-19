@@ -243,6 +243,7 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /apk", s.handleAPK)
 	mux.HandleFunc("GET /api/apk/status", s.handleAPKStatus)
 	mux.HandleFunc("GET /api/apk/download", s.handleAPKDownload)
+	mux.HandleFunc("GET /api/apk/download/bookeink", s.handleBookeinkDownload)
 	mux.HandleFunc("GET /api/apk/qr", s.handleAPKQR)
 	mux.HandleFunc("POST /api/apk/build", s.handleAPKBuild)
 	mux.HandleFunc("GET /api/apk/events", s.handleAPKEvents)
@@ -390,6 +391,7 @@ func (s *server) handleDoctor(w http.ResponseWriter, r *http.Request) {
 
 func (s *server) handleAPK(w http.ResponseWriter, r *http.Request) {
 	st := s.apkMgr.Status()
+	bSt := s.apkMgr.BookeinkStatus()
 
 	host := r.Host
 	if h, _, err := net.SplitHostPort(host); err == nil {
@@ -402,32 +404,66 @@ func (s *server) handleAPK(w http.ResponseWriter, r *http.Request) {
 
 	apkURL := fmt.Sprintf("http://%s/apk", host)
 	downloadURL := fmt.Sprintf("http://%s/api/apk/download", host)
+	bookeinkDownloadURL := fmt.Sprintf("http://%s/api/apk/download/bookeink", host)
 	qrURL := fmt.Sprintf("/api/apk/qr?text=%s", apkURL)
 
 	s.render(w, "apk", map[string]any{
-		"Title":       "Android E-ink 앱 (APK) 다운로드",
-		"Status":      st,
-		"LANInfo":     s.lanInfo,
-		"Port":        s.port,
-		"AllowLAN":    s.allowLAN,
-		"APKURL":      apkURL,
-		"DownloadURL": downloadURL,
-		"QRURL":       qrURL,
+		"Title":               "Android E-ink 앱 (APK) 다운로드",
+		"Status":              st,
+		"BookeinkStatus":      bSt,
+		"LANInfo":             s.lanInfo,
+		"Port":                s.port,
+		"AllowLAN":            s.allowLAN,
+		"APKURL":              apkURL,
+		"DownloadURL":         downloadURL,
+		"BookeinkDownloadURL": bookeinkDownloadURL,
+		"QRURL":               qrURL,
 	})
 }
 
 func (s *server) handleAPKStatus(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, 200, s.apkMgr.Status())
+	app := r.URL.Query().Get("app")
+	if app == "bookeink" {
+		writeJSON(w, 200, s.apkMgr.BookeinkStatus())
+		return
+	}
+	writeJSON(w, 200, map[string]any{
+		"prostudy":         s.apkMgr.Status(),
+		"bookeink":         s.apkMgr.BookeinkStatus(),
+		"exists":           s.apkMgr.Status().Exists,
+		"fileName":         s.apkMgr.Status().FileName,
+		"sizeFormatted":    s.apkMgr.Status().SizeFormatted,
+		"modTimeFormatted": s.apkMgr.Status().ModTimeFormatted,
+		"isBuilding":       s.apkMgr.IsBuilding(),
+		"lastError":        s.apkMgr.Status().LastError,
+	})
 }
 
 func (s *server) handleAPKDownload(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Query().Get("app") == "bookeink" {
+		s.handleBookeinkDownload(w, r)
+		return
+	}
 	apkPath := s.apkMgr.APKPath()
 	st, err := os.Stat(apkPath)
 	if err != nil || st.IsDir() {
-		jsonError(w, 404, "APK 파일이 아직 빌드되지 않았습니다. 웹 페이지에서 빌드를 먼저 실행해주세요.")
+		jsonError(w, 404, "pro-study APK 파일이 아직 빌드되지 않았습니다. 웹 페이지에서 빌드를 먼저 실행해주세요.")
 		return
 	}
 	w.Header().Set("Content-Disposition", "attachment; filename=\"pro-study.apk\"")
+	w.Header().Set("Content-Type", "application/vnd.android.package-archive")
+	w.Header().Set("Content-Length", fmt.Sprintf("%d", st.Size()))
+	http.ServeFile(w, r, apkPath)
+}
+
+func (s *server) handleBookeinkDownload(w http.ResponseWriter, r *http.Request) {
+	apkPath := s.apkMgr.BookeinkAPKPath()
+	st, err := os.Stat(apkPath)
+	if err != nil || st.IsDir() {
+		jsonError(w, 404, "Bookeink APK 파일이 아직 빌드되지 않았습니다. Bookeink를 먼저 빌드해주세요.")
+		return
+	}
+	w.Header().Set("Content-Disposition", "attachment; filename=\"bookeink.apk\"")
 	w.Header().Set("Content-Type", "application/vnd.android.package-archive")
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", st.Size()))
 	http.ServeFile(w, r, apkPath)
@@ -461,14 +497,21 @@ func (s *server) handleAPKBuild(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, 409, "이미 APK 빌드가 진행 중입니다.")
 		return
 	}
+	app := r.URL.Query().Get("app")
 	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 		defer cancel()
-		if err := s.apkMgr.Build(ctx); err != nil {
-			log.Printf("APK 빌드 에러: %v", err)
+		if app == "bookeink" {
+			if err := s.apkMgr.BuildBookeink(ctx); err != nil {
+				log.Printf("Bookeink APK 빌드 에러: %v", err)
+			}
+		} else {
+			if err := s.apkMgr.Build(ctx); err != nil {
+				log.Printf("pro-study APK 빌드 에러: %v", err)
+			}
 		}
 	}()
-	writeJSON(w, 202, map[string]string{"status": "building"})
+	writeJSON(w, 202, map[string]string{"status": "building", "app": app})
 }
 
 func (s *server) handleAPKEvents(w http.ResponseWriter, r *http.Request) {
