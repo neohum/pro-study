@@ -1,0 +1,16 @@
+{
+  "id": "concurrency-select",
+  "chapter": "concurrency",
+  "chapterTitle": "동시성 (Concurrency)",
+  "order": 19,
+  "title": "Select Statement",
+  "titleKo": "select 다중 채널 대기",
+  "summaryKo": "select문은 고루틴이 여러 통신 연산을 대기할 수 있게 합니다. 케이스 중 하나가 준비될 때까지 블록됩니다.",
+  "entry": "select.go",
+  "concepts": [
+    "select",
+    "채널 이벤트 멀티플렉싱",
+    "quit 채널"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc fibonacci(c, quit chan int) {\n\tx, y := 0, 1\n\tfor {\n\t\tselect {\n\t\tcase c <- x:\n\t\t\tx, y = y, x+y\n\t\tcase <-quit:\n\t\t\tfmt.Println(\"종료 신호 수신\")\n\t\t\treturn\n\t\t}\n\t}\n}\n\nfunc main() {\n\tc := make(chan int)\n\tquit := make(chan int)\n\n\tgo func() {\n\t\tfor i := 0; i < 8; i++ {\n\t\t\tfmt.Println(<-c)\n\t\t}\n\t\tquit <- 0\n\t}()\n\n\tfibonacci(c, quit)\n}\n"
+}

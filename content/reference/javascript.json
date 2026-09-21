@@ -1,0 +1,198 @@
+{
+  "lang": "javascript",
+  "name": "JavaScript",
+  "version": "ECMAScript 2024+",
+  "overview": "JavaScript는 동적 일급 함수, 프로토타입 기반 객체 지향, 이벤트 루프 기반의 논블로킹 I/O를 지원하는 웹 브라우저 및 Node.js 생태계의 핵심 언어입니다.",
+  "grammar": [
+    {
+      "id": "js-vars-scopes",
+      "title": "변수 선언과 스코프 (const, let, 블록 스코프)",
+      "category": "variables",
+      "summary": "var의 호이스팅 부작용을 피하고 블록 스코프를 제공하는 const(재할당 불가)와 let을 사용합니다.",
+      "syntax": "const PI = 3.141592;\nlet counter = 0;",
+      "example": "const user = { name: 'Kim' };\nuser.name = 'Lee'; // 내부 프로퍼티 변경 가능\nconsole.log(user.name);"
+    },
+    {
+      "id": "js-destructuring-spread",
+      "title": "구조 분해 할당과 스프레드 연산자 (...)",
+      "category": "data_structures",
+      "summary": "배열이나 객체의 속성을 분해하여 개별 변수에 할당하고, ... 연산자로 컬렉션을 복사하거나 병합합니다.",
+      "syntax": "const { id, name } = user;\nconst combined = [...arr1, ...arr2];",
+      "example": "const options = { host: 'localhost', port: 8080 };\nconst config = { ...options, secure: true };\nconsole.log(config.port);"
+    },
+    {
+      "id": "js-arrow-functions",
+      "title": "화살표 함수(Arrow Function)와 this 바인딩",
+      "category": "functions",
+      "summary": "간결한 문법을 제공하며, 상위 렉시컬 스코프의 this를 그대로 유지(Lexical this)합니다.",
+      "syntax": "const add = (a, b) => a + b;\nconst square = x => x * x;",
+      "example": "const multiply = (a, b) => a * b;\nconsole.log(multiply(3, 4)); // 12"
+    },
+    {
+      "id": "js-classes-modules",
+      "title": "클래스와 ES 모듈 (import / export)",
+      "category": "modules",
+      "summary": "class, constructor, extends 문법으로 객체 지향 상속을 지원하며 import/export로 모듈을 분할합니다.",
+      "syntax": "export class Animal { constructor(name) { this.name = name; } }\nimport { Animal } from './animal.js';",
+      "example": "class Animal {\n    constructor(name) {\n        this.name = name;\n    }\n    speak() {\n        return `${this.name} makes a noise.`;\n    }\n}\nconst dog = new Animal('Maltese');\nconsole.log(dog.speak());"
+    },
+    {
+      "id": "js-optional-nullish",
+      "title": "옵셔널 체이닝(?.)과 널 병합 연산자(??)",
+      "category": "operators",
+      "summary": "null 또는 undefined일 때 에러 없이 안전하게 접근(?.)하고 기본값을 지정(??)합니다.",
+      "syntax": "const street = user?.address?.street ?? 'Unknown';",
+      "example": "const settings = { volume: 0 };\nconst vol = settings.volume ?? 50; // 0이 유지됨 (||와 달리 0을 falsy로 보지 않음)\nconsole.log(vol);"
+    },
+    {
+      "id": "js-promises-async",
+      "title": "비동기 처리 (Promise와 async / await)",
+      "category": "concurrency",
+      "summary": "콜백 지옥을 해결하는 Promise와 동기식 코드처럼 읽히는 async/await로 비동기 작업을 처리합니다.",
+      "syntax": "async function loadData() {\n    const res = await fetch('/api');\n    return res.json();\n}",
+      "example": "async function run() {\n    const p = new Promise(resolve => setTimeout(() => resolve('ready'), 100));\n    const msg = await p;\n    console.log(msg);\n}\nrun();"
+    }
+  ],
+  "functions": [
+    {
+      "name": "console.log",
+      "signature": "console.log(...data: any[]): void",
+      "module": "global/console",
+      "description": "인자들을 웹 브라우저 콘솔이나 stdout 표준 출력에 기록합니다.",
+      "example": "console.log('Value:', 42);"
+    },
+    {
+      "name": "console.error",
+      "signature": "console.error(...data: any[]): void",
+      "module": "global/console",
+      "description": "에러 메시지를 stderr 표준 에러 스트림에 출력합니다.",
+      "example": "console.error('Failed to load resource');"
+    },
+    {
+      "name": "setTimeout",
+      "signature": "setTimeout(callback, delay, ...args): timeoutID",
+      "module": "global/timers",
+      "description": "지정된 밀리초(delay)가 경과한 후 콜백 함수를 1회 비동기로 실행합니다.",
+      "example": "setTimeout(() => console.log('delayed'), 1000);"
+    },
+    {
+      "name": "clearTimeout",
+      "signature": "clearTimeout(timeoutID): void",
+      "module": "global/timers",
+      "description": "이전에 setTimeout으로 예약된 타이머 실행을 취소합니다.",
+      "example": "clearTimeout(timerId);"
+    },
+    {
+      "name": "setInterval",
+      "signature": "setInterval(callback, delay, ...args): intervalID",
+      "module": "global/timers",
+      "description": "지정된 밀리초 주기마다 콜백 함수를 반복해서 실행합니다.",
+      "example": "const id = setInterval(() => tick(), 1000);"
+    },
+    {
+      "name": "Math.max",
+      "signature": "Math.max(...values: number[]): number",
+      "module": "global/Math",
+      "description": "전달된 인수 중 가장 큰 숫자를 반환합니다.",
+      "example": "const max = Math.max(10, 20, 5);"
+    },
+    {
+      "name": "Math.min",
+      "signature": "Math.min(...values: number[]): number",
+      "module": "global/Math",
+      "description": "전달된 인수 중 가장 작은 숫자를 반환합니다.",
+      "example": "const min = Math.min(10, 20, 5);"
+    },
+    {
+      "name": "Math.random",
+      "signature": "Math.random(): number",
+      "module": "global/Math",
+      "description": "0 이상 1 미만의 의사 난수(부동소수점)를 반환합니다.",
+      "example": "const r = Math.floor(Math.random() * 10);"
+    },
+    {
+      "name": "Array.isArray",
+      "signature": "Array.isArray(value: any): boolean",
+      "module": "global/Array",
+      "description": "전달된 값이 배열인지 여부를 정확히 판별합니다.",
+      "example": "if (Array.isArray(data)) { ... }"
+    },
+    {
+      "name": "Array.prototype.indexOf",
+      "signature": "indexOf(searchElement, fromIndex?): number",
+      "module": "global/Array",
+      "description": "배열에서 지정된 요소를 찾아 첫 번째 인덱스를 반환하며 없으면 -1을 반환합니다.",
+      "example": "const idx = [1, 2, 3].indexOf(2);"
+    },
+    {
+      "name": "Array.prototype.slice",
+      "signature": "slice(start?, end?): any[]",
+      "module": "global/Array",
+      "description": "배열의 일부분을 얕은 복사본으로 추출하여 새 배열로 반환합니다.",
+      "example": "const sub = arr.slice(1, 3);"
+    },
+    {
+      "name": "Array.prototype.splice",
+      "signature": "splice(start, deleteCount, ...items): any[]",
+      "module": "global/Array",
+      "description": "배열의 기존 요소를 삭제하거나 새 요소를 제자리에 삽입하여 원본 배열을 수정합니다.",
+      "example": "arr.splice(1, 1, 'newItem');"
+    },
+    {
+      "name": "Array.prototype.every",
+      "signature": "every(predicate): boolean",
+      "module": "global/Array",
+      "description": "배열의 모든 요소가 판별 함수를 만족하는지 검사합니다.",
+      "example": "const allPos = [1, 2, 3].every(x => x > 0);"
+    },
+    {
+      "name": "Array.prototype.some",
+      "signature": "some(predicate): boolean",
+      "module": "global/Array",
+      "description": "배열의 최소 하나의 요소가 판별 함수를 만족하는지 검사합니다.",
+      "example": "const hasEven = [1, 3, 4].some(x => x % 2 === 0);"
+    },
+    {
+      "name": "String.prototype.trim",
+      "signature": "trim(): string",
+      "module": "global/String",
+      "description": "문자열 양 끝의 공백 문자를 제거한 새로운 문자열을 반환합니다.",
+      "example": "const clean = '  hello  '.trim();"
+    },
+    {
+      "name": "String.prototype.replace",
+      "signature": "replace(pattern, replacement): string",
+      "module": "global/String",
+      "description": "패턴(문자열 또는 RegExp)과 일치하는 첫 번째 부분을 교체합니다.",
+      "example": "const res = 'foo bar'.replace('bar', 'baz');"
+    },
+    {
+      "name": "String.prototype.replaceAll",
+      "signature": "replaceAll(pattern, replacement): string",
+      "module": "global/String",
+      "description": "패턴과 일치하는 모든 부분을 대체 문자열로 교체합니다.",
+      "example": "const res = 'a-b-c'.replaceAll('-', ':');"
+    },
+    {
+      "name": "Object.assign",
+      "signature": "Object.assign(target, ...sources): object",
+      "module": "global/Object",
+      "description": "하나 이상의 출처 객체로부터 모든 열거 가능한 자체 속성을 대상 객체로 복사합니다.",
+      "example": "const merged = Object.assign({}, objA, objB);"
+    },
+    {
+      "name": "Object.freeze",
+      "signature": "Object.freeze(obj): object",
+      "module": "global/Object",
+      "description": "객체를 동결(Freeze)하여 새로운 속성 추가, 삭제, 기존 속성 수정을 차단합니다.",
+      "example": "const frozen = Object.freeze({ immutable: true });"
+    },
+    {
+      "name": "Date.now",
+      "signature": "Date.now(): number",
+      "module": "global/Date",
+      "description": "UTC 기준 1970년 1월 1일 자정부터 현재까지 경과한 밀리초(Unix epoch time)를 반환합니다.",
+      "example": "const timestamp = Date.now();"
+    }
+  ]
+}

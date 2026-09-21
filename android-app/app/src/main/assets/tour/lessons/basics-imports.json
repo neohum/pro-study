@@ -1,0 +1,15 @@
+{
+  "id": "basics-imports",
+  "chapter": "basics",
+  "chapterTitle": "기본 문법 (Basics)",
+  "order": 2,
+  "title": "Factored Imports",
+  "titleKo": "그룹화된 패키지 임포트",
+  "summaryKo": "괄호를 사용하여 여러 패키지를 한 번에 그룹(Factored) 형태로 임포트하는 것이 Go의 관용적(idiomatic) 스타일입니다.",
+  "entry": "imports.go",
+  "concepts": [
+    "factored import",
+    "math.Sqrt"
+  ],
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc main() {\n\tfmt.Printf(\"7의 제곱근은 %g입니다.\\n\", math.Sqrt(7))\n}\n"
+}

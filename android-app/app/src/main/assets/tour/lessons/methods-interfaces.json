@@ -1,0 +1,16 @@
+{
+  "id": "methods-interfaces",
+  "chapter": "methods",
+  "chapterTitle": "메서드와 인터페이스 (Methods & Interfaces)",
+  "order": 16,
+  "title": "Interfaces",
+  "titleKo": "암시적 인터페이스 구현",
+  "summaryKo": "인터페이스는 메서드 서명의 모음입니다. 명시적인 implements 키워드 없이 메서드만 구현하면 자동으로 인터페이스를 충족합니다.",
+  "entry": "interfaces.go",
+  "concepts": [
+    "interface",
+    "암시적 구현",
+    "다형성"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\ntype Greeter interface {\n\tGreet() string\n}\n\ntype Person struct {\n\tName string\n}\n\nfunc (p Person) Greet() string {\n\treturn \"안녕하세요, 저는 \" + p.Name + \"입니다.\"\n}\n\nfunc main() {\n\tvar g Greeter = Person{Name: \"Gopher\"}\n\tfmt.Println(g.Greet())\n}\n"
+}

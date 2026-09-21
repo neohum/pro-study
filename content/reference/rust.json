@@ -1,0 +1,198 @@
+{
+  "lang": "rust",
+  "name": "Rust",
+  "version": "Rust 2024 / 1.85+",
+  "overview": "Rust는 가비지 컬렉터 없이도 소유권(Ownership)과 빌림(Borrowing) 시스템을 통해 컴파일 타임에 메모리 안정성과 데이터 레이스 방지를 보장하는 고성능 시스템 프로그래밍 언어입니다.",
+  "grammar": [
+    {
+      "id": "rust-ownership-borrowing",
+      "title": "소유권(Ownership)과 불변/가변 참조(&, &mut)",
+      "category": "memory",
+      "summary": "모든 값은 단 하나의 소유자(Owner)를 가지며, 범위를 벗어나면 drop됩니다. &로 불변 참조, &mut로 단일 가변 참조를 빌릴 수 있습니다.",
+      "syntax": "let s1 = String::from(\"hello\");\nlet s2 = s1; // move\nlet len = calculate_length(&s2);",
+      "example": "fn calculate_len(s: &str) -> usize {\n    s.len()\n}\n\nfn main() {\n    let s = String::from(\"Rust\");\n    println!(\"len: {}\", calculate_len(&s));\n}"
+    },
+    {
+      "id": "rust-pattern-matching",
+      "title": "패턴 매칭 (match, if let)",
+      "category": "control_flow",
+      "summary": "모든 경우의 수를 컴파일 시점에 전수 검사(Exhaustive)하는 강력한 match 및 if let 구문을 제공합니다.",
+      "syntax": "match val {\n    Some(x) => println!(\"{}\", x),\n    None => (),\n}",
+      "example": "fn main() {\n    let opt: Option<i32> = Some(42);\n    match opt {\n        Some(n) => println!(\"value: {}\", n),\n        None => println!(\"empty\"),\n    }\n}"
+    },
+    {
+      "id": "rust-enums-results",
+      "title": "Option<T>과 Result<T, E> 및 ? 연산자",
+      "category": "error_handling",
+      "summary": "null 대신 Option을, 예외 대신 Result를 사용하여 안전하게 에러를 전파하고 ? 연산자로 간결하게 처리합니다.",
+      "syntax": "fn parse(s: &str) -> Result<i32, ParseIntError> {\n    let n = s.parse::<i32>()?;\n    Ok(n)\n}",
+      "example": "fn main() -> Result<(), Box<dyn std::error::Error>> {\n    let num: i32 = \"123\".parse()?;\n    println!(\"num: {}\", num);\n    Ok(())\n}"
+    },
+    {
+      "id": "rust-structs-traits",
+      "title": "구조체(struct)와 트레이트(Trait)",
+      "category": "types",
+      "summary": "데이터는 struct로 정의하고, 공통 동작 인터페이스는 trait과 impl 블록으로 구현하여 다형성을 제공합니다.",
+      "syntax": "trait Summary { fn summarize(&self) -> String; }\nimpl Summary for Article { ... }",
+      "example": "struct Point { x: f64, y: f64 }\n\nimpl Point {\n    fn new(x: f64, y: f64) -> Self {\n        Self { x, y }\n    }\n}\n\nfn main() {\n    let p = Point::new(1.0, 2.0);\n    println!(\"({}, {})\", p.x, p.y);\n}"
+    },
+    {
+      "id": "rust-closures-iterators",
+      "title": "클로저와 이터레이터 (Iterator)",
+      "category": "functions",
+      "summary": "함수형 프로그래밍 스타일의 map, filter, fold와 제로 코스트 추상화(Zero-cost Abstraction)를 지원합니다.",
+      "syntax": "let doubled: Vec<i32> = v.iter().map(|x| x * 2).collect();",
+      "example": "fn main() {\n    let nums = vec![1, 2, 3, 4, 5];\n    let sum: i32 = nums.iter().filter(|&&x| x % 2 == 1).sum();\n    println!(\"sum of odds: {}\", sum);\n}"
+    },
+    {
+      "id": "rust-threads-channels",
+      "title": "동시성 (std::thread, mpsc 채널)",
+      "category": "concurrency",
+      "summary": "Send와 Sync 트레이트로 컴파일 타임에 스레드 안전성을 강제하며, mpsc(다중 생산자 단일 소비자) 채널로 메시지를 전달합니다.",
+      "syntax": "let handle = std::thread::spawn(move || { ... });\nhandle.join().unwrap();",
+      "example": "use std::sync::mpsc;\nuse std::thread;\n\nfn main() {\n    let (tx, rx) = mpsc::channel();\n    thread::spawn(move || {\n        tx.send(\"hello from thread\").unwrap();\n    });\n    println!(\"{}\", rx.recv().unwrap());\n}"
+    }
+  ],
+  "functions": [
+    {
+      "name": "println!",
+      "signature": "macro_rules! println",
+      "module": "std",
+      "description": "포맷 스트링과 인자들을 표준 출력에 출력하고 줄바꿈을 추가합니다.",
+      "example": "println!(\"Hello, {}!\", \"Rust\");"
+    },
+    {
+      "name": "format!",
+      "signature": "macro_rules! format",
+      "module": "std",
+      "description": "포맷 스트링과 인자들을 결합하여 새로운 힙 할당 String 객체를 생성합니다.",
+      "example": "let s = format!(\"x = {}, y = {}\", 10, 20);"
+    },
+    {
+      "name": "vec!",
+      "signature": "macro_rules! vec",
+      "module": "std",
+      "description": "초기 요소들로 구성된 동적 배열 Vec<T>을 간결하게 생성합니다.",
+      "example": "let numbers = vec![1, 2, 3, 4, 5];"
+    },
+    {
+      "name": "String::from",
+      "signature": "fn from(s: &str) -> String",
+      "module": "std::string::String",
+      "description": "문자열 슬라이스(&str)로부터 가변 소유권을 가진 힙 할당 String을 생성합니다.",
+      "example": "let s = String::from(\"hello\");"
+    },
+    {
+      "name": "Vec::push",
+      "signature": "pub fn push(&mut self, value: T)",
+      "module": "std::vec::Vec",
+      "description": "벡터의 맨 뒤에 새 요소를 추가하고 필요시 용량을 자동으로 확장합니다.",
+      "example": "let mut v = Vec::new(); v.push(42);"
+    },
+    {
+      "name": "Vec::pop",
+      "signature": "pub fn pop(&mut self) -> Option<T>",
+      "module": "std::vec::Vec",
+      "description": "벡터의 마지막 요소를 꺼내어 Option으로 반환하며, 비어있으면 None을 반환합니다.",
+      "example": "let item = v.pop();"
+    },
+    {
+      "name": "Option::unwrap_or",
+      "signature": "pub fn unwrap_or(self, default: T) -> T",
+      "module": "std::option::Option",
+      "description": "Some(v)이면 내부 값 v를 반환하고 None이면 기본값 default를 반환합니다.",
+      "example": "let val = opt.unwrap_or(0);"
+    },
+    {
+      "name": "Option::map",
+      "signature": "pub fn map<U, F>(self, f: F) -> Option<U>",
+      "module": "std::option::Option",
+      "description": "Some 내부 값에 변환 함수를 적용하고 None이면 None을 유지합니다.",
+      "example": "let len = opt.map(|s| s.len());"
+    },
+    {
+      "name": "Result::unwrap_or_else",
+      "signature": "pub fn unwrap_or_else<F>(self, op: F) -> T",
+      "module": "std::result::Result",
+      "description": "Ok(v)이면 값 v를 반환하고 Err(e)이면 클로저를 실행해 대체 값을 반환합니다.",
+      "example": "let count = res.unwrap_or_else(|_| 0);"
+    },
+    {
+      "name": "HashMap::insert",
+      "signature": "pub fn insert(&mut self, k: K, v: V) -> Option<V>",
+      "module": "std::collections::HashMap",
+      "description": "해시맵에 키-값 쌍을 저장하며, 기존 키가 있었다면 이전 값을 반환합니다.",
+      "example": "map.insert(\"kr\", \"Seoul\");"
+    },
+    {
+      "name": "HashMap::get",
+      "signature": "pub fn get<Q>(&self, k: &Q) -> Option<&V>",
+      "module": "std::collections::HashMap",
+      "description": "해시맵에서 키에 해당하는 값의 불변 참조를 검색하여 Option으로 반환합니다.",
+      "example": "if let Some(&val) = map.get(\"kr\") { ... }"
+    },
+    {
+      "name": "fs::read_to_string",
+      "signature": "pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String>",
+      "module": "std::fs",
+      "description": "파일 전체를 UTF-8 문자열로 한 번에 읽어 Result<String>으로 반환합니다.",
+      "example": "let content = std::fs::read_to_string(\"file.txt\")?;"
+    },
+    {
+      "name": "fs::write",
+      "signature": "pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()>",
+      "module": "std::fs",
+      "description": "바이트나 문자열 데이터를 지정된 경로의 파일에 덮어씁니다.",
+      "example": "std::fs::write(\"out.txt\", \"data\")?;"
+    },
+    {
+      "name": "thread::spawn",
+      "signature": "pub fn spawn<F, T>(f: F) -> JoinHandle<T>",
+      "module": "std::thread",
+      "description": "새로운 OS 네이티브 스레드를 생성하여 클로저를 병렬로 실행합니다.",
+      "example": "let handle = std::thread::spawn(|| 42);"
+    },
+    {
+      "name": "thread::sleep",
+      "signature": "pub fn sleep(dur: Duration)",
+      "module": "std::thread",
+      "description": "현재 스레드의 실행을 지정된 Duration 동안 정지합니다.",
+      "example": "std::thread::sleep(std::time::Duration::from_millis(100));"
+    },
+    {
+      "name": "Mutex::lock",
+      "signature": "pub fn lock(&self) -> LockResult<MutexGuard<'_, T>>",
+      "module": "std::sync::Mutex",
+      "description": "상호 배제 락을 획득하며, Guard가 스코프를 벗어날 때 자동으로 언락됩니다.",
+      "example": "let mut guard = mutex.lock().unwrap(); *guard += 1;"
+    },
+    {
+      "name": "Arc::new",
+      "signature": "pub fn new(data: T) -> Arc<T>",
+      "module": "std::sync::Arc",
+      "description": "스레드 간에 안전하게 공유할 수 있는 원자적 참조 카운팅 스마트 포인터를 생성합니다.",
+      "example": "let shared = std::sync::Arc::new(5);"
+    },
+    {
+      "name": "env::var",
+      "signature": "pub fn var<K: AsRef<OsStr>>(key: K) -> Result<String, VarError>",
+      "module": "std::env",
+      "description": "환경 변수를 검색하여 유효한 유니코드 문자열이면 Ok(val)을 반환합니다.",
+      "example": "let port = std::env::var(\"PORT\").unwrap_or_else(|_| \"8080\".into());"
+    },
+    {
+      "name": "Iterator::collect",
+      "signature": "fn collect<B: FromIterator<Self::Item>>(self) -> B",
+      "module": "std::iter::Iterator",
+      "description": "이터레이터의 모든 항목을 소모하여 벡터(Vec), 해시맵(HashMap) 등의 컬렉션으로 변환합니다.",
+      "example": "let doubled: Vec<_> = (0..5).map(|x| x * 2).collect();"
+    },
+    {
+      "name": "Iterator::filter",
+      "signature": "fn filter<P>(self, predicate: P) -> Filter<Self, P>",
+      "module": "std::iter::Iterator",
+      "description": "조건자 클로저가 참을 반환하는 요소만 걸러내는 이터레이터를 생성합니다.",
+      "example": "let evens = nums.into_iter().filter(|x| x % 2 == 0);"
+    }
+  ]
+}

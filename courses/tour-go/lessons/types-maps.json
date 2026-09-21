@@ -1,0 +1,16 @@
+{
+  "id": "types-maps",
+  "chapter": "moretypes",
+  "chapterTitle": "자료구조 (More Types)",
+  "order": 14,
+  "title": "Maps and Mutation",
+  "titleKo": "맵 생성과 키-값 조작",
+  "summaryKo": "map은 키와 값을 매핑하는 해시 테이블입니다. make로 생성하며, 콤마 ok 문법으로 키 존재 여부를 확인합니다.",
+  "entry": "maps.go",
+  "concepts": [
+    "map[K]V",
+    "make(map)",
+    "comma ok 관용구"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tm := make(map[string]int)\n\tm[\"Answer\"] = 42\n\tfmt.Println(\"Answer:\", m[\"Answer\"])\n\n\tdelete(m, \"Answer\")\n\tv, ok := m[\"Answer\"]\n\tfmt.Println(\"삭제 후 조회:\", v, \"존재 여부:\", ok)\n}\n"
+}

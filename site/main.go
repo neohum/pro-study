@@ -28,9 +28,12 @@ import (
 	"pro-study/site/internal/catalog"
 	"pro-study/site/internal/doctor"
 	"pro-study/site/internal/guide"
+	"pro-study/site/internal/idea"
 	"pro-study/site/internal/opener"
 	"pro-study/site/internal/progress"
+	"pro-study/site/internal/reference"
 	"pro-study/site/internal/runner"
+	"pro-study/site/internal/tour"
 	"pro-study/site/internal/workspace"
 	"pro-study/site/web"
 )
@@ -160,6 +163,9 @@ type server struct {
 	port     string
 	lanInfo  apk.LANIPInfo
 	allowLAN bool
+	refStore  *reference.Store
+	tourStore *tour.Store
+	ideaStore *idea.Store
 }
 
 func newServer(root string, port string, allowLAN bool) (*server, error) {
@@ -178,6 +184,25 @@ func newServer(root string, port string, allowLAN bool) (*server, error) {
 		return nil, fmt.Errorf("progress.json 읽기 실패: %w", err)
 	}
 	s.store = store
+
+	refStore, err := reference.Load(root)
+	if err != nil {
+		log.Printf("경고: 레퍼런스 로드 실패: %v", err)
+	}
+	s.refStore = refStore
+
+	tourStore, err := tour.Load(root)
+	if err != nil {
+		log.Printf("경고: Tour of Go 로드 실패: %v", err)
+	}
+	s.tourStore = tourStore
+
+	ideaStore, err := idea.Open(filepath.Join(root, "data", "ideas.json"))
+	if err != nil {
+		log.Printf("경고: ideas.json 로드 실패: %v", err)
+	}
+	s.ideaStore = ideaStore
+
 	s.runner = runner.New()
 	s.runner.OnDone = func(job *runner.Job, res runner.Result) {
 		if err := s.store.Record(job.Project.ID, job.Stage, res.OK, res.Passed, res.Total); err != nil {
@@ -194,7 +219,7 @@ func newServer(root string, port string, allowLAN bool) (*server, error) {
 		},
 	}
 	s.tmpl = map[string]*template.Template{}
-	for _, page := range []string{"home", "project", "doctor", "apk"} {
+	for _, page := range []string{"home", "project", "doctor", "apk", "reference", "trace", "ideas"} {
 		t, err := template.New("layout").Funcs(funcs).ParseFS(web.Templates, "templates/layout.html", "templates/"+page+".html")
 		if err != nil {
 			return nil, err
@@ -241,6 +266,15 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /p/{lang}/{slug}", s.handleProject)
 	mux.HandleFunc("GET /doctor", s.handleDoctor)
 	mux.HandleFunc("GET /apk", s.handleAPK)
+	mux.HandleFunc("GET /ref", s.handleReference)
+	mux.HandleFunc("GET /ref/{lang}", s.handleReference)
+	mux.HandleFunc("GET /trace/go", s.handleTourTrace)
+	mux.HandleFunc("GET /trace/go/{lesson}", s.handleTourTrace)
+	mux.HandleFunc("GET /ideas", s.handleIdeas)
+	mux.HandleFunc("GET /api/ideas", s.handleAPIIdeas)
+	mux.HandleFunc("POST /api/ideas", s.handleAPIIdeasPost)
+	mux.HandleFunc("POST /api/ideas/{id}/vote", s.handleAPIIdeaVote)
+	mux.HandleFunc("GET /api/trace/go/{lesson}", s.handleAPITourLesson)
 	mux.HandleFunc("GET /api/apk/status", s.handleAPKStatus)
 	mux.HandleFunc("GET /api/apk/download", s.handleAPKDownload)
 	mux.HandleFunc("GET /api/apk/download/bookeink", s.handleBookeinkDownload)
@@ -387,6 +421,137 @@ func (s *server) handleDoctor(w http.ResponseWriter, r *http.Request) {
 		"AllFound": doctor.AllFound(tools),
 		"Root":     s.root,
 	})
+}
+
+func (s *server) handleReference(w http.ResponseWriter, r *http.Request) {
+	lang := r.PathValue("lang")
+	if lang == "" {
+		lang = "go"
+	}
+	doc, ok := s.refStore.Get(lang)
+	if !ok {
+		http.NotFound(w, r)
+		return
+	}
+	s.render(w, "reference", map[string]any{
+		"Title": doc.Name + " 레퍼런스",
+		"Doc":   doc,
+	})
+}
+
+func (s *server) handleTourTrace(w http.ResponseWriter, r *http.Request) {
+	if s.tourStore == nil {
+		http.Error(w, "Tour of Go 콘텐츠가 로드되지 않았습니다", 500)
+		return
+	}
+	manifest := s.tourStore.Manifest()
+	all := s.tourStore.AllLessons()
+	if len(all) == 0 {
+		http.Error(w, "Tour of Go 레슨이 없습니다", 404)
+		return
+	}
+
+	lessonID := r.PathValue("lesson")
+	if lessonID == "" {
+		lessonID = all[0].ID
+	}
+
+	cur, ok := s.tourStore.GetLesson(lessonID)
+	if !ok {
+		http.NotFound(w, r)
+		return
+	}
+
+	var prev, next *tour.Lesson
+	for i, l := range all {
+		if l.ID == cur.ID {
+			if i > 0 {
+				prev = all[i-1]
+			}
+			if i < len(all)-1 {
+				next = all[i+1]
+			}
+			break
+		}
+	}
+
+	s.render(w, "trace", map[string]any{
+		"Title":         cur.Title + " - A Tour of Go 필사",
+		"Manifest":      manifest,
+		"CurrentLesson": cur,
+		"PrevLesson":    prev,
+		"NextLesson":    next,
+	})
+}
+
+func (s *server) handleIdeas(w http.ResponseWriter, r *http.Request) {
+	ideas := []idea.Idea{}
+	if s.ideaStore != nil {
+		ideas = s.ideaStore.List()
+	}
+	s.render(w, "ideas", map[string]any{
+		"Title": "아이디어 제안소",
+		"Ideas": ideas,
+	})
+}
+
+func (s *server) handleAPIIdeas(w http.ResponseWriter, r *http.Request) {
+	if s.ideaStore == nil {
+		writeJSON(w, 200, []idea.Idea{})
+		return
+	}
+	writeJSON(w, 200, s.ideaStore.List())
+}
+
+func (s *server) handleAPIIdeasPost(w http.ResponseWriter, r *http.Request) {
+	if s.ideaStore == nil {
+		jsonError(w, 500, "아이디어 저장소가 초기화되지 않았습니다")
+		return
+	}
+	var req struct {
+		Title       string `json:"title"`
+		Category    string `json:"category"`
+		Description string `json:"description"`
+		Author      string `json:"author"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		jsonError(w, 400, "잘못된 요청 형식입니다: "+err.Error())
+		return
+	}
+	item, err := s.ideaStore.Add(req.Title, req.Category, req.Description, req.Author)
+	if err != nil {
+		jsonError(w, 400, err.Error())
+		return
+	}
+	writeJSON(w, 201, item)
+}
+
+func (s *server) handleAPIIdeaVote(w http.ResponseWriter, r *http.Request) {
+	if s.ideaStore == nil {
+		jsonError(w, 500, "아이디어 저장소가 초기화되지 않았습니다")
+		return
+	}
+	id := r.PathValue("id")
+	votes, err := s.ideaStore.Vote(id)
+	if err != nil {
+		jsonError(w, 404, err.Error())
+		return
+	}
+	writeJSON(w, 200, map[string]any{"ok": true, "votes": votes})
+}
+
+func (s *server) handleAPITourLesson(w http.ResponseWriter, r *http.Request) {
+	if s.tourStore == nil {
+		jsonError(w, 500, "Tour of Go가 초기화되지 않았습니다")
+		return
+	}
+	lessonID := r.PathValue("lesson")
+	lesson, ok := s.tourStore.GetLesson(lessonID)
+	if !ok {
+		jsonError(w, 404, "레슨을 찾을 수 없습니다: "+lessonID)
+		return
+	}
+	writeJSON(w, 200, lesson)
 }
 
 func (s *server) handleAPK(w http.ResponseWriter, r *http.Request) {

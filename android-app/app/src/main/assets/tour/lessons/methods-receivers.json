@@ -1,0 +1,16 @@
+{
+  "id": "methods-receivers",
+  "chapter": "methods",
+  "chapterTitle": "메서드와 인터페이스 (Methods & Interfaces)",
+  "order": 15,
+  "title": "Methods on Types",
+  "titleKo": "구조체 리시버 메서드",
+  "summaryKo": "Go에는 클래스가 없지만, 타입에 리시버(Receiver) 인자를 갖는 메서드를 정의하여 객체지향적 프로그래밍을 지원합니다.",
+  "entry": "methods.go",
+  "concepts": [
+    "리시버 함수",
+    "메서드 선언",
+    "math.Hypot"
+  ],
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\ntype Vertex struct {\n\tX, Y float64\n}\n\n// Vertex 타입에 정의된 Abs 메서드\nfunc (v Vertex) Abs() float64 {\n\treturn math.Hypot(v.X, v.Y)\n}\n\nfunc main() {\n\tv := Vertex{3, 4}\n\tfmt.Println(\"Vertex의 절대 크기:\", v.Abs())\n}\n"
+}

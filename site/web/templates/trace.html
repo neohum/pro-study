@@ -1,0 +1,117 @@
+{{define "content"}}
+<div class="trace-layout">
+  <aside class="trace-sidebar">
+    <div class="sidebar-header">
+      <h2>A Tour of Go 필사</h2>
+      <span class="badge badge-accent">{{.Manifest.TotalLessons}}개 레슨</span>
+    </div>
+    <div class="chapter-nav">
+      {{range .Manifest.Chapters}}
+      <div class="chapter-group">
+        <div class="chapter-title">{{.Title}}</div>
+        <ul class="lesson-list">
+          {{range .Lessons}}
+          <li>
+            <a href="/trace/go/{{.ID}}" class="lesson-link {{if eq .ID $.CurrentLesson.ID}}active{{end}}">
+              <span class="lesson-en">{{.Title}}</span>
+              <span class="lesson-ko">{{.TitleKo}}</span>
+            </a>
+          </li>
+          {{end}}
+        </ul>
+      </div>
+      {{end}}
+    </div>
+  </aside>
+
+  <main class="trace-main">
+    <div class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-meta">
+          <span class="badge badge-chapter">{{.CurrentLesson.ChapterTitle}}</span>
+          <span class="lesson-order">Lesson #{{.CurrentLesson.Order}}</span>
+        </div>
+        <h1 class="lesson-title">{{.CurrentLesson.Title}} <small>{{.CurrentLesson.TitleKo}}</small></h1>
+        <p class="lesson-summary">{{.CurrentLesson.SummaryKo}}</p>
+        <div class="concept-tags">
+          {{range .CurrentLesson.Concepts}}
+          <span class="badge badge-concept"># {{.}}</span>
+          {{end}}
+        </div>
+      </div>
+
+      <div class="trace-workspace">
+        <div class="trace-tabs">
+          <button class="trace-tab active" data-view="typing">⌨️ 한 줄씩 타이핑 필사</button>
+          <button class="trace-tab" data-view="fullcode">📄 전체 코드 보기</button>
+        </div>
+
+        <div class="trace-panel trace-panel-typing" id="typingPanel">
+          <div class="trace-status-bar">
+            <div class="progress-info">
+              <span>진행률: <strong id="traceProgressText">0%</strong> (<span id="traceLineIndex">1</span>/<span id="traceLineTotal">0</span>줄)</span>
+              <div class="trace-progress-bar">
+                <div class="trace-progress-fill" id="traceProgressFill" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="trace-actions">
+              <button class="btn btn-sm btn-ghost" id="btnResetTrace">🔄 처음부터 다시</button>
+            </div>
+          </div>
+
+          <div class="typing-container">
+            <div class="code-context-prev" id="traceContextPrev"></div>
+            
+            <div class="typing-active-line">
+              <div class="line-number" id="activeLineNum">1</div>
+              <div class="line-display">
+                <div class="target-ghost" id="targetGhost"></div>
+                <input type="text" id="traceInput" class="trace-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="위 코드를 그대로 따라 입력하고 Enter를 누르세요...">
+              </div>
+            </div>
+
+            <div class="code-context-next" id="traceContextNext"></div>
+          </div>
+
+          <div class="trace-complete-banner" id="traceCompleteBanner" hidden>
+            <div class="complete-icon">🎉</div>
+            <h3>레슨 필사를 완료했습니다!</h3>
+            <p>직접 타이핑하며 Go 언어의 관용적 문법을 체화했습니다.</p>
+            <div class="complete-actions">
+              {{if .NextLesson}}
+              <a href="/trace/go/{{.NextLesson.ID}}" class="btn btn-primary">다음 레슨으로 이동 ({{.NextLesson.TitleKo}}) ➔</a>
+              {{else}}
+              <a href="/trace/go" class="btn btn-primary">Go Tour 첫 레슨으로 돌아가기</a>
+              {{end}}
+            </div>
+          </div>
+        </div>
+
+        <div class="trace-panel trace-panel-fullcode" id="fullcodePanel" hidden>
+          <div class="code-toolbar">
+            <span class="file-name">{{.CurrentLesson.Entry}}</span>
+            <button class="btn btn-sm" id="btnCopyCode">📋 전체 코드 복사</button>
+          </div>
+          <pre class="full-code"><code class="language-go" id="sourceRawCode">{{.CurrentLesson.Code}}</code></pre>
+        </div>
+      </div>
+
+      <div class="lesson-footer-nav">
+        {{if .PrevLesson}}
+        <a href="/trace/go/{{.PrevLesson.ID}}" class="btn btn-outline">⬅ 이전: {{.PrevLesson.TitleKo}}</a>
+        {{else}}
+        <div></div>
+        {{end}}
+
+        {{if .NextLesson}}
+        <a href="/trace/go/{{.NextLesson.ID}}" class="btn btn-primary">다음: {{.NextLesson.TitleKo}} ➔</a>
+        {{end}}
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+window.__TOUR_LESSON_CODE__ = {{.CurrentLesson.Code}};
+</script>
+{{end}}

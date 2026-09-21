@@ -1,4 +1,4 @@
-﻿# pro-study Android E-ink 앱 패키징 및 APK 빌드 스크립트
+# pro-study Android E-ink 앱 패키징 및 APK 빌드 스크립트
 $ErrorActionPreference = "Stop"
 
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
@@ -14,11 +14,16 @@ Write-Host "==========================================================" -Foregro
 Write-Host " 2. Gradle Debug APK 빌드 (assembleDebug)" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Cyan
 $AndroidDir = Join-Path $Root "android-app"
+$ApkPath = Join-Path $AndroidDir "app\build\outputs\apk\debug\app-debug.apk"
+if (Test-Path $ApkPath) { Remove-Item -Force $ApkPath }
 Set-Location $AndroidDir
 & .\gradlew.bat assembleDebug
+if ($LASTEXITCODE -ne 0) {
+    Set-Location $Root
+    throw "Gradle assembleDebug failed with exit code $LASTEXITCODE"
+}
 
 Set-Location $Root
-$ApkPath = Join-Path $AndroidDir "app\build\outputs\apk\debug\app-debug.apk"
 
 Write-Host ""
 Write-Host "==========================================================" -ForegroundColor Cyan
