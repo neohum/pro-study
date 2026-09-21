@@ -102,6 +102,41 @@ function run() {
 
   fs.writeFileSync(path.join(ASSETS_DIR, 'manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
   console.log(`\n총 ${totalCount}개 프로젝트 에셋 패키징 완료: ${ASSETS_DIR}/manifest.json`);
+
+  // ---- 2. 언어 문법 및 함수 레퍼런스 패키징 ----
+  const ANDROID_ASSETS_ROOT = path.join(ROOT, 'android-app', 'app', 'src', 'main', 'assets');
+  const REF_SRC_DIR = path.join(ROOT, 'content', 'reference');
+  const REF_DEST_DIR = path.join(ANDROID_ASSETS_ROOT, 'reference');
+  if (fs.existsSync(REF_SRC_DIR)) {
+    fs.mkdirSync(REF_DEST_DIR, { recursive: true });
+    const refFiles = fs.readdirSync(REF_SRC_DIR).filter(f => f.endsWith('.json'));
+    for (const file of refFiles) {
+      fs.copyFileSync(path.join(REF_SRC_DIR, file), path.join(REF_DEST_DIR, file));
+    }
+    console.log(`[OK] 문법/함수 레퍼런스 ${refFiles.length}개 언어 에셋 패키징 완료 -> ${REF_DEST_DIR}`);
+  }
+
+  // ---- 3. A Tour of Go 필사 코스 패키징 ----
+  const TOUR_SRC_DIR = path.join(ROOT, 'courses', 'tour-go');
+  const TOUR_DEST_DIR = path.join(ANDROID_ASSETS_ROOT, 'tour');
+  if (fs.existsSync(TOUR_SRC_DIR)) {
+    fs.mkdirSync(TOUR_DEST_DIR, { recursive: true });
+    if (fs.existsSync(path.join(TOUR_SRC_DIR, 'manifest.json'))) {
+      fs.copyFileSync(path.join(TOUR_SRC_DIR, 'manifest.json'), path.join(TOUR_DEST_DIR, 'manifest.json'));
+    }
+    if (fs.existsSync(path.join(TOUR_SRC_DIR, 'lessons.json'))) {
+      fs.copyFileSync(path.join(TOUR_SRC_DIR, 'lessons.json'), path.join(TOUR_DEST_DIR, 'lessons.json'));
+    }
+    const lessonsSubSrc = path.join(TOUR_SRC_DIR, 'lessons');
+    const lessonsSubDest = path.join(TOUR_DEST_DIR, 'lessons');
+    if (fs.existsSync(lessonsSubSrc)) {
+      fs.mkdirSync(lessonsSubDest, { recursive: true });
+      for (const lf of fs.readdirSync(lessonsSubSrc).filter(f => f.endsWith('.json'))) {
+        fs.copyFileSync(path.join(lessonsSubSrc, lf), path.join(lessonsSubDest, lf));
+      }
+    }
+    console.log(`[OK] A Tour of Go 필사 코스 에셋 패키징 완료 -> ${TOUR_DEST_DIR}`);
+  }
 }
 
 run();

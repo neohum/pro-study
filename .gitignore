@@ -27,9 +27,12 @@ logs/
 **/playwright-report/
 
 # pro-study 학습 사이트 런타임 산출물
+*.exe
 work/
 data/progress.json
 data/progress.json.tmp
+data/ideas.json
+data/ideas.json.tmp
 
 # Android build & local settings
 android-app/.gradle/

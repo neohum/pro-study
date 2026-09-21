@@ -1,0 +1,16 @@
+{
+  "id": "generics-type-parameters",
+  "chapter": "generics",
+  "chapterTitle": "제네릭 (Generics)",
+  "order": 17,
+  "title": "Type Parameters",
+  "titleKo": "제네릭 타입 매개변수와 comparable",
+  "summaryKo": "Go 1.18부터 함수와 타입에 타입 파라미터 [T comparable]를 선언하여 다양한 타입에 대해 안전한 제네릭 코드를 작성할 수 있습니다.",
+  "entry": "generics.go",
+  "concepts": [
+    "[T comparable]",
+    "제네릭 함수",
+    "타입 안전성"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\n// Index는 comparable 인터페이스를 만족하는 모든 타입 슬라이스에서 x의 위치를 찾습니다.\nfunc Index[T comparable](s []T, x T) int {\n\tfor i, v := range s {\n\t\tif v == x {\n\t\t\treturn i\n\t\t}\n\t}\n\treturn -1\n}\n\nfunc main() {\n\tsi := []int{10, 20, 15, -10}\n\tfmt.Println(\"20의 인덱스:\", Index(si, 20))\n\n\tss := []string{\"apple\", \"banana\", \"cherry\"}\n\tfmt.Println(\"banana의 인덱스:\", Index(ss, \"banana\"))\n}\n"
+}

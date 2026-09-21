@@ -103,6 +103,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        // Go Tour 필사 화면 열기
+        findViewById<Button>(R.id.btn_open_trace).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.TourTraceActivity::class.java)
+            startActivity(intent)
+        }
+
         // E-ink 화면 새로고침 (플래시 리프레시로 잔상 정리)
         findViewById<Button>(R.id.btn_refresh).setOnClickListener {
             flashScreenRefresh()

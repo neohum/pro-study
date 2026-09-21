@@ -1,0 +1,16 @@
+{
+  "id": "concurrency-goroutines",
+  "chapter": "concurrency",
+  "chapterTitle": "동시성 (Concurrency)",
+  "order": 18,
+  "title": "Goroutines and Channels",
+  "titleKo": "고루틴과 채널 동기화",
+  "summaryKo": "go 키워드로 경량 스레드인 고루틴을 실행하고, 채널(<-)을 통해 락 없이 데이터를 안전하게 통신하고 동기화합니다.",
+  "entry": "goroutines.go",
+  "concepts": [
+    "go 키워드",
+    "chan int",
+    "채널 송수신 <-"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc sum(s []int, c chan int) {\n\ttotal := 0\n\tfor _, v := range s {\n\t\ttotal += v\n\t}\n\tc <- total // 결과를 채널에 전송\n}\n\nfunc main() {\n\ts := []int{7, 2, 8, -9, 4, 0}\n\tc := make(chan int)\n\n\tgo sum(s[:len(s)/2], c)\n\tgo sum(s[len(s)/2:], c)\n\n\tx, y := <-c, <-c // 채널로부터 두 결과를 수신\n\n\tfmt.Println(\"x:\", x, \"y:\", y, \"합계:\", x+y)\n}\n"
+}

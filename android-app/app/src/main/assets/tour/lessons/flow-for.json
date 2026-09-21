@@ -1,0 +1,16 @@
+{
+  "id": "flow-for",
+  "chapter": "flowcontrol",
+  "chapterTitle": "흐름 제어 (Flow Control)",
+  "order": 6,
+  "title": "For Loop",
+  "titleKo": "기본 for 반복문",
+  "summaryKo": "Go에는 while이나 do-while이 없으며, 오직 for 키워드 하나로 모든 반복을 표현합니다.",
+  "entry": "for.go",
+  "concepts": [
+    "for 루프",
+    "조건식",
+    "사후 처리식"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tsum := 0\n\tfor i := 0; i < 10; i++ {\n\t\tsum += i\n\t}\n\tfmt.Println(\"0부터 9까지의 합:\", sum)\n}\n"
+}

@@ -1,0 +1,212 @@
+{
+  "lang": "c",
+  "name": "C (C23)",
+  "version": "ISO/IEC 9899:2024 (C23)",
+  "overview": "현대 C23 표준은 nullptr 키워드, constexpr 변수, auto 타입 추론, 광범위한 고정 너비 정수 및 향상된 표준 라이브러리를 공식 지원하여 시스템 레벨의 최고 성능과 정밀한 메모리 제어를 제공합니다.",
+  "grammar": [
+    {
+      "id": "c-vars-types",
+      "title": "변수 선언 및 기본 타입",
+      "category": "variables",
+      "summary": "C23에서는 기본 정수형, 부동소수점형 외에 nullptr, constexpr, 고정 크기 정수(stdint.h)를 기본으로 지원합니다.",
+      "syntax": "constexpr int MAX = 100;\nauto x = 42;\nvoid *ptr = nullptr;",
+      "example": "#include <stdio.h>\n#include <stdint.h>\n\nint main(void) {\n    constexpr int32_t count = 10;\n    void *p = nullptr;\n    printf(\"count: %d, p is null: %s\\n\", count, p == nullptr ? \"true\" : \"false\");\n    return 0;\n}"
+    },
+    {
+      "id": "c-control-flow",
+      "title": "제어문 (if, switch, loops)",
+      "category": "control_flow",
+      "summary": "조건문(if-else, switch)과 반복문(for, while, do-while)을 통해 실행 흐름을 제어합니다.",
+      "syntax": "if (cond) { ... } else { ... }\nswitch (val) { case 1: ... break; default: ... }\nfor (int i = 0; i < n; i++) { ... }",
+      "example": "#include <stdio.h>\n\nint main(void) {\n    for (int i = 1; i <= 5; i++) {\n        if (i % 2 == 0) {\n            printf(\"%d is even\\n\", i);\n        } else {\n            printf(\"%d is odd\\n\", i);\n        }\n    }\n    return 0;\n}"
+    },
+    {
+      "id": "c-functions",
+      "title": "함수 정의와 포인터 전달",
+      "category": "functions",
+      "summary": "함수는 값 복사(Call by Value)로 인자를 전달하므로, 원본 수정을 위해서는 포인터 주소를 넘깁니다.",
+      "syntax": "return_type func_name(param_type param) { ... }",
+      "example": "#include <stdio.h>\n\nvoid swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main(void) {\n    int x = 10, y = 20;\n    swap(&x, &y);\n    printf(\"x=%d, y=%d\\n\", x, y);\n    return 0;\n}"
+    },
+    {
+      "id": "c-pointers-memory",
+      "title": "포인터와 동적 메모리 할당",
+      "category": "memory",
+      "summary": "malloc/calloc으로 힙 영역에 메모리를 할당받고 반드시 free로 반환하여 누수를 방지합니다.",
+      "syntax": "int *arr = malloc(size * sizeof(int));\nfree(arr);",
+      "example": "#include <stdio.h>\n#include <stdlib.h>\n\nint main(void) {\n    int *nums = malloc(3 * sizeof(int));\n    if (nums == NULL) return 1;\n    nums[0] = 10; nums[1] = 20; nums[2] = 30;\n    printf(\"nums[1] = %d\\n\", nums[1]);\n    free(nums);\n    return 0;\n}"
+    },
+    {
+      "id": "c-struct-typedef",
+      "title": "구조체(struct)와 typedef",
+      "category": "data_structures",
+      "summary": "서로 다른 데이터 타입을 하나로 묶어 사용자 정의 자료구조를 만듭니다.",
+      "syntax": "typedef struct { ... } TypeName;",
+      "example": "#include <stdio.h>\n\ntypedef struct {\n    int id;\n    char name[32];\n} Student;\n\nint main(void) {\n    Student s = { .id = 1, .name = \"Neo\" };\n    printf(\"Student #%d: %s\\n\", s.id, s.name);\n    return 0;\n}"
+    },
+    {
+      "id": "c-macros-preprocessor",
+      "title": "전처리기(Preprocessor)와 매크로",
+      "category": "modules",
+      "summary": "#define, #include, #ifdef 등의 전처리 지시어로 컴파일 전 코드 치환 및 조건부 컴파일을 수행합니다.",
+      "syntax": "#define MAX(a, b) ((a) > (b) ? (a) : (b))",
+      "example": "#include <stdio.h>\n#define SQUARE(x) ((x) * (x))\n\nint main(void) {\n    printf(\"5 squared: %d\\n\", SQUARE(5));\n    return 0;\n}"
+    }
+  ],
+  "functions": [
+    {
+      "name": "printf",
+      "signature": "int printf(const char *format, ...)",
+      "module": "stdio.h",
+      "description": "서식 지정자에 맞춰 표준 출력 스트림(stdout)에 데이터를 출력합니다.",
+      "example": "printf(\"Hello, %s! Value: %d\\n\", \"world\", 42);"
+    },
+    {
+      "name": "scanf",
+      "signature": "int scanf(const char *format, ...)",
+      "module": "stdio.h",
+      "description": "표준 입력 스트림(stdin)에서 지정된 서식에 맞춰 값을 입력받습니다.",
+      "example": "int n; scanf(\"%d\", &n);"
+    },
+    {
+      "name": "snprintf",
+      "signature": "int snprintf(char *str, size_t size, const char *format, ...)",
+      "module": "stdio.h",
+      "description": "버퍼 오버플로를 방지하면서 최대 size 바이트 크기 내로 서식화된 문자열을 버퍼에 저장합니다.",
+      "example": "char buf[64]; snprintf(buf, sizeof(buf), \"ID: %d\", 123);"
+    },
+    {
+      "name": "fopen",
+      "signature": "FILE *fopen(const char *filename, const char *mode)",
+      "module": "stdio.h",
+      "description": "지정된 모드(r, w, a 등)로 파일을 열고 파일 스트림 포인터를 반환합니다.",
+      "example": "FILE *fp = fopen(\"data.txt\", \"r\"); if (fp) fclose(fp);"
+    },
+    {
+      "name": "fclose",
+      "signature": "int fclose(FILE *stream)",
+      "module": "stdio.h",
+      "description": "열려 있는 파일 스트림을 닫고 버퍼를 비웁니다.",
+      "example": "fclose(fp);"
+    },
+    {
+      "name": "fgets",
+      "signature": "char *fgets(char *str, int num, FILE *stream)",
+      "module": "stdio.h",
+      "description": "파일 또는 stdin 스트림에서 개행 문자까지 한 줄을 안전하게 읽어 버퍼에 저장합니다.",
+      "example": "char line[256]; fgets(line, sizeof(line), stdin);"
+    },
+    {
+      "name": "malloc",
+      "signature": "void *malloc(size_t size)",
+      "module": "stdlib.h",
+      "description": "힙 영역에 지정된 바이트 수만큼 동적 메모리를 할당합니다.",
+      "example": "int *p = malloc(10 * sizeof(int));"
+    },
+    {
+      "name": "calloc",
+      "signature": "void *calloc(size_t num, size_t size)",
+      "module": "stdlib.h",
+      "description": "지정된 개수 및 크기만큼 동적 메모리를 할당하고 모든 바이트를 0으로 초기화합니다.",
+      "example": "int *p = calloc(10, sizeof(int));"
+    },
+    {
+      "name": "realloc",
+      "signature": "void *realloc(void *ptr, size_t new_size)",
+      "module": "stdlib.h",
+      "description": "기존에 할당된 동적 메모리 블록의 크기를 재조정합니다.",
+      "example": "p = realloc(p, 20 * sizeof(int));"
+    },
+    {
+      "name": "free",
+      "signature": "void free(void *ptr)",
+      "module": "stdlib.h",
+      "description": "동적으로 할당된 메모리 공간을 해제하여 시스템에 반환합니다.",
+      "example": "free(p); p = NULL;"
+    },
+    {
+      "name": "atoi",
+      "signature": "int atoi(const char *str)",
+      "module": "stdlib.h",
+      "description": "문자열을 정수(int)로 변환합니다.",
+      "example": "int val = atoi(\"12345\");"
+    },
+    {
+      "name": "qsort",
+      "signature": "void qsort(void *base, size_t num, size_t size, int (*compare)(const void*, const void*))",
+      "module": "stdlib.h",
+      "description": "비교 함수 포인터를 기반으로 배열 요소를 퀵 소트 알고리즘으로 정렬합니다.",
+      "example": "qsort(arr, n, sizeof(int), cmp_fn);"
+    },
+    {
+      "name": "bsearch",
+      "signature": "void *bsearch(const void *key, const void *base, size_t num, size_t size, int (*compare)(const void*, const void*))",
+      "module": "stdlib.h",
+      "description": "정렬된 배열에서 이진 검색으로 특정 요소를 찾습니다.",
+      "example": "int *item = bsearch(&key, arr, n, sizeof(int), cmp_fn);"
+    },
+    {
+      "name": "strlen",
+      "signature": "size_t strlen(const char *str)",
+      "module": "string.h",
+      "description": "널 종료 문자('\\0') 이전까지의 문자열 길이를 바이트 단위로 반환합니다.",
+      "example": "size_t len = strlen(\"hello\");"
+    },
+    {
+      "name": "strcpy",
+      "signature": "char *strcpy(char *dest, const char *src)",
+      "module": "string.h",
+      "description": "널 종료 문자를 포함하여 문자열을 대상 버퍼로 복사합니다.",
+      "example": "strcpy(dest, src);"
+    },
+    {
+      "name": "strncpy",
+      "signature": "char *strncpy(char *dest, const char *src, size_t n)",
+      "module": "string.h",
+      "description": "최대 n바이트까지 문자열을 대상 버퍼로 복사하여 버퍼 오버런을 방지합니다.",
+      "example": "strncpy(dest, src, sizeof(dest) - 1);"
+    },
+    {
+      "name": "strcmp",
+      "signature": "int strcmp(const char *str1, const char *str2)",
+      "module": "string.h",
+      "description": "두 문자열을 사전식으로 비교하여 같으면 0, 다르면 양수 또는 음수를 반환합니다.",
+      "example": "if (strcmp(a, b) == 0) { /* 일치 */ }"
+    },
+    {
+      "name": "memset",
+      "signature": "void *memset(void *ptr, int value, size_t num)",
+      "module": "string.h",
+      "description": "지정된 메모리 영역을 특정 바이트 값으로 채웁니다.",
+      "example": "memset(buf, 0, sizeof(buf));"
+    },
+    {
+      "name": "memcpy",
+      "signature": "void *memcpy(void *dest, const void *src, size_t num)",
+      "module": "string.h",
+      "description": "원본 메모리 블록을 대상 메모리 블록으로 지정된 크기만큼 복사합니다.",
+      "example": "memcpy(dest, src, sizeof(src));"
+    },
+    {
+      "name": "sqrt",
+      "signature": "double sqrt(double x)",
+      "module": "math.h",
+      "description": "인자로 전달된 부동소수점 숫자의 제곱근을 계산합니다.",
+      "example": "double r = sqrt(16.0);"
+    },
+    {
+      "name": "pow",
+      "signature": "double pow(double base, double exp)",
+      "module": "math.h",
+      "description": "밑(base)의 지수(exp) 승을 계산하여 반환합니다.",
+      "example": "double p = pow(2.0, 8.0);"
+    },
+    {
+      "name": "time",
+      "signature": "time_t time(time_t *timer)",
+      "module": "time.h",
+      "description": "현재 Epoch 시간(1970년 1월 1일 이후 초 단위)을 반환합니다.",
+      "example": "time_t now = time(NULL);"
+    }
+  ]
+}

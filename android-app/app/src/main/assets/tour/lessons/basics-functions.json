@@ -1,0 +1,16 @@
+{
+  "id": "basics-functions",
+  "chapter": "basics",
+  "chapterTitle": "기본 문법 (Basics)",
+  "order": 3,
+  "title": "Functions",
+  "titleKo": "함수 선언과 매개변수 타입",
+  "summaryKo": "Go에서 타입은 변수명 뒤에 옵니다. 연속된 매개변수가 같은 타입이면 마지막에만 타입을 명시할 수 있습니다.",
+  "entry": "functions.go",
+  "concepts": [
+    "func",
+    "매개변수 타입",
+    "반환 타입"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc add(x int, y int) int {\n\treturn x + y\n}\n\nfunc multiply(x, y int) int {\n\treturn x * y\n}\n\nfunc main() {\n\tfmt.Println(\"합계:\", add(42, 13))\n\tfmt.Println(\"곱셈:\", multiply(6, 7))\n}\n"
+}

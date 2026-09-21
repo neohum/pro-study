@@ -1,0 +1,16 @@
+{
+  "id": "types-structs",
+  "chapter": "moretypes",
+  "chapterTitle": "자료구조 (More Types)",
+  "order": 11,
+  "title": "Structs and Fields",
+  "titleKo": "구조체 정의와 필드 접근",
+  "summaryKo": "struct는 필드들의 컬렉션입니다. 점(.) 문법으로 필드에 접근하며, 구조체 포인터를 통해서도 간접참조 없이 필드에 접근합니다.",
+  "entry": "structs.go",
+  "concepts": [
+    "type struct",
+    "구조체 리터럴",
+    "포인터 접근"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\ntype Vertex struct {\n\tX int\n\tY int\n}\n\nfunc main() {\n\tv := Vertex{1, 2}\n\tv.X = 4\n\tp := &v\n\tp.Y = 1e2 // (*p).Y와 동일\n\tfmt.Println(\"Vertex:\", v)\n}\n"
+}

@@ -197,10 +197,10 @@ func (r *Runner) execute(job *Job, workDir, stdin string) {
 	start := time.Now()
 	var res Result
 	defer func() {
-		job.finish(res)
 		if r.OnDone != nil {
 			r.OnDone(job, res)
 		}
+		job.finish(res)
 	}()
 
 	os.MkdirAll(filepath.Join(workDir, "build"), 0o755)

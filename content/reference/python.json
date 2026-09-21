@@ -1,0 +1,198 @@
+{
+  "lang": "python",
+  "name": "Python",
+  "version": "Python 3.13+",
+  "overview": "Python은 높은 가독성, 풍부한 표준 라이브러리, 타입 힌트, 동적 타이핑과 유연한 객체 지향 및 함수형 패러다임을 갖춘 세계에서 가장 인기 있는 범용 프로그래밍 언어입니다.",
+  "grammar": [
+    {
+      "id": "py-vars-types",
+      "title": "변수 선언과 타입 힌트 (Type Hints)",
+      "category": "variables",
+      "summary": "동적 타입 언어이지만 PEP 484 타입 힌트를 사용하여 코드 명확성을 높이고 정적 타입 체커(mypy 등)의 지원을 받습니다.",
+      "syntax": "name: str = \"Python\"\nage: int = 30\nscores: list[float] = [95.5, 88.0]",
+      "example": "def greet(name: str, times: int = 1) -> str:\n    return f\"Hello, {name}! \" * times\n\nprint(greet(\"World\", 2))"
+    },
+    {
+      "id": "py-control-flow",
+      "title": "제어문과 구조적 패턴 매칭 (match-case)",
+      "category": "control_flow",
+      "summary": "들여쓰기 기반의 if-elif-else, for-in, while 루프와 Python 3.10+의 match-case 패턴 매칭을 제공합니다.",
+      "syntax": "match status:\n    case 200:\n        ...\n    case 404:\n        ...\n    case _:\n        ...",
+      "example": "command = \"quit\"\nmatch command.split():\n    case [\"go\", direction]:\n        print(f\"Moving {direction}\")\n    case [\"quit\"]:\n        print(\"Exiting\")\n    case _:\n        print(\"Unknown command\")"
+    },
+    {
+      "id": "py-comprehensions",
+      "title": "컴프리헨션 (List/Dict Comprehension)",
+      "category": "data_structures",
+      "summary": "반복문과 조건문을 결합하여 리스트, 딕셔너리, 세트를 한 줄로 간결하고 빠르게 생성합니다.",
+      "syntax": "[expr for item in iterable if condition]\n{k: v for k, v in pairs}",
+      "example": "squares = [x**2 for x in range(10) if x % 2 == 0]\nprint(squares)  # [0, 4, 16, 36, 64]"
+    },
+    {
+      "id": "py-classes-dataclasses",
+      "title": "클래스와 데이터클래스 (@dataclass)",
+      "category": "types",
+      "summary": "@dataclass 데코레이터를 사용하면 __init__, __repr__, __eq__ 등의 보일러플레이트 코드를 자동 생성합니다.",
+      "syntax": "from dataclasses import dataclass\n\n@dataclass\nclass Point:\n    x: float\n    y: float",
+      "example": "from dataclasses import dataclass\n\n@dataclass\nclass User:\n    id: int\n    name: str\n    active: bool = True\n\nu = User(1, \"Alice\")\nprint(u)"
+    },
+    {
+      "id": "py-context-managers",
+      "title": "컨텍스트 매니저 (with 문)",
+      "category": "functions",
+      "summary": "파일, 네트워크, 락 등의 자원을 사용할 때 with 문으로 스코프 종료 시 자동 해제를 보장합니다.",
+      "syntax": "with open(path, \"r\", encoding=\"utf-8\") as f:\n    data = f.read()",
+      "example": "with open(\"sample.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"Hello Python\")"
+    },
+    {
+      "id": "py-asyncio",
+      "title": "비동기 프로그래밍 (async / await)",
+      "category": "concurrency",
+      "summary": "단일 스레드 이벤트 루프 기반으로 I/O 바운드 작업을 효율적으로 동시 처리하는 async/await 구문입니다.",
+      "syntax": "async def fetch():\n    await asyncio.sleep(1)\n    return 42",
+      "example": "import asyncio\n\nasync def main():\n    print(\"Start\")\n    await asyncio.sleep(0.5)\n    print(\"Done\")\n\nasyncio.run(main())"
+    }
+  ],
+  "functions": [
+    {
+      "name": "print",
+      "signature": "print(*objects, sep=' ', end='\\n', file=None, flush=False)",
+      "module": "builtins",
+      "description": "객체들을 텍스트 스트림(기본 stdout)에 출력합니다.",
+      "example": "print(\"Score:\", 100, sep=\"=\")"
+    },
+    {
+      "name": "len",
+      "signature": "len(s) -> int",
+      "module": "builtins",
+      "description": "시퀀스(문자열, 리스트, 튜플)나 컬렉션(딕셔너리, 세트)의 항목 개수를 반환합니다.",
+      "example": "count = len([1, 2, 3])"
+    },
+    {
+      "name": "range",
+      "signature": "range(stop) / range(start, stop[, step])",
+      "module": "builtins",
+      "description": "연속된 정수 시퀀스를 불변 시퀀스 객체로 생성합니다.",
+      "example": "for i in range(0, 10, 2): print(i)"
+    },
+    {
+      "name": "enumerate",
+      "signature": "enumerate(iterable, start=0)",
+      "module": "builtins",
+      "description": "반복 가능한 객체를 순회할 때 (인덱스, 값) 쌍의 튜플을 생성합니다.",
+      "example": "for idx, val in enumerate([\"a\", \"b\"]): print(idx, val)"
+    },
+    {
+      "name": "zip",
+      "signature": "zip(*iterables, strict=False)",
+      "module": "builtins",
+      "description": "여러 반복 가능한 객체의 동일 인덱스 요소들을 묶어 튜플의 이터레이터를 만듭니다.",
+      "example": "for k, v in zip([\"name\", \"age\"], [\"Bob\", 25]): print(k, v)"
+    },
+    {
+      "name": "sorted",
+      "signature": "sorted(iterable, *, key=None, reverse=False) -> list",
+      "module": "builtins",
+      "description": "임의의 이터러블로부터 정렬된 새로운 리스트를 생성하여 반환합니다.",
+      "example": "s = sorted([3, 1, 4, 1, 5], reverse=True)"
+    },
+    {
+      "name": "isinstance",
+      "signature": "isinstance(object, classinfo) -> bool",
+      "module": "builtins",
+      "description": "객체가 지정된 클래스 또는 튜플 내 클래스의 인스턴스인지 확인합니다.",
+      "example": "is_str = isinstance(\"hello\", str)"
+    },
+    {
+      "name": "open",
+      "signature": "open(file, mode='r', encoding=None) -> file object",
+      "module": "builtins",
+      "description": "파일을 열고 파일 스트림 객체를 반환합니다.",
+      "example": "with open(\"data.txt\", \"r\", encoding=\"utf-8\") as f: text = f.read()"
+    },
+    {
+      "name": "json.dumps",
+      "signature": "dumps(obj, *, indent=None) -> str",
+      "module": "json",
+      "description": "Python 딕셔너리나 객체를 JSON 형식의 문자열로 직렬화합니다.",
+      "example": "json_str = json.dumps({\"name\": \"Alice\"}, indent=2)"
+    },
+    {
+      "name": "json.loads",
+      "signature": "loads(s) -> Any",
+      "module": "json",
+      "description": "JSON 형식의 문자열을 파싱하여 Python 딕셔너리나 리스트로 변환합니다.",
+      "example": "data = json.loads('{\"id\": 1}')"
+    },
+    {
+      "name": "pathlib.Path.read_text",
+      "signature": "read_text(encoding=None, errors=None) -> str",
+      "module": "pathlib",
+      "description": "경로에 위치한 파일의 내용을 텍스트 문자열로 한 번에 읽어옵니다.",
+      "example": "from pathlib import Path; content = Path(\"file.txt\").read_text(encoding=\"utf-8\")"
+    },
+    {
+      "name": "pathlib.Path.write_text",
+      "signature": "write_text(data, encoding=None, errors=None) -> int",
+      "module": "pathlib",
+      "description": "텍스트 데이터를 지정된 파일 경로에 덮어씁니다.",
+      "example": "Path(\"out.txt\").write_text(\"content\", encoding=\"utf-8\")"
+    },
+    {
+      "name": "os.environ.get",
+      "signature": "get(key, default=None) -> str | None",
+      "module": "os",
+      "description": "환경 변수 값을 조회하며 존재하지 않을 경우 기본값을 반환합니다.",
+      "example": "port = os.environ.get(\"PORT\", \"8000\")"
+    },
+    {
+      "name": "re.search",
+      "signature": "search(pattern, string, flags=0) -> Match | None",
+      "module": "re",
+      "description": "문자열 전체를 검색하여 정규 표현식 패턴과 처음 일치하는 매치 객체를 반환합니다.",
+      "example": "m = re.search(r\"\\d+\", \"item 42\"); num = m.group() if m else None"
+    },
+    {
+      "name": "datetime.now",
+      "signature": "now(tz=None) -> datetime",
+      "module": "datetime",
+      "description": "현재 로컬 일시를 나타내는 datetime 객체를 반환합니다.",
+      "example": "from datetime import datetime; current = datetime.now()"
+    },
+    {
+      "name": "math.sqrt",
+      "signature": "sqrt(x) -> float",
+      "module": "math",
+      "description": "숫자 x의 제곱근을 부동소수점으로 계산합니다.",
+      "example": "r = math.sqrt(25.0)"
+    },
+    {
+      "name": "random.choice",
+      "signature": "choice(seq) -> Any",
+      "module": "random",
+      "description": "비어있지 않은 시퀀스(리스트, 튜플 등)에서 무작위로 하나의 요소를 선택합니다.",
+      "example": "pick = random.choice([\"apple\", \"banana\", \"cherry\"])"
+    },
+    {
+      "name": "asyncio.run",
+      "signature": "run(main, *, debug=None) -> Any",
+      "module": "asyncio",
+      "description": "새로운 비동기 이벤트 루프를 생성하여 비동기 코루틴(coroutine)을 실행하고 완료 후 루프를 정리합니다.",
+      "example": "asyncio.run(main())"
+    },
+    {
+      "name": "functools.partial",
+      "signature": "partial(func, /, *args, **keywords)",
+      "module": "functools",
+      "description": "함수의 일부 인자를 미리 고정한 새로운 호출 가능한 부분 함수 객체를 생성합니다.",
+      "example": "base2 = functools.partial(int, base=2); num = base2(\"1010\")"
+    },
+    {
+      "name": "itertools.chain",
+      "signature": "chain(*iterables)",
+      "module": "itertools",
+      "description": "여러 이터러블을 연속된 하나의 긴 이터레이터로 연결합니다.",
+      "example": "combined = list(itertools.chain([1, 2], [3, 4]))"
+    }
+  ]
+}

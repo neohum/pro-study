@@ -217,12 +217,242 @@
   // ---- 가이드 코드 블록 하이라이트 ----
   function highlightGuide() {
     if (!window.hljs) return;
-    $$(".guide pre code").forEach(el => window.hljs.highlightElement(el));
+    $$(".guide pre code, .syntax-block pre code, .example-block pre code, .function-example pre code, pre.full-code code")
+      .forEach(el => window.hljs.highlightElement(el));
+  }
+
+  // ---- 레퍼런스 페이지 (/ref) ----
+  function initReference() {
+    const searchInput = $("#refSearchInput");
+    if (!searchInput) return;
+
+    const cards = $$(".grammar-card, .function-card");
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const text = (card.dataset.search || card.textContent).toLowerCase();
+        card.hidden = q !== "" && !text.includes(q);
+      });
+    });
+  }
+
+  // ---- Go Tour 필사 페이지 (/trace/go) ----
+  function initTourTracing() {
+    const typingPanel = $("#typingPanel");
+    if (!typingPanel || !window.__TOUR_LESSON_CODE__) return;
+
+    const rawCode = window.__TOUR_LESSON_CODE__;
+    let lines = rawCode.split("\n");
+    if (lines.length > 0 && lines[lines.length - 1] === "") {
+      lines.pop();
+    }
+
+    const tabs = $$(".trace-tab");
+    const fullcodePanel = $("#fullcodePanel");
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.toggle("active", t === tab));
+        const view = tab.dataset.view;
+        typingPanel.hidden = view !== "typing";
+        fullcodePanel.hidden = view !== "fullcode";
+      });
+    });
+
+    const btnCopy = $("#btnCopyCode");
+    if (btnCopy) {
+      btnCopy.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(rawCode);
+          toast("전체 코드가 클립보드에 복사되었습니다.");
+        } catch (_) {
+          toast("클립보드 복사에 실패했습니다.", true);
+        }
+      });
+    }
+
+    let curLineIdx = 0;
+    const prevContextEl = $("#traceContextPrev");
+    const nextContextEl = $("#traceContextNext");
+    const activeLineNumEl = $("#activeLineNum");
+    const targetGhostEl = $("#targetGhost");
+    const traceInput = $("#traceInput");
+    const progressFill = $("#traceProgressFill");
+    const progressText = $("#traceProgressText");
+    const lineIndexEl = $("#traceLineIndex");
+    const lineTotalEl = $("#traceLineTotal");
+    const completeBanner = $("#traceCompleteBanner");
+    const btnReset = $("#btnResetTrace");
+
+    if (lineTotalEl) lineTotalEl.textContent = lines.length;
+
+    function updateLine() {
+      if (curLineIdx >= lines.length) {
+        if (completeBanner) completeBanner.hidden = false;
+        $(".typing-active-line").style.display = "none";
+        progressFill.style.width = "100%";
+        progressText.textContent = "100%";
+        return;
+      }
+
+      const target = lines[curLineIdx];
+      const startPrev = Math.max(0, curLineIdx - 4);
+      prevContextEl.textContent = lines.slice(startPrev, curLineIdx).join("\n");
+      const endNext = Math.min(lines.length, curLineIdx + 5);
+      nextContextEl.textContent = lines.slice(curLineIdx + 1, endNext).join("\n");
+
+      activeLineNumEl.textContent = curLineIdx + 1;
+      targetGhostEl.textContent = target === "" ? "↵ (빈 줄: Enter를 누르세요)" : target;
+      traceInput.value = "";
+      traceInput.classList.remove("mismatch");
+      traceInput.focus();
+
+      const pct = Math.round((curLineIdx / lines.length) * 100);
+      progressFill.style.width = pct + "%";
+      progressText.textContent = pct + "%";
+      lineIndexEl.textContent = curLineIdx + 1;
+    }
+
+    traceInput.addEventListener("input", () => {
+      const target = lines[curLineIdx];
+      const val = traceInput.value;
+      if (target.startsWith(val)) {
+        traceInput.classList.remove("mismatch");
+      } else {
+        traceInput.classList.add("mismatch");
+      }
+    });
+
+    traceInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const target = lines[curLineIdx];
+        const val = traceInput.value;
+        if (target.trim() === "" || val.trimEnd() === target.trimEnd()) {
+          curLineIdx++;
+          updateLine();
+        } else {
+          traceInput.classList.add("mismatch");
+          toast("코드가 일치하지 않습니다. 다시 확인해주세요.", true);
+        }
+      }
+    });
+
+    if (btnReset) {
+      btnReset.addEventListener("click", () => {
+        curLineIdx = 0;
+        $(".typing-active-line").style.display = "flex";
+        if (completeBanner) completeBanner.hidden = true;
+        updateLine();
+        toast("필사를 처음부터 다시 시작합니다.");
+      });
+    }
+
+    updateLine();
+  }
+
+  // ---- 아이디어 제안소 (/ideas) ----
+  function initIdeas() {
+    const form = $("#ideaForm");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = $("#ideaTitle").value.trim();
+      const category = $("#ideaCategory").value;
+      const author = $("#ideaAuthor").value.trim() || "익명 러너";
+      const description = $("#ideaDesc").value.trim();
+
+      const submitBtn = $("#btnSubmitIdea");
+      submitBtn.disabled = true;
+
+      try {
+        const item = await api("POST", "/api/ideas", { title, category, description, author });
+        toast("아이디어가 성공적으로 제안되었습니다!");
+        form.reset();
+
+        // 새 카드 DOM 추가
+        const list = $("#ideasList");
+        const countEl = $("#ideasCount");
+        if (list) {
+          const card = document.createElement("article");
+          card.className = "idea-card";
+          card.dataset.id = item.id;
+          card.dataset.category = item.category;
+          card.innerHTML = `
+            <div class="idea-vote-box">
+              <button class="btn-vote" data-id="${item.id}" title="이 아이디어 추천하기">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <span class="vote-count">${item.votes}</span>
+              </button>
+            </div>
+            <div class="idea-content">
+              <div class="idea-meta">
+                <span class="badge badge-idea-cat">${item.category}</span>
+                <span class="idea-author">${item.author}</span>
+                <span class="idea-date">${item.createdAt}</span>
+              </div>
+              <h3 class="idea-card-title">${item.title}</h3>
+              <p class="idea-card-desc">${item.description}</p>
+            </div>
+          `;
+          list.prepend(card);
+          bindVoteButtons(card);
+        }
+        if (countEl) {
+          countEl.textContent = parseInt(countEl.textContent || "0", 10) + 1;
+        }
+      } catch (err) {
+        toast("아이디어 등록 실패: " + err.message, true);
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    function bindVoteButtons(scope) {
+      $$(".btn-vote", scope || document).forEach(btn => {
+        if (btn.dataset.bound) return;
+        btn.dataset.bound = "true";
+        btn.addEventListener("click", async () => {
+          const id = btn.dataset.id;
+          if (btn.classList.contains("voted")) return;
+          try {
+            const res = await api("POST", `/api/ideas/${id}/vote`);
+            btn.classList.add("voted");
+            const countEl = btn.querySelector(".vote-count");
+            if (countEl) countEl.textContent = res.votes;
+            toast("아이디어를 추천했습니다!");
+          } catch (err) {
+            toast("추천 실패: " + err.message, true);
+          }
+        });
+      });
+    }
+
+    bindVoteButtons();
+
+    // 카테고리 필터
+    const filterBtns = $$(".filter-btn");
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.toggle("active", b === btn));
+        const filter = btn.dataset.filter;
+        $$(".idea-card").forEach(card => {
+          if (filter === "all" || card.dataset.category === filter) {
+            card.hidden = false;
+          } else {
+            card.hidden = true;
+          }
+        });
+      });
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     initHome();
     initProject();
+    initReference();
+    initTourTracing();
+    initIdeas();
     highlightGuide();
   });
 })();

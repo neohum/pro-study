@@ -1,0 +1,81 @@
+{{define "content"}}
+<div class="ref-container">
+  <div class="ref-header">
+    <div class="ref-title-group">
+      <h1>{{.Doc.Name}} 문법 및 표준 라이브러리 레퍼런스</h1>
+      <span class="badge badge-version">{{.Doc.Version}}</span>
+    </div>
+    <p class="ref-overview">{{.Doc.Overview}}</p>
+  </div>
+
+  <div class="ref-lang-tabs" role="tablist">
+    <a href="/ref/c" class="ref-tab {{if eq .Doc.Lang "c"}}active{{end}}">C (C23)</a>
+    <a href="/ref/go" class="ref-tab {{if eq .Doc.Lang "go"}}active{{end}}">Go</a>
+    <a href="/ref/rust" class="ref-tab {{if eq .Doc.Lang "rust"}}active{{end}}">Rust</a>
+    <a href="/ref/python" class="ref-tab {{if eq .Doc.Lang "python"}}active{{end}}">Python</a>
+    <a href="/ref/typescript" class="ref-tab {{if eq .Doc.Lang "typescript"}}active{{end}}">TypeScript</a>
+    <a href="/ref/javascript" class="ref-tab {{if eq .Doc.Lang "javascript"}}active{{end}}">JavaScript</a>
+  </div>
+
+  <div class="ref-toolbar">
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="refSearchInput" placeholder="문법 항목이나 함수 이름(예: printf, Mutex, fmt, async)으로 검색..." autofocus>
+    </div>
+    <div class="ref-stats">
+      <span>문법 <strong>{{len .Doc.Grammar}}</strong>개</span>
+      <span>함수 <strong>{{len .Doc.Functions}}</strong>개</span>
+    </div>
+  </div>
+
+  <section class="ref-section" id="section-grammar">
+    <div class="section-head">
+      <h2>💡 핵심 문법 및 제어 구조</h2>
+      <span class="badge">{{len .Doc.Grammar}} 항목</span>
+    </div>
+    <div class="grammar-grid">
+      {{range .Doc.Grammar}}
+      <article class="grammar-card" data-search="{{.Title}} {{.Category}} {{.Summary}} {{.Syntax}}">
+        <div class="grammar-card-head">
+          <h3>{{.Title}}</h3>
+          <span class="badge badge-cat">{{.Category}}</span>
+        </div>
+        <p class="grammar-summary">{{.Summary}}</p>
+        <div class="syntax-block">
+          <div class="code-label">문법 구조</div>
+          <pre><code>{{.Syntax}}</code></pre>
+        </div>
+        <div class="example-block">
+          <div class="code-label">실전 예제</div>
+          <pre><code class="language-{{$.Doc.Lang}}">{{.Example}}</code></pre>
+        </div>
+      </article>
+      {{end}}
+    </div>
+  </section>
+
+  <section class="ref-section" id="section-functions">
+    <div class="section-head">
+      <h2>📚 자주 쓰이는 표준 라이브러리 함수</h2>
+      <span class="badge">{{len .Doc.Functions}} 함수</span>
+    </div>
+    <div class="functions-list">
+      {{range .Doc.Functions}}
+      <article class="function-card" data-search="{{.Name}} {{.Module}} {{.Description}} {{.Signature}}">
+        <div class="function-head">
+          <div class="fn-name-sig">
+            <h3 class="fn-name">{{.Name}}</h3>
+            <code class="fn-sig">{{.Signature}}</code>
+          </div>
+          <span class="badge badge-module">{{.Module}}</span>
+        </div>
+        <p class="function-desc">{{.Description}}</p>
+        <div class="function-example">
+          <pre><code class="language-{{$.Doc.Lang}}">{{.Example}}</code></pre>
+        </div>
+      </article>
+      {{end}}
+    </div>
+  </section>
+</div>
+{{end}}

@@ -1,0 +1,16 @@
+{
+  "id": "flow-defer",
+  "chapter": "flowcontrol",
+  "chapterTitle": "흐름 제어 (Flow Control)",
+  "order": 9,
+  "title": "Defer and Stacking",
+  "titleKo": "defer 지연 실행과 스택 구조",
+  "summaryKo": "defer 키워드는 함수가 반환될 때까지 실행을 지연시킵니다. 여러 개의 defer는 LIFO(후입선출) 스택 순서로 실행됩니다.",
+  "entry": "defer.go",
+  "concepts": [
+    "defer",
+    "LIFO 스택 실행",
+    "리소스 정리"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"카운팅 시작\")\n\n\tfor i := 0; i < 4; i++ {\n\t\tdefer fmt.Println(\"지연 출력:\", i)\n\t}\n\n\tfmt.Println(\"함수 본문 종료\")\n}\n"
+}

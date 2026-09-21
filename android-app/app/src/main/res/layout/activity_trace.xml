@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eink_bg"
+    android:orientation="vertical">
+
+    <!-- 상단 툴바 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/eink_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <Button
+            android:id="@+id/btn_trace_back"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="← 목록"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_trace_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:text="A Tour of Go 필사"
+            android:textColor="@color/eink_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_select_lesson"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="레슨 목록"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_clear_canvas"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="지우기"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_refresh_trace"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="새로고침"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/eink_border" />
+
+    <!-- 레슨 가이드 및 메타 설명 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/eink_surface"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_chapter_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_eink_badge"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="Basics"
+                android:textColor="@color/eink_text_primary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_lesson_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Lesson 1 / 19"
+                android:textColor="@color/eink_text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_lesson_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingMultiplier="1.3"
+            android:text="패키지 선언과 진입점..."
+            android:textColor="@color/eink_text_primary"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/eink_border" />
+
+    <!-- 필사 작업 영역 (고스트 텍스트 + 스타일러스 덧쓰기 캔버스 오버레이) -->
+    <FrameLayout
+        android:id="@+id/trace_canvas_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/eink_bg">
+
+        <ScrollView
+            android:id="@+id/scroll_ghost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <FrameLayout
+                    android:id="@+id/canvas_wrapper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="600dp"
+                    android:minHeight="800dp">
+
+                    <!-- 배경 Ghost 가이드 코드 -->
+                    <TextView
+                        android:id="@+id/tv_ghost_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:lineSpacingMultiplier="1.4"
+                        android:padding="16dp"
+                        android:text="package main\n\nfunc main() {\n}"
+                        android:textColor="#A0A0A0"
+                        android:textSize="16sp" />
+
+                    <!-- 스타일러스 덧쓰기 터치 캔버스 뷰 -->
+                    <com.prostudy.eink.ui.tracing.TracingDrawingView
+                        android:id="@+id/drawing_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/eink_border" />
+
+    <!-- 하단 레슨 네비게이션 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/eink_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <Button
+            android:id="@+id/btn_prev_lesson"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="← 이전 레슨"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_next_lesson"
+            style="@style/EinkButton.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="다음 레슨 →"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>

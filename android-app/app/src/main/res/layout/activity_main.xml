@@ -27,11 +27,20 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btn_open_trace"
+            style="@style/EinkButton.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="✍️ Go필사"
+            android:textSize="12sp" />
+
+        <Button
             android:id="@+id/btn_refresh"
             style="@style/EinkButton"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:text="화면 새로고침"
+            android:text="새로고침"
             android:textSize="12sp" />
     </LinearLayout>
 

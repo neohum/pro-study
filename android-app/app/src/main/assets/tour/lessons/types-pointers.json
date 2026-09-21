@@ -1,0 +1,16 @@
+{
+  "id": "types-pointers",
+  "chapter": "moretypes",
+  "chapterTitle": "자료구조 (More Types)",
+  "order": 10,
+  "title": "Pointers",
+  "titleKo": "포인터와 메모리 주소",
+  "summaryKo": "Go는 포인터를 지원하지만 C와 달리 포인터 연산(pointer arithmetic)은 불가능하여 안전합니다.",
+  "entry": "pointers.go",
+  "concepts": [
+    "포인터 *T",
+    "주소 연산자 &",
+    "역참조"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\ti, j := 42, 2701\n\n\tp := &i         // i의 주소를 가리킴\n\tfmt.Println(\"p가 가리키는 값:\", *p)\n\t*p = 21         // p를 통해 i의 값을 변경\n\tfmt.Println(\"변경된 i:\", i)\n\n\tp = &j         // j의 주소를 가리킴\n\t*p = *p / 37   // p를 통해 j를 나눔\n\tfmt.Println(\"변경된 j:\", j)\n}\n"
+}

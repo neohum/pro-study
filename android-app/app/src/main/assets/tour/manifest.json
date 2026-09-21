@@ -1,0 +1,140 @@
+{
+  "courseId": "tour-go",
+  "title": "A Tour of Go 실전 필사 코스",
+  "description": "공식 Go 튜토리얼(A Tour of Go)의 핵심 문법, 제어문, 자료구조, 메서드, 제네릭, 동시성을 한 줄씩 따라 쓰며 체화하는 필사 코스",
+  "totalChapters": 6,
+  "totalLessons": 19,
+  "chapters": [
+    {
+      "id": "basics",
+      "title": "기본 문법 (Basics)",
+      "lessons": [
+        {
+          "id": "basics-packages",
+          "title": "Packages",
+          "titleKo": "패키지 선언과 진입점"
+        },
+        {
+          "id": "basics-imports",
+          "title": "Factored Imports",
+          "titleKo": "그룹화된 패키지 임포트"
+        },
+        {
+          "id": "basics-functions",
+          "title": "Functions",
+          "titleKo": "함수 선언과 매개변수 타입"
+        },
+        {
+          "id": "basics-multiple-results",
+          "title": "Multiple Results",
+          "titleKo": "다중 반환값 함수"
+        },
+        {
+          "id": "basics-variables",
+          "title": "Variables and Short Declaration",
+          "titleKo": "변수 선언과 := 단축 연산자"
+        }
+      ]
+    },
+    {
+      "id": "flowcontrol",
+      "title": "흐름 제어 (Flow Control)",
+      "lessons": [
+        {
+          "id": "flow-for",
+          "title": "For Loop",
+          "titleKo": "기본 for 반복문"
+        },
+        {
+          "id": "flow-if-short",
+          "title": "If with Short Statement",
+          "titleKo": "if 단축 선언문"
+        },
+        {
+          "id": "flow-switch",
+          "title": "Switch without Condition",
+          "titleKo": "조건 없는 switch 분기문"
+        },
+        {
+          "id": "flow-defer",
+          "title": "Defer and Stacking",
+          "titleKo": "defer 지연 실행과 스택 구조"
+        }
+      ]
+    },
+    {
+      "id": "moretypes",
+      "title": "자료구조 (More Types)",
+      "lessons": [
+        {
+          "id": "types-pointers",
+          "title": "Pointers",
+          "titleKo": "포인터와 메모리 주소"
+        },
+        {
+          "id": "types-structs",
+          "title": "Structs and Fields",
+          "titleKo": "구조체 정의와 필드 접근"
+        },
+        {
+          "id": "types-slices",
+          "title": "Slices and Append",
+          "titleKo": "슬라이스 조작과 동적 추가"
+        },
+        {
+          "id": "types-range",
+          "title": "Range Loop",
+          "titleKo": "range를 이용한 슬라이스 순회"
+        },
+        {
+          "id": "types-maps",
+          "title": "Maps and Mutation",
+          "titleKo": "맵 생성과 키-값 조작"
+        }
+      ]
+    },
+    {
+      "id": "methods",
+      "title": "메서드와 인터페이스 (Methods & Interfaces)",
+      "lessons": [
+        {
+          "id": "methods-receivers",
+          "title": "Methods on Types",
+          "titleKo": "구조체 리시버 메서드"
+        },
+        {
+          "id": "methods-interfaces",
+          "title": "Interfaces",
+          "titleKo": "암시적 인터페이스 구현"
+        }
+      ]
+    },
+    {
+      "id": "generics",
+      "title": "제네릭 (Generics)",
+      "lessons": [
+        {
+          "id": "generics-type-parameters",
+          "title": "Type Parameters",
+          "titleKo": "제네릭 타입 매개변수와 comparable"
+        }
+      ]
+    },
+    {
+      "id": "concurrency",
+      "title": "동시성 (Concurrency)",
+      "lessons": [
+        {
+          "id": "concurrency-goroutines",
+          "title": "Goroutines and Channels",
+          "titleKo": "고루틴과 채널 동기화"
+        },
+        {
+          "id": "concurrency-select",
+          "title": "Select Statement",
+          "titleKo": "select 다중 채널 대기"
+        }
+      ]
+    }
+  ]
+}

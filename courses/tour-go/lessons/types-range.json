@@ -1,0 +1,16 @@
+{
+  "id": "types-range",
+  "chapter": "moretypes",
+  "chapterTitle": "자료구조 (More Types)",
+  "order": 13,
+  "title": "Range Loop",
+  "titleKo": "range를 이용한 슬라이스 순회",
+  "summaryKo": "for와 range를 조합하면 슬라이스나 맵을 순회할 때 인덱스와 복사된 요소 값을 깔끔하게 얻을 수 있습니다.",
+  "entry": "range.go",
+  "concepts": [
+    "range",
+    "인덱스/값 언패킹",
+    "언더스코어 _ 무시"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nvar pow = []int{1, 2, 4, 8, 16, 32, 64, 128}\n\nfunc main() {\n\tfor i, v := range pow {\n\t\tfmt.Printf(\"2**%d = %d\\n\", i, v)\n\t}\n}\n"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "basics-variables",
+  "chapter": "basics",
+  "chapterTitle": "기본 문법 (Basics)",
+  "order": 5,
+  "title": "Variables and Short Declaration",
+  "titleKo": "변수 선언과 := 단축 연산자",
+  "summaryKo": "var 키워드로 변수를 선언하거나, 함수 내부에서는 := 연산자로 타입 추론과 초기화를 한 번에 수행합니다.",
+  "entry": "variables.go",
+  "concepts": [
+    "var",
+    ":= 단축 선언",
+    "타입 추론"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nvar c, python, java bool\n\nfunc main() {\n\tvar i int = 1\n\tk := 3 // 함수 내부 단축 선언\n\tc, python, java = true, false, \"no\" == \"yes\"\n\tfmt.Println(i, k, c, python, java)\n}\n"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "flow-if-short",
+  "chapter": "flowcontrol",
+  "chapterTitle": "흐름 제어 (Flow Control)",
+  "order": 7,
+  "title": "If with Short Statement",
+  "titleKo": "if 단축 선언문",
+  "summaryKo": "for처럼 if 조건문 앞에도 간단한 실행문을 배치할 수 있으며, 선언된 변수의 유효 범위는 if-else 블록 내부로 제한됩니다.",
+  "entry": "if_short.go",
+  "concepts": [
+    "if 초기화식",
+    "변수 스코프",
+    "math.Pow"
+  ],
+  "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc pow(x, n, lim float64) float64 {\n\tif v := math.Pow(x, n); v < lim {\n\t\treturn v\n\t} else {\n\t\tfmt.Printf(\"%g >= %g\\n\", v, lim)\n\t}\n\treturn lim\n}\n\nfunc main() {\n\tfmt.Println(\"결과 1:\", pow(3, 2, 10))\n\tfmt.Println(\"결과 2:\", pow(3, 3, 20))\n}\n"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "basics-multiple-results",
+  "chapter": "basics",
+  "chapterTitle": "기본 문법 (Basics)",
+  "order": 4,
+  "title": "Multiple Results",
+  "titleKo": "다중 반환값 함수",
+  "summaryKo": "Go 함수는 여러 개의 값을 동시에 반환할 수 있어 에러 핸들링과 값 전달이 매우 직관적입니다.",
+  "entry": "multiple_results.go",
+  "concepts": [
+    "다중 반환값",
+    "문자열 교환"
+  ],
+  "code": "package main\n\nimport \"fmt\"\n\nfunc swap(x, y string) (string, string) {\n\treturn y, x\n}\n\nfunc main() {\n\ta, b := swap(\"hello\", \"world\")\n\tfmt.Println(a, b)\n}\n"
+}
