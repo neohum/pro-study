@@ -1,0 +1,30 @@
+{
+  "id": "python/08-git-mini",
+  "title": "미니 Git 객체 저장소",
+  "summary": "SHA-1 해시와 zlib 압축으로 blob, tree, commit 객체를 생성하고 복원하는 Git 코어",
+  "lang": "python",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": [
+    "hashlib SHA-1",
+    "zlib 압축",
+    "Content-Addressable Storage",
+    "Git 객체 포맷",
+    "바이너리 I/O"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

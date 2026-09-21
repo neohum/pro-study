@@ -1,0 +1,29 @@
+{
+  "id": "typescript/06-event-emitter",
+  "title": "타입 안전 Event Emitter",
+  "summary": "이벤트 맵(EventMap) 제네릭을 기반으로 이벤트 이름과 페이로드 타입을 100% 검증",
+  "lang": "typescript",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": [
+    "Generic EventMap",
+    "Indexed Access Types",
+    "Rest Parameters with Tuples",
+    "Once & Off",
+    "Pub/Sub"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

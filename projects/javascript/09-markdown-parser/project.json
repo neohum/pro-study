@@ -1,0 +1,29 @@
+{
+  "id": "javascript/09-markdown-parser",
+  "title": "스트림 기반 마크다운 변환기",
+  "summary": "제목, 목록, 코드 블록, 인라인 강조를 처리하여 표준 HTML로 변환하는 파서",
+  "lang": "javascript",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": [
+    "블록 vs 인라인 파싱",
+    "상태 전이",
+    "정규식 치환",
+    "HTML 변환",
+    "버퍼 스트리밍"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

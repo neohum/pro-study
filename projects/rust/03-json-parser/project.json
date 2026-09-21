@@ -1,0 +1,30 @@
+{
+  "id": "rust/03-json-parser",
+  "title": "경량 JSON 파서 & 직렬화기",
+  "summary": "재귀적 열거형(Box<JsonValue>)을 사용해 JSON을 AST로 파싱하고 문자열로 재구성",
+  "lang": "rust",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": [
+    "재귀적 타입과 Box",
+    "상태 머신 렉서",
+    "Display 트레이트 구현",
+    "슬라이스 슬라이싱",
+    "Result 전파(?)"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

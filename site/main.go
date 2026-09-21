@@ -450,7 +450,8 @@ func (s *server) handleAPKDownload(w http.ResponseWriter, r *http.Request) {
 		jsonError(w, 404, "pro-study APK 파일이 아직 빌드되지 않았습니다. 웹 페이지에서 빌드를 먼저 실행해주세요.")
 		return
 	}
-	w.Header().Set("Content-Disposition", "attachment; filename=\"pro-study.apk\"")
+	fileName := s.apkMgr.APKFileName()
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", fileName))
 	w.Header().Set("Content-Type", "application/vnd.android.package-archive")
 	w.Header().Set("Content-Length", fmt.Sprintf("%d", st.Size()))
 	http.ServeFile(w, r, apkPath)

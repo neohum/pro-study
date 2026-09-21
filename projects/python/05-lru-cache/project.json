@@ -1,0 +1,30 @@
+{
+  "id": "python/05-lru-cache",
+  "title": "이중 연결 리스트 LRU 캐시",
+  "summary": "이중 연결 리스트와 해시맵으로 O(1) 조회/삽입/만료를 보장하는 LRU 캐시",
+  "lang": "python",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": [
+    "이중 연결 리스트",
+    "해시 테이블",
+    "O(1) 노드 이동",
+    "캐시 축출(Eviction)",
+    "객체지향 설계"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

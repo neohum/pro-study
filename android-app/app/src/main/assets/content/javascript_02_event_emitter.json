@@ -1,0 +1,23 @@
+{
+  "id": "javascript/02-event-emitter",
+  "lang": "javascript",
+  "order": 2,
+  "title": "Pub/Sub 패턴 이벤트 브로커",
+  "summary": "on, once, emit, off 및 네임스페이스 와일드카드를 지원하는 이벤트 발행/구독기",
+  "difficulty": 1,
+  "concepts": [
+    "클래스와 Private 필드(#)",
+    "Map과 Set",
+    "콜백 패턴",
+    "메모리 누수 방지",
+    "옵저버 패턴"
+  ],
+  "entry": "main.js",
+  "readme": "# 02. Pub/Sub 패턴 이벤트 브로커\n\n## 무엇을 만드는가\n\non, once, emit, off 및 네임스페이스 와일드카드를 지원하는 이벤트 발행/구독기\n\n## 왜 이 프로젝트인가\n\n자바스크립트의 비동기 이벤트 루프, 프로토타입 체계, 모던 ES2024 문법을 실전 프로젝트를 통해 깊이 있게 학습합니다.\n외부 프레임워크 없이 순수 자바스크립트로 핵심 엔진을 직접 작성함으로써 언어의 동작 원리를 체화합니다.\n\n## 핵심 개념\n\n### 개념 1: 클래스와 Private 필드(#)\n\n- 클래스와 Private 필드(#)의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 2: Map과 Set\n\n- Map과 Set의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 3: 콜백 패턴\n\n- 콜백 패턴의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 4: 메모리 누수 방지\n\n- 메모리 누수 방지의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 5: 옵저버 패턴\n\n- 옵저버 패턴의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 팩토리 함수\n\n기본 자료구조와 진입점 함수를 선언합니다.\n\n### Step 2: 핵심 알고리즘 구현\n\n요구사항에 맞춘 주요 비즈니스 로직 및 알고리즘을 작성합니다.\n\n### Step 3: 부가 기능 및 예외 처리\n\n에러 케이스와 엣지 케이스를 안전하게 처리하는 방어 로직을 추가합니다.\n\n### Step 4: 최적화 및 상태 갱신\n\n불필요한 연산을 줄이고 데이터 정합성을 유지하도록 최적화합니다.\n\n### Step 5: REPL 인터페이스 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError: Unexpected token | Node 버전 또는 모듈 문법 불일치 | 최신 Node.js 환경에서 CommonJS/ESM 설정을 확인합니다. |\n| 비동기 출력 순서 뒤섞임 | Promise 미처리 또는 비동기 락 누락 | async/await 및 큐 체이닝 순서를 점검합니다. |\n\n## 더 나아가기\n\n- 대규모 데이터셋 벤치마크 및 메모리 프로파일링\n- Worker Threads를 활용한 멀티코어 병렬 처리\n\n## 참고\n\n- MDN Web Docs JavaScript: <https://developer.mozilla.org/ko/docs/Web/JavaScript>\n",
+  "starterCode": {
+    "main.js": "// 02-event-emitter (starter)\nconst readline = require('readline');\n\n// TODO(step-1): EventEmitter 클래스 및 리스너 저장소\nclass EventEmitter {\n  #events = new Map();\n\n  // TODO(step-2): on (지속 리스너 등록)\n  on(event, listener) {}\n\n  // TODO(step-3): once (일회성 리스너 등록)\n  once(event, listener) {}\n\n  // TODO(step-4): emit (이벤트 발행)\n  emit(event, ...args) {}\n\n  // TODO(step-5): off (리스너 해제)\n  off(event, listener) {}\n}\n\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', () => {});\n"
+  },
+  "solutionCode": {
+    "main.js": "// 02-event-emitter (solution)\nconst readline = require('readline');\n\nclass EventEmitter {\n  #events = new Map();\n\n  on(event, fn) {\n    if (!this.#events.has(event)) this.#events.set(event, []);\n    this.#events.get(event).push({ fn, once: false });\n  }\n\n  once(event, fn) {\n    if (!this.#events.has(event)) this.#events.set(event, []);\n    this.#events.get(event).push({ fn, once: true });\n  }\n\n  emit(event, ...args) {\n    if (!this.#events.has(event)) return;\n    const listeners = this.#events.get(event);\n    const keep = [];\n    for (const item of listeners) {\n      item.fn(...args);\n      if (!item.once) keep.push(item);\n    }\n    this.#events.set(event, keep);\n  }\n\n  off(event) {\n    this.#events.delete(event);\n  }\n}\n\nconst emitter = new EventEmitter();\nconst rl = readline.createInterface({ input: process.stdin });\n\nrl.on('line', (line) => {\n  line = line.trim();\n  if (!line) return;\n  const parts = line.split(' ');\n  const cmd = parts[0];\n  if (cmd === 'on') {\n    const ev = parts[1];\n    const prefix = parts.slice(2).join(' ');\n    emitter.on(ev, (arg) => console.log(`${prefix}: ${arg}`));\n  } else if (cmd === 'once') {\n    const ev = parts[1];\n    const prefix = parts.slice(2).join(' ');\n    emitter.once(ev, (arg) => console.log(`${prefix}: ${arg}`));\n  } else if (cmd === 'emit') {\n    const ev = parts[1];\n    const data = parts.slice(2).join(' ');\n    emitter.emit(ev, data);\n  }\n});\n"
+  }
+}

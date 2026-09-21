@@ -1,0 +1,23 @@
+{
+  "id": "javascript/03-async-queue",
+  "lang": "javascript",
+  "order": 3,
+  "title": "비동기 동시성 제어 작업 큐",
+  "summary": "동시 실행 작업 수(concurrency)를 제한하며 순차/병렬 작업을 제어하는 태스크 러너",
+  "difficulty": 2,
+  "concepts": [
+    "Promise",
+    "async/await",
+    "큐(Queue) 자료구조",
+    "동시성 제한",
+    "마이크로태스크"
+  ],
+  "entry": "main.js",
+  "readme": "# 03. 비동기 동시성 제어 작업 큐\n\n## 무엇을 만드는가\n\n동시 실행 작업 수(concurrency)를 제한하며 순차/병렬 작업을 제어하는 태스크 러너\n\n## 왜 이 프로젝트인가\n\n자바스크립트의 비동기 이벤트 루프, 프로토타입 체계, 모던 ES2024 문법을 실전 프로젝트를 통해 깊이 있게 학습합니다.\n외부 프레임워크 없이 순수 자바스크립트로 핵심 엔진을 직접 작성함으로써 언어의 동작 원리를 체화합니다.\n\n## 핵심 개념\n\n### 개념 1: Promise\n\n- Promise의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 2: async/await\n\n- async/await의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 3: 큐(Queue) 자료구조\n\n- 큐(Queue) 자료구조의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 4: 동시성 제한\n\n- 동시성 제한의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 5: 마이크로태스크\n\n- 마이크로태스크의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 팩토리 함수\n\n기본 자료구조와 진입점 함수를 선언합니다.\n\n### Step 2: 핵심 알고리즘 구현\n\n요구사항에 맞춘 주요 비즈니스 로직 및 알고리즘을 작성합니다.\n\n### Step 3: 부가 기능 및 예외 처리\n\n에러 케이스와 엣지 케이스를 안전하게 처리하는 방어 로직을 추가합니다.\n\n### Step 4: 최적화 및 상태 갱신\n\n불필요한 연산을 줄이고 데이터 정합성을 유지하도록 최적화합니다.\n\n### Step 5: REPL 인터페이스 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError: Unexpected token | Node 버전 또는 모듈 문법 불일치 | 최신 Node.js 환경에서 CommonJS/ESM 설정을 확인합니다. |\n| 비동기 출력 순서 뒤섞임 | Promise 미처리 또는 비동기 락 누락 | async/await 및 큐 체이닝 순서를 점검합니다. |\n\n## 더 나아가기\n\n- 대규모 데이터셋 벤치마크 및 메모리 프로파일링\n- Worker Threads를 활용한 멀티코어 병렬 처리\n\n## 참고\n\n- MDN Web Docs JavaScript: <https://developer.mozilla.org/ko/docs/Web/JavaScript>\n",
+  "starterCode": {
+    "main.js": "// 03-async-queue (starter)\nconst readline = require('readline');\n\n// TODO(step-1): TaskQueue 클래스 생성자 (concurrency 제어)\nclass TaskQueue {\n  constructor(concurrency = 1) {\n    this.concurrency = concurrency;\n    this.queue = [];\n    this.running = 0;\n  }\n\n  // TODO(step-2): 태스크 등록 (add)\n  add(fn) {\n    return Promise.resolve();\n  }\n\n  // TODO(step-3): 다음 태스크 실행 스케줄러 (next)\n  #next() {}\n\n  // TODO(step-4): 완료 대기 (drain)\n  drain() {\n    return Promise.resolve();\n  }\n}\n\n// TODO(step-5): REPL 파이프라인\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', () => {});\n"
+  },
+  "solutionCode": {
+    "main.js": "// 03-async-queue (solution)\nconst readline = require('readline');\n\nclass TaskQueue {\n  constructor(concurrency = 1) {\n    this.concurrency = concurrency;\n    this.queue = [];\n    this.running = 0;\n  }\n\n  add(fn) {\n    return new Promise((resolve, reject) => {\n      this.queue.push({ fn, resolve, reject });\n      this.#next();\n    });\n  }\n\n  #next() {\n    while (this.running < this.concurrency && this.queue.length > 0) {\n      const { fn, resolve, reject } = this.queue.shift();\n      this.running++;\n      Promise.resolve()\n        .then(() => fn())\n        .then(resolve, reject)\n        .finally(() => {\n          this.running--;\n          this.#next();\n        });\n    }\n  }\n}\n\nasync function main() {\n  const rl = readline.createInterface({ input: process.stdin });\n  const lines = [];\n  for await (const line of rl) {\n    if (line.trim()) lines.push(line.trim());\n  }\n\n  if (lines.length === 0) return;\n  const cap = parseInt(lines[0].replace('concurrency ', ''), 10) || 1;\n  const q = new TaskQueue(cap);\n\n  const tasks = lines.slice(1).map((name) => () => {\n    return new Promise((resolve) => {\n      console.log(`Task ${name} done`);\n      resolve();\n    });\n  });\n\n  await Promise.all(tasks.map((t) => q.add(t)));\n}\n\nmain();\n"
+  }
+}

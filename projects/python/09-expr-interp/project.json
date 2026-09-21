@@ -1,0 +1,30 @@
+{
+  "id": "python/09-expr-interp",
+  "title": "S-표현식 Lisp 인터프리터",
+  "summary": "렉서, AST 파서, 렉시컬 스코프 환경을 갖추어 기본 산술과 변수 정의를 수행하는 인터프리터",
+  "lang": "python",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": [
+    "S-표현식 파싱",
+    "재귀 하강",
+    "환경 프레임(Scope)",
+    "클로저와 평가기",
+    "AST 순회"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

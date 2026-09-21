@@ -1,0 +1,23 @@
+{
+  "id": "javascript/06-template-engine",
+  "lang": "javascript",
+  "order": 6,
+  "title": "미니 템플릿 엔진",
+  "summary": "Mustache 스타일의 변수 치환({{var}}), 반복문({{#each}}), 조건문({{#if}}) 템플릿 엔진",
+  "difficulty": 3,
+  "concepts": [
+    "정규표현식 캡처",
+    "AST 변환",
+    "스코프 체인",
+    "HTML 엔티티 이스케이프",
+    "문자열 컴파일"
+  ],
+  "entry": "main.js",
+  "readme": "# 06. 미니 템플릿 엔진\n\n## 무엇을 만드는가\n\nMustache 스타일의 변수 치환({{var}}), 반복문({{#each}}), 조건문({{#if}}) 템플릿 엔진\n\n## 왜 이 프로젝트인가\n\n자바스크립트의 비동기 이벤트 루프, 프로토타입 체계, 모던 ES2024 문법을 실전 프로젝트를 통해 깊이 있게 학습합니다.\n외부 프레임워크 없이 순수 자바스크립트로 핵심 엔진을 직접 작성함으로써 언어의 동작 원리를 체화합니다.\n\n## 핵심 개념\n\n### 개념 1: 정규표현식 캡처\n\n- 정규표현식 캡처의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 2: AST 변환\n\n- AST 변환의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 3: 스코프 체인\n\n- 스코프 체인의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 4: HTML 엔티티 이스케이프\n\n- HTML 엔티티 이스케이프의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 5: 문자열 컴파일\n\n- 문자열 컴파일의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 팩토리 함수\n\n기본 자료구조와 진입점 함수를 선언합니다.\n\n### Step 2: 핵심 알고리즘 구현\n\n요구사항에 맞춘 주요 비즈니스 로직 및 알고리즘을 작성합니다.\n\n### Step 3: 부가 기능 및 예외 처리\n\n에러 케이스와 엣지 케이스를 안전하게 처리하는 방어 로직을 추가합니다.\n\n### Step 4: 최적화 및 상태 갱신\n\n불필요한 연산을 줄이고 데이터 정합성을 유지하도록 최적화합니다.\n\n### Step 5: REPL 인터페이스 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError: Unexpected token | Node 버전 또는 모듈 문법 불일치 | 최신 Node.js 환경에서 CommonJS/ESM 설정을 확인합니다. |\n| 비동기 출력 순서 뒤섞임 | Promise 미처리 또는 비동기 락 누락 | async/await 및 큐 체이닝 순서를 점검합니다. |\n\n## 더 나아가기\n\n- 대규모 데이터셋 벤치마크 및 메모리 프로파일링\n- Worker Threads를 활용한 멀티코어 병렬 처리\n\n## 참고\n\n- MDN Web Docs JavaScript: <https://developer.mozilla.org/ko/docs/Web/JavaScript>\n",
+  "starterCode": {
+    "main.js": "// 06-template-engine (starter)\nconst readline = require('readline');\n\n// TODO(step-1): 토크나이저 (변수, 블록 시작/종료 태그)\nfunction tokenize(template) {\n  return [];\n}\n\n// TODO(step-2): 변수 치환 ({{name}})\nfunction renderVariables(template, data) {\n  return template;\n}\n\n// TODO(step-3): 조건문 블록 처리 ({{#if condition}})\nfunction renderConditionals(template, data) {\n  return template;\n}\n\n// TODO(step-4): 반복문 블록 처리 ({{#each list}})\nfunction renderLoops(template, data) {\n  return template;\n}\n\n// TODO(step-5): 통합 렌더러\nfunction render(template, data) {\n  return \"\";\n}\n\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', () => {});\n"
+  },
+  "solutionCode": {
+    "main.js": "// 06-template-engine (solution)\nconst readline = require('readline');\n\nfunction render(template, data) {\n  // 1. Loops: {{#each list}}...{{/each}}\n  let out = template.replace(/\\{\\{#each\\s+(\\w+)\\}\\}([\\s\\S]*?)\\{\\{\\/each\\}\\}/g, (_, key, inner) => {\n    const list = data[key] || [];\n    return list.map((item) => {\n      let itemStr = inner;\n      if (typeof item === 'object') {\n        for (const k of Object.keys(item)) {\n          itemStr = itemStr.replace(new RegExp(`\\\\{\\\\{item\\\\.${k}\\\\}\\\\}`, 'g'), item[k]);\n        }\n      } else {\n        itemStr = itemStr.replace(/\\{\\{this\\}\\}/g, item);\n      }\n      return itemStr.trim();\n    }).join('\\n');\n  });\n\n  // 2. Conditionals: {{#if cond}}...{{/if}}\n  out = out.replace(/\\{\\{#if\\s+(\\w+)\\}\\}([\\s\\S]*?)\\{\\{\\/if\\}\\}/g, (_, key, inner) => {\n    return data[key] ? inner.trim() : '';\n  });\n\n  // 3. Simple variables: {{var}}\n  out = out.replace(/\\{\\{(\\w+)\\}\\}/g, (_, key) => {\n    return data[key] !== undefined ? data[key] : '';\n  });\n\n  return out.trim();\n}\n\nasync function main() {\n  const rl = readline.createInterface({ input: process.stdin });\n  let tpl = '';\n  let dataStr = '';\n  let isData = false;\n\n  for await (const line of rl) {\n    if (line.trim() === '---DATA---') {\n      isData = true;\n      continue;\n    }\n    if (!isData) {\n      tpl += (tpl ? '\\n' : '') + line;\n    } else {\n      dataStr += (dataStr ? '\\n' : '') + line;\n    }\n  }\n\n  const data = JSON.parse(dataStr);\n  console.log(render(tpl, data));\n}\n\nmain();\n"
+  }
+}

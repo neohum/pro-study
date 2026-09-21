@@ -1,0 +1,6 @@
+cap 1
+put x 99
+get x
+put y 100
+get x
+get y

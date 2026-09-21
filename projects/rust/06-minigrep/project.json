@@ -1,0 +1,30 @@
+{
+  "id": "rust/06-minigrep",
+  "title": "파일 검색 및 패턴 매처",
+  "summary": "대소문자 무시 플래그, 줄 번호 출력, 패턴 매칭을 지원하는 minigrep 도구",
+  "lang": "rust",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": [
+    "std::fs & std::env",
+    "환경 변수 처리",
+    "TDD와 단위 테스트",
+    "에러 래핑",
+    "반복자 소비"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

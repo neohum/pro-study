@@ -1,0 +1,29 @@
+{
+  "id": "typescript/02-type-validator",
+  "title": "런타임 스키마 검증기 (Zod-like)",
+  "summary": "정적 타입 추론(infer)과 런타임 유효성 검증을 결합한 타입스크립트 스키마 라이브러리",
+  "lang": "typescript",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "Type Inference (infer)",
+    "Generic Constraints",
+    "Conditional Types",
+    "타입 서술어(is)",
+    "Builder Pattern"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

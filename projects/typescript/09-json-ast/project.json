@@ -1,0 +1,29 @@
+{
+  "id": "typescript/09-json-ast",
+  "title": "JSON AST 파서 & 타입 변환기",
+  "summary": "JSON 문자열을 구문 분석하여 강력한 타입의 AST 노드 트리로 변환하고 순회",
+  "lang": "typescript",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": [
+    "Recursive Type Definition",
+    "Tagged Union AST",
+    "Visitor Pattern",
+    "Recursive Descent Parsing",
+    "JSON Serialization"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

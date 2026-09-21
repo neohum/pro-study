@@ -24,7 +24,7 @@
         <div class="apk-meta-box">
           <div class="meta-row">
             <span class="meta-label">패키지 파일</span>
-            <span class="meta-val code-val">pro-study.apk</span>
+            <span class="meta-val code-val" id="apkFileName">{{if .Status.FileName}}{{.Status.FileName}}{{else}}pro-study-v1.1.0.apk{{end}}</span>
           </div>
           <div class="meta-row">
             <span class="meta-label">파일 크기</span>
@@ -43,7 +43,7 @@
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            <span id="btnDownloadText">{{if .Status.Exists}}pro-study APK 다운로드 ({{.Status.SizeFormatted}}){{else}}APK 빌드 필요{{end}}</span>
+            <span id="btnDownloadText">{{if .Status.Exists}}{{.Status.FileName}} 다운로드 ({{.Status.SizeFormatted}}){{else}}APK 빌드 필요{{end}}</span>
           </a>
 
           <button id="btnBuild" class="btn btn-secondary" type="button" {{if .Status.IsBuilding}}disabled{{end}}>

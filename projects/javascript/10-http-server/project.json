@@ -1,0 +1,29 @@
+{
+  "id": "javascript/10-http-server",
+  "title": "Node.js 기반 경량 HTTP 라우팅 서버",
+  "summary": "URL 경로 매칭, 쿼리스트링 파싱, JSON 직렬화 및 미들웨어 파이프라인을 구현",
+  "lang": "javascript",
+  "order": 10,
+  "difficulty": 5,
+  "concepts": [
+    "HTTP 프로토콜",
+    "라우팅 테이블",
+    "미들웨어 체인",
+    "Content-Type 처리",
+    "상태 코드"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

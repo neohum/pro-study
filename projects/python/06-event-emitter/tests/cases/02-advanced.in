@@ -1,0 +1,3 @@
+once order.placed Paid
+emit order.placed 100
+emit order.placed 200

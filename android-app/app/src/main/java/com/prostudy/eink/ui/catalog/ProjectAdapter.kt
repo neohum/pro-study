@@ -39,7 +39,16 @@ class ProjectAdapter(
         private val tvConcepts: TextView = itemView.findViewById(R.id.tv_card_concepts)
 
         fun bind(item: ProjectSummary) {
-            tvNum.text = String.format("%02d", item.order)
+            val langTag = when (item.lang.lowercase()) {
+                "c" -> "C23"
+                "go" -> "GO"
+                "rust" -> "RUST"
+                "python" -> "PY"
+                "typescript" -> "TS"
+                "javascript" -> "JS"
+                else -> item.lang.uppercase()
+            }
+            tvNum.text = "[$langTag] %02d".format(item.order)
             tvTitle.text = item.title
             val stars = "★".repeat(item.difficulty.coerceIn(1, 5)) +
                     "☆".repeat((5 - item.difficulty).coerceIn(0, 4))

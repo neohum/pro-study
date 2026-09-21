@@ -1,0 +1,30 @@
+{
+  "id": "python/02-text-analyzer",
+  "title": "텍스트 통계 및 단어 빈도 분석기",
+  "summary": "텍스트 스트림을 읽어 단어 수, 줄 수, 빈도수 TOP N을 산출하는 텍스트 분석기",
+  "lang": "python",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "collections.Counter",
+    "re 정규표현식",
+    "sys.stdin 스트림",
+    "제너레이터",
+    "딕셔너리 정렬"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

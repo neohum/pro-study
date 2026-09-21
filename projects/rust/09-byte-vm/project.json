@@ -1,0 +1,30 @@
+{
+  "id": "rust/09-byte-vm",
+  "title": "스택 기반 바이트코드 가상머신",
+  "summary": "바이트코드 명령어 집합(Push, Pop, Add, Sub, Mul, Print)을 스택 머신에서 순차 실행",
+  "lang": "rust",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": [
+    "바이트코드 인터프리터",
+    "OpCode 열거형",
+    "스택 포인터 & 오버플로 방지",
+    "런타임 에러 처리",
+    "2-Pass 디스패치"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

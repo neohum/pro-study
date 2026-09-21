@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sync"
 	"time"
@@ -49,8 +50,45 @@ func NewManager(root string) *Manager {
 	}
 }
 
+// VersionName은 android-app/app/build.gradle.kts에서 versionName을 읽어온다.
+func (m *Manager) VersionName() string {
+	gradleFile := filepath.Join(m.root, "android-app", "app", "build.gradle.kts")
+	data, err := os.ReadFile(gradleFile)
+	if err != nil {
+		return "1.1.0"
+	}
+	re := regexp.MustCompile(`versionName\s*=\s*"([^"]+)"`)
+	matches := re.FindSubmatch(data)
+	if len(matches) > 1 {
+		return string(matches[1])
+	}
+	return "1.1.0"
+}
+
+// APKFileName은 버전이 포함된 APK 파일 이름을 반환한다.
+func (m *Manager) APKFileName() string {
+	return fmt.Sprintf("pro-study-v%s.apk", m.VersionName())
+}
+
 // APKPath는 빌드 산출물 APK 파일의 절대 경로를 반환한다.
 func (m *Manager) APKPath() string {
+	verName := m.APKFileName()
+	// 1. build/pro-study-vX.X.X.apk
+	p1 := filepath.Join(m.root, "build", verName)
+	if st, err := os.Stat(p1); err == nil && !st.IsDir() && st.Size() > 0 {
+		return p1
+	}
+	// 2. build/pro-study-eink.apk
+	p2 := filepath.Join(m.root, "build", "pro-study-eink.apk")
+	if st, err := os.Stat(p2); err == nil && !st.IsDir() && st.Size() > 0 {
+		return p2
+	}
+	// 3. android-app/app/build/outputs/apk/debug/pro-study-vX.X.X.apk
+	p3 := filepath.Join(m.root, "android-app", "app", "build", "outputs", "apk", "debug", verName)
+	if st, err := os.Stat(p3); err == nil && !st.IsDir() && st.Size() > 0 {
+		return p3
+	}
+	// 4. android-app/app/build/outputs/apk/debug/app-debug.apk
 	return filepath.Join(m.root, "android-app", "app", "build", "outputs", "apk", "debug", "app-debug.apk")
 }
 
@@ -60,11 +98,12 @@ func (m *Manager) Status() Status {
 	defer m.mu.RUnlock()
 
 	apkPath := m.APKPath()
+	fileName := m.APKFileName()
 	st, err := os.Stat(apkPath)
 	if err != nil || st.IsDir() {
 		return Status{
 			Exists:     false,
-			FileName:   "pro-study.apk",
+			FileName:   fileName,
 			FilePath:   apkPath,
 			IsBuilding: m.isBuilding,
 			LastError:  m.lastError,
@@ -79,7 +118,7 @@ func (m *Manager) Status() Status {
 
 	return Status{
 		Exists:           true,
-		FileName:         "pro-study.apk",
+		FileName:         fileName,
 		FilePath:         apkPath,
 		SizeBytes:        st.Size(),
 		SizeFormatted:    formatBytes(st.Size()),
@@ -256,6 +295,18 @@ func (m *Manager) Build(ctx context.Context) error {
 	}
 
 	m.broadcastLog("=== APK 빌드 성공 완료! ===")
+
+	verName := m.APKFileName()
+	buildDir := filepath.Join(m.root, "build")
+	_ = os.MkdirAll(buildDir, 0755)
+	srcApk := filepath.Join(androidDir, "app", "build", "outputs", "apk", "debug", "app-debug.apk")
+	if st, err := os.Stat(srcApk); err == nil && st.Size() > 0 {
+		_ = copyFile(srcApk, filepath.Join(buildDir, verName))
+		_ = copyFile(srcApk, filepath.Join(buildDir, "pro-study-eink.apk"))
+		_ = copyFile(srcApk, filepath.Join(buildDir, "app-debug.apk"))
+		_ = copyFile(srcApk, filepath.Join(androidDir, "app", "build", "outputs", "apk", "debug", verName))
+	}
+
 	status := m.Status()
 	m.broadcastLog(fmt.Sprintf("생성 파일: %s (%s)", status.FileName, status.SizeFormatted))
 	return nil
@@ -455,5 +506,23 @@ func GenerateQRPNG(content string, size int) ([]byte, error) {
 	}
 	return qrcode.Encode(content, qrcode.Medium, size)
 }
+
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, in)
+	return err
+}
+
 
 

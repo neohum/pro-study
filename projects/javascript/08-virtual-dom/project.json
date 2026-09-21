@@ -1,0 +1,28 @@
+{
+  "id": "javascript/08-virtual-dom",
+  "title": "미니 Virtual DOM & Diffing 알고리즘",
+  "summary": "가상 DOM 노드(VNode)를 생성하고 트리 간 차이점(diff)을 계산하여 패치(patch)를 생성",
+  "lang": "javascript",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": [
+    "VNode 구조",
+    "트리 Diffing",
+    "속성 및 자식 조정(Reconciliation)",
+    "배치 업데이트"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

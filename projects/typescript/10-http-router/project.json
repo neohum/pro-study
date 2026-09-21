@@ -1,0 +1,29 @@
+{
+  "id": "typescript/10-http-router",
+  "title": "타입 안전 Trie 기반 HTTP 라우터",
+  "summary": "URL 경로의 파라미터(:id) 타입을 추출하고 핸들러 매핑을 검증하는 고속 라우팅 엔진",
+  "lang": "typescript",
+  "order": 10,
+  "difficulty": 5,
+  "concepts": [
+    "Template Literal Param Extraction",
+    "Radix/Trie Tree",
+    "Route Match Result",
+    "Middleware Pipeline",
+    "HTTP Methods"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

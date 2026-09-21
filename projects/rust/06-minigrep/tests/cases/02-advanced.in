@@ -1,0 +1,6 @@
+query rust
+ignore_case
+---DATA---
+Learn Rust today
+Hello World
+rust is fast

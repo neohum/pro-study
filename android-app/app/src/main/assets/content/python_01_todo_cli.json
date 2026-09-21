@@ -1,0 +1,23 @@
+{
+  "id": "python/01-todo-cli",
+  "lang": "python",
+  "order": 1,
+  "title": "JSON 저장 TODO CLI",
+  "summary": "명령줄 인자 처리와 JSON 파일 영속화로 할 일 목록을 관리하는 CLI 도구",
+  "difficulty": 1,
+  "concepts": [
+    "sys.argv & argparse",
+    "json 직렬화",
+    "dataclass",
+    "파일 I/O",
+    "예외 처리"
+  ],
+  "entry": "main.py",
+  "readme": "# 01. JSON 저장 TODO CLI\n\n## 무엇을 만드는가\n\n명령줄 인자 처리와 JSON 파일 영속화로 할 일 목록을 관리하는 CLI 도구\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: sys.argv & argparse\n\n- sys.argv & argparse에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: json 직렬화\n\n- json 직렬화에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: dataclass\n\n- dataclass에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: 파일 I/O\n\n- 파일 I/O에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: 예외 처리\n\n- 예외 처리에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 01-todo-cli — JSON 저장 TODO CLI (starter)\n#\n# 표준 입력에서 한 줄씩 명령을 읽어 할 일 목록을 관리한다.\n#   add <할일>  -> Added: <할일>\n#   done <번호> -> Done: <할일>\n#   list        -> 목록 출력 (1-based index)\nimport sys\nimport json\n\n# TODO(step-1): 데이터 모델 정의\n# id(int), title(str), completed(bool) 필드를 갖는 자료구조를 정의한다.\nclass TodoItem:\n    def __init__(self, id_num: int, title: str, completed: bool = False):\n        self.id = id_num\n        self.title = title\n        self.completed = completed\n\n# TODO(step-2): 할 일 추가 (add)\ndef add_item(items: list, title: str) -> TodoItem:\n    item = TodoItem(len(items) + 1, title)\n    items.append(item)\n    return item\n\n# TODO(step-3): 할 일 완료 (done)\ndef complete_item(items: list, id_num: int) -> TodoItem:\n    if 1 <= id_num <= len(items):\n        items[id_num - 1].completed = True\n        return items[id_num - 1]\n    return None\n\n# TODO(step-4): 목록 포맷팅 (list)\ndef format_list(items: list) -> str:\n    lines = []\n    for item in items:\n        mark = \"x\" if item.completed else \" \"\n        lines.append(f\"{item.id}. [{mark}] {item.title}\")\n    return \"\\n\".join(lines)\n\n# TODO(step-5): REPL 명령 처리 루프\ndef main():\n    items = []\n    for raw in sys.stdin:\n        line = raw.strip()\n        if not line:\n            continue\n        # 명령 파싱 및 수행\n        pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 01-todo-cli — JSON 저장 TODO CLI (solution)\nimport sys\n\nclass TodoItem:\n    def __init__(self, id_num: int, title: str, completed: bool = False):\n        self.id = id_num\n        self.title = title\n        self.completed = completed\n\ndef add_item(items: list, title: str) -> TodoItem:\n    item = TodoItem(len(items) + 1, title)\n    items.append(item)\n    return item\n\ndef complete_item(items: list, id_num: int):\n    if 1 <= id_num <= len(items):\n        items[id_num - 1].completed = True\n        return items[id_num - 1]\n    return None\n\ndef format_list(items: list) -> str:\n    lines = []\n    for item in items:\n        mark = \"x\" if item.completed else \" \"\n        lines.append(f\"{item.id}. [{mark}] {item.title}\")\n    return \"\\n\".join(lines)\n\ndef main():\n    items = []\n    for raw in sys.stdin:\n        line = raw.strip()\n        if not line:\n            continue\n        parts = line.split(\" \", 1)\n        cmd = parts[0]\n        arg = parts[1] if len(parts) > 1 else \"\"\n        if cmd == \"add\" and arg:\n            item = add_item(items, arg)\n            print(f\"Added: {item.title}\")\n        elif cmd == \"done\" and arg:\n            try:\n                num = int(arg)\n                item = complete_item(items, num)\n                if item:\n                    print(f\"Done: {item.title}\")\n            except ValueError:\n                pass\n        elif cmd == \"list\":\n            out = format_list(items)\n            if out:\n                print(out)\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "javascript/02-event-emitter",
+  "title": "Pub/Sub 패턴 이벤트 브로커",
+  "summary": "on, once, emit, off 및 네임스페이스 와일드카드를 지원하는 이벤트 발행/구독기",
+  "lang": "javascript",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "클래스와 Private 필드(#)",
+    "Map과 Set",
+    "콜백 패턴",
+    "메모리 누수 방지",
+    "옵저버 패턴"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

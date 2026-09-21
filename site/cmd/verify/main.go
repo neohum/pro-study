@@ -41,7 +41,7 @@ var (
 
 func main() {
 	root := flag.String("root", "", "저장소 루트 (기본: projects/가 있는 현재 또는 상위)")
-	lang := flag.String("lang", "", "c | go (기본: 전부)")
+	lang := flag.String("lang", "", "c | go | rust | python | typescript | javascript (기본: 전부)")
 	rng := flag.String("range", "", "order 범위, 예: 1..5")
 	only := flag.String("only", "", "쉼표로 구분한 id 목록, 예: c/01-calc,go/02-wordfreq")
 	timeout := flag.Duration("timeout", 180*time.Second, "명령 하나의 시간 상한")

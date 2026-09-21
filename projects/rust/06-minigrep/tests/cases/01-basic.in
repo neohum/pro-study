@@ -1,0 +1,5 @@
+query rust
+---DATA---
+Learn Rust today
+Hello World
+rust is fast

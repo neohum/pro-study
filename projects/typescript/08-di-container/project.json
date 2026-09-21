@@ -1,0 +1,29 @@
+{
+  "id": "typescript/08-di-container",
+  "title": "타입 안전 의존성 주입 (DI) 컨테이너",
+  "summary": "서비스 토큰과 생성자 주입을 통해 Singleton/Transient 수명 주기를 제어하는 IoC 컨테이너",
+  "lang": "typescript",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": [
+    "Constructor Type (new (...args: any[]) => T)",
+    "InjectionToken<T>",
+    "Inversion of Control",
+    "Factory Pattern",
+    "Lifetime Management"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

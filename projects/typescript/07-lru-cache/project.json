@@ -1,0 +1,29 @@
+{
+  "id": "typescript/07-lru-cache",
+  "title": "제네릭 LRU 캐시",
+  "summary": "제네릭 키-값 <K, V> 타입과 이중 연결 리스트로 구현하는 타입 세이프 캐시",
+  "lang": "typescript",
+  "order": 7,
+  "difficulty": 3,
+  "concepts": [
+    "Generic Classes <K, V>",
+    "Doubly Linked List",
+    "O(1) Map Lookup",
+    "Capacity Eviction",
+    "Iterator"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

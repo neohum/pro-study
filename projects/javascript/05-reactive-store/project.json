@@ -1,0 +1,29 @@
+{
+  "id": "javascript/05-reactive-store",
+  "title": "Proxy 기반 반응형 상태 관리자",
+  "summary": "Proxy와 Reflect로 상태 변경을 감지하고 파생 상태와 이펙트를 자동 갱신하는 미니 스토어",
+  "lang": "javascript",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": [
+    "Proxy",
+    "Reflect",
+    "의존성 추적(Dependency Tracking)",
+    "이펙트 시스템",
+    "상태 불변성"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

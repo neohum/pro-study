@@ -1,0 +1,29 @@
+{
+  "id": "javascript/04-deep-clone",
+  "title": "순환 참조 지원 Deep Clone & 객체 비교",
+  "summary": "WeakMap을 활용하여 순환 참조를 방지하고 Date, RegExp, Set, Map까지 복제하는 유틸리티",
+  "lang": "javascript",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": [
+    "WeakMap",
+    "재귀 탐색",
+    "타입 판별(typeof/toString)",
+    "Symbol",
+    "프로토타입 체인"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

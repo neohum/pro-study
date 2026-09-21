@@ -1,0 +1,30 @@
+{
+  "id": "rust/04-vector-db",
+  "title": "인메모리 벡터 유사도 검색기",
+  "summary": "Vec<f32> 임베딩 간의 코사인 유사도를 계산하고 Top-K 결과를 정렬 추출",
+  "lang": "rust",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": [
+    "제네릭과 Trait",
+    "부동소수점 정렬(total_cmp)",
+    "Vec 메모리 관리",
+    "스칼라 연산",
+    "메서드 체이닝"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

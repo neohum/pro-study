@@ -1,0 +1,4 @@
+SELECT name, age ORDER BY age DESC
+Alice,25
+Bob,19
+Charlie,30

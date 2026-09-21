@@ -1,0 +1,30 @@
+{
+  "id": "rust/08-kvstore",
+  "title": "WAL(Write-Ahead Log) 기반 키-값 저장소",
+  "summary": "파일에 추가 전용(Append-only) 로그를 기록하고 메모리 해시 인덱스로 복구하는 KV 스토리지",
+  "lang": "rust",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": [
+    "std::fs::OpenOptions",
+    "바이너리/텍스트 직렬화",
+    "크래시 복구(Crash Recovery)",
+    "BufWriter 플러시",
+    "디렉터리 파일 조작"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

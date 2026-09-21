@@ -9,7 +9,7 @@
 [CmdletBinding()]
 param(
   [switch]$All,
-  [ValidateSet('c', 'go', '')][string]$Lang = '',
+  [ValidateSet('c', 'go', 'rust', 'python', 'typescript', 'javascript', '')][string]$Lang = '',
   [string]$Range = '',
   [string]$Only = ''
 )

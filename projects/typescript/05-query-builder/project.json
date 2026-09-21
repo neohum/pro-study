@@ -1,0 +1,29 @@
+{
+  "id": "typescript/05-query-builder",
+  "title": "타입 안전 SQL 쿼리 빌더",
+  "summary": "테이블 스키마의 컬럼 타입에 맞춰 SELECT, WHERE 절의 자동 완성과 타입 안전성을 보장",
+  "lang": "typescript",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": [
+    "Template Literal Types",
+    "Conditional Types",
+    "Fluent Interface",
+    "Partial & Pick",
+    "AST Construction"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

@@ -402,7 +402,16 @@ func (r *Runner) execRaw(job *Job, stage, workDir string, argv []string, stdin i
 
 // ---- 명령 허용 목록 ----
 
-var allowedBases = map[string]bool{"gcc": true, "go": true}
+var allowedBases = map[string]bool{
+	"gcc":     true,
+	"go":      true,
+	"rustc":   true,
+	"cargo":   true,
+	"python":  true,
+	"python3": true,
+	"node":    true,
+	"tsc":     true,
+}
 
 func isBuildArtifact(tok string) bool {
 	return strings.HasPrefix(tok, "build/") || strings.HasPrefix(tok, `build\`)
@@ -424,7 +433,7 @@ func checkAllowed(argv []string) error {
 	}
 	base := strings.TrimSuffix(strings.ToLower(tok), ".exe")
 	if !allowedBases[base] {
-		return fmt.Errorf("허용되지 않는 명령: %q (허용: gcc, go, build/...)", tok)
+		return fmt.Errorf("허용되지 않는 명령: %q (허용: gcc, go, rustc, cargo, python, node, tsc, build/...)", tok)
 	}
 	return nil
 }

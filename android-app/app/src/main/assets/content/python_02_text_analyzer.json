@@ -1,0 +1,23 @@
+{
+  "id": "python/02-text-analyzer",
+  "lang": "python",
+  "order": 2,
+  "title": "텍스트 통계 및 단어 빈도 분석기",
+  "summary": "텍스트 스트림을 읽어 단어 수, 줄 수, 빈도수 TOP N을 산출하는 텍스트 분석기",
+  "difficulty": 1,
+  "concepts": [
+    "collections.Counter",
+    "re 정규표현식",
+    "sys.stdin 스트림",
+    "제너레이터",
+    "딕셔너리 정렬"
+  ],
+  "entry": "main.py",
+  "readme": "# 02. 텍스트 통계 및 단어 빈도 분석기\n\n## 무엇을 만드는가\n\n텍스트 스트림을 읽어 단어 수, 줄 수, 빈도수 TOP N을 산출하는 텍스트 분석기\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: collections.Counter\n\n- collections.Counter에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: re 정규표현식\n\n- re 정규표현식에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: sys.stdin 스트림\n\n- sys.stdin 스트림에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: 제너레이터\n\n- 제너레이터에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: 딕셔너리 정렬\n\n- 딕셔너리 정렬에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 02-text-analyzer — 텍스트 통계 및 단어 빈도 분석기 (starter)\nimport sys\nimport re\nfrom collections import Counter\n\n# TODO(step-1): 단어 토큰화\ndef tokenize(text: str) -> list[str]:\n    return re.findall(r'[a-zA-Z0-9]+', text.lower())\n\n# TODO(step-2): 줄 및 단어 개수 집계\ndef count_stats(lines: list[str]) -> tuple[int, int]:\n    return len(lines), 0\n\n# TODO(step-3): 빈도수 상위 단어 정렬\ndef top_words(words: list[str]) -> list[tuple[str, int]]:\n    counter = Counter(words)\n    return counter.most_common()\n\n# TODO(step-4): 출력 형식 포맷팅\ndef format_output(lines_count: int, words_count: int, freqs: list[tuple[str, int]]) -> str:\n    return \"\"\n\n# TODO(step-5): 메인 스트림 루프\ndef main():\n    lines = sys.stdin.readlines()\n    # 통계 처리\n    pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 02-text-analyzer — 텍스트 통계 및 단어 빈도 분석기 (solution)\nimport sys\nimport re\nfrom collections import Counter\n\ndef tokenize(text: str) -> list[str]:\n    return re.findall(r'[a-zA-Z0-9]+', text.lower())\n\ndef count_stats(lines: list[str]) -> tuple[int, int, list[str]]:\n    all_words = []\n    for line in lines:\n        all_words.extend(tokenize(line))\n    return len(lines), len(all_words), all_words\n\ndef top_words(words: list[str]) -> list[tuple[str, int]]:\n    counter = Counter(words)\n    # 정렬: 빈도 내림차순, 단어 오름차순\n    items = sorted(counter.items(), key=lambda x: (-x[1], x[0]))\n    return items\n\ndef format_output(lines_count: int, words_count: int, freqs: list[tuple[str, int]]) -> str:\n    res = [f\"lines: {lines_count}\", f\"words: {words_count}\"]\n    for word, cnt in freqs:\n        res.append(f\"{word}: {cnt}\")\n    return \"\\n\".join(res)\n\ndef main():\n    content = sys.stdin.read()\n    if not content:\n        return\n    raw_lines = content.rstrip(\"\\r\\n\").split(\"\\n\")\n    lines_count, words_count, words = count_stats(raw_lines)\n    freqs = top_words(words)\n    print(format_output(lines_count, words_count, freqs))\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

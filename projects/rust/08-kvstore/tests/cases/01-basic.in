@@ -1,0 +1,4 @@
+set user alice
+get user
+del user
+get user

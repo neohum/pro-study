@@ -1,0 +1,29 @@
+{
+  "id": "typescript/03-functional-utils",
+  "title": "타입 안전 함수형 유틸리티",
+  "summary": "pipe, compose, curry, Option, Either 모나드를 타입 추론과 함께 구현",
+  "lang": "typescript",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": [
+    "Variadic Tuple Types",
+    "Higher-Order Functions",
+    "Option & Either Monad",
+    "Currying",
+    "Pipe/Compose"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

@@ -1,0 +1,7 @@
+cap 2
+put a 10
+put b 20
+get a
+put c 30
+get b
+get c

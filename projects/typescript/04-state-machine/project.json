@@ -1,0 +1,29 @@
+{
+  "id": "typescript/04-state-machine",
+  "title": "타입 안전 유한 상태 머신 (FSM)",
+  "summary": "상태(States)와 전이(Transitions)를 타입 수준에서 강제하는 결정론적 상태 머신",
+  "lang": "typescript",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": [
+    "Mapped Types",
+    "Keyof & Indexed Access",
+    "Exhaustive Check (never)",
+    "Event Mapping",
+    "State Pattern"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}
