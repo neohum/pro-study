@@ -103,6 +103,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
+        // 6개 언어 문법 & 함수 레퍼런스 사전 화면 열기
+        findViewById<Button>(R.id.btn_open_ref).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.reference.ReferenceActivity::class.java)
+            startActivity(intent)
+        }
+
         // Go Tour 필사 화면 열기
         findViewById<Button>(R.id.btn_open_trace).setOnClickListener {
             val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.TourTraceActivity::class.java)
