@@ -1,0 +1,23 @@
+{
+  "id": "python/10-http-framework",
+  "lang": "python",
+  "order": 10,
+  "title": "WSGI 스타일 HTTP 라우팅 서버",
+  "summary": "원시 소켓 또는 HTTP 스트림에서 요청 파싱, 경로 파라미터 매칭, 미들웨어 체이닝을 구현",
+  "difficulty": 5,
+  "concepts": [
+    "HTTP/1.1 프로토콜",
+    "요청/응답 파서",
+    "Trie/Regex 라우터",
+    "미들웨어 파이프라인",
+    "상태 코드 & 헤더"
+  ],
+  "entry": "main.py",
+  "readme": "# 10. WSGI 스타일 HTTP 라우팅 서버\n\n## 무엇을 만드는가\n\n원시 소켓 또는 HTTP 스트림에서 요청 파싱, 경로 파라미터 매칭, 미들웨어 체이닝을 구현\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: HTTP/1.1 프로토콜\n\n- HTTP/1.1 프로토콜에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: 요청/응답 파서\n\n- 요청/응답 파서에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: Trie/Regex 라우터\n\n- Trie/Regex 라우터에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: 미들웨어 파이프라인\n\n- 미들웨어 파이프라인에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: 상태 코드 & 헤더\n\n- 상태 코드 & 헤더에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 10-http-framework (starter)\nimport sys\n\n# TODO(step-1): Request 객체 파싱 (Method, Path, Headers)\nclass Request:\n    def __init__(self, raw: str):\n        self.method = \"\"\n        self.path = \"\"\n        self.headers = {}\n\n# TODO(step-2): Response 빌더\nclass Response:\n    def __init__(self, status: int = 200, body: str = \"\"):\n        self.status = status\n        self.body = body\n\n# TODO(step-3): 경로 파라미터(:param) 라우팅 엔진\nclass Router:\n    def __init__(self):\n        self.routes = []\n\n    def add(self, pattern: str, handler):\n        pass\n\n# TODO(step-4): 미들웨어 파이프라인\ndef apply_middlewares(req: Request, handler):\n    return handler(req)\n\n# TODO(step-5): HTTP 스트림 처리 루프\ndef main():\n    pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 10-http-framework (solution)\nimport sys\nimport re\n\ndef parse_http_request(raw: str):\n    lines = raw.split(\"\\r\\n\")\n    if not lines or not lines[0]:\n        return None, None\n    req_line = lines[0].split()\n    if len(req_line) < 2:\n        return None, None\n    method, path = req_line[0], req_line[1]\n    return method, path\n\ndef handle_route(method: str, path: str) -> str:\n    if path == \"/hello\":\n        body = \"Hello World\"\n        return f\"HTTP/1.1 200 OK\\r\\nContent-Length: {len(body)}\\r\\n\\r\\n{body}\"\n    m = re.match(r\"^/users/(\\d+)$\", path)\n    if m:\n        uid = m.group(1)\n        body = f\"User ID: {uid}\"\n        return f\"HTTP/1.1 200 OK\\r\\nContent-Length: {len(body)}\\r\\n\\r\\n{body}\"\n    body = \"Not Found\"\n    return f\"HTTP/1.1 404 Not Found\\r\\nContent-Length: {len(body)}\\r\\n\\r\\n{body}\"\n\ndef main():\n    content = sys.stdin.read()\n    if not content:\n        return\n    method, path = parse_http_request(content)\n    if method and path:\n        print(handle_route(method, path))\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

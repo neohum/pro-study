@@ -58,6 +58,10 @@
   const langOf = (path) => {
     if (/\.(c|h)$/.test(path)) return "c";
     if (/\.go$/.test(path)) return "go";
+    if (/\.rs$/.test(path)) return "rust";
+    if (/\.py$/.test(path)) return "python";
+    if (/\.ts$/.test(path)) return "typescript";
+    if (/\.js$/.test(path)) return "javascript";
     if (/\.(json)$/.test(path)) return "json";
     if (/\.(md)$/.test(path)) return "markdown";
     if (/\.(ps1)$/.test(path)) return "powershell";

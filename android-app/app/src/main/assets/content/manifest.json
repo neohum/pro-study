@@ -361,6 +361,684 @@
       ],
       "entry": "main.go",
       "assetFile": "content/go_10_metrics_dashboard.json"
+    },
+    {
+      "id": "javascript/01-calculator-cli",
+      "lang": "javascript",
+      "order": 1,
+      "title": "모던 ES2024 산술 계산기 CLI",
+      "summary": "연산자 우선순위와 괄호를 재귀적으로 처리하는 커맨드라인 계산기",
+      "difficulty": 1,
+      "concepts": [
+        "ES Modules",
+        "클로저",
+        "정규식 토큰화",
+        "재귀 하강 파싱",
+        "에러 핸들링"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_01_calculator_cli.json"
+    },
+    {
+      "id": "javascript/02-event-emitter",
+      "lang": "javascript",
+      "order": 2,
+      "title": "Pub/Sub 패턴 이벤트 브로커",
+      "summary": "on, once, emit, off 및 네임스페이스 와일드카드를 지원하는 이벤트 발행/구독기",
+      "difficulty": 1,
+      "concepts": [
+        "클래스와 Private 필드(#)",
+        "Map과 Set",
+        "콜백 패턴",
+        "메모리 누수 방지",
+        "옵저버 패턴"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_02_event_emitter.json"
+    },
+    {
+      "id": "javascript/03-async-queue",
+      "lang": "javascript",
+      "order": 3,
+      "title": "비동기 동시성 제어 작업 큐",
+      "summary": "동시 실행 작업 수(concurrency)를 제한하며 순차/병렬 작업을 제어하는 태스크 러너",
+      "difficulty": 2,
+      "concepts": [
+        "Promise",
+        "async/await",
+        "큐(Queue) 자료구조",
+        "동시성 제한",
+        "마이크로태스크"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_03_async_queue.json"
+    },
+    {
+      "id": "javascript/04-deep-clone",
+      "lang": "javascript",
+      "order": 4,
+      "title": "순환 참조 지원 Deep Clone & 객체 비교",
+      "summary": "WeakMap을 활용하여 순환 참조를 방지하고 Date, RegExp, Set, Map까지 복제하는 유틸리티",
+      "difficulty": 2,
+      "concepts": [
+        "WeakMap",
+        "재귀 탐색",
+        "타입 판별(typeof/toString)",
+        "Symbol",
+        "프로토타입 체인"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_04_deep_clone.json"
+    },
+    {
+      "id": "javascript/05-reactive-store",
+      "lang": "javascript",
+      "order": 5,
+      "title": "Proxy 기반 반응형 상태 관리자",
+      "summary": "Proxy와 Reflect로 상태 변경을 감지하고 파생 상태와 이펙트를 자동 갱신하는 미니 스토어",
+      "difficulty": 3,
+      "concepts": [
+        "Proxy",
+        "Reflect",
+        "의존성 추적(Dependency Tracking)",
+        "이펙트 시스템",
+        "상태 불변성"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_05_reactive_store.json"
+    },
+    {
+      "id": "javascript/06-template-engine",
+      "lang": "javascript",
+      "order": 6,
+      "title": "미니 템플릿 엔진",
+      "summary": "Mustache 스타일의 변수 치환({{var}}), 반복문({{#each}}), 조건문({{#if}}) 템플릿 엔진",
+      "difficulty": 3,
+      "concepts": [
+        "정규표현식 캡처",
+        "AST 변환",
+        "스코프 체인",
+        "HTML 엔티티 이스케이프",
+        "문자열 컴파일"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_06_template_engine.json"
+    },
+    {
+      "id": "javascript/07-promise-utils",
+      "lang": "javascript",
+      "order": 7,
+      "title": "바닥부터 만드는 Promise 유틸리티",
+      "summary": "all, allSettled, race, any를 네이티브 API에 의존하지 않고 직접 구현",
+      "difficulty": 3,
+      "concepts": [
+        "Promise 상태 기계",
+        "카운터와 래치",
+        "에러 집계(AggregateError)",
+        "비동기 타이밍"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_07_promise_utils.json"
+    },
+    {
+      "id": "javascript/08-virtual-dom",
+      "lang": "javascript",
+      "order": 8,
+      "title": "미니 Virtual DOM & Diffing 알고리즘",
+      "summary": "가상 DOM 노드(VNode)를 생성하고 트리 간 차이점(diff)을 계산하여 패치(patch)를 생성",
+      "difficulty": 4,
+      "concepts": [
+        "VNode 구조",
+        "트리 Diffing",
+        "속성 및 자식 조정(Reconciliation)",
+        "배치 업데이트"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_08_virtual_dom.json"
+    },
+    {
+      "id": "javascript/09-markdown-parser",
+      "lang": "javascript",
+      "order": 9,
+      "title": "스트림 기반 마크다운 변환기",
+      "summary": "제목, 목록, 코드 블록, 인라인 강조를 처리하여 표준 HTML로 변환하는 파서",
+      "difficulty": 4,
+      "concepts": [
+        "블록 vs 인라인 파싱",
+        "상태 전이",
+        "정규식 치환",
+        "HTML 변환",
+        "버퍼 스트리밍"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_09_markdown_parser.json"
+    },
+    {
+      "id": "javascript/10-http-server",
+      "lang": "javascript",
+      "order": 10,
+      "title": "Node.js 기반 경량 HTTP 라우팅 서버",
+      "summary": "URL 경로 매칭, 쿼리스트링 파싱, JSON 직렬화 및 미들웨어 파이프라인을 구현",
+      "difficulty": 5,
+      "concepts": [
+        "HTTP 프로토콜",
+        "라우팅 테이블",
+        "미들웨어 체인",
+        "Content-Type 처리",
+        "상태 코드"
+      ],
+      "entry": "main.js",
+      "assetFile": "content/javascript_10_http_server.json"
+    },
+    {
+      "id": "python/01-todo-cli",
+      "lang": "python",
+      "order": 1,
+      "title": "JSON 저장 TODO CLI",
+      "summary": "명령줄 인자 처리와 JSON 파일 영속화로 할 일 목록을 관리하는 CLI 도구",
+      "difficulty": 1,
+      "concepts": [
+        "sys.argv & argparse",
+        "json 직렬화",
+        "dataclass",
+        "파일 I/O",
+        "예외 처리"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_01_todo_cli.json"
+    },
+    {
+      "id": "python/02-text-analyzer",
+      "lang": "python",
+      "order": 2,
+      "title": "텍스트 통계 및 단어 빈도 분석기",
+      "summary": "텍스트 스트림을 읽어 단어 수, 줄 수, 빈도수 TOP N을 산출하는 텍스트 분석기",
+      "difficulty": 1,
+      "concepts": [
+        "collections.Counter",
+        "re 정규표현식",
+        "sys.stdin 스트림",
+        "제너레이터",
+        "딕셔너리 정렬"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_02_text_analyzer.json"
+    },
+    {
+      "id": "python/03-markdown-parser",
+      "lang": "python",
+      "order": 3,
+      "title": "미니 마크다운 to HTML 변환기",
+      "summary": "제목, 볼드, 이탤릭, 링크, 리스트를 순수 문자열 처리로 HTML 변환",
+      "difficulty": 2,
+      "concepts": [
+        "문자열 파싱",
+        "상태 머신",
+        "정규식 치환",
+        "HTML 이스케이프",
+        "블록/인라인 분리"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_03_markdown_parser.json"
+    },
+    {
+      "id": "python/04-csv-sql",
+      "lang": "python",
+      "order": 4,
+      "title": "인메모리 CSV SQL 쿼리 엔진",
+      "summary": "CSV 데이터를 테이블로 로드하여 SELECT, WHERE, ORDER BY를 평가하는 미니 쿼리 엔진",
+      "difficulty": 2,
+      "concepts": [
+        "csv 모듈",
+        "SQL 토크나이저",
+        "람다 필터링",
+        "다중 키 정렬",
+        "프로젝션"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_04_csv_sql.json"
+    },
+    {
+      "id": "python/05-lru-cache",
+      "lang": "python",
+      "order": 5,
+      "title": "이중 연결 리스트 LRU 캐시",
+      "summary": "이중 연결 리스트와 해시맵으로 O(1) 조회/삽입/만료를 보장하는 LRU 캐시",
+      "difficulty": 3,
+      "concepts": [
+        "이중 연결 리스트",
+        "해시 테이블",
+        "O(1) 노드 이동",
+        "캐시 축출(Eviction)",
+        "객체지향 설계"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_05_lru_cache.json"
+    },
+    {
+      "id": "python/06-event-emitter",
+      "lang": "python",
+      "order": 6,
+      "title": "비동기 이벤트 버스 (Pub/Sub)",
+      "summary": "이벤트 구독, 발행, 일회성 리스너(once), 와일드카드 매칭을 지원하는 이벤트 브로커",
+      "difficulty": 3,
+      "concepts": [
+        "옵저버 패턴",
+        "콜백 큐",
+        "이벤트 네임스페이스",
+        "와일드카드 패턴",
+        "메모리 누수 방지"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_06_event_emitter.json"
+    },
+    {
+      "id": "python/07-schema-validator",
+      "lang": "python",
+      "order": 7,
+      "title": "선언형 JSON 스키마 검증기",
+      "summary": "필수 필드, 타입(str/int/bool), 범위 제약 조건을 검증하고 구조화된 에러를 반환",
+      "difficulty": 3,
+      "concepts": [
+        "재귀 데이터 검증",
+        "디스크립터 & 타입 검사",
+        "에러 누적",
+        "선언형 규칙 엔진",
+        "JSON 파싱"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_07_schema_validator.json"
+    },
+    {
+      "id": "python/08-git-mini",
+      "lang": "python",
+      "order": 8,
+      "title": "미니 Git 객체 저장소",
+      "summary": "SHA-1 해시와 zlib 압축으로 blob, tree, commit 객체를 생성하고 복원하는 Git 코어",
+      "difficulty": 4,
+      "concepts": [
+        "hashlib SHA-1",
+        "zlib 압축",
+        "Content-Addressable Storage",
+        "Git 객체 포맷",
+        "바이너리 I/O"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_08_git_mini.json"
+    },
+    {
+      "id": "python/09-expr-interp",
+      "lang": "python",
+      "order": 9,
+      "title": "S-표현식 Lisp 인터프리터",
+      "summary": "렉서, AST 파서, 렉시컬 스코프 환경을 갖추어 기본 산술과 변수 정의를 수행하는 인터프리터",
+      "difficulty": 4,
+      "concepts": [
+        "S-표현식 파싱",
+        "재귀 하강",
+        "환경 프레임(Scope)",
+        "클로저와 평가기",
+        "AST 순회"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_09_expr_interp.json"
+    },
+    {
+      "id": "python/10-http-framework",
+      "lang": "python",
+      "order": 10,
+      "title": "WSGI 스타일 HTTP 라우팅 서버",
+      "summary": "원시 소켓 또는 HTTP 스트림에서 요청 파싱, 경로 파라미터 매칭, 미들웨어 체이닝을 구현",
+      "difficulty": 5,
+      "concepts": [
+        "HTTP/1.1 프로토콜",
+        "요청/응답 파서",
+        "Trie/Regex 라우터",
+        "미들웨어 파이프라인",
+        "상태 코드 & 헤더"
+      ],
+      "entry": "main.py",
+      "assetFile": "content/python_10_http_framework.json"
+    },
+    {
+      "id": "rust/01-cli-calc",
+      "lang": "rust",
+      "order": 1,
+      "title": "재귀 하강 식 계산기",
+      "summary": "연산자 우선순위와 괄호를 enum, match, Result로 안전하게 파싱 및 평가하는 계산기",
+      "difficulty": 1,
+      "concepts": [
+        "enum & pattern matching",
+        "Result<T, E> & Option<T>",
+        "재귀 하강 파서",
+        "std::io::BufRead",
+        "에러 타입 정의"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_01_cli_calc.json"
+    },
+    {
+      "id": "rust/02-word-counter",
+      "lang": "rust",
+      "order": 2,
+      "title": "단어 및 문자 통계 분석기",
+      "summary": "문자열 슬라이스(&str)와 HashMap, Iterator를 이용한 고성능 텍스트 빈도 분석기",
+      "difficulty": 1,
+      "concepts": [
+        "소유권과 빌림(Borrowing)",
+        "&str과 String",
+        "HashMap entry API",
+        "Iterator combinators",
+        "정렬과 클로저"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_02_word_counter.json"
+    },
+    {
+      "id": "rust/03-json-parser",
+      "lang": "rust",
+      "order": 3,
+      "title": "경량 JSON 파서 & 직렬화기",
+      "summary": "재귀적 열거형(Box<JsonValue>)을 사용해 JSON을 AST로 파싱하고 문자열로 재구성",
+      "difficulty": 2,
+      "concepts": [
+        "재귀적 타입과 Box",
+        "상태 머신 렉서",
+        "Display 트레이트 구현",
+        "슬라이스 슬라이싱",
+        "Result 전파(?)"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_03_json_parser.json"
+    },
+    {
+      "id": "rust/04-vector-db",
+      "lang": "rust",
+      "order": 4,
+      "title": "인메모리 벡터 유사도 검색기",
+      "summary": "Vec<f32> 임베딩 간의 코사인 유사도를 계산하고 Top-K 결과를 정렬 추출",
+      "difficulty": 2,
+      "concepts": [
+        "제네릭과 Trait",
+        "부동소수점 정렬(total_cmp)",
+        "Vec 메모리 관리",
+        "스칼라 연산",
+        "메서드 체이닝"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_04_vector_db.json"
+    },
+    {
+      "id": "rust/05-lru-cache",
+      "lang": "rust",
+      "order": 5,
+      "title": "인덱스 기반 제네릭 LRU 캐시",
+      "summary": "안전한 Rust(Safe Rust)로 포인터 없이 Vec 슬롯과 인덱스로 연결 리스트를 구현한 LRU 캐시",
+      "difficulty": 3,
+      "concepts": [
+        "Safe Rust 연결 리스트(Index-based)",
+        "제네릭 <K, V>",
+        "O(1) 캐시 축출",
+        "Borrow Checker 극복",
+        "수명(Lifetime)"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_05_lru_cache.json"
+    },
+    {
+      "id": "rust/06-minigrep",
+      "lang": "rust",
+      "order": 6,
+      "title": "파일 검색 및 패턴 매처",
+      "summary": "대소문자 무시 플래그, 줄 번호 출력, 패턴 매칭을 지원하는 minigrep 도구",
+      "difficulty": 3,
+      "concepts": [
+        "std::fs & std::env",
+        "환경 변수 처리",
+        "TDD와 단위 테스트",
+        "에러 래핑",
+        "반복자 소비"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_06_minigrep.json"
+    },
+    {
+      "id": "rust/07-threadpool",
+      "lang": "rust",
+      "order": 7,
+      "title": "멀티스레드 작업 실행 풀",
+      "summary": "Arc, Mutex, mpsc 채널을 조합하여 고정 워커 스레드로 작업을 분배 실행",
+      "difficulty": 4,
+      "concepts": [
+        "Arc & Mutex 동시성",
+        "std::sync::mpsc",
+        "Drop 트레이트(Graceful Shutdown)",
+        "스레드 조인(JoinHandle)",
+        "Job 클로저 박싱"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_07_threadpool.json"
+    },
+    {
+      "id": "rust/08-kvstore",
+      "lang": "rust",
+      "order": 8,
+      "title": "WAL(Write-Ahead Log) 기반 키-값 저장소",
+      "summary": "파일에 추가 전용(Append-only) 로그를 기록하고 메모리 해시 인덱스로 복구하는 KV 스토리지",
+      "difficulty": 4,
+      "concepts": [
+        "std::fs::OpenOptions",
+        "바이너리/텍스트 직렬화",
+        "크래시 복구(Crash Recovery)",
+        "BufWriter 플러시",
+        "디렉터리 파일 조작"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_08_kvstore.json"
+    },
+    {
+      "id": "rust/09-byte-vm",
+      "lang": "rust",
+      "order": 9,
+      "title": "스택 기반 바이트코드 가상머신",
+      "summary": "바이트코드 명령어 집합(Push, Pop, Add, Sub, Mul, Print)을 스택 머신에서 순차 실행",
+      "difficulty": 4,
+      "concepts": [
+        "바이트코드 인터프리터",
+        "OpCode 열거형",
+        "스택 포인터 & 오버플로 방지",
+        "런타임 에러 처리",
+        "2-Pass 디스패치"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_09_byte_vm.json"
+    },
+    {
+      "id": "rust/10-http-server",
+      "lang": "rust",
+      "order": 10,
+      "title": "경량 HTTP/1.1 웹 서버",
+      "summary": "TcpListener와 TcpStream으로 HTTP 요청을 읽고 정적 라우팅 및 404를 반환하는 웹 서버",
+      "difficulty": 5,
+      "concepts": [
+        "std::net::TcpListener/TcpStream",
+        "HTTP 요청 헤더 파싱",
+        "Content-Length 계산",
+        "소켓 I/O 스트림",
+        "상태 코드 포맷팅"
+      ],
+      "entry": "main.rs",
+      "assetFile": "content/rust_10_http_server.json"
+    },
+    {
+      "id": "typescript/01-todo-cli",
+      "lang": "typescript",
+      "order": 1,
+      "title": "강타입 TODO CLI",
+      "summary": "인터페이스, 유니언 타입, 타입 가드로 견고하게 작성하는 할 일 목록 관리 CLI",
+      "difficulty": 1,
+      "concepts": [
+        "Interface & Type Alias",
+        "Discriminated Unions",
+        "Strict Null Checks",
+        "Type Guards",
+        "Generic Functions"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_01_todo_cli.json"
+    },
+    {
+      "id": "typescript/02-type-validator",
+      "lang": "typescript",
+      "order": 2,
+      "title": "런타임 스키마 검증기 (Zod-like)",
+      "summary": "정적 타입 추론(infer)과 런타임 유효성 검증을 결합한 타입스크립트 스키마 라이브러리",
+      "difficulty": 1,
+      "concepts": [
+        "Type Inference (infer)",
+        "Generic Constraints",
+        "Conditional Types",
+        "타입 서술어(is)",
+        "Builder Pattern"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_02_type_validator.json"
+    },
+    {
+      "id": "typescript/03-functional-utils",
+      "lang": "typescript",
+      "order": 3,
+      "title": "타입 안전 함수형 유틸리티",
+      "summary": "pipe, compose, curry, Option, Either 모나드를 타입 추론과 함께 구현",
+      "difficulty": 2,
+      "concepts": [
+        "Variadic Tuple Types",
+        "Higher-Order Functions",
+        "Option & Either Monad",
+        "Currying",
+        "Pipe/Compose"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_03_functional_utils.json"
+    },
+    {
+      "id": "typescript/04-state-machine",
+      "lang": "typescript",
+      "order": 4,
+      "title": "타입 안전 유한 상태 머신 (FSM)",
+      "summary": "상태(States)와 전이(Transitions)를 타입 수준에서 강제하는 결정론적 상태 머신",
+      "difficulty": 2,
+      "concepts": [
+        "Mapped Types",
+        "Keyof & Indexed Access",
+        "Exhaustive Check (never)",
+        "Event Mapping",
+        "State Pattern"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_04_state_machine.json"
+    },
+    {
+      "id": "typescript/05-query-builder",
+      "lang": "typescript",
+      "order": 5,
+      "title": "타입 안전 SQL 쿼리 빌더",
+      "summary": "테이블 스키마의 컬럼 타입에 맞춰 SELECT, WHERE 절의 자동 완성과 타입 안전성을 보장",
+      "difficulty": 3,
+      "concepts": [
+        "Template Literal Types",
+        "Conditional Types",
+        "Fluent Interface",
+        "Partial & Pick",
+        "AST Construction"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_05_query_builder.json"
+    },
+    {
+      "id": "typescript/06-event-emitter",
+      "lang": "typescript",
+      "order": 6,
+      "title": "타입 안전 Event Emitter",
+      "summary": "이벤트 맵(EventMap) 제네릭을 기반으로 이벤트 이름과 페이로드 타입을 100% 검증",
+      "difficulty": 3,
+      "concepts": [
+        "Generic EventMap",
+        "Indexed Access Types",
+        "Rest Parameters with Tuples",
+        "Once & Off",
+        "Pub/Sub"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_06_event_emitter.json"
+    },
+    {
+      "id": "typescript/07-lru-cache",
+      "lang": "typescript",
+      "order": 7,
+      "title": "제네릭 LRU 캐시",
+      "summary": "제네릭 키-값 <K, V> 타입과 이중 연결 리스트로 구현하는 타입 세이프 캐시",
+      "difficulty": 3,
+      "concepts": [
+        "Generic Classes <K, V>",
+        "Doubly Linked List",
+        "O(1) Map Lookup",
+        "Capacity Eviction",
+        "Iterator"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_07_lru_cache.json"
+    },
+    {
+      "id": "typescript/08-di-container",
+      "lang": "typescript",
+      "order": 8,
+      "title": "타입 안전 의존성 주입 (DI) 컨테이너",
+      "summary": "서비스 토큰과 생성자 주입을 통해 Singleton/Transient 수명 주기를 제어하는 IoC 컨테이너",
+      "difficulty": 4,
+      "concepts": [
+        "Constructor Type (new (...args: any[]) => T)",
+        "InjectionToken<T>",
+        "Inversion of Control",
+        "Factory Pattern",
+        "Lifetime Management"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_08_di_container.json"
+    },
+    {
+      "id": "typescript/09-json-ast",
+      "lang": "typescript",
+      "order": 9,
+      "title": "JSON AST 파서 & 타입 변환기",
+      "summary": "JSON 문자열을 구문 분석하여 강력한 타입의 AST 노드 트리로 변환하고 순회",
+      "difficulty": 4,
+      "concepts": [
+        "Recursive Type Definition",
+        "Tagged Union AST",
+        "Visitor Pattern",
+        "Recursive Descent Parsing",
+        "JSON Serialization"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_09_json_ast.json"
+    },
+    {
+      "id": "typescript/10-http-router",
+      "lang": "typescript",
+      "order": 10,
+      "title": "타입 안전 Trie 기반 HTTP 라우터",
+      "summary": "URL 경로의 파라미터(:id) 타입을 추출하고 핸들러 매핑을 검증하는 고속 라우팅 엔진",
+      "difficulty": 5,
+      "concepts": [
+        "Template Literal Param Extraction",
+        "Radix/Trie Tree",
+        "Route Match Result",
+        "Middleware Pipeline",
+        "HTTP Methods"
+      ],
+      "entry": "main.ts",
+      "assetFile": "content/typescript_10_http_router.json"
     }
   ]
 }

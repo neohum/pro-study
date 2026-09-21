@@ -1,0 +1,27 @@
+{
+  "id": "rust/_template",
+  "title": "(템플릿) 프로젝트 제목",
+  "summary": "카드에 보이는 한 줄 요약",
+  "lang": "rust",
+  "order": 99,
+  "difficulty": 1,
+  "concepts": [
+    "개념 1",
+    "개념 2"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

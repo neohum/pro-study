@@ -11,8 +11,8 @@ android {
         applicationId = "com.prostudy.eink"
         minSdk = 26
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.7"
+        versionCode = 9
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,4 +72,22 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
+    testImplementation("org.json:json:20240303")
+}
+
+afterEvaluate {
+    tasks.findByName("assembleDebug")?.doLast {
+        val apkDir = layout.buildDirectory.dir("outputs/apk/debug").get().asFile
+        val src = File(apkDir, "app-debug.apk")
+        if (src.exists()) {
+            val ver = android.defaultConfig.versionName ?: "1.1.0"
+            val verApk = File(apkDir, "pro-study-v$ver.apk")
+            src.copyTo(verApk, overwrite = true)
+            val rootBuild = rootProject.file("../build")
+            if (!rootBuild.exists()) rootBuild.mkdirs()
+            src.copyTo(File(rootBuild, "pro-study-v$ver.apk"), overwrite = true)
+            src.copyTo(File(rootBuild, "pro-study-eink.apk"), overwrite = true)
+            src.copyTo(File(rootBuild, "app-debug.apk"), overwrite = true)
+        }
+    }
 }

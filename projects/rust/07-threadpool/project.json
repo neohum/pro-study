@@ -1,0 +1,30 @@
+{
+  "id": "rust/07-threadpool",
+  "title": "멀티스레드 작업 실행 풀",
+  "summary": "Arc, Mutex, mpsc 채널을 조합하여 고정 워커 스레드로 작업을 분배 실행",
+  "lang": "rust",
+  "order": 7,
+  "difficulty": 4,
+  "concepts": [
+    "Arc & Mutex 동시성",
+    "std::sync::mpsc",
+    "Drop 트레이트(Graceful Shutdown)",
+    "스레드 조인(JoinHandle)",
+    "Job 클로저 박싱"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

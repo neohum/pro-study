@@ -1,0 +1,30 @@
+{
+  "id": "python/01-todo-cli",
+  "title": "JSON 저장 TODO CLI",
+  "summary": "명령줄 인자 처리와 JSON 파일 영속화로 할 일 목록을 관리하는 CLI 도구",
+  "lang": "python",
+  "order": 1,
+  "difficulty": 1,
+  "concepts": [
+    "sys.argv & argparse",
+    "json 직렬화",
+    "dataclass",
+    "파일 I/O",
+    "예외 처리"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

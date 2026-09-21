@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var containerCode: LinearLayout
 
     // 카탈로그 뷰
-    private lateinit var btnTabC: Button
-    private lateinit var btnTabGo: Button
+    private lateinit var tabButtons: List<Pair<String?, Button>>
     private lateinit var rvProjects: RecyclerView
 
     // 상세 뷰
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCodeTitle: TextView
     private lateinit var codeViewer: CodeViewer
 
-    private var currentLang = "c"
+    private var currentLang: String? = null
     private var currentProject: ProjectDetail? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
         setupBackNavigation()
 
-        loadCatalog(currentLang)
+        selectTab(null)
     }
 
     private fun bindViews() {
@@ -67,8 +66,24 @@ class MainActivity : AppCompatActivity() {
         containerDetail = findViewById(R.id.container_detail)
         containerCode = findViewById(R.id.container_code)
 
-        btnTabC = findViewById(R.id.btn_tab_c)
-        btnTabGo = findViewById(R.id.btn_tab_go)
+        val btnTabAll: Button = findViewById(R.id.btn_tab_all)
+        val btnTabC: Button = findViewById(R.id.btn_tab_c)
+        val btnTabGo: Button = findViewById(R.id.btn_tab_go)
+        val btnTabRust: Button = findViewById(R.id.btn_tab_rust)
+        val btnTabPython: Button = findViewById(R.id.btn_tab_python)
+        val btnTabTypeScript: Button = findViewById(R.id.btn_tab_typescript)
+        val btnTabJavaScript: Button = findViewById(R.id.btn_tab_javascript)
+
+        tabButtons = listOf(
+            null to btnTabAll,
+            "c" to btnTabC,
+            "go" to btnTabGo,
+            "rust" to btnTabRust,
+            "python" to btnTabPython,
+            "typescript" to btnTabTypeScript,
+            "javascript" to btnTabJavaScript
+        )
+
         rvProjects = findViewById(R.id.rv_projects)
 
         btnDetailBack = findViewById(R.id.btn_detail_back)
@@ -94,25 +109,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 언어 탭 전환
-        btnTabC.setOnClickListener {
-            if (currentLang != "c") {
-                currentLang = "c"
-                btnTabC.setBackgroundColor(Color.BLACK)
-                btnTabC.setTextColor(Color.WHITE)
-                btnTabGo.setBackgroundColor(Color.TRANSPARENT)
-                btnTabGo.setTextColor(Color.BLACK)
-                loadCatalog(currentLang)
-            }
-        }
-
-        btnTabGo.setOnClickListener {
-            if (currentLang != "go") {
-                currentLang = "go"
-                btnTabGo.setBackgroundColor(Color.BLACK)
-                btnTabGo.setTextColor(Color.WHITE)
-                btnTabC.setBackgroundColor(Color.TRANSPARENT)
-                btnTabC.setTextColor(Color.BLACK)
-                loadCatalog(currentLang)
+        for ((lang, btn) in tabButtons) {
+            btn.setOnClickListener {
+                selectTab(lang)
             }
         }
 
@@ -132,7 +131,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadCatalog(lang: String) {
+    private fun selectTab(lang: String?) {
+        currentLang = lang
+        for ((key, btn) in tabButtons) {
+            val isSelected = (key == lang)
+            if (isSelected) {
+                btn.setBackgroundColor(Color.BLACK)
+                btn.setTextColor(Color.WHITE)
+            } else {
+                btn.setBackgroundColor(Color.TRANSPARENT)
+                btn.setTextColor(Color.BLACK)
+            }
+        }
+        loadCatalog(lang)
+    }
+
+    private fun loadCatalog(lang: String?) {
         val list = repository.getProjects(lang)
         adapter.submitList(list)
     }

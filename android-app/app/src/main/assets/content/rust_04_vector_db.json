@@ -1,0 +1,23 @@
+{
+  "id": "rust/04-vector-db",
+  "lang": "rust",
+  "order": 4,
+  "title": "인메모리 벡터 유사도 검색기",
+  "summary": "Vec<f32> 임베딩 간의 코사인 유사도를 계산하고 Top-K 결과를 정렬 추출",
+  "difficulty": 2,
+  "concepts": [
+    "제네릭과 Trait",
+    "부동소수점 정렬(total_cmp)",
+    "Vec 메모리 관리",
+    "스칼라 연산",
+    "메서드 체이닝"
+  ],
+  "entry": "main.rs",
+  "readme": "# 04. 인메모리 벡터 유사도 검색기\n\n## 무엇을 만드는가\n\nVec<f32> 임베딩 간의 코사인 유사도를 계산하고 Top-K 결과를 정렬 추출\n\n## 왜 이 프로젝트인가\n\n러스트의 핵심 불변식(메모리 안전성, 소유권과 빌림 체계, 무비용 추상화)을 실전 구현을 통해 체화합니다.\n가비지 컬렉터 없이도 안전하고 고성능인 시스템 소프트웨어를 작성하는 감각을 익힙니다.\n\n## 핵심 개념\n\n### 개념 1: 제네릭과 Trait\n\n- 제네릭과 Trait의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 2: 부동소수점 정렬(total_cmp)\n\n- 부동소수점 정렬(total_cmp)의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 3: Vec 메모리 관리\n\n- Vec 메모리 관리의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 4: 스칼라 연산\n\n- 스칼라 연산의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 5: 메서드 체이닝\n\n- 메서드 체이닝의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 핵심 열거형 및 자료구조 선언\n\n데이터 모델과 에러 처리를 위한 열거형을 선언합니다.\n\n### Step 2: 기본 파서 및 변환기 작성\n\n입력 데이터를 구조화된 내부 표현으로 파싱합니다.\n\n### Step 3: 핵심 비즈니스 로직 구현\n\n도메인 로직과 상태 전이를 안전하게 구현합니다.\n\n### Step 4: 에러 핸들링 및 안전한 축출/정리\n\nResult와 Option을 매칭하고 예외 상황을 완벽히 방어합니다.\n\n### Step 5: REPL 파이프라인 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| cannot borrow as mutable | 불변 참조와 가변 참조 동시 사용 | 스코프를 분리하거나 clone 또는 entry API를 활용합니다. |\n| value used here after move | 소유권 이전(Move) 발생 | 참조(& 또는 &mut)를 넘기거나 필요한 경우 명시적으로 .clone()합니다. |\n\n## 더 나아가기\n\n- unsafe 블록을 통한 원시 포인터 최적화 비교\n- SIMD 또는 rayon을 활용한 데이터 병렬 처리\n\n## 참고\n\n- The Rust Programming Language: <https://doc.rust-lang.org/book/>\n",
+  "starterCode": {
+    "main.rs": "// 04-vector-db (starter)\n#![allow(unused_variables, dead_code, unused_mut, unused_imports)]\nuse std::io::{self, BufRead};\n\n// TODO(step-1): VectorItem 구조체 및 도트 프로덕트\nstruct VectorItem {\n    id: String,\n    vec: Vec<f32>,\n}\n\nfn dot_product(a: &[f32], b: &[f32]) -> f32 {\n    0.0\n}\n\n// TODO(step-2): 코사인 유사도 계산\nfn cosine_similarity(a: &[f32], b: &[f32]) -> f32 {\n    0.0\n}\n\n// TODO(step-3): VectorDB 구조체 및 insert\nstruct VectorDB {\n    items: Vec<VectorItem>,\n}\n\nimpl VectorDB {\n    fn new() -> Self {\n        VectorDB { items: Vec::new() }\n    }\n\n    // TODO(step-4): query (Top-K 유사 항목 검색)\n    fn query(&self, target: &[f32], top_k: usize) -> Vec<(&str, f32)> {\n        Vec::new()\n    }\n}\n\n// TODO(step-5): REPL CLI\nfn main() {\n    let stdin = io::stdin();\n    for line in stdin.lock().lines() {}\n}\n"
+  },
+  "solutionCode": {
+    "main.rs": "// 04-vector-db (solution)\n#![allow(unused_variables, dead_code, unused_mut, unused_imports)]\nuse std::io::{self, BufRead};\n\nstruct VectorItem {\n    id: String,\n    vec: Vec<f32>,\n}\n\nfn cosine_similarity(a: &[f32], b: &[f32]) -> f32 {\n    let dot: f32 = a.iter().zip(b.iter()).map(|(x, y)| x * y).sum();\n    let norm_a: f32 = a.iter().map(|x| x * x).sum::<f32>().sqrt();\n    let norm_b: f32 = b.iter().map(|x| x * x).sum::<f32>().sqrt();\n    if norm_a == 0.0 || norm_b == 0.0 {\n        0.0\n    } else {\n        dot / (norm_a * norm_b)\n    }\n}\n\nfn main() {\n    let stdin = io::stdin();\n    let mut items: Vec<VectorItem> = Vec::new();\n\n    for line in stdin.lock().lines() {\n        if let Ok(l) = line {\n            let trimmed = l.trim();\n            if trimmed.is_empty() { continue; }\n            let parts: Vec<&str> = trimmed.split_whitespace().collect();\n            if parts[0] == \"add\" && parts.len() >= 3 {\n                let id = parts[1].to_string();\n                let vec: Vec<f32> = parts[2..].iter().map(|s| s.parse().unwrap_or(0.0)).collect();\n                items.push(VectorItem { id, vec });\n            } else if parts[0] == \"query\" && parts.len() >= 2 {\n                let target: Vec<f32> = parts[1..].iter().map(|s| s.parse().unwrap_or(0.0)).collect();\n                let mut scores: Vec<(&str, f32)> = items\n                    .iter()\n                    .map(|it| (it.id.as_str(), cosine_similarity(&it.vec, &target)))\n                    .collect();\n                scores.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap());\n                if let Some(best) = scores.first() {\n                    println!(\"Best: {} ({:.2})\", best.0, best.1);\n                }\n            }\n        }\n    }\n}\n"
+  }
+}

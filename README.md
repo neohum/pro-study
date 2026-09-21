@@ -54,7 +54,7 @@
 
 ---
 
-## 2. 20개 프로젝트 커리큘럼
+## 2. 60개 프로젝트 커리큘럼
 
 ### C23 프로젝트 (10개)
 1. **01-calc**: 재귀 하강 계산기 (`constexpr`, `nullptr`, `auto`, `[[nodiscard]]`, `0b`, `'` 리터럴)
@@ -79,6 +79,54 @@
 8. **08-generics**: 제네릭 컬렉션 라이브러리 (Stack, Queue, PriorityQueue, LRUCache, Go 1.23+ `iter.Seq`)
 9. **09-interp**: 소형 스크립트 언어 인터프리터 (Lexer, Pratt 재귀 하강 파서, AST, 환경 스코프, 트리 평가기)
 10. **10-metrics-dashboard**: 런타임 메트릭 대시보드 서버 (`runtime/metrics`, Server-Sent Events, 실시간 시각화)
+
+### Rust 프로젝트 (10개)
+1. **01-cli-calc**: 재귀 하강 식 계산기 (`enum`, `match`, `Result`, `Option`, Pattern Matching, Error Handling)
+2. **02-word-counter**: 단어 및 문자 통계 분석기 (`HashMap`, `BufRead`, `Iterator`, Struct, String slice, Ownership)
+3. **03-json-parser**: 경량 JSON 파서 & 직렬화기 (`Box<JsonValue>`, Custom enum, State Machine, Slices)
+4. **04-vector-db**: 인메모리 벡터 유사도 검색기 (`Vec<f32>`, Generics, Cosine Similarity, Closures)
+5. **05-lru-cache**: 인덱스 기반 제네릭 LRU 캐시 (Safe Rust 인덱스 연결 리스트, Generic `<K, V>`, O(1) 축출)
+6. **06-minigrep**: 파일 검색 및 패턴 매처 (`std::fs`, `std::env`, 환경 변수 처리, 대소문자 무시 옵션)
+7. **07-threadpool**: 멀티스레드 작업 실행 풀 (`Arc`, `Mutex`, `mpsc` channel, `Drop` trait graceful shutdown)
+8. **08-kvstore**: WAL 기반 키-값 저장소 (`OpenOptions`, Binary/Text serialization, 인메모리 인덱스, 복구)
+9. **09-byte-vm**: 스택 기반 바이트코드 가상머신 (Bytecode execution, OpCode enum, Stack manipulation)
+10. **10-http-server**: 경량 HTTP/1.1 웹 서버 (`TcpListener`, `TcpStream`, HTTP Request Parsing, Status Codes)
+
+### Python 프로젝트 (10개)
+1. **01-todo-cli**: JSON 저장 TODO CLI (`argparse`, `json`, Dataclasses, Type Hints, 파일 I/O)
+2. **02-text-analyzer**: 텍스트 통계 및 N-gram 빈도 분석기 (`collections.Counter`, `re` 정규식, Generators)
+3. **03-markdown-parser**: 미니 마크다운 to HTML 변환기 (문자열 파싱, 상태 머신, HTML 이스케이프)
+4. **04-csv-sql**: CSV 기반 인메모리 SQL 쿼리 엔진 (SELECT, WHERE, ORDER BY, 람다 필터링, 정렬)
+5. **05-lru-cache**: 이중 연결 리스트 LRU 캐시 (Double Linked List, Dictionary, O(1) 조회/삽입)
+6. **06-event-emitter**: 비동기 이벤트 버스 (옵저버 패턴, 콜백 큐, 와일드카드, once)
+7. **07-schema-validator**: 선언형 JSON 스키마 검증기 (재귀 타입 검증, 디스크립터, 에러 리포팅)
+8. **08-git-mini**: 미니 Git 객체 저장소 (`hashlib` SHA-1, `zlib` 압축, Content-Addressable Storage)
+9. **09-expr-interp**: S-표현식 Lisp 인터프리터 (토크나이징, S-expression AST, Lexical Scoping, 환경 평가기)
+10. **10-http-framework**: WSGI 스타일 HTTP 라우팅 서버 (요청 파싱, 경로 파라미터 매칭, 미들웨어 체이닝)
+
+### TypeScript 프로젝트 (10개)
+1. **01-todo-cli**: 강타입 TODO CLI (Interfaces, Type Aliases, Discriminated Unions, Strict Null Checks)
+2. **02-type-validator**: 런타임 스키마 검증기 (Type Inference `infer`, Generic Constraints, Type Guards `is`)
+3. **03-functional-utils**: 타입 안전 함수형 유틸리티 (Option/Either 모나드, Pipe/Compose, Currying)
+4. **04-state-machine**: 타입 안전 유한 상태 머신 (Mapped Types, Keyof, Exhaustive Check `never`)
+5. **05-query-builder**: 타입 안전 SQL 쿼리 빌더 (Fluent Interface, Conditional Types, Utility Types)
+6. **06-event-emitter**: 타입 안전 Event Emitter (Generic EventMap, Indexed Access Types, Rest Tuples)
+7. **07-lru-cache**: 제네릭 LRU 캐시 (Generic `<K, V>`, Doubly Linked List, O(1) Map Lookup)
+8. **08-di-container**: 의존성 주입 컨테이너 (Constructor Type, InjectionToken, Inversion of Control)
+9. **09-json-ast**: JSON AST 파서 & 타입 변환기 (Recursive Type, Tagged Union AST, Visitor Pattern)
+10. **10-http-router**: 타입 안전 Trie 기반 HTTP 라우터 (Radix/Trie Tree, Path Param Extraction `:id`)
+
+### JavaScript 프로젝트 (10개)
+1. **01-calculator-cli**: 모던 ES2024 산술 계산기 CLI (ES Modules, Closure, 재귀 하강 파서, 에러 처리)
+2. **02-event-emitter**: Pub/Sub 패턴 이벤트 브로커 (`class`, Private fields `#`, `Map`, `Set`, 콜백)
+3. **03-async-queue**: 비동기 동시성 제어 큐 (Promises, `async/await`, Concurrency Pool, Queue)
+4. **04-deep-clone**: 순환 참조 지원 Deep Clone & 객체 비교 (`WeakMap`, 재귀 탐색, Symbol, 프로토타입)
+5. **05-reactive-store**: Proxy 기반 반응형 상태 관리자 (`Proxy`, `Reflect`, Dependency Tracking, Effect)
+6. **06-template-engine**: 미니 템플릿 엔진 (정규식 치환, AST, 반복문 `{{#each}}`, 조건문 `{{#if}}`)
+7. **07-promise-utils**: 바닥부터 만드는 Promise 유틸리티 (`all`, `allSettled`, `race`, 마이크로태스크)
+8. **08-virtual-dom**: 미니 Virtual DOM & Diffing 알고리즘 (VNode representation, Tree diffing, Patching)
+9. **09-markdown-parser**: 스트림 기반 마크다운 변환기 (라인 스트리밍, 블록/인라인 파싱, HTML 생성)
+10. **10-http-server**: Node.js 기반 경량 HTTP 라우팅 서버 (HTTP 파싱, 라우팅 테이블, 미들웨어 체인)
 
 ---
 

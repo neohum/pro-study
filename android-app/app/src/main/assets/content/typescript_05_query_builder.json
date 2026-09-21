@@ -1,0 +1,23 @@
+{
+  "id": "typescript/05-query-builder",
+  "lang": "typescript",
+  "order": 5,
+  "title": "타입 안전 SQL 쿼리 빌더",
+  "summary": "테이블 스키마의 컬럼 타입에 맞춰 SELECT, WHERE 절의 자동 완성과 타입 안전성을 보장",
+  "difficulty": 3,
+  "concepts": [
+    "Template Literal Types",
+    "Conditional Types",
+    "Fluent Interface",
+    "Partial & Pick",
+    "AST Construction"
+  ],
+  "entry": "main.ts",
+  "readme": "# 05. 타입 안전 SQL 쿼리 빌더\n\n## 무엇을 만드는가\n\n테이블 스키마의 컬럼 타입에 맞춰 SELECT, WHERE 절의 자동 완성과 타입 안전성을 보장\n\n## 왜 이 프로젝트인가\n\n타입스크립트의 정적 타입 시스템과 고급 타입 기법(제네릭, 조건부 타입, 템플릿 리터럴)을 실전 구현을 통해 체화합니다.\n런타임 에러를 컴파일 타임으로 앞당기는 타입 중심 설계(Type-Driven Design)를 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: Template Literal Types\n\n- Template Literal Types에 대한 심층 원리와 설계 패턴을 다룹니다.\n\n### 개념 2: Conditional Types\n\n- Conditional Types에 대한 심층 원리와 설계 패턴을 다룹니다.\n\n### 개념 3: Fluent Interface\n\n- Fluent Interface에 대한 심층 원리와 설계 패턴을 다룹니다.\n\n### 개념 4: Partial & Pick\n\n- Partial & Pick에 대한 심층 원리와 설계 패턴을 다룹니다.\n\n### 개념 5: AST Construction\n\n- AST Construction에 대한 심층 원리와 설계 패턴을 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 핵심 타입 및 인터페이스 정의\n\n자료구조와 도메인 모델의 타입을 정밀하게 선언합니다.\n\n### Step 2: 기본 클래스 및 팩토리 구현\n\n타입 제약 조건을 만족하는 기본 인스턴스 생성 로직을 작성합니다.\n\n### Step 3: 고급 타입 연산 및 제네릭 메서드\n\n타입 추론과 유연성을 극대화하는 제네릭 메서드를 추가합니다.\n\n### Step 4: 예외 검증 및 타입 단언\n\n런타임 불일치 및 엣지 케이스를 안전하게 가드하는 로직을 보강합니다.\n\n### Step 5: REPL 파이프라인 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 완성합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| TS2322: Type is not assignable | 유니언 타입 불일치 또는 널 가능성 | 타입 가드(Type Guard) 또는 옵셔널 체이닝으로 좁히기를 수행합니다. |\n| TS2339: Property does not exist | 제네릭 제약(extends) 누락 | 제네릭 파라미터에 적절한 제약 조건(extends Record<...>)을 부여합니다. |\n\n## 더 나아가기\n\n- Conditional Types와 infer를 활용한 복합 반환형 추출\n- 데코레이터(Decorators) 기반 메타데이터 주입\n\n## 참고\n\n- TypeScript 핸드북: <https://www.typescriptlang.org/docs/handbook/intro.html>\n",
+  "starterCode": {
+    "main.ts": "// 05-query-builder (starter)\ndeclare const require: any;\ndeclare const process: any;\nconst readline = require('readline');\n\n// TODO(step-1): QueryState 인터페이스\ninterface QueryState {\n  table: string;\n  selectCols: string[];\n  whereClauses: string[];\n}\n\n// TODO(step-2): QueryBuilder 클래스\nclass QueryBuilder<T> {\n  private state: QueryState;\n  constructor(table: string) {\n    this.state = { table, selectCols: [], whereClauses: [] };\n  }\n\n  // TODO(step-3): select 체이닝 메서드\n  select<K extends keyof T>(...cols: K[]): this {\n    return this;\n  }\n\n  // TODO(step-4): where 체이닝 메서드\n  where<K extends keyof T>(col: K, op: string, val: unknown): this {\n    return this;\n  }\n\n  // TODO(step-5): toSQL 빌드 메서드\n  toSQL(): string {\n    return \"\";\n  }\n}\n\nfunction main(): void {\n  const rl = readline.createInterface({ input: process.stdin });\n  rl.on('line', () => {});\n}\n\nmain();\n"
+  },
+  "solutionCode": {
+    "main.ts": "// 05-query-builder (solution)\ndeclare const require: any;\ndeclare const process: any;\nconst readline = require('readline');\n\ninterface User {\n  id: number;\n  name: string;\n  age: number;\n}\n\nclass QueryBuilder<T> {\n  private selectCols: string[] = [];\n  private whereClauses: string[] = [];\n  private table: string;\n\n  constructor(table: string) {\n    this.table = table;\n  }\n\n  select<K extends keyof T>(...cols: K[]): this {\n    this.selectCols = cols as string[];\n    return this;\n  }\n\n  where<K extends keyof T>(col: K, op: string, val: unknown): this {\n    const formatted = typeof val === 'string' ? `'${val}'` : String(val);\n    this.whereClauses.push(`${String(col)} ${op} ${formatted}`);\n    return this;\n  }\n\n  toSQL(): string {\n    const cols = this.selectCols.length > 0 ? this.selectCols.join(', ') : '*';\n    let sql = `SELECT ${cols} FROM ${this.table}`;\n    if (this.whereClauses.length > 0) {\n      sql += ` WHERE ${this.whereClauses.join(' AND ')}`;\n    }\n    return sql;\n  }\n}\n\nfunction main(): void {\n  const rl = readline.createInterface({ input: process.stdin });\n  rl.on('line', (line: string) => {\n    line = line.trim();\n    if (!line) return;\n    const parts = line.split(' ');\n    const qb = new QueryBuilder<User>('users');\n    if (parts[0] === 'all') {\n      console.log(qb.select('id', 'name').toSQL());\n    } else if (parts[0] === 'filter') {\n      console.log(qb.select('name', 'age').where('age', '>=', parseInt(parts[1], 10)).toSQL());\n    }\n  });\n}\n\nmain();\n"
+  }
+}

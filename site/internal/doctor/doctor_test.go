@@ -16,11 +16,11 @@ func TestCheckReportsMissingTools(t *testing.T) {
 	t.Cleanup(func() { LookPath = orig })
 
 	ts := Check()
-	if len(ts) != 3 {
-		t.Fatalf("도구 %d개, want 3", len(ts))
+	if len(ts) != 7 {
+		t.Fatalf("도구 %d개, want 7", len(ts))
 	}
 	if AllFound(ts) {
-		t.Fatal("gcc·code가 없는데 AllFound=true")
+		t.Fatal("일부 도구가 없는데 AllFound=true")
 	}
 	for _, tool := range ts {
 		switch tool.Cmd {

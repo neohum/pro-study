@@ -19,6 +19,10 @@ import (
 var langs = []struct{ Key, Name string }{
 	{"c", "C23"},
 	{"go", "Go"},
+	{"rust", "Rust"},
+	{"python", "Python"},
+	{"typescript", "TypeScript"},
+	{"javascript", "JavaScript"},
 }
 
 var testKinds = map[string]bool{

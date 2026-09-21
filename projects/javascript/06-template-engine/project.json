@@ -1,0 +1,29 @@
+{
+  "id": "javascript/06-template-engine",
+  "title": "미니 템플릿 엔진",
+  "summary": "Mustache 스타일의 변수 치환({{var}}), 반복문({{#each}}), 조건문({{#if}}) 템플릿 엔진",
+  "lang": "javascript",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": [
+    "정규표현식 캡처",
+    "AST 변환",
+    "스코프 체인",
+    "HTML 엔티티 이스케이프",
+    "문자열 컴파일"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

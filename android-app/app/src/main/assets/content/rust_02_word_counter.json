@@ -1,0 +1,23 @@
+{
+  "id": "rust/02-word-counter",
+  "lang": "rust",
+  "order": 2,
+  "title": "단어 및 문자 통계 분석기",
+  "summary": "문자열 슬라이스(&str)와 HashMap, Iterator를 이용한 고성능 텍스트 빈도 분석기",
+  "difficulty": 1,
+  "concepts": [
+    "소유권과 빌림(Borrowing)",
+    "&str과 String",
+    "HashMap entry API",
+    "Iterator combinators",
+    "정렬과 클로저"
+  ],
+  "entry": "main.rs",
+  "readme": "# 02. 단어 및 문자 통계 분석기\n\n## 무엇을 만드는가\n\n문자열 슬라이스(&str)와 HashMap, Iterator를 이용한 고성능 텍스트 빈도 분석기\n\n## 왜 이 프로젝트인가\n\n러스트의 핵심 불변식(메모리 안전성, 소유권과 빌림 체계, 무비용 추상화)을 실전 구현을 통해 체화합니다.\n가비지 컬렉터 없이도 안전하고 고성능인 시스템 소프트웨어를 작성하는 감각을 익힙니다.\n\n## 핵심 개념\n\n### 개념 1: 소유권과 빌림(Borrowing)\n\n- 소유권과 빌림(Borrowing)의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 2: &str과 String\n\n- &str과 String의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 3: HashMap entry API\n\n- HashMap entry API의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 4: Iterator combinators\n\n- Iterator combinators의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n### 개념 5: 정렬과 클로저\n\n- 정렬과 클로저의 원리와 관용적(Idiomatic) 러스트 코드 작성법을 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 핵심 열거형 및 자료구조 선언\n\n데이터 모델과 에러 처리를 위한 열거형을 선언합니다.\n\n### Step 2: 기본 파서 및 변환기 작성\n\n입력 데이터를 구조화된 내부 표현으로 파싱합니다.\n\n### Step 3: 핵심 비즈니스 로직 구현\n\n도메인 로직과 상태 전이를 안전하게 구현합니다.\n\n### Step 4: 에러 핸들링 및 안전한 축출/정리\n\nResult와 Option을 매칭하고 예외 상황을 완벽히 방어합니다.\n\n### Step 5: REPL 파이프라인 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| cannot borrow as mutable | 불변 참조와 가변 참조 동시 사용 | 스코프를 분리하거나 clone 또는 entry API를 활용합니다. |\n| value used here after move | 소유권 이전(Move) 발생 | 참조(& 또는 &mut)를 넘기거나 필요한 경우 명시적으로 .clone()합니다. |\n\n## 더 나아가기\n\n- unsafe 블록을 통한 원시 포인터 최적화 비교\n- SIMD 또는 rayon을 활용한 데이터 병렬 처리\n\n## 참고\n\n- The Rust Programming Language: <https://doc.rust-lang.org/book/>\n",
+  "starterCode": {
+    "main.rs": "// 02-word-counter (starter)\n#![allow(unused_variables, dead_code, unused_mut, unused_imports)]\nuse std::collections::HashMap;\nuse std::io::{self, Read};\n\n// TODO(step-1): 단어 정제 함수 sanitize_word\nfn sanitize(word: &str) -> String {\n    word.to_lowercase()\n}\n\n// TODO(step-2): 빈도 카운팅 update_counts\nfn update_counts(text: &str, map: &mut HashMap<String, usize>) {}\n\n// TODO(step-3): 상위 N개 단어 추출 및 정렬\nfn top_words(map: &HashMap<String, usize>) -> Vec<(String, usize)> {\n    Vec::new()\n}\n\n// TODO(step-4): 전체 통계 출력\nfn print_stats(total_lines: usize, total_words: usize, top: &[(String, usize)]) {}\n\n// TODO(step-5): 메인 스트림 처리\nfn main() {\n    let mut content = String::new();\n    io::stdin().read_to_string(&mut content).unwrap();\n}\n"
+  },
+  "solutionCode": {
+    "main.rs": "// 02-word-counter (solution)\n#![allow(unused_variables, dead_code, unused_mut, unused_imports)]\nuse std::collections::HashMap;\nuse std::io::{self, Read};\n\nfn sanitize(word: &str) -> String {\n    word.chars()\n        .filter(|c| c.is_alphanumeric())\n        .collect::<String>()\n        .to_lowercase()\n}\n\nfn main() {\n    let mut content = String::new();\n    if io::stdin().read_to_string(&mut content).is_err() {\n        return;\n    }\n    let lines: Vec<&str> = content.lines().collect();\n    let total_lines = lines.len();\n\n    let mut map: HashMap<String, usize> = HashMap::new();\n    let mut total_words = 0;\n\n    for line in &lines {\n        for w in line.split_whitespace() {\n            let s = sanitize(w);\n            if !s.is_empty() {\n                *map.entry(s).or_insert(0) += 1;\n                total_words += 1;\n            }\n        }\n    }\n\n    let mut entries: Vec<(String, usize)> = map.into_iter().collect();\n    entries.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));\n\n    println!(\"lines: {}\", total_lines);\n    println!(\"words: {}\", total_words);\n    for (word, count) in entries {\n        println!(\"{}: {}\", word, count);\n    }\n}\n"
+  }
+}

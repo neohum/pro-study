@@ -1,0 +1,4 @@
+SELECT name, age WHERE age > 20
+Alice,25
+Bob,19
+Charlie,30

@@ -1,0 +1,29 @@
+{
+  "id": "javascript/03-async-queue",
+  "title": "비동기 동시성 제어 작업 큐",
+  "summary": "동시 실행 작업 수(concurrency)를 제한하며 순차/병렬 작업을 제어하는 태스크 러너",
+  "lang": "javascript",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": [
+    "Promise",
+    "async/await",
+    "큐(Queue) 자료구조",
+    "동시성 제한",
+    "마이크로태스크"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

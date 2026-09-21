@@ -1,0 +1,30 @@
+{
+  "id": "python/04-csv-sql",
+  "title": "인메모리 CSV SQL 쿼리 엔진",
+  "summary": "CSV 데이터를 테이블로 로드하여 SELECT, WHERE, ORDER BY를 평가하는 미니 쿼리 엔진",
+  "lang": "python",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": [
+    "csv 모듈",
+    "SQL 토크나이저",
+    "람다 필터링",
+    "다중 키 정렬",
+    "프로젝션"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

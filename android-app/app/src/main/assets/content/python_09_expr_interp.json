@@ -1,0 +1,23 @@
+{
+  "id": "python/09-expr-interp",
+  "lang": "python",
+  "order": 9,
+  "title": "S-표현식 Lisp 인터프리터",
+  "summary": "렉서, AST 파서, 렉시컬 스코프 환경을 갖추어 기본 산술과 변수 정의를 수행하는 인터프리터",
+  "difficulty": 4,
+  "concepts": [
+    "S-표현식 파싱",
+    "재귀 하강",
+    "환경 프레임(Scope)",
+    "클로저와 평가기",
+    "AST 순회"
+  ],
+  "entry": "main.py",
+  "readme": "# 09. S-표현식 Lisp 인터프리터\n\n## 무엇을 만드는가\n\n렉서, AST 파서, 렉시컬 스코프 환경을 갖추어 기본 산술과 변수 정의를 수행하는 인터프리터\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: S-표현식 파싱\n\n- S-표현식 파싱에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: 재귀 하강\n\n- 재귀 하강에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: 환경 프레임(Scope)\n\n- 환경 프레임(Scope)에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: 클로저와 평가기\n\n- 클로저와 평가기에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: AST 순회\n\n- AST 순회에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 09-expr-interp (starter)\nimport sys\n\n# TODO(step-1): S-표현식 토큰화\ndef tokenize(chars: str) -> list[str]:\n    return []\n\n# TODO(step-2): 구문 분석 (S-Expression AST 파서)\ndef parse_ast(tokens: list[str]):\n    return None\n\n# TODO(step-3): Scope 환경 클래스 정의\nclass Environment:\n    def __init__(self, parent=None):\n        self.bindings = {}\n        self.parent = parent\n\n# TODO(step-4): 재귀 평가기 eval_expr\ndef eval_expr(expr, env: Environment):\n    return 0\n\n# TODO(step-5): REPL 실행 루프\ndef main():\n    pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 09-expr-interp (solution)\nimport sys\n\ndef tokenize(chars: str) -> list[str]:\n    return chars.replace('(', ' ( ').replace(')', ' ) ').split()\n\ndef parse_ast(tokens: list[str]):\n    if len(tokens) == 0:\n        return None\n    tok = tokens.pop(0)\n    if tok == '(':\n        lst = []\n        while tokens and tokens[0] != ')':\n            lst.append(parse_ast(tokens))\n        if tokens:\n            tokens.pop(0) # pop ')'\n        return lst\n    elif tok == ')':\n        return None\n    else:\n        try:\n            return int(tok)\n        except ValueError:\n            return tok\n\nclass Environment:\n    def __init__(self):\n        self.vars = {}\n\n    def get(self, name):\n        return self.vars.get(name, 0)\n\n    def set(self, name, val):\n        self.vars[name] = val\n\ndef eval_expr(expr, env: Environment):\n    if isinstance(expr, int):\n        return expr\n    if isinstance(expr, str):\n        return env.get(expr)\n    if not isinstance(expr, list) or len(expr) == 0:\n        return 0\n\n    op = expr[0]\n    if op == 'define':\n        var_name = expr[1]\n        val = eval_expr(expr[2], env)\n        env.set(var_name, val)\n        return val\n    elif op == '+':\n        args = [eval_expr(x, env) for x in expr[1:]]\n        return sum(args)\n    elif op == '*':\n        args = [eval_expr(x, env) for x in expr[1:]]\n        res = 1\n        for a in args:\n            res *= a\n        return res\n    elif op == '-':\n        args = [eval_expr(x, env) for x in expr[1:]]\n        if len(args) == 1:\n            return -args[0]\n        return args[0] - sum(args[1:])\n    return 0\n\ndef main():\n    env = Environment()\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        tokens = tokenize(line)\n        ast = parse_ast(tokens)\n        res = eval_expr(ast, env)\n        print(res)\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

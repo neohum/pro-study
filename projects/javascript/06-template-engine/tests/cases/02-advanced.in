@@ -1,0 +1,5 @@
+{{#each users}}
+User: {{this}}
+{{/each}}
+---DATA---
+{"users": ["Alice", "Bob"]}

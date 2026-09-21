@@ -1,0 +1,30 @@
+{
+  "id": "python/03-markdown-parser",
+  "title": "미니 마크다운 to HTML 변환기",
+  "summary": "제목, 볼드, 이탤릭, 링크, 리스트를 순수 문자열 처리로 HTML 변환",
+  "lang": "python",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": [
+    "문자열 파싱",
+    "상태 머신",
+    "정규식 치환",
+    "HTML 이스케이프",
+    "블록/인라인 분리"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "id": "typescript/01-todo-cli",
+  "title": "강타입 TODO CLI",
+  "summary": "인터페이스, 유니언 타입, 타입 가드로 견고하게 작성하는 할 일 목록 관리 CLI",
+  "lang": "typescript",
+  "order": 1,
+  "difficulty": 1,
+  "concepts": [
+    "Interface & Type Alias",
+    "Discriminated Unions",
+    "Strict Null Checks",
+    "Type Guards",
+    "Generic Functions"
+  ],
+  "entry": "main.ts",
+  "build": [
+    "tsc",
+    "--noEmit",
+    "main.ts"
+  ],
+  "run": [
+    "node",
+    "main.ts"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

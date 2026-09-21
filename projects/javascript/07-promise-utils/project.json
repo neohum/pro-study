@@ -1,0 +1,28 @@
+{
+  "id": "javascript/07-promise-utils",
+  "title": "바닥부터 만드는 Promise 유틸리티",
+  "summary": "all, allSettled, race, any를 네이티브 API에 의존하지 않고 직접 구현",
+  "lang": "javascript",
+  "order": 7,
+  "difficulty": 3,
+  "concepts": [
+    "Promise 상태 기계",
+    "카운터와 래치",
+    "에러 집계(AggregateError)",
+    "비동기 타이밍"
+  ],
+  "entry": "main.js",
+  "build": [
+    "node",
+    "--check",
+    "main.js"
+  ],
+  "run": [
+    "node",
+    "main.js"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

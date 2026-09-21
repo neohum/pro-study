@@ -1,0 +1,8 @@
+cap 3
+put x 10
+put y 20
+put z 30
+get x
+put w 40
+get y
+get x

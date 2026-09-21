@@ -1,0 +1,30 @@
+{
+  "id": "python/06-event-emitter",
+  "title": "비동기 이벤트 버스 (Pub/Sub)",
+  "summary": "이벤트 구독, 발행, 일회성 리스너(once), 와일드카드 매칭을 지원하는 이벤트 브로커",
+  "lang": "python",
+  "order": 6,
+  "difficulty": 3,
+  "concepts": [
+    "옵저버 패턴",
+    "콜백 큐",
+    "이벤트 네임스페이스",
+    "와일드카드 패턴",
+    "메모리 누수 방지"
+  ],
+  "entry": "main.py",
+  "build": [
+    "python",
+    "-m",
+    "py_compile",
+    "main.py"
+  ],
+  "run": [
+    "python",
+    "main.py"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

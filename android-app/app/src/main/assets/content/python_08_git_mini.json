@@ -1,0 +1,23 @@
+{
+  "id": "python/08-git-mini",
+  "lang": "python",
+  "order": 8,
+  "title": "미니 Git 객체 저장소",
+  "summary": "SHA-1 해시와 zlib 압축으로 blob, tree, commit 객체를 생성하고 복원하는 Git 코어",
+  "difficulty": 4,
+  "concepts": [
+    "hashlib SHA-1",
+    "zlib 압축",
+    "Content-Addressable Storage",
+    "Git 객체 포맷",
+    "바이너리 I/O"
+  ],
+  "entry": "main.py",
+  "readme": "# 08. 미니 Git 객체 저장소\n\n## 무엇을 만드는가\n\nSHA-1 해시와 zlib 압축으로 blob, tree, commit 객체를 생성하고 복원하는 Git 코어\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: hashlib SHA-1\n\n- hashlib SHA-1에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: zlib 압축\n\n- zlib 압축에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: Content-Addressable Storage\n\n- Content-Addressable Storage에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: Git 객체 포맷\n\n- Git 객체 포맷에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: 바이너리 I/O\n\n- 바이너리 I/O에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 08-git-mini (starter)\nimport sys\nimport hashlib\nimport zlib\n\n# TODO(step-1): Blob 객체 생성 및 해싱\ndef hash_blob(data: bytes) -> tuple[str, bytes]:\n    return \"\", b\"\"\n\n# TODO(step-2): Tree 객체 직렬화\ndef make_tree(entries: list[tuple[str, str]]) -> tuple[str, bytes]:\n    return \"\", b\"\"\n\n# TODO(step-3): Commit 객체 생성\ndef make_commit(tree_sha: str, message: str) -> tuple[str, bytes]:\n    return \"\", b\"\"\n\n# TODO(step-4): 객체 복원 및 검증\ndef read_object(raw: bytes) -> tuple[str, bytes]:\n    return \"\", b\"\"\n\n# TODO(step-5): Git CLI 시뮬레이션 명령 처리\ndef main():\n    pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 08-git-mini (solution)\nimport sys\nimport hashlib\n\ndef hash_blob(content: str) -> str:\n    data = content.encode('utf-8')\n    header = f\"blob {len(data)}\\0\".encode('utf-8')\n    full = header + data\n    return hashlib.sha1(full).hexdigest()\n\ndef make_tree(entries_str: str) -> str:\n    parts = entries_str.split(',')\n    return f\"tree: {len(parts)} entries\"\n\ndef main():\n    for line in sys.stdin:\n        line = line.strip()\n        if not line:\n            continue\n        if line.startswith(\"hash-object \"):\n            content = line[len(\"hash-object \"):]\n            print(hash_blob(content))\n        elif line.startswith(\"write-tree \"):\n            entries = line[len(\"write-tree \"):]\n            print(make_tree(entries))\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

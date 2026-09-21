@@ -1,0 +1,3 @@
+on greet Hello
+emit greet Alice
+emit greet Bob

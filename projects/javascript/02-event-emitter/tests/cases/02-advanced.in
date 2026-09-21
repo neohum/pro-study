@@ -1,0 +1,3 @@
+once login Welcome
+emit login User1
+emit login User2

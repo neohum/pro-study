@@ -26,6 +26,10 @@ var tools = []struct {
 }{
 	{"gcc (C23)", "gcc", []string{"--version"}, "MinGW-w64 gcc 13 이상을 설치하고 bin 폴더를 PATH에 추가하세요. C23은 gcc 13부터, #embed는 gcc 15부터 지원합니다."},
 	{"go", "go", []string{"version"}, "https://go.dev/dl 에서 Go 1.22 이상을 설치하세요."},
+	{"rust (rustc)", "rustc", []string{"--version"}, "https://rustup.rs 또는 scoop install rust-gnu 로 Rust를 설치하세요."},
+	{"python", "python", []string{"--version"}, "https://python.org 또는 scoop install python 으로 Python 3.10 이상을 설치하세요."},
+	{"node.js", "node", []string{"--version"}, "https://nodejs.org 또는 scoop install nodejs 로 Node.js 20 이상을 설치하세요."},
+	{"typescript (tsc)", "tsc", []string{"--version"}, "npm install -g typescript 로 TypeScript 컴파일러를 설치하세요."},
 	{"VS Code CLI", "code", []string{"--version"}, "VS Code를 설치한 뒤 명령 팔레트에서 'Shell Command: Install code command in PATH'를 실행하거나, 설치 시 'PATH에 추가'를 켜세요."},
 }
 

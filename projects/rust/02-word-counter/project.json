@@ -1,0 +1,30 @@
+{
+  "id": "rust/02-word-counter",
+  "title": "단어 및 문자 통계 분석기",
+  "summary": "문자열 슬라이스(&str)와 HashMap, Iterator를 이용한 고성능 텍스트 빈도 분석기",
+  "lang": "rust",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "소유권과 빌림(Borrowing)",
+    "&str과 String",
+    "HashMap entry API",
+    "Iterator combinators",
+    "정렬과 클로저"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

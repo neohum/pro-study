@@ -21,11 +21,14 @@ class ContentRepository(private val context: Context) {
     }
 
     fun getProjectDetail(id: String): ProjectDetail? {
-        val parts = id.split("/")
-        if (parts.size != 2) return null
-        val lang = parts[0]
-        val slug = parts[1].replace("-", "_")
-        val fileName = "content/${lang}_${slug}.json"
+        val summary = getProjects().find { it.id == id }
+        val fileName = summary?.assetFile?.takeIf { it.isNotBlank() } ?: run {
+            val parts = id.split("/")
+            if (parts.size != 2) return null
+            val lang = parts[0]
+            val slug = parts[1].replace("-", "_")
+            "content/${lang}_${slug}.json"
+        }
 
         return try {
             val jsonStr = readAssetFile(fileName)

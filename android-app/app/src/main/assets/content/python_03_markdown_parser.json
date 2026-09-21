@@ -1,0 +1,23 @@
+{
+  "id": "python/03-markdown-parser",
+  "lang": "python",
+  "order": 3,
+  "title": "미니 마크다운 to HTML 변환기",
+  "summary": "제목, 볼드, 이탤릭, 링크, 리스트를 순수 문자열 처리로 HTML 변환",
+  "difficulty": 2,
+  "concepts": [
+    "문자열 파싱",
+    "상태 머신",
+    "정규식 치환",
+    "HTML 이스케이프",
+    "블록/인라인 분리"
+  ],
+  "entry": "main.py",
+  "readme": "# 03. 미니 마크다운 to HTML 변환기\n\n## 무엇을 만드는가\n\n제목, 볼드, 이탤릭, 링크, 리스트를 순수 문자열 처리로 HTML 변환\n\n## 왜 이 프로젝트인가\n\n파이썬의 핵심 문법과 표준 라이브러리 패턴을 점진적으로 깊이 있게 체화합니다.\n실제 실무에서 자주 쓰이는 설계 패턴과 아키텍처 원리를 바닥부터 직접 구현하며 학습합니다.\n\n## 핵심 개념\n\n### 개념 1: 문자열 파싱\n\n- 문자열 파싱에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 2: 상태 머신\n\n- 상태 머신에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 3: 정규식 치환\n\n- 정규식 치환에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 4: HTML 이스케이프\n\n- HTML 이스케이프에 대한 실전 활용법과 원리를 다룹니다.\n\n### 개념 5: 블록/인라인 분리\n\n- 블록/인라인 분리에 대한 실전 활용법과 원리를 다룹니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 데이터 모델\n\n기본 모델과 토크나이징 로직을 설계합니다.\n\n### Step 2: 핵심 처리 로직 구현\n\n데이터 변환 및 핵심 비즈니스 로직을 구현합니다.\n\n### Step 3: 보조 기능 및 유효성 검증\n\n필터링, 정렬, 제약 조건 검증을 추가합니다.\n\n### Step 4: 출력 포맷팅 및 에러 처리\n\n결과를 가공하고 예외 상황을 안전하게 처리합니다.\n\n### Step 5: REPL 스트림 및 CLI 연동\n\n표준 입출력 루프를 완성하여 전체 파이프라인을 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError 발생 | 들여쓰기 또는 파이썬 3.10+ 문법 불일치 | 4스페이스 들여쓰기와 최신 문법 버전을 확인합니다. |\n| 입력 파싱 실패 | 줄바꿈(\\r\\n) 미처리 | .strip() 또는 rstrip('\\r\\n')으로 공백을 정제합니다. |\n\n## 더 나아가기\n\n- 대용량 데이터 스트리밍 처리 최적화\n- 타입 힌트(mypy) 정적 검증 강화\n\n## 참고\n\n- Python 공식 문서: <https://docs.python.org/3/>\n",
+  "starterCode": {
+    "main.py": "# 03-markdown-parser (starter)\nimport sys\nimport re\n\n# TODO(step-1): 인라인 태그 변환 (볼드, 이탤릭)\ndef parse_inline(text: str) -> str:\n    return text\n\n# TODO(step-2): 제목(#, ##, ###) 변환\ndef parse_header(line: str) -> str:\n    return line\n\n# TODO(step-3): 순서 없는 리스트(* ) 처리\ndef parse_list_item(line: str) -> str:\n    return line\n\n# TODO(step-4): 단락(<p>) 묶기\ndef parse_blocks(lines: list[str]) -> list[str]:\n    return []\n\n# TODO(step-5): 전체 문서 파싱 파이프라인\ndef main():\n    pass\n\nif __name__ == \"__main__\":\n    main()\n"
+  },
+  "solutionCode": {
+    "main.py": "# 03-markdown-parser (solution)\nimport sys\nimport re\n\ndef parse_inline(text: str) -> str:\n    text = re.sub(r'\\*\\*(.+?)\\*\\*', r'<strong>\\1</strong>', text)\n    text = re.sub(r'\\*(.+?)\\*', r'<em>\\1</em>', text)\n    return text\n\ndef main():\n    content = sys.stdin.read()\n    if not content:\n        return\n    raw_lines = [l.rstrip('\\r') for l in content.strip().split('\\n')]\n    out = []\n    in_list = False\n\n    for line in raw_lines:\n        line_str = line.strip()\n        if not line_str:\n            if in_list:\n                out.append(\"</ul>\")\n                in_list = False\n            continue\n\n        if line_str.startswith(\"### \"):\n            if in_list:\n                out.append(\"</ul>\")\n                in_list = False\n            out.append(f\"<h3>{parse_inline(line_str[4:])}</h3>\")\n        elif line_str.startswith(\"## \"):\n            if in_list:\n                out.append(\"</ul>\")\n                in_list = False\n            out.append(f\"<h2>{parse_inline(line_str[3:])}</h2>\")\n        elif line_str.startswith(\"# \"):\n            if in_list:\n                out.append(\"</ul>\")\n                in_list = False\n            out.append(f\"<h1>{parse_inline(line_str[2:])}</h1>\")\n        elif line_str.startswith(\"* \"):\n            if not in_list:\n                out.append(\"<ul>\")\n                in_list = True\n            out.append(f\"<li>{parse_inline(line_str[2:])}</li>\")\n        else:\n            if in_list:\n                out.append(\"</ul>\")\n                in_list = False\n            out.append(f\"<p>{parse_inline(line_str)}</p>\")\n\n    if in_list:\n        out.append(\"</ul>\")\n    print(\"\\n\".join(out))\n\nif __name__ == \"__main__\":\n    main()\n"
+  }
+}

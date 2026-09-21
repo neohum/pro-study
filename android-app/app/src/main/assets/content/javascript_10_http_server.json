@@ -1,0 +1,23 @@
+{
+  "id": "javascript/10-http-server",
+  "lang": "javascript",
+  "order": 10,
+  "title": "Node.js 기반 경량 HTTP 라우팅 서버",
+  "summary": "URL 경로 매칭, 쿼리스트링 파싱, JSON 직렬화 및 미들웨어 파이프라인을 구현",
+  "difficulty": 5,
+  "concepts": [
+    "HTTP 프로토콜",
+    "라우팅 테이블",
+    "미들웨어 체인",
+    "Content-Type 처리",
+    "상태 코드"
+  ],
+  "entry": "main.js",
+  "readme": "# 10. Node.js 기반 경량 HTTP 라우팅 서버\n\n## 무엇을 만드는가\n\nURL 경로 매칭, 쿼리스트링 파싱, JSON 직렬화 및 미들웨어 파이프라인을 구현\n\n## 왜 이 프로젝트인가\n\n자바스크립트의 비동기 이벤트 루프, 프로토타입 체계, 모던 ES2024 문법을 실전 프로젝트를 통해 깊이 있게 학습합니다.\n외부 프레임워크 없이 순수 자바스크립트로 핵심 엔진을 직접 작성함으로써 언어의 동작 원리를 체화합니다.\n\n## 핵심 개념\n\n### 개념 1: HTTP 프로토콜\n\n- HTTP 프로토콜의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 2: 라우팅 테이블\n\n- 라우팅 테이블의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 3: 미들웨어 체인\n\n- 미들웨어 체인의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 4: Content-Type 처리\n\n- Content-Type 처리의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 5: 상태 코드\n\n- 상태 코드의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 팩토리 함수\n\n기본 자료구조와 진입점 함수를 선언합니다.\n\n### Step 2: 핵심 알고리즘 구현\n\n요구사항에 맞춘 주요 비즈니스 로직 및 알고리즘을 작성합니다.\n\n### Step 3: 부가 기능 및 예외 처리\n\n에러 케이스와 엣지 케이스를 안전하게 처리하는 방어 로직을 추가합니다.\n\n### Step 4: 최적화 및 상태 갱신\n\n불필요한 연산을 줄이고 데이터 정합성을 유지하도록 최적화합니다.\n\n### Step 5: REPL 인터페이스 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError: Unexpected token | Node 버전 또는 모듈 문법 불일치 | 최신 Node.js 환경에서 CommonJS/ESM 설정을 확인합니다. |\n| 비동기 출력 순서 뒤섞임 | Promise 미처리 또는 비동기 락 누락 | async/await 및 큐 체이닝 순서를 점검합니다. |\n\n## 더 나아가기\n\n- 대규모 데이터셋 벤치마크 및 메모리 프로파일링\n- Worker Threads를 활용한 멀티코어 병렬 처리\n\n## 참고\n\n- MDN Web Docs JavaScript: <https://developer.mozilla.org/ko/docs/Web/JavaScript>\n",
+  "starterCode": {
+    "main.js": "// 10-http-server (starter)\nconst readline = require('readline');\n\n// TODO(step-1): HTTP 요청 문자열 파서\nfunction parseRequest(raw) {\n  return { method: 'GET', path: '/' };\n}\n\n// TODO(step-2): 라우터 클래스\nclass Router {\n  #routes = [];\n  add(method, path, handler) {}\n  match(method, path) { return null; }\n}\n\n// TODO(step-3): 응답 포맷팅 유틸리티\nfunction buildResponse(status, body, contentType = 'text/plain') {\n  return \"\";\n}\n\n// TODO(step-4): 미들웨어 실행기\nfunction runMiddlewares(req, middlewares, handler) {\n  return handler(req);\n}\n\n// TODO(step-5): HTTP 스트림 처리\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', () => {});\n"
+  },
+  "solutionCode": {
+    "main.js": "// 10-http-server (solution)\nconst readline = require('readline');\n\nfunction parseRequest(raw) {\n  const lines = raw.split('\\r\\n');\n  if (!lines || lines.length === 0) return null;\n  const first = lines[0].split(' ');\n  return { method: first[0], path: first[1] };\n}\n\nfunction handleRoute(req) {\n  if (req.path === '/api/health') {\n    const body = JSON.stringify({ status: 'ok' });\n    return `HTTP/1.1 200 OK\\r\\nContent-Type: application/json\\r\\nContent-Length: ${body.length}\\r\\n\\r\\n${body}`;\n  }\n  if (req.path === '/hello') {\n    const body = 'Hello World';\n    return `HTTP/1.1 200 OK\\r\\nContent-Type: text/plain\\r\\nContent-Length: ${body.length}\\r\\n\\r\\n${body}`;\n  }\n  const body = 'Not Found';\n  return `HTTP/1.1 404 Not Found\\r\\nContent-Type: text/plain\\r\\nContent-Length: ${body.length}\\r\\n\\r\\n${body}`;\n}\n\nasync function main() {\n  const rl = readline.createInterface({ input: process.stdin });\n  let reqText = '';\n  for await (const line of rl) {\n    reqText += line + '\\r\\n';\n  }\n  const req = parseRequest(reqText);\n  if (req) {\n    console.log(handleRoute(req));\n  }\n}\n\nmain();\n"
+  }
+}

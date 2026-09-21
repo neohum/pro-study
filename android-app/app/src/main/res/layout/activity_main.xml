@@ -48,30 +48,93 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <!-- 언어 선택 탭 -->
-        <LinearLayout
+        <!-- 언어 선택 탭 (가로 스크롤) -->
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:orientation="horizontal">
+            android:layout_height="48dp"
+            android:scrollbars="none"
+            android:fillViewport="true"
+            android:background="@color/eink_bg">
 
-            <Button
-                android:id="@+id/btn_tab_c"
-                style="@style/EinkButton.Primary"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/layout_lang_tabs"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="C23 (10)"
-                android:textSize="14sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp">
 
-            <Button
-                android:id="@+id/btn_tab_go"
-                style="@style/EinkButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Go (10)"
-                android:textSize="14sp" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btn_tab_all"
+                    style="@style/EinkButton.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="전체 (60)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_c"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="C23 (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_go"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="Go (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_rust"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="Rust (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_python"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="Python (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_typescript"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="TypeScript (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_javascript"
+                    style="@style/EinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="12dp"
+                    android:text="JavaScript (10)"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_projects"

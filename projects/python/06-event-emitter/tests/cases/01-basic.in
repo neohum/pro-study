@@ -1,0 +1,3 @@
+on user.login Hello
+emit user.login Alice
+emit user.login Bob

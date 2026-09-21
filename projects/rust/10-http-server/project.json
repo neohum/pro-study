@@ -1,0 +1,30 @@
+{
+  "id": "rust/10-http-server",
+  "title": "경량 HTTP/1.1 웹 서버",
+  "summary": "TcpListener와 TcpStream으로 HTTP 요청을 읽고 정적 라우팅 및 404를 반환하는 웹 서버",
+  "lang": "rust",
+  "order": 10,
+  "difficulty": 5,
+  "concepts": [
+    "std::net::TcpListener/TcpStream",
+    "HTTP 요청 헤더 파싱",
+    "Content-Length 계산",
+    "소켓 I/O 스트림",
+    "상태 코드 포맷팅"
+  ],
+  "entry": "main.rs",
+  "build": [
+    "rustc",
+    "-O",
+    "-o",
+    "build/app.exe",
+    "main.rs"
+  ],
+  "run": [
+    "build/app.exe"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

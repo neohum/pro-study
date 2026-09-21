@@ -1,0 +1,22 @@
+{
+  "id": "javascript/07-promise-utils",
+  "lang": "javascript",
+  "order": 7,
+  "title": "바닥부터 만드는 Promise 유틸리티",
+  "summary": "all, allSettled, race, any를 네이티브 API에 의존하지 않고 직접 구현",
+  "difficulty": 3,
+  "concepts": [
+    "Promise 상태 기계",
+    "카운터와 래치",
+    "에러 집계(AggregateError)",
+    "비동기 타이밍"
+  ],
+  "entry": "main.js",
+  "readme": "# 07. 바닥부터 만드는 Promise 유틸리티\n\n## 무엇을 만드는가\n\nall, allSettled, race, any를 네이티브 API에 의존하지 않고 직접 구현\n\n## 왜 이 프로젝트인가\n\n자바스크립트의 비동기 이벤트 루프, 프로토타입 체계, 모던 ES2024 문법을 실전 프로젝트를 통해 깊이 있게 학습합니다.\n외부 프레임워크 없이 순수 자바스크립트로 핵심 엔진을 직접 작성함으로써 언어의 동작 원리를 체화합니다.\n\n## 핵심 개념\n\n### 개념 1: Promise 상태 기계\n\n- Promise 상태 기계의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 2: 카운터와 래치\n\n- 카운터와 래치의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 3: 에러 집계(AggregateError)\n\n- 에러 집계(AggregateError)의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n### 개념 4: 비동기 타이밍\n\n- 비동기 타이밍의 메커니즘과 베스트 프랙티스를 실습합니다.\n\n\n## 단계별 구현\n\n### Step 1: 기본 구조 및 팩토리 함수\n\n기본 자료구조와 진입점 함수를 선언합니다.\n\n### Step 2: 핵심 알고리즘 구현\n\n요구사항에 맞춘 주요 비즈니스 로직 및 알고리즘을 작성합니다.\n\n### Step 3: 부가 기능 및 예외 처리\n\n에러 케이스와 엣지 케이스를 안전하게 처리하는 방어 로직을 추가합니다.\n\n### Step 4: 최적화 및 상태 갱신\n\n불필요한 연산을 줄이고 데이터 정합성을 유지하도록 최적화합니다.\n\n### Step 5: REPL 인터페이스 및 CLI 연동\n\n표준 입출력 스트림을 통해 입력을 받고 결과를 출력하는 루프를 연결합니다.\n\n## 막혔을 때\n\n| 증상 | 원인 | 해결책 |\n| --- | --- | --- |\n| SyntaxError: Unexpected token | Node 버전 또는 모듈 문법 불일치 | 최신 Node.js 환경에서 CommonJS/ESM 설정을 확인합니다. |\n| 비동기 출력 순서 뒤섞임 | Promise 미처리 또는 비동기 락 누락 | async/await 및 큐 체이닝 순서를 점검합니다. |\n\n## 더 나아가기\n\n- 대규모 데이터셋 벤치마크 및 메모리 프로파일링\n- Worker Threads를 활용한 멀티코어 병렬 처리\n\n## 참고\n\n- MDN Web Docs JavaScript: <https://developer.mozilla.org/ko/docs/Web/JavaScript>\n",
+  "starterCode": {
+    "main.js": "// 07-promise-utils (starter)\nconst readline = require('readline');\n\n// TODO(step-1): Promise.all 구현 (모두 성공 시 결과 배열)\nfunction promiseAll(promises) {\n  return Promise.resolve([]);\n}\n\n// TODO(step-2): Promise.race 구현 (가장 먼저 끝난 것)\nfunction promiseRace(promises) {\n  return Promise.resolve(null);\n}\n\n// TODO(step-3): Promise.allSettled 구현 (모든 결과 {status, value/reason})\nfunction promiseAllSettled(promises) {\n  return Promise.resolve([]);\n}\n\n// TODO(step-4): Promise.any 구현 (첫 번째 성공)\nfunction promiseAny(promises) {\n  return Promise.resolve(null);\n}\n\n// TODO(step-5): REPL 테스트 러너\nconst rl = readline.createInterface({ input: process.stdin });\nrl.on('line', () => {});\n"
+  },
+  "solutionCode": {
+    "main.js": "// 07-promise-utils (solution)\nconst readline = require('readline');\n\nfunction promiseAll(promises) {\n  return new Promise((resolve, reject) => {\n    if (promises.length === 0) return resolve([]);\n    const results = [];\n    let completed = 0;\n    promises.forEach((p, idx) => {\n      Promise.resolve(p).then(\n        (val) => {\n          results[idx] = val;\n          completed++;\n          if (completed === promises.length) resolve(results);\n        },\n        (err) => reject(err)\n      );\n    });\n  });\n}\n\nfunction promiseAllSettled(promises) {\n  return new Promise((resolve) => {\n    if (promises.length === 0) return resolve([]);\n    const results = [];\n    let completed = 0;\n    promises.forEach((p, idx) => {\n      Promise.resolve(p).then(\n        (val) => {\n          results[idx] = { status: 'fulfilled', value: val };\n          completed++;\n          if (completed === promises.length) resolve(results);\n        },\n        (err) => {\n          results[idx] = { status: 'rejected', reason: err };\n          completed++;\n          if (completed === promises.length) resolve(results);\n        }\n      );\n    });\n  });\n}\n\nasync function main() {\n  const rl = readline.createInterface({ input: process.stdin });\n  for await (const line of rl) {\n    if (!line.trim()) continue;\n    const parts = line.trim().split(' ');\n    const cmd = parts[0];\n    if (cmd === 'all') {\n      const vals = parts.slice(1).map((x) => Promise.resolve(Number(x)));\n      const res = await promiseAll(vals);\n      console.log('All: ' + res.join(', '));\n    } else if (cmd === 'allSettled') {\n      const vals = parts.slice(1).map((x, i) => i % 2 === 0 ? Promise.resolve(x) : Promise.reject(x));\n      const res = await promiseAllSettled(vals);\n      console.log('Settled: ' + res.map((r) => r.status).join(', '));\n    }\n  }\n}\n\nmain();\n"
+  }
+}
