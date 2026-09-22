@@ -113,7 +113,16 @@
                 style="@style/EinkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
+                android:layout_marginEnd="6dp"
                 android:text="JavaScript"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_ref_tab_math"
+                style="@style/EinkButton.Primary"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:text="📐 수학 필사"
                 android:textSize="12sp" />
         </LinearLayout>
     </HorizontalScrollView>

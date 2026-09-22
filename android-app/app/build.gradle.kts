@@ -11,8 +11,8 @@ android {
         applicationId = "com.prostudy.eink"
         minSdk = 26
         targetSdk = 34
-        versionCode = 11
-        versionName = "1.3.0"
+        versionCode = 17
+        versionName = "1.9.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

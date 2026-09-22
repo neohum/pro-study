@@ -1,0 +1,379 @@
+{
+  "courseId": "math-cs",
+  "title": "6개 언어로 정복하는 초·중·고 연계 컴퓨터공학 및 AI 수학 필사 코스",
+  "description": "대한민국 초·중·고 교육과정(2022/2015 개정)부터 대학 컴퓨터공학 및 AI 수학까지, 수식 유도와 6개 언어(C23, Go, Rust, Python, TypeScript, JavaScript) 순수 알고리즘을 2중 필사하고 단계별 퀴즈/테스트로 마스터하는 종합 학습 코스",
+  "supportedLanguages": ["c", "go", "rust", "python", "typescript", "javascript"],
+  "totalStages": 7,
+  "totalModules": 40,
+  "stages": [
+    {
+      "id": "stage1-middle",
+      "title": "Stage 1: 중등 기초 수학 (수치 연산과 대수적 기틀)",
+      "curriculumOrigin": "중학교 1~3학년 수학 (수와 연산, 문자와 식, 일차/이차함수, 피타고라스 정리, 삼각비, 대푯값과 산포도)",
+      "modules": [
+        {
+          "id": "mod-1-1-gcd-euclid",
+          "order": 1,
+          "titleKo": "소인수분해와 유클리드 호제법",
+          "mathConcept": "약수, 소수 판별, 최대공약수(GCD)의 원리 a = bq + r => gcd(a, b) = gcd(b, r)",
+          "targetAlgorithms": "유클리드 호제법 반복/재귀 구현 및 시간복잡도 O(log(min(a,b)))",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-1-2-quadratic-cancellation",
+          "order": 2,
+          "titleKo": "이차방정식과 수치적 취소 오차 회피",
+          "mathConcept": "이차방정식 ax^2 + bx + c = 0, 판별식 D = b^2 - 4ac, 근의 공식",
+          "targetAlgorithms": "b^2 >> 4ac 상황에서 부동소수점 치명적 취소(Catastrophic Cancellation) 방지 대체 공식 구현",
+          "prerequisites": ["mod-1-1-gcd-euclid"]
+        },
+        {
+          "id": "mod-1-3-linear-interpolation",
+          "order": 3,
+          "titleKo": "좌표평면·일차함수와 선형 보간(Lerp)",
+          "mathConcept": "직선의 기울기 m = (y2 - y1)/(x2 - x1), 일차함수 y = mx + b, 내분점 공식",
+          "targetAlgorithms": "선형 보간 Lerp(a, b, t) = a + (b - a)*t 및 2D 궤적 샘플러",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-1-4-pythagoras-distance",
+          "order": 4,
+          "titleKo": "피타고라스 정리와 유클리드 거리 (L2 Norm)",
+          "mathConcept": "직각삼각형 a^2 + b^2 = c^2, 2차원 좌표계 두 점 사이의 거리 d = sqrt((x2-x1)^2 + (y2-y1)^2)",
+          "targetAlgorithms": "2D/3D 유클리드 거리 계산기, 거리 제곱 비교 최적화(sqrt 제거) 및 원형 히트박스 충돌 판정",
+          "prerequisites": ["mod-1-3-linear-interpolation"]
+        },
+        {
+          "id": "mod-1-5-statistics-welford",
+          "order": 5,
+          "titleKo": "기초 통계와 웰포드(Welford) 온라인 분산 알고리즘",
+          "mathConcept": "산술평균, 편차, 분산 sigma^2 = sum(xi - mu)^2 / N, 표준편차 sigma",
+          "targetAlgorithms": "단일 루프로 메모리 저장 없이 실시간 분산을 갱신하는 웰포드(Welford) 수치 안정 알고리즘",
+          "prerequisites": []
+        }
+      ]
+    },
+    {
+      "id": "stage2-common-high",
+      "title": "Stage 2: 고교 공통수학 (대수 구조와 논리적 연산)",
+      "curriculumOrigin": "2022 개정 공통수학 1·2 (다항식, 나머지 정리, 집합과 명제, 함수와 역함수, 경우의 수, 2x2 행렬)",
+      "modules": [
+        {
+          "id": "mod-2-1-rolling-hash",
+          "order": 6,
+          "titleKo": "다항식 연산과 라빈-카프(Rabin-Karp) 롤링 해시",
+          "mathConcept": "다항식 P(x) = sum(ci * x^i), 조립제법, 모듈러 산술을 결합한 다항식 해시",
+          "targetAlgorithms": "슬라이딩 윈도우 기반 O(1) 해시 갱신 라빈-카프 문자열 검색 알고리즘",
+          "prerequisites": ["mod-1-1-gcd-euclid"]
+        },
+        {
+          "id": "mod-2-2-bitmask-sets",
+          "order": 7,
+          "titleKo": "집합의 연산과 비트마스크(Bitmask) 알고리즘",
+          "mathConcept": "부분집합, 합집합, 교집합, 차집합, 여집합, 드모르간 법칙",
+          "targetAlgorithms": "정수 비트 연산(AND, OR, XOR, NOT, Shift)으로 구현하는 O(1) 집합 자료구조",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-2-3-boolean-logic",
+          "order": 8,
+          "titleKo": "명제와 논리 조건식의 최적화",
+          "mathConcept": "조건문, 대우명제, 충분조건과 필요조건, 진리표(Truth Table)",
+          "targetAlgorithms": "단락 평가(Short-Circuit Evaluation) 및 불리언 표현식 간소화 파서",
+          "prerequisites": ["mod-2-2-bitmask-sets"]
+        },
+        {
+          "id": "mod-2-4-injective-surjective-crypto",
+          "order": 9,
+          "titleKo": "함수의 사상(단사·전사·전단사)과 대칭키 암호화",
+          "mathConcept": "정의역/공역/치역, 일대일 대응(전단사 함수 Bijective), 역함수 f^-1(x)",
+          "targetAlgorithms": "전단사 사상을 이용한 바이트 치환 테이블(S-Box) 및 치환-전치 암호화/복호화",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-2-5-permutations-backtracking",
+          "order": 10,
+          "titleKo": "순열·조합과 N-Queens 백트래킹",
+          "mathConcept": "합의 법칙, 곱의 법칙, 순열 nPr = n!/(n-r)!, 조합 nCr = n!/(r!(n-r)!)",
+          "targetAlgorithms": "재귀(Recursion) 기반 순열·조합 생성기 및 N-Queens 체스 백트래킹 완전탐색",
+          "prerequisites": ["mod-2-2-bitmask-sets"]
+        },
+        {
+          "id": "mod-2-6-matrix-2d-transform",
+          "order": 11,
+          "titleKo": "2x2 행렬 연산과 2D 그래픽스 기하 변환",
+          "mathConcept": "행렬의 덧셈, 스칼라배, 행렬 곱셈, 2x2 역행렬 및 행렬식 ad - bc",
+          "targetAlgorithms": "2D 점의 회전(Rotation), 크기(Scale), 전단(Shear)을 수행하는 2x2 행렬 변환 엔진",
+          "prerequisites": ["mod-1-3-linear-interpolation"]
+        }
+      ]
+    },
+    {
+      "id": "stage3-advanced-high",
+      "title": "Stage 3: 고교 심화 수학 (대수·미적분·확통·기하)",
+      "curriculumOrigin": "고등학교 일반/진로선택 (대수/수학I, 미적분I·II/수학II, 확률과 통계, 기하)",
+      "modules": [
+        {
+          "id": "mod-3-1-logarithm-complexity",
+          "order": 12,
+          "titleKo": "지수·로그와 알고리즘 시간복잡도",
+          "mathConcept": "지수함수 a^x, 로그함수 log_b(x), 로그의 성질, 정보 엔트로피 비트(Bit) 단위",
+          "targetAlgorithms": "이진 탐색(Binary Search) 알고리즘 및 O(log n) 시간복잡도 증명 측정기",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-3-2-trig-rotations",
+          "order": 13,
+          "titleKo": "삼각함수·호도법과 2D 회전 역학",
+          "mathConcept": "호도법(Radian), 단위원, sin, cos, tan 덧셈정리, 각속도",
+          "targetAlgorithms": "각도-라디안 변환기, 회전 행렬 R(theta) 및 게임 오브젝트 2D 조준 벡터 계산기",
+          "prerequisites": ["mod-1-4-pythagoras-distance", "mod-2-6-matrix-2d-transform"]
+        },
+        {
+          "id": "mod-3-3-recurrence-dp",
+          "order": 14,
+          "titleKo": "수열·수학적 귀납법과 동적 계획법(DP)",
+          "mathConcept": "등차/등비수열 일반항, 수열의 합 Sigma, 피보나치 점화식 a_n = a_{n-1} + a_{n-2}",
+          "targetAlgorithms": "메모이제이션(Top-down) 및 타뷸레이션(Bottom-up) DP 피보나치와 계단 오르기",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-3-4-limit-epsilon",
+          "order": 15,
+          "titleKo": "극한·연속성과 부동소수점 수렴 판별",
+          "mathConcept": "함수의 극한 lim_{x->a} f(x), 좌극한/우극한, 연속성의 정의, 수열의 수렴",
+          "targetAlgorithms": "부동소수점 머신 입실론(Machine Epsilon) 동적 측정 및 루프 수렴 판별 가드",
+          "prerequisites": ["mod-3-1-logarithm-complexity"]
+        },
+        {
+          "id": "mod-3-5-numerical-derivative-1d",
+          "order": 16,
+          "titleKo": "미분계수·도함수와 1차원 경사하강법",
+          "mathConcept": "미분계수 정의 f'(x) = lim_{h->0} (f(x+h)-f(x))/h, 중앙 차분 공식, 극대/극소",
+          "targetAlgorithms": "중앙 차분 수치 미분 함수 및 1차원 볼록 함수 최소점을 찾는 경사하강법(GD)",
+          "prerequisites": ["mod-3-4-limit-epsilon"]
+        },
+        {
+          "id": "mod-3-6-numerical-integration",
+          "order": 17,
+          "titleKo": "구분구적법·정적분과 사다리꼴 수치적분",
+          "mathConcept": "구분구적법(Riemann Sum), 미적분학의 기본정리, 정적분 int_a^b f(x)dx",
+          "targetAlgorithms": "사다리꼴 공식(Trapezoidal Rule) 및 심프슨 공식(Simpson's Rule) 수치적분기",
+          "prerequisites": ["mod-3-5-numerical-derivative-1d"]
+        },
+        {
+          "id": "mod-3-7-naive-bayes",
+          "order": 18,
+          "titleKo": "조건부확률·베이즈 정리와 나이브 베이즈 분류기",
+          "mathConcept": "사건의 독립과 종속, 조건부확률 P(A|B) = P(A cap B)/P(B), 베이즈 정리 P(A|B) = P(B|A)P(A)/P(B)",
+          "targetAlgorithms": "로그 확률 덧셈을 적용한 텍스트 스팸/햄 나이브 베이즈(Naive Bayes) 분류기",
+          "prerequisites": []
+        },
+        {
+          "id": "mod-3-8-vector-cosine-similarity",
+          "order": 19,
+          "titleKo": "평면/공간벡터의 내적과 코사인 유사도",
+          "mathConcept": "벡터의 성분 표시, 벡터 크기 ||u||, 내적 u . v = ||u||||v||cos(theta) = sum(ui * vi)",
+          "targetAlgorithms": "고차원 임베딩 벡터 간 코사인 유사도(Cosine Similarity) 및 추천 시스템 검색기",
+          "prerequisites": ["mod-1-4-pythagoras-distance"]
+        }
+      ]
+    },
+    {
+      "id": "stage4-linear-algebra",
+      "title": "Stage 4: 대학 선형대수학 (Linear Algebra for CS/AI)",
+      "curriculumOrigin": "대학 컴퓨터공학·인공지능 핵심 기초 (벡터공간, 행렬 분해, 기하학적 변환, 고유값, SVD)",
+      "modules": [
+        {
+          "id": "mod-4-1-vector-space-basis",
+          "order": 20,
+          "titleKo": "벡터공간·선형결합과 기저(Basis)",
+          "mathConcept": "선형독립과 선형종속, 기저(Basis), 차원(Dimension), 부분공간의 Span",
+          "targetAlgorithms": "벡터들의 선형 독립 여부 판별기 및 임의의 벡터 기저 분해 함수",
+          "prerequisites": ["mod-3-8-vector-cosine-similarity"]
+        },
+        {
+          "id": "mod-4-2-gaussian-elimination-rref",
+          "order": 21,
+          "titleKo": "가우스 소거법과 기약행사다리꼴(RREF)",
+          "mathConcept": "기본행연산, 첨가행렬, 행사다리꼴(REF), 기약행사다리꼴(RREF), 피벗팅(Partial Pivoting)",
+          "targetAlgorithms": "피벗팅이 포함된 순수 가우스-조던 소거법 및 N차 정사각 역행렬 계산기",
+          "prerequisites": ["mod-2-6-matrix-2d-transform"]
+        },
+        {
+          "id": "mod-4-3-affine-homogeneous-4x4",
+          "order": 22,
+          "titleKo": "동차좌표계와 4x4 3D 아핀 변환 행렬",
+          "mathConcept": "선형사상, 동차좌표(x, y, z, 1), 3차원 이동(Translation), 회전(Euler Rotation), 스케일(Scale)",
+          "targetAlgorithms": "3D 그래픽스 모델-뷰-프로젝션(MVP) 4x4 행렬 곱셈 및 점 변환 파이프라인",
+          "prerequisites": ["mod-3-2-trig-rotations", "mod-4-2-gaussian-elimination-rref"]
+        },
+        {
+          "id": "mod-4-4-determinant-cramer",
+          "order": 23,
+          "titleKo": "행렬식의 기하학적 의미와 크라메르 공식",
+          "mathConcept": "부피 팽창 계수 det(A), 여인수 전개(Laplace Expansion), 수반행렬(Adjugate), 크라메르 공식",
+          "targetAlgorithms": "N차 정사각 행렬식 재귀 계산기 및 소규모 연립방정식 크라메르 풀이기",
+          "prerequisites": ["mod-4-2-gaussian-elimination-rref"]
+        },
+        {
+          "id": "mod-4-5-eigenvalues-power-iteration",
+          "order": 24,
+          "titleKo": "고유값·고유벡터와 거듭제곱법(Power Iteration)",
+          "mathConcept": "고유치 방정식 Av = lambda v, 특성방정식 det(A - lambda I) = 0, 대각화(Diagonalization)",
+          "targetAlgorithms": "거듭제곱법(Power Iteration)을 이용한 주 고유값 및 고유벡터 근사 추출기",
+          "prerequisites": ["mod-4-4-determinant-cramer"]
+        },
+        {
+          "id": "mod-4-6-gram-schmidt-qr",
+          "order": 25,
+          "titleKo": "그람-슈미트 정규직교화와 QR 분해",
+          "mathConcept": "직교기저, 정규직교기저, 정사영(Projection), 그람-슈미트 과정, QR 분해 A = QR",
+          "targetAlgorithms": "수치 안정성을 갖춘 수정된 그람-슈미트(MGS) 알고리즘 및 최소제곱법 회귀 분석기",
+          "prerequisites": ["mod-4-1-vector-space-basis"]
+        },
+        {
+          "id": "mod-4-7-svd-pca",
+          "order": 26,
+          "titleKo": "특이값 분해(SVD)와 주성분 분석(PCA)",
+          "mathConcept": "임의의 m x n 행렬 분해 A = U Sigma V^T, 특이값(Singular Values), 최적 저랭크 근사",
+          "targetAlgorithms": "2D/3D 데이터셋의 공분산 행렬 계산 및 PCA 제1·제2 주성분 차원 축소기",
+          "prerequisites": ["mod-4-5-eigenvalues-power-iteration", "mod-4-6-gram-schmidt-qr"]
+        }
+      ]
+    },
+    {
+      "id": "stage5-discrete-math",
+      "title": "Stage 5: 대학 이산수학 & 암호학 (Discrete Math & Crypto)",
+      "curriculumOrigin": "대학 컴퓨터공학 전공 필수 (수리논리, 그래프 이론, 정수론, 암호학, 알고리즘 분석)",
+      "modules": [
+        {
+          "id": "mod-5-1-propositional-sat",
+          "order": 27,
+          "titleKo": "명제·술어논리와 DPLL SAT 솔버 기초",
+          "mathConcept": "명제논리, 논리합정규형(CNF), 한정기호(forall, exists), 충족 가능성 문제(SAT)",
+          "targetAlgorithms": "단위 전파(Unit Propagation)와 순수 리터럴 제거가 포함된 미니 DPLL SAT 솔버",
+          "prerequisites": ["mod-2-3-boolean-logic"]
+        },
+        {
+          "id": "mod-5-2-graph-representations",
+          "order": 28,
+          "titleKo": "관계와 그래프 표현 (인접행렬 vs 인접리스트)",
+          "mathConcept": "동치관계, 유향/무향 그래프 G = (V, E), 차수(Degree), 경로와 사이클",
+          "targetAlgorithms": "인접 행렬 및 인접 리스트 상호 변환기 및 그래프 순환(Cycle) 감지기",
+          "prerequisites": ["mod-2-2-bitmask-sets"]
+        },
+        {
+          "id": "mod-5-3-shortest-path-mst",
+          "order": 29,
+          "titleKo": "그래프 최단경로(Dijkstra)와 최소신장트리(MST)",
+          "mathConcept": "트리의 성질, 가중치 그래프, 삼각 부등식, 탐욕 알고리즘(Greedy)의 정당성",
+          "targetAlgorithms": "우선순위 큐 다익스트라(Dijkstra) 최단경로 및 크루스칼(Kruskal 유니온-파인드) MST",
+          "prerequisites": ["mod-5-2-graph-representations"]
+        },
+        {
+          "id": "mod-5-4-modular-eea",
+          "order": 30,
+          "titleKo": "모듈러 정수론과 확장 유클리드 알고리즘(EEA)",
+          "mathConcept": "모듈러 합동식 a == b (mod m), 베주 항등식 ax + by = gcd(a,b), 페르마의 소정리",
+          "targetAlgorithms": "확장 유클리드 알고리즘(EEA) 기반 모듈러 곱셈 역원(Modular Inverse) 계산기",
+          "prerequisites": ["mod-1-1-gcd-euclid"]
+        },
+        {
+          "id": "mod-5-5-rsa-cryptosystem",
+          "order": 31,
+          "titleKo": "오일러 파이 함수와 순수 RSA 공개키 암호",
+          "mathConcept": "오일러 피 함수 phi(n) = (p-1)(q-1), 공개키 e와 개인키 d = e^-1 mod phi(n), 거듭제곱 잉여",
+          "targetAlgorithms": "밀러-라빈 소수 판정법 및 빠른 모듈러 거듭제곱(Modular Exponentiation)을 이용한 순수 RSA",
+          "prerequisites": ["mod-5-4-modular-eea"]
+        },
+        {
+          "id": "mod-5-6-master-theorem",
+          "order": 32,
+          "titleKo": "점화식과 마스터 정리(Master Theorem)",
+          "mathConcept": "분할 정복 점화식 T(n) = aT(n/b) + f(n), 세 가지 분기 케이스, 임계 지수 c_crit = log_b(a)",
+          "targetAlgorithms": "분할 정복 알고리즘(머지소트, 스트라센)의 시간복잡도를 판정하는 마스터 정리 평가기",
+          "prerequisites": ["mod-3-1-logarithm-complexity", "mod-3-3-recurrence-dp"]
+        }
+      ]
+    },
+    {
+      "id": "stage6-optimization",
+      "title": "Stage 6: 대학 다변수 미적분 & 최적화 (Optimization for AI)",
+      "curriculumOrigin": "머신러닝·딥러닝·데이터 엔지니어링 핵심 (다변수 해석학, 경사도, 역전파, 적응형 옵티마이저)",
+      "modules": [
+        {
+          "id": "mod-6-1-multivariate-gradient",
+          "order": 33,
+          "titleKo": "다변수 함수·편미분과 그래디언트(Gradient)",
+          "mathConcept": "다변수 함수 f(x1, ..., xn), 편도함수 partial f / partial xi, 그래디언트 벡터 nabla f",
+          "targetAlgorithms": "다변수 수치 그래디언트 벡터 계산기 및 2변수 손실 함수 등고선 하강 시뮬레이터",
+          "prerequisites": ["mod-3-5-numerical-derivative-1d", "mod-3-8-vector-cosine-similarity"]
+        },
+        {
+          "id": "mod-6-2-autograd-chain-rule",
+          "order": 34,
+          "titleKo": "다변수 연쇄법칙과 자동 미분(Micro-Autograd)",
+          "mathConcept": "다변수 합성함수의 연쇄법칙(Chain Rule), 계산 그래프(Computational Graph), 역전파(Backprop)",
+          "targetAlgorithms": "스칼라 연산 노드와 부모 노드 그래디언트를 누적하는 순수 마이크로 역전파(Autograd) 엔진",
+          "prerequisites": ["mod-6-1-multivariate-gradient"]
+        },
+        {
+          "id": "mod-6-3-jacobian-hessian",
+          "order": 35,
+          "titleKo": "야코비안(Jacobian)과 헤시안(Hessian) 2차 미분",
+          "mathConcept": "벡터 함수의 1차 도함수 야코비안 행렬 J, 스칼라 함수의 2차 편도함수 헤시안 행렬 H",
+          "targetAlgorithms": "다변수 함수의 수치 야코비안·헤시안 행렬 계산기 및 안장점(Saddle Point) 판별기",
+          "prerequisites": ["mod-4-2-gaussian-elimination-rref", "mod-6-1-multivariate-gradient"]
+        },
+        {
+          "id": "mod-6-4-adam-optimizer",
+          "order": 36,
+          "titleKo": "경사하강법의 진화 (모멘텀·RMSProp·Adam)",
+          "mathConcept": "지수 이동 평균(EMA), 1차 모멘트(방향성), 2차 모멘트(학습률 조절), 바이어스 보정",
+          "targetAlgorithms": "SGD, Momentum, RMSProp, Adam 4가지 옵티마이저 수식 유도 및 매개변수 갱신 루프",
+          "prerequisites": ["mod-6-1-multivariate-gradient"]
+        },
+        {
+          "id": "mod-6-5-lagrange-multipliers",
+          "order": 37,
+          "titleKo": "제약 최적화와 라그랑주 승수법(Lagrange Multipliers)",
+          "mathConcept": "등식 제약조건 g(x) = 0 하에서 f(x) 극대/극소, 라그랑주 함수 L(x, lambda) = f(x) - lambda g(x)",
+          "targetAlgorithms": "예산 제약 하의 효용 극대화 연립방정식을 뉴턴-랩슨법으로 풀이하는 최적화 엔진",
+          "prerequisites": ["mod-4-2-gaussian-elimination-rref", "mod-6-1-multivariate-gradient"]
+        }
+      ]
+    },
+    {
+      "id": "stage7-stats-numerical",
+      "title": "Stage 7: 통계적 모델·정보이론 & 수치해석 (Stats & Numerical)",
+      "curriculumOrigin": "데이터 사이언스·시스템 프로그래밍 수치 안정성 (마르코프, 엔트로피, IEEE 754, 수치해법)",
+      "modules": [
+        {
+          "id": "mod-7-1-markov-pagerank",
+          "order": 38,
+          "titleKo": "마르코프 연쇄와 구글 페이지랭크(PageRank)",
+          "mathConcept": "마르코프 성질, 확률 전이 행렬 P, 정구 분포(Stationary Distribution) pi = pi P, 댐핑 팩터(d)",
+          "targetAlgorithms": "하이퍼링크 웹 그래프의 멱승법(Power Iteration) 기반 구글 PageRank 정상상태 수렴기",
+          "prerequisites": ["mod-4-5-eigenvalues-power-iteration", "mod-5-2-graph-representations"]
+        },
+        {
+          "id": "mod-7-2-shannon-entropy-cross-entropy",
+          "order": 39,
+          "titleKo": "샤논 엔트로피와 교차 엔트로피 손실(Cross-Entropy)",
+          "mathConcept": "자가 정보량 I(x) = -log2(p(x)), 샤논 엔트로피 H(X) = -sum p(x)log2 p(x), 교차 엔트로피 H(p,q)",
+          "targetAlgorithms": "텍스트 문자열 엔트로피 측정기 및 분류 신경망 소프트맥스(Softmax) 교차 엔트로피 손실기",
+          "prerequisites": ["mod-3-1-logarithm-complexity"]
+        },
+        {
+          "id": "mod-7-3-ieee754-newton-raphson",
+          "order": 40,
+          "titleKo": "IEEE 754 부동소수점 비트 분해와 뉴턴-랩슨 해법",
+          "mathConcept": "부호(Sign 1비트), 지수(Exponent 11비트), 가수(Mantissa 52비트), 뉴턴-랩슨 x_{n+1} = x_n - f(x_n)/f'(x_n)",
+          "targetAlgorithms": "64비트 double 부동소수점 비트 파싱 추출기 및 비선형 방정식 뉴턴-랩슨 초고속 근사기",
+          "prerequisites": ["mod-3-5-numerical-derivative-1d"]
+        }
+      ]
+    }
+  ]
+}

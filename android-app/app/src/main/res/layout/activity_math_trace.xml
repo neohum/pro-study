@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eink_bg"
+    android:orientation="vertical">
+
+    <!-- 상단 툴바 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/eink_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <Button
+            android:id="@+id/btn_math_back"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="← 뒤로"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_math_header_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="8dp"
+            android:text="📐 중1~대학 수학 교과 개념 &amp; 그래프"
+            android:textColor="@color/eink_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_math_anim_toggle"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="⏸ 정지"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_select_math_module"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="단원 선택"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/eink_border" />
+
+    <!-- 수학 모듈 메타 가이드 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/eink_surface"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_curriculum_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_eink_badge"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="중1 수학 연계"
+                android:textColor="@color/eink_text_primary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_math_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Lesson #1 (1/15)"
+                android:textColor="@color/eink_text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_math_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="소인수분해와 거듭제곱, 최대공약수"
+            android:textColor="@color/eink_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 탭 전환 버튼: 수학 개념 & 그래프 vs 6개 언어 코드 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_mode_math_formula"
+                style="@style/EinkButton.Primary"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="📖 수학 개념·도출·실전 문제"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_mode_math_code"
+                style="@style/EinkButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="💻 6개 언어 알고리즘 코드"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- 언어 선택 서브 탭 (코드 모드 시 노출) -->
+        <HorizontalScrollView
+            android:id="@+id/scroll_math_langs"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button android:id="@+id/btn_math_lang_c" style="@style/EinkButton.Primary" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginEnd="4dp" android:text="C23" android:textSize="11sp" />
+                <Button android:id="@+id/btn_math_lang_go" style="@style/EinkButton" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginEnd="4dp" android:text="Go" android:textSize="11sp" />
+                <Button android:id="@+id/btn_math_lang_rust" style="@style/EinkButton" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginEnd="4dp" android:text="Rust" android:textSize="11sp" />
+                <Button android:id="@+id/btn_math_lang_python" style="@style/EinkButton" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginEnd="4dp" android:text="Python" android:textSize="11sp" />
+                <Button android:id="@+id/btn_math_lang_ts" style="@style/EinkButton" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginEnd="4dp" android:text="TypeScript" android:textSize="11sp" />
+                <Button android:id="@+id/btn_math_lang_js" style="@style/EinkButton" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="JavaScript" android:textSize="11sp" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/eink_border" />
+
+    <!-- 메인 스크롤 콘텐츠 영역 -->
+    <ScrollView
+        android:id="@+id/scroll_main_math"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <!-- [1] 수학 개념 모드 컨테이너 -->
+            <LinearLayout
+                android:id="@+id/layout_math_concept_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <!-- 시각화 그래프 영역 -->
+                <LinearLayout
+                    android:id="@+id/layout_graph_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📊 시각화 인터랙티브 그래프"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <com.prostudy.eink.ui.math.MathGraphView
+                        android:id="@+id/math_graph_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        android:layout_marginTop="6dp"
+                        android:background="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/tv_graph_caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="그래프 설명이 여기에 표시됩니다."
+                        android:textColor="@color/eink_text_secondary"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- 1. 중1 눈높이 기초 용어 사전 카드 -->
+                <LinearLayout
+                    android:id="@+id/card_math_terms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📖 1. 중1 눈높이 기초 용어 사전 (Glossary)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_math_terms_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="용어 설명 내용"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- 2. 핵심 공식 & 법칙 카드 -->
+                <LinearLayout
+                    android:id="@+id/card_math_formulas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📐 2. 핵심 공식 및 수학 법칙 (Key Formulas)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_math_formulas_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="핵심 공식 내용"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- 2.1 수식 기호 & 문자 뜻풀이 카드 (Symbol & Variable Guide) -->
+                <LinearLayout
+                    android:id="@+id/card_symbol_guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🔤 2.1 수식 기호 &amp; 문자 뜻풀이 (Symbol Guide)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_symbol_guide_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="수식 기호 설명 내용"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <!-- 3. 수식 도출 원리 & 증명 과정 카드 (Why & How) -->
+                <LinearLayout
+                    android:id="@+id/card_math_derivation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/tv_derivation_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🔍 3. 수식 도출 원리와 과정 (Formula Derivation)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_derivation_story"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="#F7F7F7"
+                        android:padding="8dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="도출 배경 이야기"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_derivation_steps_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="6dp"
+                        android:text="단계별 수식 전개 과정"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_derivation_conclusion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="#EEEEEE"
+                        android:padding="8dp"
+                        android:text="도출 결론"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- 4. 직관적인 원리 및 컴퓨터 응용 카드 -->
+                <LinearLayout
+                    android:id="@+id/card_math_intuition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="💡 4. 개념 원리 &amp; 프로그래밍 연결 (Intuition)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_math_explanation_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="5dp"
+                        android:text="개념 원리 상세 설명"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_math_cs_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="#F0F0F0"
+                        android:padding="8dp"
+                        android:lineSpacingExtra="4dp"
+                        android:text="CS/프로그래밍 응용"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- 5. 단계별 예제 및 실전 연습 문제 세트 카드 -->
+                <LinearLayout
+                    android:id="@+id/card_math_example"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_eink_card"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="✏️ 5. 단계별 예제 및 실전 연습 문제 (Worked Problems)"
+                        android:textColor="@color/eink_text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <!-- 복수 문제들이 추가되는 동적 레이아웃 -->
+                    <LinearLayout
+                        android:id="@+id/layout_problems_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- [2] 6개 언어 코드 모드 컨테이너 -->
+            <LinearLayout
+                android:id="@+id/layout_math_code_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_code_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="// C23 Implementation"
+                    android:textColor="@color/eink_text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:id="@+id/tv_code_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="12dp"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:background="@color/eink_border" />
+
+    <!-- 하단 네비게이션 바 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/eink_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <Button
+            android:id="@+id/btn_prev_math"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="← 이전 단원"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_next_math"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="다음 단원 →"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</LinearLayout>
