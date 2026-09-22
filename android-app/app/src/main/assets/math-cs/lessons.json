@@ -1,0 +1,3116 @@
+[
+  {
+    "id": "mod-1-1-gcd-euclid",
+    "stage": "stage1-middle",
+    "order": 1,
+    "titleKo": "소인수분해와 거듭제곱, 최대공약수",
+    "titleEn": "Prime Factorization, Powers, and Euclidean GCD",
+    "koreanCurriculumUnit": "중학교 1학년 수학 - Ⅰ. 수와 연산 (1. 소인수분해)",
+    "graphType": "NUMBER_LINE",
+    "graphCaption": "수직선 위의 기준점(0)과 자연수의 약수 및 배수의 위치 관계",
+    "terms": [
+      {
+        "term": "소수 (Prime Number)",
+        "definition": "1보다 큰 자연수 중에서 1과 자기 자신만을 약수로 갖는 수 (예: 2, 3, 5, 7, 11...). 2는 소수 중 유일한 짝수예요!"
+      },
+      {
+        "term": "합성수 (Composite Number)",
+        "definition": "1보다 큰 자연수 중에서 소수가 아닌 수, 즉 약수가 3개 이상인 수 (예: 4, 6, 8, 9...). ※ 1은 소수도 합성수도 아니에요."
+      },
+      {
+        "term": "거듭제곱 (Power)",
+        "definition": "같은 수를 여러 번 곱한 것을 간단히 쓰는 방법 (밑: 곱하는 수, 지수: 곱해진 횟수. 예: 2 × 2 × 2 = 2³)"
+      },
+      {
+        "term": "소인수분해 (Prime Factorization)",
+        "definition": "어떤 자연수를 오직 '소수들의 곱'으로만 분해하여 나타내는 것 (수의 레고 블록 분해)"
+      },
+      {
+        "term": "최대공약수 (GCD)",
+        "definition": "두 개 이상의 자연수가 공통으로 나누어떨어지는 약수(공약수) 중에서 가장 큰 수"
+      },
+      {
+        "term": "서로소 (Coprime)",
+        "definition": "최대공약수가 1뿐인 두 자연수의 관계 (예: 4와 9는 약수가 1만 겹치므로 서로소)"
+      }
+    ],
+    "mathExplanation": "초등학교 때는 12를 3 × 4로 나타냈지만, 4는 다시 2 × 2로 쪼갤 수 있습니다. 더 이상 쪼갤 수 없는 가장 순수한 수인 '소수'들만의 곱(12 = 2² × 3)으로 표현하는 것을 '소인수분해'라고 합니다. 모든 합성수는 소수들의 곱으로 단 하나의 유일한 모양으로 분해됩니다(산술의 기본정리). 큰 두 수의 최대공약수를 구할 때는 하나씩 나누지 않고 유클리드 호제법을 쓰면 엄청나게 빠르게 구할 수 있습니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "나눗셈 정리 (Division Theorem)",
+        "latex": "a = bq + r \\quad (0 \\le r < b)",
+        "explanation": "자연수 a를 b로 나누면 몫 q와 나머지 r이 유일하게 결정되며, 나머지는 나누는 수 b보다 항상 작습니다."
+      },
+      {
+        "title": "유클리드 호제법 기본 공식",
+        "latex": "\\gcd(a, b) = \\gcd(b, a \\bmod b)",
+        "explanation": "큰 수 a와 b의 최대공약수는, 작은 수 b와 나머지 r의 최대공약수와 완벽하게 같습니다."
+      },
+      {
+        "title": "두 수의 곱과 최대공약수·최소공배수의 관계",
+        "latex": "a \\times b = \\gcd(a, b) \\times \\operatorname{lcm}(a, b)",
+        "explanation": "두 자연수를 곱한 값은 항상 두 수의 최대공약수와 최소공배수를 곱한 값과 일치합니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "GCD",
+        "name": "최대공약수 (Greatest Common Divisor)",
+        "meaning": "Greatest(가장 큰) + Common(공통의) + Divisor(나누는 수/약수)의 머리글자 약자입니다. 두 개 이상의 수가 공통으로 나누어떨어지는 공약수 중 가장 큰 수입니다."
+      },
+      {
+        "symbol": "LCM",
+        "name": "최소공배수 (Least Common Multiple)",
+        "meaning": "Least(가장 작은) + Common(공통의) + Multiple(배수)의 머리글자 약자입니다. 두 개 이상의 수가 공통으로 가지는 공배수 중 0을 제외하고 가장 작은 수입니다."
+      },
+      {
+        "symbol": "mod",
+        "name": "나머지 연산 (Modulo)",
+        "meaning": "Modulo(모듈로/나머지)의 약자입니다. a mod b는 'a를 b로 나누었을 때의 나머지'를 뜻하며, 프로그래밍 언어의 % 연산자와 동일합니다."
+      },
+      {
+        "symbol": "a",
+        "name": "나뉨수 (Dividend)",
+        "meaning": "나누어지는 원래 전체 수량입니다. (예: 나누어줄 빵 전체 17개)"
+      },
+      {
+        "symbol": "b",
+        "name": "나누는 수 (Divisor)",
+        "meaning": "몇 개씩 묶을지 나누는 기준이 되는 수량입니다. (예: 나누어줄 사람 수 5명)"
+      },
+      {
+        "symbol": "q",
+        "name": "몫 (Quotient)",
+        "meaning": "몫을 뜻하는 영어 Quotient의 머리글자 q입니다. 한 묶음당 똑같이 돌아가는 수량입니다. (예: 1인당 3개씩 분배)"
+      },
+      {
+        "symbol": "r",
+        "name": "나머지 (Remainder)",
+        "meaning": "남은 찌꺼기를 뜻하는 영어 Remainder의 머리글자 r입니다. 다 똑같이 나누어주고 끝에 남은 분량입니다. (예: 남은 빵 2개)"
+      },
+      {
+        "symbol": "bq",
+        "name": "곱셈 기호(×) 생략",
+        "meaning": "수학에서는 문자와 문자, 숫자와 문자의 곱셈에서 곱하기(×) 기호를 생략합니다. bq는 b × q를 뜻합니다."
+      },
+      {
+        "symbol": "0 ≤ r < b",
+        "name": "나머지의 수학적 성립 조건",
+        "meaning": "나머지 r은 음수가 될 수 없어 0 이상이어야 하고(0 ≤ r), 나누는 수 b보다 반드시 작아야 합니다(r < b). 만약 r이 b 이상이면 한 묶음을 더 묶어 나눌 수 있으므로 나눗셈이 아직 덜 끝난 것입니다."
+      },
+      {
+        "symbol": "\\quad",
+        "name": "수식 띄어쓰기 공백 (LaTeX Quad)",
+        "meaning": "수학 수식 조판 언어(LaTeX)에서 식과 조건식 사이를 보기 좋게 한 칸 띄워주는 간격(Quad Space) 명령입니다."
+      },
+      {
+        "symbol": "d | a",
+        "name": "나눈다 / 약수·배수 기호",
+        "meaning": "세로 막대(|)는 'd가 a를 나누어떨어뜨린다(d divides a)'는 뜻입니다. 즉, a는 d의 배수이고 d는 a의 약수라는 뜻입니다."
+      },
+      {
+        "symbol": "∴",
+        "name": "그러므로 (Therefore)",
+        "meaning": "점 3개 삼각형 기호로, 앞선 논리적 유도 과정을 바탕으로 최종 결론을 맺을 때 쓰는 수학 기호입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "d = \\gcd(a, b) \\implies d \\mid a \\quad \\text{and} \\quad d \\mid b",
+        "justification": "d가 a와 b의 공약수이므로 a와 b는 둘 다 d의 배수입니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "a = bq + r \\implies r = a - bq",
+        "justification": "나눗셈 검산식에서 나머지만 남기기 위해 bq를 좌변으로 이항합니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "d \\mid a, \\ d \\mid b \\implies d \\mid (a - bq) \\implies d \\mid r",
+        "justification": "a도 d의 배수이고 b도 d의 배수이므로, 그 뺄셈인 나머지 r 역시 무조건 d의 배수가 됩니다."
+      },
+      {
+        "stepNumber": 4,
+        "mathExpression": "\\therefore \\gcd(a, b) = \\gcd(b, r)",
+        "justification": "공약수들이 완전히 일치하므로 그 중 제일 큰 최대공약수도 완벽히 같습니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "빵 나누기에서 탄생한 유클리드 호제법의 원리",
+      "backgroundStory": "초등학교 때 빵 17개를 5명에게 나눠주면 '1인당 3개씩 갖고 2개가 남는다(17 = 5×3 + 2)'고 배웠습니다. 고대 그리스의 수학자 유클리드는 이 나눗셈에서 엄청난 발견을 했습니다. 만약 어떤 도막(공약수)으로 17과 5를 똑같이 자를 수 있다면, 17에서 5를 세 번 덜어내고 남은 '나머지 2' 역시 그 도막으로 정확히 잘라져야 한다는 것입니다! 따라서 복잡하게 큰 수를 따질 필요 없이, 나누는 수(5)와 나머지(2)만 비교해도 최대공약수는 변하지 않습니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "a = b \\times q + r \\iff r = a - b \\times q",
+          "justification": "수학에서 나머지는 원래 수(a)에서 나누는 수(b)를 몫(q)만큼 덜어낸 나머지 분량입니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "a = k_1 \\times d, \\quad b = k_2 \\times d",
+          "justification": "a와 b의 공약수를 d라고 두면, a와 b는 각각 d라는 공통 블록으로 딱 맞게 조립됩니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "r = (k_1 \\times d) - (k_2 \\times d) \\times q = (k_1 - k_2 q) \\times d",
+          "justification": "나머지 r 식에 대입하면 d로 묶어낼 수 있으므로, 나머지 r도 무조건 d의 배수가 됩니다."
+        },
+        {
+          "stepNumber": 4,
+          "mathExpression": "\\gcd(a, b) = \\gcd(b, r) = \\gcd(r, r_2) = \\dots = \\text{마지막 0 직전의 나누는 수}",
+          "justification": "나머지가 0이 될 때까지 이 과정을 반복하면 가장 작은 단계에서 최대공약수가 바로 튀어나옵니다."
+        }
+      ],
+      "conclusion": "아무리 1억 자리의 큰 수라도 나머지를 구하는 나눗셈을 몇 번 반복하기만 하면 최대공약수를 빛의 속도로 구할 수 있습니다."
+    },
+    "workedExample": {
+      "problem": "두 자연수 1071과 462의 최대공약수를 유클리드 호제법으로 구하시오.",
+      "stepsToTrace": [
+        "1단계: 1071을 462로 나눈다 ➔ 1071 = 462 × 2 + 147 (나머지 147)",
+        "2단계: 앞의 나누는 수 462를 나머지 147로 나눈다 ➔ 462 = 147 × 3 + 21 (나머지 21)",
+        "3단계: 앞의 나누는 수 147을 나머지 21로 나눈다 ➔ 147 = 21 × 7 + 0 (나머지 0)",
+        "결론: 나머지가 0이 되었을 때 나누는 수였던 21이 최종 최대공약수이다."
+      ],
+      "finalAnswer": "gcd(1071, 462) = 21"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 개념: 소인수분해와 거듭제곱 표현",
+        "question": "자연수 360을 소인수분해하고, 거듭제곱 꼴로 나타낸 후 360의 소인수를 모두 구하시오.",
+        "interpretation": "소인수분해를 할 때는 가장 작은 소수인 2부터 시작하여 더 이상 나눌 수 없을 때까지(몫이 소수가 될 때까지) 차례로 나누어갑니다. 마지막에 나온 소수들의 개수를 지수로 세어줍니다.",
+        "solutionSteps": [
+          "1단계: 360은 짝수이므로 2로 나눕니다 ➔ 360 ÷ 2 = 180",
+          "2단계: 180 ÷ 2 = 90, 90 ÷ 2 = 45 (2로 3번 나누어짐 ➔ 2³)",
+          "3단계: 45는 3으로 나뉩니다 ➔ 45 ÷ 3 = 15, 15 ÷ 3 = 5 (3으로 2번 나누어짐 ➔ 3²)",
+          "4단계: 마지막 몫은 5(소수)이므로 분해 완료 ➔ 360 = 2 × 2 × 2 × 3 × 3 × 5 = 2³ × 3² × 5",
+          "5단계: 소인수는 거듭제곱의 '밑'에 있는 소수들이므로 2, 3, 5입니다."
+        ],
+        "answer": "360 = 2³ × 3² × 5, 소인수: 2, 3, 5",
+        "keyPoint": "지수(작은 숫자)는 곱해진 횟수입니다. 2가 3개 곱해졌으므로 2×3=6이 아니라 2³=8임을 헷갈리지 마세요!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 유클리드 호제법과 분수 약분",
+        "question": "분수 105 / 252를 기약분수(더 이상 약분할 수 없는 분수)로 나타내기 위해 분자와 분모의 최대공약수를 구하고 약분하시오.",
+        "interpretation": "분수 약분의 핵심은 분자와 분모를 '최대공약수'로 동시에 나누는 것입니다. 252와 105에 유클리드 호제법을 적용하면 공약수를 한 번에 찾을 수 있습니다.",
+        "solutionSteps": [
+          "1단계: 큰 수 252를 105로 나눕니다 ➔ 252 = 105 × 2 + 42 (나머지 42)",
+          "2단계: 105를 42로 나눕니다 ➔ 105 = 42 × 2 + 21 (나머지 21)",
+          "3단계: 42를 21로 나눕니다 ➔ 42 = 21 × 2 + 0 (나머지 0, 나눗셈 종료)",
+          "4단계: 마지막 나누는 수 21이 최대공약수 gcd(252, 105) = 21입니다.",
+          "5단계: 분자와 분모를 각각 21로 약분합니다 ➔ 105 ÷ 21 = 5, 252 ÷ 21 = 12."
+        ],
+        "answer": "최대공약수 = 21, 기약분수 = 5 / 12",
+        "keyPoint": "나머지가 0이 되었을 때의 몫(2)이 아니라 '나누었던 수(21)'가 최대공약수라는 점을 주의하세요."
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 최대공약수와 최소공배수 관계식 활용",
+        "question": "두 자연수 A와 24의 최대공약수가 6이고 최소공배수가 72일 때, 자연수 A의 값을 구하시오.",
+        "interpretation": "중1 교과서 공식인 '두 수의 곱 = 최대공약수 × 최소공배수 (A × B = G × L)'를 떠올립니다. 식에 알고 있는 값들을 대입하여 일차방정식을 풀면 됩니다.",
+        "solutionSteps": [
+          "1단계: 두 수의 곱과 GCD, LCM의 관계식 A × B = gcd × lcm을 적습니다.",
+          "2단계: 문제에서 주어진 B = 24, gcd = 6, lcm = 72를 대입합니다 ➔ A × 24 = 6 × 72",
+          "3단계: 우변을 계산합니다 ➔ 6 × 72 = 432",
+          "4단계: 양변을 24로 나누어 A를 구합니다 ➔ A = 432 ÷ 24 = 18",
+          "5단계: 검산해 봅니다. 18 = 2 × 3², 24 = 2³ × 3 ➔ gcd = 2 × 3 = 6, lcm = 2³ × 3² = 72로 정확히 일치합니다."
+        ],
+        "answer": "A = 18",
+        "keyPoint": "A × B = G × L 공식은 두 수일 때만 성립합니다(세 수일 때는 다른 방식을 씁니다)."
+      }
+    ],
+    "csIntuition": "컴퓨터에서 1부터 차례로 나누면 O(N) 시간이 걸려 암호학에서 쓰는 100자리 숫자는 우주 수명 동안 계산해야 하지만, 유클리드 호제법은 나눗셈 1번마다 숫자가 최소 절반 이하로 급감하여 O(log N)에 끝납니다. 이는 인터넷 보안 암호(RSA)의 핵심 토대입니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "gcd.c",
+        "code": "#include <stdint.h>\n#include <stdio.h>\n\nuint64_t gcd(uint64_t a, uint64_t b) {\n    while (b != 0) {\n        uint64_t temp = b;\n        b = a % b;\n        a = temp;\n    }\n    return a;\n}\n\nint main(void) {\n    printf(\"GCD(1071, 462) = %llu\\n\", (unsigned long long)gcd(1071, 462));\n    return 0;\n}\n",
+        "notes": "C23 64비트 정수 오버플로우 방어"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "gcd.go",
+        "code": "package main\n\nimport \"fmt\"\n\nfunc GCD(a, b int64) int64 {\n\tfor b != 0 {\n\t\ta, b = b, a%b\n\t}\n\treturn a\n}\n\nfunc main() {\n\tfmt.Println(\"GCD(1071, 462) =\", GCD(1071, 462))\n}\n",
+        "notes": "Go 다중 대입 구문 활용"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "gcd.rs",
+        "code": "pub fn gcd(mut a: u64, mut b: u64) -> u64 {\n    while b != 0 {\n        let temp = b;\n        b = a % b;\n        a = temp;\n    }\n    a\n}\n\nfn main() {\n    println!(\"GCD(1071, 462) = {}\", gcd(1071, 462));\n}\n",
+        "notes": "Rust 제로 코스트 추상화 루프"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "gcd.py",
+        "code": "def gcd(a: int, b: int) -> int:\n    while b != 0:\n        a, b = b, a % b\n    return a\n\nif __name__ == \"__main__\":\n    print(\"GCD(1071, 462) =\", gcd(1071, 462))\n",
+        "notes": "Python 튜플 스왑 방식"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "gcd.ts",
+        "code": "export function gcd(a: number, b: number): number {\n  let x = Math.abs(a);\n  let y = Math.abs(b);\n  while (y !== 0) {\n    const temp = y;\n    y = x % y;\n    x = temp;\n  }\n  return x;\n}\n\nconsole.log(`GCD(1071, 462) = ${gcd(1071, 462)}`);\n",
+        "notes": "TS 절댓값 방어 함수"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "gcd.js",
+        "code": "function gcd(a, b) {\n  let x = Math.abs(a);\n  let y = Math.abs(b);\n  while (y !== 0) {\n    const temp = y;\n    y = x % y;\n    x = temp;\n  }\n  return x;\n}\nconsole.log(\"GCD(1071, 462) =\", gcd(1071, 462));\n",
+        "notes": "JS 표준 구현"
+      }
+    }
+  },
+  {
+    "id": "mod-1-2-integers-number-line",
+    "stage": "stage1-middle",
+    "order": 2,
+    "titleKo": "정수와 유리수, 수직선과 절댓값",
+    "titleEn": "Integers, Rational Numbers, Number Line, and Absolute Value",
+    "koreanCurriculumUnit": "중학교 1학년 수학 - Ⅰ. 수와 연산 (2. 정수와 유리수)",
+    "graphType": "NUMBER_LINE",
+    "graphCaption": "기준 0을 중심으로 오른쪽은 양수(+), 왼쪽은 음수(-)이며, 원점과의 거리가 절댓값입니다.",
+    "terms": [
+      {
+        "term": "양수와 음수 (Positive & Negative)",
+        "definition": "기준 0보다 큰 수에는 양의 부호(+), 작은 수에는 음의 부호(-)를 붙인 수 (예: 해발 +100m, 해저 -50m)"
+      },
+      {
+        "term": "정수 (Integer)",
+        "definition": "양의 정수(자연수, +1, +2...), 0, 음의 정수(-1, -2...)를 모두 통틀어 부르는 말"
+      },
+      {
+        "term": "유리수 (Rational Number)",
+        "definition": "분모가 0이 아닌 분수 b/a (a, b는 정수) 꼴로 나타낼 수 있는 모든 수"
+      },
+      {
+        "term": "수직선 (Number Line)",
+        "definition": "직선 위에 기준점 0(원점)을 잡고 일정한 눈금으로 수를 늘어놓은 직선 (오른쪽일수록 크고 왼쪽일수록 작음)"
+      },
+      {
+        "term": "절댓값 (Absolute Value, |x|)",
+        "definition": "수직선 위에서 어떤 수를 나타내는 점과 원점(0) 사이의 순수한 '거리'. 거리는 음수가 없으므로 항상 0 이상!"
+      }
+    ],
+    "mathExplanation": "초등학교 때는 0보다 작은 수를 생각할 수 없었지만, 겨울철 영하의 기온이나 빚, 엘리베이터 지하층처럼 현실에는 0보다 작은 수량이 얼마든지 존재합니다. 수직선 위에서 오른쪽으로 가면 더하기(+), 왼쪽으로 가면 빼기(-)가 됩니다. 절댓값은 방향과 상관없이 '원점에서 몇 걸음 떨어져 있는가?'라는 거리만을 잰 것입니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "절댓값의 수학적 정의",
+        "latex": "|x| = \\begin{cases} x & (x \\ge 0) \\\\ -x & (x < 0) \\end{cases}",
+        "explanation": "x가 0 이상이면 그대로 나오고, 음수이면 앞에 마이너스를 한 번 더 붙여서 양수로 만들어 탈출합니다."
+      },
+      {
+        "title": "수직선 위 두 점 사이의 거리 공식",
+        "latex": "d(A, B) = |a - b| = |b - a|",
+        "explanation": "두 점 사이 거리는 큰 수에서 작은 수를 빼거나, 두 좌표의 차이에 절댓값을 씌우면 됩니다."
+      },
+      {
+        "title": "음수와 음수의 곱셈 법칙",
+        "latex": "(-a) \\times (-b) = +(a \\times b)",
+        "explanation": "음수와 음수를 곱하면 부호가 반전되어 반드시 양수가 됩니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "|x|",
+        "name": "절댓값 기호 (Vertical Bars)",
+        "meaning": "두 개의 수직 막대(| |) 사이에 숫자를 넣은 기호로, 부호를 뗀 순수한 '거리'를 뜻합니다. 원점(0)에서 x까지의 거리이므로 결과는 항상 0 이상입니다."
+      },
+      {
+        "symbol": "x",
+        "name": "미지수 / 변수 (Variable)",
+        "meaning": "어떤 정수나 유리수도 대신 들어갈 수 있는 빈 상자 역할을 하는 대표 문자입니다."
+      },
+      {
+        "symbol": "\\begin{cases} ... \\end{cases}",
+        "name": "경우별 조건 묶음 괄호",
+        "meaning": "수학에서 입력값의 조건에 따라 결과 공식이 달라질 때, 왼쪽을 큰 중괄호({)로 묶어 경우를 나누어 설명하는 기호입니다."
+      },
+      {
+        "symbol": "x ≥ 0",
+        "name": "0 이상 (양수 또는 0)",
+        "meaning": "x가 0보다 크거나 같을 때를 뜻합니다. 이때는 부호를 바꿀 필요 없이 |x| = x 그대로 껍질을 벗고 나옵니다."
+      },
+      {
+        "symbol": "x < 0",
+        "name": "0 미만 (음수)",
+        "meaning": "x가 0보다 작은 음수일 때를 뜻합니다."
+      },
+      {
+        "symbol": "-x",
+        "name": "부호 반전 (양수로 변환)",
+        "meaning": "x가 이미 음수(예: -5)일 때, 앞에 마이너스를 한 번 더 붙여 -(-5) = +5로 만들어 거리(양수)로 탈출시키는 조작입니다."
+      },
+      {
+        "symbol": "d(A, B)",
+        "name": "두 점 사이의 거리 함수",
+        "meaning": "거리를 뜻하는 영어 Distance의 머리글자 d입니다. 점 A와 점 B 사이의 실제 물리적 간격을 나타냅니다."
+      },
+      {
+        "symbol": "|a - b| = |b - a|",
+        "name": "거리의 대칭성",
+        "meaning": "A에서 B까지의 거리나 B에서 A까지의 거리는 같습니다. 뺄셈 순서가 바뀌어도 절댓값을 씌우면 결과가 동일한 양수 거리가 됩니다."
+      },
+      {
+        "symbol": "+, -",
+        "name": "양의 부호(Plus)와 음의 부호(Minus)",
+        "meaning": "기준점 0보다 오른쪽(이익, 지상)에 있으면 양의 부호(+), 0보다 왼쪽(손실, 지하)에 있으면 음의 부호(-)를 붙입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "(-1) \\times (1 + (-1)) = (-1) \\times 0 = 0",
+        "justification": "1과 -1을 더하면 0이므로 어떤 수에 0을 곱하면 0이 됩니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "(-1) \\times 1 + (-1) \\times (-1) = 0",
+        "justification": "분배법칙을 써서 좌변의 괄호를 하나씩 풀어 전개합니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "-1 + (-1) \\times (-1) = 0 \\implies (-1) \\times (-1) = 1",
+        "justification": "-1에 무엇을 더해야 0이 될까요? 바로 +1입니다. 따라서 음수끼리 곱하면 양수가 됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "왜 음수 곱하기 음수는 양수가 될까? (수식 도출의 비밀)",
+      "backgroundStory": "많은 중1 학생들이 가장 혼란스러워하는 질문입니다. '빚과 빚을 곱하는데 왜 갑자기 돈이 생겨요?' 이는 일상 언어의 비유 때문입니다. 수학에서 곱셈은 '방향의 반전'을 의미합니다. 동영상을 뒤로 감기(음수) 상태에서, 뒤로 걷는 사람(음수)을 재생하면 화면 속 사람은 앞으로 걸어가는 것(+양수)처럼 보입니다! 수학자들은 분배법칙이라는 거대한 규칙이 깨지지 않도록 논리적으로 이를 유도했습니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "3 \\times (-2) = -6, \\quad 2 \\times (-2) = -4, \\quad 1 \\times (-2) = -2, \\quad 0 \\times (-2) = 0",
+          "justification": "앞의 숫자가 1씩 줄어들 때마다 계산 결과는 2씩 커지고 있는 규칙적인 패턴을 관찰합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "(-1) \\times (-2) = 0 + 2 = +2",
+          "justification": "앞의 숫자를 0에서 -1로 1 더 줄이면, 규칙에 따라 결과는 2가 더 커져서 +2가 되어야만 규칙이 유지됩니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "(-a) \\times (-b) = -1 \\times a \\times -1 \\times b = (-1 \\times -1) \\times (a \\times b) = + (ab)",
+          "justification": "모든 음수의 곱은 (-1)×(-1)=+1이라는 논리적 불변식 덕분에 양수로 도출됩니다."
+        }
+      ],
+      "conclusion": "음수와 음수의 곱이 양수가 되는 것은 단순한 암기 규칙이 아니라, 수학 전체의 일관성과 분배법칙을 지탱하는 완벽한 논리적 필연입니다."
+    },
+    "workedExample": {
+      "problem": "수직선 위의 두 점 A(-7)과 B(5)에 대하여 점 A의 절댓값과 두 점 A, B 사이의 거리를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 점 A의 절댓값은 원점(0)에서 -7까지의 거리이므로 |-7| = 7이다.",
+        "2단계: 두 점 사이의 거리는 d = |5 - (-7)|을 계산한다.",
+        "3단계: 마이너스 마이너스는 플러스가 되므로 5 - (-7) = 5 + 7 = 12이다.",
+        "4단계: 따라서 거리 d = |12| = 12이다."
+      ],
+      "finalAnswer": "|-7| = 7, 거리 d = 12"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 수직선 위의 수의 대소 관계와 절댓값",
+        "question": "다음 수 중에서 절댓값이 가장 큰 수와 가장 작은 수를 각각 고르시오: [-5, +3, -1.5, +4.8, 0]",
+        "interpretation": "절댓값은 부호(+, -)를 떼어내고 순수한 숫자의 크기(원점에서의 거리)만 비교하는 문제입니다. 0의 절댓값은 0입니다.",
+        "solutionSteps": [
+          "1단계: 각 수의 절댓값을 구합니다.",
+          "   |-5| = 5, |+3| = 3, |-1.5| = 1.5, |+4.8| = 4.8, |0| = 0",
+          "2단계: 절댓값 크기 순서로 나열합니다: 0 < 1.5 < 3 < 4.8 < 5",
+          "3단계: 절댓값이 가장 큰 수는 5를 만든 '-5'입니다.",
+          "4단계: 절댓값이 가장 작은 수는 원점 그 자체인 '0'입니다."
+        ],
+        "answer": "절댓값이 가장 큰 수: -5, 가장 작은 수: 0",
+        "keyPoint": "그냥 수의 대소 비교라면 -5가 가장 작겠지만, '절댓값'을 물었으므로 원점에서 가장 멀리 떨어진 -5가 가장 큰 절댓값(5)을 갖습니다!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 부호가 섞인 혼합 사칙연산",
+        "question": "다음 식의 값을 계산하시오: (-3)² - (-12) ÷ (+4) × (-2)",
+        "interpretation": "중1 혼합 계산의 절대 원칙: 1) 거듭제곱 먼저 ➔ 2) 괄호 안 ➔ 3) 곱셈·나눗셈 ➔ 4) 덧셈·뺄셈 순서로 해결합니다. 부호 처리에 유의합니다.",
+        "solutionSteps": [
+          "1단계: 거듭제곱 (-3)²을 먼저 계산합니다 ➔ (-3) × (-3) = +9",
+          "2단계: 나눗셈 (-12) ÷ (+4)를 계산합니다 ➔ 부호가 다르므로 -3",
+          "3단계: 곱셈 (-3) × (-2)를 계산합니다 ➔ 음수 × 음수는 양수이므로 +6",
+          "4단계: 뺄셈 식에 대입하여 최종 연산합니다 ➔ 9 - (+6) = 9 - 6 = 3"
+        ],
+        "answer": "3",
+        "keyPoint": "(-3)² = +9이지만, 만약 -3²으로 괄호가 없다면 -(3×3) = -9가 됩니다. 괄호가 있는지 없는지 꼭 눈을 크게 뜨고 확인하세요!"
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 수직선 상의 중점(가운데 점) 좌표 구하기",
+        "question": "수직선 위의 두 점 P(-8)과 Q(+4)의 한가운데에 있는 점 M(중점)의 좌표를 구하시오.",
+        "interpretation": "두 점의 가운데 점(중점)은 두 점의 좌표를 더한 뒤 2로 나누는 평균(산술평균)으로 구할 수도 있고, 전체 거리를 반으로 나누어 한쪽에서 더해갈 수도 있습니다.",
+        "solutionSteps": [
+          "방법 1 (평균 공식):",
+          "1단계: 두 좌표를 더합니다 ➔ (-8) + (+4) = -4",
+          "2단계: 2로 나눕니다 ➔ (-4) ÷ 2 = -2",
+          "방법 2 (거리 이용):",
+          "1단계: P와 Q 사이 거리는 |4 - (-8)| = |4 + 8| = 12입니다.",
+          "2단계: 가운데까지의 거리는 12 ÷ 2 = 6입니다.",
+          "3단계: P(-8)에서 오른쪽(+)으로 6만큼 이동합니다 ➔ -8 + 6 = -2"
+        ],
+        "answer": "중점 M의 좌표 = -2",
+        "keyPoint": "음수와 양수의 덧셈에서 절댓값이 큰 쪽의 부호(-8의 마이너스)를 따라간다는 점을 명심하세요."
+      }
+    ],
+    "csIntuition": "컴퓨터 하드웨어(CPU)는 음수를 표현하기 위해 2의 보수(Two's Complement)를 씁니다. 비트를 반전시킨 후 1을 더하면 뺄셈 회로를 따로 만들지 않고 덧셈기 하나만으로 모든 사칙연산을 초고속 처리할 수 있습니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "abs.c",
+        "code": "#include <stdio.h>\n#include <stdint.h>\n\nint64_t my_abs(int64_t x) {\n    return (x < 0) ? -x : x;\n}\n\nint64_t dist_1d(int64_t a, int64_t b) {\n    return my_abs(a - b);\n}\n\nint main(void) {\n    printf(\"Dist(-7, 5) = %lld\\n\", (long long)dist_1d(-7, 5));\n    return 0;\n}\n",
+        "notes": "삼항 연산자 기반 절댓값 및 1차원 거리"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "abs.go",
+        "code": "package main\n\nimport \"fmt\"\n\nfunc Abs(x int64) int64 {\n\tif x < 0 { return -x }\n\treturn x\n}\n\nfunc Dist1D(a, b int64) int64 {\n\treturn Abs(a - b)\n}\n\nfunc main() {\n\tfmt.Println(\"Dist(-7, 5) =\", Dist1D(-7, 5))\n}\n",
+        "notes": "Go 정수 절댓값 함수"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "abs.rs",
+        "code": "pub fn my_abs(x: i64) -> i64 {\n    if x < 0 { -x } else { x }\n}\n\npub fn dist_1d(a: i64, b: i64) -> i64 {\n    my_abs(a - b)\n}\n\nfn main() {\n    println!(\"Dist: {}\", dist_1d(-7, 5));\n}\n",
+        "notes": "Rust 식(expression) if-else"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "abs.py",
+        "code": "def my_abs(x: int) -> int:\n    return -x if x < 0 else x\n\ndef dist_1d(a: int, b: int) -> int:\n    return my_abs(a - b)\n\nif __name__ == \"__main__\":\n    print(\"Dist(-7, 5) =\", dist_1d(-7, 5))\n",
+        "notes": "Python 삼항 표현식"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "abs.ts",
+        "code": "export function myAbs(x: number): number {\n  return x < 0 ? -x : x;\n}\n\nexport function dist1D(a: number, b: number): number {\n  return myAbs(a - b);\n}\n\nconsole.log(`Dist: ${dist1D(-7, 5)}`);\n",
+        "notes": "TS 1D 거리 계산기"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "abs.js",
+        "code": "function myAbs(x) { return x < 0 ? -x : x; }\nfunction dist1D(a, b) { return myAbs(a - b); }\nconsole.log(\"Dist:\", dist1D(-7, 5));\n",
+        "notes": "JS 기본 함수"
+      }
+    }
+  },
+  {
+    "id": "mod-1-3-coordinate-plane",
+    "stage": "stage1-middle",
+    "order": 3,
+    "titleKo": "순서쌍과 좌표평면, 사분면",
+    "titleEn": "Ordered Pairs, Coordinate Plane, and Quadrants",
+    "koreanCurriculumUnit": "중학교 1학년 수학 - Ⅱ. 좌표평면과 그래프 (1. 순서쌍과 좌표)",
+    "graphType": "COORDINATE_PLANE",
+    "graphCaption": "가로축(x축)과 세로축(y축)이 만나는 원점 (0,0)과 반시계 방향으로 도는 제1, 제2, 제3, 제4사분면",
+    "terms": [
+      {
+        "term": "순서쌍 (Ordered Pair)",
+        "definition": "순서를 생각하여 두 수를 (a, b)처럼 짝지어 나타낸 것 (앞이 가로 x, 뒤가 세로 y)"
+      },
+      {
+        "term": "x축과 y축 (Coordinate Axes)",
+        "definition": "평면 위에 가로로 놓인 수직선을 x축, 세로로 놓인 수직선을 y축이라고 부름"
+      },
+      {
+        "term": "원점 (Origin, O)",
+        "definition": "x축과 y축이 직각으로 교차하는 기준점 (0, 0)"
+      },
+      {
+        "term": "좌표평면 (Cartesian Plane)",
+        "definition": "두 좌표축에 의해 평면 위의 모든 위치를 (x, y)라는 주소로 나타낼 수 있는 2차원 세계"
+      },
+      {
+        "term": "사분면 (Quadrant)",
+        "definition": "좌표축에 의해 평면이 4개로 쪼개진 방. 오른쪽 위부터 반시계 방향으로 제1, 2, 3, 4사분면"
+      }
+    ],
+    "mathExplanation": "천장에 붙은 파리의 위치를 숫자로 정확히 설명하고 싶었던 프랑스 수학자 데카르트의 기발한 아이디어에서 좌표평면이 탄생했습니다. 수직선 하나는 1차원(선)이었지만, 가로선과 세로선 2개를 교차시키면 2차원(면)의 모든 위치를 (x, y) 순서쌍으로 정확히 찍을 수 있습니다. 이것이 바로 컴퓨터 모니터의 픽셀 좌표계이자 모든 스마트폰 게임 맵의 뼈대입니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "사분면 부호 판별 법칙 (반시계 방향 회전)",
+        "latex": "\\begin{cases} \\text{제1사분면 (우상):} & x > 0, \\ y > 0 \\quad (+, +) \\\\ \\text{제2사분면 (좌상):} & x < 0, \\ y > 0 \\quad (-, +) \\\\ \\text{제3사분면 (좌하):} & x < 0, \\ y < 0 \\quad (-, -) \\\\ \\text{제4사분면 (우하):} & x > 0, \\ y < 0 \\quad (+, -) \\end{cases}",
+        "explanation": "x와 y의 부호만 보면 점이 어느 방에 들어가 있는지 즉시 판별됩니다. (축 위의 점은 사분면에 포함되지 않아요!)"
+      },
+      {
+        "title": "좌표 대칭이동 공식 (종이접기 원리)",
+        "latex": "\\begin{cases} x\\text{축 대칭 (상하 반전):} & (x, y) \\to (x, -y) \\\\ y\\text{축 대칭 (좌우 반전):} & (x, y) \\to (-x, y) \\\\ \\text{원점 대칭 (180도 회전):} & (x, y) \\to (-x, -y) \\end{cases}",
+        "explanation": "접는 축의 반대쪽 좌표 부호가 반대로 바뀝니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "(x, y)",
+        "name": "순서쌍 (Ordered Pair)",
+        "meaning": "두 수를 괄호와 쉼표로 묶어 '순서'를 고정한 표기법입니다. 앞자리 x는 가로(좌우), 뒷자리 y는 세로(상하)를 뜻하므로 (2, 3)과 (3, 2)는 전혀 다른 위치입니다."
+      },
+      {
+        "symbol": "x",
+        "name": "x좌표 (가로 위치 / Abscissa)",
+        "meaning": "원점(0, 0)을 기준으로 오른쪽(+)으로 몇 칸, 또는 왼쪽(-)으로 몇 칸 떨어져 있는지를 나타냅니다."
+      },
+      {
+        "symbol": "y",
+        "name": "y좌표 (세로 위치 / Ordinate)",
+        "meaning": "원점(0, 0)을 기준으로 위쪽(+)으로 몇 칸, 또는 아래쪽(-)으로 몇 칸 떨어져 있는지를 나타냅니다."
+      },
+      {
+        "symbol": "O (0, 0)",
+        "name": "원점 (Origin)",
+        "meaning": "영어 Origin(기원/출발점)의 머리글자 대문자 O입니다. 가로 x축과 세로 y축이 직각으로 교차하는 모든 위치의 기준점 (0, 0)입니다."
+      },
+      {
+        "symbol": "(+, +), (-, +), (-, -), (+, -)",
+        "name": "사분면 부호 (Quadrants Signs)",
+        "meaning": "평면이 4개로 나뉜 방의 부호입니다. 제1사분면(오른쪽 위: +, +), 제2사분면(왼쪽 위: -, +), 제3사분면(왼쪽 아래: -, -), 제4사분면(오른쪽 아래: +, -) 순서로 반시계 방향으로 돕니다."
+      },
+      {
+        "symbol": "→ (화살표)",
+        "name": "대칭이동 사상 (Transformation Mapping)",
+        "meaning": "어떤 점 P(x, y)가 대칭 이동이나 회전 변환 규칙에 의해 새로운 좌표로 변환되어 이동함을 나타냅니다."
+      },
+      {
+        "symbol": "P, P'",
+        "name": "점의 이름과 프라임 기호",
+        "meaning": "점(Point)의 머리글자 P를 쓰고, 작은따옴표(' 프라임)는 대칭 이동 후 새롭게 옮겨간 점의 위치를 구별하기 위해 붙이는 기호입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "P(x, y) \\xrightarrow{x\\text{축 대칭}} P'(x, -y)",
+        "justification": "x축을 접는 선으로 접으면 가로 위치 x는 그대로이고 높이 y만 반대로 뒤집힙니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "P(x, y) \\xrightarrow{y\\text{축 대칭}} P''(-x, y)",
+        "justification": "y축을 접는 선으로 접으면 높이 y는 그대로이고 가로 위치 x만 반대로 뒤집힙니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "P(x, y) \\xrightarrow{\\text{원점 대칭}} P'''(-x, -y)",
+        "justification": "x축 대칭을 하고 연달아 y축 대칭을 하면 두 좌표 부호가 모두 반전되어 180도 점대칭이 됩니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "사분면의 번호가 왜 시계 반대 방향으로 붙었을까?",
+      "backgroundStory": "시계는 오른쪽(시계 방향)으로 도는데 왜 사분면은 제1 ➔ 제2 ➔ 제3 ➔ 제4사분면으로 '시계 반대 방향'으로 돌까요? 수학에서는 양수(+)의 방향을 항상 기본으로 삼습니다. x도 양수, y도 양수인 가장 평화로운 오른쪽 위가 '제1사분면'입니다. 여기서 양의 각도(회전)를 정의할 때, x축에서 y축으로 올라가는 회전 방향이 바로 시계 반대 방향이기 때문에 모든 사분면과 각도의 기준이 반시계 방향으로 정해졌습니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{시작(동쪽): } (x>0, y=0) \\xrightarrow{+90^\\circ \\text{ 회전}} \\text{북쪽: } (x=0, y>0)",
+          "justification": "x축 양의 방향에서 y축 양의 방향으로 가려면 시계 반대 방향으로 90도 돌아야 합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\text{제1사분면}(+,+) \\to \\text{제2사분면}(-,+) \\to \\text{제3사분면}(-,-) \\to \\text{제4사분면}(+,-)",
+          "justification": "각도가 0° ➔ 90° ➔ 180° ➔ 270°로 증가함에 따라 지나가는 사분면의 순서가 됩니다."
+        }
+      ],
+      "conclusion": "이 반시계 방향 회전 규약은 고등학교 삼각함수와 대학 그래픽스, 로봇 공학의 각도 회전 공식으로 고스란히 이어집니다."
+    },
+    "workedExample": {
+      "problem": "좌표평면 위의 점 P(-4, 3)에 대하여 속한 사분면을 구하고, 점 P를 x축, y축, 원점에 대해 대칭이동한 좌표를 각각 구하시오.",
+      "stepsToTrace": [
+        "1단계: x = -4(음수), y = +3(양수)이므로 제2사분면(좌상단)에 속한다.",
+        "2단계: x축 대칭이동 ➔ y부호 반전 ➔ (-4, -3).",
+        "3단계: y축 대칭이동 ➔ x부호 반전 ➔ (4, 3).",
+        "4단계: 원점 대칭이동 ➔ x, y 둘 다 부호 반전 ➔ (4, -3)."
+      ],
+      "finalAnswer": "제2사분면, x축 대칭: (-4,-3), y축 대칭: (4,3), 원점 대칭: (4,-3)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 점의 사분면 판정하기",
+        "question": "다음 점들이 속하는 사분면을 각각 구하시오 (단, 축 위의 점은 '축 위'라고 쓰시오): A(3, -5), B(-2, -7), C(0, 4), D(-6, 1)",
+        "interpretation": "순서쌍 (x, y)의 부호 조합 (+, +), (-, +), (-, -), (+, -)를 확인합니다. 좌표 중 하나라도 0이면 어느 사분면에도 속하지 않고 축 위에 있습니다.",
+        "solutionSteps": [
+          "1단계: 점 A(3, -5)는 x>0, y<0 ➔ 제4사분면",
+          "2단계: 점 B(-2, -7)은 x<0, y<0 ➔ 제3사분면",
+          "3단계: 점 C(0, 4)는 x=0이므로 y축 위에 있는 점입니다 ➔ y축 위의 점 (사분면 없음)",
+          "4단계: 점 D(-6, 1)은 x<0, y>0 ➔ 제2사분면"
+        ],
+        "answer": "A: 제4사분면, B: 제3사분면, C: y축 위의 점, D: 제2사분면",
+        "keyPoint": "좌표축 위의 점(예: (0,4)나 (5,0))은 사분면에 포함되지 않는다는 점이 시험에 아주 자주 출제됩니다!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 사분면 조건을 이용한 미지수 부호 판별",
+        "question": "점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, ab)는 어느 사분면에 속하는지 구하시오.",
+        "interpretation": "제3사분면의 정의(x<0, y<0)로부터 a와 b의 부호를 먼저 알아낸 뒤, 새로운 점 Q의 x좌표(-a)와 y좌표(ab)의 부호를 곱셈 규칙으로 판정합니다.",
+        "solutionSteps": [
+          "1단계: 점 P(a, b)가 제3사분면이므로 a < 0 (음수), b < 0 (음수)입니다.",
+          "2단계: 점 Q의 x좌표는 -a입니다. a가 음수이므로 -a는 -(-) = 양수(+)가 됩니다 ➔ x좌표 > 0",
+          "3단계: 점 Q의 y좌표는 ab입니다. 음수 × 음수는 양수이므로 ab는 양수(+)가 됩니다 ➔ y좌표 > 0",
+          "4단계: 점 Q는 x > 0, y > 0이므로 제1사분면에 속합니다."
+        ],
+        "answer": "제1사분면",
+        "keyPoint": "-a라고 해서 무조건 음수가 아닙니다! a 자체가 음수이면 -a는 양수가 된다는 점을 꼭 기억하세요."
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 좌표평면 위 세 점으로 만드는 삼각형의 넓이",
+        "question": "좌표평면 위의 세 점 A(-2, 1), B(4, 1), C(1, 5)를 꼭짓점으로 하는 삼각형 ABC의 넓이를 구하시오.",
+        "interpretation": "점 A와 B의 y좌표가 1로 같으므로 선분 AB가 가로(밑변)가 됩니다. 밑변 길이는 x좌표의 차이이고, 높이는 점 C의 y좌표와 밑변 y좌표의 차이입니다.",
+        "solutionSteps": [
+          "1단계: 밑변 AB의 길이를 구합니다. y좌표가 같으므로 가로 길이는 |4 - (-2)| = 4 + 2 = 6입니다.",
+          "2단계: 높이를 구합니다. 꼭짓점 C의 y좌표는 5이고 밑변의 y좌표는 1이므로 세로 높이 h = 5 - 1 = 4입니다.",
+          "3단계: 삼각형 넓이 공식 (밑변 × 높이 ÷ 2)에 대입합니다.",
+          "   넓이 S = (6 × 4) ÷ 2 = 24 ÷ 2 = 12"
+        ],
+        "answer": "삼각형의 넓이 = 12",
+        "keyPoint": "좌표평면 도형 문제는 먼저 점을 눈으로 대략 찍어보고 밑변이 가로선인지 세로선인지 파악하면 쉽게 풀립니다."
+      }
+    ],
+    "csIntuition": "수학 좌표계는 원점이 정중앙에 있고 y가 위로 커지지만, 스마트폰 앱/웹 스크린 좌표계는 화면 왼쪽 위(Top-Left)가 (0,0)이고 y가 '아래로' 커집니다. 게임을 만들 때는 `screenY = screenHeight - mathY` 공식을 써서 수학 좌표를 화면 좌표로 뒤집어줍니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "quadrant.c",
+        "code": "#include <stdio.h>\n\ntypedef struct { double x, y; } Point2D;\n\nint get_quadrant(Point2D p) {\n    if (p.x > 0 && p.y > 0) return 1;\n    if (p.x < 0 && p.y > 0) return 2;\n    if (p.x < 0 && p.y < 0) return 3;\n    if (p.x > 0 && p.y < 0) return 4;\n    return 0; // 축 위\n}\n\nint main(void) {\n    Point2D p = { -4.0, 3.0 };\n    printf(\"Quadrant: %d\\n\", get_quadrant(p));\n    return 0;\n}\n",
+        "notes": "C23 구조체 좌표 사분면 함수"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "quadrant.go",
+        "code": "package main\n\nimport \"fmt\"\n\ntype Point struct{ X, Y float64 }\n\nfunc Quadrant(p Point) int {\n\tswitch {\n\tcase p.X > 0 && p.Y > 0: return 1\n\tcase p.X < 0 && p.Y > 0: return 2\n\tcase p.X < 0 && p.Y < 0: return 3\n\tcase p.X > 0 && p.Y < 0: return 4\n\tdefault: return 0\n\t}\n}\n\nfunc main() {\n\tfmt.Println(\"Quadrant:\", Quadrant(Point{-4, 3}))\n}\n",
+        "notes": "Go switch 패턴 사분면"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "quadrant.rs",
+        "code": "pub fn quadrant(x: f64, y: f64) -> i32 {\n    match (x > 0.0, y > 0.0, x < 0.0, y < 0.0) {\n        (true, true, _, _) => 1,\n        (_, true, true, _) => 2,\n        (_, _, true, true) => 3,\n        (true, _, _, true) => 4,\n        _ => 0,\n    }\n}\n\nfn main() {\n    println!(\"Quadrant: {}\", quadrant(-4.0, 3.0));\n}\n",
+        "notes": "Rust 4방향 튜플 매칭"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "quadrant.py",
+        "code": "def get_quadrant(x: float, y: float) -> int:\n    if x > 0 and y > 0: return 1\n    if x < 0 and y > 0: return 2\n    if x < 0 and y < 0: return 3\n    if x > 0 and y < 0: return 4\n    return 0\n\nif __name__ == \"__main__\":\n    print(\"Quadrant:\", get_quadrant(-4, 3))\n",
+        "notes": "Python 조건문 분기"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "quadrant.ts",
+        "code": "export function getQuadrant(x: number, y: number): number {\n  if (x > 0 && y > 0) return 1;\n  if (x < 0 && y > 0) return 2;\n  if (x < 0 && y < 0) return 3;\n  if (x > 0 && y < 0) return 4;\n  return 0;\n}\n\nconsole.log(getQuadrant(-4, 3));\n",
+        "notes": "TS 사분면 함수"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "quadrant.js",
+        "code": "function getQuadrant(x, y) {\n  if (x > 0 && y > 0) return 1;\n  if (x < 0 && y > 0) return 2;\n  if (x < 0 && y < 0) return 3;\n  if (x > 0 && y < 0) return 4;\n  return 0;\n}\nconsole.log(getQuadrant(-4, 3));\n",
+        "notes": "JS 사분면 판정"
+      }
+    }
+  },
+  {
+    "id": "mod-1-4-linear-function",
+    "stage": "stage1-middle",
+    "order": 4,
+    "titleKo": "일차함수와 직선의 방정식, 기울기",
+    "titleEn": "Linear Functions, Slope, and Equations of Lines",
+    "koreanCurriculumUnit": "중학교 2학년 수학 - Ⅱ. 일차함수 (1. 일차함수와 그래프)",
+    "graphType": "LINEAR_FUNCTION",
+    "graphCaption": "y = ax + b 직선의 그래프와 x절편, y절편, x 증가량 대비 y 증가량(기울기 a)",
+    "terms": [
+      {
+        "term": "변수와 함수 (Variable & Function)",
+        "definition": "변하는 값을 변수(x, y)라 하고, x의 값이 정해지면 그에 따라 y의 값이 오직 하나씩 정해지는 관계를 함수(y = f(x))라고 불러요."
+      },
+      {
+        "term": "일차함수 (Linear Function)",
+        "definition": "y = ax + b (a ≠ 0, a, b는 상수)처럼 x에 관한 일차식으로 나타내어지는 함수. 그래프는 반듯한 '직선' 모양!"
+      },
+      {
+        "term": "기울기 (Slope, a)",
+        "definition": "직선이 얼마나 가파르게 기울어져 있는지를 나타내는 비율. x가 1칸 갈 때 y가 몇 칸 올라가는지(가로 증가량 분의 세로 증가량 Δy/Δx)"
+      },
+      {
+        "term": "y절편 (y-intercept, b)",
+        "definition": "직선이 y축과 만나는 점의 y좌표. 즉, 출발점인 x = 0일 때의 y값"
+      },
+      {
+        "term": "x절편 (x-intercept)",
+        "definition": "직선이 x축과 만나는 점의 x좌표. 즉, 땅에 닿는 y = 0일 때의 x값 (-b/a)"
+      },
+      {
+        "term": "평행 (Parallel)",
+        "definition": "두 직선의 기울기 a가 같아서 아무리 길게 뻗어나가도 영원히 만나지 않는 관계"
+      }
+    ],
+    "mathExplanation": "택시를 타면 기본요금(b)이 있고 달린 거리(x)에 비례해서 요금(ax)이 올라갑니다. 이것이 바로 일차함수 y = ax + b입니다. x가 1, 2, 3으로 변할 때 y도 똑같은 간격으로 늘어납니다. 기울기 a가 양수(+)면 오른쪽 위로 올라가는 오르막길, 음수(-)면 오른쪽 아래로 내려가는 내리막길이 됩니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "기울기 공식 (계단 오르기 비율)",
+        "latex": "a = \\frac{\\Delta y}{\\Delta x} = \\frac{y_2 - y_1}{x_2 - x_1} \\quad (x_1 \\ne x_2)",
+        "explanation": "두 점 (x1, y1)과 (x2, y2)를 잇는 직선의 기울기는 가로 변화량 분의 세로 변화량입니다."
+      },
+      {
+        "title": "일차함수의 표준형",
+        "latex": "y = ax + b \\quad (a: \\text{기울기}, \\ b: y\\text{절편})",
+        "explanation": "기울기 a와 y절편 b만 알면 평면 위의 모든 직선을 완벽하게 그릴 수 있습니다."
+      },
+      {
+        "title": "선형 보간(Lerp) 공식",
+        "latex": "\\operatorname{Lerp}(y_1, y_2, t) = y_1 + t(y_2 - y_1) \\quad (0 \\le t \\le 1)",
+        "explanation": "비율 t(0: 시작점, 1: 끝점)에 따라 두 점 사이를 부드럽게 직선으로 이어주는 공식입니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "Lerp",
+        "name": "선형 보간 (Linear Interpolation)",
+        "meaning": "Linear(선형/직선의) + Interpolation(사이값을 채우는 보간)의 축약 합성어입니다. 두 지점 사이를 일정한 직선 비율(t)로 부드럽게 이어주는 컴퓨터 그래픽스 및 게임 애니메이션의 필수 공식입니다."
+      },
+      {
+        "symbol": "y = ax + b",
+        "name": "일차함수 표준형 방정식",
+        "meaning": "x의 최고차수가 1차인 직선의 방정식입니다. 입력 x에 일정한 상수 a가 곱해지고 기본값 b가 더해져 꺾이지 않는 반듯한 직선이 됩니다."
+      },
+      {
+        "symbol": "a",
+        "name": "기울기 (Slope)",
+        "meaning": "직선이 기울어진 경사도입니다. x가 1칸 증가할 때 y가 몇 칸 변하는지의 비율이며, a > 0이면 우상향(오르막), a < 0이면 우하향(내리막)입니다."
+      },
+      {
+        "symbol": "b",
+        "name": "y절편 (y-intercept)",
+        "meaning": "직선이 y축과 만나는 절편(마디)입니다. x = 0일 때의 출발점 높이(기본요금)를 뜻합니다."
+      },
+      {
+        "symbol": "Δ (Delta)",
+        "name": "변화량 기호 (그리스 대문자 델타)",
+        "meaning": "차이(Difference)를 뜻하는 그리스 문자 대문자 Δ입니다. Δx = x2 - x1은 가로 밑변 이동량, Δy = y2 - y1은 세로 높이 변화량을 의미합니다."
+      },
+      {
+        "symbol": "Δy / Δx",
+        "name": "평균 변화율 / 기울기 분수",
+        "meaning": "가로 밑변 이동량 대비 세로 높이 변화량의 비율입니다. 등산로나 계단을 오를 때 발판 폭 대비 계단 높이의 비율과 같습니다."
+      },
+      {
+        "symbol": "t (0 ≤ t ≤ 1)",
+        "name": "보간 매개변수 (Time / Parameter)",
+        "meaning": "시간(Time) 또는 비율(Ratio)을 뜻하는 문자입니다. t = 0이면 시작점 y1이고, t = 1이면 끝점 y2이며, t = 0.5면 정확히 정중앙 50% 지점을 가리킵니다."
+      },
+      {
+        "symbol": "x1 ≠ x2",
+        "name": "분모 0 불가 조건",
+        "meaning": "두 점의 x좌표가 같으면 분모 Δx가 0이 되어 수학적으로 나눗셈이 성립하지 않습니다. 이때는 함수가 아닌 수직선(x = k)이 됩니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "y_1 = a x_1 + b, \\quad y_2 = a x_2 + b",
+        "justification": "직선 위의 서로 다른 두 점을 기본 일차함수 식에 대입합니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "y_2 - y_1 = (a x_2 + b) - (a x_1 + b) = a(x_2 - x_1)",
+        "justification": "두 식을 아래위로 빼면 y절편 b가 사라지고 순수한 증가량만 남습니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "a = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{\\Delta y}{\\Delta x}",
+        "justification": "양변을 x의 증가량으로 나누면 기울기 a가 수학적으로 유도됩니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "등산로 경사도에서 도출된 기울기(a) 공식의 비밀",
+      "backgroundStory": "스키장 슬로프나 등산로 표지판을 보면 '경사도 20%'라는 표현이 있습니다. 이는 앞으로 100m 걸어갈 때 위로 20m 올라간다는 뜻입니다. 수학자들은 직선의 가파른 정도를 숫자로 딱 떨어지게 정의하기 위해 '가로로 간 거리(밑변)' 대비 '세로로 올라간 높이'의 비율을 재기로 약속했습니다. 어떤 점 두 개를 골라 삼각형을 만들어도 비율이 항상 같다는 닮음의 원리가 이 수식의 뿌리입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\Delta x = x_2 - x_1 \\quad (\\text{가로 밑변의 길이})",
+          "justification": "오른쪽 점의 x좌표에서 왼쪽 점의 x좌표를 빼서 가로로 이동한 거리를 구합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\Delta y = y_2 - y_1 \\quad (\\text{세로 높이의 변화})",
+          "justification": "나중 높이 y2에서 처음 높이 y1을 빼서 수직으로 변한 높이를 구합니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "\\text{가파른 정도(기울기)} = \\frac{\\text{세로 높이 변화}}{\\text{가로 밑변 이동}} = \\frac{y_2 - y_1}{x_2 - x_1}",
+          "justification": "가로가 1칸 늘어날 때 세로가 변하는 순수한 단위 비율을 얻습니다."
+        }
+      ],
+      "conclusion": "기울기 a는 'x가 1 증가할 때 y는 얼만큼 변하는가?'를 나타내는 마법의 배율입니다."
+    },
+    "workedExample": {
+      "problem": "두 점 A(1, 3)과 B(4, 9)를 지나는 일차함수의 기울기 a와 식 y = ax + b를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 가로 증가량 Δx = 4 - 1 = 3, 세로 증가량 Δy = 9 - 3 = 6이다.",
+        "2단계: 기울기 a = 6 / 3 = 2이다. (x가 1칸 갈 때 y는 2칸씩 올라감)",
+        "3단계: y = 2x + b 식에 점 A(1, 3)의 좌표를 대입한다 ➔ 3 = 2(1) + b ➔ b = 1.",
+        "4단계: 따라서 구하는 식은 y = 2x + 1이다."
+      ],
+      "finalAnswer": "기울기 a = 2, 식: y = 2x + 1 (y절편: 1, x절편: -0.5)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 기울기와 y절편으로 직선 식 구하기",
+        "question": "기울기가 -3이고 점 (0, 5)를 지나는 일차함수의 식을 구하고, 이 그래프의 x절편을 구하시오.",
+        "interpretation": "점 (0, 5)는 x좌표가 0이므로 바로 'y절편 b = 5'를 친절하게 알려준 것입니다. y = ax + b에 a = -3, b = 5를 넣고, x절편은 y = 0을 대입하여 x를 풉니다.",
+        "solutionSteps": [
+          "1단계: 기울기 a = -3이고 y절편 b = 5이므로 일차함수 식은 y = -3x + 5입니다.",
+          "2단계: x절편을 구하기 위해 y에 0을 대입합니다 ➔ 0 = -3x + 5",
+          "3단계: 일차방정식을 풉니다 ➔ 3x = 5 ➔ x = 5/3",
+          "4단계: 따라서 그래프는 (5/3, 0)에서 x축과 만납니다."
+        ],
+        "answer": "일차함수 식: y = -3x + 5, x절편: 5/3",
+        "keyPoint": "x절편은 y = 0일 때의 x값이고, y절편은 x = 0일 때의 y값입니다. 둘을 반대로 대입하지 않도록 주의하세요!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 두 점을 지나는 일차함수와 미지수 구하기",
+        "question": "두 점 (2, -1)과 (5, 8)을 지나는 직선 위에 점 (k, 14)가 있을 때, k의 값을 구하시오.",
+        "interpretation": "먼저 두 점을 이용해 기울기를 구하고 직선의 방정식을 완성합니다. 그 후 점 (k, 14)를 대입하여 k를 찾아냅니다.",
+        "solutionSteps": [
+          "1단계: 기울기 a를 구합니다 ➔ a = [8 - (-1)] / (5 - 2) = (8 + 1) / 3 = 9 / 3 = 3",
+          "2단계: y = 3x + b 식에 점 (2, -1)을 대입합니다 ➔ -1 = 3(2) + b ➔ -1 = 6 + b ➔ b = -7",
+          "3단계: 완성된 일차함수 식은 y = 3x - 7입니다.",
+          "4단계: 점 (k, 14)가 이 직선 위에 있으므로 대입합니다 ➔ 14 = 3k - 7",
+          "5단계: 3k = 21 ➔ k = 7"
+        ],
+        "answer": "k = 7",
+        "keyPoint": "어떤 점이 직선 위에 있다는 말은, 그 점의 좌표를 함수 식에 넣었을 때 등호가 참이 된다는 뜻입니다."
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 평행한 두 일차함수의 성질",
+        "question": "일차함수 y = ax - 4의 그래프가 y = 2x + 7의 그래프와 평행하고, 점 (3, m)을 지날 때 a + m의 값을 구하시오.",
+        "interpretation": "두 직선이 '평행'하다는 것은 기울기가 같다는 뜻입니다(a = 2). 기울기를 알아냈으니 함수 식을 완성하고 점 (3, m)을 대입해 m을 구합니다.",
+        "solutionSteps": [
+          "1단계: 두 직선이 평행하므로 기울기가 같습니다 ➔ a = 2",
+          "2단계: 따라서 첫 번째 일차함수 식은 y = 2x - 4가 됩니다.",
+          "3단계: 이 직선이 점 (3, m)을 지나므로 대입합니다 ➔ m = 2(3) - 4 = 6 - 4 = 2",
+          "4단계: 구하는 a + m의 값을 계산합니다 ➔ a + m = 2 + 2 = 4"
+        ],
+        "answer": "a + m = 4",
+        "keyPoint": "기울기가 같고 y절편이 다르면 '평행(만나지 않음)'이고, y절편까지 같으면 '일치(완전히 겹침)'입니다."
+      }
+    ],
+    "csIntuition": "게임 프로그래밍에서 주인공이 A(10)에서 B(100)로 1초 동안 부드럽게 걸어갈 때 `position = Lerp(10, 100, t)`를 사용합니다. 이 Lerp(선형 보간)가 바로 두 점을 잇는 일차함수 직선 위의 현재 위치를 계산하는 공식입니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "linear_func.c",
+        "code": "#include <stdio.h>\n\ndouble calc_slope(double x1, double y1, double x2, double y2) {\n    return (y2 - y1) / (x2 - x1);\n}\n\ndouble lerp(double start, double end, double t) {\n    return start + t * (end - start);\n}\n\nint main(void) {\n    printf(\"Slope: %.2f\\n\", calc_slope(1, 3, 4, 9));\n    printf(\"Lerp 50%%: %.2f\\n\", lerp(10, 100, 0.5));\n    return 0;\n}\n",
+        "notes": "C23 기울기 및 Lerp 구현"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "linear_func.go",
+        "code": "package main\n\nimport \"fmt\"\n\nfunc Slope(x1, y1, x2, y2 float64) float64 {\n\treturn (y2 - y1) / (x2 - x1)\n}\n\nfunc Lerp(start, end, t float64) float64 {\n\treturn start + t*(end-start)\n}\n\nfunc main() {\n\tfmt.Println(\"Slope:\", Slope(1, 3, 4, 9))\n\tfmt.Println(\"Lerp:\", Lerp(10, 100, 0.5))\n}\n",
+        "notes": "Go 64비트 실수 선형 보간"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "linear_func.rs",
+        "code": "pub fn slope(x1: f64, y1: f64, x2: f64, y2: f64) -> f64 {\n    (y2 - y1) / (x2 - x1)\n}\n\npub fn lerp(start: f64, end: f64, t: f64) -> f64 {\n    start + t * (end - start)\n}\n\nfn main() {\n    println!(\"Slope: {}\", slope(1.0, 3.0, 4.0, 9.0));\n    println!(\"Lerp: {}\", lerp(10.0, 100.0, 0.5));\n}\n",
+        "notes": "Rust 고속 보간 계산기"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "linear_func.py",
+        "code": "def slope(x1: float, y1: float, x2: float, y2: float) -> float:\n    return (y2 - y1) / (x2 - x1)\n\ndef lerp(start: float, end: float, t: float) -> float:\n    return start + t * (end - start)\n\nif __name__ == \"__main__\":\n    print(\"Slope:\", slope(1, 3, 4, 9))\n    print(\"Lerp:\", lerp(10, 100, 0.5))\n",
+        "notes": "Python Lerp"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "linear_func.ts",
+        "code": "export function slope(x1: number, y1: number, x2: number, y2: number): number {\n  return (y2 - y1) / (x2 - x1);\n}\n\nexport function lerp(start: number, end: number, t: number): number {\n  return start + t * (end - start);\n}\n\nconsole.log(`Slope: ${slope(1, 3, 4, 9)}`);\n",
+        "notes": "TS 선형 보간 모듈"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "linear_func.js",
+        "code": "function slope(x1, y1, x2, y2) {\n  return (y2 - y1) / (x2 - x1);\n}\nfunction lerp(start, end, t) {\n  return start + t * (end - start);\n}\nconsole.log(\"Slope:\", slope(1, 3, 4, 9));\n",
+        "notes": "JS Lerp 함수"
+      }
+    }
+  },
+  {
+    "id": "mod-1-5-pythagoras-distance",
+    "stage": "stage1-middle",
+    "order": 5,
+    "titleKo": "피타고라스 정리와 유클리드 거리",
+    "titleEn": "Pythagorean Theorem and Euclidean Distance",
+    "koreanCurriculumUnit": "중학교 2학년 수학 - Ⅵ. 도형의 성질 (피타고라스 정리)",
+    "graphType": "PYTHAGORAS",
+    "graphCaption": "직각삼각형의 직각을 낀 두 변의 정사각형 넓이의 합은 빗변의 정사각형 넓이와 같습니다 (3² + 4² = 5²)",
+    "terms": [
+      {
+        "term": "직각삼각형 (Right Triangle)",
+        "definition": "세 내각 중 한 각이 90°(직각)인 삼각형"
+      },
+      {
+        "term": "빗변 (Hypotenuse)",
+        "definition": "직각삼각형에서 직각(90°)의 맞은편에 있는 가장 긴 변 (기호: c)"
+      },
+      {
+        "term": "피타고라스 정리",
+        "definition": "직각삼각형에서 직각을 낀 두 변 a, b와 빗변 c 사이에 a² + b² = c²이 항상 성립한다는 기하학의 대법칙"
+      },
+      {
+        "term": "피타고라스 삼조 (Pythagorean Triples)",
+        "definition": "a² + b² = c²을 만족하는 예쁜 세 자연수 쌍 (가장 유명한 세트: 3-4-5, 5-12-13, 8-15-17)"
+      },
+      {
+        "term": "유클리드 거리 (L2 Norm)",
+        "definition": "평면이나 입체 공간에서 두 점 사이를 가장 곧게 이은 최단 직선 거리"
+      }
+    ],
+    "mathExplanation": "인류 역사상 가장 아름답고 유명한 정리입니다. 가로로 3m, 세로로 4m 꺾인 길을 갈 때, 대각선으로 가로지르면 몇 미터일까요? 피타고라스 정리에 따르면 3²(9) + 4²(16) = 25 = 5²이므로 대각선 길이는 정확히 5m가 됩니다! 이 원리를 좌표평면에 가져오면 두 점 사이의 최단 거리를 구하는 만능 열쇠가 됩니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "피타고라스 정리 기본 공식",
+        "latex": "a^2 + b^2 = c^2 \\implies c = \\sqrt{a^2 + b^2}",
+        "explanation": "빗변의 길이는 두 직각변의 제곱의 합에 루트(제곱근)를 씌운 값입니다."
+      },
+      {
+        "title": "2차원 평면 두 점 사이의 거리 공식",
+        "latex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}",
+        "explanation": "가로 거리 Δx와 세로 거리 Δy로 직각삼각형을 만들면 빗변 d가 곧 두 점 사이의 거리가 됩니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "a, b",
+        "name": "직각을 낀 두 변 (Legs / 직각변)",
+        "meaning": "직각삼각형에서 90° 직각을 마주보고 끼고 있는 밑변과 높이입니다."
+      },
+      {
+        "symbol": "c",
+        "name": "빗변 (Hypotenuse)",
+        "meaning": "직각(90°)의 바로 맞은편에 위치한 가장 긴 대각선 변입니다. 영어 Hypotenuse는 '아래로 팽팽하게 뻗은 줄'이라는 그리스어에서 유래했습니다."
+      },
+      {
+        "symbol": "a², b², c²",
+        "name": "거듭제곱 (정사각형의 넓이)",
+        "meaning": "각 변의 길이를 한 변으로 하는 정사각형의 실제 면적을 뜻합니다. (예: a = 3이면 3 × 3 = 9면적)"
+      },
+      {
+        "symbol": "√ (Radical / Root)",
+        "name": "제곱근 기호 (루트)",
+        "meaning": "뿌리를 뜻하는 라틴어 radix의 첫 글자 r을 길게 늘어뜨린 기호입니다. 제곱해서 그 안의 수가 되는 원래의 양수 길이를 되돌려줍니다."
+      },
+      {
+        "symbol": "d",
+        "name": "유클리드 거리 (Distance / L2 Norm)",
+        "meaning": "거리(Distance)의 머리글자 d입니다. 두 점 사이를 가장 똑바로 이은 최단 직선 거리입니다."
+      },
+      {
+        "symbol": "(x2 - x1)²",
+        "name": "가로 차이의 제곱",
+        "meaning": "두 점의 가로 간격(밑변)의 제곱입니다. x2 - x1이 음수가 나오더라도 제곱하면 항상 양수가 되어 거리가 정확히 보장됩니다."
+      },
+      {
+        "symbol": "(y2 - y1)²",
+        "name": "세로 차이의 제곱",
+        "meaning": "두 점의 세로 높이 차이(높이)의 제곱입니다. 가로 제곱과 더해 빗변 제곱을 만듭니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\text{큰 정사각형 넓이} = (a + b)^2 = a^2 + 2ab + b^2",
+        "justification": "한 변의 길이가 (a + b)인 큰 정사각형의 넓이를 구합니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\text{조각들의 합} = c^2 + 4 \\times \\left(\\frac{1}{2}ab\\right) = c^2 + 2ab",
+        "justification": "가운데 기울어진 정사각형(c²)과 네 귀퉁이 직각삼각형 4개의 넓이를 합칩니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "a^2 + 2ab + b^2 = c^2 + 2ab \\implies a^2 + b^2 = c^2",
+        "justification": "양변에서 똑같은 2ab를 빼내면 a² + b² = c²이 완벽하게 도출됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "정사각형 종이접기에서 탄생한 피타고라스 정리의 증명",
+      "backgroundStory": "고대 그리스의 수학자 피타고라스는 바닥 타일을 바라보다가 놀라운 사실을 발견했습니다. 직각삼각형의 세 변을 한 변으로 하는 정사각형 3개를 그렸을 때, 작은 두 정사각형의 넓이를 오려 붙이면 빗변의 커다란 정사각형 넓이와 완벽하게 포개어진다는 것입니다. 이것을 한 변이 (a+b)인 큰 사각형 안에서 증명할 수 있습니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{한 변이 } (a+b) \\text{인 정사각형 안에 직각삼각형 4개를 배치}",
+          "justification": "네 귀퉁이에 밑변 a, 높이 b인 직각삼각형 4개를 두면 가운데에 한 변이 c인 정사각형이 생깁니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "(a + b)^2 = c^2 + 4 \\times \\left(\\frac{1}{2}ab\\right)",
+          "justification": "전체 큰 사각형의 넓이는 가운데 사각형 넓이 c²과 직각삼각형 4개의 넓이의 합과 같습니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "a^2 + 2ab + b^2 = c^2 + 2ab \\iff a^2 + b^2 = c^2",
+          "justification": "양쪽에서 삼각형 4개 분량인 2ab를 떼어내면 a² + b² = c²만 남습니다."
+        }
+      ],
+      "conclusion": "직각삼각형의 두 변의 제곱을 더하면 항상 빗변의 제곱이 된다는 불변의 기하학적 진리가 증명되었습니다."
+    },
+    "workedExample": {
+      "problem": "직각삼각형의 두 직각변의 길이가 a = 6, b = 8일 때 빗변 c의 길이를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 두 변을 제곱한다 ➔ a² = 6² = 36, b² = 8² = 64.",
+        "2단계: 두 제곱의 합을 구한다 ➔ 36 + 64 = 100.",
+        "3단계: 피타고라스 정리 c² = 100이므로 양의 제곱근을 취한다 ➔ c = √100 = 10.",
+        "결론: 빗변의 길이는 10이다 (3:4:5의 2배 확대형!)."
+      ],
+      "finalAnswer": "빗변 c = 10"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 피타고라스 정리를 이용한 직각변 구하기",
+        "question": "직각삼각형의 빗변의 길이가 13이고 한 직각변의 길이가 5일 때, 나머지 한 변의 길이를 구하시오.",
+        "interpretation": "빗변이 13(c = 13)이고 한 변이 5(a = 5)이므로 a² + b² = c² 식에 대입하여 b² = c² - a²으로 풉니다.",
+        "solutionSteps": [
+          "1단계: 피타고라스 정리 식을 세웁니다 ➔ 5² + b² = 13²",
+          "2단계: 제곱수를 계산합니다 ➔ 25 + b² = 169",
+          "3단계: b²만 남기고 이항합니다 ➔ b² = 169 - 25 = 144",
+          "4단계: 144는 12의 제곱이므로 양의 제곱근을 취합니다 ➔ b = √144 = 12"
+        ],
+        "answer": "나머지 한 변의 길이 = 12",
+        "keyPoint": "빗변을 구할 때는 더하지만(a²+b²), 직각변을 구할 때는 빗변의 제곱에서 빼야(c²-a²) 한다는 점을 절대 혼동하지 마세요!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 좌표평면 위 두 점 사이의 거리 계산",
+        "question": "좌표평면 위의 두 점 A(-1, 2)와 B(3, 5) 사이의 직선 거리를 구하시오.",
+        "interpretation": "가로 차이 Δx와 세로 차이 Δy를 각각 구하여 피타고라스 거리 공식 d = √(Δx² + Δy²)에 대입합니다.",
+        "solutionSteps": [
+          "1단계: 가로 밑변 Δx를 구합니다 ➔ 3 - (-1) = 3 + 1 = 4",
+          "2단계: 세로 높이 Δy를 구합니다 ➔ 5 - 2 = 3",
+          "3단계: 각각 제곱하여 더합니다 ➔ 4² + 3² = 16 + 9 = 25",
+          "4단계: 양의 제곱근을 취합니다 ➔ d = √25 = 5"
+        ],
+        "answer": "두 점 사이의 거리 d = 5",
+        "keyPoint": "좌표에 음수가 있을 때 (-1)을 뺄셈하면 부호가 +로 바뀌는 것에 주의하세요."
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 게임 충돌 판정과 제곱 비교 최적화",
+        "question": "원점 (0,0)에 반지름이 3인 몬스터가 있고, 좌표 (5, 6)에 반지름이 4인 플레이어가 있을 때, 두 캐릭터가 충돌했는지 판정하시오. (루트 계산 없이 판별식 사용)",
+        "interpretation": "두 원이 충돌하려면 두 중심 사이의 거리 d가 두 반지름의 합(r1 + r2) 이하이어야 합니다. 즉, d² ≤ (r1 + r2)²인지 거리의 제곱끼리 비교합니다.",
+        "solutionSteps": [
+          "1단계: 중심 사이의 거리의 제곱 d²을 구합니다.",
+          "   d² = (5 - 0)² + (6 - 0)² = 5² + 6² = 25 + 36 = 61",
+          "2단계: 두 반지름의 합의 제곱 (r1 + r2)²을 구합니다.",
+          "   r1 + r2 = 3 + 4 = 7이므로 7² = 49",
+          "3단계: 두 값을 비교합니다 ➔ 61 > 49 (d² > (r1 + r2)²)",
+          "4단계: 두 중심 사이의 거리가 반지름 합보다 크므로 충돌하지 않았습니다."
+        ],
+        "answer": "충돌하지 않음 (거리의 제곱 61 > 반지름합의 제곱 49)",
+        "keyPoint": "컴퓨터 게임에서는 sqrt()를 쓰지 않고 거리의 제곱끼리 비교하는 이 방법이 초당 60프레임을 유지하는 핵심 기술입니다!"
+      }
+    ],
+    "csIntuition": "수천 개의 총알과 비행기가 날아다니는 탄막 슈팅 게임에서 매 프레임마다 `Math.sqrt()`를 부르면 CPU에 불이 납니다. 피타고라스 정리의 제곱 비교 공식 `dx*dx + dy*dy <= r_sum*r_sum`을 쓰면 초고속 충돌 검사가 가능합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "distance.c",
+        "code": "#include <stdio.h>\n#include <math.h>\n\ndouble distance_2d(double x1, double y1, double x2, double y2) {\n    double dx = x2 - x1;\n    double dy = y2 - y1;\n    return sqrt(dx * dx + dy * dy);\n}\n\nint is_circle_colliding(double x1, double y1, double r1, double x2, double y2, double r2) {\n    double dx = x2 - x1;\n    double dy = y2 - y1;\n    double r_sum = r1 + r2;\n    return (dx * dx + dy * dy) <= (r_sum * r_sum); // sqrt 생략\n}\n\nint main(void) {\n    printf(\"Dist: %.2f\\n\", distance_2d(-1, 2, 3, 5));\n    printf(\"Colliding: %d\\n\", is_circle_colliding(0, 0, 3, 5, 6, 4));\n    return 0;\n}\n",
+        "notes": "C23 제곱 비교 충돌 최적화"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "distance.go",
+        "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc Distance(x1, y1, x2, y2 float64) float64 {\n\tdx, dy := x2-x1, y2-y1\n\treturn math.Sqrt(dx*dx + dy*dy)\n}\n\nfunc main() {\n\tfmt.Println(\"Dist:\", Distance(-1, 2, 3, 5))\n}\n",
+        "notes": "Go 2D 거리"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "distance.rs",
+        "code": "pub fn distance(x1: f64, y1: f64, x2: f64, y2: f64) -> f64 {\n    let dx = x2 - x1;\n    let dy = y2 - y1;\n    (dx * dx + dy * dy).sqrt()\n}\n\nfn main() {\n    println!(\"Dist: {}\", distance(-1.0, 2.0, 3.0, 5.0));\n}\n",
+        "notes": "Rust f64 sqrt"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "distance.py",
+        "code": "import math\n\ndef distance(x1: float, y1: float, x2: float, y2: float) -> float:\n    return math.hypot(x2 - x1, y2 - y1)\n\nif __name__ == \"__main__\":\n    print(\"Dist:\", distance(-1, 2, 3, 5))\n",
+        "notes": "Python math.hypot"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "distance.ts",
+        "code": "export function distance(x1: number, y1: number, x2: number, y2: number): number {\n  return Math.hypot(x2 - x1, y2 - y1);\n}\n\nconsole.log(`Dist: ${distance(-1, 2, 3, 5)}`);\n",
+        "notes": "TS Math.hypot"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "distance.js",
+        "code": "function distance(x1, y1, x2, y2) {\n  return Math.hypot(x2 - x1, y2 - y1);\n}\nconsole.log(\"Dist:\", distance(-1, 2, 3, 5));\n",
+        "notes": "JS 거리 계산"
+      }
+    }
+  },
+  {
+    "id": "mod-1-6-quadratic-equation",
+    "stage": "stage1-middle",
+    "order": 6,
+    "titleKo": "이차방정식과 근의 공식, 판별식",
+    "titleEn": "Quadratic Equations, Quadratic Formula, and Discriminant",
+    "koreanCurriculumUnit": "중학교 3학년 수학 - Ⅱ. 이차방정식 (1. 이차방정식의 풀이)",
+    "graphType": "PARABOLA",
+    "graphCaption": "ax² + bx + c = 0의 해를 나타내는 포물선과 x축의 교점 (D > 0: 2개, D = 0: 1개, D < 0: 없음)",
+    "terms": [
+      {
+        "term": "이차방정식 (Quadratic Equation)",
+        "definition": "ax² + bx + c = 0 (a ≠ 0)처럼 x의 최고차항이 2차인 방정식"
+      },
+      {
+        "term": "인수분해 (Factoring)",
+        "definition": "하나의 다항식을 두 개 이상의 일차식들의 곱으로 쪼개는 것 (예: x² - 5x + 6 = (x - 2)(x - 3))"
+      },
+      {
+        "term": "완전제곱식 (Perfect Square)",
+        "definition": "(x + p)²처럼 다항식의 전체가 제곱으로 묶이는 식"
+      },
+      {
+        "term": "근(해) (Root)",
+        "definition": "방정식의 미지수 x에 넣었을 때 식을 참(0 = 0)으로 만들어주는 정답"
+      },
+      {
+        "term": "근의 공식",
+        "definition": "인수분해가 안 되는 어떤 복잡한 이차방정식이라도 계수 a, b, c만으로 해를 바로 뽑아내는 만능 공식"
+      },
+      {
+        "term": "판별식 (Discriminant, D)",
+        "definition": "근의 공식 루트 안에 들어있는 식 D = b² - 4ac. 이 녀석의 부호만 보면 실근이 2개인지, 1개(중근)인지, 없는지 알 수 있어요!"
+      }
+    ],
+    "mathExplanation": "중1 때는 2x + 4 = 10 같은 일차방정식을 배웠습니다. 하지만 공을 하늘로 던졌을 때의 높이나 땅의 면적을 다룰 때는 x²(제곱)이 들어간 '이차방정식'이 나타납니다. 곱해서 0이 되려면 둘 중 하나가 0이어야 하므로 (x-2)(x-3)=0이면 x=2 또는 x=3이 됩니다. 인수분해가 안 될 때는 '완전제곱식 만들기'라는 강력한 기술로 유도된 '근의 공식'을 쓰면 됩니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "이차방정식 근의 공식 (만능 해결사)",
+        "latex": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} \\quad (a \\ne 0)",
+        "explanation": "계수 a, b, c를 쏙 대입하면 플러스 루트와 마이너스 루트로 두 개의 해가 한 번에 튀어나옵니다."
+      },
+      {
+        "title": "판별식 D의 실근 개수 판정 법칙",
+        "latex": "D = b^2 - 4ac \\implies \\begin{cases} D > 0 & \\text{서로 다른 두 실근 (그래프가 x축과 2번 만남)} \\\\ D = 0 & \\text{중근 (그래프가 x축에 접함)} \\\\ D < 0 & \\text{실근 없음 (그래프가 x축 위에 붕 뜸)} \\end{cases}",
+        "explanation": "루트 안의 수가 양수면 2개, 0이면 1개(중근), 음수면 실수가 될 수 없으므로 0개입니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "a, b, c",
+        "name": "이차방정식의 계수(Coefficients)와 상수항(Constant)",
+        "meaning": "ax² + bx + c = 0에서 a는 이차항 x² 앞의 계수, b는 일차항 x 앞의 계수, c는 문자 없는 순수한 숫자 상수항입니다."
+      },
+      {
+        "symbol": "a ≠ 0",
+        "name": "이차방정식 성립 조건",
+        "meaning": "만약 a = 0이면 x²항이 사라져 일차방정식이 되어버리므로, 이차방정식이 되기 위한 필수 불변 조건입니다."
+      },
+      {
+        "symbol": "± (Plus-Minus)",
+        "name": "플러스마이너스 복호 기호",
+        "meaning": "+(양수)와 -(음수) 두 개의 해를 한 번에 묶어 쓰는 기호입니다. x = (-b + √D)/(2a)와 x = (-b - √D)/(2a)라는 2개의 정답을 뜻합니다."
+      },
+      {
+        "symbol": "D",
+        "name": "판별식 (Discriminant)",
+        "meaning": "영어 Discriminant(구별/판별하다)의 머리글자 D입니다. 근의 공식 루트 안의 식 D = b² - 4ac로, 해를 직접 구하지 않고도 근의 개수(2개, 1개, 0개)를 단번에 판별합니다."
+      },
+      {
+        "symbol": "b² - 4ac",
+        "name": "판별식 계산식",
+        "meaning": "완전제곱식을 전개하고 통분하는 과정에서 자연스럽게 도출된 핵심 수식입니다."
+      },
+      {
+        "symbol": "2a",
+        "name": "근의 공식 분모",
+        "meaning": "이차항 계수 a로 나누고 완전제곱식을 푸는 과정에서 4a²의 제곱근인 2a가 분모로 도출된 것입니다."
+      },
+      {
+        "symbol": "x",
+        "name": "방정식의 근(해) / Root",
+        "meaning": "방정식에 대입했을 때 좌변 ax² + bx + c를 0으로 만들어주는 미지수의 참값입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "ax^2 + bx + c = 0 \\implies x^2 + \\frac{b}{a}x = -\\frac{c}{a}",
+        "justification": "양변을 a로 나누고 상수항을 오른쪽으로 넘깁니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "x^2 + \\frac{b}{a}x + \\left(\\frac{b}{2a}\\right)^2 = \\frac{b^2}{4a^2} - \\frac{c}{a}",
+        "justification": "좌변을 완전제곱식으로 만들기 위해 x 계수의 절반의 제곱을 양변에 똑같이 더해줍니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a^2}",
+        "justification": "좌변을 묶고 우변을 4a²으로 통분하면 드디어 판별식 b²-4ac가 나타납니다!"
+      },
+      {
+        "stepNumber": 4,
+        "mathExpression": "x + \\frac{b}{2a} = \\pm \\frac{\\sqrt{b^2 - 4ac}}{2a} \\implies x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+        "justification": "양변의 제곱근을 취하고 +b/(2a)를 이항하면 인류의 위대한 '근의 공식'이 완성됩니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "정사각형 퍼즐 맞추기에서 탄생한 근의 공식 유도",
+      "backgroundStory": "고대 바빌로니아와 아라비아의 수학자 알콰리즈미는 정사각형 타일 조각을 맞추다가 근의 공식을 유도했습니다. x²이라는 큰 정사각형 옆에 (b/a)x라는 직사각형을 반으로 쪼개어 가로와 세로에 붙이면 모퉁이에 딱 (b/2a)² 크기의 작은 정사각형 구멍이 생깁니다. 이 구멍을 양변에 채워 넣음으로써 완벽한 큰 정사각형(완전제곱식)을 완성하고 제곱근을 취하는 직관적인 기하학적 유도법입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "x^2 + 2 \\left(\\frac{b}{2a}\\right) x + \\left(\\frac{b}{2a}\\right)^2 = \\left(x + \\frac{b}{2a}\\right)^2",
+          "justification": "가운데 1차항을 둘로 나누어 양쪽에 붙이고 모퉁이 조각을 더해 완전제곱식을 조립합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2 - 4ac}{4a^2}",
+          "justification": "우변의 상수항들을 합쳐 통분합니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "x = -\\frac{b}{2a} \\pm \\frac{\\sqrt{b^2 - 4ac}}{2a}",
+          "justification": "제곱을 벗겨내고 중심 위치에서 좌우로 ±루트만큼 떨어진 두 해를 구합니다."
+        }
+      ],
+      "conclusion": "근의 공식은 무작정 외우는 주문이 아니라, '완전제곱식으로 묶어 제곱근을 씌운다'는 단순한 사각형 퍼즐 맞추기의 최종 결과물입니다."
+    },
+    "workedExample": {
+      "problem": "이차방정식 2x² - 4x + 1 = 0의 해를 근의 공식을 사용하여 구하시오.",
+      "stepsToTrace": [
+        "1단계: 계수를 확인한다 ➔ a = 2, b = -4, c = 1.",
+        "2단계: 판별식을 확인한다 ➔ D = (-4)² - 4(2)(1) = 16 - 8 = 8 > 0 (서로 다른 두 실근).",
+        "3단계: 근의 공식에 대입한다 ➔ x = [-(-4) ± √8] / (2 × 2) = (4 ± 2√2) / 4.",
+        "4단계: 분모와 분자를 2로 약분한다 ➔ x = (2 ± √2) / 2."
+      ],
+      "finalAnswer": "x = (2 + √2)/2 또는 x = (2 - √2)/2"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 인수분해를 이용한 이차방정식 풀이",
+        "question": "이차방정식 x² - 7x + 12 = 0의 두 근을 인수분해를 통해 구하시오.",
+        "interpretation": "곱해서 +12가 되고 더해서 -7이 되는 두 정수를 찾습니다. (-3) × (-4) = 12이고 (-3) + (-4) = -7이므로 (x - 3)(x - 4) = 0으로 인수분해됩니다.",
+        "solutionSteps": [
+          "1단계: 두 수의 곱이 12, 합이 -7인 조합을 찾습니다 ➔ -3과 -4",
+          "2단계: 좌변을 인수분해합니다 ➔ (x - 3)(x - 4) = 0",
+          "3단계: 두 식의 곱이 0이므로 x - 3 = 0 또는 x - 4 = 0입니다.",
+          "4단계: 따라서 x = 3 또는 x = 4입니다."
+        ],
+        "answer": "x = 3 또는 x = 4",
+        "keyPoint": "합과 곱의 부호를 볼 때, 상수항이 양수(+)이면 두 수의 부호가 같고 일차항이 음수(-)이므로 둘 다 음수입니다."
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 판별식 D를 이용한 근의 개수 판정",
+        "question": "이차방정식 x² - 6x + k = 0이 '중근(오직 하나의 실근)'을 가질 때, 상수 k의 값을 구하시오.",
+        "interpretation": "중근을 가지려면 판별식 D = b² - 4ac의 값이 정확히 '0'이어야 합니다 (또는 상수항이 x 계수 절반의 제곱).",
+        "solutionSteps": [
+          "1단계: 계수를 확인합니다 ➔ a = 1, b = -6, c = k",
+          "2단계: 판별식 식을 세웁니다 ➔ D = (-6)² - 4(1)(k) = 36 - 4k",
+          "3단계: 중근 조건 D = 0을 적용합니다 ➔ 36 - 4k = 0",
+          "4단계: 일차방정식을 풉니다 ➔ 4k = 36 ➔ k = 9",
+          "5단계: 검산해 봅니다 ➔ x² - 6x + 9 = (x - 3)² = 0 (중근 x = 3 성립)"
+        ],
+        "answer": "k = 9",
+        "keyPoint": "x²의 계수가 1일 때 중근을 가지려면 상수항은 x 계수의 절반(-3)의 제곱인 9가 되어야 합니다."
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 로켓 발사 높이와 비행 시간 계산",
+        "question": "지면에서 쏘아 올린 물 로켓의 t초 후의 높이 h(m)가 h = -5t² + 20t라고 합니다. 이 로켓이 다시 지면(높이 h = 0)에 떨어지는 시간은 발사 후 몇 초 뒤인지 구하시오.",
+        "interpretation": "지면에 떨어진다는 것은 높이 h가 0이 된다는 뜻이므로, 이차방정식 -5t² + 20t = 0의 해를 구하는 실생활 문제입니다.",
+        "solutionSteps": [
+          "1단계: h = 0을 대입하여 이차방정식을 만듭니다 ➔ -5t² + 20t = 0",
+          "2단계: 양변을 -5로 나눕니다 ➔ t² - 4t = 0",
+          "3단계: 공통인수 t로 묶어 인수분해합니다 ➔ t(t - 4) = 0",
+          "4단계: 해를 구합니다 ➔ t = 0 또는 t = 4",
+          "5단계: t = 0은 발사 순간이고, 다시 지면에 떨어지는 시간은 4초 뒤입니다."
+        ],
+        "answer": "4초 뒤",
+        "keyPoint": "실생활 물리 문제에서는 시간 t ≥ 0이어야 하므로 음수 해가 나오면 버려야 합니다."
+      }
+    ],
+    "csIntuition": "3D 컴퓨터 그래픽스의 광선 추적(Ray Tracing) 알고리즘에서 카메라가 쏜 레이저(직선)가 3D 구(Sphere)와 충돌하는지 계산할 때 바로 이 판별식 D를 씁니다. $D > 0$이면 구를 뚫고 지나가 화면에 픽셀 색상을 칠합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "quadratic.c",
+        "code": "#include <stdio.h>\n#include <math.h>\n\nint solve_quadratic(double a, double b, double c, double *r1, double *r2) {\n    double d = b * b - 4 * a * c;\n    if (d < 0) return 0;\n    double s = sqrt(d);\n    *r1 = (-b + s) / (2 * a);\n    *r2 = (-b - s) / (2 * a);\n    return (d == 0) ? 1 : 2;\n}\n\nint main(void) {\n    double r1, r2;\n    int count = solve_quadratic(2, -4, 1, &r1, &r2);\n    printf(\"Roots: %.3f, %.3f (count=%d)\\n\", r1, r2, count);\n    return 0;\n}\n",
+        "notes": "C23 판별식 기반 근의 공식 솔버"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "quadratic.go",
+        "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc Solve(a, b, c float64) (float64, float64, bool) {\n\td := b*b - 4*a*c\n\tif d < 0 { return 0, 0, false }\n\ts := math.Sqrt(d)\n\treturn (-b + s)/(2*a), (-b - s)/(2*a), true\n}\n\nfunc main() {\n\tr1, r2, ok := Solve(2, -4, 1)\n\tfmt.Printf(\"Roots: %.3f, %.3f (ok=%v)\\n\", r1, r2, ok)\n}\n",
+        "notes": "Go 근의 공식"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "quadratic.rs",
+        "code": "pub fn solve(a: f64, b: f64, c: f64) -> Option<(f64, f64)> {\n    let d = b * b - 4.0 * a * c;\n    if d < 0.0 { None }\n    else {\n        let s = d.sqrt();\n        Some(((-b + s)/(2.0*a), (-b - s)/(2.0*a)))\n    }\n}\n\nfn main() {\n    println!(\"Roots: {:?}\", solve(2.0, -4.0, 1.0));\n}\n",
+        "notes": "Rust Option 반환"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "quadratic.py",
+        "code": "import math\n\ndef solve(a: float, b: float, c: float):\n    d = b * b - 4 * a * c\n    if d < 0: return None\n    s = math.sqrt(d)\n    return ((-b + s)/(2*a), (-b - s)/(2*a))\n\nif __name__ == \"__main__\":\n    print(\"Roots:\", solve(2, -4, 1))\n",
+        "notes": "Python 튜플 반환"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "quadratic.ts",
+        "code": "export function solve(a: number, b: number, c: number): [number, number] | null {\n  const d = b * b - 4 * a * c;\n  if (d < 0) return null;\n  const s = Math.sqrt(d);\n  return [(-b + s) / (2 * a), (-b - s) / (2 * a)];\n}\n\nconsole.log(solve(2, -4, 1));\n",
+        "notes": "TS 튜플 솔버"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "quadratic.js",
+        "code": "function solve(a, b, c) {\n  const d = b * b - 4 * a * c;\n  if (d < 0) return null;\n  const s = Math.sqrt(d);\n  return [(-b + s) / (2 * a), (-b - s) / (2 * a)];\n}\nconsole.log(solve(2, -4, 1));\n",
+        "notes": "JS 배열 반환"
+      }
+    }
+  },
+  {
+    "id": "mod-1-7-quadratic-function",
+    "stage": "stage1-middle",
+    "order": 7,
+    "titleKo": "이차함수와 포물선, 꼭짓점",
+    "titleEn": "Quadratic Functions, Parabolas, and Vertices",
+    "koreanCurriculumUnit": "중학교 3학년 수학 - Ⅲ. 이차함수 (1. 이차함수와 그래프)",
+    "graphType": "PARABOLA",
+    "graphCaption": "y = a(x-p)² + q 포물선의 대칭축 x = p와 산꼭대기/골짜기 바닥점인 꼭짓점 (p, q)",
+    "terms": [
+      {
+        "term": "이차함수 (Quadratic Function)",
+        "definition": "y = ax² + bx + c (a ≠ 0)처럼 x에 관한 2차식으로 표현되는 함수"
+      },
+      {
+        "term": "포물선 (Parabola)",
+        "definition": "공을 던졌을 때 허공에 그리는 완벽한 좌우 대칭 곡선"
+      },
+      {
+        "term": "꼭짓점 (Vertex, (p, q))",
+        "definition": "포물선이 방향을 꺾는 가장 중요한 기준점. U자 모양일 땐 최저점, ∩자 모양일 땐 최고점"
+      },
+      {
+        "term": "대칭축 (Axis of Symmetry, x = p)",
+        "definition": "포물선을 반으로 딱 접었을 때 양쪽이 완전히 포개어지는 거울선"
+      },
+      {
+        "term": "아래로 볼록 vs 위로 볼록",
+        "definition": "a > 0이면 U자 모양(그릇 모양, 최솟값 존재), a < 0이면 ∩자 모양(모자 모양, 최댓값 존재)"
+      }
+    ],
+    "mathExplanation": "농구공을 림으로 던질 때 공이 날아가는 궤적을 슬로모션으로 보면 아름다운 곡선이 그려집니다. 이것이 이차함수의 '포물선'입니다. 포물선에서 가장 특별한 점은 바로 '꼭짓점'입니다. 물건의 가격을 얼마로 정해야 '이익을 최대(최댓값)'로 낼 수 있는지, 또는 오차를 '최소(최솟값)'로 줄일 수 있는지를 알아내는 최적화 수학의 출발점입니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "이차함수 표준형 (꼭짓점이 바로 보이는 형태)",
+        "latex": "y = a(x - p)^2 + q \\implies \\text{꼭짓점: } (p, q), \\quad \\text{대칭축: } x = p",
+        "explanation": "식을 완전제곱식으로 바꾸면 x = p일 때 제곱 괄호가 0이 되어 가장 작거나 큰 값 q를 갖게 됩니다."
+      },
+      {
+        "title": "일반형 ax² + bx + c에서 꼭짓점 좌표 공식",
+        "latex": "p = -\\frac{b}{2a}, \\quad q = c - \\frac{b^2}{4a}",
+        "explanation": "일반형을 완전제곱식으로 묶어 전개하면 꼭짓점의 x좌표 p는 항상 -b/(2a)가 됩니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "(p, q)",
+        "name": "포물선의 꼭짓점 좌표 (Vertex)",
+        "meaning": "포물선이 방향을 틀어 올라가거나 내려가는 가장 극적인 전환점입니다. U자 모양(a > 0)일 때는 바닥 최솟값 (p, q), ∩자 모양(a < 0)일 때는 꼭대기 최댓값 (p, q)가 됩니다."
+      },
+      {
+        "symbol": "x = p",
+        "name": "대칭축의 방정식 (Axis of Symmetry)",
+        "meaning": "포물선을 좌우로 반듯하게 접었을 때 양쪽이 완벽하게 겹쳐지는 수직 거울선입니다. 꼭짓점의 x좌표와 항상 같습니다."
+      },
+      {
+        "symbol": "p = -b / (2a)",
+        "name": "꼭짓점 x좌표 공식",
+        "meaning": "일반형 ax² + bx + c를 완전제곱식으로 묶을 때 일차항의 절반에서 자연스럽게 도출되는 핵심 위치 공식입니다."
+      },
+      {
+        "symbol": "q = c - b² / (4a)",
+        "name": "꼭짓점 y좌표 (최댓값 또는 최솟값)",
+        "meaning": "대칭축 x = p를 대입했을 때 나오는 포물선의 가장 높거나 가장 낮은 극값 높이입니다."
+      },
+      {
+        "symbol": "a > 0 vs a < 0",
+        "name": "포물선의 볼록성 (Curvature)",
+        "meaning": "a > 0이면 아래로 볼록(그릇 모양, 최솟값 존재), a < 0이면 위로 볼록(모자/산 모양, 최댓값 존재)을 결정합니다."
+      },
+      {
+        "symbol": "(x - p)²",
+        "name": "완전제곱식 구조",
+        "meaning": "어떤 실수를 제곱해도 0 이상이므로, (x - p)²의 최솟값은 괄호 안이 0이 되는 x = p일 때 정확히 0이 됩니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "y = a\\left(x^2 + \\frac{b}{a}x\\right) + c",
+        "justification": "최고차항 계수 a로 x가 들어있는 항들을 묶어냅니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "y = a\\left(x^2 + \\frac{b}{a}x + \\frac{b^2}{4a^2} - \\frac{b^2}{4a^2}\\right) + c",
+        "justification": "괄호 안을 완전제곱식으로 만들기 위해 b²/(4a²)을 더하고 뺍니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "y = a\\left(x + \\frac{b}{2a}\\right)^2 + \\left(c - \\frac{b^2}{4a}\\right)",
+        "justification": "완전제곱식으로 묶고 남은 상수를 밖으로 빼내어 p = -b/(2a), q = c - b²/(4a)를 유도합니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "왜 실수의 제곱은 항상 0 이상일까? (꼭짓점의 원리)",
+      "backgroundStory": "어떤 실수라도 제곱을 하면 항상 0 이상이 됩니다(x² ≥ 0). 음수도 제곱하면 양수가 되기 때문입니다! 따라서 (x - p)²은 x가 정확히 p일 때 '가장 작은 값 0'을 찍고, x가 p에서 멀어질수록 점점 커집니다. 이것이 바로 a > 0일 때 x = p에서 가장 낮은 꼭짓점 바닥(최솟값 q)을 갖게 되는 이유입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "(x - p)^2 \\ge 0 \\quad (\\text{모든 실수 } x\\text{에 대하여})",
+          "justification": "실수의 제곱은 아무리 작아도 0보다 작아질 수 없습니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "a(x - p)^2 \\ge 0 \\quad (a > 0\\text{일 때})",
+          "justification": "양수 a를 곱해도 부등호 방향은 유지됩니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "y = a(x - p)^2 + q \\ge 0 + q = q",
+          "justification": "양변에 q를 더하면 y의 값은 무조건 q 이상이 되므로 최솟값이 q가 됩니다."
+        }
+      ],
+      "conclusion": "꼭짓점 (p, q)는 괄호 안을 0으로 만드는 x = p에서 높이 y = q가 결정되는 지점입니다."
+    },
+    "workedExample": {
+      "problem": "이차함수 y = x² - 4x + 3을 표준형 y = a(x-p)² + q로 바꾸고, 꼭짓점과 대칭축을 구하시오.",
+      "stepsToTrace": [
+        "1단계: x항들을 묶는다 ➔ y = (x² - 4x) + 3.",
+        "2단계: 절반의 제곱(+4)을 더하고 뺀다 ➔ y = (x² - 4x + 4 - 4) + 3.",
+        "3단계: 완전제곱식으로 묶는다 ➔ y = (x - 2)² - 4 + 3 = (x - 2)² - 1.",
+        "4단계: 꼭짓점은 (2, -1), 대칭축은 x = 2이다."
+      ],
+      "finalAnswer": "표준형: y = (x - 2)² - 1, 꼭짓점: (2, -1), 대칭축: x = 2, 최솟값: -1"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 표준형에서 꼭짓점과 대칭축 읽기",
+        "question": "이차함수 y = -2(x + 3)² + 5의 그래프에 대하여 꼭짓점의 좌표, 대칭축의 방정식, 그리고 최댓값(또는 최솟값)을 구하시오.",
+        "interpretation": "y = a(x - p)² + q 꼴에서 p = -3, q = 5입니다. a = -2 < 0이므로 위로 볼록(∩자 모자 모양)하여 꼭짓점에서 '최댓값'을 갖습니다.",
+        "solutionSteps": [
+          "1단계: 괄호 안 (x + 3)을 0으로 만드는 x값을 찾습니다 ➔ x = -3 (p = -3)",
+          "2단계: 그때의 y값을 읽습니다 ➔ y = 5 (q = 5)",
+          "3단계: 꼭짓점의 좌표는 (-3, 5)이고, 대칭축의 방정식은 x = -3입니다.",
+          "4단계: a = -2로 음수이므로 위로 볼록하며, x = -3일 때 최댓값 5를 갖습니다."
+        ],
+        "answer": "꼭짓점: (-3, 5), 대칭축: x = -3, 최댓값: 5 (최솟값은 없음)",
+        "keyPoint": "(x + 3)이므로 꼭짓점의 x좌표는 +3이 아니라 부호가 반대인 '-3'이라는 점을 절대 잊지 마세요!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 일반형을 표준형으로 변형하여 꼭짓점 찾기",
+        "question": "이차함수 y = -x² + 6x - 5의 그래프의 꼭짓점의 좌표와 y절편을 구하시오.",
+        "interpretation": "-1로 앞의 두 항을 묶은 뒤 절반의 제곱을 더하고 빼서 완전제곱식을 만듭니다. y절편은 x = 0을 넣었을 때의 상수항입니다.",
+        "solutionSteps": [
+          "1단계: x²의 계수인 -1로 묶습니다 ➔ y = -(x² - 6x) - 5",
+          "2단계: -6의 절반은 -3이고 제곱은 9이므로 괄호 안에 +9 -9를 넣습니다.",
+          "   y = -(x² - 6x + 9 - 9) - 5",
+          "3단계: -9가 괄호 밖으로 나갈 때 앞의 마이너스를 만나 +9가 됩니다.",
+          "   y = -(x - 3)² + 9 - 5 = -(x - 3)² + 4",
+          "4단계: 따라서 꼭짓점의 좌표는 (3, 4)입니다.",
+          "5단계: y절편은 x = 0일 때 y값이므로 원래 식의 상수항 -5입니다."
+        ],
+        "answer": "꼭짓점: (3, 4), y절편: -5 (점 (0, -5))",
+        "keyPoint": "괄호 안에서 상수를 밖으로 뺄 때 앞의 계수(-1)를 반드시 곱해서 꺼내야 부호 실수를 방지할 수 있습니다!"
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 철망으로 만드는 닭장의 최대 넓이",
+        "question": "길이가 20m인 철망으로 직사각형 모양의 닭장을 만들려고 합니다. 닭장의 넓이가 최대가 되도록 할 때, 가로의 길이와 그때의 최대 넓이를 구하시오.",
+        "interpretation": "둘레가 20m이므로 (가로 + 세로) = 10m입니다. 가로를 x라 두면 세로는 10 - x가 되고, 넓이 y = x(10 - x) = -x² + 10x라는 이차함수가 만들어집니다.",
+        "solutionSteps": [
+          "1단계: 가로 길이를 x라고 하면, 세로 길이는 10 - x입니다 (0 < x < 10).",
+          "2단계: 직사각형 넓이 y에 대한 식을 세웁니다 ➔ y = x(10 - x) = -x² + 10x",
+          "3단계: 완전제곱식 표준형으로 변형합니다.",
+          "   y = -(x² - 10x + 25 - 25) = -(x - 5)² + 25",
+          "4단계: a = -1 < 0이므로 x = 5일 때 최댓값 25를 갖습니다.",
+          "5단계: 가로가 5m일 때 세로도 10 - 5 = 5m(정사각형)가 되며 최대 넓이는 25m²입니다."
+        ],
+        "answer": "가로 길이: 5m, 최대 넓이: 25m²",
+        "keyPoint": "둘레가 일정한 직사각형 중 넓이가 최대가 되는 도형은 항상 네 변의 길이가 같은 '정사각형'입니다!"
+      }
+    ],
+    "csIntuition": "인공지능 딥러닝에서 정답과 예측값의 오차를 측정하는 손실 함수(MSE, Mean Squared Error)는 $J(w) = (y - hat{y})^2$ 같은 이차함수 꼴입니다. 이차함수의 가장 낮은 바닥(꼭짓점)을 찾아 내려가는 알고리즘이 바로 인공지능의 심장인 경사하강법(Gradient Descent)입니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "vertex.c",
+        "code": "#include <stdio.h>\n\ntypedef struct { double p, q; } Vertex;\n\nVertex get_vertex(double a, double b, double c) {\n    double p = -b / (2.0 * a);\n    double q = c - (b * b) / (4.0 * a);\n    Vertex v = { p, q };\n    return v;\n}\n\nint main(void) {\n    Vertex v = get_vertex(1, -4, 3);\n    printf(\"Vertex: (%.2f, %.2f)\\n\", v.p, v.q);\n    return 0;\n}\n",
+        "notes": "C23 포물선 꼭짓점 공식 솔버"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "vertex.go",
+        "code": "package main\n\nimport \"fmt\"\n\nfunc Vertex(a, b, c float64) (p, q float64) {\n\tp = -b / (2 * a)\n\tq = c - (b*b)/(4*a)\n\treturn\n}\n\nfunc main() {\n\tp, q := Vertex(1, -4, 3)\n\tfmt.Printf(\"Vertex: (%.2f, %.2f)\\n\", p, q)\n}\n",
+        "notes": "Go 꼭짓점 다중 반환"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "vertex.rs",
+        "code": "pub fn vertex(a: f64, b: f64, c: f64) -> (f64, f64) {\n    (-b / (2.0 * a), c - (b * b) / (4.0 * a))\n}\n\nfn main() {\n    let (p, q) = vertex(1.0, -4.0, 3.0);\n    println!(\"Vertex: ({:.2}, {:.2})\", p, q);\n}\n",
+        "notes": "Rust 튜플 꼭짓점"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "vertex.py",
+        "code": "def vertex(a: float, b: float, c: float) -> tuple[float, float]:\n    p = -b / (2 * a)\n    q = c - (b * b) / (4 * a)\n    return (p, q)\n\nif __name__ == \"__main__\":\n    print(\"Vertex:\", vertex(1, -4, 3))\n",
+        "notes": "Python 꼭짓점 튜플"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "vertex.ts",
+        "code": "export function vertex(a: number, b: number, c: number): { p: number; q: number } {\n  return { p: -b / (2 * a), q: c - (b * b) / (4 * a) };\n}\n\nconsole.log(vertex(1, -4, 3));\n",
+        "notes": "TS 꼭짓점 객체"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "vertex.js",
+        "code": "function vertex(a, b, c) {\n  return { p: -b / (2 * a), q: c - (b * b) / (4 * a) };\n}\nconsole.log(vertex(1, -4, 3));\n",
+        "notes": "JS 포물선 꼭짓점"
+      }
+    }
+  },
+  {
+    "id": "mod-1-8-trig-ratios",
+    "stage": "stage1-middle",
+    "order": 8,
+    "titleKo": "삼각비의 정의와 특수각",
+    "titleEn": "Trigonometric Ratios and Special Angles",
+    "koreanCurriculumUnit": "중학교 3학년 수학 - Ⅳ. 삼각비 (1. 삼각비)",
+    "graphType": "UNIT_CIRCLE",
+    "graphCaption": "직각삼각형의 변의 비율과 특수각(30°, 45°, 60°)에서의 sin, cos, tan 값",
+    "terms": [
+      {
+        "term": "삼각비 (Trigonometric Ratio)",
+        "definition": "직각삼각형에서 한 예각의 크기가 정해질 때, 삼각형의 크기와 무관하게 일정하게 결정되는 두 변의 길이의 비율"
+      },
+      {
+        "term": "사인 (sin, Sine)",
+        "definition": "빗변 대비 높이의 비율 (sin θ = 높이 / 빗변)"
+      },
+      {
+        "term": "코사인 (cos, Cosine)",
+        "definition": "빗변 대비 밑변의 비율 (cos θ = 밑변 / 빗변)"
+      },
+      {
+        "term": "탄젠트 (tan, Tangent)",
+        "definition": "밑변 대비 높이의 비율 (tan θ = 높이 / 밑변 = 기울기)"
+      },
+      {
+        "term": "특수각",
+        "definition": "정삼각형을 반으로 자르거나 정사각형을 대각선으로 잘랐을 때 나오는 예쁜 각도 (30°, 45°, 60°)"
+      }
+    ],
+    "mathExplanation": "직각삼각형의 크기가 손바닥만 하든 피라미드만 하든 상관없이 각도가 같으면 모든 직각삼각형은 서로 닮음입니다. 따라서 두 변의 길이의 '비율'은 항상 일정합니다. 고대 수학자 탈레스는 막대기 하나와 그림자의 삼각비 각도를 이용해 직접 올라가지 않고도 거대한 이집트 피라미드의 높이를 정확히 재어냈습니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "직각삼각형 삼각비 3대 정의",
+        "latex": "\\sin\\theta = \\frac{\\text{높이}}{\\text{빗변}}, \\quad \\cos\\theta = \\frac{\\text{밑변}}{\\text{빗변}}, \\quad \\tan\\theta = \\frac{\\text{높이}}{\\text{밑변}}",
+        "explanation": "빗변을 분모로 두면 사인(높이)과 코사인(밑변)이 되고, 밑변 분의 높이가 탄젠트입니다."
+      },
+      {
+        "title": "특수각(30°, 45°, 60°)의 핵심 삼각비 표",
+        "latex": "\\begin{array}{c|ccc} \\theta & 30^\\circ & 45^\\circ & 60^\\circ \\\\ \\hline \\sin & 1/2 & \\sqrt{2}/2 & \\sqrt{3}/2 \\\\ \\cos & \\sqrt{3}/2 & \\sqrt{2}/2 & 1/2 \\\\ \\tan & \\sqrt{3}/3 & 1 & \\sqrt{3} \\end{array}",
+        "explanation": "사인은 0에서 1로 커지고, 코사인은 1에서 0으로 작아지며, 45도에서 둘이 똑같아집니다."
+      },
+      {
+        "title": "피타고라스 삼각 항등식",
+        "latex": "\\sin^2\\theta + \\cos^2\\theta = 1, \\quad \\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}",
+        "explanation": "피타고라스 정리 덕분에 사인 제곱과 코사인 제곱을 더하면 각도와 무관하게 항상 1이 됩니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "sin",
+        "name": "사인 (Sine)",
+        "meaning": "라틴어 sinus(옷의 주름, 만곡, 활시위의 호)에서 유래한 약어입니다. 직각삼각형에서 빗변 대비 마주보는 '높이'의 길이 비율(높이/빗변)입니다."
+      },
+      {
+        "symbol": "cos",
+        "name": "코사인 (Cosine)",
+        "meaning": "Complementary Sine(여각의 사인)의 줄임말입니다. 90도에서 각도를 뺀 나머지 각도의 사인이란 뜻으로, 빗변 대비 이웃한 '밑변'의 비율(밑변/빗변)입니다."
+      },
+      {
+        "symbol": "tan",
+        "name": "탄젠트 (Tangent)",
+        "meaning": "접한다는 뜻의 라틴어 tangens(접선)에서 유래했습니다. 밑변 대비 높이의 비율(높이/밑변)이며, 일차함수 직선의 '기울기'와 완벽히 같습니다."
+      },
+      {
+        "symbol": "θ (Theta)",
+        "name": "각도 기호 (그리스 문자 세타)",
+        "meaning": "수학에서 회전 각도를 나타낼 때 전 세계적으로 가장 보편적으로 사용하는 그리스 문자 소문자입니다."
+      },
+      {
+        "symbol": "° (Degree)",
+        "name": "60분법 각도 단위 (도)",
+        "meaning": "원 한 바퀴를 360등분한 단위입니다. (예: 직각 90°, 평각 180°)"
+      },
+      {
+        "symbol": "sin²θ + cos²θ = 1",
+        "name": "피타고라스 삼각 항등식",
+        "meaning": "피타고라스 정리 a² + b² = c²의 양변을 빗변의 제곱 c²으로 나누어 유도된 기하학의 기본 불변 등식입니다."
+      },
+      {
+        "symbol": "sin²θ",
+        "name": "삼각함수 거듭제곱 표기법",
+        "meaning": "(sin θ)²과 완전히 같은 뜻입니다. 괄호를 생략하고 보기 편하게 하기 위해 지수 2를 sin 문자 바로 뒤에 붙여 씁니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\sin\\theta = \\frac{b}{c}, \\quad \\cos\\theta = \\frac{a}{c} \\quad (c\\text{는 빗변})",
+        "justification": "빗변 c와 직각변 a, b로 사인과 코사인의 정의를 적습니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\sin^2\\theta + \\cos^2\\theta = \\frac{b^2}{c^2} + \\frac{a^2}{c^2} = \\frac{a^2 + b^2}{c^2}",
+        "justification": "두 식을 각각 제곱하여 통분해 더합니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "a^2 + b^2 = c^2 \\implies \\frac{c^2}{c^2} = 1",
+        "justification": "피타고라스 정리에 의해 분자가 c²과 같아지므로 약분되어 항상 1이 도출됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "정삼각형을 반으로 쪼개어 도출한 30°와 60°의 특수각",
+      "backgroundStory": "한 변의 길이가 2인 정삼각형을 반으로 딱 쪼개면 어떻게 될까요? 밑변은 2의 절반인 1이 되고, 꼭지각 60°는 반으로 나뉘어 30°가 됩니다! 피타고라스 정리에 의해 높이는 √(2² - 1²) = √3이 됩니다. 이 아름다운 '1 : √3 : 2' 비율의 직각삼각형에서 30도와 60도의 모든 삼각비가 저절로 유도됩니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{정삼각형 반토막: 빗변 } c = 2, \\quad \\text{밑변 } a = 1",
+          "justification": "한 변이 2인 정삼각형의 꼭짓점에서 수선을 내리면 밑변이 1로 이등분됩니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\text{높이 } h = \\sqrt{2^2 - 1^2} = \\sqrt{4 - 1} = \\sqrt{3}",
+          "justification": "피타고라스 정리에 의해 세 변의 비율이 1 : √3 : 2로 완성됩니다."
+        },
+        {
+          "stepNumber": 3,
+          "mathExpression": "\\sin 30^\\circ = \\frac{1}{2}, \\quad \\cos 30^\\circ = \\frac{\\sqrt{3}}{2}, \\quad \\tan 30^\\circ = \\frac{1}{\\sqrt{3}} = \\frac{\\sqrt{3}}{3}",
+          "justification": "30도 각도를 기준으로 대변(높이)과 이웃변(밑변)을 읽어냅니다."
+        }
+      ],
+      "conclusion": "삼각비 표를 무작정 외울 필요 없이, 정삼각형을 반으로 가르면 30°와 60°의 삼각비가 즉시 머릿속에 그려집니다."
+    },
+    "workedExample": {
+      "problem": "빗변의 길이가 10m이고 지면과의 각도가 30°인 미끄럼틀의 높이와 바닥 밑변의 길이를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 높이 = 빗변 × sin 30° = 10 × (1/2) = 5m이다.",
+        "2단계: 밑변 = 빗변 × cos 30° = 10 × (√3/2) = 5√3m (약 8.66m)이다.",
+        "3단계: 검산 ➔ 5² + (5√3)² = 25 + 75 = 100 = 10²으로 피타고라스 정리가 딱 맞는다."
+      ],
+      "finalAnswer": "높이: 5m, 바닥 밑변: 5√3m"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 특수각 삼각비의 덧셈 뺄셈 계산",
+        "question": "다음 식의 값을 계산하시오: 2 × sin 30° + 4 × cos 60° - tan 45°",
+        "interpretation": "특수각 삼각비 값인 sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1을 대입하여 계산합니다.",
+        "solutionSteps": [
+          "1단계: 각 삼각비의 값을 확인합니다 ➔ sin 30° = 1/2, cos 60° = 1/2, tan 45° = 1",
+          "2단계: 식에 대입합니다 ➔ 2 × (1/2) + 4 × (1/2) - 1",
+          "3단계: 곱셈을 먼저 계산합니다 ➔ 1 + 2 - 1",
+          "4단계: 덧셈 뺄셈을 완료합니다 ➔ 2"
+        ],
+        "answer": "2",
+        "keyPoint": "sin 30°와 cos 60°의 값이 둘 다 1/2로 같다는 상호 여각 관계(30° + 60° = 90°)를 기억해두면 편리합니다."
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 나무의 높이 측정하기 (탄젠트 활용)",
+        "question": "어떤 사람이 나무 밑동에서 12m 떨어진 지점에서 나무의 꼭대기를 올려다본 각도가 45°였습니다. 이 사람의 눈높이가 1.5m일 때, 나무의 실제 높이를 구하시오.",
+        "interpretation": "밑변이 12m이고 각도가 45°인 직각삼각형에서 높이 = 밑변 × tan 45°입니다. 여기에 사람의 눈높이 1.5m를 더해주어야 땅바닥에서부터의 전체 나무 높이가 됩니다.",
+        "solutionSteps": [
+          "1단계: tan 45° = 1이므로, 눈높이 위의 나무 부분 높이는 12 × tan 45° = 12 × 1 = 12m입니다.",
+          "2단계: 실제 나무의 높이는 땅바닥에서부터의 높이이므로 사람의 눈높이(1.5m)를 더합니다.",
+          "   나무 높이 = 12m + 1.5m = 13.5m"
+        ],
+        "answer": "13.5m",
+        "keyPoint": "실생활 측정 문제에서는 사람의 눈높이나 삼각대 높이를 마지막에 더해주는 것을 깜빡 잊지 마세요!"
+      },
+      {
+        "problemNumber": 3,
+        "title": "응용 문제: 하나의 삼각비로 나머지 삼각비 구하기",
+        "question": "예각 A에 대하여 cos A = 3/5일 때, sin A와 tan A의 값을 각각 구하시오.",
+        "interpretation": "빗변이 5이고 밑변이 3인 직각삼각형을 머릿속에 그립니다. 피타고라스 삼조 3-4-5에 의해 높이는 4가 되므로 sin과 tan을 즉시 읽을 수 있습니다.",
+        "solutionSteps": [
+          "1단계: cos A = 3/5이므로 빗변 c = 5, 밑변 a = 3으로 둘 수 있습니다.",
+          "2단계: 피타고라스 정리로 높이 b를 구합니다 ➔ b² = 5² - 3² = 25 - 9 = 16 ➔ b = 4",
+          "3단계: sin A의 정의에 대입합니다 ➔ sin A = 높이 / 빗변 = 4/5",
+          "4단계: tan A의 정의에 대입합니다 ➔ tan A = 높이 / 밑변 = 4/3"
+        ],
+        "answer": "sin A = 4/5, tan A = 4/3",
+        "keyPoint": "피타고라스 삼각 항등식 sin²A + cos²A = 1을 써서 sin A = √(1 - 9/25) = √(16/25) = 4/5로 구할 수도 있습니다."
+      }
+    ],
+    "csIntuition": "2D/3D 게임에서 비행기가 각도 $\theta$ 방향으로 날아갈 때 x축 이동량은 `dx = speed * cos(θ)`, y축 이동량은 `dy = speed * sin(θ)`로 계산됩니다. 모든 게임 엔진의 물리 이동 로직은 삼각비 분해로 돌아갑니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "trig.c",
+        "code": "#include <stdio.h>\n#include <math.h>\n\n#define PI 3.14159265358979323846\n\nvoid get_movement(double speed, double deg, double *dx, double *dy) {\n    double rad = deg * (PI / 180.0);\n    *dx = speed * cos(rad);\n    *dy = speed * sin(rad);\n}\n\nint main(void) {\n    double dx, dy;\n    get_movement(10.0, 30.0, &dx, &dy);\n    printf(\"Speed 10 at 30 deg: dx=%.2f, dy=%.2f\\n\", dx, dy);\n    return 0;\n}\n",
+        "notes": "C23 게임 속도 벡터 분해"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "trig.go",
+        "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc Movement(speed, deg float64) (float64, float64) {\n\trad := deg * (math.Pi / 180)\n\treturn speed * math.Cos(rad), speed * math.Sin(rad)\n}\n\nfunc main() {\n\tdx, dy := Movement(10, 30)\n\tfmt.Printf(\"dx=%.2f, dy=%.2f\\n\", dx, dy)\n}\n",
+        "notes": "Go 삼각함수 속도 분해"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "trig.rs",
+        "code": "pub fn movement(speed: f64, deg: f64) -> (f64, f64) {\n    let rad = deg.to_radians();\n    (speed * rad.cos(), speed * rad.sin())\n}\n\nfn main() {\n    let (dx, dy) = movement(10.0, 30.0);\n    println!(\"dx={:.2}, dy={:.2}\", dx, dy);\n}\n",
+        "notes": "Rust to_radians 벡터"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "trig.py",
+        "code": "import math\n\ndef movement(speed: float, deg: float) -> tuple[float, float]:\n    rad = math.radians(deg)\n    return (speed * math.cos(rad), speed * math.sin(rad))\n\nif __name__ == \"__main__\":\n    print(\"Move:\", movement(10, 30))\n",
+        "notes": "Python 삼각함수"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "trig.ts",
+        "code": "export function movement(speed: number, deg: number): { dx: number; dy: number } {\n  const rad = (deg * Math.PI) / 180;\n  return { dx: speed * Math.cos(rad), dy: speed * Math.sin(rad) };\n}\n\nconsole.log(movement(10, 30));\n",
+        "notes": "TS 속도 분해"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "trig.js",
+        "code": "function movement(speed, deg) {\n  const rad = (deg * Math.PI) / 180;\n  return { dx: speed * Math.cos(rad), dy: speed * Math.sin(rad) };\n}\nconsole.log(movement(10, 30));\n",
+        "notes": "JS 이동 벡터"
+      }
+    }
+  },
+  {
+    "id": "mod-2-1-unit-circle-rad",
+    "stage": "stage2-common-high",
+    "order": 9,
+    "titleKo": "호도법과 단위원의 삼각함수",
+    "titleEn": "Radians, Unit Circle, and Circular Trigonometric Functions",
+    "koreanCurriculumUnit": "고등학교 대수 - Ⅱ. 삼각함수 (1. 삼각함수의 뜻과 호도법)",
+    "graphType": "UNIT_CIRCLE",
+    "graphCaption": "반지름 r = 1인 단위원과 각도 θ 회전 바늘, 단위원 위의 점 (x, y) = (cos θ, sin θ)",
+    "terms": [
+      {
+        "term": "호도법 (Circular Measure)",
+        "definition": "반지름과 호의 길이가 같아질 때의 중심각을 '1 라디안(rad)'으로 정의하는 각도 측정법"
+      },
+      {
+        "term": "라디안 (Radian)",
+        "definition": "호도법의 각도 단위. 180° = π rad (약 3.14 rad = 180°)"
+      },
+      {
+        "term": "단위원 (Unit Circle)",
+        "definition": "좌표평면 위에서 원점 (0,0)을 중심으로 하고 반지름이 딱 1인 원 (x² + y² = 1)"
+      },
+      {
+        "term": "동경 (Radius Vector)",
+        "definition": "시계 바늘처럼 원점을 중심으로 뱅글뱅글 회전하는 각도 바늘 선"
+      },
+      {
+        "term": "삼각함수의 확장",
+        "definition": "직각삼각형(0°~90°)을 벗어나, 360°를 넘는 각이나 음수 각도까지 단위원 위의 좌표로 정의한 함수"
+      }
+    ],
+    "mathExplanation": "초등학교와 중학교 때 쓴 360분법(도, °)은 인류가 인위적으로 정한 단위였습니다. 하지만 '호도법(라디안)'은 원의 반지름과 호의 실제 '길이' 비율로 각도를 잽니다. 실로 원 둘레를 재는 것처럼 각도를 순수한 '실수(숫자)'로 만들 수 있어서, 미적분을 하거나 컴퓨터 프로그래밍 계산을 할 때 절대적인 표준 단위가 됩니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "60분법과 호도법의 변환 공식 (파이 등식)",
+        "latex": "180^\\circ = \\pi \\text{ rad} \\iff 1^\\circ = \\frac{\\pi}{180} \\text{ rad}, \\quad 1 \\text{ rad} = \\frac{180^\\circ}{\\pi} \\approx 57.3^\\circ",
+        "explanation": "각도(도)에 π/180을 곱하면 라디안이 되고, 180/π를 곱하면 다시 도가 됩니다."
+      },
+      {
+        "title": "단위원 위의 좌표 정의",
+        "latex": "P(x, y) = (\\cos\\theta, \\sin\\theta) \\quad (x^2 + y^2 = 1)",
+        "explanation": "단위원 위를 회전하는 점의 가로 x좌표가 코사인, 세로 y좌표가 사인입니다."
+      },
+      {
+        "title": "부채꼴의 호의 길이와 넓이 공식",
+        "latex": "l = r\\theta, \\quad S = \\frac{1}{2}r^2\\theta = \\frac{1}{2}rl \\quad (\\theta\\text{는 라디안})",
+        "explanation": "호도법을 쓰면 복잡한 360분의 몇 공식이 사라지고 곱셈 하나로 끝납니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "rad",
+        "name": "라디안 (Radian)",
+        "meaning": "반지름(Radius)에서 유래한 호도법의 각도 단위입니다. 호의 길이가 반지름 r과 똑같아질 때의 중심각을 '1 rad(약 57.3°)'로 정의합니다. 각도를 실(string)의 길이처럼 순수한 실수로 다룰 수 있게 해줍니다."
+      },
+      {
+        "symbol": "π (Pi)",
+        "name": "원주율 (그리스 문자 파이)",
+        "meaning": "원둘레를 뜻하는 그리스어 페리메트로스(perimetros)의 첫 글자 π입니다. 원의 지름에 대한 둘레의 비율로 약 3.14159265...입니다. 180°는 정확히 π rad입니다."
+      },
+      {
+        "symbol": "180° = π rad",
+        "name": "각도 변환 기본 등식",
+        "meaning": "원 한 바퀴(360°) 둘레가 2πr이므로 360° = 2π rad이며, 반 바퀴인 180°는 π rad이 됩니다. 1° = π/180 rad입니다."
+      },
+      {
+        "symbol": "P(cos θ, sin θ)",
+        "name": "단위원 위의 점 좌표",
+        "meaning": "반지름이 1인 원(단위원) 위를 회전하는 점의 x좌표는 항상 cos θ, y좌표는 항상 sin θ가 됩니다."
+      },
+      {
+        "symbol": "l = rθ",
+        "name": "호의 길이 공식",
+        "meaning": "호의 길이(Length)를 뜻하는 l입니다. 호도법에서는 반지름 r에 각도 θ(라디안)를 곱하기만 하면 호의 길이가 나옵니다."
+      },
+      {
+        "symbol": "S = 1/2 r²θ",
+        "name": "부채꼴의 넓이 공식",
+        "meaning": "넓이(Surface Area)를 뜻하는 S입니다. 삼각형 넓이 공식(1/2 × 밑변 × 높이)에서 밑변이 호 l, 높이가 반지름 r인 것과 원리가 같습니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\text{원 둘레} = 2\\pi r \\iff 360^\\circ = 2\\pi \\text{ rad}",
+        "justification": "반지름 r인 원 한 바퀴의 둘레가 2πr이므로 360도는 2π 라디안이 됩니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "180^\\circ = \\pi \\text{ rad} \\implies 90^\\circ = \\frac{\\pi}{2}, \\ 60^\\circ = \\frac{\\pi}{3}, \\ 45^\\circ = \\frac{\\pi}{4}, \\ 30^\\circ = \\frac{\\pi}{6}",
+        "justification": "양변을 나누어 교과서 특수각들을 라디안으로 즉시 변환합니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "각도를 실(string)로 재는 호도법의 탄생 원리",
+      "backgroundStory": "피자를 자를 때 부채꼴의 둥근 테두리(호)의 길이는 중심각이 커질수록 정비례해서 길어집니다. 반지름이 10cm인 원에서 호의 길이가 똑같이 10cm가 되는 순간의 각도를 '1 라디안'이라고 부르기로 약속했습니다. 원 둘레 전체(2πr)는 반지름의 2π(약 6.28)배이므로, 360도는 2π 라디안이 되고, 180도는 파이(π = 3.14159...) 라디안이 됩니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\theta = \\frac{\\text{호의 길이 } l}{\\text{반지름 } r}",
+          "justification": "각도 θ를 두 길이의 비율로 정의하면 단위가 약분되어 순수한 실수가 됩니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "l = r \\times \\theta",
+          "justification": "양변에 r을 곱하면 부채꼴 호의 길이 공식이 저절로 튀어나옵니다."
+        }
+      ],
+      "conclusion": "호도법 덕분에 각도가 단순한 도형 기호가 아니라 사칙연산과 미적분이 가능한 '진짜 숫자'가 되었습니다."
+    },
+    "workedExample": {
+      "problem": "각도 120°를 라디안으로 나타내고, 단위원 위의 점 (cos 120°, sin 120°)의 좌표를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 120°에 π/180을 곱한다 ➔ 120 × (π/180) = 2π/3 rad.",
+        "2단계: 120°는 제2사분면 각도이므로 x는 음수, y는 양수이다.",
+        "3단계: 180° - 120° = 60°이므로 cos 120° = -cos 60° = -1/2이다.",
+        "4단계: sin 120° = +sin 60° = √3/2이다.",
+        "결론: 단위원 위의 좌표는 (-1/2, √3/2)이다."
+      ],
+      "finalAnswer": "120° = 2π/3 rad, 좌표: (-1/2, √3/2)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 각도와 라디안 상호 변환",
+        "question": "다음 60분법의 각은 라디안으로, 라디안은 60분법의 각도로 변환하시오: (1) 225°, (2) 5π/6 rad",
+        "interpretation": "도 ➔ 라디안은 π/180을 곱하고, 라디안 ➔ 도는 π 자리에 180°를 쏙 대입하여 약분합니다.",
+        "solutionSteps": [
+          "1단계 (225° 변환): 225 × (π / 180) = (45 × 5)π / (45 × 4) = 5π/4 rad",
+          "2단계 (5π/6 변환): π 대신 180°를 넣습니다 ➔ 5 × 180° / 6 = 5 × 30° = 150°"
+        ],
+        "answer": "(1) 5π/4 rad, (2) 150°",
+        "keyPoint": "라디안을 도(°)로 바꿀 때는 π를 180°로 바꾸면 암산으로도 1초 만에 풀립니다!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 부채꼴의 호의 길이와 넓이 구하기",
+        "question": "반지름의 길이가 6cm이고 중심각의 크기가 2π/3 rad인 부채꼴의 호의 길이와 넓이를 구하시오.",
+        "interpretation": "호도법 공식 l = rθ와 S = (1/2)rl에 r = 6, θ = 2π/3을 그대로 대입합니다.",
+        "solutionSteps": [
+          "1단계: 호의 길이 l을 구합니다 ➔ l = rθ = 6 × (2π/3) = 4π cm",
+          "2단계: 부채꼴의 넓이 S를 구합니다 ➔ S = (1/2) r l = (1/2) × 6 × 4π = 12π cm²"
+        ],
+        "answer": "호의 길이: 4π cm, 넓이: 12π cm²",
+        "keyPoint": "중심각이 라디안일 때는 360분의 몇을 곱하지 않고 rθ만 곱하면 끝납니다."
+      }
+    ],
+    "csIntuition": "C언어, Python, JS 등 모든 프로그래밍 언어의 `Math.sin()`, `Math.cos()`는 인자로 '라디안'을 받습니다. 사용자가 입력한 45도를 그대로 넣으면 엉뚱한 값이 나오므로 반드시 `deg * (Math.PI / 180)`으로 라디안 변환을 거쳐야 합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "rad.c",
+        "code": "#include <stdio.h>\n#include <math.h>\n\n#define PI 3.14159265358979323846\n\ndouble deg_to_rad(double deg) { return deg * (PI / 180.0); }\n\nint main(void) {\n    double rad = deg_to_rad(120.0);\n    printf(\"120 deg = %.4f rad, cos=%.2f, sin=%.2f\\n\", rad, cos(rad), sin(rad));\n    return 0;\n}\n",
+        "notes": "C23 각도-라디안 변환"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "rad.go",
+        "code": "package main\n\nimport (\n\t\"fmt\"\n\t\"math\"\n)\n\nfunc main() {\n\trad := 120.0 * (math.Pi / 180)\n\tfmt.Printf(\"cos=%.2f, sin=%.2f\\n\", math.Cos(rad), math.Sin(rad))\n}\n",
+        "notes": "Go math.Pi 상수"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "rad.rs",
+        "code": "fn main() {\n    let rad = 120.0_f64.to_radians();\n    println!(\"cos={:.2}, sin={:.2}\", rad.cos(), rad.sin());\n}\n",
+        "notes": "Rust to_radians() 메서드"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "rad.py",
+        "code": "import math\nrad = math.radians(120)\nprint(f\"cos={math.cos(rad):.2f}, sin={math.sin(rad):.2f}\")\n",
+        "notes": "Python math.radians"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "rad.ts",
+        "code": "const rad = (120 * Math.PI) / 180;\nconsole.log(`cos=${Math.cos(rad).toFixed(2)}, sin=${Math.sin(rad).toFixed(2)}`);\n",
+        "notes": "TS 단위원 좌표"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "rad.js",
+        "code": "const rad = (120 * Math.PI) / 180;\nconsole.log(\"cos=\", Math.cos(rad).toFixed(2), \"sin=\", Math.sin(rad).toFixed(2));\n",
+        "notes": "JS 라디안 삼각함수"
+      }
+    }
+  },
+  {
+    "id": "mod-2-2-sine-cosine-wave",
+    "stage": "stage2-common-high",
+    "order": 10,
+    "titleKo": "사인·코사인 함수와 파동 주기 그래프",
+    "titleEn": "Sine and Cosine Periodic Functions and Wave Graphs",
+    "koreanCurriculumUnit": "고등학교 대수 - Ⅱ. 삼각함수 (2. 삼각함수의 그래프)",
+    "graphType": "SINE_COSINE",
+    "graphCaption": "주기 2π, 진폭 1을 가지는 사인 파동(실선)과 코사인 파동(점선)의 위상차 π/2",
+    "terms": [
+      {
+        "term": "주기함수 (Periodic Function)",
+        "definition": "일정한 간격(주기)마다 똑같은 모양의 그래프가 끊임없이 반복되는 함수 (f(x + p) = f(x))"
+      },
+      {
+        "term": "주기 (Period, T)",
+        "definition": "그래프 모양이 한 번 완성되어 반복되기까지 걸리는 가로 간격 (사인의 기본 주기는 2π)"
+      },
+      {
+        "term": "진폭 (Amplitude, A)",
+        "definition": "파동의 중심선에서 산꼭대기(마루)까지의 높이"
+      },
+      {
+        "term": "위상차 (Phase Difference)",
+        "definition": "사인 곡선과 코사인 곡선처럼 모양은 같지만 옆으로 얼마큼 어긋나(밀려) 있는지를 나타내는 차이"
+      },
+      {
+        "term": "진동과 파동",
+        "definition": "소리, 빛, 전파, 바다의 물결처럼 주기적으로 오르락내리락하는 자연계의 모든 율동 현상"
+      }
+    ],
+    "mathExplanation": "단위원 위를 일정한 속도로 도는 회전목마의 높이를 시간에 따라 가로축으로 쭈욱 펼치면 부드러운 파도 모양의 사인(Sine) 곡선이 그려집니다. 코사인(Cosine) 곡선은 사인 곡선을 옆으로 90°(π/2) 살짝 민 것과 완전히 똑같습니다. 음악 신디사이저의 맑은 소리부터 스마트폰 와이파이 전파까지 자연계의 모든 파동은 이 두 함수로 완벽히 설명됩니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "삼각함수 파동의 일반형 공식",
+        "latex": "y = A \\sin(Bx - C) + D \\implies \\text{진폭: } |A|, \\quad \\text{주기 } T = \\frac{2\\pi}{|B|}",
+        "explanation": "A는 높낮이(위아래 확대), B는 가로 압축(주기), C는 좌우 평행이동, D는 상하 이동입니다."
+      },
+      {
+        "title": "사인과 코사인의 위상 관계",
+        "latex": "\\cos x = \\sin\\left(x + \\frac{\\pi}{2}\\right)",
+        "explanation": "사인을 왼쪽으로 90도 밀면 코사인과 완벽하게 겹쳐집니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "A",
+        "name": "진폭 (Amplitude)",
+        "meaning": "진폭(Amplitude)의 머리글자 A입니다. 파동의 중심선에서 마루(가장 높은 꼭대기)까지의 순수한 높이를 결정하며, 위아래로 당기거나 누르는 배율입니다."
+      },
+      {
+        "symbol": "B",
+        "name": "주기 조절 계수 (각진동수 계수)",
+        "meaning": "x에 곱해지는 속도 배율입니다. B가 클수록 파동이 촘촘하게 진동하며, 주기 T는 2π를 |B|로 나눈 값으로 줄어듭니다."
+      },
+      {
+        "symbol": "T",
+        "name": "주기 (Period / Time)",
+        "meaning": "시간(Time) 또는 주기(Period)의 머리글자 T입니다. 파동의 산에서 다음 산까지, 모양이 1회 완성되는 가로 길이(사인의 기본 주기는 2π)입니다."
+      },
+      {
+        "symbol": "C",
+        "name": "위상 이동 (Phase Shift)",
+        "meaning": "파동을 좌우(가로) 방향으로 평행이동시키는 값입니다."
+      },
+      {
+        "symbol": "D",
+        "name": "수직 중심축 이동 (Vertical Shift)",
+        "meaning": "파동 전체를 위아래로 들어 올리거나 내리는 기준 중심선의 높이입니다."
+      },
+      {
+        "symbol": "π/2",
+        "name": "위상차 (Phase Difference, 90도)",
+        "meaning": "사인과 코사인의 형태 차이입니다. 사인 함수를 왼쪽으로 π/2(90°) 밀면 코사인 함수와 완전히 포개어집니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\sin(x + 2\\pi) = \\sin x",
+        "justification": "단위원을 360도(2π 라디안) 돌면 원래 자리로 돌아오므로 주기는 2π입니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "y = \\sin(Bx) \\implies B \\times T = 2\\pi \\implies T = \\frac{2\\pi}{B}",
+        "justification": "x에 B가 곱해지면 B배 빠르게 회전하므로 주기는 B로 나눈 값으로 줄어듭니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "회전 운동에서 물결 파동이 탄생하는 기하학적 유도",
+      "backgroundStory": "원판에 연필을 꽂고 빙글빙글 돌리면서 그 아래로 종이를 일정한 속도로 쭉 잡아당기면 종이 위에 물결 모양의 파동이 저절로 그려집니다! 원운동의 세로 위치 y는 y = sin θ이므로, 각도 θ가 시간에 따라 비례해서 커질 때 그려지는 자취가 바로 사인 파동 곡선입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "P(\\theta) = (\\cos\\theta, \\sin\\theta)",
+          "justification": "원 위를 도는 점의 y좌표 sin θ의 변화를 관찰합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\theta: 0 \\to \\frac{\\pi}{2} \\to \\pi \\to \\frac{3\\pi}{2} \\to 2\\pi \\implies y: 0 \\to 1 \\to 0 \\to -1 \\to 0",
+          "justification": "각도가 변함에 따라 높이가 0에서 1로 올라갔다가 0, -1을 찍고 다시 0으로 돌아옵니다."
+        }
+      ],
+      "conclusion": "원운동과 파동은 완전히 같은 현상을 다른 각도에서 바라본 것입니다."
+    },
+    "workedExample": {
+      "problem": "함수 y = 4 sin(2x) - 1의 주기, 진폭, 최댓값, 최솟값을 구하시오.",
+      "stepsToTrace": [
+        "1단계: 진폭 A = |4| = 4이다.",
+        "2단계: 주기 T = 2π / |B| = 2π / 2 = π이다.",
+        "3단계: 최댓값 = |A| + D = 4 + (-1) = 3이다.",
+        "4단계: 최솟값 = -|A| + D = -4 + (-1) = -5이다."
+      ],
+      "finalAnswer": "주기: π, 진폭: 4, 최댓값: 3, 최솟값: -5"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 삼각함수의 주기와 최댓값·최솟값 판별",
+        "question": "함수 y = -3 cos(4x) + 2의 주기와 최댓값, 최솟값을 구하시오.",
+        "interpretation": "주기는 x 앞의 계수 4로 2π를 나눕니다. 코사인의 치역 [-1, 1]에 -3배를 하고 2를 더해 최댓값과 최솟값을 구합니다.",
+        "solutionSteps": [
+          "1단계: 주기 T = 2π / 4 = π/2",
+          "2단계: 진폭 = |-3| = 3",
+          "3단계: 최댓값 = 3 + 2 = 5",
+          "4단계: 최솟값 = -3 + 2 = -1"
+        ],
+        "answer": "주기: π/2, 최댓값: 5, 최솟값: -1",
+        "keyPoint": "앞의 계수가 -3처럼 음수라도 진폭과 주기는 항상 '양수'로 계산합니다."
+      }
+    ],
+    "csIntuition": "디지털 오디오(음악) 합성기에서는 `sin(2 * PI * freq * t)` 공식을 써서 '라(440Hz)' 음을 생성합니다. 또한 게임에서 카메라가 지진으로 부드럽게 흔들리는 진동 효과를 만들 때도 사인파를 사용합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "sine.c",
+        "code": "#include <stdio.h>\n#include <math.h>\n#define PI 3.14159265358979323846\n\ndouble sine_wave(double amp, double freq, double t) {\n    return amp * sin(2.0 * PI * freq * t);\n}\nint main(void) {\n    printf(\"t=0.25: %.2f\\n\", sine_wave(4.0, 1.0, 0.25));\n    return 0;\n}\n",
+        "notes": "C23 오디오 사인파"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "sine.go",
+        "code": "package main\nimport (\"fmt\"; \"math\")\nfunc main() {\n    fmt.Println(4.0 * math.Sin(2*math.Pi*1.0*0.25))\n}\n",
+        "notes": "Go 사인파"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "sine.rs",
+        "code": "use std::f64::consts::PI;\nfn main() {\n    println!(\"{:.2}\", 4.0 * (2.0 * PI * 1.0 * 0.25).sin());\n}\n",
+        "notes": "Rust 파동 샘플러"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "sine.py",
+        "code": "import math\nprint(round(4.0 * math.sin(2 * math.pi * 1.0 * 0.25), 2))\n",
+        "notes": "Python 신호 처리"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "sine.ts",
+        "code": "console.log(4 * Math.sin(2 * Math.PI * 1 * 0.25));\n",
+        "notes": "TS WebAudio 파형"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "sine.js",
+        "code": "console.log(4 * Math.sin(2 * Math.PI * 1 * 0.25));\n",
+        "notes": "JS 사인파"
+      }
+    }
+  },
+  {
+    "id": "mod-3-1-derivative-gradient",
+    "stage": "stage3-advanced-high",
+    "order": 11,
+    "titleKo": "미분계수와 접선의 기울기, 도함수",
+    "titleEn": "Derivatives, Instantaneous Rate of Change, and Tangent Slopes",
+    "koreanCurriculumUnit": "고등학교 미적분 - Ⅱ. 미분법 (1. 미분계수와 도함수)",
+    "graphType": "LINEAR_FUNCTION",
+    "graphCaption": "두 점 사이의 평균변화율에서 간격 h가 0으로 무한히 줄어들 때의 순간 접선 기울기 f'(x)",
+    "terms": [
+      {
+        "term": "평균변화율 (Average Rate)",
+        "definition": "서울에서 부산까지 400km를 4시간에 달렸을 때의 평균 속도 100km/h (Δy / Δx)"
+      },
+      {
+        "term": "순간변화율 / 미분계수 (Derivative, f'(a))",
+        "definition": "속도위반 단속 카메라를 통과하는 바로 그 '찰나의 순간'에 속도계 바늘이 가리키는 정확한 순간 속도 (접선의 기울기)"
+      },
+      {
+        "term": "도함수 (Derivative Function, f'(x))",
+        "definition": "모든 x에 대해 그 점에서의 순간 기울기를 단번에 알려주는 마법의 공식 함수"
+      },
+      {
+        "term": "접선 (Tangent Line)",
+        "definition": "곡선 위를 달리는 자동차의 헤드라이트 빛이 앞으로 곧게 뻗어나가는 방향의 직선"
+      }
+    ],
+    "mathExplanation": "자동차가 커브길을 돌 때 특정 찰나의 순간에 핸들이 가리키는 방향(접선)과 속도를 어떻게 잴 수 있을까요? 뉴턴과 라이프니츠는 두 점 사이의 시간 간격 h를 '0에 무한히 가깝게' 줄여서 순간 기울기를 계산하는 '미분(Differentiation)'을 발명했습니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "미분계수의 극한 정의식 (뉴턴의 식)",
+        "latex": "f'(x) = \\lim_{h \\to 0} \\frac{f(x + h) - f(x)}{h}",
+        "explanation": "간격 h를 0으로 보내면 두 점을 잇는 직선이 한 점을 스치는 접선으로 변합니다."
+      },
+      {
+        "title": "거듭제곱 미분 공식 (가장 쉬운 미분 비법)",
+        "latex": "\\frac{d}{dx}[x^n] = n x^{n-1} \\quad (\\text{예: } (x^3)' = 3x^2, \\ (x^2)' = 2x)",
+        "explanation": "지수가 앞으로 뛰어내리고 머리 위의 숫자는 1이 줄어듭니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "f'(x)",
+        "name": "도함수 / 프라임 기호 (Prime)",
+        "meaning": "뉴턴이 도입한 미분 표기법으로, f prime x라고 읽습니다. 원래 함수 f(x)의 각 점에서의 '순간 접선 기울기'를 나타내는 도함수입니다."
+      },
+      {
+        "symbol": "lim (Limit)",
+        "name": "극한 기호 (리미트)",
+        "meaning": "한계(Limit)를 뜻하는 라틴어 limes에서 유래한 약어입니다. 어떤 변수가 목표 값에 '한없이 가까워지는 상태'를 의미합니다."
+      },
+      {
+        "symbol": "h → 0",
+        "name": "간격의 극한 수렴 조건",
+        "meaning": "두 점 사이의 가로 간격 h를 0이 되지는 않으면서 0의 문턱까지 무한히 좁힌다는 뜻입니다. 이를 통해 0으로 나누는 오류를 피하면서 순간 속도를 구합니다."
+      },
+      {
+        "symbol": "h",
+        "name": "증분 / 간격 (Increment / Height)",
+        "meaning": "x의 변화량 Δx를 대신하는 간격 문자입니다. (x + h)는 x에서 아주 살짝 옆으로 이동한 위치입니다."
+      },
+      {
+        "symbol": "d/dx",
+        "name": "라이프니츠 미분 연산자",
+        "meaning": "미세한 차이(Differential)를 뜻하는 d입니다. d/dx는 'x에 관하여 미분하라'는 연산 지시 명령입니다."
+      },
+      {
+        "symbol": "n x^(n-1)",
+        "name": "거듭제곱 미분 다항식",
+        "meaning": "x^n을 미분하면 원래 지수 n이 계수로 앞으로 곱해지고, 지수는 1 줄어들어 n-1이 되는 다항함수 미분의 만능 기본 규칙입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "f(x) = x^2 \\implies \\frac{(x+h)^2 - x^2}{h} = \\frac{x^2 + 2xh + h^2 - x^2}{h}",
+        "justification": "f(x) = x² 식에 미분계수 정의를 대입하여 분자를 전개합니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\frac{2xh + h^2}{h} = 2x + h \\quad (h \\ne 0)",
+        "justification": "분모와 분자의 h를 약분하여 깔끔한 일차식으로 만듭니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "\\lim_{h \\to 0} (2x + h) = 2x \\implies (x^2)' = 2x",
+        "justification": "h를 0으로 보내면 남은 항은 정확히 2x가 도출됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "0으로 나누지 않고 0의 문턱까지 다가가는 극한의 마법",
+      "backgroundStory": "수학에서 분모가 0이 되는 나눗셈은 금지되어 있습니다. 하지만 h가 0이 아니라 0에 '한없이 가까워지는 상태'라면 약분이 가능합니다! (2xh + h²)/h에서 h를 약분하면 2x + h가 되고, 이제 마음 놓고 h에 0을 대입하면 2x라는 깨끗한 순간 기울기가 남게 됩니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\frac{\\Delta y}{\\Delta x} = 2x + \\Delta x",
+          "justification": "평균변화율을 구하면 x에 따른 값과 간격 Δx가 남습니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\Delta x \\to 0 \\implies 2x",
+          "justification": "간격을 무한히 줄이면 순간변화율 도함수가 완성됩니다."
+        }
+      ],
+      "conclusion": "미분은 0으로 나누지 않으면서도 찰나의 순간 속도를 정확히 재는 극한의 위대한 발명입니다."
+    },
+    "workedExample": {
+      "problem": "함수 f(x) = x³ - 4x + 7의 도함수 f'(x)를 구하고, x = 2에서의 접선의 기울기를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 거듭제곱 공식을 적용한다 ➔ (x³)' = 3x².",
+        "2단계: 1차항과 상수항을 미분한다 ➔ (-4x)' = -4, (7)' = 0.",
+        "3단계: 도함수 완성 ➔ f'(x) = 3x² - 4.",
+        "4단계: x = 2를 대입한다 ➔ f'(2) = 3(2)² - 4 = 12 - 4 = 8."
+      ],
+      "finalAnswer": "f'(x) = 3x² - 4, 접선 기울기: 8"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 다항함수의 도함수 구하기",
+        "question": "함수 f(x) = 5x⁴ - 2x³ + 7x - 9의 도함수 f'(x)를 구하시오.",
+        "interpretation": "거듭제곱 미분 공식 (x^n)' = n x^(n-1)과 상수의 미분은 0이라는 규칙을 각 항에 차례로 적용합니다.",
+        "solutionSteps": [
+          "1단계: 5x⁴ 미분 ➔ 5 × 4x³ = 20x³",
+          "2단계: -2x³ 미분 ➔ -2 × 3x² = -6x²",
+          "3단계: 7x 미분 ➔ 7",
+          "4단계: 상수항 -9 미분 ➔ 0",
+          "5단계: 모두 합칩니다 ➔ f'(x) = 20x³ - 6x² + 7"
+        ],
+        "answer": "f'(x) = 20x³ - 6x² + 7",
+        "keyPoint": "상수항(숫자만 있는 항)은 변화율이 0이므로 미분하면 완전히 사라집니다!"
+      }
+    ],
+    "csIntuition": "컴퓨터 프로그램에서 기호 미분을 할 수 없을 때, 아주 작은 $h = 10^{-5}$를 잡고 `(f(x + h) - f(x - h)) / (2 * h)`(중앙 차분 수치 미분)를 계산하면 오차 0.0001% 미만의 정밀한 순간 기울기를 얻을 수 있습니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "diff.c",
+        "code": "#include <stdio.h>\n\ntypedef double (*Func1D)(double);\ndouble diff(Func1D f, double x) {\n    double h = 1e-5;\n    return (f(x + h) - f(x - h)) / (2.0 * h);\n}\ndouble poly(double x) { return x*x*x - 4*x + 7; }\nint main(void) {\n    printf(\"f'(2) approx = %.4f (Exact: 8.0)\\n\", diff(poly, 2.0));\n    return 0;\n}\n",
+        "notes": "C23 수치 미분기"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "diff.go",
+        "code": "package main\nimport \"fmt\"\nfunc Diff(f func(float64) float64, x float64) float64 {\n    h := 1e-5\n    return (f(x+h) - f(x-h)) / (2*h)\n}\nfunc main() {\n    fmt.Printf(\"f'(2)=%.4f\\n\", Diff(func(x float64) float64 { return x*x*x - 4*x + 7 }, 2))\n}\n",
+        "notes": "Go 일급 함수 수치 미분"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "diff.rs",
+        "code": "fn diff<F: Fn(f64) -> f64>(f: F, x: f64) -> f64 {\n    let h = 1e-5;\n    (f(x + h) - f(x - h)) / (2.0 * h)\n}\nfn main() {\n    println!(\"{:.4}\", diff(|x| x*x*x - 4.0*x + 7.0, 2.0));\n}\n",
+        "notes": "Rust 클로저 미분"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "diff.py",
+        "code": "def diff(f, x, h=1e-5):\n    return (f(x+h) - f(x-h)) / (2*h)\nprint(f\"{diff(lambda x: x**3 - 4*x + 7, 2):.4f}\")\n",
+        "notes": "Python 람다 미분"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "diff.ts",
+        "code": "export function diff(f: (x: number) => number, x: number): number {\n  const h = 1e-5;\n  return (f(x + h) - f(x - h)) / (2 * h);\n}\nconsole.log(diff((x) => x ** 3 - 4 * x + 7, 2));\n",
+        "notes": "TS 수치 미분"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "diff.js",
+        "code": "function diff(f, x) { const h = 1e-5; return (f(x+h)-f(x-h))/(2*h); }\nconsole.log(diff(x => x**3 - 4*x + 7, 2));\n",
+        "notes": "JS 수치 미분"
+      }
+    }
+  },
+  {
+    "id": "mod-3-2-definite-integral",
+    "stage": "stage3-advanced-high",
+    "order": 12,
+    "titleKo": "정적분과 곡선 아래의 넓이, 구분구적법",
+    "titleEn": "Definite Integrals, Riemann Sums, and Area Under Curves",
+    "koreanCurriculumUnit": "고등학교 미적분 - Ⅲ. 적분법 (2. 정적분)",
+    "graphType": "COORDINATE_PLANE",
+    "graphCaption": "구간 [a, b]를 수천 개로 얇게 쪼갠 직사각형들의 넓이의 합(리만 합)이 곡선 아래의 면적으로 수렴하는 과정",
+    "terms": [
+      {
+        "term": "부정적분 (Indefinite Integral)",
+        "definition": "미분의 정반대 거꾸로 계산! 도함수가 f(x)가 되는 원래의 함수 F(x)를 찾는 것"
+      },
+      {
+        "term": "구분구적법 (Method of Exhaustion)",
+        "definition": "곡선으로 둘러싸인 면적을 구하기 위해 얇은 직사각형 수만 개로 쪼개어 더하는 고대 아르키메데스의 아이디어"
+      },
+      {
+        "term": "리만 합 (Riemann Sum)",
+        "definition": "직사각형들의 밑변 × 높이를 차례로 모두 합산한 수식"
+      },
+      {
+        "term": "정적분 (Definite Integral, ∫_a^b)",
+        "definition": "구간 a부터 b까지 곡선 아래에 갇힌 순수한 땅의 넓이"
+      },
+      {
+        "term": "미적분학의 기본정리 (FTC)",
+        "definition": "무한히 직사각형을 더할 필요 없이, 부정적분의 끝값에서 시작값을 빼기(F(b) - F(a))만 하면 넓이가 1초 만에 나온다는 기적의 정리"
+      }
+    ],
+    "mathExplanation": "식빵을 얇게 썰어놓은 조각들을 다시 모으면 온전한 식빵 한 덩어리가 됩니다. 정적분(Integration)은 바로 이 '잘게 쪼개어 다시 합친다'는 아이디어입니다. 울퉁불퉁한 곡선 아래의 넓이를 구할 때, 미분의 역연산(부정적분)을 이용하면 복잡한 무한 덧셈을 단 한 줄의 뺄셈으로 끝낼 수 있습니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "미적분학의 기본정리 (FTC 2)",
+        "latex": "\\int_a^b f(x) \\, dx = F(b) - F(a) \\quad (\\text{단, } F'(x) = f(x))",
+        "explanation": "원래 함수 F에 끝점 b를 대입한 값에서 시작점 a를 대입한 값을 빼면 곡선의 넓이가 나옵니다."
+      },
+      {
+        "title": "거듭제곱 적분 공식",
+        "latex": "\\int x^n \\, dx = \\frac{x^{n+1}}{n+1} + C \\quad (\\text{예: } \\int x^2 dx = \\frac{1}{3}x^3 + C)",
+        "explanation": "미분과 반대로 지수에 1을 더하고, 그 새로운 지수로 분모를 나누어줍니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "FTC",
+        "name": "미적분학의 기본정리 (Fundamental Theorem of Calculus)",
+        "meaning": "Fundamental(기본적인) + Theorem(정리) + of Calculus(미적분학의)의 머리글자 약자입니다. 미분과 적분이 서로 정반대 연산(역연산)임을 밝혀 무한 덧셈을 간단한 양 끝값 뺄셈 F(b) - F(a)로 끝내게 해준 인류 역사상 가장 위대한 수학 정리 중 하나입니다."
+      },
+      {
+        "symbol": "∫ (Integral)",
+        "name": "인테그랄 / 적분 기호",
+        "meaning": "합계(Sum)의 라틴어 Summa의 머리글자 S를 라이프니츠가 위아래로 길게 늘여서 만든 기호입니다. 무한히 많은 얇은 조각들을 빈틈없이 누적해서 합친다는 뜻입니다."
+      },
+      {
+        "symbol": "∫_a^b",
+        "name": "적분 구간 (아래끝 a와 위끝 b)",
+        "meaning": "x = a부터 x = b까지의 범위 안에서만 넓이를 구하라는 적분 구간의 시작점(a)과 끝점(b)입니다."
+      },
+      {
+        "symbol": "dx",
+        "name": "미소 가로 폭 (Differential x)",
+        "meaning": "무한히 얇은 직사각형의 가로 밑변 길이(Δx가 0으로 갈 때의 미세한 두께)입니다."
+      },
+      {
+        "symbol": "f(x) dx",
+        "name": "직사각형 하나의 미소 면적",
+        "meaning": "직사각형의 높이 f(x)와 밑변 dx를 곱한 미세한 조각의 면적입니다."
+      },
+      {
+        "symbol": "F(x)",
+        "name": "부정적분 / 원시함수 (Antiderivative)",
+        "meaning": "미분했을 때 도함수가 f(x)가 되는 원래의 본체 함수(F'(x) = f(x))를 뜻합니다."
+      },
+      {
+        "symbol": "C",
+        "name": "적분상수 (Constant of Integration)",
+        "meaning": "상수(Constant)의 머리글자 C입니다. 어떤 상수라도 미분하면 0이 되어 사라지므로, 부정적분으로 되돌릴 때 알 수 없는 원래 상수를 보충해 놓는 기호입니다."
+      },
+      {
+        "symbol": "∑ (Sigma)",
+        "name": "시그마 합 기호",
+        "meaning": "Sum(합)에 해당하는 그리스 문자 대문자 Σ입니다. n개의 직사각형 조각들의 넓이를 1번부터 n번까지 차례대로 더한다는 뜻입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\Delta x = \\frac{b - a}{n}, \\quad S_n = \\sum_{k=1}^n f(a + k\\Delta x) \\Delta x",
+        "justification": "구간 [a, b]를 n개로 잘게 쪼갠 직사각형들의 넓이를 합산합니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\lim_{n \\to \\infty} S_n = \\int_a^b f(x) \\, dx = F(b) - F(a)",
+        "justification": "조각의 개수 n을 무한대로 보내면 오차가 0이 되며 정확한 정적분 넓이로 수렴합니다."
+      }
+    ],
+    "derivationDetail": {
+      "title": "종이 쌓기에서 유도된 미적분학 기본정리",
+      "backgroundStory": "종이 한 장의 두께는 거의 0에 가깝지만 수백 장을 차곡차곡 쌓으면 두꺼운 책(부피)이 됩니다. 곡선의 넓이를 구할 때 폭이 거의 0에 가까운 무한히 얇은 직사각형들을 적분 기호(∫: 합계를 뜻하는 Sum의 S를 길게 늘인 것) 아래에서 연속적으로 쌓아 올리는 것입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "A'(x) = f(x)",
+          "justification": "넓이 함수 A(x)의 순간 증가율은 바로 그 위치에서의 곡선의 높이 f(x)와 완벽히 같습니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "A(x) = \\int f(x) dx = F(x) + C \\implies A(b) - A(a) = F(b) - F(a)",
+          "justification": "넓이의 변화율이 높이이므로, 넓이 자체는 높이를 적분한 원함수의 차이가 됩니다."
+        }
+      ],
+      "conclusion": "적분과 미분은 서로를 되돌리는 완벽한 짝꿍(역연산) 관계입니다."
+    },
+    "workedExample": {
+      "problem": "구간 [0, 2]에서 곡선 f(x) = x²과 x축 사이의 넓이 ∫_0^2 x² dx를 구하시오.",
+      "stepsToTrace": [
+        "1단계: x²의 부정적분을 구한다 ➔ F(x) = (1/3) x³.",
+        "2단계: 위끝 x = 2를 대입한다 ➔ F(2) = (1/3) × 2³ = 8/3.",
+        "3단계: 아래끝 x = 0을 대입한다 ➔ F(0) = 0.",
+        "4단계: 뺀다 ➔ 8/3 - 0 = 8/3 (약 2.67)."
+      ],
+      "finalAnswer": "넓이 = 8/3 (약 2.667)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 정적분의 기본 계산",
+        "question": "다음 정적분의 값을 계산하시오: ∫_1^3 (2x + 3) dx",
+        "interpretation": "2x + 3의 부정적분(x² + 3x)을 구한 뒤 위끝 3을 넣은 값에서 아래끝 1을 넣은 값을 뺍니다.",
+        "solutionSteps": [
+          "1단계: 부정적분을 구합니다 ➔ F(x) = x² + 3x",
+          "2단계: 위끝 3을 대입합니다 ➔ F(3) = 3² + 3(3) = 9 + 9 = 18",
+          "3단계: 아래끝 1을 대입합니다 ➔ F(1) = 1² + 3(1) = 1 + 3 = 4",
+          "4단계: 뺍니다 ➔ 18 - 4 = 14"
+        ],
+        "answer": "14",
+        "keyPoint": "정적분을 계산할 때는 적분상수 C는 어차피 뺄셈에서 상쇄되어 사라지므로 적지 않아도 됩니다."
+      }
+    ],
+    "csIntuition": "컴퓨터 알고리즘에서 적분을 풀 때는 직사각형 대신 윗변을 빗변으로 잇는 사다리꼴 공식(Trapezoidal Rule)을 씁니다. 게임 엔진에서 자동차의 가속도로부터 속도를 구하고, 속도로부터 위치를 누적 갱신할 때 이 사다리꼴 수치적분을 매 프레임 실행합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "integral.c",
+        "code": "#include <stdio.h>\ntypedef double (*Func1D)(double);\ndouble trap_int(Func1D f, double a, double b, int n) {\n    double h = (b - a) / n;\n    double sum = 0.5 * (f(a) + f(b));\n    for (int i = 1; i < n; i++) sum += f(a + i * h);\n    return sum * h;\n}\ndouble sq(double x) { return x * x; }\nint main(void) {\n    printf(\"Int of x^2 [0, 2] = %.4f\\n\", trap_int(sq, 0.0, 2.0, 1000));\n    return 0;\n}\n",
+        "notes": "C23 사다리꼴 적분기"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "integral.go",
+        "code": "package main\nimport \"fmt\"\nfunc Trap(f func(float64) float64, a, b float64, n int) float64 {\n    h := (b-a)/float64(n)\n    s := 0.5*(f(a)+f(b))\n    for i := 1; i < n; i++ { s += f(a+float64(i)*h) }\n    return s * h\n}\nfunc main() {\n    fmt.Printf(\"%.4f\\n\", Trap(func(x float64) float64 { return x*x }, 0, 2, 1000))\n}\n",
+        "notes": "Go 수치 적분"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "integral.rs",
+        "code": "fn trap<F: Fn(f64) -> f64>(f: F, a: f64, b: f64, n: usize) -> f64 {\n    let h = (b - a) / n as f64;\n    let mut s = 0.5 * (f(a) + f(b));\n    for i in 1..n { s += f(a + i as f64 * h); }\n    s * h\n}\nfn main() { println!(\"{:.4}\", trap(|x| x*x, 0.0, 2.0, 1000)); }\n",
+        "notes": "Rust 적분기"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "integral.py",
+        "code": "def trap(f, a, b, n=1000):\n    h = (b-a)/n\n    s = 0.5*(f(a)+f(b)) + sum(f(a+i*h) for i in range(1, n))\n    return s * h\nprint(f\"{trap(lambda x: x**2, 0, 2):.4f}\")\n",
+        "notes": "Python 수치적분"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "integral.ts",
+        "code": "export function trap(f: (x: number) => number, a: number, b: number, n: number = 1000): number {\n  const h = (b - a) / n;\n  let s = 0.5 * (f(a) + f(b));\n  for (let i = 1; i < n; i++) s += f(a + i * h);\n  return s * h;\n}\nconsole.log(trap((x) => x * x, 0, 2));\n",
+        "notes": "TS 사다리꼴 적분"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "integral.js",
+        "code": "function trap(f, a, b, n = 1000) {\n  const h = (b - a) / n;\n  let s = 0.5 * (f(a) + f(b));\n  for (let i = 1; i < n; i++) s += f(a + i * h);\n  return s * h;\n}\nconsole.log(trap(x => x*x, 0, 2));\n",
+        "notes": "JS 정적분 함수"
+      }
+    }
+  },
+  {
+    "id": "mod-4-1-vectors-dot-product",
+    "stage": "stage4-linear-algebra",
+    "order": 13,
+    "titleKo": "벡터의 기본 연산과 내적 (Dot Product)",
+    "titleEn": "Vector Operations, Dot Products, and Orthogonality",
+    "koreanCurriculumUnit": "대학 선형대수학 - Ⅰ. 벡터 공간과 내적 (Vectors and Inner Products)",
+    "graphType": "COORDINATE_PLANE",
+    "graphCaption": "좌표평면 위의 원점에서 뻗어나가는 두 화살표(벡터)의 사이 각도 θ와 내적 a · b = |a||b| cos θ",
+    "terms": [
+      {
+        "term": "스칼라 (Scalar)",
+        "definition": "크기(양)만을 갖는 단일 숫자 (예: 몸무게 45kg, 기온 20℃, 시간 10초)"
+      },
+      {
+        "term": "벡터 (Vector)",
+        "definition": "크기뿐만 아니라 '방향'까지 함께 갖는 물리량 (화살표로 표현! 예: 북동쪽으로 시속 50km의 바람)"
+      },
+      {
+        "term": "벡터의 크기/노름 (Norm, ||v||)",
+        "definition": "화살표의 순수한 길이. 피타고라스 정리에 의해 ||v|| = √(x² + y²)"
+      },
+      {
+        "term": "내적 (Dot Product, a · b)",
+        "definition": "두 벡터의 성분끼리 곱해서 모두 더한 스칼라 값. 두 화살표가 '얼마나 같은 방향을 가리키는가?'를 측정"
+      },
+      {
+        "term": "직교 (Orthogonal)",
+        "definition": "두 벡터가 정확히 90° 직각을 이루어 내적이 0이 되는 상태 (서로 아무런 상관이 없음)"
+      }
+    ],
+    "mathExplanation": "중학교 때 배운 좌표평면의 점 (x, y)에 원점 (0,0)에서 출발하는 화살표를 그리면 그것이 바로 '벡터(Vector)'입니다. 게임 속 캐릭터의 시선 방향, 바람의 세기, 인공지능의 단어 의미 등 방향이 있는 모든 것은 벡터로 표현됩니다. 특히 '내적(Dot Product)'은 두 화살표가 나란하면 최대가 되고, 90도 직각이면 0이 되는 놀라운 성질을 가져 인공지능 유사도 검색의 절대적인 표준입니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "벡터 내적의 대수적 계산법 (성분 곱의 합)",
+        "latex": "\\vec{a} \\cdot \\vec{b} = a_x b_x + a_y b_y = \\sum_{i=1}^n a_i b_i",
+        "explanation": "x끼리 곱하고 y끼리 곱해서 더해주기만 하면 스칼라 숫자 하나가 나옵니다."
+      },
+      {
+        "title": "벡터 내적의 기하학적 정의",
+        "latex": "\\vec{a} \\cdot \\vec{b} = \\|\\vec{a}\\| \\|\\vec{b}\\| \\cos\\theta",
+        "explanation": "두 벡터의 길이 곱하기 두 화살표 사이 각도의 코사인 값과 항상 일치합니다."
+      },
+      {
+        "title": "코사인 유사도 (Cosine Similarity, AI 검색 공식)",
+        "latex": "\\cos\\theta = \\frac{\\vec{a} \\cdot \\vec{b}}{\\|\\vec{a}\\| \\|\\vec{b}\\|}",
+        "explanation": "내적을 두 벡터의 길이로 나누면 -1부터 1 사이의 방향 일치도가 나옵니다 (1: 완전 일치, 0: 직교, -1: 정반대)."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "CosSim",
+        "name": "코사인 유사도 (Cosine Similarity)",
+        "meaning": "Cosine(코사인) + Similarity(유사도/닮음)의 축약어입니다. 두 벡터(화살표)의 사이각 θ를 통해 방향이 얼마나 일치하는지를 -1(정반대)부터 0(직교 무관)을 거쳐 1(완벽 일치) 사이의 실수 점수로 평가하는 AI 검색 및 추천 알고리즘의 표준 공식입니다."
+      },
+      {
+        "symbol": "a⃗ (Vector)",
+        "name": "벡터 화살표 기호",
+        "meaning": "문자 머리 위에 작은 화살표(→)를 얹어 단순한 크기(스칼라)가 아니라 '방향'까지 함께 가진 물리량임을 표시하는 기호입니다."
+      },
+      {
+        "symbol": "· (Dot)",
+        "name": "점곱 / 스칼라 내적 기호 (Dot Product)",
+        "meaning": "두 벡터 사이에 점(·)을 찍어 내적 연산을 지시합니다. 결과는 방향이 없는 단 하나의 순수한 숫자(스칼라)가 나옵니다."
+      },
+      {
+        "symbol": "||v|| (Norm)",
+        "name": "벡터의 노름 / 길이 (Norm)",
+        "meaning": "두 줄 수직 막대(|| ||)는 화살표의 순수한 물리적 길이(크기)를 뜻합니다. 피타고라스 정리에 의해 ||v|| = √(vx² + vy²)로 계산됩니다."
+      },
+      {
+        "symbol": "ax bx + ay by",
+        "name": "성분별 내적 합산식",
+        "meaning": "두 벡터의 x성분끼리 곱하고 y성분끼리 곱해서 더하면 기하학적 길이와 각도를 몰라도 컴퓨터가 빛의 속도로 내적을 구할 수 있습니다."
+      },
+      {
+        "symbol": "cos θ",
+        "name": "방향 일치 계수",
+        "meaning": "두 화살표 사이 각도 θ의 코사인 값입니다. θ = 0°(나란함)이면 1, θ = 90°(직교)이면 0, θ = 180°(반대)이면 -1이 됩니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\|\\vec{a} - \\vec{b}\\|^2 = (a_x - b_x)^2 + (a_y - b_y)^2 = a_x^2 + a_y^2 + b_x^2 + b_y^2 - 2(a_x b_x + a_y b_y)",
+        "justification": "두 화살표 끝점을 잇는 차 벡터의 길이 제곱을 성분으로 전개합니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\|\\vec{a} - \\vec{b}\\|^2 = \\|\\vec{a}\\|^2 + \\|\\vec{b}\\|^2 - 2\\|\\vec{a}\\|\\|\\vec{b}\\|\\cos\\theta",
+        "justification": "삼각형의 제2 코사인 법칙을 적용하여 기하학적 길이와 각도 식을 세웁니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "a_x b_x + a_y b_y = \\|\\vec{a}\\| \\|\\vec{b}\\| \\cos\\theta",
+        "justification": "두 식을 대조하여 양변의 길이 제곱을 지우고 -2로 나누면 내적 공식이 완벽히 증명됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "빛과 그림자 투영에서 유도된 내적의 물리적 의미",
+      "backgroundStory": "햇빛이 수직으로 비칠 때 바닥에 생기는 막대기의 '그림자 길이'를 상상해 보세요. 화살표 a를 화살표 b 위에 수직으로 그림자를 드리우면 그림자 길이는 ||a|| cos θ가 됩니다. 여기에 바닥 화살표의 길이 ||b||를 곱한 수치가 바로 '내적 a · b'입니다. 즉, 내적은 '한 벡터가 다른 벡터의 방향으로 얼마나 힘을 보태고 있는가?'를 측정한 값입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{정사영 그림자 길이} = \\|\\vec{a}\\| \\cos\\theta",
+          "justification": "삼각비 직각삼각형에서 빗변 ||a||에 코사인을 곱하면 밑변(그림자) 길이가 됩니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\vec{a} \\cdot \\vec{b} = \\|\\vec{b}\\| \\times (\\|\\vec{a}\\| \\cos\\theta)",
+          "justification": "두 화살표의 같은 방향 성분끼리의 순수한 곱이 완성됩니다."
+        }
+      ],
+      "conclusion": "두 화살표가 90도 수직(직교)이면 그림자가 0이 되므로 내적은 무조건 0이 됩니다."
+    },
+    "workedExample": {
+      "problem": "두 벡터 a = (3, 4)와 b = (4, 0)의 내적 a · b와 코사인 유사도를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 내적 대수 계산 ➔ a · b = (3 × 4) + (4 × 0) = 12 + 0 = 12.",
+        "2단계: a의 길이 ➔ ||a|| = √(3² + 4²) = √25 = 5.",
+        "3단계: b의 길이 ➔ ||b|| = √(4² + 0²) = 4.",
+        "4단계: 코사인 유사도 ➔ cos θ = 12 / (5 × 4) = 12 / 20 = 0.6."
+      ],
+      "finalAnswer": "내적 = 12, 코사인 유사도 = 0.6 (약 53도 각도)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 두 벡터의 내적과 수직 판정",
+        "question": "두 벡터 u = (2, -3)과 v = (6, 4)의 내적 u · v를 구하고, 두 벡터가 직교(수직)하는지 판정하시오.",
+        "interpretation": "성분별 곱의 합 u_x v_x + u_y v_y를 계산합니다. 내적 결과가 정확히 0이면 두 화살표는 90도 직교합니다.",
+        "solutionSteps": [
+          "1단계: x성분끼리 곱합니다 ➔ 2 × 6 = 12",
+          "2단계: y성분끼리 곱합니다 ➔ (-3) × 4 = -12",
+          "3단계: 두 곱을 더합니다 ➔ 12 + (-12) = 0",
+          "4단계: 내적이 0이므로 두 벡터는 서로 직교(수직)합니다."
+        ],
+        "answer": "내적 u · v = 0 (두 벡터는 직교함)",
+        "keyPoint": "내적이 0이면 두 화살표는 사이 각도가 90° 직각이라는 뜻입니다!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: AI 검색에서의 코사인 유사도 비교",
+        "question": "질문 벡터 Q = (1, 1)이 주어졌을 때, 문서 A = (3, 3)과 문서 B = (0, 4) 중 어느 문서가 질문 Q와 더 의미가 유사한지 코사인 유사도로 판정하시오.",
+        "interpretation": "코사인 유사도는 벡터의 길이가 아무리 길어도 방향이 얼마나 일치하는지를 봅니다. cos θ 공식으로 두 문서의 유사도를 계산해 비교합니다.",
+        "solutionSteps": [
+          "1단계 (문서 A 비교):",
+          "   Q · A = (1 × 3) + (1 × 3) = 6",
+          "   ||Q|| = √(1² + 1²) = √2, ||A|| = √(3² + 3²) = √18 = 3√2",
+          "   cos θ_A = 6 / (√2 × 3√2) = 6 / 6 = 1.0 (방향이 완벽히 100% 일치!)",
+          "2단계 (문서 B 비교):",
+          "   Q · B = (1 × 0) + (1 × 4) = 4",
+          "   ||B|| = √(0² + 4²) = 4",
+          "   cos θ_B = 4 / (√2 × 4) = 1 / √2 ≈ 0.707 (45도 차이)",
+          "3단계: cos θ_A(1.0) > cos θ_B(0.707)이므로 문서 A가 훨씬 유사합니다."
+        ],
+        "answer": "문서 A (유사도 1.0으로 완벽 일치)",
+        "keyPoint": "ChatGPT나 네이버 검색엔진이 수억 개의 문서 중 정답을 찾을 때 이 코사인 유사도를 씁니다."
+      }
+    ],
+    "csIntuition": "3D 그래픽스에서 벽면에 빛이 얼마나 밝게 비치는지 계산하는 퐁 셰이딩(Phong Shading)은 빛 화살표(Light)와 벽면 수직 화살표(Normal)의 내적 `L · N`으로 조명을 실시간 렌더링합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "dot.c",
+        "code": "#include <stdio.h>\n#include <math.h>\ntypedef struct { double x, y; } Vec;\ndouble dot(Vec a, Vec b) { return a.x * b.x + a.y * b.y; }\ndouble norm(Vec v) { return sqrt(v.x * v.x + v.y * v.y); }\ndouble cos_sim(Vec a, Vec b) { return dot(a, b) / (norm(a) * norm(b)); }\nint main(void) {\n    Vec a = {3, 4}, b = {4, 0};\n    printf(\"Dot=%.1f, CosSim=%.2f\\n\", dot(a, b), cos_sim(a, b));\n    return 0;\n}\n",
+        "notes": "C23 벡터 내적 및 코사인 유사도"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "dot.go",
+        "code": "package main\nimport (\"fmt\"; \"math\")\ntype Vec struct{ X, Y float64 }\nfunc (a Vec) Dot(b Vec) float64 { return a.X*b.X + a.Y*b.Y }\nfunc (v Vec) Norm() float64 { return math.Sqrt(v.X*v.X + v.Y*v.Y) }\nfunc main() {\n    a, b := Vec{3, 4}, Vec{4, 0}\n    fmt.Printf(\"CosSim=%.2f\\n\", a.Dot(b)/(a.Norm()*b.Norm()))\n}\n",
+        "notes": "Go 메서드 벡터"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "dot.rs",
+        "code": "fn main() {\n    let (ax, ay, bx, by) = (3.0, 4.0, 4.0, 0.0);\n    let dot = ax*bx + ay*by;\n    let norm_a = (ax*ax + ay*ay).sqrt();\n    let norm_b = (bx*bx + by*by).sqrt();\n    println!(\"CosSim: {:.2}\", dot / (norm_a * norm_b));\n}\n",
+        "notes": "Rust 코사인 유사도"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "dot.py",
+        "code": "import math\na, b = [3, 4], [4, 0]\ndot = sum(x*y for x, y in zip(a, b))\nsim = dot / (math.hypot(*a) * math.hypot(*b))\nprint(f\"CosSim: {sim:.2f}\")\n",
+        "notes": "Python 벡터 유사도"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "dot.ts",
+        "code": "const a = [3, 4], b = [4, 0];\nconst dot = a[0]*b[0] + a[1]*b[1];\nconst sim = dot / (Math.hypot(...a) * Math.hypot(...b));\nconsole.log(`CosSim: ${sim.toFixed(2)}`);\n",
+        "notes": "TS 코사인 유사도"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "dot.js",
+        "code": "const a = [3, 4], b = [4, 0];\nconst dot = a[0]*b[0] + a[1]*b[1];\nconsole.log(\"CosSim:\", (dot / (Math.hypot(...a) * Math.hypot(...b))).toFixed(2));\n",
+        "notes": "JS 코사인 유사도"
+      }
+    }
+  },
+  {
+    "id": "mod-4-2-gaussian-elimination-rref",
+    "stage": "stage4-linear-algebra",
+    "order": 14,
+    "titleKo": "행렬과 가우스 소거법, 기약행사다리꼴(RREF)",
+    "titleEn": "Matrix Operations, Gaussian Elimination, and RREF",
+    "koreanCurriculumUnit": "대학 선형대수학 - Ⅱ. 연립일차방정식과 행렬 (Gaussian Elimination)",
+    "graphType": "NONE",
+    "graphCaption": "미지수가 수십 개인 연립방정식을 엑셀 격자표 같은 행렬로 변환하여 0을 채워 넣으며 컴퓨터가 단번에 해를 구하는 알고리즘",
+    "terms": [
+      {
+        "term": "행렬 (Matrix)",
+        "definition": "숫자들을 직사각형 모양의 괄호 안에 행(가로줄)과 열(세로줄)로 깔끔하게 정리해 놓은 수의 표"
+      },
+      {
+        "term": "확대행렬 (Augmented Matrix)",
+        "definition": "연립방정식에서 미지수 x, y, z를 떼어내고 계수 숫자들과 우변 상수항만 모아놓은 행렬"
+      },
+      {
+        "term": "기본 행 연산",
+        "definition": "방정식의 해를 바꾸지 않는 3가지 조작: 두 줄 맞바꾸기, 한 줄에 숫자 곱하기, 한 줄의 배수를 다른 줄에 더하기"
+      },
+      {
+        "term": "피벗 (Pivot)",
+        "definition": "각 가로줄에서 0이 아닌 가장 앞선 대장 숫자"
+      },
+      {
+        "term": "기약행사다리꼴 (RREF)",
+        "definition": "대각선 피벗들을 모두 1로 만들고, 피벗의 위아래를 모두 0으로 싹 지워버려 정답이 한눈에 보이는 완성된 형태"
+      }
+    ],
+    "mathExplanation": "중2 때 미지수가 2개인 연립방정식(가감법)을 배웠습니다. 하지만 공장에서 제품 100개를 생산하거나 3D 그래픽스에서 물체를 회전시킬 때는 미지수가 100개, 1000개로 늘어납니다. 수학자 가우스는 문자를 다 떼어내고 숫자 표(행렬)만 남긴 뒤, 위에서부터 아래로 0을 계단 모양으로 채워 넣으며 컴퓨터 루프 문으로 순식간에 해를 푸는 '가우스 소거법'을 정립했습니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "기본 행 연산 3대 법칙",
+        "latex": "\\begin{cases} R_i \\leftrightarrow R_j & (\\text{두 행을 교환}) \\\\ k R_i \\to R_i & (\\text{행에 0 아닌 상수 } k \\text{배}) \\\\ R_i + k R_j \\to R_i & (\\text{다른 행의 } k\\text{배를 더함}) \\end{cases}",
+        "explanation": "이 3가지 조작은 중학교 때 배운 '양변에 같은 수를 곱하거나 더해도 해는 같다'는 성질과 완전히 같습니다."
+      },
+      {
+        "title": "기약행사다리꼴(RREF) 해 판독 공식",
+        "latex": "\\begin{pmatrix} 1 & 0 & | & c_1 \\\\ 0 & 1 & | & c_2 \\end{pmatrix} \\implies x = c_1, \\ y = c_2",
+        "explanation": "왼쪽이 단위행렬(1과 0)로 정리되면 오른쪽 상수항 열이 곧바로 최종 정답이 됩니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "RREF",
+        "name": "기약행사다리꼴 (Reduced Row Echelon Form)",
+        "meaning": "Reduced(기약된/단순화된) + Row(행) + Echelon(사다리꼴 계단) + Form(형태)의 머리글자 약자입니다. 행렬의 대각선 대장 숫자(피벗)를 모두 1로 만들고, 그 위아래를 모두 0으로 싹 청소하여 미지수의 정답(x = c1, y = c2)이 한눈에 보이는 최종 완성 상태입니다."
+      },
+      {
+        "symbol": "Ri",
+        "name": "i번째 행 (Row)",
+        "meaning": "행렬의 가로줄(Row)을 뜻하는 R입니다. R1은 첫 번째 가로줄, R2는 두 번째 가로줄을 가리킵니다."
+      },
+      {
+        "symbol": "↔",
+        "name": "두 행의 맞바꿈 연산",
+        "meaning": "Ri ↔ Rj는 두 방정식의 순서를 위아래로 맞바꾸는 기본 행 연산입니다."
+      },
+      {
+        "symbol": "→",
+        "name": "행 갱신 / 대입 기호",
+        "meaning": "계산 결과를 해당 행(Row)에 덮어써서 업데이트한다는 뜻입니다."
+      },
+      {
+        "symbol": "|",
+        "name": "확대행렬 구분선 (Augmented Line)",
+        "meaning": "방정식 좌변의 미지수 계수 행렬과 우변의 상수항 열을 시각적으로 구분해 주는 세로 분리선입니다."
+      },
+      {
+        "symbol": "Pivot",
+        "name": "피벗 (축 / 중심 원소)",
+        "meaning": "각 행에서 0이 아닌 가장 앞선 첫 번째 대장 숫자입니다. 가우스 소거법은 이 피벗 아래의 숫자들을 0으로 소거해 나가는 과정입니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "\\begin{cases} 2x + y = 5 \\\\ x - y = 1 \\end{cases} \\implies \\begin{pmatrix} 2 & 1 & | & 5 \\\\ 1 & -1 & | & 1 \\end{pmatrix}",
+        "justification": "문자 x, y를 떼어내고 확대행렬로 만듭니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "R_1 \\leftrightarrow R_2 \\implies \\begin{pmatrix} 1 & -1 & | & 1 \\\\ 2 & 1 & | & 5 \\end{pmatrix}",
+        "justification": "1행의 첫 번째 숫자를 1로 만들기 위해 두 줄을 바꿉니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "R_2 - 2R_1 \\to R_2 \\implies \\begin{pmatrix} 1 & -1 & | & 1 \\\\ 0 & 3 & | & 3 \\end{pmatrix}",
+        "justification": "2행에서 1행의 2배를 빼서 2행 1열을 0으로 소거합니다 (전방 소거)."
+      },
+      {
+        "stepNumber": 4,
+        "mathExpression": "\\frac{1}{3}R_2 \\to R_2, \\ R_1 + R_2 \\to R_1 \\implies \\begin{pmatrix} 1 & 0 & | & 2 \\\\ 0 & 1 & | & 1 \\end{pmatrix}",
+        "justification": "2행을 3으로 나누고 1행에 더해 RREF를 완성하면 x = 2, y = 1이 도출됩니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "중학 가감법이 컴퓨터 알고리즘(행렬)으로 변신하는 원리",
+      "backgroundStory": "중학교 때는 '위 식에서 아래 식을 빼서 x를 없앤다'고 손으로 풀었습니다. 가우스 소거법은 이 중학 가감법을 컴퓨터가 이해할 수 있는 2중 루프(반복문)로 만든 것입니다. 첫 번째 열의 1번 줄 아래 숫자들을 전부 0으로 만들고, 두 번째 열의 2번 줄 아래를 0으로 만드는 계단식 소거를 진행하면 미지수가 10,000개라도 정확히 O(N³) 번의 연산으로 답이 나옵니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{전방 소거(Forward Elimination): 대각선 아래를 전부 0으로 만듦 (사다리꼴)}",
+          "justification": "맨 아래 줄에 미지수 하나만 남겨서 가장 쉬운 해를 먼저 구합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\text{후진 대입(Back Substitution): 아래에서 구한 해를 윗줄로 거꾸로 채워 넣음}",
+          "justification": "아래에서 위로 거슬러 올라가며 모든 미지수의 값을 연쇄적으로 결정합니다."
+        }
+      ],
+      "conclusion": "가우스 소거법은 복잡한 연립방정식을 기계적으로 0을 채워 넣으며 해결하는 가장 강력한 선형대수 알고리즘입니다."
+    },
+    "workedExample": {
+      "problem": "연립일차방정식 2x + y = 5, x - y = 1을 가우스 소거법 RREF로 풀어 x, y를 구하시오.",
+      "stepsToTrace": [
+        "1단계: 확대행렬 [[2, 1, 5], [1, -1, 1]]을 구성한다.",
+        "2단계: 두 행을 교환한다 ➔ [[1, -1, 1], [2, 1, 5]].",
+        "3단계: 2행 - 2×(1행) ➔ 2행이 [0, 3, 3]이 된다.",
+        "4단계: 2행을 3으로 나눈다 ➔ [0, 1, 1] (y = 1 도출!).",
+        "5단계: 1행 + 2행을 더해 후진 소거한다 ➔ 1행이 [1, 0, 2]가 된다 (x = 2 도출!)."
+      ],
+      "finalAnswer": "x = 2, y = 1"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 2원 1차 연립방정식의 행렬 표현과 풀이",
+        "question": "연립방정식 x + 2y = 8, 3x - y = 3을 가우스 소거법으로 풀어 x, y의 값을 구하시오.",
+        "interpretation": "확대행렬 [[1, 2, 8], [3, -1, 3]]을 세우고, 2행에서 1행의 3배를 빼서 x를 먼저 소거합니다.",
+        "solutionSteps": [
+          "1단계: 확대행렬을 적습니다 ➔ [[1, 2, 8], [3, -1, 3]]",
+          "2단계: 2행 - 3×(1행)을 계산합니다 ➔ [3 - 3, -1 - 6, 3 - 24] = [0, -7, -21]",
+          "3단계: 2행을 -7로 나눕니다 ➔ [0, 1, 3] (따라서 y = 3 확정)",
+          "4단계: 1행에 y = 3을 대입하여 후진 소거합니다 ➔ x + 2(3) = 8 ➔ x = 2"
+        ],
+        "answer": "x = 2, y = 3",
+        "keyPoint": "컴퓨터는 사람이 눈으로 푸는 대신 이 행렬 뺄셈 연산만 반복하여 1초에 수천만 개의 연립방정식을 풉니다."
+      }
+    ],
+    "csIntuition": "3D 게임 엔진에서 3차원 물체를 회전, 이동, 축소할 때 쓰는 4x4 변환 행렬(Matrix)과 카메라의 역행렬(Inverse Matrix) 계산이 전부 이 가우스 소거법을 기반으로 작동합니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "gauss.c",
+        "code": "#include <stdio.h>\nvoid solve2x2(double A[2][3]) {\n    double f = A[1][0] / A[0][0];\n    A[1][0] -= f * A[0][0];\n    A[1][1] -= f * A[0][1];\n    A[1][2] -= f * A[0][2];\n    double y = A[1][2] / A[1][1];\n    double x = (A[0][2] - A[0][1] * y) / A[0][0];\n    printf(\"Solution: x = %.1f, y = %.1f\\n\", x, y);\n}\nint main(void) {\n    double A[2][3] = {{2, 1, 5}, {1, -1, 1}};\n    solve2x2(A);\n    return 0;\n}\n",
+        "notes": "C23 가우스 소거법"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "gauss.go",
+        "code": "package main\nimport \"fmt\"\nfunc main() {\n    // 2x + y = 5, x - y = 1\n    det := 2.0*(-1.0) - 1.0*1.0\n    x := (5.0*(-1.0) - 1.0*1.0) / det\n    y := (2.0*1.0 - 5.0*1.0) / det\n    fmt.Printf(\"x=%.1f, y=%.1f\\n\", x, y)\n}\n",
+        "notes": "Go 연립방정식 풀이"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "gauss.rs",
+        "code": "fn main() {\n    let det = 2.0 * (-1.0) - 1.0 * 1.0;\n    let x = (5.0 * (-1.0) - 1.0 * 1.0) / det;\n    let y = (2.0 * 1.0 - 5.0 * 1.0) / det;\n    println!(\"x = {}, y = {}\", x, y);\n}\n",
+        "notes": "Rust 행렬식 솔버"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "gauss.py",
+        "code": "import numpy as np\nA = np.array([[2, 1], [1, -1]])\nb = np.array([5, 1])\nx = np.linalg.solve(A, b)\nprint(f\"x = {x[0]:.1f}, y = {x[1]:.1f}\")\n",
+        "notes": "Python NumPy 연립방정식 솔버"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "gauss.ts",
+        "code": "const det = 2 * (-1) - 1 * 1;\nconst x = (5 * (-1) - 1 * 1) / det;\nconst y = (2 * 1 - 5 * 1) / det;\nconsole.log(`x=${x}, y=${y}`);\n",
+        "notes": "TS 연립방정식"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "gauss.js",
+        "code": "const det = 2 * (-1) - 1 * 1;\nconsole.log(\"x=\", (5 * (-1) - 1 * 1) / det, \"y=\", (2 * 1 - 5 * 1) / det);\n",
+        "notes": "JS 크라메르 해법"
+      }
+    }
+  },
+  {
+    "id": "mod-5-1-gradient-descent-ai",
+    "stage": "stage6-optimization",
+    "order": 15,
+    "titleKo": "편미분과 인공지능 경사하강법(Gradient Descent)",
+    "titleEn": "Partial Derivatives and AI Gradient Descent Optimization",
+    "koreanCurriculumUnit": "대학 인공지능 수학 - 최적화와 경사하강법 (Gradient Descent Optimization)",
+    "graphType": "PARABOLA",
+    "graphCaption": "손실함수 곡선 J(w) 위에서 기울기(그래디언트)의 반대 방향으로 스텝을 밟아 오차가 0인 최솟값으로 수렴하는 경사하강법",
+    "terms": [
+      {
+        "term": "인공지능의 학습 (AI Learning)",
+        "definition": "AI가 문제를 많이 풀어보면서 오답(오차)을 최소화하도록 수천억 개의 내부 나사(가중치 w)를 조금씩 조이는 과정"
+      },
+      {
+        "term": "손실/비용 함수 (Loss Function, J(w))",
+        "definition": "AI의 예측이 실제 정답과 얼마나 틀렸는지를 점수로 매긴 오차 함수 (이차함수 U자 그릇 모양)"
+      },
+      {
+        "term": "가중치 (Weight, w)",
+        "definition": "AI 두뇌의 신경망 시냅스 연결 강도를 나타내는 조절 파라미터 숫자"
+      },
+      {
+        "term": "편미분 (Partial Derivative)",
+        "definition": "여러 개의 변수 중 다른 변수는 멈춰두고 오직 한 변수 w에 대해서만 변화율을 재는 미분 (∂J/∂w)"
+      },
+      {
+        "term": "그래디언트 (Gradient, ∇J)",
+        "definition": "모든 변수의 기울기를 모은 나침반 화살표 (함수가 가장 가파르게 높아지는 오르막길 방향)"
+      },
+      {
+        "term": "학습률 (Learning Rate, α)",
+        "definition": "기울기 반대 방향(내리막길)으로 한 번에 내딛을 보폭의 크기 (보통 0.1, 0.01 같은 작은 소수)"
+      }
+    ],
+    "mathExplanation": "ChatGPT나 알파고 같은 거대한 인공지능은 어떻게 학습할까요? 짙은 안개가 낀 산에서 조난당했을 때 눈을 감고 가장 낮은 골짜기 바닥(오차가 0인 지점)으로 내려가려면 어떻게 해야 할까요? 발끝으로 바닥의 기울기(미분)를 느껴보고, '기울기의 정반대 내리막 방향'으로 한 걸음씩 조심조심 내려가면 됩니다. 이것이 전 세계 인공지능 기술의 가장 밑바닥을 지탱하는 '경사하강법(Gradient Descent)'입니다.",
+    "mathFormulasToTrace": [
+      {
+        "title": "경사하강법 가중치 갱신 공식 (AI의 심장 수식)",
+        "latex": "w_{t+1} = w_t - \\alpha \\frac{\\partial J}{\\partial w}",
+        "explanation": "현재 가중치 wt에서 (학습률 α × 기울기)를 빼주면 오차가 줄어드는 방향으로 파라미터가 수정됩니다."
+      },
+      {
+        "title": "이차 오차함수의 미분과 수렴식",
+        "latex": "J(w) = w^2 \\implies \\frac{dJ}{dw} = 2w \\implies w_{t+1} = w_t - \\alpha(2w_t) = (1 - 2\\alpha)w_t",
+        "explanation": "오차가 w²일 때 기울기는 2w이며, 적절한 보폭 α를 주면 w는 최솟값 0으로 마법처럼 빨려 들어갑니다."
+      }
+    ],
+    "symbolGuide": [
+      {
+        "symbol": "SGD",
+        "name": "확률적 경사하강법 (Stochastic Gradient Descent)",
+        "meaning": "Stochastic(확률적/무작위의) + Gradient(기울기) + Descent(하강)의 머리글자 약자입니다. 빅데이터 전체를 한 번에 계산하지 않고 무작위로 뽑은 작은 묶음(배치)으로 빠르게 최적의 가중치를 찾아가는 딥러닝의 핵심 알고리즘입니다."
+      },
+      {
+        "symbol": "MSE",
+        "name": "평균제곱오차 (Mean Squared Error)",
+        "meaning": "Mean(평균) + Squared(제곱한) + Error(오차)의 머리글자 약자입니다. AI의 예측값과 실제 정답의 차이를 제곱하여 모두 더한 뒤 평균을 낸 대표적인 손실 함수입니다."
+      },
+      {
+        "symbol": "J(w)",
+        "name": "손실/비용 함수 (Loss / Cost Function)",
+        "meaning": "가중치 w를 넣었을 때 AI가 얼마나 엉터리로 예측했는지를 점수로 매긴 오차 함수입니다. 이 J(w) 값을 0에 가깝게 최소화하는 것이 AI 학습의 궁극적 목표입니다."
+      },
+      {
+        "symbol": "w",
+        "name": "가중치 (Weight)",
+        "meaning": "신경망 연결 강도(Weight)의 머리글자 w입니다. AI가 학습하면서 최적의 값을 찾아가는 내부 조절 나사 파라미터입니다."
+      },
+      {
+        "symbol": "wt, wt+1",
+        "name": "현재 스텝과 다음 스텝의 가중치",
+        "meaning": "시간 스텝(t)에서의 현재 가중치 wt와, 경사하강을 1보 내딛은 뒤 갱신된 다음 가중치 wt+1을 구별하는 첨자 표기입니다."
+      },
+      {
+        "symbol": "α (Alpha)",
+        "name": "학습률 (Learning Rate, 보폭)",
+        "meaning": "그리스 문자 소문자 알파(α)입니다. 내리막길로 한 걸음 내딛을 때의 보폭 크기(보통 0.01 등)로, 너무 크면 골짜기를 지나쳐 튕겨 나가고 너무 작으면 학습이 너무 느려집니다."
+      },
+      {
+        "symbol": "∂ (Partial)",
+        "name": "편미분 기호 (파셜 / 라운드 디)",
+        "meaning": "부분(Partial)을 뜻하는 프랑스 수학자 르장드르의 기호입니다. 변수가 수억 개일 때 다른 변수는 상수로 고정해 두고 오직 한 변수 w에 대해서만 변화율을 잴 때 사용합니다."
+      },
+      {
+        "symbol": "∇ (Nabla)",
+        "name": "그래디언트 / 기울기 벡터 (나블라)",
+        "meaning": "고대 페니키아의 삼각형 하프(Nabla)를 닮은 기호입니다. 모든 변수에 대한 편미분을 모아놓은 벡터로, 함수가 '가장 가파르게 상승하는 오르막 방향'을 가리킵니다."
+      },
+      {
+        "symbol": "- (마이너스 부호)",
+        "name": "내리막 방향 반전의 핵심 연산자",
+        "meaning": "기울기(∇)는 산꼭대기(오르막)를 가리키므로, 오차를 줄이는 골짜기 바닥(최솟값)으로 내려가기 위해 반드시 기울기 앞에 마이너스(-)를 붙여 반대 방향으로 이동합니다."
+      }
+    ],
+    "derivationStepsToTrace": [
+      {
+        "stepNumber": 1,
+        "mathExpression": "w_0 = 4.0, \\quad \\alpha = 0.1",
+        "justification": "초기 가중치를 엉뚱한 값 4.0으로 잡고, 보폭(학습률)을 0.1로 둡니다."
+      },
+      {
+        "stepNumber": 2,
+        "mathExpression": "\\nabla J(w_0) = 2 \\times 4.0 = 8.0 > 0",
+        "justification": "기울기가 양수(+)이므로 오른쪽으로 갈수록 오차가 커지는 오르막길입니다."
+      },
+      {
+        "stepNumber": 3,
+        "mathExpression": "w_1 = 4.0 - (0.1 \\times 8.0) = 4.0 - 0.8 = 3.2",
+        "justification": "오르막길의 반대인 왼쪽(음의 방향)으로 걸어 내려와 오차가 줄어든 3.2에 도착합니다."
+      },
+      {
+        "stepNumber": 4,
+        "mathExpression": "w_2 = 3.2 - (0.1 \\times 6.4) = 3.2 - 0.64 = 2.56 \\to \\dots \\to 0.0",
+        "justification": "이 과정을 수천 번 반복하면 오차가 완벽한 0이 되는 최적의 지점에 도달합니다!"
+      }
+    ],
+    "derivationDetail": {
+      "title": "마이너스(-) 부호가 오차를 줄여주는 수학적 원리",
+      "backgroundStory": "공식에서 왜 미분값을 '더하지 않고 뺄(-)'까요? 기울기가 양수(+)라는 것은 오른쪽으로 갈수록 산이 높아진다는 뜻입니다. 우리는 골짜기 바닥(최솟값)으로 내려가야 하므로 오른쪽(+)이 아니라 '왼쪽(-)'으로 가야 합니다! 반대로 기울기가 음수(-)라면 왼쪽으로 갈수록 높아지므로 '오른쪽(+)'으로 가야 합니다. 즉, 언제나 기울기의 부호를 반대로 뒤집어주어야만 내리막길을 타게 되므로 마이너스(-) 부호가 붙는 것입니다.",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "mathExpression": "\\text{기울기 } > 0 \\implies w\\text{를 감소시켜야 함 } (w - \\alpha \\times (+))",
+          "justification": "오른쪽이 높으므로 왼쪽으로 후진합니다."
+        },
+        {
+          "stepNumber": 2,
+          "mathExpression": "\\text{기울기 } < 0 \\implies w\\text{를 증가시켜야 함 } (w - \\alpha \\times (-) = w + \\dots)",
+          "justification": "왼쪽이 높으므로 오른쪽으로 전진합니다."
+        }
+      ],
+      "conclusion": "이 마이너스 부호 하나 덕분에 AI는 스스로 판단하지 않고도 수식에 따라 항상 오차가 줄어드는 바닥으로 굴러 떨어집니다."
+    },
+    "workedExample": {
+      "problem": "손실함수 J(w) = w²에 대하여 초기 가중치 w_0 = 4, 학습률 α = 0.1일 때, 경사하강법 1회 갱신 후의 w_1과 2회 갱신 후의 w_2를 구하시오.",
+      "stepsToTrace": [
+        "1단계: J(w)의 도함수를 구한다 ➔ J'(w) = 2w.",
+        "2단계: w_0 = 4에서의 기울기 ➔ J'(4) = 2 × 4 = 8.",
+        "3단계: 1스텝 갱신 ➔ w_1 = 4 - (0.1 × 8) = 4 - 0.8 = 3.2.",
+        "4단계: w_1 = 3.2에서의 기울기 ➔ J'(3.2) = 2 × 3.2 = 6.4.",
+        "5단계: 2스텝 갱신 ➔ w_2 = 3.2 - (0.1 × 6.4) = 3.2 - 0.64 = 2.56."
+      ],
+      "finalAnswer": "w_1 = 3.2, w_2 = 2.56 (오차가 급격히 감소함!)"
+    },
+    "practiceProblems": [
+      {
+        "problemNumber": 1,
+        "title": "기초 문제: 경사하강법 1단계 손계산하기",
+        "question": "손실함수 J(w) = 3w²에 대하여 현재 가중치가 w = 2이고 학습률이 α = 0.05일 때, 경사하강법을 1회 적용한 새로운 가중치 w'의 값을 구하시오.",
+        "interpretation": "J(w) = 3w²을 미분하면 J'(w) = 6w입니다. 현재 w = 2에서의 기울기를 구한 뒤 갱신 공식 w' = w - α J'(w)에 대입합니다.",
+        "solutionSteps": [
+          "1단계: 도함수를 구합니다 ➔ J'(w) = 6w",
+          "2단계: 현재 위치 w = 2에서의 기울기를 계산합니다 ➔ J'(2) = 6 × 2 = 12",
+          "3단계: 갱신 공식에 대입합니다 ➔ w' = 2 - (0.05 × 12)",
+          "4단계: 곱셈을 계산합니다 ➔ 0.05 × 12 = 0.6",
+          "5단계: 뺍니다 ➔ w' = 2 - 0.6 = 1.4"
+        ],
+        "answer": "새로운 가중치 w' = 1.4",
+        "keyPoint": "가중치가 2에서 1.4로 줄어들면서 손실함수의 최솟값인 0을 향해 성공적으로 한 걸음 다가갔습니다!"
+      },
+      {
+        "problemNumber": 2,
+        "title": "실전 문제: 학습률 α가 너무 클 때의 오버슈팅(폭주) 현상",
+        "question": "손실함수 J(w) = w²에서 초기값 w_0 = 2일 때, 만약 학습률을 너무 크게 잡아서 α = 1.5로 설정하면 w_1의 값은 얼마가 되는지 계산하고 현상을 설명하시오.",
+        "interpretation": "갱신 공식 w_1 = w_0 - α(2w_0)에 α = 1.5를 대입해 봅니다. 보폭이 너무 크면 바닥을 지나쳐 반대편 언덕으로 튕겨 나갑니다.",
+        "solutionSteps": [
+          "1단계: w_0 = 2에서의 기울기 ➔ J'(2) = 2 × 2 = 4",
+          "2단계: 공식에 대입합니다 ➔ w_1 = 2 - (1.5 × 4) = 2 - 6 = -4",
+          "3단계: 원래 위치는 +2였는데, 갱신 후 위치는 절댓값이 더 커진 -4가 되었습니다!",
+          "4단계: 오차가 줄어들지 않고 오히려 반대편으로 더 높이 튕겨 나가는 '발산(Overshooting)' 현상이 발생합니다."
+        ],
+        "answer": "w_1 = -4 (학습률이 너무 커서 최솟값으로 수렴하지 못하고 반대편으로 튕겨 나감)",
+        "keyPoint": "인공지능 학습에서 학습률(Learning Rate)을 0.001처럼 작게 설정하는 이유가 바로 이 튕겨 나감 현상을 막기 위해서입니다!"
+      }
+    ],
+    "csIntuition": "오늘날 챗GPT, 테슬라 자율주행, 구글 제미나이의 신경망 모델 훈련 알고리즘(Adam, SGD)은 수조 개의 연결 가중치에 대해 이 경사하강법 갱신 수식을 병렬 GPU로 초당 수조 번 반복하는 것입니다.",
+    "codeImplementations": {
+      "c": {
+        "lang": "c",
+        "entryFile": "gd.c",
+        "code": "#include <stdio.h>\ndouble gd_step(double w, double alpha) {\n    double grad = 2.0 * w; // J(w) = w^2\n    return w - alpha * grad;\n}\nint main(void) {\n    double w = 4.0, alpha = 0.1;\n    for (int i = 1; i <= 5; i++) {\n        w = gd_step(w, alpha);\n        printf(\"Step %d: w = %.4f\\n\", i, w);\n    }\n    return 0;\n}\n",
+        "notes": "C23 경사하강법 루프"
+      },
+      "go": {
+        "lang": "go",
+        "entryFile": "gd.go",
+        "code": "package main\nimport \"fmt\"\nfunc main() {\n    w, alpha := 4.0, 0.1\n    for i := 1; i <= 5; i++ {\n        w -= alpha * (2 * w)\n        fmt.Printf(\"Step %d: w = %.4f\\n\", i, w)\n    }\n}\n",
+        "notes": "Go AI 경사하강법"
+      },
+      "rust": {
+        "lang": "rust",
+        "entryFile": "gd.rs",
+        "code": "fn main() {\n    let (mut w, alpha) = (4.0, 0.1);\n    for i in 1..=5 {\n        w -= alpha * (2.0 * w);\n        println!(\"Step {}: w = {:.4}\", i, w);\n    }\n}\n",
+        "notes": "Rust 파라미터 갱신"
+      },
+      "python": {
+        "lang": "python",
+        "entryFile": "gd.py",
+        "code": "w, alpha = 4.0, 0.1\nfor i in range(1, 6):\n    w -= alpha * (2 * w)\n    print(f\"Step {i}: w = {w:.4f}\")\n",
+        "notes": "Python 딥러닝 기초 경사하강법"
+      },
+      "typescript": {
+        "lang": "typescript",
+        "entryFile": "gd.ts",
+        "code": "let w = 4.0, alpha = 0.1;\nfor (let i = 1; i <= 5; i++) {\n  w -= alpha * (2 * w);\n  console.log(`Step ${i}: w = ${w.toFixed(4)}`);\n}\n",
+        "notes": "TS 경사하강 루프"
+      },
+      "javascript": {
+        "lang": "javascript",
+        "entryFile": "gd.js",
+        "code": "let w = 4.0, alpha = 0.1;\nfor (let i = 1; i <= 5; i++) {\n  w -= alpha * (2 * w);\n  console.log(`Step ${i}: w = ${w.toFixed(4)}`);\n}\n",
+        "notes": "JS 경사하강법"
+      }
+    }
+  }
+]

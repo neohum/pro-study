@@ -115,6 +115,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // 📐 CS 수학 필사 화면 열기 (상단 버튼 및 자바스크립트 오른쪽 탭 버튼)
+        findViewById<Button>(R.id.btn_open_math).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.MathTraceActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btn_tab_math).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.MathTraceActivity::class.java)
+            startActivity(intent)
+        }
+
         // E-ink 화면 새로고침 (플래시 리프레시로 잔상 정리)
         findViewById<Button>(R.id.btn_refresh).setOnClickListener {
             flashScreenRefresh()

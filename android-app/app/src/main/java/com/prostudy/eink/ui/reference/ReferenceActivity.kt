@@ -89,6 +89,11 @@ class ReferenceActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.btn_ref_tab_math)?.setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.MathTraceActivity::class.java)
+            startActivity(intent)
+        }
+
         btnModeGrammar.setOnClickListener {
             if (!isGrammarMode) {
                 isGrammarMode = true

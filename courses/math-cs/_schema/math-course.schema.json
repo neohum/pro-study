@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pro-study/math-course.schema.json",
+  "title": "pro-study 6-Language Math Course Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "courseId",
+    "title",
+    "description",
+    "supportedLanguages",
+    "totalStages",
+    "totalModules",
+    "stages"
+  ],
+  "properties": {
+    "courseId": { "type": "string", "const": "math-cs" },
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "supportedLanguages": {
+      "type": "array",
+      "items": { "enum": ["c", "go", "rust", "python", "typescript", "javascript"] },
+      "minItems": 6,
+      "uniqueItems": true
+    },
+    "totalStages": { "type": "integer", "minimum": 1 },
+    "totalModules": { "type": "integer", "minimum": 1 },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "curriculumOrigin", "modules"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "curriculumOrigin": { "type": "string", "minLength": 1 },
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "order",
+                "titleKo",
+                "mathConcept",
+                "targetAlgorithms",
+                "prerequisites"
+              ],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "order": { "type": "integer", "minimum": 1 },
+                "titleKo": { "type": "string", "minLength": 1 },
+                "mathConcept": { "type": "string", "minLength": 1 },
+                "targetAlgorithms": { "type": "string", "minLength": 1 },
+                "prerequisites": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

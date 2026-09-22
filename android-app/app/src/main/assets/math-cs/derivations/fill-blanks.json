@@ -1,0 +1,26 @@
+{
+  "mod-1-1-gcd-euclid": {
+    "moduleTitle": "소인수분해와 유클리드 호제법",
+    "latexTemplate": "\\gcd(a, b) = \\gcd(b, [BLANK_1]) \\quad \\text{where } a = bq + [BLANK_2], \\quad 0 \\le [BLANK_2] < b",
+    "blanks": ["a \\pmod b", "r"],
+    "hint": "a를 b로 나눈 몫이 q이고 나머지가 r일 때, 다음 단계의 인자는 b와 나머지입니다."
+  },
+  "mod-1-4-pythagoras-distance": {
+    "moduleTitle": "피타고라스 정리와 유클리드 거리",
+    "latexTemplate": "d(\\mathbf{p}, \\mathbf{q}) = \\sqrt{(x_2 - x_1)^2 + [BLANK_1]^2} = \\|\\mathbf{p} - \\mathbf{q}\\|_{[BLANK_2]}",
+    "blanks": ["(y_2 - y_1)", "2"],
+    "hint": "세로 방향의 차이와 L2 노름 지수입니다."
+  },
+  "mod-2-2-bitmask-sets": {
+    "moduleTitle": "집합의 연산과 비트마스크",
+    "latexTemplate": "S \\setminus T = S \\cap T^c \\iff s \\,\\&\\, [BLANK_1] \\quad \\text{and} \\quad i \\in S \\iff (s \\,\\&\\, ([BLANK_2])) \\neq 0",
+    "blanks": ["\\sim t", "1 \\ll i"],
+    "hint": "비트 NOT 연산자와 1을 i번 왼쪽 시프트하는 연산자입니다."
+  },
+  "mod-4-2-gaussian-elimination-rref": {
+    "moduleTitle": "가우스 소거법과 기약행사다리꼴",
+    "latexTemplate": "A[i][j] \\leftarrow A[i][j] - [BLANK_1] \\times A[k][j] \\quad \\text{where pivot row is } k \\text{ and } [BLANK_2] = A[i][k]",
+    "blanks": ["A[i][k]", "\\text{factor}"],
+    "hint": "소거할 대상 행의 k열 원소를 피벗 행의 원소와 곱하여 뺍니다."
+  }
+}

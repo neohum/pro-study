@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pro-study/math-lesson.schema.json",
+  "title": "pro-study Math Transcription Lesson Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "stage",
+    "order",
+    "titleKo",
+    "titleEn",
+    "koreanCurriculumUnit",
+    "mathExplanation",
+    "mathFormulasToTrace",
+    "derivationStepsToTrace",
+    "workedExample",
+    "csIntuition",
+    "codeImplementations"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "stage": { "type": "string", "minLength": 1 },
+    "order": { "type": "integer", "minimum": 1 },
+    "titleKo": { "type": "string", "minLength": 1 },
+    "titleEn": { "type": "string", "minLength": 1 },
+    "koreanCurriculumUnit": { "type": "string", "minLength": 1 },
+    "mathExplanation": { "type": "string", "minLength": 1 },
+    "mathFormulasToTrace": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "latex", "explanation"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1 },
+          "latex": { "type": "string", "minLength": 1 },
+          "explanation": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "derivationStepsToTrace": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stepNumber", "mathExpression", "justification"],
+        "properties": {
+          "stepNumber": { "type": "integer", "minimum": 1 },
+          "mathExpression": { "type": "string", "minLength": 1 },
+          "justification": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "workedExample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["problem", "stepsToTrace", "finalAnswer"],
+      "properties": {
+        "problem": { "type": "string", "minLength": 1 },
+        "stepsToTrace": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "finalAnswer": { "type": "string", "minLength": 1 }
+      }
+    },
+    "practiceProblems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["problemNumber", "question", "mathSteps", "answer"],
+        "properties": {
+          "problemNumber": { "type": "integer", "minimum": 1 },
+          "question": { "type": "string", "minLength": 1 },
+          "mathSteps": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "answer": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "csIntuition": { "type": "string", "minLength": 1 },
+    "codeImplementations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["c", "go", "rust", "python", "typescript", "javascript"],
+      "properties": {
+        "c": { "$ref": "#/$defs/langImpl" },
+        "go": { "$ref": "#/$defs/langImpl" },
+        "rust": { "$ref": "#/$defs/langImpl" },
+        "python": { "$ref": "#/$defs/langImpl" },
+        "typescript": { "$ref": "#/$defs/langImpl" },
+        "javascript": { "$ref": "#/$defs/langImpl" }
+      }
+    }
+  },
+  "$defs": {
+    "langImpl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lang", "entryFile", "complexity", "code", "notes"],
+      "properties": {
+        "lang": { "type": "string" },
+        "entryFile": { "type": "string" },
+        "complexity": {
+          "type": "object",
+          "required": ["time", "space"],
+          "properties": {
+            "time": { "type": "string" },
+            "space": { "type": "string" }
+          }
+        },
+        "code": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

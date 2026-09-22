@@ -37,11 +37,20 @@
 
         <Button
             android:id="@+id/btn_open_trace"
-            style="@style/EinkButton.Primary"
+            style="@style/EinkButton"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginEnd="6dp"
             android:text="✍️ Go필사"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_open_math"
+            style="@style/EinkButton.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="📐 수학학습"
             android:textSize="12sp" />
 
         <Button
@@ -148,8 +157,18 @@
                     style="@style/EinkButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
                     android:paddingHorizontal="12dp"
                     android:text="JavaScript (10)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_math"
+                    style="@style/EinkButton.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="12dp"
+                    android:text="📐 교과 수학 (15)"
                     android:textSize="13sp" />
             </LinearLayout>
         </HorizontalScrollView>

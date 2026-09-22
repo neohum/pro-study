@@ -137,6 +137,39 @@ function run() {
     }
     console.log(`[OK] A Tour of Go 필사 코스 에셋 패키징 완료 -> ${TOUR_DEST_DIR}`);
   }
+
+  // ---- 4. 6개 언어 CS 수학 필사 코스 패키징 ----
+  const MATH_SRC_DIR = path.join(ROOT, 'courses', 'math-cs');
+  const MATH_DEST_DIR = path.join(ANDROID_ASSETS_ROOT, 'math-cs');
+  if (fs.existsSync(MATH_SRC_DIR)) {
+    fs.mkdirSync(MATH_DEST_DIR, { recursive: true });
+    if (fs.existsSync(path.join(MATH_SRC_DIR, 'manifest.json'))) {
+      fs.copyFileSync(path.join(MATH_SRC_DIR, 'manifest.json'), path.join(MATH_DEST_DIR, 'manifest.json'));
+    }
+    if (fs.existsSync(path.join(MATH_SRC_DIR, 'lessons.json'))) {
+      fs.copyFileSync(path.join(MATH_SRC_DIR, 'lessons.json'), path.join(MATH_DEST_DIR, 'lessons.json'));
+    }
+
+    const quizzesSrc = path.join(MATH_SRC_DIR, 'quizzes');
+    const quizzesDest = path.join(MATH_DEST_DIR, 'quizzes');
+    if (fs.existsSync(quizzesSrc)) {
+      fs.mkdirSync(quizzesDest, { recursive: true });
+      for (const qf of fs.readdirSync(quizzesSrc).filter(f => f.endsWith('.json'))) {
+        fs.copyFileSync(path.join(quizzesSrc, qf), path.join(quizzesDest, qf));
+      }
+    }
+
+    const derivationsSrc = path.join(MATH_SRC_DIR, 'derivations');
+    const derivationsDest = path.join(MATH_DEST_DIR, 'derivations');
+    if (fs.existsSync(derivationsSrc)) {
+      fs.mkdirSync(derivationsDest, { recursive: true });
+      for (const df of fs.readdirSync(derivationsSrc).filter(f => f.endsWith('.json'))) {
+        fs.copyFileSync(path.join(derivationsSrc, df), path.join(derivationsDest, df));
+      }
+    }
+    console.log(`[OK] 6개 언어 CS 수학 필사 코스 에셋 패키징 완료 -> ${MATH_DEST_DIR}`);
+  }
 }
 
 run();
+
