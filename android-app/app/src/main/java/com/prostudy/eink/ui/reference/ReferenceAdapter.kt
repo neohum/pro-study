@@ -37,7 +37,10 @@ class ReferenceAdapter : RecyclerView.Adapter<ReferenceAdapter.ViewHolder>() {
                         g.title.lowercase().contains(q) ||
                         g.category.lowercase().contains(q) ||
                         g.summary.lowercase().contains(q) ||
-                        g.syntax.lowercase().contains(q)
+                        g.syntax.lowercase().contains(q) ||
+                        g.explanation.lowercase().contains(q) ||
+                        g.pitfalls.lowercase().contains(q) ||
+                        g.practice.lowercase().contains(q)
                     }
                     is ReferenceCardModel.Function -> {
                         val f = model.item
@@ -67,6 +70,27 @@ class ReferenceAdapter : RecyclerView.Adapter<ReferenceAdapter.ViewHolder>() {
                 holder.tvSubtitle.text = g.syntax
                 holder.tvDesc.text = g.summary
                 holder.tvCode.text = g.example
+
+                if (g.explanation.isNotBlank()) {
+                    holder.layoutExplanation.visibility = View.VISIBLE
+                    holder.tvExplanation.text = g.explanation
+                } else {
+                    holder.layoutExplanation.visibility = View.GONE
+                }
+
+                if (g.pitfalls.isNotBlank()) {
+                    holder.layoutPitfalls.visibility = View.VISIBLE
+                    holder.tvPitfalls.text = g.pitfalls
+                } else {
+                    holder.layoutPitfalls.visibility = View.GONE
+                }
+
+                if (g.practice.isNotBlank()) {
+                    holder.layoutPractice.visibility = View.VISIBLE
+                    holder.tvPractice.text = g.practice
+                } else {
+                    holder.layoutPractice.visibility = View.GONE
+                }
             }
             is ReferenceCardModel.Function -> {
                 val f = model.item
@@ -75,6 +99,10 @@ class ReferenceAdapter : RecyclerView.Adapter<ReferenceAdapter.ViewHolder>() {
                 holder.tvSubtitle.text = f.signature
                 holder.tvDesc.text = f.description
                 holder.tvCode.text = f.example
+
+                holder.layoutExplanation.visibility = View.GONE
+                holder.layoutPitfalls.visibility = View.GONE
+                holder.layoutPractice.visibility = View.GONE
             }
         }
     }
@@ -87,5 +115,14 @@ class ReferenceAdapter : RecyclerView.Adapter<ReferenceAdapter.ViewHolder>() {
         val tvSubtitle: TextView = itemView.findViewById(R.id.tv_item_subtitle)
         val tvDesc: TextView = itemView.findViewById(R.id.tv_item_desc)
         val tvCode: TextView = itemView.findViewById(R.id.tv_item_code)
+
+        val layoutExplanation: View = itemView.findViewById(R.id.layout_item_explanation)
+        val tvExplanation: TextView = itemView.findViewById(R.id.tv_item_explanation)
+
+        val layoutPitfalls: View = itemView.findViewById(R.id.layout_item_pitfalls)
+        val tvPitfalls: TextView = itemView.findViewById(R.id.tv_item_pitfalls)
+
+        val layoutPractice: View = itemView.findViewById(R.id.layout_item_practice)
+        val tvPractice: TextView = itemView.findViewById(R.id.tv_item_practice)
     }
 }

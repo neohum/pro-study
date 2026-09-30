@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingHorizontal="10dp"
-            android:text="📖 문법 &amp; 함수 사전"
+            android:text="📖 언어 문법 학습 &amp; 사전"
             android:textColor="@color/eink_text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
