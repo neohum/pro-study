@@ -10,7 +10,10 @@ data class GrammarItem(
     val category: String,
     val summary: String,
     val syntax: String,
-    val example: String
+    val example: String,
+    val explanation: String = "",
+    val pitfalls: String = "",
+    val practice: String = ""
 )
 
 data class FunctionItem(
@@ -63,7 +66,10 @@ class ReferenceRepository(private val context: Context) {
                         category = gObj.getString("category"),
                         summary = gObj.getString("summary"),
                         syntax = gObj.getString("syntax"),
-                        example = gObj.getString("example")
+                        example = gObj.getString("example"),
+                        explanation = gObj.optString("explanation", ""),
+                        pitfalls = gObj.optString("pitfalls", ""),
+                        practice = gObj.optString("practice", "")
                     )
                 )
             }

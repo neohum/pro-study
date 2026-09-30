@@ -9,12 +9,15 @@ import (
 )
 
 type GrammarItem struct {
-	ID       string `json:"id"`
-	Title    string `json:"title"`
-	Category string `json:"category"`
-	Summary  string `json:"summary"`
-	Syntax   string `json:"syntax"`
-	Example  string `json:"example"`
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Category    string `json:"category"`
+	Summary     string `json:"summary"`
+	Syntax      string `json:"syntax"`
+	Example     string `json:"example"`
+	Explanation string `json:"explanation,omitempty"`
+	Pitfalls    string `json:"pitfalls,omitempty"`
+	Practice    string `json:"practice,omitempty"`
 }
 
 type FunctionItem struct {

@@ -36,7 +36,7 @@
     </div>
     <div class="grammar-grid">
       {{range .Doc.Grammar}}
-      <article class="grammar-card" data-search="{{.Title}} {{.Category}} {{.Summary}} {{.Syntax}}">
+      <article class="grammar-card" data-search="{{.Title}} {{.Category}} {{.Summary}} {{.Syntax}} {{.Explanation}} {{.Pitfalls}} {{.Practice}}">
         <div class="grammar-card-head">
           <h3>{{.Title}}</h3>
           <span class="badge badge-cat">{{.Category}}</span>
@@ -50,6 +50,24 @@
           <div class="code-label">실전 예제</div>
           <pre><code class="language-{{$.Doc.Lang}}">{{.Example}}</code></pre>
         </div>
+        {{if .Explanation}}
+        <div class="grammar-detail-box explanation-box">
+          <div class="detail-label">💡 문법 작동 원리 &amp; 핵심 해설</div>
+          <p>{{.Explanation}}</p>
+        </div>
+        {{end}}
+        {{if .Pitfalls}}
+        <div class="grammar-detail-box pitfalls-box">
+          <div class="detail-label">⚠️ 자주 하는 실수 &amp; 주의사항</div>
+          <p>{{.Pitfalls}}</p>
+        </div>
+        {{end}}
+        {{if .Practice}}
+        <div class="grammar-detail-box practice-box">
+          <div class="detail-label">✏️ 실전 문법 연습 퀴즈 &amp; 정답</div>
+          <pre class="practice-text">{{.Practice}}</pre>
+        </div>
+        {{end}}
       </article>
       {{end}}
     </div>
