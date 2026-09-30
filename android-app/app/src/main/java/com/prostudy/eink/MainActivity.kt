@@ -42,6 +42,9 @@ class MainActivity : AppCompatActivity() {
     // 소스 코드 뷰
     private lateinit var btnCodeBack: Button
     private lateinit var tvCodeTitle: TextView
+    private lateinit var btnCodeWrap: Button
+    private lateinit var btnCodeFontMinus: Button
+    private lateinit var btnCodeFontPlus: Button
     private lateinit var codeViewer: CodeViewer
 
     private var currentLang: String? = null
@@ -93,6 +96,9 @@ class MainActivity : AppCompatActivity() {
 
         btnCodeBack = findViewById(R.id.btn_code_back)
         tvCodeTitle = findViewById(R.id.tv_code_title)
+        btnCodeWrap = findViewById(R.id.btn_code_wrap)
+        btnCodeFontMinus = findViewById(R.id.btn_code_font_minus)
+        btnCodeFontPlus = findViewById(R.id.btn_code_font_plus)
         codeViewer = findViewById(R.id.code_viewer)
 
         rvProjects.layoutManager = LinearLayoutManager(this)
@@ -151,6 +157,24 @@ class MainActivity : AppCompatActivity() {
         // 소스 코드 뒤로가기
         btnCodeBack.setOnClickListener {
             closeCodeMode()
+        }
+
+        // 소스 코드 자동 줄바꿈 토글
+        btnCodeWrap.setOnClickListener {
+            val wrapped = codeViewer.toggleWrap()
+            btnCodeWrap.text = if (wrapped) "↔ 가로스크롤" else "↩ 줄바꿈"
+        }
+
+        // 소스 코드 글자 크기 축소 (A-)
+        btnCodeFontMinus.setOnClickListener {
+            val newSize = codeViewer.zoomOut()
+            android.widget.Toast.makeText(this, "글자 크기: ${String.format("%.1f", newSize)}sp", android.widget.Toast.LENGTH_SHORT).show()
+        }
+
+        // 소스 코드 글자 크기 확대 (A+)
+        btnCodeFontPlus.setOnClickListener {
+            val newSize = codeViewer.zoomIn()
+            android.widget.Toast.makeText(this, "글자 크기: ${String.format("%.1f", newSize)}sp", android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -214,6 +238,7 @@ class MainActivity : AppCompatActivity() {
             line.replace("\t", "    ")
         }
         tvCodeTitle.text = "소스 코드: ${p.title} (${lines.size}줄)"
+        btnCodeWrap.text = if (codeViewer.isWrapMode) "↔ 가로스크롤" else "↩ 줄바꿈"
         codeViewer.codeLines = lines
     }
 

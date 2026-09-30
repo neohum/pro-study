@@ -76,16 +76,22 @@
             android:textSize="10.5sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_item_code"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="monospace"
-            android:lineSpacingMultiplier="1.3"
-            android:text="example code..."
-            android:textColor="@color/eink_text_primary"
-            android:textSize="12sp" />
+            android:fillViewport="true">
+
+            <TextView
+                android:id="@+id/tv_item_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="monospace"
+                android:lineSpacingMultiplier="1.3"
+                android:text="example code..."
+                android:textColor="@color/eink_text_primary"
+                android:textSize="12sp" />
+        </HorizontalScrollView>
     </LinearLayout>
 
     <!-- 문법 상세 동작 원리 해설 박스 -->

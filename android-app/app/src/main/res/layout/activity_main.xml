@@ -284,8 +284,34 @@
                 android:maxLines="1"
                 android:text="소스 코드"
                 android:textColor="@color/eink_text_primary"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_code_wrap"
+                style="@style/EinkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
+                android:text="↩ 줄바꿈"
+                android:textSize="11.5sp" />
+
+            <Button
+                android:id="@+id/btn_code_font_minus"
+                style="@style/EinkButton"
+                android:layout_width="38dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
+                android:text="A-"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_code_font_plus"
+                style="@style/EinkButton"
+                android:layout_width="38dp"
+                android:layout_height="36dp"
+                android:text="A+"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <View
