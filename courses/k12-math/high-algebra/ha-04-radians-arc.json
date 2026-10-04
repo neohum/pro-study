@@ -1,0 +1,232 @@
+{
+  "id": "ha-04-radians-arc",
+  "grade": "high-algebra",
+  "domain": "삼각함수",
+  "order": 38,
+  "titleKo": "일반각과 호도법(Radian)·부채꼴의 호와 넓이",
+  "titleEn": "General Angles, Radians, and Sector Arc & Area",
+  "animation": {
+    "type": "interactive-svg",
+    "title": "호도법 정의와 부채꼴 회전",
+    "caption": "반지름 r의 길이만큼 호를 감았을 때의 각 1 라디안(약 57.3°)과 동경의 회전각 θ에 따른 호의 길이 l = rθ 및 넓이 S의 변화를 시각화합니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 360\" width=\"100%\" height=\"100%\">\n  <rect width=\"600\" height=\"360\" fill=\"#0f172a\" rx=\"12\"/>\n  <circle cx=\"240\" cy=\"180\" r=\"120\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"/>\n  <!-- Initial ray OX -->\n  <line x1=\"240\" y1=\"180\" x2=\"400\" y2=\"180\" stroke=\"#94a3b8\" stroke-width=\"2\"/>\n  <text x=\"405\" y=\"185\" fill=\"#94a3b8\" font-size=\"14\">X (시초선)</text>\n  <!-- Rotating terminal ray OP -->\n  <g transform=\"rotate(0 240 180)\">\n    <line x1=\"240\" y1=\"180\" x2=\"360\" y2=\"180\" stroke=\"#38bdf8\" stroke-width=\"3\">\n      <animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0 240 180\" to=\"-120 240 180\" dur=\"4s\" repeatCount=\"indefinite\"/>\n    </line>\n  </g>\n  <!-- Sector slice fill -->\n  <path d=\"M 240 180 L 360 180 A 120 120 0 0 0 300 76 Z\" fill=\"#38bdf8\" fill-opacity=\"0.2\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <text x=\"240\" y=\"205\" fill=\"#94a3b8\" font-size=\"14\" text-anchor=\"middle\">O</text>\n  <text x=\"295\" y=\"160\" fill=\"#38bdf8\" font-size=\"14\">r</text>\n  <text x=\"345\" y=\"120\" fill=\"#f43f5e\" font-size=\"14\" font-weight=\"bold\">l = rθ</text>\n  <text x=\"270\" y=\"145\" fill=\"#fbbf24\" font-size=\"13\">θ (rad)</text>\n  <!-- Formulas card on the right -->\n  <rect x=\"410\" y=\"40\" width=\"170\" height=\"280\" rx=\"8\" fill=\"#1e293b\" stroke=\"#475569\" stroke-width=\"1\"/>\n  <text x=\"425\" y=\"75\" fill=\"#38bdf8\" font-size=\"15\" font-weight=\"bold\">[호도법 핵심 공식]</text>\n  <text x=\"425\" y=\"110\" fill=\"#e2e8f0\" font-size=\"13\">180° = π rad</text>\n  <text x=\"425\" y=\"140\" fill=\"#e2e8f0\" font-size=\"13\">1 rad ≈ 57.3°</text>\n  <line x1=\"420\" y1=\"160\" x2=\"570\" y2=\"160\" stroke=\"#334155\" stroke-width=\"1\"/>\n  <text x=\"425\" y=\"190\" fill=\"#f43f5e\" font-size=\"14\" font-weight=\"bold\">호의 길이:</text>\n  <text x=\"435\" y=\"215\" fill=\"#f8fafc\" font-size=\"15\">l = rθ</text>\n  <text x=\"425\" y=\"250\" fill=\"#34d399\" font-size=\"14\" font-weight=\"bold\">부채꼴 넓이:</text>\n  <text x=\"435\" y=\"275\" fill=\"#f8fafc\" font-size=\"14\">S = ½ r²θ</text>\n  <text x=\"435\" y=\"298\" fill=\"#f8fafc\" font-size=\"14\">S = ½ r l</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "평면 위의 시초선 OX를 기준으로 회전하는 반직선 OP(동경)가 나타내는 회전의 양을 일반각 2nπ + θ (n은 정수)로 표현합니다. 호도법(Radian)은 호의 길이가 반지름과 같을 때의 중심각을 1 라디안(1 rad = 180°/π)으로 정의하는 각도 측정법입니다. 호도법을 사용하면 각도가 원주율 π를 매개로 실수 전체로 변환되므로 부채꼴의 호의 길이 l = rθ, 넓이 S = 1/2 r²θ = 1/2 rl 과 같은 간결한 수식으로 계산할 수 있습니다.",
+    "intuitiveStory": "우리가 1m, 1초 같은 단위를 정하듯, 각도 역시 '원의 반지름'이라는 자연의 절대 척도로 잴 수 있습니다. 반지름이 1m인 원의 둘레를 따라 줄자를 1m만큼 구부려 붙였을 때 벌어지는 각도가 바로 1 라디안입니다. 180도는 원 둘레의 절반이므로 반지름으로 재면 정확히 π(약 3.14159...)번 감깁니다. 따라서 180° = π rad 이라는 아름다운 등식이 성립합니다.",
+    "keyTerms": [
+      {
+        "termKo": "시초선과 동경",
+        "termEn": "Initial Ray and Terminal Ray",
+        "definition": "각을 재는 기준선이 되는 고정된 반직선을 시초선(Initial Ray), 시초선 주위로 회전하는 반직선을 동경(Terminal Ray)이라 함."
+      },
+      {
+        "termKo": "일반각",
+        "termEn": "General Angle",
+        "definition": "동경 OP가 회전한 바퀴 수 n(정수)을 반영하여 360° × n + α 또는 2nπ + α 로 나타낸 각."
+      },
+      {
+        "termKo": "호도법",
+        "termEn": "Radian Measure",
+        "definition": "반지름의 길이 r와 호의 길이 l이 같아질 때의 중심각의 크기를 1 라디안(rad)으로 정의하는 각도 체계."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "육십분법과 호도법 변환",
+      "nameEn": "Degrees to Radians Conversion",
+      "typesetMath": "180^\\circ = \\pi \\text{ rad} \\iff 1^\\circ = \\frac{\\pi}{180} \\text{ rad}, \\quad 1 \\text{ rad} = \\frac{180^\\circ}{\\pi} \\approx 57.3^\\circ",
+      "howToReadEn": "one hundred eighty degrees equals pi radians, which implies one degree equals pi over one eighty radians, and one radian equals one eighty over pi degrees.",
+      "explanation": "도를 라디안으로 바꿀 때는 π/180을 곱하고, 라디안을 도로 바꿀 때는 180/π를 곱합니다."
+    },
+    {
+      "nameKo": "부채꼴의 호의 길이와 넓이",
+      "nameEn": "Arc Length and Area of Sector",
+      "typesetMath": "l = r\\theta, \\quad S = \\frac{1}{2} r^2 \\theta = \\frac{1}{2} r l \\quad (\\theta \\text{는 라디안 단위})",
+      "howToReadEn": "arc length l equals r times theta; area S equals one-half r squared theta, which also equals one-half r times l, where theta is in radians.",
+      "explanation": "각 θ가 반드시 라디안일 때만 성립하며, 넓이는 마치 밑변이 l이고 높이가 r인 직각삼각형의 넓이 공식 1/2 rl 처럼 직관적으로 이해할 수 있습니다."
+    },
+    {
+      "nameKo": "두 동경의 위치 관계",
+      "nameEn": "Relative Positions of Two Terminal Rays",
+      "typesetMath": "\\begin{cases} \\text{일치} : & \\alpha - \\beta = 2n\\pi \\\\ \\text{원점 대칭 (일직선 반대)} : & \\alpha - \\beta = 2n\\pi + \\pi \\\\ x\\text{축 대칭} : & \\alpha + \\beta = 2n\\pi \\\\ y\\text{축 대칭} : & \\alpha + \\beta = 2n\\pi + \\pi \\end{cases}",
+      "howToReadEn": "Coincident rays have difference 2n pi; opposite rays have difference 2n pi plus pi; x-axis symmetric rays have sum 2n pi; y-axis symmetric rays have sum 2n pi plus pi.",
+      "explanation": "두 각의 합 또는 차를 구했을 때 특정한 회전각(0, π)이 남는 대칭성을 이용하여 미지수를 구합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "호도법과 육십분법 상호 변환",
+      "question": "다음 보기 중 옳은 것만을 있는 대로 고르시오.\n(ㄱ) 150° = 5π/6 rad\n(ㄴ) 4π/3 rad = 240°\n(ㄷ) 315° = 7π/4 rad",
+      "visualHint": "도수에 π/180을 곱해 약분하고, 라디안의 π 자리에 180°를 대입하여 계산합니다.",
+      "stepByStepSolution": [
+        "단계 1: (ㄱ) 150° × (π / 180°) = (150/180)π = 5π/6 rad (참).",
+        "단계 2: (ㄴ) (4/3) × 180° = 4 × 60° = 240° (참).",
+        "단계 3: (ㄷ) 315° × (π / 180°) = 315/180 π = 7π/4 rad (참).",
+        "단계 4: 따라서 ㄱ, ㄴ, ㄷ 모두 옳습니다."
+      ],
+      "finalAnswer": "ㄱ, ㄴ, ㄷ",
+      "pitfallAndTips": "특수각 30°=π/6, 45°=π/4, 60°=π/3, 90°=π/2의 배수로 빠르게 암산하면 실수를 줄일 수 있습니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "부채꼴 호의 길이와 넓이 기본",
+      "question": "반지름의 길이가 6 cm이고 중심각의 크기가 2π/3 라디안인 부채꼴의 호의 길이 l(cm)과 넓이 S(cm²)를 차례로 구하시오.",
+      "visualHint": "l = rθ, S = 1/2 r l 공식을 차례로 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 호의 길이 공식: l = rθ = 6 × (2π / 3) = 4π cm.",
+        "단계 2: 부채꼴 넓이 공식: S = (1/2) r l = (1/2) × 6 × 4π = 12π cm².",
+        "단계 3: 또는 S = (1/2) r² θ = (1/2) × 36 × (2π / 3) = 12π cm².",
+        "단계 4: l = 4π, S = 12π 입니다."
+      ],
+      "finalAnswer": "l = 4π cm, S = 12π cm²",
+      "pitfallAndTips": "중심각이 육십분법으로 주어졌다면 먼저 호도법(라디안)으로 변환한 후 공식에 대입해야 합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "사분면의 각 판별",
+      "question": "θ가 제2사분면의 각일 때, θ/3을 나타내는 동경이 존재할 수 있는 사분면을 모두 구하시오.",
+      "visualHint": "θ를 일반각 2nπ + π/2 < θ < 2nπ + π (n은 정수)로 표현한 뒤 3으로 나누고 n = 0, 1, 2를 대입합니다.",
+      "stepByStepSolution": [
+        "단계 1: θ가 제2사분면의 각이므로 2nπ + π/2 < θ < 2nπ + π (n은 정수)로 나타냅니다.",
+        "단계 2: 각 변을 3으로 나눕니다: (2nπ/3) + π/6 < θ/3 < (2nπ/3) + π/3.",
+        "단계 3: n = 0 일 때: π/6 < θ/3 < π/3 (30° ~ 60°) 이므로 제1사분면.",
+        "단계 4: n = 1 일 때: 2π/3 + π/6 < θ/3 < 2π/3 + π/3 => 5π/6 < θ/3 < π (150° ~ 180°) 이므로 제2사분면.",
+        "단계 5: n = 2 일 때: 4π/3 + π/6 < θ/3 < 4π/3 + π/3 => 3π/2 < θ/3 < 5π/3 (270° ~ 300°) 이므로 제4사분면.",
+        "단계 6: n = 3 일 때는 2π가 더해져 n = 0과 같은 동경이 반복됩니다.",
+        "단계 7: 따라서 θ/3이 존재할 수 있는 사분면은 제1사분면, 제2사분면, 제4사분면입니다."
+      ],
+      "finalAnswer": "제1사분면, 제2사분면, 제4사분면",
+      "pitfallAndTips": "θ/k 의 사분면을 구할 때는 회전수 n에 0부터 k-1까지의 정수를 대입하면 모든 가능한 사분면이 완벽하게 나옵니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "동경의 일치 조건",
+      "question": "0 < θ < π 일 때, 각 θ를 나타내는 동경과 각 6θ를 나타내는 동경이 일치하도록 하는 모든 각 θ의 값의 합을 구하시오.",
+      "visualHint": "두 동경이 일치하면 두 각의 차가 한 바퀴(2nπ)의 정수배입니다: 6θ - θ = 2nπ.",
+      "stepByStepSolution": [
+        "단계 1: 두 동경이 일치하므로 6θ - θ = 2nπ (n은 정수)입니다.",
+        "단계 2: 5θ = 2nπ 이므로 θ = 2nπ / 5 입니다.",
+        "단계 3: 주어진 범위는 0 < θ < π 이므로 0 < 2nπ / 5 < π 입니다.",
+        "단계 4: 각 변을 π로 나누고 5를 곱하면 0 < 2n < 5, 즉 0 < n < 2.5 입니다.",
+        "단계 5: 가능한 정수 n은 1과 2 입니다.",
+        "단계 6: n = 1 일 때 θ = 2π/5, n = 2 일 때 θ = 4π/5.",
+        "단계 7: 두 각의 합: 2π/5 + 4π/5 = 6π/5."
+      ],
+      "finalAnswer": "6π/5",
+      "pitfallAndTips": "범위 0 < θ < π 에서 등호가 없으므로 n = 0(θ = 0)은 제외해야 합니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "둘레가 일정한 부채꼴의 최대 넓이",
+      "question": "둘레의 길이가 20 cm인 부채꼴 중에서 그 넓이가 최대인 것의 반지름 r(cm), 중심각 θ(rad), 최대 넓이 S(cm²)를 구하시오.",
+      "visualHint": "둘레 공식 2r + l = 20 에서 l = 20 - 2r 을 S = 1/2 r l 에 대입하여 이차함수 최대를 찾습니다.",
+      "stepByStepSolution": [
+        "단계 1: 부채꼴의 둘레는 두 반지름과 호의 길이의 합이므로 2r + l = 20 입니다. 따라서 l = 20 - 2r (단, r > 0, l > 0 이므로 0 < r < 10).",
+        "단계 2: 부채꼴의 넓이 공식: S = (1/2) r l = (1/2) r (20 - 2r) = 10r - r² = -(r - 5)² + 25.",
+        "단계 3: S는 r = 5 cm 일 때 최댓값 25 cm²를 갖습니다.",
+        "단계 4: 이때 호의 길이 l = 20 - 2(5) = 10 cm 입니다.",
+        "단계 5: 중심각 θ = l / r = 10 / 5 = 2 rad 입니다."
+      ],
+      "finalAnswer": "r = 5 cm, θ = 2 rad, S = 25 cm²",
+      "pitfallAndTips": "둘레가 일정할 때 부채꼴의 넓이가 최대가 되는 중심각은 반지름과 무관하게 항상 '2 라디안'이라는 사실을 기억해 두면 검산에 매우 유용합니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "동경의 대칭 관계 (y축 대칭)",
+      "question": "0 < θ < π/2 일 때, 각 2θ와 5θ를 나타내는 두 동경이 y축에 대하여 대칭이다. 가능한 모든 θ의 개수를 구하시오.",
+      "visualHint": "두 동경이 y축 대칭이면 두 각의 합이 180°(π rad)에 회전수를 더한 값입니다: 2θ + 5θ = 2nπ + π.",
+      "stepByStepSolution": [
+        "단계 1: 두 동경이 y축에 대해 대칭이므로 합의 관계식: 2θ + 5θ = 7θ = 2nπ + π = (2n + 1)π (n은 정수).",
+        "단계 2: θ = (2n + 1)π / 7 입니다.",
+        "단계 3: 주어진 범위는 0 < θ < π/2 이므로 0 < (2n + 1)π / 7 < π/2 입니다.",
+        "단계 4: 각 변에 7/π 를 곱하면 0 < 2n + 1 < 3.5 입니다.",
+        "단계 5: -1 < 2n < 2.5 => -0.5 < n < 1.25.",
+        "단계 6: 가능한 정수 n은 0, 1 입니다.",
+        "단계 7: n = 0 일 때 θ = π/7, n = 1 일 때 θ = 3π/7.",
+        "단계 8: 따라서 가능한 θ의 개수는 2개입니다."
+      ],
+      "finalAnswer": "2",
+      "pitfallAndTips": "x축 대칭은 합이 2nπ, y축 대칭은 합이 (2n+1)π, y=x 대칭은 합이 2nπ + π/2 임을 명확히 구분해야 합니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "원뿔의 전개도와 부채꼴 중심각",
+      "question": "밑면의 반지름의 길이가 3 cm이고 모선의 길이가 12 cm인 원뿔이 있다. 이 원뿔의 전개도에서 옆면을 이루는 부채꼴의 중심각의 크기 θ(rad)와 원뿔의 겉넓이(cm²)를 구하시오.",
+      "visualHint": "원뿔 옆면 부채꼴의 호의 길이는 밑면인 원의 둘레의 길이(2πr)와 완벽히 같습니다.",
+      "stepByStepSolution": [
+        "단계 1: 밑면 원의 반지름 r = 3 cm 이므로 밑면 둘레의 길이는 2π(3) = 6π cm 입니다.",
+        "단계 2: 전개도에서 옆면 부채꼴의 반지름 R = 모선의 길이 = 12 cm 이고, 부채꼴 호의 길이 l = 밑면 둘레 = 6π cm 입니다.",
+        "단계 3: 호의 길이 공식 l = Rθ 에서 6π = 12θ => θ = 6π / 12 = π/2 rad (즉, 90°).",
+        "단계 4: 옆면 부채꼴의 넓이 S_옆 = (1/2) R l = (1/2) × 12 × 6π = 36π cm².",
+        "단계 5: 밑면 원의 넓이 S_밑 = π(3)² = 9π cm².",
+        "단계 6: 원뿔의 총 겉넓이 S_총 = 36π + 9π = 45π cm²."
+      ],
+      "finalAnswer": "θ = π/2 rad, 겉넓이 = 45π cm²",
+      "pitfallAndTips": "원뿔 전개도 공식 θ = 2π(r/R) 을 기억하면 중심각 θ = 2π(3/12) = π/2 로 즉시 산출할 수 있습니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "동경의 회전각과 시침·분침의 각도",
+      "question": "4시와 5시 사이에 시계의 시침과 분침이 서로 반대 방향으로 일직선을 이루는 시각을 구하고, 이때 분침의 동경이 12시 시초선으로부터 회전한 각의 크기를 라디안으로 나타내시오.",
+      "visualHint": "분침은 1분에 6°씩 회전하고, 시침은 1분에 0.5°씩 회전합니다. 4시 정각 시침은 120°에 위치합니다.",
+      "stepByStepSolution": [
+        "단계 1: 4시 x분에 시침과 분침이 반대 방향 일직선을 이룬다고 합시다. 12시 방향을 0°(시초선)로 둡니다.",
+        "단계 2: x분 동안 분침이 움직인 각: 6x°. 시침이 움직인 각: 120° + 0.5x°.",
+        "단계 3: 분침이 시침보다 180° 앞서 있으므로 방정식: 6x - (120 + 0.5x) = 180°.",
+        "단계 4: 5.5x = 300 => (11/2)x = 300 => x = 600/11 분.",
+        "단계 5: 따라서 시각은 4시 600/11분 (즉 4시 54와 6/11분) 입니다.",
+        "단계 6: 이때 분침이 회전한 각도 = 6 × (600/11) = 3600/11 도.",
+        "단계 7: 이를 라디안으로 변환: (3600/11) × (π / 180) = (20/11)π rad."
+      ],
+      "finalAnswer": "시각: 4시 600/11분, 회전각: 20π/11 rad",
+      "pitfallAndTips": "시계 문제는 1분당 회전 속도(분침 6°/분, 시침 0.5°/분)를 호도법으로 전환하는 훈련의 전형입니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "부채꼴에 내접하는 원의 반지름과 넓이 비 킬러",
+      "question": "반지름의 길이가 R이고 중심각의 크기가 π/3인 부채꼴에 내접하는 원의 반지름을 r이라 하자. 부채꼴의 넓이 S₁과 내접원의 넓이 S₂의 비 S₁ : S₂를 가장 간단한 자연수의 비로 나타내시오.",
+      "visualHint": "부채꼴의 중심에서 내접원의 중심을 잇는 선분이 중심각 π/3을 이등분(π/6)함을 이용하여 직각삼각형 삼각비를 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 부채꼴의 중심을 O, 내접원의 중심을 C, 내접원이 호와 만나는 접점을 M, 한 반지름 변과 만나는 접점을 H라 합시다.",
+        "단계 2: 대칭성에 의해 선분 OM은 중심각 π/3을 이등분하므로 ∠COH = (π/3) / 2 = π/6 (30°) 입니다.",
+        "단계 3: 직각삼각형 COH에서 선분 CH = r (내접원의 반지름)이고 ∠COH = 30° 이므로 sin(π/6) = r / OC = 1/2 입니다. 따라서 OC = 2r 입니다.",
+        "단계 4: 점 M은 호 위의 점이므로 부채꼴의 반지름 R = OM = OC + CM = 2r + r = 3r 입니다. 따라서 r = R/3 입니다.",
+        "단계 5: 부채꼴의 넓이 S₁ = (1/2) R² θ = (1/2) R² (π/3) = πR² / 6.",
+        "단계 6: 내접원의 넓이 S₂ = πr² = π(R/3)² = πR² / 9.",
+        "단계 7: 두 넓이의 비 S₁ : S₂ = (πR²/6) : (πR²/9) = (1/6) : (1/9) = 9 : 6 = 3 : 2."
+      ],
+      "finalAnswer": "3 : 2",
+      "pitfallAndTips": "부채꼴 중심 O에서 내접원의 중심 C까지의 거리(2r)와 원의 반지름(r)을 더한 것이 부채꼴의 반지름 R(3r)이 되는 기하적 연결이 핵심입니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "부채꼴 호 위의 최단 경로와 전개도 킬러",
+      "question": "밑면의 반지름의 길이가 2이고 모선의 길이가 6인 원뿔이 있다. 원뿔의 밑면 원둘레 위의 한 점 A에서 출발하여 원뿔의 옆면을 한 바퀴 감아 다시 점 A로 돌아오는 최단 경로의 길이를 구하시오.",
+      "visualHint": "원뿔의 옆면을 잘라 펼친 전개도(부채꼴)에서 시작점 A와 도착점 A'를 잇는 직선 선분의 길이가 최단 경로입니다.",
+      "stepByStepSolution": [
+        "단계 1: 원뿔의 옆면을 모선 OA를 따라 잘라 펼치면 반지름 R = 6 인 부채꼴 O-A-A' 가 됩니다.",
+        "단계 2: 옆면 부채꼴 호의 길이는 밑면 원의 둘레 2π(2) = 4π 와 같습니다.",
+        "단계 3: 부채꼴의 중심각 θ = l / R = 4π / 6 = 2π/3 (120°) 입니다.",
+        "단계 4: 한 점 A에서 옆면을 한 바퀴 돌아 다시 점 A로 돌아온다는 것은 전개도 상에서 점 A에서 점 A'까지 곧은 선분으로 이동함을 뜻합니다.",
+        "단계 5: 삼각형 OAA'에서 OA = 6, OA' = 6, 사잇각 ∠AOA' = 2π/3 = 120° 인 이등변삼각형입니다.",
+        "단계 6: 점 O에서 선분 AA'에 수선을 내리면 30°-60°-90° 직각삼각형 두 개로 나뉩니다. AA'/2 = 6 × sin(60°) = 6 × (√3/2) = 3√3.",
+        "단계 7: 따라서 최단 경로의 길이는 AA' = 2 × 3√3 = 6√3 입니다."
+      ],
+      "finalAnswer": "6√3",
+      "pitfallAndTips": "입체도형 표면 위의 최단 거리는 반드시 평면 전개도 상의 직선 선분으로 환원하여 해결해야 합니다."
+    }
+  ]
+}

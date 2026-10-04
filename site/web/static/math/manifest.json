@@ -1,0 +1,141 @@
+{
+  "title": "중1부터 고3까지 수학 전체 시각화·조판수식·문제10선·영어낭독 마스터 가이드",
+  "totalGrades": 9,
+  "totalUnits": 70,
+  "totalProblems": 700,
+  "grades": [
+    {
+      "gradeId": "middle-1",
+      "nameKo": "중학교 1학년 수학",
+      "nameEn": "Grade 7 Mathematics",
+      "units": [
+        { "id": "m1-01-factors-primes", "order": 1, "domain": "수와 연산", "titleKo": "소인수분해와 최대공약수·최소공배수", "titleEn": "Prime Factorization, GCD & LCM", "file": "middle-1/m1-01-factors-primes.json" },
+        { "id": "m1-02-integers-rationals", "order": 2, "domain": "수와 연산", "titleKo": "정수와 유리수의 덧셈·뺄셈·곱셈·나눗셈", "titleEn": "Operations with Integers and Rational Numbers", "file": "middle-1/m1-02-integers-rationals.json" },
+        { "id": "m1-03-variables-expressions", "order": 3, "domain": "문자와 식", "titleKo": "문자의 사용과 식의 계산", "titleEn": "Algebraic Expressions and Variables", "file": "middle-1/m1-03-variables-expressions.json" },
+        { "id": "m1-04-linear-equations", "order": 4, "domain": "문자와 식", "titleKo": "일차방정식의 풀이와 활용", "titleEn": "Solving Linear Equations and Applications", "file": "middle-1/m1-04-linear-equations.json" },
+        { "id": "m1-05-coordinate-plane", "order": 5, "domain": "좌표와 그래프", "titleKo": "좌표평면과 그래프·정비례·반비례", "titleEn": "Coordinate Plane, Direct & Inverse Proportions", "file": "middle-1/m1-05-coordinate-plane.json" },
+        { "id": "m1-06-basic-figures", "order": 6, "domain": "기하", "titleKo": "기본 도형과 작도·삼각형의 합동", "titleEn": "Basic Geometric Figures, Constructions & Triangle Congruence", "file": "middle-1/m1-06-basic-figures.json" },
+        { "id": "m1-07-plane-figures", "order": 7, "domain": "기하", "titleKo": "평면도형의 성질(다각형, 원과 부채꼴)", "titleEn": "Polygons, Circles, and Sectors", "file": "middle-1/m1-07-plane-figures.json" },
+        { "id": "m1-08-solids-and-stats", "order": 8, "domain": "기하/통계", "titleKo": "입체도형의 겉넓이·부피와 자료의 정리", "titleEn": "Surface Area, Volume of Solids, and Basic Statistics", "file": "middle-1/m1-08-solids-and-stats.json" }
+      ]
+    },
+    {
+      "gradeId": "middle-2",
+      "nameKo": "중학교 2학년 수학",
+      "nameEn": "Grade 8 Mathematics",
+      "units": [
+        { "id": "m2-01-decimals-fractions", "order": 9, "domain": "수와 연산", "titleKo": "유리수와 순환소수", "titleEn": "Rational Numbers and Repeating Decimals", "file": "middle-2/m2-01-decimals-fractions.json" },
+        { "id": "m2-02-exponent-polynomials", "order": 10, "domain": "문자와 식", "titleKo": "지수법칙과 다항식의 사칙계산", "titleEn": "Laws of Exponents and Operations on Polynomials", "file": "middle-2/m2-02-exponent-polynomials.json" },
+        { "id": "m2-03-linear-inequalities", "order": 11, "domain": "문자와 식", "titleKo": "일차부등식과 연립일차부등식", "titleEn": "Linear Inequalities and Systems of Inequalities", "file": "middle-2/m2-03-linear-inequalities.json" },
+        { "id": "m2-04-systems-equations", "order": 12, "domain": "문자와 식", "titleKo": "연립일차방정식의 풀이와 활용", "titleEn": "Systems of Linear Equations and Word Problems", "file": "middle-2/m2-04-systems-equations.json" },
+        { "id": "m2-05-linear-functions", "order": 13, "domain": "함수", "titleKo": "일차함수와 그래프·직선의 방정식", "titleEn": "Linear Functions, Graphs, and Equations of Lines", "file": "middle-2/m2-05-linear-functions.json" },
+        { "id": "m2-06-triangle-properties", "order": 14, "domain": "기하", "titleKo": "이등변삼각형과 직각삼각형·외심과 내심", "titleEn": "Properties of Triangles, Circumcenter & Incenter", "file": "middle-2/m2-06-triangle-properties.json" },
+        { "id": "m2-07-quadrilaterals", "order": 15, "domain": "기하", "titleKo": "평행사변형과 여러 가지 사각형", "titleEn": "Parallelograms and Special Quadrilaterals", "file": "middle-2/m2-07-quadrilaterals.json" },
+        { "id": "m2-08-similarity-probability", "order": 16, "domain": "기하/확률", "titleKo": "도형의 닮음, 피타고라스 정리와 확률", "titleEn": "Geometric Similarity, Pythagorean Theorem, and Probability", "file": "middle-2/m2-08-similarity-probability.json" }
+      ]
+    },
+    {
+      "gradeId": "middle-3",
+      "nameKo": "중학교 3학년 수학",
+      "nameEn": "Grade 9 Mathematics",
+      "units": [
+        { "id": "m3-01-square-roots", "order": 17, "domain": "수와 연산", "titleKo": "제곱근과 실수·무리수의 성질", "titleEn": "Square Roots, Real Numbers, and Irrational Numbers", "file": "middle-3/m3-01-square-roots.json" },
+        { "id": "m3-02-radical-operations", "order": 18, "domain": "수와 연산", "titleKo": "근호를 포함한 식의 계산과 분모의 유리화", "titleEn": "Operations with Radicals and Rationalizing Denominators", "file": "middle-3/m3-02-radical-operations.json" },
+        { "id": "m3-03-factoring-formulas", "order": 19, "domain": "문자와 식", "titleKo": "다항식의 곱셈 공식과 인수분해", "titleEn": "Polynomial Multiplication and Factoring Formulas", "file": "middle-3/m3-03-factoring-formulas.json" },
+        { "id": "m3-04-quadratic-equations", "order": 20, "domain": "문자와 식", "titleKo": "이차방정식의 풀이와 근의 공식", "titleEn": "Quadratic Equations and the Quadratic Formula", "file": "middle-3/m3-04-quadratic-equations.json" },
+        { "id": "m3-05-quadratic-functions", "order": 21, "domain": "함수", "titleKo": "이차함수 y = a(x-p)² + q와 포물선의 그래프", "titleEn": "Quadratic Functions, Parabolas, and Vertex Form", "file": "middle-3/m3-05-quadratic-functions.json" },
+        { "id": "m3-06-trigonometric-ratios", "order": 22, "domain": "기하", "titleKo": "삼각비(사인·코사인·탄젠트)의 정의와 특수각", "titleEn": "Trigonometric Ratios (Sine, Cosine, Tangent) & Special Angles", "file": "middle-3/m3-06-trigonometric-ratios.json" },
+        { "id": "m3-07-trig-applications", "order": 23, "domain": "기하", "titleKo": "삼각비의 활용(거리·높이·삼각형의 넓이)", "titleEn": "Applications of Trigonometry: Heights, Distances, and Area", "file": "middle-3/m3-07-trig-applications.json" },
+        { "id": "m3-08-circles-and-stats", "order": 24, "domain": "기하/통계", "titleKo": "원의 성질(원주각과 접선)과 산포도(분산·표준편차)", "titleEn": "Circles (Inscribed Angles, Tangents) and Standard Deviation", "file": "middle-3/m3-08-circles-and-stats.json" }
+      ]
+    },
+    {
+      "gradeId": "high-common",
+      "nameKo": "고등학교 1학년 공통수학 1·2",
+      "nameEn": "Grade 10 Common Mathematics",
+      "units": [
+        { "id": "h1-01-polynomials-identities", "order": 25, "domain": "대수", "titleKo": "다항식의 연산과 항등식", "titleEn": "Polynomial Arithmetic and Polynomial Identities", "file": "high-common/h1-01-polynomials-identities.json" },
+        { "id": "h1-02-remainder-factoring", "order": 26, "domain": "대수", "titleKo": "나머지정리와 고차 다항식의 인수분해", "titleEn": "Remainder Theorem, Factor Theorem, and Advanced Factoring", "file": "high-common/h1-02-remainder-factoring.json" },
+        { "id": "h1-03-complex-numbers", "order": 27, "domain": "대수", "titleKo": "복소수와 이차방정식의 판별식·근과 계수의 관계", "titleEn": "Complex Numbers, Discriminant, and Vieta's Formulas", "file": "high-common/h1-03-complex-numbers.json" },
+        { "id": "h1-04-quadratics-inequalities", "order": 28, "domain": "대수/함수", "titleKo": "이차방정식과 이차함수의 관계·이차부등식", "titleEn": "Quadratic Equations, Parabola Intersections, and Inequalities", "file": "high-common/h1-04-quadratics-inequalities.json" },
+        { "id": "h1-05-higher-equations", "order": 29, "domain": "대수", "titleKo": "삼차·사차방정식과 연립이차방정식", "titleEn": "Cubic, Quartic, and Systems of Quadratic Equations", "file": "high-common/h1-05-higher-equations.json" },
+        { "id": "h1-06-permutations-combinations", "order": 30, "domain": "경우의 수", "titleKo": "경우의 수(합·곱의 법칙)와 순열(nPr)·조합(nCr)", "titleEn": "Fundamental Counting Principle, Permutations and Combinations", "file": "high-common/h1-06-permutations-combinations.json" },
+        { "id": "h1-07-matrices-basic", "order": 31, "domain": "대수", "titleKo": "행렬의 덧셈·뺄셈·실수배와 행렬의 곱셈", "titleEn": "Matrix Algebra: Addition, Scalar Multiplication, and Product", "file": "high-common/h1-07-matrices-basic.json" },
+        { "id": "h1-08-lines-and-circles", "order": 32, "domain": "도형의 방정식", "titleKo": "평면좌표, 직선의 방정식과 원의 방정식", "titleEn": "Coordinate Geometry: Lines and Circles", "file": "high-common/h1-08-lines-and-circles.json" },
+        { "id": "h1-09-transform-inequalities", "order": 33, "domain": "도형의 방정식", "titleKo": "도형의 이동(평행·대칭)과 절대부등식", "titleEn": "Geometric Transformations and Absolute Inequalities", "file": "high-common/h1-09-transform-inequalities.json" },
+        { "id": "h1-10-sets-functions", "order": 34, "domain": "집합과 함수", "titleKo": "집합과 명제·합성함수·역함수와 유리·무리함수", "titleEn": "Sets, Logic, Composite & Inverse Functions, Rational & Radical Functions", "file": "high-common/h1-10-sets-functions.json" }
+      ]
+    },
+    {
+      "gradeId": "high-algebra",
+      "nameKo": "고등학교 2학년 대수 (수학 I)",
+      "nameEn": "Grade 11 Algebra (Math I)",
+      "units": [
+        { "id": "ha-01-exponents-radicals", "order": 35, "domain": "지수와 로그", "titleKo": "거듭제곱근과 지수의 실수 확장", "titleEn": "Roots, Radicals, and Real Exponent Laws", "file": "high-algebra/ha-01-exponents-radicals.json" },
+        { "id": "ha-02-logarithms-basic", "order": 36, "domain": "지수와 로그", "titleKo": "로그의 정의와 밑변환 공식·상용로그", "titleEn": "Logarithms: Definition, Change of Base, and Common Logs", "file": "high-algebra/ha-02-logarithms-basic.json" },
+        { "id": "ha-03-exp-log-functions", "order": 37, "domain": "지수와 로그", "titleKo": "지수함수와 로그함수의 그래프·방정식·부등식", "titleEn": "Exponential and Logarithmic Functions, Graphs, and Equations", "file": "high-algebra/ha-03-exp-log-functions.json" },
+        { "id": "ha-04-radians-arc", "order": 38, "domain": "삼각함수", "titleKo": "일반각과 호도법(Radian)·부채꼴의 호와 넓이", "titleEn": "General Angles, Radians, and Sector Arc & Area", "file": "high-algebra/ha-04-radians-arc.json" },
+        { "id": "ha-05-unit-circle-trig", "order": 39, "domain": "삼각함수", "titleKo": "단위원과 삼각함수의 정의·주기와 대칭성", "titleEn": "Unit Circle Definition of Trig Functions, Periodicity & Symmetry", "file": "high-algebra/ha-05-unit-circle-trig.json" },
+        { "id": "ha-06-sine-cosine-laws", "order": 40, "domain": "삼각함수", "titleKo": "사인법칙과 코사인법칙·삼각형의 넓이", "titleEn": "Law of Sines, Law of Cosines, and Triangle Area", "file": "high-algebra/ha-06-sine-cosine-laws.json" },
+        { "id": "ha-07-arithmetic-geometric", "order": 41, "domain": "수열", "titleKo": "등차수열과 등비수열의 일반항과 합", "titleEn": "Arithmetic and Geometric Sequences: General Terms and Partial Sums", "file": "high-algebra/ha-07-arithmetic-geometric.json" },
+        { "id": "ha-08-sigma-induction", "order": 42, "domain": "수열", "titleKo": "수열의 합 기호(∑)의 성질과 수학적 귀납법", "titleEn": "Sigma Notation Properties and Mathematical Induction", "file": "high-algebra/ha-08-sigma-induction.json" }
+      ]
+    },
+    {
+      "gradeId": "high-calculus1",
+      "nameKo": "고등학교 2학년 미적분 I (수학 II)",
+      "nameEn": "Grade 11 Calculus I (Math II)",
+      "units": [
+        { "id": "hc1-01-limits-infinity", "order": 43, "domain": "함수의 극한", "titleKo": "함수의 극한과 좌극한·우극한·부정형(0/0, ∞/∞)", "titleEn": "Limits of Functions, One-Sided Limits, and Indeterminate Forms", "file": "high-calculus1/hc1-01-limits-infinity.json" },
+        { "id": "hc1-02-continuity-theorems", "order": 44, "domain": "함수의 연속", "titleKo": "함수의 연속성과 최대·최소 정리·사잇값 정리", "titleEn": "Continuity, Extreme Value Theorem, and Intermediate Value Theorem", "file": "high-calculus1/hc1-02-continuity-theorems.json" },
+        { "id": "hc1-03-derivative-definition", "order": 45, "domain": "미분", "titleKo": "평균변화율과 미분계수(순간변화율)·도함수의 정의", "titleEn": "Average vs Instantaneous Rate of Change, Derivative Definition", "file": "high-calculus1/hc1-03-derivative-definition.json" },
+        { "id": "hc1-04-tangents-mvt", "order": 46, "domain": "미분", "titleKo": "접선의 방정식과 롤의 정리·평균값 정리", "titleEn": "Tangent Lines, Rolle's Theorem, and Mean Value Theorem", "file": "high-calculus1/hc1-04-tangents-mvt.json" },
+        { "id": "hc1-05-extrema-graphs", "order": 47, "domain": "미분", "titleKo": "함수의 증가·감소, 극대·극소와 3차·4차 함수 그래프", "titleEn": "Increasing/Decreasing, Local Extrema, and Polynomial Curves", "file": "high-calculus1/hc1-05-extrema-graphs.json" },
+        { "id": "hc1-06-derivative-apps", "order": 48, "domain": "미분", "titleKo": "도함수의 활용(최대·최소, 방정식·부등식, 속도와 가속도)", "titleEn": "Optimization, Roots of Equations, and Kinematics", "file": "high-calculus1/hc1-06-derivative-apps.json" },
+        { "id": "hc1-07-integrals-ftc", "order": 49, "domain": "적분", "titleKo": "부정적분과 정적분의 정의·미적분의 기본정리(FTC)", "titleEn": "Antiderivatives, Definite Integrals, and Fundamental Theorem of Calculus", "file": "high-calculus1/hc1-07-integrals-ftc.json" },
+        { "id": "hc1-08-integral-area-motion", "order": 50, "domain": "적분", "titleKo": "정적분의 활용(곡선과 축 사이의 넓이, 위치와 이동 거리)", "titleEn": "Applications of Integrals: Areas and Net vs Total Distance", "file": "high-calculus1/hc1-08-integral-area-motion.json" }
+      ]
+    },
+    {
+      "gradeId": "high-prob-stat",
+      "nameKo": "고등학교 3학년 확률과 통계",
+      "nameEn": "Grade 12 Probability & Statistics",
+      "units": [
+        { "id": "ps-01-advanced-counting", "order": 51, "domain": "순열과 조합", "titleKo": "원순열, 중복순열, 같은 것이 있는 순열과 중복조합(nHr)", "titleEn": "Circular, Repetitive Permutations, and Combinations with Repetition", "file": "high-prob-stat/ps-01-advanced-counting.json" },
+        { "id": "ps-02-binomial-theorem", "order": 52, "domain": "순열과 조합", "titleKo": "이항정리와 파스칼의 삼각형·이항계수의 성질", "titleEn": "Binomial Theorem, Pascal's Triangle, and Combinatorial Identities", "file": "high-prob-stat/ps-02-binomial-theorem.json" },
+        { "id": "ps-03-conditional-probability", "order": 53, "domain": "확률", "titleKo": "조건부확률, 사건의 독립과 종속, 베이즈 정리의 직관", "titleEn": "Conditional Probability, Independence, and Bayes' Intuition", "file": "high-prob-stat/ps-03-conditional-probability.json" },
+        { "id": "ps-04-independent-trials", "order": 54, "domain": "확률", "titleKo": "독립시행의 확률과 기하학적 확률 모델", "titleEn": "Independent Bernoulli Trials and Probability Models", "file": "high-prob-stat/ps-04-independent-trials.json" },
+        { "id": "ps-05-discrete-random-vars", "order": 55, "domain": "통계", "titleKo": "이산확률변수, 기댓값 E(X), 분산 V(X)과 이항분포 B(n, p)", "titleEn": "Discrete Random Variables, Expected Value, Variance, and Binomial Distribution", "file": "high-prob-stat/ps-05-discrete-random-vars.json" },
+        { "id": "ps-06-normal-distribution-ci", "order": 56, "domain": "통계", "titleKo": "연속확률변수, 정규분포 N(μ, σ²), 표준화와 표본평균의 신뢰구간", "titleEn": "Continuous Variables, Normal Distribution, Z-Score, and Confidence Intervals", "file": "high-prob-stat/ps-06-normal-distribution-ci.json" }
+      ]
+    },
+    {
+      "gradeId": "high-calculus2",
+      "nameKo": "고등학교 3학년 미적분 II (선택 미적분)",
+      "nameEn": "Grade 12 Calculus II (Advanced Calculus)",
+      "units": [
+        { "id": "hc2-01-infinite-series", "order": 57, "domain": "수열의 극한", "titleKo": "수열의 극한과 무한등비급수·프랙탈 도형의 넓이", "titleEn": "Limits of Sequences, Infinite Geometric Series, and Fractals", "file": "high-calculus2/hc2-01-infinite-series.json" },
+        { "id": "hc2-02-exp-log-limits", "order": 58, "domain": "미분법", "titleKo": "자연상수 e, 지수·로그함수의 극한과 도함수", "titleEn": "The Number e, Limits and Derivatives of Exp & Log Functions", "file": "high-calculus2/hc2-02-exp-log-limits.json" },
+        { "id": "hc2-03-trig-addition-limits", "order": 59, "domain": "미분법", "titleKo": "삼각함수의 덧셈정리, 배각공식과 극한 lim (sin x)/x = 1", "titleEn": "Trig Addition Formulas, Double Angles, and the Sinc Limit", "file": "high-calculus2/hc2-03-trig-addition-limits.json" },
+        { "id": "hc2-04-differentiation-rules", "order": 60, "domain": "미분법", "titleKo": "몫의 미분법, 합성함수, 역함수, 음함수, 매개변수 미분법", "titleEn": "Quotient Rule, Chain Rule, Implicit and Parametric Differentiation", "file": "high-calculus2/hc2-04-differentiation-rules.json" },
+        { "id": "hc2-05-concavity-inflection", "order": 61, "domain": "미분법", "titleKo": "이계도함수, 곡선의 오목·볼록과 변곡점·점근선 그래프", "titleEn": "Second Derivative, Concavity, Inflection Points, and Curve Sketching", "file": "high-calculus2/hc2-05-concavity-inflection.json" },
+        { "id": "hc2-06-substitution-parts", "order": 62, "domain": "적분법", "titleKo": "치환적분법(Substitution)과 부분적분법(Integration by Parts)", "titleEn": "U-Substitution and Integration by Parts", "file": "high-calculus2/hc2-06-substitution-parts.json" },
+        { "id": "hc2-07-riemann-sum-integrals", "order": 63, "domain": "적분법", "titleKo": "구분구적법과 정적분의 급수 표현 변환", "titleEn": "Riemann Sums and Converting Series to Definite Integrals", "file": "high-calculus2/hc2-07-riemann-sum-integrals.json" },
+        { "id": "hc2-08-volumes-arc-length", "order": 64, "domain": "적분법", "titleKo": "회전체 및 입체도형의 부피와 평면 곡선의 길이", "titleEn": "Volumes of Solids of Revolution and Arc Length of Curves", "file": "high-calculus2/hc2-08-volumes-arc-length.json" }
+      ]
+    },
+    {
+      "gradeId": "high-geometry",
+      "nameKo": "고등학교 3학년 기하",
+      "nameEn": "Grade 12 Geometry",
+      "units": [
+        { "id": "hg-01-parabola-conics", "order": 65, "domain": "이차곡선", "titleKo": "포물선의 정의와 초점·준선·표준형 방정식", "titleEn": "Parabolas: Focus, Directrix, and Standard Equation", "file": "high-geometry/hg-01-parabola-conics.json" },
+        { "id": "hg-02-ellipse-hyperbola", "order": 66, "domain": "이차곡선", "titleKo": "타원과 쌍곡선의 정의와 방정식·접선의 성질", "titleEn": "Ellipses and Hyperbolas: Foci, Asymptotes, and Tangents", "file": "high-geometry/hg-02-ellipse-hyperbola.json" },
+        { "id": "hg-03-planar-vectors", "order": 67, "domain": "평면벡터", "titleKo": "평면벡터의 덧셈·뺄셈·실수배와 성분 표현", "titleEn": "Vector Operations, Components, and Position Vectors", "file": "high-geometry/hg-03-planar-vectors.json" },
+        { "id": "hg-04-vector-dot-product", "order": 68, "domain": "평면벡터", "titleKo": "벡터의 내적(Dot Product)과 두 벡터가 이루는 각·직선의 방정식", "titleEn": "Vector Dot Product, Orthogonality, and Vector Equations of Lines", "file": "high-geometry/hg-04-vector-dot-product.json" },
+        { "id": "hg-05-space-figures-perpendicular", "order": 69, "domain": "공간도형", "titleKo": "공간에서 직선과 평면의 위치관계·삼수선의 정리와 이면각", "titleEn": "Lines and Planes in Space, Theorem of Three Perpendiculars, Dihedral Angles", "file": "high-geometry/hg-05-space-figures-perpendicular.json" },
+        { "id": "hg-06-coordinates-spheres", "order": 70, "domain": "공간도형", "titleKo": "정사영 공식, 3차원 공간좌표와 구(Sphere)의 방정식", "titleEn": "Orthogonal Projections, 3D Coordinates, and Equations of Spheres", "file": "high-geometry/hg-06-coordinates-spheres.json" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "id": "m1-03-variables-expressions",
+  "grade": "middle-1",
+  "domain": "문자와 식",
+  "order": 3,
+  "titleKo": "문자의 사용과 식의 계산",
+  "titleEn": "Algebraic Expressions and Variables",
+  "animation": {
+    "type": "svg-animation",
+    "title": "대수 막대 모델(Algebra Tiles)과 동류항 모으기",
+    "caption": "미지수 x를 나타내는 직사각형 막대와 상수 1을 나타내는 작은 정사각형 타일을 모아 식을 단순화하는 기하학적 모델입니다.",
+    "svgTemplate": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360' width='100%' height='100%' style='background:#0f172a; font-family:sans-serif;'>\n  <style>\n    .x-tile { fill: #38bdf8; stroke: #0284c7; stroke-width: 2; rx: 4; }\n    .unit-tile { fill: #f59e0b; stroke: #d97706; stroke-width: 2; rx: 3; }\n    .merge-anim { animation: shift 4s ease-in-out infinite alternate; }\n    @keyframes shift { 0% { transform: translateX(0); } 100% { transform: translateX(20px); } }\n  </style>\n  <text x='320' y='36' text-anchor='middle' fill='#f8fafc' font-size='18' font-weight='bold'>대수 막대 모델: (2x + 3) + (3x + 1) = 5x + 4</text>\n  <!-- Group 1: 2x + 3 -->\n  <g transform='translate(60, 90)'>\n    <rect x='0' y='0' width='24' height='90' class='x-tile'/>\n    <text x='12' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>x</text>\n    <rect x='34' y='0' width='24' height='90' class='x-tile'/>\n    <text x='46' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>x</text>\n    <rect x='70' y='0' width='24' height='24' class='unit-tile'/><text x='82' y='17' fill='#0f172a' font-weight='bold' text-anchor='middle'>1</text>\n    <rect x='70' y='33' width='24' height='24' class='unit-tile'/><text x='82' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>1</text>\n    <rect x='70' y='66' width='24' height='24' class='unit-tile'/><text x='82' y='83' fill='#0f172a' font-weight='bold' text-anchor='middle'>1</text>\n    <text x='50' y='120' fill='#38bdf8' font-size='15' font-weight='bold' text-anchor='middle'>2x + 3</text>\n  </g>\n  <text x='195' y='145' fill='#94a3b8' font-size='28' font-weight='bold'>+</text>\n  <!-- Group 2: 3x + 1 -->\n  <g transform='translate(230, 90)'>\n    <rect x='0' y='0' width='24' height='90' class='x-tile'/>\n    <rect x='34' y='0' width='24' height='90' class='x-tile'/>\n    <rect x='68' y='0' width='24' height='90' class='x-tile'/>\n    <text x='12' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>x</text>\n    <text x='46' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>x</text>\n    <text x='80' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>x</text>\n    <rect x='104' y='33' width='24' height='24' class='unit-tile'/><text x='116' y='50' fill='#0f172a' font-weight='bold' text-anchor='middle'>1</text>\n    <text x='65' y='120' fill='#38bdf8' font-size='15' font-weight='bold' text-anchor='middle'>3x + 1</text>\n  </g>\n  <text x='385' y='145' fill='#94a3b8' font-size='28' font-weight='bold'>=</text>\n  <!-- Combined Result: 5x + 4 -->\n  <g transform='translate(420, 90)'>\n    <rect x='0' y='0' width='20' height='90' class='x-tile'/>\n    <rect x='25' y='0' width='20' height='90' class='x-tile'/>\n    <rect x='50' y='0' width='20' height='90' class='x-tile'/>\n    <rect x='75' y='0' width='20' height='90' class='x-tile'/>\n    <rect x='100' y='0' width='20' height='90' class='x-tile'/>\n    <rect x='130' y='0' width='20' height='20' class='unit-tile'/><text x='140' y='15' fill='#0f172a' font-size='11' font-weight='bold' text-anchor='middle'>1</text>\n    <rect x='130' y='23' width='20' height='20' class='unit-tile'/><text x='140' y='38' fill='#0f172a' font-size='11' font-weight='bold' text-anchor='middle'>1</text>\n    <rect x='130' y='46' width='20' height='20' class='unit-tile'/><text x='140' y='61' fill='#0f172a' font-size='11' font-weight='bold' text-anchor='middle'>1</text>\n    <rect x='130' y='69' width='20' height='20' class='unit-tile'/><text x='140' y='84' fill='#0f172a' font-size='11' font-weight='bold' text-anchor='middle'>1</text>\n    <text x='80' y='120' fill='#10b981' font-size='15' font-weight='bold' text-anchor='middle'>5x + 4 (동류항 결합)</text>\n  </g>\n  <rect x='60' y='250' width='520' height='75' rx='8' fill='#1e293b' stroke='#334155'/>\n  <text x='320' y='280' fill='#f8fafc' font-size='14' text-anchor='middle'>동류항(Like Terms): 문자와 차수가 같은 항끼리 계수를 더하고 뺍니다.</text>\n  <text x='320' y='305' fill='#38bdf8' font-size='14' text-anchor='middle'>2x + 3x = (2 + 3)x = 5x, \\quad 3 + 1 = 4</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "문자를 사용하면 구체적인 숫자가 정해지지 않은 수량 관계나 일반적인 수학 법칙을 간결하고 명확한 수식으로 나타낼 수 있습니다. 곱셈 기호(×)와 나눗셈 기호(÷)를 생략하는 약속을 통해 식을 정돈하며, 문자와 차수가 같은 '동류항'끼리 분배법칙을 역으로 적용하여 묶어 계산합니다.",
+    "intuitiveStory": "사과 2개와 귤 3개가 든 바구니와, 사과 3개와 귤 1개가 든 바구니를 합치면 어떻게 될까요? 사과는 사과끼리 모아 5개가 되고, 귤은 귤끼리 모아 4개가 됩니다. 사과와 귤을 섞어서 '사과귤'로 합칠 수 없듯이, 대수식에서도 x항은 x항끼리, 상수항은 상수항끼리만 모을 수 있는데, 이것이 바로 '동류항 계산'의 직관입니다.",
+    "keyTerms": [
+      {
+        "termKo": "대입과 식의 값",
+        "termEn": "Substitution and Value of Expression",
+        "definition": "문자를 포함한 식에서 문자 대신에 수를 바꾸어 넣는 것을 대입이라 하고, 대입하여 계산한 결과를 식의 값이라고 합니다."
+      },
+      {
+        "termKo": "단항식과 다항식",
+        "termEn": "Monomial and Polynomial",
+        "definition": "수 또는 문자의 곱으로만 이루어진 식을 단항식이라 하고, 하나 이상의 단항식의 합으로 이루어진 식을 다항식이라고 합니다."
+      },
+      {
+        "termKo": "계수와 차수",
+        "termEn": "Coefficient and Degree",
+        "definition": "항에서 문자 앞에 곱해진 수를 계수(Coefficient)라 하고, 어떤 문자가 곱해진 개수를 그 문자에 대한 차수(Degree)라고 합니다."
+      },
+      {
+        "termKo": "동류항",
+        "termEn": "Like Terms",
+        "definition": "문자와 차수가 각각 같은 항을 서로 동류항이라고 합니다 (예: 3x와 -5x는 동류항, 2x와 2x²은 차수가 다르므로 동류항이 아님)."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "곱셈과 나눗셈 기호 생략 규칙",
+      "nameEn": "Rules for Omitting Multiplication and Division Signs",
+      "typesetMath": "a \\times b = ab, \\quad a \\div b = \\frac{a}{b}, \\quad a \\times (-1) = -a",
+      "howToReadEn": "a times b equals a b, a divided by b equals a over b, and a times negative 1 equals negative a",
+      "explanation": "문자와 수의 곱에서는 수를 문자 앞에 쓰고 곱셈 기호를 생략하며, 나눗셈 기호는 분수 꼴로 나타내어 식을 간결하게 표현합니다."
+    },
+    {
+      "nameKo": "동류항의 덧셈과 뺄셈 (분배법칙)",
+      "nameEn": "Combining Like Terms via Distributive Law",
+      "typesetMath": "mx + nx = (m + n)x, \\quad mx - nx = (m - n)x",
+      "howToReadEn": "m x plus n x equals quantity m plus n times x, and m x minus n x equals quantity m minus n times x",
+      "explanation": "동류항끼리는 분배법칙을 이용하여 계수끼리 더하거나 뺀 후 공통 문자를 곱해 하나의 항으로 합칠 수 있습니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "곱셈과 나눗셈 기호 생략하기",
+      "question": "다음 식을 곱셈 기호(×)와 나눗셈 기호(÷)를 생략하여 간단히 나타내시오: \\(x \\times (-3) + y \\div 4 - z \\times z\\)",
+      "visualHint": "수는 문자 앞에 쓰고, 분수 형태로 나눗셈을 바꾸며, 같은 문자의 곱은 거듭제곱으로 표기합니다.",
+      "stepByStepSolution": [
+        "1단계: x × (-3) = -3x (수는 문자 앞에 표기)",
+        "2단계: y ÷ 4 = y/4 (나눗셈은 분수로 변환)",
+        "3단계: z × z = z² (거듭제곱으로 표기)",
+        "4단계: 전체 식을 연결하면: -3x + y/4 - z²"
+      ],
+      "finalAnswer": "-3x + y/4 - z²",
+      "pitfallAndTips": "-3x에서 1을 생략하듯이 음수 부호와 수를 정확히 문자 앞에 두어야 하며, z × z는 2z가 아니라 z²임에 주의합니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "음수가 포함된 식의 값 구하기",
+      "question": "a = -3 일 때, 식 \\(2a^2 - 5a + 1\\)의 값을 구하시오.",
+      "visualHint": "음수를 대입할 때는 반드시 괄호를 씌워 (-3)²과 같이 거듭제곱을 먼저 계산합니다.",
+      "stepByStepSolution": [
+        "1단계: a 대신 (-3)을 대입합니다: 2(-3)² - 5(-3) + 1",
+        "2단계: 거듭제곱 계산: (-3)² = +9 이므로 2 × 9 = 18",
+        "3단계: 일차항 계산: -5 × (-3) = +15",
+        "4단계: 전체 합산: 18 + 15 + 1 = 34"
+      ],
+      "finalAnswer": "34",
+      "pitfallAndTips": "(-3)² = 9인데 -3² = -9로 혼동하여 -18로 계산하는 실수를 가장 조심해야 합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "일차식의 덧셈과 뺄셈",
+      "question": "다음 식을 간단히 하시오: \\((5x - 7) - 2(3x - 4)\\)",
+      "visualHint": "-2를 괄호 안의 각 항(3x와 -4)에 골고루 분배한 후 동류항끼리 모아 계산합니다.",
+      "stepByStepSolution": [
+        "1단계: 분배법칙으로 괄호를 전개합니다.",
+        "-2 × (3x) = -6x",
+        "-2 × (-4) = +8",
+        "따라서 식은 (5x - 7) - 6x + 8 이 됩니다.",
+        "2단계: x항끼리 모아 계산: 5x - 6x = (5 - 6)x = -x",
+        "3단계: 상수항끼리 모아 계산: -7 + 8 = +1",
+        "4단계: 최종 정리: -x + 1"
+      ],
+      "finalAnswer": "-x + 1",
+      "pitfallAndTips": "괄호 앞에 음수 -2가 있을 때 두 번째 항의 부호가 (-2) × (-4) = +8로 바뀌는 것을 놓치기 쉽습니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "분수 꼴의 일차식 계산",
+      "question": "다음 식을 간단히 하시오: \\(\\frac{3x - 1}{4} - \\frac{2x - 3}{6}\\)",
+      "visualHint": "분모 4와 6의 최소공배수인 12로 통분하고, 분자 전체를 괄호로 묶어 부호 실수를 방지합니다.",
+      "stepByStepSolution": [
+        "1단계: 분모의 최소공배수 12로 통분합니다.",
+        "첫 번째 분수: 3(3x - 1) / 12",
+        "두 번째 분수: 2(2x - 3) / 12",
+        "2단계: 하나의 분수로 합치고 분자를 전개합니다: [3(3x - 1) - 2(2x - 3)] / 12",
+        "3단계: 분자 전개: (9x - 3) - (4x - 6) = 9x - 3 - 4x + 6",
+        "4단계: 분자의 동류항 정리: (9x - 4x) + (-3 + 6) = 5x + 3",
+        "5단계: 결과: (5x + 3) / 12 (또는 5/12 x + 1/4)"
+      ],
+      "finalAnswer": "\\frac{5x + 3}{12}",
+      "pitfallAndTips": "두 번째 분수의 분자 앞 마이너스 부호는 2x뿐만 아니라 -3에도 영향을 주어 +6이 되어야 합니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "실생활 수량의 문자로 표현하기",
+      "question": "원가가 x원인 물건에 30%의 이익을 붙여 정가를 정했다가, 팔리지 않아 정가에서 20%를 할인하여 판매하였다. 최종 판매 가격을 x에 관한 일차식으로 나타내시오.",
+      "visualHint": "30% 이익 정가 = x × (1 + 0.3), 20% 할인 판매가 = 정가 × (1 - 0.2) 입니다.",
+      "stepByStepSolution": [
+        "1단계: 원가 x원에 30%의 이익을 붙인 정가를 구합니다.",
+        "정가 = x + 0.3x = 1.3x (원)",
+        "2단계: 정가 1.3x원에서 20%를 할인한 판매 가격을 구합니다.",
+        "판매가 = 1.3x × (1 - 0.2) = 1.3x × 0.8",
+        "3단계: 계수를 계산합니다: 1.3 × 0.8 = 1.04",
+        "4단계: 따라서 최종 판매가는 1.04x원 (또는 26/25 x 원)입니다."
+      ],
+      "finalAnswer": "1.04x원 (또는 \\frac{26}{25}x원)",
+      "pitfallAndTips": "+30% 한 후 -20% 했다고 해서 +10% 이익(1.1x)이 되는 것이 아닙니다! 할인은 원가가 아니라 정가에 대해 적용됩니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "다항식의 차수와 계수의 합",
+      "question": "x에 대한 다항식 \\((a - 2)x^3 + 3x^2 - bx + 5\\)가 x에 대한 2차식이고 상수항을 포함한 모든 계수의 합이 7일 때, a + b의 값을 구하시오.",
+      "visualHint": "2차식이 되려면 3차항의 계수가 0이어야 합니다. 계수의 합은 x = 1을 대입한 값과 같습니다.",
+      "stepByStepSolution": [
+        "1단계: 식 전체가 x에 대한 '2차식'이 되기 위해서는 3차항인 (a - 2)x³이 없어져야 합니다.",
+        "따라서 a - 2 = 0 이므로 a = 2 입니다.",
+        "2단계: a = 2를 대입하면 다항식은 3x² - bx + 5 가 됩니다.",
+        "3단계: 계수(2차항 계수 3, 1차항 계수 -b, 상수항 5)의 총합이 7입니다.",
+        "3 + (-b) + 5 = 7",
+        "8 - b = 7 이므로 b = 1 입니다.",
+        "4단계: 구하는 a + b = 2 + 1 = 3 입니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "1차항의 계수는 b가 아니라 부호를 포함한 -b임에 주의해야 합니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "복잡한 괄호가 있는 일차식의 환원",
+      "question": "다음 식을 간단히 하였을 때, x의 계수와 상수항의 곱을 구하시오: \\(5x - [2x - 3\\{x - (2x - 1)\\} + 4]\\)",
+      "visualHint": "소괄호() -> 중괄호{} -> 대괄호[] 순서로 안쪽부터 차근차근 전개하여 부호 오류를 방지합니다.",
+      "stepByStepSolution": [
+        "1단계: 가장 안쪽 소괄호 풀기: x - (2x - 1) = x - 2x + 1 = -x + 1",
+        "2단계: 중괄호 부분 계산: -3{-x + 1} = 3x - 3",
+        "3단계: 대괄호 안쪽 모으기: 2x + (3x - 3) + 4 = 5x + 1",
+        "4단계: 전체 식 정리: 5x - [5x + 1] = 5x - 5x - 1 = -1",
+        "5단계: 결과 식은 0x - 1 입니다. x의 계수는 0이고 상수항은 -1입니다.",
+        "6단계: 계수와 상수항의 곱 = 0 × (-1) = 0"
+      ],
+      "finalAnswer": "0",
+      "pitfallAndTips": "x항이 완전히 소거되어 0이 되는 경우 x의 계수는 0입니다. 계수와 상수항의 곱은 0이 됩니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "도형의 둘레와 넓이의 대수적 표현",
+      "question": "가로의 길이가 2a + 3이고 둘레의 길이가 6a + 10인 직사각형이 있다. 이 직사각형의 세로의 길이를 a에 관한 식으로 나타내고, a = 4일 때 직사각형의 넓이를 구하시오.",
+      "visualHint": "직사각형의 둘레 = 2 × (가로 + 세로) 입니다. 둘레를 2로 나누면 (가로 + 세로)가 됩니다.",
+      "stepByStepSolution": [
+        "1단계: 직사각형의 (가로 + 세로) = 둘레 ÷ 2 = (6a + 10) / 2 = 3a + 5",
+        "2단계: 세로의 길이 = (가로 + 세로) - 가로 = (3a + 5) - (2a + 3) = 3a + 5 - 2a - 3 = a + 2",
+        "3단계: a = 4를 대입하여 가로와 세로의 실제 길이를 구합니다.",
+        "가로 = 2(4) + 3 = 11",
+        "세로 = 4 + 2 = 6",
+        "4단계: 직사각형의 넓이 = 가로 × 세로 = 11 × 6 = 66"
+      ],
+      "finalAnswer": "세로의 길이: a + 2, 넓이: 66",
+      "pitfallAndTips": "가로를 뺄 때 -(2a + 3)의 괄호를 빠뜨려 -2a + 3으로 계산하면 세로가 a + 8로 잘못 도출될 수 있습니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "바둑알 규칙성과 일반항 n의 식 유도",
+      "question": "1단계에서는 바둑알 4개로 정사각형 모양을 만들고, 각 단계마다 한 변의 바둑알 개수를 1개씩 늘려 속이 빈 정사각형 테두리를 만든다. n단계 테두리를 만드는 데 필요한 바둑알의 개수를 n에 관한 일차식으로 나타내고, 바둑알 100개로 만들 수 있는 단계 n을 구하시오.",
+      "visualHint": "n단계 정사각형의 한 변에 놓인 바둑알 수는 (n + 1)개입니다. 네 모퉁이의 바둑알이 중복해서 세어지는 것을 고려하세요.",
+      "stepByStepSolution": [
+        "1단계: 단계별 바둑알 개수를 관찰합니다.",
+        "1단계: 한 변에 2개씩 정사각형 테두리 -> 총 4개 (또는 4 × 2 - 4 = 4)",
+        "2단계: 한 변에 3개씩 -> 4 × 3 - 4(모퉁이 4개 중복 제거) = 8개",
+        "3단계: 한 변에 4개씩 -> 4 × 4 - 4 = 12개",
+        "2단계: n단계에서는 한 변의 바둑알 수가 (n + 1)개이므로,",
+        "총 바둑알 개수 = 4(n + 1) - 4 = 4n + 4 - 4 = 4n (개)",
+        "3단계: 바둑알 100개로 만들 수 있는 단계: 4n = 100",
+        "따라서 n = 25 (단계)"
+      ],
+      "finalAnswer": "식: 4n개, 단계: 25단계",
+      "pitfallAndTips": "네 꼭짓점의 바둑알이 두 변에 동시에 속하므로 4변의 합에서 꼭짓점 4개를 빼주거나, 각 변을 (n개씩) 4묶음으로 세어야 합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "두 다항식 A, B의 역추적 문제",
+      "question": "어떤 다항식 A에 \\(3x - 5\\)를 더해야 할 것을 잘못하여 빼었더니 \\(-2x + 7\\)이 되었다. 바르게 계산한 결과를 구하시오.",
+      "visualHint": "A - (3x - 5) = -2x + 7 에서 A를 먼저 구한 뒤, 원래 계산식인 A + (3x - 5)를 수행합니다.",
+      "stepByStepSolution": [
+        "1단계: 잘못된 계산 식을 세웁니다: A - (3x - 5) = -2x + 7",
+        "2단계: 어떤 식 A를 구하기 위해 양변에 (3x - 5)를 더합니다.",
+        "A = (-2x + 7) + (3x - 5) = (-2 + 3)x + (7 - 5) = x + 2",
+        "3단계: 원래 하려고 했던 바른 계산을 수행합니다: A + (3x - 5)",
+        "바른 계산 = (x + 2) + (3x - 5) = (1 + 3)x + (2 - 5) = 4x - 3"
+      ],
+      "finalAnswer": "4x - 3",
+      "pitfallAndTips": "A를 구하는 것에서 끝나지 않고 '바르게 계산한 결과'까지 한 번 더 계산을 완료해야 합니다."
+    }
+  ]
+}

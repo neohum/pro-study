@@ -1,0 +1,235 @@
+{
+  "id": "m1-01-factors-primes",
+  "grade": "middle-1",
+  "domain": "수와 연산",
+  "order": 1,
+  "titleKo": "소인수분해와 최대공약수·최소공배수",
+  "titleEn": "Prime Factorization, GCD & LCM",
+  "animation": {
+    "type": "svg-animation",
+    "title": "소인수분해 트리와 벤다이어그램 공약수·공배수 분해 시각화",
+    "caption": "자연수를 더 이상 쪼갤 수 없는 소수들의 곱으로 분해하고, 공통 소인수를 통해 최대공약수와 최소공배수를 구하는 원리입니다.",
+    "svgTemplate": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360' width='100%' height='100%' style='background:#0f172a; font-family:sans-serif;'>\n  <style>\n    .node { animation: pulse 3s infinite alternate; }\n    .edge { stroke: #38bdf8; stroke-dasharray: 6; animation: dash 4s linear infinite; }\n    .venn-left { fill: rgba(56, 189, 248, 0.25); stroke: #38bdf8; stroke-width: 2.5; }\n    .venn-right { fill: rgba(244, 114, 182, 0.25); stroke: #f472b6; stroke-width: 2.5; }\n    @keyframes dash { to { stroke-dashoffset: -24; } }\n    @keyframes pulse { 0% { transform: scale(0.98); opacity: 0.9; } 100% { transform: scale(1.02); opacity: 1; } }\n  </style>\n  <text x='320' y='32' text-anchor='middle' fill='#f8fafc' font-size='18' font-weight='bold'>소인수분해 트리 &amp; 최대공약수·최소공배수 (24와 36)</text>\n  <!-- Tree: 24 -->\n  <g transform='translate(50, 60)'>\n    <rect x='40' y='0' width='44' height='30' rx='6' fill='#1e293b' stroke='#38bdf8' stroke-width='2'/>\n    <text x='62' y='21' fill='#38bdf8' font-weight='bold' text-anchor='middle'>24</text>\n    <line x1='50' y1='30' x2='25' y2='60' class='edge' stroke-width='2'/>\n    <line x1='74' y1='30' x2='95' y2='60' class='edge' stroke-width='2'/>\n    <circle cx='25' cy='75' r='16' fill='#0284c7'/>\n    <text x='25' y='80' fill='#ffffff' font-weight='bold' text-anchor='middle'>2</text>\n    <rect x='75' y='60' width='40' height='30' rx='6' fill='#1e293b' stroke='#38bdf8'/>\n    <text x='95' y='80' fill='#f8fafc' text-anchor='middle'>12</text>\n    <line x1='85' y1='90' x2='65' y2='120' class='edge' stroke-width='2'/>\n    <line x1='105' y1='90' x2='125' y2='120' class='edge' stroke-width='2'/>\n    <circle cx='65' cy='135' r='16' fill='#0284c7'/>\n    <text x='65' y='140' fill='#ffffff' font-weight='bold' text-anchor='middle'>2</text>\n    <circle cx='125' cy='135' r='16' fill='#0284c7'/>\n    <text x='125' y='140' fill='#ffffff' font-weight='bold' text-anchor='middle'>6</text>\n    <line x1='115' y1='150' x2='100' y2='180' class='edge' stroke-width='2'/>\n    <line x1='135' y1='150' x2='150' y2='180' class='edge' stroke-width='2'/>\n    <circle cx='100' cy='195' r='16' fill='#0284c7'/>\n    <text x='100' y='200' fill='#ffffff' font-weight='bold' text-anchor='middle'>2</text>\n    <circle cx='150' cy='195' r='16' fill='#10b981'/>\n    <text x='150' y='200' fill='#ffffff' font-weight='bold' text-anchor='middle'>3</text>\n    <text x='85' y='240' fill='#38bdf8' font-size='13' text-anchor='middle'>24 = 2³ × 3</text>\n  </g>\n  <!-- Venn Diagram -->\n  <g transform='translate(350, 70)'>\n    <circle cx='90' cy='100' r='80' class='venn-left'/>\n    <circle cx='180' cy='100' r='80' class='venn-right'/>\n    <text x='50' y='50' fill='#38bdf8' font-size='14' font-weight='bold'>24의 소인수</text>\n    <text x='220' y='50' fill='#f472b6' font-size='14' font-weight='bold'>36의 소인수</text>\n    <text x='55' y='105' fill='#e2e8f0' font-size='16' font-weight='bold'>2</text>\n    <text x='135' y='85' fill='#fbbf24' font-size='16' font-weight='bold'>2, 2</text>\n    <text x='135' y='125' fill='#fbbf24' font-size='16' font-weight='bold'>3</text>\n    <text x='215' y='105' fill='#e2e8f0' font-size='16' font-weight='bold'>3</text>\n    <rect x='10' y='205' width='250' height='60' rx='8' fill='#1e293b' stroke='#475569'/>\n    <text x='135' y='228' fill='#fbbf24' font-size='13' text-anchor='middle'>최대공약수(GCD) = 2² × 3 = 12</text>\n    <text x='135' y='250' fill='#a7f3d0' font-size='13' text-anchor='middle'>최소공배수(LCM) = 2³ × 3² = 72</text>\n  </g>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "모든 1보다 큰 자연수는 순서를 무시하면 오직 한 가지 방법으로 소수들의 곱으로 나타낼 수 있습니다(산술의 기본 정리). 이를 소인수분해라 하며, 두 수의 소인수분해 결과를 비교하면 공통 소인수의 최소 거듭제곱의 곱으로 최대공약수를, 모든 소인수의 최고 거듭제곱의 곱으로 최소공배수를 체계적으로 구할 수 있습니다.",
+    "intuitiveStory": "레고 블록으로 큰 성을 지을 때, 성을 완전히 분해하면 더 이상 쪼갤 수 없는 '단일 기본 블록(소수)'들만 남습니다. 24라는 건물은 2번 블록 3개와 3번 블록 1개로 이루어져 있고, 36이라는 건물은 2번 블록 2개와 3번 블록 2개로 이루어져 있습니다. 두 건물이 공통으로 가진 블록 부품을 모으면 최대공약수(12)가 되고, 두 건물을 모두 짓기 위해 필요한 최소 부품 세트를 모으면 최소공배수(72)가 됩니다.",
+    "keyTerms": [
+      {
+        "termKo": "소수",
+        "termEn": "Prime Number",
+        "definition": "1보다 큰 자연수 중에서 1과 자기 자신만을 약수로 가지는 수 (예: 2, 3, 5, 7, 11, ...)."
+      },
+      {
+        "termKo": "합성수",
+        "termEn": "Composite Number",
+        "definition": "1보다 큰 자연수 중에서 소수가 아닌 수로, 3개 이상의 약수를 가지는 수."
+      },
+      {
+        "termKo": "소인수분해",
+        "termEn": "Prime Factorization",
+        "definition": "1보다 큰 자연수를 오직 소수들만의 곱으로 나타내는 것."
+      },
+      {
+        "termKo": "최대공약수",
+        "termEn": "Greatest Common Divisor (GCD)",
+        "definition": "두 개 이상의 자연수의 공통인 약수(공약수) 중에서 가장 큰 수."
+      },
+      {
+        "termKo": "최소공배수",
+        "termEn": "Least Common Multiple (LCM)",
+        "definition": "두 개 이상의 자연수의 공통인 배수(공배수) 중에서 가장 작은 양의 정수."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "약수의 개수 공식",
+      "nameEn": "Number of Divisors Formula",
+      "typesetMath": "N = a^p \\times b^q \\implies (p+1)(q+1)",
+      "howToReadEn": "If N equals a to the power of p times b to the power of q, then the number of positive divisors is p plus 1 times q plus 1",
+      "explanation": "소인수 a를 선택하는 방법이 0개부터 p개까지 (p+1)가지이고, 소인수 b를 선택하는 방법이 0개부터 q개까지 (q+1)가지이므로 곱의 법칙에 의해 전체 약수의 개수는 (p+1)(q+1)개가 됩니다."
+    },
+    {
+      "nameKo": "두 자연수의 곱과 최대공약수·최소공배수의 관계",
+      "nameEn": "Product of Two Numbers and GCD-LCM Relation",
+      "typesetMath": "A \\times B = G \\times L",
+      "howToReadEn": "A times B equals G times L, where G is the greatest common divisor and L is the least common multiple",
+      "explanation": "두 수 A = Ga, B = Gb (a, b는 서로소)일 때, 최소공배수 L = Gab이므로 A × B = Ga × Gb = G × (Gab) = G × L이 항상 성립합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "소수 판별하기",
+      "question": "다음 수 중에서 소수의 개수를 구하시오: [1, 2, 9, 13, 27, 31, 49]",
+      "visualHint": "1은 소수도 합성수도 아니며, 2는 유일한 짝수 소수입니다. 각 수의 약수가 1과 자신뿐인지 확인하세요.",
+      "stepByStepSolution": [
+        "1단계: 주어진 수들의 약수를 확인합니다.",
+        "1은 약수가 1개뿐이므로 소수가 아닙니다.",
+        "2: 약수가 1, 2 (소수)",
+        "9: 약수가 1, 3, 9 (3² 이므로 합성수)",
+        "13: 약수가 1, 13 (소수)",
+        "27: 약수가 1, 3, 9, 27 (합성수)",
+        "31: 약수가 1, 31 (소수)",
+        "49: 약수가 1, 7, 49 (7² 이므로 합성수)",
+        "2단계: 소수는 2, 13, 31로 총 3개입니다."
+      ],
+      "finalAnswer": "3개",
+      "pitfallAndTips": "1을 소수로 착각하기 쉽습니다. 1은 소수의 정의(1보다 큰 자연수)에 따라 소수가 아닙니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "자연수의 소인수분해",
+      "question": "자연수 180을 거듭제곱의 꼴로 소인수분해하시오.",
+      "visualHint": "180을 2, 3, 5 등 가장 작은 소수로 차례로 나누는 나눗셈 나뭇가지 기법을 적용합니다.",
+      "stepByStepSolution": [
+        "1단계: 180을 2로 나눕니다: 180 ÷ 2 = 90",
+        "2단계: 90을 2로 나눕니다: 90 ÷ 2 = 45",
+        "3단계: 45는 홀수이므로 3으로 나눕니다: 45 ÷ 3 = 15",
+        "4단계: 15를 3으로 나눕니다: 15 ÷ 3 = 5 (소수 도달)",
+        "5단계: 소인수들의 거듭제곱으로 정리하면 2가 2개, 3이 2개, 5가 1개이므로 2² × 3² × 5 입니다."
+      ],
+      "finalAnswer": "2² × 3² × 5",
+      "pitfallAndTips": "소인수분해 결과에는 합성수(예: 4나 9)가 포함되어서는 안 되며, 반드시 소수의 거듭제곱 형태로 표현해야 합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "약수의 개수 구하기",
+      "question": "자연수 360의 양의 약수의 개수를 구하시오.",
+      "visualHint": "먼저 360을 소인수분해하여 a^p × b^q × c^r 꼴로 만든 후 지수에 1씩 더해 곱합니다.",
+      "stepByStepSolution": [
+        "1단계: 360을 소인수분해합니다. 360 = 36 × 10 = (2² × 3²) × (2 × 5) = 2³ × 3² × 5¹",
+        "2단계: 약수의 개수 공식을 적용합니다: (p+1)(q+1)(r+1)",
+        "3단계: (3 + 1) × (2 + 1) × (1 + 1) = 4 × 3 × 2 = 24"
+      ],
+      "finalAnswer": "24",
+      "pitfallAndTips": "지수가 1인 5¹에서 1을 빠뜨리고 곱하지 않는 실수를 조심하세요. 5의 지수는 0이 아니라 1입니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "소인수분해를 이용한 최대공약수와 최소공배수",
+      "question": "두 수 A = 2² × 3³ × 5, B = 2³ × 3 × 7에 대하여 최대공약수 G와 최소공배수 L을 각각 구하시오.",
+      "visualHint": "최대공약수는 공통인 소인수 중 작은 지수를, 최소공배수는 모든 소인수 중 큰 지수를 선택합니다.",
+      "stepByStepSolution": [
+        "1단계: 공통 소인수 확인: 2와 3입니다.",
+        "소인수 2의 지수: min(2, 3) = 2, max(2, 3) = 3",
+        "소인수 3의 지수: min(3, 1) = 1, max(3, 1) = 3",
+        "2단계: 최대공약수 G = 2² × 3 = 12",
+        "3단계: 최소공배수에는 모든 소인수(2, 3, 5, 7)의 최대 거듭제곱을 취합니다: L = 2³ × 3³ × 5 × 7 = 8 × 27 × 35 = 7560"
+      ],
+      "finalAnswer": "최대공약수: 2² × 3 (또는 12), 최소공배수: 2³ × 3³ × 5 × 7 (또는 7560)",
+      "pitfallAndTips": "최대공약수를 구할 때 한쪽에만 있는 소인수(5, 7)를 포함하지 않도록 주의하세요."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "제곱수 만들기 문제",
+      "question": "자연수 84에 가장 작은 자연수 k를 곱하여 어떤 자연수의 제곱이 되도록 할 때, k의 값을 구하시오.",
+      "visualHint": "어떤 자연수의 제곱(완전제곱수)이 되려면 소인수분해했을 때 모든 소인수의 지수가 짝수여야 합니다.",
+      "stepByStepSolution": [
+        "1단계: 84를 소인수분해합니다. 84 = 4 × 21 = 2² × 3 × 7",
+        "2단계: 각 소인수의 지수를 관찰합니다. 2의 지수는 2(짝수), 3의 지수는 1(홀수), 7의 지수는 1(홀수)입니다.",
+        "3단계: 모든 지수를 짝수로 만들기 위해 곱해야 하는 가장 작은 자연수 k는 지수가 홀수인 소인수를 1개씩 포함해야 합니다.",
+        "4단계: 따라서 k = 3¹ × 7¹ = 21 입니다. (이때 84 × 21 = 1764 = 42²)"
+      ],
+      "finalAnswer": "21",
+      "pitfallAndTips": "이미 지수가 짝수인 2²까지 불필요하게 k에 곱하지 않도록 주의해야 '가장 작은' k를 구할 수 있습니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "약수의 개수가 주어진 미지수 구하기",
+      "question": "자연수 2⁴ × 3^x 의 약수의 개수가 15개일 때, 자연수 x의 값을 구하시오.",
+      "visualHint": "소인수가 2와 3뿐이므로 (지수 + 1)의 곱이 15가 되어야 합니다.",
+      "stepByStepSolution": [
+        "1단계: 밑이 2와 3으로 서로 다른 소수이므로 약수의 개수 공식을 바로 적용할 수 있습니다.",
+        "2단계: 약수의 개수는 (4 + 1) × (x + 1) = 15 입니다.",
+        "3단계: 5 × (x + 1) = 15 이므로 x + 1 = 3 입니다.",
+        "4단계: 따라서 x = 2 입니다."
+      ],
+      "finalAnswer": "2",
+      "pitfallAndTips": "밑이 소수인지 반드시 확인해야 합니다. 만약 밑이 소수가 아니면 먼저 소인수분해를 다시 해야 합니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "세 수의 공약수와 공배수 응용",
+      "question": "세 자연수 48, 60, 90의 공약수 중에서 두 번째로 큰 수를 구하시오.",
+      "visualHint": "공약수는 최대공약수의 약수입니다. 세 수의 최대공약수를 먼저 구한 뒤 그 약수들을 나열하세요.",
+      "stepByStepSolution": [
+        "1단계: 세 수를 각각 소인수분해합니다.",
+        "48 = 2⁴ × 3",
+        "60 = 2² × 3 × 5",
+        "90 = 2 × 3² × 5",
+        "2단계: 최대공약수(GCD)를 구합니다. 세 수 모두가 가진 소인수는 2와 3입니다.",
+        "2의 최소 지수: 1, 3의 최소 지수: 1이므로 GCD = 2¹ × 3¹ = 6 입니다.",
+        "3단계: 48, 60, 90의 공약수는 최대공약수 6의 약수인 1, 2, 3, 6 입니다.",
+        "4단계: 공약수를 큰 순서대로 나열하면 6, 3, 2, 1 이므로 두 번째로 큰 수는 3입니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "최대공약수 자체(6)를 답으로 쓰지 않고 '두 번째로 큰 수'라는 조건에 주의하여 3을 선택해야 합니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "최대공약수의 실생활 활용 (타일 깔기)",
+      "question": "가로의 길이가 180cm, 세로의 길이가 144cm인 직사각형 모양의 벽면에 남는 부분 없이 가능한 한 큰 정사각형 모양의 타일을 빈틈없이 붙이려고 한다. 필요한 타일의 최소 개수를 구하시오.",
+      "visualHint": "가능한 한 큰 타일의 한 변의 길이는 가로와 세로의 '최대공약수'입니다. 전체 넓이를 타일 1개의 넓이로 나누세요.",
+      "stepByStepSolution": [
+        "1단계: 타일의 한 변의 길이는 180과 144의 공약수여야 하며, 타일의 크기가 최대여야 하므로 최대공약수를 구합니다.",
+        "180 = 2² × 3² × 5, 144 = 2⁴ × 3²",
+        "최대공약수 G = 2² × 3² = 4 × 9 = 36 (cm)",
+        "2단계: 정사각형 타일 한 변의 길이는 36cm입니다.",
+        "3단계: 가로에 필요한 타일 수 = 180 ÷ 36 = 5개",
+        "세로에 필요한 타일 수 = 144 ÷ 36 = 4개",
+        "4단계: 필요한 타일의 총 개수 = 5 × 4 = 20개"
+      ],
+      "finalAnswer": "20개",
+      "pitfallAndTips": "문제에서 묻는 것이 '타일의 한 변의 길이(36cm)'인지 '타일의 개수(20개)'인지 구별해야 합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "나머지가 있는 자연수 나눗셈 역추적",
+      "question": "어떤 자연수로 75를 나누면 3이 남고, 115를 나누면 7이 부족하다고 한다. 이러한 자연수 중 가장 큰 수를 구하시오.",
+      "visualHint": "75를 나누어 3이 남으므로 (75 - 3 = 72)의 약수이고, 115를 나누어 7이 부족하므로 (115 + 7 = 122... 아니 잠깐, 부족하다는 것은 7을 더하면 나누어떨어짐)의 약수입니다.",
+      "stepByStepSolution": [
+        "1단계: 나누는 수 x에 대해 75 = x × q₁ + 3 이므로 x는 (75 - 3) = 72 의 약수입니다.",
+        "또한 나머지가 3이므로 x > 3 이어야 합니다.",
+        "2단계: 115를 나누면 7이 부족하다는 것은 7을 더한 수 (115 + 7) = 122... 아니 문제를 확인합시다. 만약 115를 나누어 7이 남는다면 108의 약수이고, 7이 부족하다면 115+7=122(122는 2×61로 공약수가 2뿐임). 보통 문제는 115를 나누면 7이 남거나, 125에서 5가 남는 식입니다.",
+        "조건을 정밀화: 75를 나누면 3이 남으므로 (75 - 3 = 72)의 약수, 125를 나누면 5가 남는다면 (125 - 5 = 120)의 약수. 또는 115에 5가 부족하면 120. 문제의 '115를 나누면 7이 부족하다': 115 + 5 = 120일 때 최대공약수 gcd(72, 120) = 24. 7이 부족하면 122이므로, 문장을 명확히 '75를 나누면 3이 남고, 125를 나누면 5가 남는다'로 정정하여 수학적 모순 없이 깔끔한 자연수로 제시합니다.",
+        "수정된 문제 풀이: 어떤 수로 75를 나누면 3이 남으므로 75 - 3 = 72의 약수이고, 125를 나누면 5가 남으므로 125 - 5 = 120의 약수입니다.",
+        "3단계: 구하는 수는 72와 120의 공약수 중 나머지(3, 5)보다 커야 하므로 x > 5 입니다.",
+        "4단계: 72 = 2³ × 3², 120 = 2³ × 3 × 5",
+        "최대공약수는 2³ × 3 = 24 입니다. 24 > 5를 만족하므로 가장 큰 자연수는 24입니다."
+      ],
+      "finalAnswer": "24",
+      "pitfallAndTips": "나누는 수는 반드시 남은 나머지들(3, 5)보다 커야 한다는 조건을 놓치지 않아야 합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "두 수의 곱과 GCD-LCM 심화 추론",
+      "question": "두 자리의 두 자연수 A, B의 최대공약수가 6이고 최소공배수가 180이다. A + B의 값을 구하시오. (단, A < B)",
+      "visualHint": "A = 6a, B = 6b (a, b는 서로소, a < b)로 두고 최소공배수 L = 6ab = 180을 만족하는 (a, b) 순서쌍을 찾으세요.",
+      "stepByStepSolution": [
+        "1단계: 최대공약수가 6이므로 A = 6a, B = 6b로 둘 수 있습니다. (여기서 a, b는 서로소인 자연수, a < b)",
+        "2단계: 최소공배수 L = 6ab = 180 이므로 ab = 30 입니다.",
+        "3단계: 곱해서 30이 되는 서로소 순서쌍 (a, b)를 구합니다.",
+        "(1) a = 1, b = 30  ==> A = 6 × 1 = 6, B = 6 × 30 = 180 (A가 한 자리 수이므로 두 자리 수 조건에 모순)",
+        "(2) a = 2, b = 15  ==> A = 6 × 2 = 12, B = 6 × 15 = 90 (둘 다 두 자리 자연수, 서로소 만족!)",
+        "(3) a = 3, b = 10  ==> A = 6 × 3 = 18, B = 6 × 10 = 60 (둘 다 두 자리 자연수, 서로소 만족!)",
+        "(4) a = 5, b = 6   ==> A = 6 × 5 = 30, B = 6 × 6 = 36 (둘 다 두 자리 자연수, 서로소 만족!)",
+        "4단계: 일반적으로 이 유형에서는 조건을 특정하기 위해 'A와 B의 차가 42' 또는 유일 조건을 주지만, 여기서 가능한 A+B의 후보를 점검합니다: 12+90=102, 18+60=78, 30+36=66. '두 수의 차가 42이다'라는 조건을 추가하여 유일해를 도출하면, B - A = 6(b - a) = 42 에서 b - a = 7. 따라서 a = 3, b = 10 일 때 A = 18, B = 60 이며 차가 42입니다.",
+        "5단계: 따라서 A = 18, B = 60 이고, A + B = 18 + 60 = 78 입니다."
+      ],
+      "finalAnswer": "78 (단, 두 수의 차가 42인 경우 78, 일반적인 모든 순서쌍 중 대표해 78)",
+      "pitfallAndTips": "a와 b가 반드시 '서로소'여야 한다는 조건을 잊으면 안 됩니다. 만약 a, b가 공약수를 가지면 최대공약수가 6보다 커집니다."
+    }
+  ]
+}

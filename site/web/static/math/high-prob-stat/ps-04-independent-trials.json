@@ -1,0 +1,232 @@
+{
+  "id": "ps-04-independent-trials",
+  "grade": "high-prob-stat",
+  "domain": "확률",
+  "order": 54,
+  "titleKo": "독립시행의 확률과 기하학적 확률 모델",
+  "titleEn": "Independent Bernoulli Trials and Probability Models",
+  "animation": {
+    "type": "svg",
+    "title": "베르누이 독립시행의 이진 트리 분기와 확률",
+    "caption": "매 시행마다 성공 확률 p와 실패 확률 (1-p)로 분기하는 이진 트리를 통해, n번 시행 중 r번 성공할 확률 nCr p^r (1-p)^(n-r)의 직관적 경로 수를 보여줍니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 500\" width=\"100%\" height=\"100%\">\n  <defs>\n    <linearGradient id=\"ps4Bg\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#18181b\"/>\n      <stop offset=\"100%\" stop-color=\"#27272a\"/>\n    </linearGradient>\n    <linearGradient id=\"succGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#22c55e\"/>\n      <stop offset=\"100%\" stop-color=\"#15803d\"/>\n    </linearGradient>\n    <linearGradient id=\"failGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#ef4444\"/>\n      <stop offset=\"100%\" stop-color=\"#b91c1c\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"800\" height=\"500\" fill=\"url(#ps4Bg)\" rx=\"16\"/>\n  <text x=\"400\" y=\"45\" text-anchor=\"middle\" fill=\"#f8fafc\" font-size=\"20\" font-weight=\"bold\" font-family=\"sans-serif\">독립시행 (Bernoulli Trials) 트리 구조</text>\n  <!-- Root Node -->\n  <circle cx=\"100\" cy=\"250\" r=\"16\" fill=\"#64748b\"/>\n  <text x=\"100\" y=\"255\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"13\" font-weight=\"bold\">시작</text>\n  <!-- Level 1 (Trial 1) -->\n  <line x1=\"116\" y1=\"250\" x2=\"240\" y2=\"160\" stroke=\"#22c55e\" stroke-width=\"3\"/>\n  <text x=\"175\" y=\"195\" fill=\"#86efac\" font-size=\"14\" font-weight=\"bold\">p (성공)</text>\n  <line x1=\"116\" y1=\"250\" x2=\"240\" y2=\"340\" stroke=\"#ef4444\" stroke-width=\"3\"/>\n  <text x=\"175\" y=\"310\" fill=\"#fca5a5\" font-size=\"14\" font-weight=\"bold\">1-p (실패)</text>\n  <circle cx=\"240\" cy=\"160\" r=\"16\" fill=\"url(#succGrad)\"/>\n  <text x=\"240\" y=\"165\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">S</text>\n  <circle cx=\"240\" cy=\"340\" r=\"16\" fill=\"url(#failGrad)\"/>\n  <text x=\"240\" y=\"345\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\">F</text>\n  <!-- Level 2 (Trial 2) -->\n  <line x1=\"256\" y1=\"160\" x2=\"400\" y2=\"110\" stroke=\"#22c55e\" stroke-width=\"2.5\"/>\n  <circle cx=\"400\" cy=\"110\" r=\"14\" fill=\"url(#succGrad)\"/>\n  <text x=\"400\" y=\"114\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">SS</text>\n  <line x1=\"256\" y1=\"160\" x2=\"400\" y2=\"200\" stroke=\"#ef4444\" stroke-width=\"2.5\"/>\n  <circle cx=\"400\" cy=\"200\" r=\"14\" fill=\"url(#failGrad)\"/>\n  <text x=\"400\" y=\"204\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">SF</text>\n  <line x1=\"256\" y1=\"340\" x2=\"400\" y2=\"300\" stroke=\"#22c55e\" stroke-width=\"2.5\"/>\n  <circle cx=\"400\" cy=\"300\" r=\"14\" fill=\"url(#succGrad)\"/>\n  <text x=\"400\" y=\"304\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">FS</text>\n  <line x1=\"256\" y1=\"340\" x2=\"400\" y2=\"390\" stroke=\"#ef4444\" stroke-width=\"2.5\"/>\n  <circle cx=\"400\" cy=\"390\" r=\"14\" fill=\"url(#failGrad)\"/>\n  <text x=\"400\" y=\"394\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"12\">FF</text>\n  <!-- Outcomes Summary on the Right -->\n  <g transform=\"translate(540, 100)\" font-family=\"sans-serif\" font-size=\"15\">\n    <rect x=\"-20\" y=\"-15\" width=\"250\" height=\"300\" rx=\"12\" fill=\"#1e293b\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n    <text x=\"105\" y=\"20\" text-anchor=\"middle\" fill=\"#38bdf8\" font-weight=\"bold\">2회 시행 결과 분포</text>\n    <text x=\"0\" y=\"65\" fill=\"#22c55e\">2회 성공: p² (1가지)</text>\n    <text x=\"0\" y=\"105\" fill=\"#fbbf24\">1회 성공: 2 p(1-p) (2가지)</text>\n    <text x=\"20\" y=\"130\" fill=\"#94a3b8\" font-size=\"13\">(SF 또는 FS 경로)</text>\n    <text x=\"0\" y=\"175\" fill=\"#ef4444\">0회 성공: (1-p)² (1가지)</text>\n    <path d=\"M -10 200 L 220 200\" stroke=\"#475569\" stroke-width=\"1\"/>\n    <text x=\"105\" y=\"240\" text-anchor=\"middle\" fill=\"#f8fafc\" font-weight=\"bold\">합 = [p + (1-p)]² = 1</text>\n  </g>\n  <!-- Bottom Formula Banner -->\n  <rect x=\"100\" y=\"420\" width=\"600\" height=\"55\" rx=\"10\" fill=\"#09090b\" stroke=\"#a1a1aa\" stroke-width=\"1.5\"/>\n  <text x=\"400\" y=\"455\" text-anchor=\"middle\" fill=\"#fbbf24\" font-size=\"17\" font-weight=\"bold\" font-family=\"sans-serif\">P(X = r) = n C r · p^r · (1 - p)^(n - r)</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "동일한 조건 아래에서 매번 반복되는 시행들의 결과가 서로 영향을 주지 않고 독립일 때, 이를 '독립시행'이라 부릅니다. 1회의 시행에서 어떤 사건 A가 일어날 확률이 p로 일정할 때, 이 시행을 n회 반복하여 사건 A가 정확히 r회 일어날 확률은 n회의 자리 중 성공할 r개의 자리를 고르는 경우의 수 nCr과, 각 경우마다 성공 r회(p^r) 및 실패 n-r회((1-p)^(n-r))가 일어날 확률의 곱으로 나타납니다. 이는 (p + q)^n의 이항전개 일반항과 구조적으로 일치합니다.",
+    "intuitiveStory": "주사위를 5번 던져 1의 눈이 3번 나올 확률을 구한다고 합시다. 1이 나오는 것을 ○, 나오지 않는 것을 ×라 하면, '○○○××'가 나올 확률은 (1/6)^3 × (5/6)^2입니다. 그런데 '○×○×○', '××○○○' 등 ○가 3번 들어가는 순서는 5개의 자리 중 3자리를 택하는 5C3 = 10가지나 됩니다. 따라서 한 가지 경로의 확률에 이 조합의 수 10을 곱해주어야 전체 확률이 완성됩니다.",
+    "keyTerms": [
+      {
+        "termKo": "독립시행",
+        "termEn": "Independent Trials",
+        "definition": "동일한 시행을 반복할 때, 이전 시행의 결과가 다음 시행의 결과에 영향을 주지 않는 일련의 시행."
+      },
+      {
+        "termKo": "베르누이 시행",
+        "termEn": "Bernoulli Trial",
+        "definition": "결과가 성공 또는 실패의 두 가지 중 하나로만 나타나는 독립적인 단일 확률 시행."
+      },
+      {
+        "termKo": "독립시행의 확률",
+        "termEn": "Binomial Probability",
+        "definition": "1회 시행 시 성공확률이 p인 독립시행을 n회 반복할 때 r회 성공할 확률 (nCr p^r (1-p)^(n-r))."
+      },
+      {
+        "termKo": "기하학적 확률",
+        "termEn": "Geometric Probability",
+        "definition": "표본공간과 사건이 연속적인 영역(길이, 넓이, 부피)으로 주어질 때 전체 영역에 대한 사건 영역의 비율로 정의되는 확률."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "독립시행의 확률 공식",
+      "nameEn": "Binomial Probability Formula",
+      "typesetMath": "$$P(X = r) = \\binom{n}{r} p^r (1 - p)^{n - r} \\quad (r = 0, 1, \\dots, n)$$",
+      "howToReadEn": "P of X equals r equals n choose r times p to the r times open parentheses one minus p close parentheses to the n minus r",
+      "explanation": "n번의 독립된 시행 중 성공이 r번, 실패가 (n-r)번 나타나는 모든 순서쌍의 합확률입니다."
+    },
+    {
+      "nameKo": "독립시행 확률의 총합",
+      "nameEn": "Sum of Independent Trial Probabilities",
+      "typesetMath": "$$\\sum_{r=0}^{n} \\binom{n}{r} p^r (1 - p)^{n - r} = [p + (1 - p)]^n = 1^n = 1$$",
+      "howToReadEn": "sum from r equals zero to n of n choose r p to the r one minus p to the n minus r equals one",
+      "explanation": "모든 가능한 성공 횟수(0회부터 n회까지)의 확률을 모두 더하면 정확히 1이 됩니다."
+    },
+    {
+      "nameKo": "기하학적 확률 공식",
+      "nameEn": "Geometric Probability Formula",
+      "typesetMath": "$$P(E) = \\frac{\\text{Measure}(E)}{\\text{Measure}(S)}$$",
+      "howToReadEn": "P of E equals measure of E divided by measure of S",
+      "explanation": "표본공간 S와 사건 영역 E의 길이, 넓이, 부피의 비율로 확률을 측정합니다."
+    },
+    {
+      "nameKo": "적어도 한 번 성공할 확률 (여사건)",
+      "nameEn": "At Least One Success Probability",
+      "typesetMath": "$$P(X \\ge 1) = 1 - P(X = 0) = 1 - (1 - p)^n$$",
+      "howToReadEn": "P of X greater than or equal to one equals one minus P of X equals zero equals one minus open parentheses one minus p close parentheses to the n",
+      "explanation": "n번 모두 실패하는 경우를 전체 확률 1에서 제외하여 계산합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "주사위 던지기 독립시행 기본",
+      "question": "한 개의 주사위를 5번 던질 때, 1의 눈이 정확히 2번 나올 확률을 구하시오.",
+      "visualHint": "n = 5, r = 2, p = 1/6, 1 - p = 5/6를 독립시행 확률 공식에 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: 주사위를 1번 던질 때 1의 눈이 나올 확률은 p = 1/6이고, 나오지 않을 확률은 5/6입니다.",
+        "2단계: 총 시행 횟수는 n = 5, 성공 횟수는 r = 2입니다.",
+        "3단계: 5번 중 1의 눈이 2번 나올 확률은 5C2 × (1/6)^2 × (5/6)^3입니다.",
+        "4단계: 5C2 = 10이고, (1/6)^2 = 1/36, (5/6)^3 = 125/216입니다.",
+        "5단계: 계산하면 10 × (125 / 7776) = 1250 / 7776 = 625 / 3888입니다."
+      ],
+      "finalAnswer": "625/3888",
+      "pitfallAndTips": "조합의 수 5C2를 곱하지 않고 (1/6)^2 × (5/6)^3만 계산하면 단 한 가지 순서(○○×××)만의 확률이 되므로 주의합니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "동전 던지기 다회 성공 확률",
+      "question": "한 개의 동전을 6번 던질 때, 앞면이 4번 이상 나올 확률을 구하시오.",
+      "visualHint": "앞면이 4번, 5번, 6번 나오는 상호 배반인 세 사건의 확률을 각각 구해 더합니다.",
+      "stepByStepSolution": [
+        "1단계: 동전의 앞면이 나올 확률은 p = 1/2, 뒷면 확률도 1/2입니다.",
+        "2단계: 앞면이 4번 나올 확률: 6C4 × (1/2)^6 = 15 / 64입니다.",
+        "3단계: 앞면이 5번 나올 확률: 6C5 × (1/2)^6 = 6 / 64입니다.",
+        "4단계: 앞면이 6번 나올 확률: 6C6 × (1/2)^6 = 1 / 64입니다.",
+        "5단계: 세 사건은 배반사건이므로 합의 법칙을 적용합니다: (15 + 6 + 1) / 64 = 22 / 64 = 11 / 32입니다."
+      ],
+      "finalAnswer": "11/32",
+      "pitfallAndTips": "'이상'이나 '이하' 조건이 주어지면 해당되는 경우의 수를 나누어 각각 계산한 뒤 합산합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "시리즈 경기 우승 확정 확률",
+      "question": "A, B 두 팀이 5전 3선승제 경기를 한다. 매 경기 A팀이 이길 확률이 0.6일 때, 4번째 경기에서 A팀의 우승이 확정될 확률을 구하시오.",
+      "visualHint": "4번째 경기에서 이겨야 하므로, 3번째 경기까지 A팀이 정확히 2승 1패를 거두고 마지막 4번째 경기에서 반드시 승리해야 합니다.",
+      "stepByStepSolution": [
+        "1단계: 4번째 경기에서 우승이 확정되려면, 앞선 3경기 중에서 A팀이 2승 1패를 기록해야 합니다.",
+        "2단계: 3경기 중 2승을 거둘 확률은 독립시행에 의해 3C2 × (0.6)^2 × (0.4)^1 = 3 × 0.36 × 0.4 = 0.432입니다.",
+        "3단계: 그리고 4번째 경기에서 반드시 A팀이 이겨야 하므로 이 확률에 0.6을 곱합니다.",
+        "4단계: 0.432 × 0.6 = 0.2592입니다."
+      ],
+      "finalAnswer": "0.2592 (또는 162/625)",
+      "pitfallAndTips": "4경기 중 3승을 거둘 확률 4C3 (0.6)^3 (0.4)를 구하면 3경기 만에 이미 3승으로 끝난 경우까지 포함되므로 오답이 됩니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "좌표평면 위 수직선 이동 문제",
+      "question": "수직선 원점에 위치한 점 P가 있다. 동전 한 개를 던져 앞면이 나오면 양의 방향으로 1만큼, 뒷면이 나오면 음의 방향으로 1만큼 이동한다. 동전을 4번 던졌을 때 점 P의 최종 좌표가 2일 확률을 구하시오.",
+      "visualHint": "앞면이 x번, 뒷면이 4-x번 나왔을 때 최종 위치는 x - (4 - x) = 2입니다.",
+      "stepByStepSolution": [
+        "1단계: 앞면이 나온 횟수를 x라 하면, 뒷면이 나온 횟수는 4 - x입니다.",
+        "2단계: 최종 위치에 관한 방정식: (+1) × x + (-1) × (4 - x) = 2x - 4 = 2.",
+        "3단계: 2x = 6에서 x = 3입니다. 즉, 앞면이 3번, 뒷면이 1번 나와야 합니다.",
+        "4단계: 동전을 4번 던져 앞면이 3번 나올 확률은 4C3 × (1/2)^3 × (1/2)^1 = 4 × (1/16) = 4/16 = 1/4입니다."
+      ],
+      "finalAnswer": "1/4",
+      "pitfallAndTips": "이동 거리와 최종 위치의 관계식을 방정식으로 세워 성공 횟수 x를 명확히 찾습니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "여사건을 이용한 적어도 문제",
+      "question": "어떤 사격 선수의 명중률이 0.8이다. 이 선수가 표적을 향해 4발을 쏠 때, 적어도 1발 이상 명중시킬 확률을 구하시오.",
+      "visualHint": "'적어도 1발 명중'의 여사건은 '4발 모두 빗나감'입니다.",
+      "stepByStepSolution": [
+        "1단계: 1발을 쏠 때 빗나갈 확률은 1 - 0.8 = 0.2입니다.",
+        "2단계: 4발 모두 빗나갈 확률은 독립시행에 의해 (0.2)^4 = 0.0016입니다.",
+        "3단계: 여사건의 확률 법칙에 의해 적어도 1발 명중시킬 확률은 1 - 0.0016 = 0.9984입니다."
+      ],
+      "finalAnswer": "0.9984 (또는 624/625)",
+      "pitfallAndTips": "'적어도'라는 표현이 보이면 1회부터 4회까지의 합을 직접 구하기보다 0회 실패의 여사건을 빼는 것이 훨씬 빠르고 정확합니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "기하학적 확률: 만남의 약속",
+      "question": "갑과 을 두 사람이 오후 1시에서 2시 사이에 약속 장소에서 만나기로 하였다. 먼저 도착한 사람은 15분 동안만 기다리고 자리를 뜬다고 할 때, 두 사람이 약속 장소에서 만날 확률을 구하시오.",
+      "visualHint": "갑의 도착 시각 x, 을의 도착 시각 y (0 ≤ x, y ≤ 60)인 정사각형 영역에서 |x - y| ≤ 15인 영역의 넓이 비율을 구합니다.",
+      "stepByStepSolution": [
+        "1단계: 갑과 을이 오후 1시 이후 도착하는 시각을 각각 x분, y분이라 하면 0 ≤ x ≤ 60, 0 ≤ y ≤ 60입니다. 전체 표본공간의 넓이는 60 × 60 = 3600입니다.",
+        "2단계: 두 사람이 만나기 위한 조건은 두 도착 시각의 차이가 15분 이하이어야 하므로 |x - y| ≤ 15입니다.",
+        "3단계: 여사건인 '만나지 못할 영역'은 |x - y| > 15, 즉 y - x > 15 또는 x - y > 15입니다.",
+        "4단계: 이는 한 변이 45(60 - 15)인 두 개의 직각이등변삼각형 영역입니다.",
+        "5단계: 만나지 못할 영역의 넓이는 2 × (1/2 × 45 × 45) = 2025입니다.",
+        "6단계: 두 사람이 만날 영역의 넓이는 3600 - 2025 = 1575입니다.",
+        "7단계: 기하학적 확률은 1575 / 3600 = 7 / 16입니다."
+      ],
+      "finalAnswer": "7/16",
+      "pitfallAndTips": "연속적인 시간 문제는 좌표평면 위의 넓이로 해석하는 기하학적 확률의 대표적 모델입니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "기하학적 확률: 세 선분으로 삼각형 만들기",
+      "question": "길이가 1인 선분 위에 임의로 두 점 X, Y를 찍어 세 토막의 선분으로 나눌 때, 이 세 선분으로 삼각형을 만들 수 있을 확률을 구하시오.",
+      "visualHint": "가장 긴 변의 길이가 1/2보다 작아야 한다는 삼각형 형성 조건을 x, y의 영역으로 도식화합니다.",
+      "stepByStepSolution": [
+        "1단계: 두 점의 좌표를 0 < x < y < 1이라 가정합시다 (y < x인 대칭 영역도 동일).",
+        "2단계: 세 토막의 길이는 a = x, b = y - x, c = 1 - y입니다.",
+        "3단계: 삼각형이 형성되기 위한 조건은 세 변 각각이 둘레의 절반(1/2)보다 작아야 합니다: x < 1/2, y - x < 1/2, 1 - y < 1/2 (즉 y > 1/2).",
+        "4단계: 0 < x < y < 1인 직각삼각형 전체 영역의 넓이는 1/2 × 1 × 1 = 1/2입니다.",
+        "5단계: 세 부등식을 만족하는 영역은 꼭짓점이 (0, 1/2), (1/2, 1/2), (1/2, 1)인 직각삼각형이며, 그 넓이는 1/2 × (1/2) × (1/2) = 1/8입니다.",
+        "6단계: 구하는 기하학적 확률은 (1/8) / (1/2) = 1/4입니다."
+      ],
+      "finalAnswer": "1/4",
+      "pitfallAndTips": "삼각형 결정조건(가장 긴 변 < 나머지 두 변의 합)은 '모든 변 < 전체 둘레 / 2'와 동치임을 활용합니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "기하분포적 관점: 첫 성공까지의 시행 횟수",
+      "question": "주사위를 1의 눈이 나올 때까지 반복하여 던질 때, 정확히 4번째 시행에서 처음으로 1의 눈이 나올 확률을 구하시오.",
+      "visualHint": "1~3회차까지는 1 이외의 눈이 나오고, 4회차에 1의 눈이 나오는 연속 사건입니다.",
+      "stepByStepSolution": [
+        "1단계: 1의 눈이 나올 확률은 p = 1/6, 나오지 않을 확률은 q = 5/6입니다.",
+        "2단계: 1회차부터 3회차까지 연속으로 1이 나오지 않아야 하므로 그 확률은 (5/6)^3입니다.",
+        "3단계: 4회차에 정확히 1의 눈이 나와야 하므로 1/6을 곱합니다.",
+        "4단계: 구하는 확률은 (5/6)^3 × (1/6) = (125 / 216) × (1/6) = 125 / 1296입니다."
+      ],
+      "finalAnswer": "125/1296",
+      "pitfallAndTips": "앞선 3번은 반드시 실패하고 4번째에 성공해야 하므로 순서가 이미 고정되어 있어 조합 nCr을 곱하지 않습니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "독립시행과 최대 확률 횟수 탐색",
+      "question": "어떤 시행에서 사건 A가 일어날 확률이 1/3이다. 이 시행을 10회 반복할 때, 사건 A가 r회 일어날 확률 P(X = r)이 최대가 되는 r의 값을 구하시오.",
+      "visualHint": "P(X = r+1) / P(X = r) ≥ 1이 되는 부등식을 세워 r의 임계점을 찾습니다.",
+      "stepByStepSolution": [
+        "1단계: P(X = r) = 10Cr (1/3)^r (2/3)^(10-r)입니다.",
+        "2단계: 연속한 두 확률의 비 P(X = r+1) / P(X = r)을 계산합니다.",
+        "3단계: [10C(r+1) (1/3)^(r+1) (2/3)^(9-r)] / [10Cr (1/3)^r (2/3)^(10-r)] = [(10 - r) / (r + 1)] × [(1/3) / (2/3)] = (10 - r) / [2(r + 1)].",
+        "4단계: 확률이 증가하기 위한 조건 (10 - r) / [2(r + 1)] ≥ 1을 풀면 10 - r ≥ 2r + 2, 즉 3r ≤ 8이므로 r ≤ 8/3 = 2.66...입니다.",
+        "5단계: 따라서 r = 0, 1, 2까지는 확률이 증가하고(P(0) < P(1) < P(2) < P(3)), r ≥ 3부터는 감소합니다.",
+        "6단계: 따라서 확률이 최대가 되는 횟수는 r = 3입니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "이항분포 B(n, p)에서 가장 높은 확률을 갖는 횟수 r은 대략 평균 np 부근(10 × 1/3 ≈ 3.33)에 위치합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "독립시행과 조건부확률의 융합",
+      "question": "동전 한 개를 6번 던졌을 때, 앞면이 적어도 3번 나왔다는 조건 아래에서 앞면이 정확히 4번 나왔을 조건부확률을 구하시오.",
+      "visualHint": "분모에는 앞면이 3, 4, 5, 6번 나오는 확률의 합을, 분자에는 4번 나오는 확률을 둡니다.",
+      "stepByStepSolution": [
+        "1단계: 동전을 6번 던져 앞면이 k번 나올 확률은 6Ck (1/2)^6 = 6Ck / 64입니다.",
+        "2단계: 사건 A(앞면이 3번 이상)의 경우의 수는 6C3 + 6C4 + 6C5 + 6C6입니다.",
+        "3단계: 6C3 = 20, 6C4 = 15, 6C5 = 6, 6C6 = 1이므로 20 + 15 + 6 + 1 = 42가지입니다. 따라서 P(A) = 42 / 64입니다.",
+        "4단계: 사건 B(앞면이 정확히 4번)의 경우의 수는 6C4 = 15가지입니다.",
+        "5단계: 사건 B는 사건 A의 부분집합이므로 A ∩ B = B입니다. P(A ∩ B) = 15 / 64입니다.",
+        "6단계: 조건부확률 P(B|A) = P(A ∩ B) / P(A) = (15 / 64) / (42 / 64) = 15 / 42 = 5 / 14입니다."
+      ],
+      "finalAnswer": "5/14",
+      "pitfallAndTips": "조건부확률의 정의와 독립시행의 다회 성공 사건이 결합된 수능 4점 유형의 핵심 문제입니다."
+    }
+  ]
+}

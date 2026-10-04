@@ -1,0 +1,222 @@
+{
+  "id": "ha-02-logarithms-basic",
+  "grade": "high-algebra",
+  "domain": "지수와 로그",
+  "order": 36,
+  "titleKo": "로그의 정의와 밑변환 공식·상용로그",
+  "titleEn": "Logarithms: Definition, Change of Base, and Common Logs",
+  "animation": {
+    "type": "interactive-svg",
+    "title": "로그의 밑변환과 지수-로그 상호 전환",
+    "caption": "밑 a의 거듭제곱과 로그 지수 x = log_a N의 대응 관계 및 밑변환 비율의 동적 시각화입니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 360\" width=\"100%\" height=\"100%\">\n  <rect width=\"600\" height=\"360\" fill=\"#0f172a\" rx=\"12\"/>\n  <defs>\n    <linearGradient id=\"logGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"100%\" stop-color=\"#818cf8\"/>\n    </linearGradient>\n  </defs>\n  <!-- Diagram Boxes -->\n  <rect x=\"50\" y=\"60\" width=\"210\" height=\"100\" rx=\"10\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n  <text x=\"155\" y=\"95\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"16\" font-weight=\"bold\" font-family=\"sans-serif\">지수 표현 (Exponential)</text>\n  <text x=\"155\" y=\"135\" text-anchor=\"middle\" fill=\"#f8fafc\" font-size=\"22\" font-family=\"sans-serif\">a<tspan font-size=\"16\" dy=\"-10\">x</tspan><tspan dy=\"10\"> = N</tspan></text>\n  \n  <rect x=\"340\" y=\"60\" width=\"210\" height=\"100\" rx=\"10\" fill=\"#1e293b\" stroke=\"#818cf8\" stroke-width=\"2\"/>\n  <text x=\"445\" y=\"95\" text-anchor=\"middle\" fill=\"#818cf8\" font-size=\"16\" font-weight=\"bold\" font-family=\"sans-serif\">로그 표현 (Logarithmic)</text>\n  <text x=\"445\" y=\"135\" text-anchor=\"middle\" fill=\"#f8fafc\" font-size=\"22\" font-family=\"sans-serif\">x = log<tspan font-size=\"15\" dy=\"6\">a</tspan><tspan dy=\"-6\"> N</tspan></text>\n  \n  <!-- Animated bidirectional arrows -->\n  <path d=\"M 265 100 L 335 100\" stroke=\"#fbbf24\" stroke-width=\"3\" stroke-dasharray=\"6 4\">\n    <animate attributeName=\"stroke-dashoffset\" values=\"20;0\" dur=\"1.5s\" repeatCount=\"indefinite\"/>\n  </path>\n  <polygon points=\"335,95 345,100 335,105\" fill=\"#fbbf24\"/>\n  <polygon points=\"265,95 255,100 265,105\" fill=\"#fbbf24\"/>\n  \n  <!-- Conditions box -->\n  <rect x=\"50\" y=\"190\" width=\"500\" height=\"130\" rx=\"10\" fill=\"#1e293b\" stroke=\"#334155\" stroke-width=\"1.5\"/>\n  <text x=\"70\" y=\"225\" fill=\"#f43f5e\" font-size=\"15\" font-weight=\"bold\" font-family=\"sans-serif\">[필수 정의 조건]</text>\n  <text x=\"70\" y=\"255\" fill=\"#e2e8f0\" font-size=\"14\" font-family=\"sans-serif\">• 밑 조건 (Base): a &gt; 0, a ≠ 1 (밑은 1이 아닌 양수)</text>\n  <text x=\"70\" y=\"285\" fill=\"#e2e8f0\" font-size=\"14\" font-family=\"sans-serif\">• 진수 조건 (Argument): N &gt; 0 (진수는 반드시 양수)</text>\n  <text x=\"70\" y=\"310\" fill=\"#38bdf8\" font-size=\"13\" font-family=\"sans-serif\">밑변환 공식: log_a b = (log_c b) / (log_c a) = 1 / (log_b a)</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "a > 0, a ≠ 1 일 때 양수 N에 대하여 a^x = N을 만족하는 실수 x는 오직 하나 존재하며, 이 x를 x = log_a N (밑이 a인 N의 로그)으로 정의합니다. 로그가 실수로서 정의되기 위해서는 밑 조건(a > 0, a ≠ 1)과 진수 조건(N > 0)이 반드시 동시에 만족되어야 합니다. 로그의 핵심 능력은 곱셈을 덧셈으로, 나눗셈을 뺄셈으로, 거듭제곱을 곱셈으로 축약하는 것이며, 밑변환 공식 log_a b = (log_c b)/(log_c a)를 통해 원하는 어떤 밑으로도 자유롭게 변환하여 복잡한 식을 일원화할 수 있습니다.",
+    "intuitiveStory": "17세기 천문학자 케플러는 수십 년간 행성 궤도의 거대한 다자리수 곱셈과 나눗셈에 시달리며 눈이 멀 지경이었습니다. 이때 존 네이피어가 '로그'를 발명했습니다. 로그를 취하면 천문학적 숫자의 지루한 곱셈이 단순한 덧셈으로 바뀌어 계산 시간을 수십 분의 일로 줄였고, 프랑스의 수학자 라플라스는 '로그는 천문학자의 수명을 두 배로 늘려주었다'고 극찬했습니다.",
+    "keyTerms": [
+      {
+        "termKo": "밑과 진수",
+        "termEn": "Base and Argument",
+        "definition": "log_a N에서 a를 로그의 밑(Base), N을 로그의 진수(Argument)라 하며 a>0, a≠1, N>0을 만족해야 함."
+      },
+      {
+        "termKo": "밑변환 공식",
+        "termEn": "Change of Base Formula",
+        "definition": "log_a b = (log_c b)/(log_c a) 로, 서로 다른 밑을 가진 로그들을 동일한 밑 c로 통일할 수 있는 핵심 도구."
+      },
+      {
+        "termKo": "상용로그",
+        "termEn": "Common Logarithm",
+        "definition": "10을 밑으로 하는 로그 log₁₀ N을 밑 10을 생략하여 log N으로 나타낸 로그로, 십진법 자릿수 계산에 특화됨."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "로그의 기본 연산 성질",
+      "nameEn": "Properties of Logarithms",
+      "typesetMath": "\\log_a (xy) = \\log_a x + \\log_a y, \\quad \\log_a \\frac{x}{y} = \\log_a x - \\log_a y, \\quad \\log_a x^k = k \\log_a x",
+      "howToReadEn": "log base a of xy equals log base a of x plus log base a of y; log base a of x over y equals log base a of x minus log base a of y; and log base a of x to the k equals k times log base a of x.",
+      "explanation": "지수법칙의 연산 규칙(밑이 같을 때 지수의 합과 차)이 로그에서는 진수의 곱과 몫에 대응됩니다."
+    },
+    {
+      "nameKo": "밑변환 공식",
+      "nameEn": "Change of Base Formulas",
+      "typesetMath": "\\log_a b = \\frac{\\log_c b}{\\log_c a}, \\quad \\log_a b = \\frac{1}{\\log_b a}, \\quad a^{\\log_c b} = b^{\\log_c a}",
+      "howToReadEn": "log base a of b equals log base c of b over log base c of a; log base a of b equals one over log base b of a; and a to the power of log base c of b equals b to the power of log base c of a.",
+      "explanation": "밑과 진수의 위치를 바꾸면 역수가 되며, 지수에 로그가 있을 때 밑과 진수를 맞바꿀 수 있습니다."
+    },
+    {
+      "nameKo": "상용로그의 지표와 가수",
+      "nameEn": "Characteristic and Mantissa of Common Log",
+      "typesetMath": "\\log N = n + \\alpha \\quad (n \\in \\mathbb{Z}, 0 \\le \\alpha < 1)",
+      "howToReadEn": "log of N equals n plus alpha, where n is an integer and alpha is between zero and one.",
+      "explanation": "정수 부분 n은 진수 N의 자릿수를 결정(n≥0이면 n+1자리 정수, n<0이면 소수점 아래 |n|째 자리에서 처음으로 0 아닌 수)하고, 소수 부분 α는 수의 배열 순서를 결정합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "로그 기본 연산",
+      "question": "다음 식의 값을 계산하시오: log₂ 24 - log₂ 3",
+      "visualHint": "밑이 같은 로그의 뺄셈은 진수의 나눗셈으로 결합합니다: log_a x - log_a y = log_a (x/y).",
+      "stepByStepSolution": [
+        "단계 1: 두 로그는 모두 밑이 2로 동일합니다.",
+        "단계 2: 로그의 뺄셈 공식을 적용하여 하나의 로그로 합칩니다: log₂ (24 / 3).",
+        "단계 3: 진수를 계산합니다: 24 / 3 = 8.",
+        "단계 4: 8 = 2³ 이므로 log₂ 8 = log₂ (2³) = 3 입니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "log₂ 24 - log₂ 3을 (log₂ 24)/(log₂ 3)으로 잘못 쓰는 치명적인 실수를 주의하세요."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "로그의 정의 조건",
+      "question": "log_(x-2) (7 - x) 가 정의되기 위한 모든 정수 x의 값의 합을 구하시오.",
+      "visualHint": "밑 조건(밑 > 0, 밑 ≠ 1)과 진수 조건(진수 > 0)의 공통 범위를 구합니다.",
+      "stepByStepSolution": [
+        "단계 1: 밑 조건을 세웁니다: x - 2 > 0 이고 x - 2 ≠ 1.",
+        "단계 2: 이를 풀면 x > 2 이고 x ≠ 3 입니다.",
+        "단계 3: 진수 조건을 세웁니다: 7 - x > 0 이므로 x < 7 입니다.",
+        "단계 4: 공통 범위를 구합니다: 2 < x < 7 이면서 x ≠ 3. 즉, x ∈ {4, 5, 6}.",
+        "단계 5: 만족하는 모든 정수 x의 합: 4 + 5 + 6 = 15."
+      ],
+      "finalAnswer": "15",
+      "pitfallAndTips": "밑이 1이 아니어야 한다는 조건(x - 2 ≠ 1 => x ≠ 3)을 빠뜨리는 경우가 빈번합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "밑변환 공식의 연쇄 계산",
+      "question": "다음 식의 값을 구하시오: log₂ 3 × log₃ 5 × log₅ 16",
+      "visualHint": "밑변환 공식을 이용해 모든 로그를 상용로그(밑 10)의 분수 꼴로 나타내면 연쇄 약분됩니다.",
+      "stepByStepSolution": [
+        "단계 1: 상용로그로 밑을 변환합니다: log₂ 3 = (log 3)/(log 2), log₃ 5 = (log 5)/(log 3), log₅ 16 = (log 16)/(log 5).",
+        "단계 2: 세 식을 곱합니다: (log 3 / log 2) × (log 5 / log 3) × (log 16 / log 5).",
+        "단계 3: 분자와 분모에서 log 3과 log 5가 약분되어 (log 16)/(log 2) 가 남습니다.",
+        "단계 4: 16 = 2⁴ 이므로 log 16 = log(2⁴) = 4 log 2 입니다.",
+        "단계 5: (4 log 2) / (log 2) = 4 입니다."
+      ],
+      "finalAnswer": "4",
+      "pitfallAndTips": "log_a b × log_b c = log_a c 성질을 기억하면 직관적으로 log₂ 16 = 4로 바로 도출할 수 있습니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "밑과 진수의 지수 정리",
+      "question": "log₄ 8 + log₉ 27 의 값을 구하시오.",
+      "visualHint": "log_(a^m) (b^n) = (n/m) log_a b 성질을 활용하여 소인수의 거듭제곱 지수를 앞으로 뺍니다.",
+      "stepByStepSolution": [
+        "단계 1: log₄ 8 = log_(2²) (2³) 입니다. 공식에 의해 (3/2) log₂ 2 = 3/2 입니다.",
+        "단계 2: log₉ 27 = log_(3²) (3³) 입니다. 공식에 의해 (3/2) log₃ 3 = 3/2 입니다.",
+        "단계 3: 두 항을 더합니다: 3/2 + 3/2 = 3."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "밑의 지수 m은 분모로 나가고, 진수의 지수 n은 분자로 나감을 헷갈리지 마세요."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "문자로 표현된 로그의 변환",
+      "question": "log₁₀ 2 = a, log₁₀ 3 = b 일 때, log₅ 18 을 a와 b로 나타내시오.",
+      "visualHint": "log₅ 18을 밑변환 공식으로 상용로그로 바꾼 뒤, log 5 = 1 - log 2 = 1 - a 임을 이용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 밑변환 공식으로 밑을 10으로 통일합니다: log₅ 18 = (log 18) / (log 5).",
+        "단계 2: 분자 log 18 = log(2 × 3²) = log 2 + 2 log 3 = a + 2b 입니다.",
+        "단계 3: 분모 log 5 = log(10 / 2) = log 10 - log 2 = 1 - a 입니다.",
+        "단계 4: 분수식으로 결합합니다: (a + 2b) / (1 - a)."
+      ],
+      "finalAnswer": "(a + 2b) / (1 - a)",
+      "pitfallAndTips": "log 5를 1 - log 2 로 바꾸는 것은 상용로그 문제의 가장 대표적이고 핵심적인 테크닉입니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "로그 역수 합의 이차방정식 유도",
+      "question": "1이 아닌 두 양수 a, b에 대하여 log_a b + 4 log_b a = 4 가 성립할 때, log_a (a²b³) 의 값을 구하시오.",
+      "visualHint": "t = log_a b 로 두면 log_b a = 1/t 임을 이용하여 t에 대한 이차방정식을 풉니다.",
+      "stepByStepSolution": [
+        "단계 1: t = log_a b 로 치환하면 t + 4/t = 4 입니다.",
+        "단계 2: 양변에 t를 곱하여 정리합니다: t² - 4t + 4 = 0, 즉 (t - 2)² = 0 이므로 t = 2 입니다.",
+        "단계 3: 따라서 log_a b = 2 입니다.",
+        "단계 4: 구하고자 하는 식을 전개합니다: log_a (a²b³) = log_a (a²) + log_a (b³) = 2 + 3 log_a b.",
+        "단계 5: log_a b = 2를 대입합니다: 2 + 3(2) = 2 + 6 = 8."
+      ],
+      "finalAnswer": "8",
+      "pitfallAndTips": "log_a b 와 log_b a 는 서로 역수 관계임을 인지하고 치환 후 완전제곱식을 신속히 발견해야 합니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "상용로그를 이용한 큰 수의 자릿수",
+      "question": "log 2 = 0.3010, log 3 = 0.4771 일 때, 12²⁰ 은 몇 자리 정수인지 구하시오.",
+      "visualHint": "log(12²⁰)의 상용로그 값을 계산하여 정수 부분 n을 구하면 자릿수는 n + 1입니다.",
+      "stepByStepSolution": [
+        "단계 1: x = 12²⁰ 에 상용로그를 취합니다: log x = log(12²⁰) = 20 log 12.",
+        "단계 2: 12 = 2² × 3 이므로 log 12 = 2 log 2 + log 3 입니다.",
+        "단계 3: 값을 대입합니다: log 12 = 2(0.3010) + 0.4771 = 0.6020 + 0.4771 = 1.0791.",
+        "단계 4: 20을 곱합니다: log x = 20 × 1.0791 = 21.582.",
+        "단계 5: 정수 부분 n = 21, 소수 부분 α = 0.582 입니다.",
+        "단계 6: 정수 부분이 21이므로 자릿수는 n + 1 = 21 + 1 = 22자리 정수입니다."
+      ],
+      "finalAnswer": "22",
+      "pitfallAndTips": "정수 부분이 n일 때 자릿수는 n이 아니라 n + 1자리임(예: log 100 = 2는 3자리 정수)을 절대 잊지 마세요."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "상용로그의 소수 부분 일치 조건",
+      "question": "log x의 정수 부분이 2이고, log x² 과 log(1/x)의 소수 부분이 같을 때, 양수 x의 값을 모두 구하시오.",
+      "visualHint": "두 수의 소수 부분이 같으면 두 로그의 차가 '정수'가 됨을 이용합니다.",
+      "stepByStepSolution": [
+        "단계 1: log x의 정수 부분이 2이므로 2 ≤ log x < 3 입니다.",
+        "단계 2: log x² 과 log(1/x)의 소수 부분이 같으므로, 두 로그의 차 log x² - log(1/x) 는 정수 k 이어야 합니다.",
+        "단계 3: 식을 간단히 합니다: 2 log x - (-log x) = 3 log x = k (k는 정수).",
+        "단계 4: 2 ≤ log x < 3 의 각 변에 3을 곱하면 6 ≤ 3 log x < 9 입니다.",
+        "단계 5: 따라서 정수 k가 될 수 있는 값은 6, 7, 8 입니다.",
+        "단계 6: 각각에 대해 log x = 6/3 = 2, 7/3, 8/3 입니다.",
+        "단계 7: 단, 소수 부분 검증: log x = 2일 때 log x² = 4(소수부분 0), log(1/x) = -2(소수부분 0)으로 만족합니다. 모든 경우 소수 부분이 정의되므로 x = 10², 10^(7/3), 10^(8/3) 입니다."
+      ],
+      "finalAnswer": "10², 10^(7/3), 10^(8/3)",
+      "pitfallAndTips": "소수 부분의 합이 1인 유형과 달리, 소수 부분이 같은 유형은 소수 부분이 0이 되어도 상관없으므로 경계값 2를 포함합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "로그 부등식과 최고자리 숫자 결정",
+      "question": "log 2 = 0.3010, log 3 = 0.4771 일 때, (5/4)ⁿ > 100 을 만족하는 최소의 자연수 n을 구하고, 3⁴⁰의 최고자리 숫자를 구하시오. 두 답을 순서대로 적으시오.",
+      "visualHint": "최고자리 숫자는 상용로그의 소수 부분 α가 log k ≤ α < log(k+1) 범위 어디에 속하는지로 결정됩니다.",
+      "stepByStepSolution": [
+        "단계 1: [첫 번째 질문] (5/4)ⁿ > 100 의 양변에 상용로그를 취합니다: n log(5/4) > log 100 = 2.",
+        "단계 2: log(5/4) = log 5 - log 4 = (1 - log 2) - 2 log 2 = 1 - 3 log 2 = 1 - 3(0.3010) = 1 - 0.9030 = 0.0970.",
+        "단계 3: n × 0.0970 > 2 이므로 n > 2 / 0.0970 = 2000 / 97 ≈ 20.618 입니다. 따라서 최소의 자연수 n = 21 입니다.",
+        "단계 4: [두 번째 질문] N = 3⁴⁰ 의 상용로그: log N = 40 log 3 = 40 × 0.4771 = 19.084 입니다.",
+        "단계 5: 소수 부분 α = 0.084 입니다.",
+        "단계 6: log 1 = 0, log 2 = 0.3010 이므로 0 ≤ 0.084 < 0.3010, 즉 log 1 ≤ α < log 2 입니다.",
+        "단계 7: 따라서 3⁴⁰의 최고자리 숫자는 1 입니다."
+      ],
+      "finalAnswer": "21, 1",
+      "pitfallAndTips": "소수 부분이 log 1과 log 2 사이에 있으면 최고자리 숫자가 1이 된다는 자릿수 추론 원리를 확실히 정리하세요."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "로그 정수조건 격자점 고난도 킬러",
+      "question": "두 자연수 a, b에 대하여 1 ≤ a ≤ 20, 1 ≤ b ≤ 20 일 때, log₂ a + log₃ b 가 유리수가 되도록 하는 순서쌍 (a, b)의 개수를 구하시오.",
+      "visualHint": "log₂ a와 log₃ b가 각각 독립적으로 유리수여야 유리수 합이 가능함을 대수적 무리수 독립성으로 파악합니다.",
+      "stepByStepSolution": [
+        "단계 1: 2와 3은 서로 다른 소수이므로, log₂ a + log₃ b = p/q (유리수) 가 성립하려면 log₂ a 와 log₃ b 가 각각 유리수여야 합니다.",
+        "단계 2: a가 자연수일 때 log₂ a가 유리수이면 a는 2의 거듭제곱이어야 합니다: a = 2^m (m은 음이 아닌 정수).",
+        "단계 3: 1 ≤ a ≤ 20 범위에서 가능한 a는 2⁰=1, 2¹=2, 2²=4, 2³=8, 2⁴=16 총 5개입니다.",
+        "단계 4: b가 자연수일 때 log₃ b가 유리수이면 b는 3의 거듭제곱이어야 합니다: b = 3^k (k는 음이 아닌 정수).",
+        "단계 5: 1 ≤ b ≤ 20 범위에서 가능한 b는 3⁰=1, 3¹=3, 3²=9 총 3개입니다.",
+        "단계 6: a와 b는 서로 독립적으로 선택될 수 있으므로, 곱의 법칙에 의해 가능한 순서쌍 (a, b)의 개수는 5 × 3 = 15개입니다."
+      ],
+      "finalAnswer": "15",
+      "pitfallAndTips": "소수가 다른 두 로그의 합이 유리수가 되려면 각각이 독립적으로 유리수(소인수 거듭제곱)가 되어야 한다는 대수적 성질이 핵심 키입니다."
+    }
+  ]
+}

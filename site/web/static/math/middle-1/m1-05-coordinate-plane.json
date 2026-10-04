@@ -1,0 +1,226 @@
+{
+  "id": "m1-05-coordinate-plane",
+  "grade": "middle-1",
+  "domain": "좌표와 그래프",
+  "order": 5,
+  "titleKo": "좌표평면과 그래프·정비례·반비례",
+  "titleEn": "Coordinate Plane, Direct & Inverse Proportions",
+  "animation": {
+    "type": "svg-animation",
+    "title": "데카르트 좌표평면과 정비례 직선 및 반비례 쌍곡선",
+    "caption": "원점을 지나는 정비례 직선 y = ax와 x축, y축에 한없이 가까워지는 반비례 쌍곡선 y = a/x의 기하학적 형태 비교입니다.",
+    "svgTemplate": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360' width='100%' height='100%' style='background:#0f172a; font-family:sans-serif;'>\n  <style>\n    .axis { stroke: #94a3b8; stroke-width: 2.5; marker-end: url(#arrow-slate); }\n    .grid-line { stroke: #1e293b; stroke-width: 1; stroke-dasharray: 2,2; }\n    .direct-line { stroke: #38bdf8; stroke-width: 3.5; stroke-dasharray: 400; stroke-dashoffset: 400; animation: drawLine 3s forwards; }\n    .inverse-curve { stroke: #f43f5e; stroke-width: 3; fill: none; stroke-dasharray: 500; stroke-dashoffset: 500; animation: drawCurve 3.5s 0.5s forwards; }\n    @keyframes drawLine { to { stroke-dashoffset: 0; } }\n    @keyframes drawCurve { to { stroke-dashoffset: 0; } }\n  </style>\n  <defs>\n    <marker id='arrow-slate' markerWidth='6' markerHeight='6' refX='5' refY='3' orient='auto'>\n      <polygon points='0 0, 6 3, 0 6' fill='#94a3b8'/>\n    </marker>\n  </defs>\n  <text x='320' y='32' text-anchor='middle' fill='#f8fafc' font-size='17' font-weight='bold'>좌표평면: 정비례 y = 1.5x (하늘색) vs 반비례 y = 6/x (분홍색)</text>\n  <g transform='translate(320, 180)'>\n    <!-- Axes -->\n    <line x1='-280' y1='0' x2='280' y2='0' class='axis'/>\n    <line x1='0' y1='140' x2='0' y2='-140' class='axis'/>\n    <text x='270' y='-10' fill='#94a3b8' font-size='14' font-weight='bold'>x</text>\n    <text x='12' y='-130' fill='#94a3b8' font-size='14' font-weight='bold'>y</text>\n    <text x='-15' y='18' fill='#94a3b8' font-size='14' font-weight='bold'>O</text>\n    <!-- Quadrant labels -->\n    <text x='160' y='-80' fill='#475569' font-size='16' font-weight='bold'>제1사분면 (+,+)</text>\n    <text x='-230' y='-80' fill='#475569' font-size='16' font-weight='bold'>제2사분면 (-,+)</text>\n    <text x='-230' y='90' fill='#475569' font-size='16' font-weight='bold'>제3사분면 (-,-)</text>\n    <text x='160' y='90' fill='#475569' font-size='16' font-weight='bold'>제4사분면 (+,-)</text>\n    <!-- Direct proportion line: y = 1.5x (y is flipped in SVG) -->\n    <line x1='-140' y1='105' x2='140' y2='-105' class='direct-line'/>\n    <!-- Inverse proportion: y = 6000/x scaled -->\n    <path d='M 30 -160 Q 50 -70 180 -25' class='inverse-curve'/>\n    <path d='M -30 160 Q -50 70 -180 25' class='inverse-curve'/>\n    <!-- Moving point on direct -->\n    <circle cx='80' cy='-60' r='5' fill='#38bdf8'/>\n    <text x='90' y='-65' fill='#38bdf8' font-size='12' font-weight='bold'>(x, ax)</text>\n  </g>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "수직선 두 개를 원점에서 직교하도록 교차시켜 평면 위의 모든 점의 위치를 순서쌍 (x, y)로 일대일 대응시킨 것이 좌표평면입니다. 정비례 y = ax (a ≠ 0)는 x가 2배, 3배가 될 때 y도 2배, 3배가 되는 관계로 원점을 지나는 직선 그래프를 그리며, 반비례 y = a/x (a ≠ 0)는 x가 2배, 3배가 될 때 y는 1/2배, 1/3배가 되는 관계로 한 쌍의 매끄러운 곡선(쌍곡선)을 형성합니다.",
+    "intuitiveStory": "시속 60km로 일정하게 달리는 자동차는 시간이 2배, 3배 흐를수록 이동 거리도 정확히 2배, 3배 늘어나므로 '정비례'합니다. 반면 총 60개의 사탕을 나누어 먹을 때 사람이 2배, 3배 늘어나면 1인당 받는 사탕은 1/2배, 1/3배로 줄어들며, 곱(사람수 × 사탕수 = 60)이 항상 일정한 '반비례' 관계를 이룹니다.",
+    "keyTerms": [
+      {
+        "termKo": "순서쌍과 좌표",
+        "termEn": "Ordered Pair and Coordinates",
+        "definition": "두 수의 순서를 정하여 짝지어 나타낸 쌍 (x, y)를 순서쌍이라 하며, x를 x좌표, y를 y좌표라고 합니다."
+      },
+      {
+        "termKo": "사분면",
+        "termEn": "Quadrant",
+        "definition": "좌표평면이 x축과 y축에 의해 나뉘는 네 부분으로, 오른쪽 위부터 반시계 방향으로 제1사분면, 제2사분면, 제3사분면, 제4사분면이라 부릅니다 (좌표축 위의 점은 사분면에 속하지 않음)."
+      },
+      {
+        "termKo": "정비례",
+        "termEn": "Direct Proportion",
+        "definition": "두 변수 x, y에 대하여 x의 값이 2배, 3배, 4배...로 변함에 따라 y의 값도 2배, 3배, 4배...로 변하는 관계 (y = ax, a ≠ 0)."
+      },
+      {
+        "termKo": "반비례",
+        "termEn": "Inverse Proportion",
+        "definition": "두 변수 x, y에 대하여 x의 값이 2배, 3배, 4배...로 변함에 따라 y의 값은 1/2배, 1/3배, 1/4배...로 변하는 관계 (y = a/x, xy = a, a ≠ 0)."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "정비례 관계식",
+      "nameEn": "Direct Proportion Equation",
+      "typesetMath": "y = ax \\iff \\frac{y}{x} = a \\quad (a \\neq 0)",
+      "howToReadEn": "y equals a times x, which is equivalent to y over x equals a, where a is a non-zero constant",
+      "explanation": "x에 대한 y의 비율 y/x가 항상 상수 a로 일정하게 유지되는 관계이며, a > 0이면 제1, 3사분면을 지나고 a < 0이면 제2, 4사분면을 지납니다."
+    },
+    {
+      "nameKo": "반비례 관계식",
+      "nameEn": "Inverse Proportion Equation",
+      "typesetMath": "y = \\frac{a}{x} \\iff xy = a \\quad (a \\neq 0, \\, x \\neq 0)",
+      "howToReadEn": "y equals a over x, which is equivalent to x times y equals a, where a is a non-zero constant",
+      "explanation": "두 변수의 곱 xy가 항상 일정한 상수 a를 유지하는 관계이며, 좌표축과 만나지 않는 한 쌍의 매끄러운 곡선(쌍곡선)이 됩니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "점의 좌표와 사분면 판별",
+      "question": "다음 점들이 속하는 사분면 또는 축을 각각 말하시오: A(3, -5), B(-4, -2), C(0, 7), D(-6, 1)",
+      "visualHint": "x와 y의 부호: (+, +)는 1사분면, (-, +)는 2사분면, (-, -)는 3사분면, (+, -)는 4사분면이며 좌표가 0인 점은 좌표축 위의 점입니다.",
+      "stepByStepSolution": [
+        "1단계: 점 A(3, -5)는 x > 0, y < 0 이므로 제4사분면입니다.",
+        "2단계: 점 B(-4, -2)는 x < 0, y < 0 이므로 제3사분면입니다.",
+        "3단계: 점 C(0, 7)은 x = 0 이므로 y축 위의 점입니다 (어느 사분면에도 속하지 않음).",
+        "4단계: 점 D(-6, 1)은 x < 0, y > 0 이므로 제2사분면입니다."
+      ],
+      "finalAnswer": "A: 제4사분면, B: 제3사분면, C: y축 위의 점, D: 제2사분면",
+      "pitfallAndTips": "좌표축 위의 점(x=0 또는 y=0)은 사분면에 포함되지 않는다는 점에 유의하세요."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "대칭인 점의 좌표 구하기",
+      "question": "점 P(4, -3)에 대하여 다음 점의 좌표를 각각 구하시오: (1) x축에 대칭인 점, (2) y축에 대칭인 점, (3) 원점에 대칭인 점",
+      "visualHint": "x축 대칭은 y 부호 반전, y축 대칭은 x 부호 반전, 원점 대칭은 둘 다 반전됩니다.",
+      "stepByStepSolution": [
+        "1단계: (1) x축에 대해 대칭 이동하면 y좌표의 부호만 바뀝니다: (4, -(-3)) = (4, 3)",
+        "2단계: (2) y축에 대해 대칭 이동하면 x좌표의 부호만 바뀝니다: (-4, -3)",
+        "3단계: (3) 원점에 대해 대칭 이동하면 x, y좌표의 부호가 모두 바뀝니다: (-4, 3)"
+      ],
+      "finalAnswer": "(1) (4, 3), (2) (-4, -3), (3) (-4, 3)",
+      "pitfallAndTips": "x축 대칭일 때 x좌표를 바꾸는 실수를 자주 합니다. 접는 기준 축의 좌표는 그대로 유지되고 반대쪽 축 좌표의 부호가 바뀝니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "정비례 관계식 구하기",
+      "question": "y가 x에 정비례하고 x = -3일 때 y = 12이다. x = 5일 때의 y의 값을 구하시오.",
+      "visualHint": "정비례 식이므로 y = ax로 두고 대입하여 상수 a를 먼저 구합니다.",
+      "stepByStepSolution": [
+        "1단계: y가 x에 정비례하므로 y = ax (a ≠ 0)로 놓습니다.",
+        "2단계: x = -3, y = 12를 대입합니다: 12 = a × (-3)",
+        "a = 12 ÷ (-3) = -4",
+        "따라서 관계식은 y = -4x 입니다.",
+        "3단계: x = 5일 때의 y 값을 계산합니다: y = -4 × 5 = -20"
+      ],
+      "finalAnswer": "-20",
+      "pitfallAndTips": "비례상수 a를 구할 때 12 ÷ (-3)의 음수 부호를 빠뜨리지 않도록 주의합니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "반비례 관계식 구하기",
+      "question": "y가 x에 반비례하고 x = 4일 때 y = 6이다. y = -8일 때의 x의 값을 구하시오.",
+      "visualHint": "반비례 식은 xy = a (일정)이므로 곱이 항상 일정함을 이용하면 매우 쉽게 풀립니다.",
+      "stepByStepSolution": [
+        "1단계: y가 x에 반비례하므로 xy = a (상수)입니다.",
+        "2단계: x = 4, y = 6 일 때 a = 4 × 6 = 24 입니다.",
+        "따라서 관계식은 xy = 24 또는 y = 24/x 입니다.",
+        "3단계: y = -8일 때: x × (-8) = 24",
+        "x = 24 ÷ (-8) = -3"
+      ],
+      "finalAnswer": "-3",
+      "pitfallAndTips": "반비례에서는 두 변수의 곱이 항상 일정하다(xy = a)는 성질을 쓰면 분수 계산을 최소화할 수 있습니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "좌표평면 위 삼각형의 넓이",
+      "question": "세 점 A(1, 4), B(-2, -1), C(4, -1)을 꼭짓점으로 하는 삼각형 ABC의 넓이를 구하시오.",
+      "visualHint": "선분 BC의 y좌표가 같으므로 선분 BC를 밑변으로 잡고, 점 A의 y좌표와의 차이를 높이로 계산합니다.",
+      "stepByStepSolution": [
+        "1단계: 점 B(-2, -1)과 점 C(4, -1)은 y좌표가 -1로 동일하므로 선분 BC는 x축에 평행합니다.",
+        "2단계: 밑변 BC의 길이 = 4 - (-2) = 6",
+        "3단계: 높이는 점 A(1, 4)의 y좌표와 선분 BC의 y좌표(-1) 사이의 수직 거리입니다.",
+        "높이 h = 4 - (-1) = 5",
+        "4단계: 삼각형 ABC의 넓이 = (1/2) × 밑변 × 높이 = (1/2) × 6 × 5 = 15"
+      ],
+      "finalAnswer": "15",
+      "pitfallAndTips": "축에 평행한 변이 있는 삼각형은 그 변을 밑변으로 삼으면 외접 직사각형을 그리지 않고도 빠르게 구할 수 있습니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "정비례 그래프 위의 점",
+      "question": "정비례 관계 \\(y = \\frac{2}{3}x\\)의 그래프가 점 (k, k - 2)를 지날 때, 상수 k의 값을 구하시오.",
+      "visualHint": "그래프가 어떤 점을 지난다는 것은 그 점의 x, y좌표를 관계식에 대입했을 때 등식이 성립한다는 뜻입니다.",
+      "stepByStepSolution": [
+        "1단계: 점 (k, k - 2)를 y = (2/3)x 에 대입합니다.",
+        "k - 2 = (2/3)k",
+        "2단계: 양변에 3을 곱하여 분모를 없앱니다.",
+        "3(k - 2) = 2k",
+        "3k - 6 = 2k",
+        "3단계: 이항하여 k를 구합니다.",
+        "3k - 2k = 6",
+        "k = 6"
+      ],
+      "finalAnswer": "6",
+      "pitfallAndTips": "'그래프가 점을 지난다 = 점의 좌표를 식에 대입한다'는 함수의 가장 기본적이면서도 중요한 원칙을 기억하세요."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "정비례와 반비례 그래프의 교점",
+      "question": "정비례 관계 \\(y = 2x\\)의 그래프와 반비례 관계 \\(y = \\frac{18}{x}\\)의 그래프가 만나는 두 교점을 P, Q라고 할 때, 선분 PQ의 길이를 구하시오. (단, 점 P는 제1사분면의 점)",
+      "visualHint": "교점의 좌표는 두 식을 연립하여 구합니다: 2x = 18/x 에서 2x² = 18.",
+      "stepByStepSolution": [
+        "1단계: 두 그래프의 교점을 구하기 위해 연립합니다: 2x = 18/x",
+        "2단계: 양변에 x를 곱합니다: 2x² = 18",
+        "x² = 9 이므로 x = 3 또는 x = -3",
+        "3단계: 교점의 좌표 구하기",
+        "x = 3일 때 y = 2(3) = 6 이므로 점 P는 (3, 6) (제1사분면)",
+        "x = -3일 때 y = 2(-3) = -6 이므로 점 Q는 (-3, -6) (제3사분면)",
+        "4단계: 두 점 P(3, 6)과 Q(-3, -6)은 원점에 대해 서로 대칭입니다.",
+        "선분 PQ의 길이 = √[(3 - (-3))² + (6 - (-6))²] = √[6² + 12²] = √[36 + 144] = √180 = 6√5 (또는 중1 수준에서는 피타고라스 정리를 이용해 직각삼각형 가로 6, 세로 12로부터 빗변 길이 도출)"
+      ],
+      "finalAnswer": "6\\sqrt{5} (또는 \\sqrt{180})",
+      "pitfallAndTips": "원점을 지나는 직선과 원점 대칭인 반비례 곡선이 만나므로 두 교점은 원점에 대해 점대칭 관계를 이룹니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "실생활 그래프 해석 (물통 채우기)",
+      "question": "직육면체 모양의 물통에 매분 일정한 양의 물을 넣는다. 물을 넣기 시작한 지 x분 후의 수면의 높이를 y cm라고 할 때, 4분 후 높이가 10cm였다. 물통의 전체 높이가 45cm일 때 물통을 가득 채우는 데 걸리는 총 시간(분)을 구하시오.",
+      "visualHint": "매분 일정한 양을 넣으므로 수면의 높이 y는 시간 x에 정비례(y = ax)합니다.",
+      "stepByStepSolution": [
+        "1단계: 높이 y와 시간 x는 정비례하므로 y = ax 입니다.",
+        "2단계: x = 4일 때 y = 10 이므로, 10 = 4a 에서 a = 10/4 = 2.5 (cm/분)",
+        "따라서 관계식은 y = 2.5x 입니다.",
+        "3단계: 물통의 전체 높이 y = 45cm가 되는 시간 x를 구합니다.",
+        "45 = 2.5x",
+        "x = 45 ÷ 2.5 = 18 (분)"
+      ],
+      "finalAnswer": "18분",
+      "pitfallAndTips": "문제를 풀 때 '추가로 더 걸리는 시간'인지 '총 시간'인지 명확히 구별해야 합니다. 여기서는 '총 시간'이므로 18분입니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "반비례 곡선 위의 직사각형의 넓이 불변성",
+      "question": "반비례 관계 \\(y = \\frac{12}{x} \\, (x > 0)\\)의 그래프 위의 임의의 점 P에서 x축에 내린 수선의 발을 A, y축에 내린 수선의 발을 B, 원점을 O라고 할 때, 직사각형 OAPB의 넓이를 구하시오.",
+      "visualHint": "점 P의 좌표를 (t, 12/t)로 두고 직사각형의 가로와 세로의 곱을 식으로 표현해보세요.",
+      "stepByStepSolution": [
+        "1단계: 점 P는 y = 12/x 위의 점이므로 점 P의 x좌표를 t (t > 0)라고 두면 y좌표는 12/t 입니다. 즉 P(t, 12/t)",
+        "2단계: 점 P에서 x축에 내린 수선의 발 A의 좌표는 (t, 0)이고, OA의 길이는 t 입니다.",
+        "3단계: 점 P에서 y축에 내린 수선의 발 B의 좌표는 (0, 12/t)이고, OB의 길이는 12/t 입니다.",
+        "4단계: 직사각형 OAPB의 넓이 = OA × OB = t × (12/t) = 12",
+        "5단계: t의 값과 무관하게 직사각형의 넓이는 항상 비례상수 12로 일정합니다."
+      ],
+      "finalAnswer": "12",
+      "pitfallAndTips": "반비례 곡선 y = a/x 위의 임의의 점에서 축에 내린 수선으로 만든 직사각형의 넓이는 점의 위치에 상관없이 항상 |a|라는 중요한 기하학적 성질을 갖습니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "사분면 부호 조건과 복합 점의 위치 추론",
+      "question": "점 P(a, b)가 제2사분면의 점일 때, 점 \\(Q(ab, \\, a - b)\\)와 점 \\(R\\left(\\frac{b}{a}, \\, -a^2\\right)\\)는 각각 제몇 사분면의 점인지 구하시오.",
+      "visualHint": "제2사분면 점이므로 a < 0, b > 0 입니다. 각 점의 x좌표와 y좌표의 부호를 엄밀하게 판정하세요.",
+      "stepByStepSolution": [
+        "1단계: 점 P(a, b)가 제2사분면의 점이므로 a < 0 (음수), b > 0 (양수) 입니다.",
+        "2단계: 점 Q(ab, a - b)의 좌표 부호 판정",
+        "x좌표: ab = (음수) × (양수) < 0 (음수)",
+        "y좌표: a - b = (음수) - (양수) = (음수) + (음수) < 0 (음수)",
+        "따라서 점 Q는 x < 0, y < 0 이므로 제3사분면의 점입니다.",
+        "3단계: 점 R(b/a, -a²)의 좌표 부호 판정",
+        "x좌표: b/a = (양수) ÷ (음수) < 0 (음수)",
+        "y좌표: a ≠ 0이므로 a² > 0 이고, -a² < 0 (음수)",
+        "따라서 점 R 역시 x < 0, y < 0 이므로 제3사분면의 점입니다."
+      ],
+      "finalAnswer": "점 Q: 제3사분면, 점 R: 제3사분면",
+      "pitfallAndTips": "-a²에서 괄호가 없으므로 a²(양수)에 음의 부호가 붙어 항상 음수가 된다는 점을 주의해야 합니다. (-a)²과 혼동하지 마세요."
+    }
+  ]
+}

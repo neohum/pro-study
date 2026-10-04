@@ -1,0 +1,222 @@
+{
+  "id": "h1-01-polynomials-identities",
+  "grade": "high-common",
+  "domain": "대수",
+  "order": 25,
+  "titleKo": "다항식의 연산과 항등식",
+  "titleEn": "Polynomial Arithmetic and Polynomial Identities",
+  "animation": {
+    "type": "algebra-geometry",
+    "title": "다항식 곱셈과 3차원 전개 직관 시각화",
+    "caption": "(a+b)³ = a³ + 3a²b + 3ab² + b³의 대수적 전개를 한 변의 길이가 a+b인 정육면체의 8개 입체 블록 분할로 시각화합니다.",
+    "svgTemplate": "<svg viewBox='0 0 800 400' xmlns='http://www.w3.org/2000/svg'><defs><linearGradient id='cubeA' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#3b82f6'/><stop offset='100%' stop-color='#1d4ed8'/></linearGradient><linearGradient id='cubeB' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#10b981'/><stop offset='100%' stop-color='#047857'/></linearGradient><linearGradient id='cubeAB' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='#f59e0b'/><stop offset='100%' stop-color='#b45309'/></linearGradient></defs><rect width='100%' height='100%' fill='#0f172a'/><text x='400' y='35' fill='#f8fafc' font-size='20' font-weight='bold' text-anchor='middle'>3차원 입체 부피 분할로 보는 (a+b)³ 공식</text><g transform='translate(150, 180)'><polygon points='0,0 80,-46 180,-46 100,0' fill='url(#cubeA)' stroke='#93c5fd' stroke-width='1.5'/><polygon points='0,0 100,0 100,100 0,100' fill='url(#cubeA)' opacity='0.9' stroke='#93c5fd' stroke-width='1.5'/><polygon points='100,0 180,-46 180,54 100,100' fill='url(#cubeA)' opacity='0.8' stroke='#93c5fd' stroke-width='1.5'/><text x='50' y='55' fill='#ffffff' font-size='18' font-weight='bold' text-anchor='middle'>a³</text></g><g transform='translate(350, 150)'><polygon points='0,0 40,-23 90,-23 50,0' fill='url(#cubeAB)' stroke='#fcd34d' stroke-width='1.5'/><polygon points='0,0 50,0 50,100 0,100' fill='url(#cubeAB)' opacity='0.9' stroke='#fcd34d' stroke-width='1.5'/><polygon points='50,0 90,-23 90,77 50,100' fill='url(#cubeAB)' opacity='0.8' stroke='#fcd34d' stroke-width='1.5'/><text x='25' y='55' fill='#ffffff' font-size='16' font-weight='bold' text-anchor='middle'>a²b (×3)</text></g><g transform='translate(480, 190)'><polygon points='0,0 60,-34 85,-34 25,0' fill='url(#cubeAB)' stroke='#fcd34d' stroke-width='1.5'/><polygon points='0,0 25,0 25,50 0,50' fill='url(#cubeAB)' opacity='0.9' stroke='#fcd34d' stroke-width='1.5'/><polygon points='25,0 85,-34 85,16 25,50' fill='url(#cubeAB)' opacity='0.8' stroke='#fcd34d' stroke-width='1.5'/><text x='12' y='30' fill='#ffffff' font-size='14' font-weight='bold' text-anchor='middle'>ab² (×3)</text></g><g transform='translate(600, 230)'><polygon points='0,0 25,-14 50,-14 25,0' fill='url(#cubeB)' stroke='#6ee7b7' stroke-width='1.5'/><polygon points='0,0 25,0 25,25 0,25' fill='url(#cubeB)' opacity='0.9' stroke='#6ee7b7' stroke-width='1.5'/><polygon points='25,0 50,-14 50,11 25,25' fill='url(#cubeB)' opacity='0.8' stroke='#6ee7b7' stroke-width='1.5'/><text x='12' y='18' fill='#ffffff' font-size='12' font-weight='bold' text-anchor='middle'>b³</text></g><text x='400' y='360' fill='#38bdf8' font-size='18' font-family='monospace' font-weight='bold' text-anchor='middle'>(a + b)³ = a³ + 3a²b + 3ab² + b³</text></svg>"
+  },
+  "concept": {
+    "corePrinciple": "다항식의 사칙연산은 동류항끼리 묶어 정리하는 덧셈·뺄셈과 분배법칙을 기초로 합니다. 특히 두 다항식 A, B에 대하여 A를 B(B ≠ 0)로 나누었을 때 몫 Q와 나머지 R이 유일하게 존재하여 A = BQ + R (단, deg(R) < deg(B))로 표현됩니다. 항등식은 문자에 어떤 실수를 대입해도 항상 참이 되는 등식이며, 미정계수를 구할 때는 양변의 동류항 계수를 비교하는 '계수비교법'과 적절한 특정 수치를 대입하는 '수치대입법'을 문제의 형태에 따라 효율적으로 선택합니다.",
+    "intuitiveStory": "고대 바빌로니아와 그리스의 기하학자들은 곱셈 공식을 숫자의 계산이 아니라 '도형의 면적과 부피'로 이해했습니다. 예를 들어 (a+b)³은 한 변의 길이가 (a+b)인 큰 정육면체 빵을 칼로 세 번 잘라 부피 a³인 큰 정육면체 1개, a×a×b인 직육면체 3개, a×b×b인 직육면체 3개, 그리고 부피 b³인 작은 정육면체 1개로 나누는 것과 완벽히 같습니다. 대수학(Algebra)의 아름다움은 이렇게 복잡한 기하학적 형태를 문자의 대칭성과 전개 규칙 하나로 간단히 다룰 수 있다는 데 있습니다.",
+    "keyTerms": [
+      {
+        "termKo": "항등식",
+        "termEn": "Polynomial Identity",
+        "definition": "포함된 문자에 어떤 값을 대입하여도 항상 참이 되는 등식"
+      },
+      {
+        "termKo": "미정계수법",
+        "termEn": "Method of Undetermined Coefficients",
+        "definition": "항등식의 성질을 이용하여 아직 정해지지 않은 계수를 구하는 방법 (계수비교법, 수치대입법)"
+      },
+      {
+        "termKo": "다항식의 나눗셈 정리",
+        "termEn": "Polynomial Division Algorithm",
+        "definition": "다항식 A를 다항식 B(B≠0)로 나눌 때 A = BQ + R (deg R < deg B)을 만족하는 유일한 몫 Q와 나머지 R을 구하는 정리"
+      },
+      {
+        "termKo": "곱셈 공식",
+        "termEn": "Algebraic Expansion Formulas",
+        "definition": "다항식의 곱을 전개할 때 자주 쓰이는 전개 규칙 공식"
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "세 항의 완전제곱식 전개",
+      "nameEn": "Square of Trinomial",
+      "typesetMath": "(a+b+c)^2 = a^2+b^2+c^2+2(ab+bc+ca)",
+      "howToReadEn": "open parenthesis a plus b plus c close parenthesis squared equals a squared plus b squared plus c squared plus two times open parenthesis a b plus b c plus c a close parenthesis",
+      "explanation": "세 실수의 합의 제곱은 각 항의 제곱의 합에 두 항씩 곱한 것의 2배의 합을 더한 것입니다."
+    },
+    {
+      "nameKo": "세제곱 곱셈 공식",
+      "nameEn": "Cube of a Binomial",
+      "typesetMath": "(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3",
+      "howToReadEn": "open parenthesis a plus b close parenthesis cubed equals a cubed plus three a squared b plus three a b squared plus b cubed",
+      "explanation": "이항의 세제곱 전개식이며, 변형 공식 a³+b³ = (a+b)³ - 3ab(a+b)로도 널리 사용됩니다."
+    },
+    {
+      "nameKo": "세 변수 세제곱 합과 인수분해",
+      "nameEn": "Sum of Three Cubes Identity",
+      "typesetMath": "a^3+b^3+c^3-3abc = (a+b+c)(a^2+b^2+c^2-ab-bc-ca)",
+      "howToReadEn": "a cubed plus b cubed plus c cubed minus three a b c equals open parenthesis a plus b plus c close parenthesis times open parenthesis a squared plus b squared plus c squared minus a b minus b c minus c a close parenthesis",
+      "explanation": "a+b+c=0 이거나 a=b=c 일 때 a³+b³+c³ = 3abc 가 성립하는 중요한 항등식입니다."
+    },
+    {
+      "nameKo": "다항식 나눗셈의 기본 관계식",
+      "nameEn": "Division Algorithm for Polynomials",
+      "typesetMath": "A(x) = B(x)Q(x) + R(x) \\quad (\\deg(R) < \\deg(B))",
+      "howToReadEn": "A of x equals B of x times Q of x plus R of x, where degree of R is strictly less than degree of B",
+      "explanation": "다항식 A(x)를 다항식 B(x)로 나눈 몫 Q(x)와 나머지 R(x)의 관계를 나타내는 항등식입니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "다항식의 덧셈과 뺄셈",
+      "question": "두 다항식 A = 2x² - 3x + 1, B = x² + 4x - 5에 대하여 2A - B를 계산하시오.",
+      "visualHint": "동류항(x²항, x항, 상수항)끼리 계수를 괄호로 묶어 정리합니다.",
+      "stepByStepSolution": [
+        "1단계: 2A를 전개합니다. 2(2x² - 3x + 1) = 4x² - 6x + 2",
+        "2단계: 2A - B를 식으로 세웁니다. (4x² - 6x + 2) - (x² + 4x - 5)",
+        "3단계: 괄호를 풀고 부호를 바꿉니다. 4x² - 6x + 2 - x² - 4x + 5",
+        "4단계: 동류항끼리 묶어 계산합니다. (4-1)x² + (-6-4)x + (2+5) = 3x² - 10x + 7"
+      ],
+      "finalAnswer": "3x² - 10x + 7",
+      "pitfallAndTips": "다항식을 뺄 때 괄호 뒤의 모든 항의 부호가 바뀌어야 함에 주의하십시오."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "세 항의 완전제곱식 전개",
+      "question": "(x + 2y - 3z)²을 전개하시오.",
+      "visualHint": "(a+b+c)² = a² + b² + c² + 2ab + 2bc + 2ca 공식을 적용합니다. 여기서 a=x, b=2y, c=-3z입니다.",
+      "stepByStepSolution": [
+        "1단계: 각 항의 제곱을 구합니다. x² + (2y)² + (-3z)² = x² + 4y² + 9z²",
+        "2단계: 두 항씩 곱한 값의 2배를 구합니다. 2(x)(2y) = 4xy, 2(2y)(-3z) = -12yz, 2(-3z)(x) = -6zx",
+        "3단계: 모든 항을 합하여 전개식을 완성합니다. x² + 4y² + 9z² + 4xy - 12yz - 6zx"
+      ],
+      "finalAnswer": "x² + 4y² + 9z² + 4xy - 12yz - 6zx",
+      "pitfallAndTips": "부호가 음수인 항(-3z)의 제곱은 양수가 되지만, 다른 항과 곱해진 교차항은 음수 부호가 됨을 놓치지 마세요."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "세제곱 곱셈 공식의 변형",
+      "question": "x + y = 4이고 xy = 2일 때, x³ + y³의 값을 구하시오.",
+      "visualHint": "x³ + y³ = (x+y)³ - 3xy(x+y) 변형 공식을 사용합니다.",
+      "stepByStepSolution": [
+        "1단계: 세제곱 곱셈 변형 공식 x³ + y³ = (x+y)³ - 3xy(x+y)를 적습니다.",
+        "2단계: 주어진 값 x+y = 4, xy = 2를 대입합니다.",
+        "3단계: (4)³ - 3(2)(4)를 계산합니다.",
+        "4단계: 64 - 24 = 40을 도출합니다."
+      ],
+      "finalAnswer": "40",
+      "pitfallAndTips": "x³+y³을 (x+y)³과 혼동하여 64로 답하는 실수를 주의하세요. 반드시 3xy(x+y) 항을 빼주어야 합니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "조건식을 활용한 교차항 합 계산",
+      "question": "a + b + c = 0이고 a² + b² + c² = 8일 때, ab + bc + ca의 값을 구하시오.",
+      "visualHint": "(a+b+c)² = a² + b² + c² + 2(ab+bc+ca)에 알고 있는 값을 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: 완전제곱 전개 공식 (a+b+c)² = a² + b² + c² + 2(ab+bc+ca)를 세웁니다.",
+        "2단계: 주어진 조건 a+b+c = 0과 a²+b²+c² = 8을 대입합니다. 0² = 8 + 2(ab+bc+ca)",
+        "3단계: 2(ab+bc+ca) = -8 이므로 ab+bc+ca = -4 임을 구합니다."
+      ],
+      "finalAnswer": "-4",
+      "pitfallAndTips": "실수의 제곱의 합은 항상 양수이지만, 두 수씩 곱한 합은 음수가 될 수 있습니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "항등식의 계수비교법과 수치대입법",
+      "question": "등식 2x² + 5x - 3 = a(x-1)² + b(x-1) + c가 x에 대한 항등식일 때, 상수 a, b, c에 대하여 a + b + c의 값을 구하시오.",
+      "visualHint": "x=1을 대입하면 c를 바로 구할 수 있으며, x-1에 대한 내림차순 정리 또는 수치대입법을 활용합니다.",
+      "stepByStepSolution": [
+        "1단계: 양변에 x = 1을 대입합니다. 좌변: 2(1)² + 5(1) - 3 = 4, 우변: c. 따라서 c = 4",
+        "2단계: 최고차항 계수를 비교합니다. 좌변의 x² 계수는 2이고 우변은 a이므로 a = 2",
+        "3단계: 양변에 x = 2를 대입합니다. 좌변: 2(4) + 5(2) - 3 = 15. 우변: a(1)² + b(1) + c = 2 + b + 4 = b + 6. 따라서 b + 6 = 15에서 b = 9",
+        "4단계: a + b + c = 2 + 9 + 4 = 15를 계산합니다."
+      ],
+      "finalAnswer": "15",
+      "pitfallAndTips": "우변을 완전히 전개하여 2x²+5x-3 = ax² + (-2a+b)x + (a-b+c)로 계수를 비교해도 동일한 답을 얻을 수 있습니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "수치대입법을 이용한 미정계수 결정",
+      "question": "등식 (x² - 1)P(x) + ax + b = x⁴ + 3x² - 2가 x에 대한 항등식일 때, 상수 a, b의 곱 ab의 값을 구하시오.",
+      "visualHint": "P(x)의 식을 모르므로, 앞의 계수 (x²-1)을 0으로 만드는 x=1과 x=-1을 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: x² - 1 = (x-1)(x+1)이므로 x = 1을 양변에 대입합니다. 0 + a(1) + b = 1⁴ + 3(1)² - 2 => a + b = 2",
+        "2단계: x = -1을 양변에 대입합니다. 0 + a(-1) + b = (-1)⁴ + 3(-1)² - 2 => -a + b = 2",
+        "3단계: 두 식을 연립하여 풉니다. 두 식을 더하면 2b = 4이므로 b = 2, 대입하면 a = 0",
+        "4단계: 따라서 ab = 0 × 2 = 0"
+      ],
+      "finalAnswer": "0",
+      "pitfallAndTips": "P(x)의 차수를 몰라도 미지의 다항식 앞의 인수를 0으로 만드는 x값을 대입하면 문제를 손쉽게 해결할 수 있습니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "다항식의 나눗셈과 검산식 A=BQ+R",
+      "question": "다항식 f(x) = 2x³ - 3x² + 5x - 4를 다항식 x - 2로 나눈 몫을 Q(x), 나머지를 R이라 할 때, Q(1) + R의 값을 구하시오.",
+      "visualHint": "조립제법을 이용하거나 다항식의 직접 나눗셈을 수행합니다.",
+      "stepByStepSolution": [
+        "1단계: 조립제법을 위해 계수 [2, -3, 5, -4]를 나열하고 x=2로 시행합니다.",
+        "2단계: 첫째 항 2가 내려오고, 2×2=4 더하면 1, 1×2=2 더하면 7, 7×2=14 더하면 10이 됩니다.",
+        "3단계: 몫 Q(x) = 2x² + x + 7이고, 나머지 R = 10입니다.",
+        "4단계: Q(1) = 2(1)² + 1 + 7 = 10이므로, Q(1) + R = 10 + 10 = 20입니다."
+      ],
+      "finalAnswer": "20",
+      "pitfallAndTips": "나누는 식이 일차식이면 나머지는 항상 상수항(0차 이하)이어야 합니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "항등식의 계수의 총합과 짝수차수 합",
+      "question": "(2x² - x + 1)³ = a₆x⁶ + a₅x⁵ + a₄x⁴ + a₃x³ + a₂x² + a₁x + a₀ 이 x에 대한 항등식일 때, 짝수 차수 계수의 합 a₀ + a₂ + a₄ + a₆의 값을 구하시오.",
+      "visualHint": "x=1을 대입하면 모든 계수의 합, x=-1을 대입하면 교대 부호의 합이 나타납니다.",
+      "stepByStepSolution": [
+        "1단계: 양변에 x = 1을 대입합니다. (2 - 1 + 1)³ = 2³ = 8 = a₆ + a₅ + a₄ + a₃ + a₂ + a₁ + a₀ (식 ①)",
+        "2단계: 양변에 x = -1을 대입합니다. (2(-1)² - (-1) + 1)³ = (2 + 1 + 1)³ = 4³ = 64 = a₆ - a₅ + a₄ - a₃ + a₂ - a₁ + a₀ (식 ②)",
+        "3단계: 식 ①과 식 ②를 변변 더합니다. 8 + 64 = 72 = 2(a₆ + a₄ + a₂ + a₀)",
+        "4단계: 양변을 2로 나누면 a₀ + a₂ + a₄ + a₆ = 72 / 2 = 36입니다."
+      ],
+      "finalAnswer": "36",
+      "pitfallAndTips": "a₀는 상수항으로 x⁰의 계수이므로 짝수차수에 포함됩니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "세 변수의 세제곱 공식과 연립 해석",
+      "question": "실수 a, b, c가 a + b + c = 1, a² + b² + c² = 3, a³ + b³ + c³ = 7을 만족할 때, 세 수의 곱 abc의 값을 구하시오.",
+      "visualHint": "(a+b+c)² 공식을 통해 ab+bc+ca를 먼저 구한 후, a³+b³+c³ - 3abc 공식에 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: (a+b+c)² = a² + b² + c² + 2(ab+bc+ca) 공식에 값을 대입합니다. 1² = 3 + 2(ab+bc+ca) => 2(ab+bc+ca) = -2 => ab+bc+ca = -1",
+        "2단계: a³ + b³ + c³ - 3abc = (a+b+c)(a² + b² + c² - (ab+bc+ca)) 공식을 적습니다.",
+        "3단계: 알고 있는 값들을 대입합니다. 7 - 3abc = (1)(3 - (-1)) = 1 × 4 = 4",
+        "4단계: 7 - 3abc = 4 에서 3abc = 3 이므로 abc = 1 임을 구합니다."
+      ],
+      "finalAnswer": "1",
+      "pitfallAndTips": "부호 -(ab+bc+ca)에서 마이너스와 음수가 만나 +1이 되는 연산 실수를 주의해야 합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "나눗셈 정리와 몫·나머지의 변환 심화",
+      "question": "다항식 f(x)를 (x - 1/2)로 나누었을 때의 몫을 Q(x), 나머지를 R이라 할 때, x·f(x)를 (2x - 1)로 나누었을 때의 몫과 나머지를 Q(x)와 R을 사용하여 바르게 나타내시오.",
+      "visualHint": "f(x) = (x - 1/2)Q(x) + R의 양변에 x를 곱한 후, 나누는 식 (2x - 1)의 형태로 묶어냅니다.",
+      "stepByStepSolution": [
+        "1단계: 주어진 관계식을 씁니다. f(x) = (x - 1/2)Q(x) + R",
+        "2단계: 양변에 x를 곱합니다. x·f(x) = x(x - 1/2)Q(x) + R·x",
+        "3단계: 2x - 1 형태로 맞추기 위해 x(x - 1/2)를 (2x - 1)(x/2)로 변형합니다. 즉, (2x - 1)·(1/2 x Q(x)) + Rx",
+        "4단계: Rx는 일차식이므로 일차식 (2x - 1)로 더 나눌 수 있습니다. Rx = (2x - 1)(R/2) + R/2",
+        "5단계: (2x - 1)로 공통인수를 묶어 정리합니다. x·f(x) = (2x - 1) [ 1/2 x Q(x) + R/2 ] + R/2",
+        "6단계: 따라서 몫은 (1/2)xQ(x) + R/2 이고, 나머지는 R/2 입니다."
+      ],
+      "finalAnswer": "몫: (1/2)xQ(x) + R/2, 나머지: R/2",
+      "pitfallAndTips": "Rx를 그대로 나머지로 남겨두면 안 됩니다! 나누는 식이 일차식이므로 나머지는 반드시 상수항이어야 합니다."
+    }
+  ]
+}

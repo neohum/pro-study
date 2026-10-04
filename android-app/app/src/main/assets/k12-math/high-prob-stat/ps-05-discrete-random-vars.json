@@ -1,0 +1,236 @@
+{
+  "id": "ps-05-discrete-random-vars",
+  "grade": "high-prob-stat",
+  "domain": "통계",
+  "order": 55,
+  "titleKo": "이산확률변수, 기댓값 E(X), 분산 V(X)과 이항분포 B(n, p)",
+  "titleEn": "Discrete Random Variables, Expected Value, Variance, and Binomial Distribution",
+  "animation": {
+    "type": "svg",
+    "title": "이산확률분포의 무게중심(기댓값)과 산포도(분산)",
+    "caption": "확률질량함수의 각 확률 기둥이 수직선 위에 놓여 있을 때 기댓값 E(X)가 물리적 무게중심(지렛대의 받침점) 역할을 하고, 분산 V(X)가 중심으로부터 퍼진 정도임을 시각화합니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 500\" width=\"100%\" height=\"100%\">\n  <defs>\n    <linearGradient id=\"ps5Bg\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#0c1222\"/>\n      <stop offset=\"100%\" stop-color=\"#1e293b\"/>\n    </linearGradient>\n    <linearGradient id=\"barGrad\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#06b6d4\"/>\n      <stop offset=\"100%\" stop-color=\"#0284c7\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"800\" height=\"500\" fill=\"url(#ps5Bg)\" rx=\"16\"/>\n  <text x=\"400\" y=\"45\" text-anchor=\"middle\" fill=\"#f8fafc\" font-size=\"20\" font-weight=\"bold\" font-family=\"sans-serif\">이산확률분포: 기댓값 E(X) &amp; 분산 V(X)</text>\n  <!-- Coordinate Axis -->\n  <line x1=\"80\" y1=\"350\" x2=\"720\" y2=\"350\" stroke=\"#94a3b8\" stroke-width=\"3\"/>\n  <!-- Probability Bars -->\n  <!-- x=0: P=0.1 -->\n  <rect x=\"130\" y=\"300\" width=\"60\" height=\"50\" fill=\"url(#barGrad)\" rx=\"4\"/>\n  <text x=\"160\" y=\"290\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"14\">0.1</text>\n  <text x=\"160\" y=\"375\" text-anchor=\"middle\" fill=\"#cbd5e1\" font-size=\"15\" font-weight=\"bold\">0</text>\n  <!-- x=1: P=0.3 -->\n  <rect x=\"250\" y=\"200\" width=\"60\" height=\"150\" fill=\"url(#barGrad)\" rx=\"4\"/>\n  <text x=\"280\" y=\"190\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"14\">0.3</text>\n  <text x=\"280\" y=\"375\" text-anchor=\"middle\" fill=\"#cbd5e1\" font-size=\"15\" font-weight=\"bold\">1</text>\n  <!-- x=2: P=0.4 -->\n  <rect x=\"370\" y=\"150\" width=\"60\" height=\"200\" fill=\"url(#barGrad)\" rx=\"4\"/>\n  <text x=\"400\" y=\"140\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"14\">0.4</text>\n  <text x=\"400\" y=\"375\" text-anchor=\"middle\" fill=\"#cbd5e1\" font-size=\"15\" font-weight=\"bold\">2</text>\n  <!-- x=3: P=0.2 -->\n  <rect x=\"490\" y=\"250\" width=\"60\" height=\"100\" fill=\"url(#barGrad)\" rx=\"4\"/>\n  <text x=\"520\" y=\"240\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"14\">0.2</text>\n  <text x=\"520\" y=\"375\" text-anchor=\"middle\" fill=\"#cbd5e1\" font-size=\"15\" font-weight=\"bold\">3</text>\n  <!-- Center of Mass Fulcrum: E(X) = 0*0.1 + 1*0.3 + 2*0.4 + 3*0.2 = 1.7 -->\n  <!-- 1.7 corresponds to x: 160 + 1.7 * 120 = 364 -->\n  <polygon points=\"364,352 350,380 378,380\" fill=\"#f59e0b\"/>\n  <line x1=\"364\" y1=\"100\" x2=\"364\" y2=\"350\" stroke=\"#f59e0b\" stroke-width=\"2.5\" stroke-dasharray=\"6 4\">\n    <animate attributeName=\"opacity\" values=\"0.5;1;0.5\" dur=\"2s\" repeatCount=\"indefinite\"/>\n  </line>\n  <text x=\"364\" y=\"90\" text-anchor=\"middle\" fill=\"#fbbf24\" font-size=\"16\" font-weight=\"bold\">무게중심 E(X) = 1.7</text>\n  <!-- Bottom Summary Card -->\n  <rect x=\"100\" y=\"410\" width=\"600\" height=\"65\" rx=\"10\" fill=\"#0f172a\" stroke=\"#38bdf8\" stroke-width=\"1.5\"/>\n  <text x=\"400\" y=\"435\" text-anchor=\"middle\" fill=\"#e2e8f0\" font-size=\"15\" font-family=\"sans-serif\">E(X) = ∑ x_i P(X = x_i),   V(X) = E(X²) - [E(X)]²</text>\n  <text x=\"400\" y=\"460\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"14\" font-weight=\"bold\">이항분포 X ~ B(n, p) ⇒ E(X) = np,   V(X) = np(1-p)</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "확률변수 X가 취할 수 있는 값들이 하나씩 셀 수 있는 이산적인 값일 때 이를 '이산확률변수'라 합니다. 기댓값 E(X)는 각 변수값에 그 확률을 곱하여 모두 더한 가중평균으로, 물리적으로는 확률 분포의 무게중심을 나타냅니다. 분산 V(X)는 편차의 제곱의 기댓값 E[(X - m)^2] = E(X^2) - [E(X)]^2으로 정의되며 변량들이 기댓값 주변에 얼마나 퍼져 있는지를 수치화합니다. 특히 성공률이 p인 독립시행을 n회 반복하는 이항분포 B(n, p)의 경우 기댓값은 np, 분산은 np(1-p)로 아름답고 단순하게 도출됩니다.",
+    "intuitiveStory": "시소 위에 0점, 1점, 2점, 3점의 무게추를 올려놓았을 때, 확률이 각 위치에 실리는 무게(질량)에 해당합니다. 시소가 수평을 유지하며 균형을 잡는 유일한 받침점의 위치가 바로 기댓값 E(X)입니다. 분산은 이 무게추들이 받침점으로부터 멀리 떨어져 있을수록 시소가 요동치는 관성모멘트처럼 커지는 퍼짐의 척도입니다.",
+    "keyTerms": [
+      {
+        "termKo": "이산확률변수",
+        "termEn": "Discrete Random Variable",
+        "definition": "확률변수가 취할 수 있는 값이 유한개이거나 자연수처럼 하나씩 셀 수 있는 변수."
+      },
+      {
+        "termKo": "확률질량함수",
+        "termEn": "Probability Mass Function (PMF)",
+        "definition": "이산확률변수 X가 특정 값 x를 가질 확률을 대응시키는 함수 P(X = x)."
+      },
+      {
+        "termKo": "기댓값 (평균)",
+        "termEn": "Expected Value",
+        "definition": "확률변수의 확률적 평균치로서 E(X) = ∑ x_i p_i로 계산되는 중심 위치 척도."
+      },
+      {
+        "termKo": "분산 및 표준편차",
+        "termEn": "Variance and Standard Deviation",
+        "definition": "변수가 평균으로부터 떨어진 흩어짐의 정도를 나타내는 산포도로 V(X) = E(X^2) - [E(X)]^2, σ(X) = √V(X)."
+      },
+      {
+        "termKo": "이항분포",
+        "termEn": "Binomial Distribution",
+        "definition": "1회 성공 확률이 p인 독립시행을 n회 반복할 때 성공 횟수 X가 따르는 확률분포 B(n, p)."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "기댓값 공식",
+      "nameEn": "Expected Value Formula",
+      "typesetMath": "$$E(X) = \\sum_{i=1}^{n} x_i \\, P(X = x_i) = \\sum_{i=1}^{n} x_i \\, p_i$$",
+      "howToReadEn": "E of X equals sum from i equals one to n of x sub i times P of X equals x sub i",
+      "explanation": "각 변량과 해당 확률의 곱을 모두 합산하여 확률분포의 무게중심을 구합니다."
+    },
+    {
+      "nameKo": "분산과 표준편차 계산식",
+      "nameEn": "Variance Formula via Squares",
+      "typesetMath": "$$V(X) = E(X^2) - [E(X)]^2, \\quad \\sigma(X) = \\sqrt{V(X)}$$",
+      "howToReadEn": "V of X equals E of X squared minus open parentheses E of X close parentheses squared",
+      "explanation": "제곱의 평균에서 평균의 제곱을 빼는 계산 공식으로, 편차 제곱의 평균과 완전히 같습니다."
+    },
+    {
+      "nameKo": "확률변수의 선형변환",
+      "nameEn": "Linear Transformation of Random Variables",
+      "typesetMath": "$$E(aX + b) = a E(X) + b, \\quad V(aX + b) = a^2 V(X), \\quad \\sigma(aX + b) = |a| \\sigma(X)$$",
+      "howToReadEn": "E of a X plus b equals a E of X plus b and V of a X plus b equals a squared V of X",
+      "explanation": "상수 곱과 덧셈에 따른 평균의 평행이동과 분산의 제곱비례 스케일링 특성입니다."
+    },
+    {
+      "nameKo": "이항분포의 평균과 분산",
+      "nameEn": "Mean and Variance of Binomial Distribution",
+      "typesetMath": "$$X \\sim B(n, p) \\implies E(X) = np, \\quad V(X) = np(1 - p), \\quad \\sigma(X) = \\sqrt{np(1 - p)}$$",
+      "howToReadEn": "X follows B of n p implies E of X equals n p and V of X equals n p times one minus p",
+      "explanation": "단일 베르누이 시행 변수 n개의 합으로 분해하여 직관적으로 유도되는 핵심 통계량입니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "확률질량함수의 성질과 미지수 구하기",
+      "question": "이산확률변수 X의 확률분포가 P(X = 1) = k, P(X = 2) = 2k, P(X = 3) = 0.4일 때, 상수 k의 값과 P(X ≤ 2)를 구하시오.",
+      "visualHint": "확률의 총합은 항상 1이어야 한다는 기본 성질 ∑ P(X = x) = 1을 이용합니다.",
+      "stepByStepSolution": [
+        "1단계: 확률의 총합이 1이므로 k + 2k + 0.4 = 1이 성립해야 합니다.",
+        "2단계: 3k + 0.4 = 1에서 3k = 0.6이므로 k = 0.2입니다.",
+        "3단계: P(X ≤ 2) = P(X = 1) + P(X = 2) = k + 2k = 3k입니다.",
+        "4단계: k = 0.2를 대입하면 P(X ≤ 2) = 0.6입니다."
+      ],
+      "finalAnswer": "k = 0.2, P(X ≤ 2) = 0.6",
+      "pitfallAndTips": "각 확률이 0 이상 1 이하인지 검산하고, 확률의 총합이 1이 되는지 확인합니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "주사위 눈의 기댓값과 분산",
+      "question": "공정한 주사위 1개를 던져 나오는 눈의 수를 X라 할 때, X의 기댓값 E(X)와 분산 V(X)를 구하시오.",
+      "visualHint": "각 눈 1~6의 확률은 1/6로 동일합니다.",
+      "stepByStepSolution": [
+        "1단계: E(X) = (1 + 2 + 3 + 4 + 5 + 6) × (1/6) = 21/6 = 7/2 = 3.5입니다.",
+        "2단계: E(X^2) = (1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2) × (1/6) = (1 + 4 + 9 + 16 + 25 + 36) / 6 = 91/6입니다.",
+        "3단계: 분산 V(X) = E(X^2) - [E(X)]^2 = 91/6 - (7/2)^2 = 91/6 - 49/4 = (182 - 147) / 12 = 35/12입니다."
+      ],
+      "finalAnswer": "E(X) = 7/2 (또는 3.5), V(X) = 35/12",
+      "pitfallAndTips": "주사위 눈처럼 등간격 균등분포에서는 평균이 양 끝값의 한가운데( (1+6)/2 = 3.5 )가 됩니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "확률변수의 선형변환 성질",
+      "question": "확률변수 X에 대하여 E(X) = 5, V(X) = 4일 때, 새로운 확률변수 Y = 3X - 2의 평균 E(Y), 분산 V(Y), 표준편차 σ(Y)를 구하시오.",
+      "visualHint": "E(aX + b) = aE(X) + b, V(aX + b) = a^2 V(X), σ(aX + b) = |a| σ(X)를 적용합니다.",
+      "stepByStepSolution": [
+        "1단계: E(Y) = E(3X - 2) = 3 E(X) - 2 = 3 × 5 - 2 = 13입니다.",
+        "2단계: V(Y) = V(3X - 2) = 3^2 × V(X) = 9 × 4 = 36입니다.",
+        "3단계: σ(Y) = √V(Y) = √36 = 6입니다 (또는 |3| × σ(X) = 3 × 2 = 6)."
+      ],
+      "finalAnswer": "E(Y) = 13, V(Y) = 36, σ(Y) = 6",
+      "pitfallAndTips": "분산 계산 시 뒤에 더해진 상수(-2)는 산포도에 영향을 주지 않으므로 사라지고, 계수는 제곱(3^2 = 9)되어 곱해집니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "동전 3개 던지기의 앞면 수의 분포",
+      "question": "서로 다른 3개의 동전을 동시에 던질 때 나오는 앞면의 개수를 X라 하자. X의 기댓값과 분산을 구하시오.",
+      "visualHint": "X는 이항분포 B(3, 1/2)를 따르므로 공식을 즉시 적용할 수 있습니다.",
+      "stepByStepSolution": [
+        "1단계: X가 취할 수 있는 값은 0, 1, 2, 3입니다.",
+        "2단계: 각 동전의 앞면 성공확률이 p = 1/2인 독립시행을 3회 반복하므로 X ~ B(3, 1/2)입니다.",
+        "3단계: E(X) = np = 3 × (1/2) = 3/2 = 1.5입니다.",
+        "4단계: V(X) = np(1 - p) = 3 × (1/2) × (1/2) = 3/4 = 0.75입니다."
+      ],
+      "finalAnswer": "E(X) = 3/2, V(X) = 3/4",
+      "pitfallAndTips": "분포표를 만들어 직접 구해도 되지만, 이항분포 모수 n, p를 식별하여 E=np, V=npq로 풀면 매우 효율적입니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "비복원추출에서의 분산 계산 (초기하분포 모델)",
+      "question": "흰 공 3개와 검은 공 2개가 들어 있는 주머니에서 동시에 2개의 공을 꺼낼 때, 나오는 흰 공의 개수를 X라 하자. V(X)를 구하시오.",
+      "visualHint": "X가 0, 1, 2일 때의 조합 확률 P(X=x)를 표로 작성하여 E(X)와 E(X^2)를 계산합니다.",
+      "stepByStepSolution": [
+        "1단계: 전체 5개 중 2개를 꺼내는 경우의 수는 5C2 = 10입니다.",
+        "2단계: P(X = 0) = (3C0 × 2C2) / 10 = 1/10입니다.",
+        "3단계: P(X = 1) = (3C1 × 2C1) / 10 = (3 × 2) / 10 = 6/10 = 3/5입니다.",
+        "4단계: P(X = 2) = (3C2 × 2C0) / 10 = 3/10입니다.",
+        "5단계: E(X) = 0 × (1/10) + 1 × (6/10) + 2 × (3/10) = 12/10 = 6/5 = 1.2입니다.",
+        "6단계: E(X^2) = 0^2 × (1/10) + 1^2 × (6/10) + 2^2 × (3/10) = 6/10 + 12/10 = 18/10 = 9/5 = 1.8입니다.",
+        "7단계: V(X) = E(X^2) - [E(X)]^2 = 9/5 - (6/5)^2 = 45/25 - 36/25 = 9/25 = 0.36입니다."
+      ],
+      "finalAnswer": "9/25 (또는 0.36)",
+      "pitfallAndTips": "동시에 2개를 꺼내는 것은 비복원추출이므로 독립시행이 아니며, 조합 nCr로 각각의 확률을 직접 구해야 합니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "이항분포의 평균과 분산 역추정",
+      "question": "확률변수 X가 이항분포 B(n, p)를 따르고 E(X) = 12, V(X) = 8일 때, 시행 횟수 n과 성공확률 p의 값을 구하시오.",
+      "visualHint": "np = 12, np(1 - p) = 8의 연립방정식을 세워 1 - p를 먼저 구합니다.",
+      "stepByStepSolution": [
+        "1단계: 이항분포에서 E(X) = np = 12입니다.",
+        "2단계: V(X) = np(1 - p) = 8입니다.",
+        "3단계: V(X) / E(X) = [np(1 - p)] / (np) = 1 - p = 8 / 12 = 2/3입니다.",
+        "4단계: 따라서 실패확률 1 - p = 2/3이므로 성공확률 p = 1 - 2/3 = 1/3입니다.",
+        "5단계: np = 12에 p = 1/3을 대입하면 n × (1/3) = 12에서 n = 36입니다."
+      ],
+      "finalAnswer": "n = 36, p = 1/3",
+      "pitfallAndTips": "V(X) / E(X) = 1 - p (실패확률 q)가 됨을 기억하면 1초 만에 p와 n을 분리할 수 있습니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "이항분포 확률질량함수 값과 E(X^2)",
+      "question": "확률변수 X가 이항분포 B(4, 1/3)을 따를 때, P(X = 2)와 E(X^2)의 값을 각각 구하시오.",
+      "visualHint": "P(X = 2)는 독립시행 공식으로, E(X^2)는 V(X) + [E(X)]^2 관계식으로 구합니다.",
+      "stepByStepSolution": [
+        "1단계: P(X = 2) = 4C2 × (1/3)^2 × (2/3)^2 = 6 × (1/9) × (4/9) = 24 / 81 = 8 / 27입니다.",
+        "2단계: E(X) = np = 4 × (1/3) = 4/3입니다.",
+        "3단계: V(X) = np(1 - p) = 4 × (1/3) × (2/3) = 8/9입니다.",
+        "4단계: V(X) = E(X^2) - [E(X)]^2이므로 E(X^2) = V(X) + [E(X)]^2입니다.",
+        "5단계: E(X^2) = 8/9 + (4/3)^2 = 8/9 + 16/9 = 24/9 = 8/3입니다."
+      ],
+      "finalAnswer": "P(X = 2) = 8/27, E(X^2) = 8/3",
+      "pitfallAndTips": "E(X^2)를 각 항의 제곱과 확률의 곱으로 일일이 더하지 않고 분산 공식을 역이용하는 것이 훨씬 빠릅니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "복권 당첨금의 기댓값과 공정한 참가비",
+      "question": "총 10,000장의 복권이 발행되었다. 1등 1장에는 1,000,000원, 2등 10장에는 각 100,000원, 3등 100장에는 각 10,000원의 상금이 지급되고 나머지는 꽝(0원)이다. 이 복권 1장의 상금의 기댓값을 구하시오.",
+      "visualHint": "상금을 확률변수 X로 두고 각 당첨 확률을 가중치로 하여 기댓값을 구합니다.",
+      "stepByStepSolution": [
+        "1단계: 1등 당첨 확률은 1 / 10000입니다.",
+        "2단계: 2등 당첨 확률은 10 / 10000 = 1 / 1000입니다.",
+        "3단계: 3등 당첨 확률은 100 / 10000 = 1 / 100입니다.",
+        "4단계: 기댓값 E(X) = (1,000,000 × 1/10000) + (100,000 × 10/10000) + (10,000 × 100/10000) + (0 × 나머지)입니다.",
+        "5단계: 계산하면 100 + 100 + 100 = 300원입니다."
+      ],
+      "finalAnswer": "300원",
+      "pitfallAndTips": "전체 상금 총액을 발행 매수로 나누는 방법( (100만 + 100만 + 100만) / 10,000 = 300만 / 1만 = 300원 )으로도 즉시 검산 가능합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "이항분포 확률비 조건에서의 분산 결정",
+      "question": "확률변수 X가 이항분포 B(n, p)를 따르고 P(X = 1) = 8 P(X = 0)이며 기댓값 E(X) = 4일 때, 분산 V(X)를 구하시오.",
+      "visualHint": "P(X = 1) / P(X = 0) = n p / (1 - p) = 8 관계식과 np = 4를 연립합니다.",
+      "stepByStepSolution": [
+        "1단계: P(X = 0) = nC0 p^0 (1 - p)^n = (1 - p)^n입니다.",
+        "2단계: P(X = 1) = nC1 p^1 (1 - p)^(n-1) = n p (1 - p)^(n-1)입니다.",
+        "3단계: 조건 P(X = 1) = 8 P(X = 0)에 대입하면 n p (1 - p)^(n-1) = 8 (1 - p)^n입니다.",
+        "4단계: 양변을 (1 - p)^(n-1)로 나누면 n p = 8(1 - p)가 됩니다.",
+        "5단계: E(X) = np = 4이므로 4 = 8(1 - p)에서 1 - p = 4/8 = 1/2입니다. 따라서 p = 1/2입니다.",
+        "6단계: np = 4에서 n × (1/2) = 4이므로 n = 8입니다.",
+        "7단계: 분산 V(X) = np(1 - p) = 8 × (1/2) × (1/2) = 2입니다."
+      ],
+      "finalAnswer": "2",
+      "pitfallAndTips": "P(X = 1)과 P(X = 0)의 비는 np / (1 - p)로 정리된다는 일반적인 성질을 이용하면 빠르게 연립할 수 있습니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "새로운 변수의 제곱의 기댓값과 최솟값",
+      "question": "확률변수 X에 대하여 E(X) = 3, V(X) = 2일 때, 실수 a에 대한 함수 f(a) = E[(X - a)^2]의 최솟값과 그때의 a의 값을 구하시오.",
+      "visualHint": "E[(X - a)^2]를 전개하여 기댓값의 선형성을 적용하면 a에 대한 이차함수가 됩니다.",
+      "stepByStepSolution": [
+        "1단계: f(a) = E[(X - a)^2] = E[X^2 - 2aX + a^2]를 전개합니다.",
+        "2단계: 기댓값의 선형성에 의해 f(a) = E(X^2) - 2a E(X) + a^2입니다.",
+        "3단계: V(X) = E(X^2) - [E(X)]^2이므로 E(X^2) = V(X) + [E(X)]^2 = 2 + 3^2 = 2 + 9 = 11입니다.",
+        "4단계: f(a) = a^2 - 2(3)a + 11 = a^2 - 6a + 11 = (a - 3)^2 + 2입니다.",
+        "5단계: a는 실수이므로 a = 3일 때 최솟값 2를 갖습니다.",
+        "6단계: 이는 일반적인 성질인 E[(X - a)^2]는 a = E(X)일 때 최솟값 V(X)를 갖는다는 통계학의 핵심 정리와 완벽히 일치합니다."
+      ],
+      "finalAnswer": "a = 3일 때 최솟값 2",
+      "pitfallAndTips": "편차제곱의 기댓값은 a가 바로 기댓값(평균)일 때 최소가 되며, 그 최솟값 자체가 분산의 정의입니다."
+    }
+  ]
+}
