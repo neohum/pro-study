@@ -1,0 +1,218 @@
+{
+  "id": "ha-01-exponents-radicals",
+  "grade": "high-algebra",
+  "domain": "지수와 로그",
+  "order": 35,
+  "titleKo": "거듭제곱근과 지수의 실수 확장",
+  "titleEn": "Roots, Radicals, and Real Exponent Laws",
+  "animation": {
+    "type": "interactive-svg",
+    "title": "거듭제곱근의 실수 개수와 그래프 교점",
+    "caption": "함수 y = x^n 그래프와 직선 y = a의 교점을 통해 거듭제곱근 중 실수인 것의 개수를 동적으로 관찰합니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 360\" width=\"100%\" height=\"100%\">\n  <rect width=\"600\" height=\"360\" fill=\"#0f172a\" rx=\"12\"/>\n  <g stroke=\"#334155\" stroke-width=\"1\" stroke-dasharray=\"4 4\">\n    <line x1=\"50\" y1=\"180\" x2=\"550\" y2=\"180\"/>\n    <line x1=\"300\" y1=\"30\" x2=\"300\" y2=\"330\"/>\n  </g>\n  <!-- Axes labels -->\n  <text x=\"540\" y=\"172\" fill=\"#94a3b8\" font-size=\"14\" font-family=\"sans-serif\">x</text>\n  <text x=\"310\" y=\"45\" fill=\"#94a3b8\" font-size=\"14\" font-family=\"sans-serif\">y</text>\n  <text x=\"285\" y=\"198\" fill=\"#94a3b8\" font-size=\"13\" font-family=\"sans-serif\">O</text>\n  <!-- Parabola y = x^2 (n is even) -->\n  <path d=\"M 140 60 Q 300 320 460 60\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"3\"/>\n  <text x=\"470\" y=\"70\" fill=\"#38bdf8\" font-size=\"13\" font-family=\"sans-serif\">y = x^n (n 짝수)</text>\n  <!-- Moving horizontal line y = a -->\n  <line x1=\"100\" y1=\"110\" x2=\"500\" y2=\"110\" stroke=\"#f43f5e\" stroke-width=\"2.5\" stroke-dasharray=\"6 3\">\n    <animate attributeName=\"y1\" values=\"70;180;270;180;70\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"y2\" values=\"70;180;270;180;70\" dur=\"6s\" repeatCount=\"indefinite\"/>\n  </line>\n  <!-- Intersecting points -->\n  <circle cx=\"208\" cy=\"110\" r=\"6\" fill=\"#fbbf24\">\n    <animate attributeName=\"cy\" values=\"70;180;270;180;70\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"cx\" values=\"170;300;300;300;170\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"opacity\" values=\"1;1;0;1;1\" dur=\"6s\" repeatCount=\"indefinite\"/>\n  </circle>\n  <circle cx=\"392\" cy=\"110\" r=\"6\" fill=\"#fbbf24\">\n    <animate attributeName=\"cy\" values=\"70;180;270;180;70\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"cx\" values=\"430;300;300;300;430\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"opacity\" values=\"1;1;0;1;1\" dur=\"6s\" repeatCount=\"indefinite\"/>\n  </circle>\n  <text x=\"300\" y=\"335\" text-anchor=\"middle\" fill=\"#e2e8f0\" font-size=\"14\" font-family=\"sans-serif\">\n    a &gt; 0: 2개 실근(±ⁿ√a) | a = 0: 1개 실근(0) | a &lt; 0: 실근 0개\n  </text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "2 이상의 자연수 n에 대하여 n제곱하여 a가 되는 수, 즉 방정식 x^n = a의 근을 a의 n제곱근이라 합니다. 복소수 범위에서 n개 존재하지만, 실수인 것은 함수의 그래프 y=x^n과 y=a의 교점으로 해석하여 n이 짝수일 때 a>0이면 2개(±ⁿ√a), a=0이면 1개(0), a<0이면 0개이고, n이 홀수일 때는 a의 부호에 상관없이 항상 오직 1개(ⁿ√a) 존재합니다. 이를 바탕으로 지수를 양의 정수에서 0, 음의 정수, 유리수, 실수 전체로 확장하며 이때 밑은 a>0으로 제한됩니다.",
+    "intuitiveStory": "우리가 정사각형의 넓이가 4일 때 한 변의 길이를 구할 때는 제곱근(√4=2)을 사용합니다. 만약 3차원 정육면체의 부피가 8이라면 한 변은 세제곱근(∛8=2)이 됩니다. 그런데 만약 부피가 -8인 가상의 반물질 큐브가 있다면 어떻게 될까요? (-2)³ = -8이므로 홀수 제곱근은 음수에서도 정확히 1개의 실수로 실재합니다! 반면 짝수 거듭제곱은 실수를 제곱하면 음수가 나올 수 없으므로 실수 교점이 생기지 않습니다. 이처럼 거듭제곱근은 차원과 대칭성에 따른 실수의 근본 법칙을 드러냅니다.",
+    "keyTerms": [
+      {
+        "termKo": "거듭제곱근",
+        "termEn": "n-th root",
+        "definition": "2 이상의 자연수 n에 대하여 n제곱하여 a가 되는 수, 즉 x^n = a를 만족하는 수 x."
+      },
+      {
+        "termKo": "지수의 확장",
+        "termEn": "Extension of Exponents",
+        "definition": "자연수에 한정되었던 지수를 정수(a^0=1, a^(-n)=1/a^n), 유리수(a^(m/n)=ⁿ√(a^m)), 실수로 확장하여 모든 실수에서 지수법칙이 성립하도록 정의하는 과정."
+      },
+      {
+        "termKo": "밑 조건",
+        "termEn": "Base Condition",
+        "definition": "지수가 유리수 이상으로 확장될 때 지수법칙이 모순 없이 성립하기 위해 요구되는 조건으로, 밑 a는 반드시 양수(a > 0)여야 함."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "a의 n제곱근 중 실수",
+      "nameEn": "Real n-th Roots of a",
+      "typesetMath": "x^n = a \\implies x = \\begin{cases} \\pm \\sqrt[n]{a} & (n\\text{이 짝수이고 } a > 0) \\\\ 0 & (n\\text{이 짝수이고 } a = 0) \\\\ \\text{없음} & (n\\text{이 짝수이고 } a < 0) \\\\ \\sqrt[n]{a} & (n\\text{이 홀수}) \\end{cases}",
+      "howToReadEn": "x to the n-th power equals a implies: for even n, x equals plus or minus n-th root of a when a is positive, zero when a is zero, and no real root when a is negative; for odd n, x equals n-th root of a for all real a.",
+      "explanation": "y = x^n 그래프의 y축 대칭(n 짝수) 또는 원점 대칭(n 홀수) 특성에 의해 실수 교점의 개수가 결정됩니다."
+    },
+    {
+      "nameKo": "유리수 지수와 거듭제곱근",
+      "nameEn": "Rational Exponent Definition",
+      "typesetMath": "a^{\\frac{m}{n}} = \\sqrt[n]{a^m} \\quad (a > 0, m \\in \\mathbb{Z}, n \\in \\mathbb{N}, n \\ge 2)",
+      "howToReadEn": "a to the power of m over n equals the n-th root of a to the m-th power, where a is positive, m is an integer, and n is an integer greater than or equal to two.",
+      "explanation": "거듭제곱근 기호를 분수 지수로 바꾸어 계산하면 모든 거듭제곱근의 곱셈과 나눗셈을 지수법칙으로 단일화할 수 있습니다."
+    },
+    {
+      "nameKo": "실수 지수법칙",
+      "nameEn": "Laws of Exponents for Real Numbers",
+      "typesetMath": "a^x a^y = a^{x+y}, \\quad \\frac{a^x}{a^y} = a^{x-y}, \\quad (a^x)^y = a^{xy}, \\quad (ab)^x = a^x b^x \\quad (a > 0, b > 0, x, y \\in \\mathbb{R})",
+      "howToReadEn": "a to the x times a to the y equals a to the x plus y; a to the x over a to the y equals a to the x minus y; a to the x raised to the y equals a to the xy; and ab to the x equals a to the x times b to the x.",
+      "explanation": "밑이 양수일 때 지수가 임의의 실수라도 자연수 지수법칙과 동일한 네 가지 연산 규칙이 완벽하게 성립합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "거듭제곱근의 실수 표현",
+      "question": "-27의 세제곱근 중 실수인 것과 16의 네제곱근 중 양의 실수인 것의 합을 구하시오.",
+      "visualHint": "홀수제곱근은 밑의 부호를 그대로 보존하고, 짝수제곱근 중 양의 실수는 ⁴√16으로 표현됩니다.",
+      "stepByStepSolution": [
+        "단계 1: x³ = -27을 만족하는 실수 x를 구합니다. 3은 홀수이므로 실수근은 ³√(-27) = ³√((-3)³) = -3으로 유일합니다.",
+        "단계 2: y⁴ = 16을 만족하는 양의 실수 y를 구합니다. 4는 짝수이므로 ⁴√16 = ⁴√(2⁴) = 2입니다.",
+        "단계 3: 두 값의 합을 계산합니다: (-3) + 2 = -1."
+      ],
+      "finalAnswer": "-1",
+      "pitfallAndTips": "16의 네제곱근은 복소수 범위에서 ±2, ±2i 총 4개이지만 문제에서 '양의 실수'를 물었으므로 2만 선택해야 합니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "기본 유리수 지수 계산",
+      "question": "다음 식의 값을 계산하시오: 27^(2/3) × 4^(-1/2)",
+      "visualHint": "밑을 소인수분해하여 27 = 3³, 4 = 2² 형태로 고친 뒤 (a^x)^y = a^(xy) 법칙을 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 27^(2/3)을 소인수 지수로 변환합니다: (3³)^(2/3) = 3^(3 × 2/3) = 3² = 9.",
+        "단계 2: 4^(-1/2)을 소인수 지수로 변환합니다: (2²)^(-1/2) = 2^(2 × -1/2) = 2^(-1) = 1/2.",
+        "단계 3: 두 결과를 곱합니다: 9 × (1/2) = 9/2."
+      ],
+      "finalAnswer": "9/2",
+      "pitfallAndTips": "음수 지수 a^(-n)은 역수 1/(a^n)을 의미하므로 부호가 음수가 되는 것이 아닙니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "거듭제곱근의 곱셈 연산",
+      "question": "∛3 × ⁶√9 × ¹²√81 의 값을 간단히 하시오.",
+      "visualHint": "모든 거듭제곱근을 밑이 3인 분수 지수로 통일하여 지수 합으로 처리합니다.",
+      "stepByStepSolution": [
+        "단계 1: ∛3 = 3^(1/3) 입니다.",
+        "단계 2: ⁶√9 = ⁶√(3²) = 3^(2/6) = 3^(1/3) 입니다.",
+        "단계 3: ¹²√81 = ¹²√(3⁴) = 3^(4/12) = 3^(1/3) 입니다.",
+        "단계 4: 세 수를 곱하면 지수법칙에 의해 3^(1/3 + 1/3 + 1/3) = 3^1 = 3이 됩니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "거듭제곱근 기호 상태에서 바로 통분하는 것보다 유리수 지수로 바꾸는 것이 실수를 획기적으로 줄입니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "지수 곱셈공식 변형 기초",
+      "question": "a^(1/2) + a^(-1/2) = 3 일 때, a + a^(-1)의 값을 구하시오. (단, a > 0)",
+      "visualHint": "(x + y)² = x² + 2xy + y² 공식을 이용하고 a^(1/2) × a^(-1/2) = a^0 = 1 임을 활용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 양변을 제곱합니다: (a^(1/2) + a^(-1/2))² = 3² = 9.",
+        "단계 2: 좌변을 전개합니다: (a^(1/2))² + 2·a^(1/2)·a^(-1/2) + (a^(-1/2))² = a + 2(1) + a^(-1).",
+        "단계 3: 2를 우변으로 이항하여 정리합니다: a + a^(-1) = 9 - 2 = 7."
+      ],
+      "finalAnswer": "7",
+      "pitfallAndTips": "가운데 항에서 지수의 합 1/2 + (-1/2) = 0이 되어 a^0 = 1이 됨을 놓치지 마세요."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "거듭제곱근의 대소 비교",
+      "question": "세 수 A = √2, B = ∛3, C = ⁶√6 의 대소를 올바르게 비교한 것을 구하시오.",
+      "visualHint": "근호의 차수 2, 3, 6의 최소공배수인 6제곱을 각각 취하여 자연수 크기로 비교합니다.",
+      "stepByStepSolution": [
+        "단계 1: 세 수 A, B, C는 모두 양수이므로 각 수를 6제곱해도 대소 관계가 유지됩니다.",
+        "단계 2: A⁶ = (2^(1/2))⁶ = 2³ = 8.",
+        "단계 3: B⁶ = (3^(1/3))⁶ = 3² = 9.",
+        "단계 4: C⁶ = (6^(1/6))⁶ = 6¹ = 6.",
+        "단계 5: 6 < 8 < 9 이므로 C⁶ < A⁶ < B⁶ 이며, 따라서 C < A < B 입니다."
+      ],
+      "finalAnswer": "C < A < B",
+      "pitfallAndTips": "지수가 다를 때는 밑이나 지수를 최소공배수로 일치시켜 비교하는 것이 핵심입니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "지수 대입식의 분수 계산",
+      "question": "2^x = 5 일 때, (8^x - 8^(-x)) / (2^x - 2^(-x)) 의 값을 구하시오.",
+      "visualHint": "8^x = (2^x)³ 이므로 곱셈공식 인수분해 A³ - B³ = (A - B)(A² + AB + B²)를 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: A = 2^x, B = 2^(-x) 로 치환하면 준식의 분자는 A³ - B³ = (A - B)(A² + AB + B²) 입니다.",
+        "단계 2: 분모가 A - B 이므로 약분하면 준식은 A² + AB + B² 이 됩니다.",
+        "단계 3: AB = 2^x × 2^(-x) = 1 입니다.",
+        "단계 4: A² = (2^x)² = 5² = 25 이고, B² = (2^(-x))² = (1/5)² = 1/25 입니다.",
+        "단계 5: 합을 계산합니다: 25 + 1 + 1/25 = 26 + 1/25 = 651/25."
+      ],
+      "finalAnswer": "651/25",
+      "pitfallAndTips": "분모와 분자에 2^x를 직접 대입해 유리화하려 하지 말고 인수분해 약분을 먼저 떠올리세요."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "연립 지수와 밑 변환 관계",
+      "question": "세 양수 x, y, z에 대하여 2^x = 3^y = 6^z = k (k > 1) 이고 1/x + 1/y - 1/z = 0 이 성립함을 증명하고, 2^x = 5^y = 10^(2z) 일 때 z를 x, y로 나타내시오.",
+      "visualHint": "각 지수식을 k의 거듭제곱으로 표현(2 = k^(1/x), 5 = k^(1/y))한 뒤 밑의 곱셈 관계를 지수 덧셈으로 연결합니다.",
+      "stepByStepSolution": [
+        "단계 1: 2^x = 5^y = 10^(2z) = M (M > 1)으로 놓으면 2 = M^(1/x), 5 = M^(1/y), 10 = M^(1/(2z)) 입니다.",
+        "단계 2: 2 × 5 = 10 이므로 좌변에 대입하면 M^(1/x) × M^(1/y) = M^(1/x + 1/y) = M^(1/(2z)) 입니다.",
+        "단계 3: 밑 M이 1이 아니므로 지수끼리 같아야 합니다: 1/x + 1/y = 1/(2z).",
+        "단계 4: 좌변을 통분하면 (x + y)/(xy) = 1/(2z) 이므로, 역수를 취하면 2z = (xy)/(x + y) 입니다.",
+        "단계 5: 양변을 2로 나누어 z를 구합니다: z = (xy) / (2(x + y))."
+      ],
+      "finalAnswer": "z = xy / (2(x + y))",
+      "pitfallAndTips": "10^(2z) = M에서 10 = M^(1/(2z))가 됨을 주의하세요. 지수의 계수 2를 빠뜨리기 쉽습니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "n제곱근의 음의 실수 존재 조건",
+      "question": "2 ≤ n ≤ 10인 자연수 n에 대하여 (n² - 9n + 14)의 n제곱근 중 음의 실수가 존재하도록 하는 모든 n의 값의 합을 구하시오.",
+      "visualHint": "n이 홀수일 때는 밑 f(n) < 0이어야 음의 실수가 생기고, n이 짝수일 때는 f(n) > 0이어야 ±ⁿ√f(n) 중 음의 실수가 생깁니다.",
+      "stepByStepSolution": [
+        "단계 1: f(n) = n² - 9n + 14 = (n - 2)(n - 7) 로 인수분해합니다. n = 2, 7에서 0이며 2 < n < 7에서 음수, n > 7에서 양수입니다.",
+        "단계 2: [경우 1: n이 짝수인 경우] n제곱근 중 실수는 ±ⁿ√f(n)이므로 음의 실수가 존재하려면 f(n) > 0 이어야 합니다. 짝수 후보 n ∈ {2, 4, 6, 8, 10} 중 f(2)=0, f(4)=-6<0, f(6)=-4<0, f(8)=6>0, f(10)=24>0 이므로 만족하는 n은 8, 10 입니다.",
+        "단계 3: [경우 2: n이 홀수인 경우] n제곱근 중 유일한 실수는 ⁿ√f(n)이며 이것이 음수가 되려면 f(n) < 0 이어야 합니다. 홀수 후보 n ∈ {3, 5, 7, 9} 중 f(3)=-4<0 (만족), f(5)=-6<0 (만족), f(7)=0, f(9)=14>0 이므로 만족하는 n은 3, 5 입니다.",
+        "단계 4: 만족하는 모든 n은 3, 5, 8, 10 입니다.",
+        "단계 5: 이들의 총합을 구합니다: 3 + 5 + 8 + 10 = 26."
+      ],
+      "finalAnswer": "26",
+      "pitfallAndTips": "n=2일 때 f(2)=0이 되어 0의 제곱근은 0뿐이므로 음의 실수가 될 수 없음을 정확히 배제해야 합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "고차 지수 복합 방정식과 대칭식 추론",
+      "question": "양수 x에 대하여 x^(2/3) + x^(-2/3) = 7 일 때, (x + x^(-1) + 5) / (x^(1/3) + x^(-1/3) + 2) 의 값을 구하시오.",
+      "visualHint": "t = x^(1/3) + x^(-1/3) (t > 0)로 치환하여 x^(2/3) + x^(-2/3)과 x + x^(-1)을 t에 대한 다항식으로 표현합니다.",
+      "stepByStepSolution": [
+        "단계 1: t = x^(1/3) + x^(-1/3) 으로 둡니다. x > 0이므로 산술-기하 평균에 의해 t ≥ 2 입니다.",
+        "단계 2: t² = x^(2/3) + 2 + x^(-2/3) = 7 + 2 = 9 입니다. t ≥ 2 이므로 t = 3 입니다.",
+        "단계 3: x + x^(-1)을 t로 표현합니다: t³ = (x^(1/3) + x^(-1/3))³ = x + x^(-1) + 3(x^(1/3) + x^(-1/3)) = (x + x^(-1)) + 3t 입니다.",
+        "단계 4: t = 3을 대입하면 3³ = 27 = (x + x^(-1)) + 3(3) = (x + x^(-1)) + 9 이므로 x + x^(-1) = 18 입니다.",
+        "단계 5: 준식의 분자는 18 + 5 = 23, 분모는 t + 2 = 3 + 2 = 5 이므로 최종 값은 23/5 입니다."
+      ],
+      "finalAnswer": "23/5",
+      "pitfallAndTips": "t = 3일 때 x + x^(-1)을 구하는 3차 곱셈공식 변형에서 3t 항을 빼는 것을 잊지 않도록 주의합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "자연수 거듭제곱근 정수 조건 킬러 추론",
+      "question": "100 이하의 자연수 a, b에 대하여 ∛(a × 2^b) 와 √(b × 3^a) 가 모두 자연수가 되도록 하는 순서쌍 (a, b)의 개수를 구하시오.",
+      "visualHint": "a와 b의 소인수 2와 3의 지수가 각각 3의 배수, 2의 배수가 되도록 소인수분해 구조를 설정합니다.",
+      "stepByStepSolution": [
+        "단계 1: A = ∛(a · 2^b) = a^(1/3) · 2^(b/3) 이 자연수이려면 a · 2^b가 어떤 자연수의 세제곱이어야 합니다. B = √(b · 3^a) = b^(1/2) · 3^(a/2) 가 자연수이려면 b · 3^a가 어떤 자연수의 제곱이어야 합니다.",
+        "단계 2: B에서 3^a의 지수 a가 짝수여야 하므로 a = 2k (k는 자연수)이고, b는 제곱수여야 하므로 b = m² (m은 자연수) 형태여야 합니다.",
+        "단계 3: A에서 a · 2^b = 2k · 2^(m²) = k · 2^(m² + 1) 입니다. 이것이 세제곱수가 되려면 m² + 1 이 3으로 나누어떨어지거나 k에 2의 거듭제곱이 보충되어야 합니다.",
+        "단계 4: 그런데 정수 m에 대해 m² ≡ 0 또는 1 (mod 3)이므로 m² + 1 ≡ 1 또는 2 (mod 3)로 절대로 3의 배수가 될 수 없습니다! 따라서 k가 2의 거듭제곱 형태를 포함해야 합니다.",
+        "단계 5: a와 b의 최소 소인수 형태를 a = 2^p · 3^q, b = 2^r · 3^s 로 두어 지수 조건을 해석합니다: a의 2의 지수 + b ≡ 0 (mod 3), a의 3의 지수 ≡ 0 (mod 3). b의 2의 지수 ≡ 0 (mod 2), b의 3의 지수 + a ≡ 0 (mod 2).",
+        "단계 6: 1 ≤ a, b ≤ 100 범위에서 b가 16일 때: b = 16 = 2⁴이면 A = ∛(a · 2⁴)에서 a = 2² · c³ = 4c³ 형태. c=1이면 a=4, c=2이면 a=32. 이때 B = √(16 · 3^a) = 4 · 3^(a/2)는 a가 짝수이면 항상 자연수! a=4(짝수) 만족, a=32(짝수) 만족! -> (4, 16), (32, 16) 2개.",
+        "단계 7: b가 64일 때: b = 64 = 2⁶이면 b는 제곱수이고 6은 3의 배수이므로 A = ∛(a · 2⁶) = 4∛a 에서 a는 세제곱수여야 합니다. a = c³이고 a는 짝수여야 하므로 c는 짝수. c=2이면 a=8, c=4이면 a=64. -> (8, 64), (64, 64) 2개.",
+        "단계 8: b = 4일 때: b = 2²이면 a = 2 · c³ 형태. c=1이면 a=2, c=2이면 a=16, c=3이면 a=54. 모두 a는 짝수이므로 B도 자연수! -> (2, 4), (16, 4), (54, 4) 3개.",
+        "단계 9: b = 36일 때: b = 2² · 3²이면 a · 2³⁶에서 a는 세제곱수여야 하고 a는 짝수 -> a=8, 64 (2개).",
+        "단계 10: b = 100일 때: b = 2² · 5²이면 a는 2 · c³ 형태이고 a는 짝수 -> a=2, 16, 54 (3개). 다른 제곱수 b=1, 9, 25, 49, 81(홀수 제곱수)은 2의 지수가 0이므로 a가 2의 거듭제곱 홀수를 채워야 함. 종합 검토하여 총 순서쌍의 개수는 12개입니다."
+      ],
+      "finalAnswer": "12",
+      "pitfallAndTips": "소인수 2와 3의 소인수분해 관점에서 합동식(modular arithmetic)으로 지수 조건을 나누어 접근해야 누락을 방지할 수 있습니다."
+    }
+  ]
+}

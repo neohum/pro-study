@@ -1,0 +1,219 @@
+{
+  "id": "ps-01-advanced-counting",
+  "grade": "high-prob-stat",
+  "domain": "순열과 조합",
+  "order": 51,
+  "titleKo": "원순열, 중복순열, 같은 것이 있는 순열과 중복조합(nHr)",
+  "titleEn": "Circular, Repetitive Permutations, and Combinations with Repetition",
+  "animation": {
+    "type": "svg",
+    "title": "원순열의 회전 대칭성과 중복조합 칸막이 모델",
+    "caption": "원탁에서 n개 자리를 회전시켰을 때 일치하는 n가지를 1가지로 간주하는 원순열과, n개 종류에서 r개를 뽑는 중복조합의 공-칸막이 대응을 시각화합니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 500\" width=\"100%\" height=\"100%\">\n  <defs>\n    <linearGradient id=\"ps1Bg\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#0f172a\"/>\n      <stop offset=\"100%\" stop-color=\"#1e293b\"/>\n    </linearGradient>\n    <linearGradient id=\"nodeGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#38bdf8\"/>\n      <stop offset=\"100%\" stop-color=\"#2563eb\"/>\n    </linearGradient>\n    <filter id=\"glow\" x=\"-20%\" y=\"-20%\" width=\"140%\" height=\"140%\">\n      <feGaussianBlur stdDeviation=\"4\" result=\"blur\"/>\n      <feComposite in=\"SourceGraphic\" in2=\"blur\" operator=\"over\"/>\n    </filter>\n  </defs>\n  <rect width=\"800\" height=\"500\" fill=\"url(#ps1Bg)\" rx=\"16\"/>\n  <text x=\"400\" y=\"45\" text-anchor=\"middle\" fill=\"#f8fafc\" font-size=\"20\" font-weight=\"bold\" font-family=\"sans-serif\">원순열 회전 대칭 &amp; 중복조합(nHr) 모델</text>\n  <!-- Left: Circular Permutation -->\n  <g transform=\"translate(210, 260)\">\n    <circle cx=\"0\" cy=\"0\" r=\"110\" fill=\"none\" stroke=\"#334155\" stroke-width=\"4\" stroke-dasharray=\"6 6\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"70\" fill=\"#1e293b\" stroke=\"#38bdf8\" stroke-width=\"2\"/>\n    <text x=\"0\" y=\"6\" text-anchor=\"middle\" fill=\"#94a3b8\" font-size=\"14\" font-family=\"sans-serif\">원탁 회전동일</text>\n    <g>\n      <animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0\" to=\"360\" dur=\"12s\" repeatCount=\"indefinite\"/>\n      <circle cx=\"0\" cy=\"-110\" r=\"20\" fill=\"url(#nodeGrad)\" filter=\"url(#glow)\"/>\n      <text x=\"0\" y=\"-104\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">1</text>\n      <circle cx=\"104\" cy=\"-34\" r=\"20\" fill=\"url(#nodeGrad)\"/>\n      <text x=\"104\" y=\"-28\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">2</text>\n      <circle cx=\"64\" cy=\"89\" r=\"20\" fill=\"url(#nodeGrad)\"/>\n      <text x=\"64\" y=\"95\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">3</text>\n      <circle cx=\"-64\" cy=\"89\" r=\"20\" fill=\"url(#nodeGrad)\"/>\n      <text x=\"-64\" y=\"95\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">4</text>\n      <circle cx=\"-104\" cy=\"-34\" r=\"20\" fill=\"url(#nodeGrad)\"/>\n      <text x=\"-104\" y=\"-28\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"bold\">5</text>\n    </g>\n    <text x=\"0\" y=\"150\" text-anchor=\"middle\" fill=\"#38bdf8\" font-size=\"16\" font-weight=\"bold\" font-family=\"sans-serif\">원순열: (5 - 1)! = 24</text>\n  </g>\n  <!-- Right: Stars and Bars for nHr -->\n  <g transform=\"translate(560, 160)\">\n    <rect x=\"-170\" y=\"0\" width=\"340\" height=\"240\" rx=\"12\" fill=\"#0f172a\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n    <text x=\"0\" y=\"35\" text-anchor=\"middle\" fill=\"#f59e0b\" font-size=\"17\" font-weight=\"bold\" font-family=\"sans-serif\">중복조합: nHr = n+r-1 C r</text>\n    <text x=\"0\" y=\"65\" text-anchor=\"middle\" fill=\"#94a3b8\" font-size=\"13\" font-family=\"sans-serif\">3종류(A,B,C)에서 4개 선택 (칸막이 2개, 공 4개)</text>\n    <!-- Balls and Dividers -->\n    <g transform=\"translate(-110, 110)\">\n      <circle cx=\"20\" cy=\"0\" r=\"14\" fill=\"#10b981\"/>\n      <circle cx=\"60\" cy=\"0\" r=\"14\" fill=\"#10b981\"/>\n      <rect x=\"92\" y=\"-22\" width=\"6\" height=\"44\" rx=\"3\" fill=\"#ef4444\"/>\n      <circle cx=\"130\" cy=\"0\" r=\"14\" fill=\"#10b981\"/>\n      <rect x=\"162\" y=\"-22\" width=\"6\" height=\"44\" rx=\"3\" fill=\"#ef4444\"/>\n      <circle cx=\"200\" cy=\"0\" r=\"14\" fill=\"#10b981\"/>\n    </g>\n    <text x=\"-40\" y=\"160\" text-anchor=\"middle\" fill=\"#10b981\" font-size=\"13\">A: 2개</text>\n    <text x=\"25\" y=\"160\" text-anchor=\"middle\" fill=\"#10b981\" font-size=\"13\">B: 1개</text>\n    <text x=\"90\" y=\"160\" text-anchor=\"middle\" fill=\"#10b981\" font-size=\"13\">C: 1개</text>\n    <text x=\"0\" y=\"210\" text-anchor=\"middle\" fill=\"#fbbf24\" font-size=\"15\" font-weight=\"bold\">3H4 = 3+4-1 C 4 = 6C4 = 15가지</text>\n  </g>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "순열과 조합의 심화 영역은 대칭성(원순열), 선택의 중복 허용(중복순열, 중복조합), 구성 요소의 동질성(같은 것이 있는 순열)을 다룹니다. 원순열은 회전하여 겹치는 n개의 상태를 단 하나의 상태로 동치 관계화하여 (n-1)!로 셈합니다. 중복조합 nHr은 서로 다른 n개 대상 중 순서 없이 중복을 허용하여 r개를 택하는 것으로, r개의 공과 (n-1)개의 칸막이를 일렬로 배열하는 같은 것이 있는 순열 또는 n+r-1Cr 조합 모델과 일대일 대응합니다.",
+    "intuitiveStory": "원탁에 앉을 때 모든 사람이 오른쪽으로 한 칸씩 옮겨 앉아도 양옆 사람과의 상대적 위치 관계는 전혀 변하지 않습니다. 따라서 시작 위치의 구분이 사라져 회전수 n만큼 경우의 수가 줄어듭니다. 반면 뷔페 접시에 3종류의 디저트를 총 5개 담을 때, 접시에 담긴 디저트의 순서는 상관없고 각 종류별 개수만 중요합니다. 이때 접시 위에 2개의 칸막이를 두어 구역을 나누면 공 5개와 칸막이 2개의 자리배치 문제로 완벽히 변환됩니다.",
+    "keyTerms": [
+      {
+        "termKo": "원순열",
+        "termEn": "Circular Permutation",
+        "definition": "서로 다른 대상을 원형으로 배열할 때, 회전하여 일치하는 배치를 동일한 한 가지로 보는 순열."
+      },
+      {
+        "termKo": "중복순열",
+        "termEn": "Permutation with Repetition",
+        "definition": "서로 다른 n개 중에서 중복을 허락하여 r개를 택해 일렬로 나열하는 순열 (n^r)."
+      },
+      {
+        "termKo": "같은 것이 있는 순열",
+        "termEn": "Permutation with Identical Items",
+        "definition": "n개 중 같은 것이 각각 p개, q개, ... 있을 때 이들을 일렬로 배열하는 경우의 수 (n! / (p!q!...))."
+      },
+      {
+        "termKo": "중복조합",
+        "termEn": "Combination with Repetition",
+        "definition": "서로 다른 n개 중에서 순서를 고려하지 않고 중복을 허락하여 r개를 선택하는 조합 (nHr = n+r-1Cr)."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "원순열의 수",
+      "nameEn": "Circular Permutation Formula",
+      "typesetMath": "$$\\frac{n!}{n} = (n - 1)!$$",
+      "howToReadEn": "n factorial divided by n equals n minus one factorial",
+      "explanation": "서로 다른 n개를 원형으로 배열할 때 회전에 의해 겹치는 경우가 n가지씩 발생하므로 n으로 나눕니다."
+    },
+    {
+      "nameKo": "중복순열의 수",
+      "nameEn": "Permutation with Repetition Formula",
+      "typesetMath": "$${}_{n}\\Pi_{r} = n^r$$",
+      "howToReadEn": "n pi r equals n to the power of r",
+      "explanation": "r개의 각 자리에 서로 다른 n가지 원소가 중복하여 들어갈 수 있으므로 곱의 법칙에 의해 n^r입니다."
+    },
+    {
+      "nameKo": "같은 것이 있는 순열",
+      "nameEn": "Permutations of Multiset",
+      "typesetMath": "$$\\frac{n!}{p! \\, q! \\, \\cdots \\, r!} \\quad (p + q + \\cdots + r = n)$$",
+      "howToReadEn": "n factorial divided by p factorial times q factorial dots r factorial",
+      "explanation": "같은 것이 있는 원소끼리의 자리 바꿈은 새로운 배열을 만들지 않으므로 각각의 팩토리얼로 나누어 줍니다."
+    },
+    {
+      "nameKo": "중복조합의 수",
+      "nameEn": "Stars and Bars Combination Formula",
+      "typesetMath": "$${}_{n}\\mathrm{H}_{r} = {}_{n + r - 1}\\mathrm{C}_{r}$$",
+      "howToReadEn": "n H r equals n plus r minus one choose r",
+      "explanation": "r개의 대상과 대상들의 종류를 구분하는 (n-1)개의 칸막이를 일렬로 배열하는 경우의 수와 같습니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "원탁 둘러앉기 기본",
+      "question": "서로 다른 5명의 학생이 원형 탁자에 둘러앉는 경우의 수를 구하시오.",
+      "visualHint": "한 학생의 자리를 고정하면 나머지 4명의 학생을 일렬로 세우는 순열 문제가 됩니다.",
+      "stepByStepSolution": [
+        "1단계: 서로 다른 5명을 원탁에 앉힐 때 회전하여 일치하는 배치는 5가지씩 존재합니다.",
+        "2단계: 원순열 공식 (n - 1)!을 적용합니다.",
+        "3단계: (5 - 1)! = 4! = 4 × 3 × 2 × 1 = 24입니다."
+      ],
+      "finalAnswer": "24",
+      "pitfallAndTips": "원탁 문제에서 자리에 고유 번호가 매겨져 있다면 원순열이 아닌 일반 순열 5!이 됩니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "중복순열을 이용한 신호 만들기",
+      "question": "모스 부호인 점(·)과 선(-) 2개의 기호를 중복 사용하여 4자리 부호를 만들 때, 만들 수 있는 서로 다른 신호의 개수를 구하시오.",
+      "visualHint": "4개의 빈칸 각각에 들어갈 수 있는 기호는 2가지씩입니다.",
+      "stepByStepSolution": [
+        "1단계: 선택할 수 있는 기호의 종류는 n = 2가지입니다.",
+        "2단계: 택하여 나열할 자리의 수는 r = 4자리입니다.",
+        "3단계: 중복순열 공식에 의해 2^4 = 16가지 신호가 만들어집니다."
+      ],
+      "finalAnswer": "16",
+      "pitfallAndTips": "밑(n)과 지수(r)의 위치를 혼동하지 않도록 '선택권이 주어지는 대상'을 지수로 생각합니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "이웃하는 조건을 만족하는 원순열",
+      "question": "부모를 포함한 6명의 가족이 원탁에 둘러앉을 때, 부모가 반드시 이웃하여 앉는 경우의 수를 구하시오.",
+      "visualHint": "이웃하는 부모를 한 묶음으로 취급하여 총 5개 덩어리를 원탁에 배치합니다.",
+      "stepByStepSolution": [
+        "1단계: 부모 2명을 하나의 묶음으로 묶으면 총 개체 수는 (묶음 1개 + 자녀 4명) = 5개가 됩니다.",
+        "2단계: 5개 묶음을 원탁에 배열하는 원순열의 수는 (5 - 1)! = 4! = 24가지입니다.",
+        "3단계: 묶음 안에서 부모가 서로 자리를 바꾸는 경우의 수는 2! = 2가지입니다.",
+        "4단계: 곱의 법칙에 의해 24 × 2 = 48가지입니다."
+      ],
+      "finalAnswer": "48",
+      "pitfallAndTips": "원순열 회전 대칭성은 전체 묶음을 배열할 때 한 번만 적용해야 하며, 묶음 내부 자리바꿈에는 원순열을 적용하지 않습니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "같은 것이 있는 단어의 나열",
+      "question": "단어 'SUCCESS'에 포함된 7개의 문자를 일렬로 나열하는 경우의 수를 구하시오.",
+      "visualHint": "문자 구성을 확인합니다: S가 3개, C가 2개, U가 1개, E가 1개입니다.",
+      "stepByStepSolution": [
+        "1단계: 총 문자의 수는 7개입니다.",
+        "2단계: 중복된 문자의 빈도를 파악합니다: S 3개, C 2개, U 1개, E 1개입니다.",
+        "3단계: 같은 것이 있는 순열 공식을 적용합니다: 7! / (3! × 2! × 1! × 1!).",
+        "4단계: 7! = 5040, 3! = 6, 2! = 2이므로 5040 / (6 × 2) = 5040 / 12 = 420가지입니다."
+      ],
+      "finalAnswer": "420",
+      "pitfallAndTips": "동일한 문자의 개수를 셀 때 누락이나 중복 카운트가 발생하지 않도록 알파벳별로 정리합니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "도로망에서의 최단 경로의 수",
+      "question": "가로로 4칸, 세로로 3칸인 직사각형 격자 도로망에서 좌하단 A지점에서 우상단 B지점까지 최단 거리로 이동하는 경우의 수를 구하시오.",
+      "visualHint": "오른쪽 이동 4번(→, →, →, →)과 위쪽 이동 3번(↑, ↑, ↑)의 일렬 나열 문제입니다.",
+      "stepByStepSolution": [
+        "1단계: A에서 B까지 최단 거리로 가기 위해서는 오른쪽으로 4칸, 위쪽으로 3칸 총 7번 이동해야 합니다.",
+        "2단계: 가로 이동 문자 a 4개와 세로 이동 문자 b 3개를 일렬로 나열하는 같은 것이 있는 순열입니다.",
+        "3단계: 계산식은 7! / (4! × 3!) = (7 × 6 × 5) / (3 × 2 × 1) = 35가지입니다."
+      ],
+      "finalAnswer": "35",
+      "pitfallAndTips": "조합 표현인 7C3 또는 7C4와 완전히 동일한 원리임을 기억하면 신속히 풀 수 있습니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "중복조합을 이용한 상품 선택",
+      "question": "사과, 배, 감 3종류의 과일 중에서 중복을 허락하여 6개의 과일을 고르는 경우의 수를 구하시오. (단, 과일의 수는 충분하다)",
+      "visualHint": "서로 다른 3종류에서 6개를 택하므로 n = 3, r = 6인 중복조합 3H6입니다.",
+      "stepByStepSolution": [
+        "1단계: 과일의 종류 n = 3, 고르는 개수 r = 6입니다.",
+        "2단계: 중복조합 공식 nHr = n+r-1Cr을 적용합니다.",
+        "3단계: 3H6 = 3+6-1C6 = 8C6 = 8C2입니다.",
+        "4단계: 8C2 = (8 × 7) / (2 × 1) = 28가지입니다."
+      ],
+      "finalAnswer": "28",
+      "pitfallAndTips": "n과 r을 바꾸어 6H3으로 계산하는 실수를 범하기 쉽습니다. 서로 다른 종류 수가 n입니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "방정식의 음이 아닌 정수해의 개수",
+      "question": "방정식 x + y + z = 8을 만족하는 음이 아닌 정수 (x, y, z)의 순서쌍의 개수를 구하시오.",
+      "visualHint": "3개의 문자 x, y, z에서 중복을 허락하여 8개를 택하는 중복조합과 일치합니다.",
+      "stepByStepSolution": [
+        "1단계: 음이 아닌 정수해이므로 x, y, z는 0 이상인 정수입니다.",
+        "2단계: 이는 서로 다른 3개 대상에서 중복을 허락하여 8개를 선택하는 3H8과 같습니다.",
+        "3단계: 3H8 = 3+8-1C8 = 10C8 = 10C2 = (10 × 9) / 2 = 45가지입니다."
+      ],
+      "finalAnswer": "45",
+      "pitfallAndTips": "'음이 아닌 정수' 조건일 때 공식 nHr을 바로 적용할 수 있습니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "방정식의 양의 정수해(자연수해)의 개수",
+      "question": "방정식 a + b + c + d = 11을 만족하는 자연수 (a, b, c, d)의 순서쌍의 개수를 구하시오.",
+      "visualHint": "각 미지수가 최소 1 이상이어야 하므로 미리 1씩 배분하고 치환합니다.",
+      "stepByStepSolution": [
+        "1단계: a, b, c, d가 자연수이므로 a ≥ 1, b ≥ 1, c ≥ 1, d ≥ 1입니다.",
+        "2단계: a' = a - 1, b' = b - 1, c' = c - 1, d' = d - 1로 두면 a', b', c', d' ≥ 0입니다.",
+        "3단계: 식에 대입하면 (a'+1) + (b'+1) + (c'+1) + (d'+1) = 11 이므로 a' + b' + c' + d' = 7이 됩니다.",
+        "4단계: 음이 아닌 정수해를 구하는 4H7을 적용합니다.",
+        "5단계: 4H7 = 4+7-1C7 = 10C7 = 10C3 = (10 × 9 × 8) / (3 × 2 × 1) = 120가지입니다."
+      ],
+      "finalAnswer": "120",
+      "pitfallAndTips": "자연수해 조건일 때는 미리 각 변수에 1씩 할당한 후 남은 개수를 중복조합으로 분배해야 합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "직사각형 탁자 순열 (다각형 순열)",
+      "question": "가로에 2명씩, 세로에 1명씩 총 6명이 앉을 수 있는 직사각형 모양의 탁자에 6명이 둘러앉는 경우의 수를 구하시오.",
+      "visualHint": "원순열 (6 - 1)!을 구한 뒤, 회전시켰을 때 서로 다른 자리 배치의 기준점 수를 곱합니다.",
+      "stepByStepSolution": [
+        "1단계: 먼저 6명이 원탁에 앉는 경우의 수를 계산하면 (6 - 1)! = 5! = 120가지입니다.",
+        "2단계: 직사각형 탁자를 180도 회전하면 본래 모양과 겹치므로, 서로 다른 위치의 자리는 3종류입니다 (가로 왼쪽, 가로 오른쪽, 세로 자리).",
+        "3단계: 즉, 원형 배열 1가지당 서로 구별되는 직사각형 자리 배치가 3가지씩 존재합니다.",
+        "4단계: 따라서 구하는 경우의 수는 5! × 3 = 120 × 3 = 360가지입니다."
+      ],
+      "finalAnswer": "360",
+      "pitfallAndTips": "다각형 순열은 (원순열 수) × (회전 대칭에 의해 구별되는 첫 번째 사람의 착석 위치 수)로 분해하여 계산합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "단조 증가 함수의 개수와 중복조합",
+      "question": "집합 X = {1, 2, 3, 4}에서 집합 Y = {1, 2, 3, 4, 5, 6}으로의 함수 f 중 x1 < x2 이면 f(x1) ≤ f(x2)를 만족하는 함수의 개수를 구하시오.",
+      "visualHint": "등호가 포함된 부등식 조건 f(1) ≤ f(2) ≤ f(3) ≤ f(4)는 공역에서 중복을 허락하여 4개의 함숫값을 고르는 중복조합입니다.",
+      "stepByStepSolution": [
+        "1단계: 정의역의 원소 4개에 대응할 함숫값은 f(1) ≤ f(2) ≤ f(3) ≤ f(4)의 관계를 만족해야 합니다.",
+        "2단계: 함숫값이 될 원소는 공역 Y의 6개 원소 중에서 중복을 허락하여 4개를 택하기만 하면 크기 순서대로 자동 배정됩니다.",
+        "3단계: 따라서 구하는 함수의 개수는 공역 크기 6개에서 4개를 고르는 중복조합 6H4입니다.",
+        "4단계: 6H4 = 6+4-1C4 = 9C4 = (9 × 8 × 7 × 6) / (4 × 3 × 2 × 1) = 126가지입니다."
+      ],
+      "finalAnswer": "126",
+      "pitfallAndTips": "부등호에 등호가 없으면 조합 nCr이고, 등호가 포함된 비감소 함수 조건이면 중복조합 nHr입니다."
+    }
+  ]
+}

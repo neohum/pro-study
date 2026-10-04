@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+  <title>K-12 수학 완전 정복 (중1~고3)</title>
+  <link rel="stylesheet" href="katex/katex.min.css">
+  <script src="katex/katex.min.js"></script>
+  <script src="katex/auto-render.min.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111827;
+      --text-muted: #4b5563;
+      --border: #e5e7eb;
+      --card-bg: #f9fafb;
+      --primary: #1e40af;
+      --primary-light: #eff6ff;
+      --accent: #0f766e;
+      --accent-light: #f0fdfa;
+      --font-scale: 1;
+    }
+    body.dark-mode {
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --card-bg: #1e293b;
+      --primary: #60a5fa;
+      --primary-light: #1e3a5f;
+      --accent: #2dd4bf;
+      --accent-light: #134e4a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      line-height: 1.65;
+      padding: 12px;
+      font-size: calc(15px * var(--font-scale));
+      -webkit-font-smoothing: antialiased;
+    }
+    .header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 16px;
+    }
+    .nav-selects {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+      min-width: 260px;
+    }
+    select, button {
+      font-family: inherit;
+      font-size: inherit;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    select { flex: 1; font-weight: 500; }
+    button:active { opacity: 0.7; }
+    .btn-action {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+    .unit-meta {
+      margin-bottom: 16px;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      border-left: 5px solid var(--primary);
+    }
+    .grade-badge {
+      display: inline-block;
+      font-size: 0.8em;
+      font-weight: 700;
+      color: #fff;
+      background: var(--primary);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+    .unit-title-ko {
+      font-size: 1.4em;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .unit-title-en {
+      font-size: 0.95em;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    /* Section card */
+    .section-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-size: 1.15em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    /* Animation Box */
+    .animation-box {
+      background: #0b1120;
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .svg-container {
+      width: 100%;
+      max-height: 380px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .svg-container svg {
+      width: 100%;
+      height: auto;
+      max-height: 360px;
+    }
+    .animation-caption {
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: #cbd5e1;
+      text-align: left;
+      line-height: 1.5;
+    }
+    /* Concept styling */
+    .concept-principle {
+      padding: 12px 14px;
+      background: var(--primary-light);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .concept-story {
+      padding: 12px 14px;
+      background: var(--card-bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      margin-bottom: 14px;
+      font-size: 0.95em;
+    }
+    .term-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+    }
+    .term-item {
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      border-radius: 6px;
+    }
+    .term-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .term-ko { font-weight: 700; color: var(--primary); }
+    .term-en { font-size: 0.85em; color: var(--text-muted); }
+    .term-def { font-size: 0.9em; color: var(--text); }
+    /* Formulas styling */
+    .formula-card {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .formula-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .formula-name-ko { font-weight: 700; font-size: 1.05em; }
+    .formula-name-en { font-size: 0.85em; color: var(--text-muted); }
+    .formula-math-display {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      text-align: center;
+      font-size: 1.25em;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+    .reading-box {
+      background: var(--accent-light);
+      border: 1px dashed var(--accent);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .reading-text {
+      font-size: 0.95em;
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .formula-desc {
+      font-size: 0.92em;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    /* Problem accordion styling */
+    .problem-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+    .problem-header {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .problem-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+    }
+    .star-rating { color: #f59e0b; font-size: 0.9em; }
+    .problem-body { padding: 14px 16px; }
+    .problem-question {
+      font-size: 1.05em;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .problem-hint {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+    }
+    body.dark-mode .problem-hint {
+      background: #78350f;
+      color: #fef3c7;
+    }
+    .solution-toggle-btn {
+      width: 100%;
+      padding: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .solution-container {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .solution-step {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    .final-answer-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #dcfce7;
+      color: #166534;
+      border-radius: 6px;
+      font-weight: 700;
+      border-left: 4px solid #16a34a;
+    }
+    body.dark-mode .final-answer-box {
+      background: #14532d;
+      color: #dcfce7;
+    }
+    .pitfall-box {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 6px;
+      font-size: 0.88em;
+    }
+    body.dark-mode .pitfall-box {
+      background: #7f1d1d;
+      color: #fee2e2;
+    }
+    .footer-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+    .footer-nav button {
+      flex: 1;
+      padding: 12px;
+      font-size: 1em;
+      font-weight: 700;
+    }
+    .speak-btn {
+      background: none;
+      border: 1px solid currentColor;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <div class="nav-selects">
+      <select id="gradeSelect" onchange="onGradeChange()"></select>
+      <select id="unitSelect" onchange="onUnitChange()"></select>
+    </div>
+    <div style="display:flex; gap:6px;">
+      <button onclick="changeFontSize(-0.1)" title="글씨 축소">A-</button>
+      <button onclick="changeFontSize(0.1)" title="글씨 확대">A+</button>
+      <button onclick="toggleDarkMode()" title="다크/라이트 모드">🌓</button>
+      <button onclick="toggleAnimationState()" id="animStateBtn" title="애니메이션 정지/재생">⏸ 정지</button>
+    </div>
+  </div>
+
+  <div id="contentLoading" style="text-align:center; padding: 40px; font-weight:bold;">단원 데이터를 불러오는 중...</div>
+  
+  <div id="unitContent" style="display:none;">
+    <div class="unit-meta">
+      <span class="grade-badge" id="gradeBadge"></span>
+      <h1 class="unit-title-ko" id="unitTitleKo"></h1>
+      <div class="unit-title-en" id="unitTitleEn"></div>
+    </div>
+
+    <!-- 1. 움직이는 원리 시각화 (SVG Animation) -->
+    <div class="section-card">
+      <h2 class="section-title">🎬 원리 시각화 애니메이션</h2>
+      <div class="animation-box">
+        <div class="svg-container" id="svgContainer"></div>
+        <div class="animation-caption" id="animCaption"></div>
+      </div>
+    </div>
+
+    <!-- 2. 기본 개념 및 직관 해설 -->
+    <div class="section-card">
+      <h2 class="section-title">💡 핵심 개념 &amp; 직관적 비유</h2>
+      <div class="concept-principle" id="corePrinciple"></div>
+      <div class="concept-story" id="intuitiveStory"></div>
+      <h3 style="font-size:1em; margin: 12px 0 8px 0; color:var(--text-muted);">📚 핵심 용어 정리</h3>
+      <div class="term-grid" id="termGrid"></div>
+    </div>
+
+    <!-- 3. 실물 조판 공식 & 영어 낭독법 -->
+    <div class="section-card">
+      <h2 class="section-title">📐 조판 공식 &amp; 영어 낭독법 (How to Read)</h2>
+      <div id="formulasContainer"></div>
+    </div>
+
+    <!-- 4. 개념 체화 10선 문제 & 5단계 해설 -->
+    <div class="section-card">
+      <h2 class="section-title">📝 개념 체화 10선 문제 &amp; 단계별 풀이</h2>
+      <div id="problemsContainer"></div>
+    </div>
+
+    <!-- 하단 이동 네비게이션 -->
+    <div class="footer-nav">
+      <button onclick="navigateUnit(-1)" id="btnPrevUnit">◀ 이전 단원</button>
+      <button onclick="navigateUnit(1)" id="btnNextUnit" class="btn-action">다음 단원 ▶</button>
+    </div>
+  </div>
+
+  <script>
+    let manifestData = null;
+    let currentUnitData = null;
+    let currentGradeIndex = 0;
+    let currentUnitIndex = 0;
+    let animPaused = false;
+    let fontScale = 1.0;
+
+    // TTS 발음 낭독 함수 (안드로이드 네이티브 브릿지 or 웹 SpeechSynthesis)
+    function speakEnglish(text) {
+      if (window.AndroidTTS && typeof window.AndroidTTS.speak === 'function') {
+        window.AndroidTTS.speak(text);
+      } else if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'en-US';
+        utter.rate = 0.9;
+        window.speechSynthesis.speak(utter);
+      } else {
+        alert("음성 지원이 없는 환경입니다: " + text);
+      }
+    }
+
+    function changeFontSize(delta) {
+      fontScale = Math.max(0.8, Math.min(1.6, fontScale + delta));
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    function toggleAnimationState() {
+      const container = document.getElementById('svgContainer');
+      const btn = document.getElementById('animStateBtn');
+      animPaused = !animPaused;
+      if (animPaused) {
+        container.style.animationPlayState = 'paused';
+        const animatedEls = container.querySelectorAll('*');
+        animatedEls.forEach(el => el.style.animationPlayState = 'paused');
+        btn.textContent = '▶ 재생';
+      } else {
+        container.style.animationPlayState = 'running';
+        const animatedEls = container.querySelectorAll('*');
+        animatedEls.forEach(el => el.style.animationPlayState = 'running');
+        btn.textContent = '⏸ 정지';
+      }
+    }
+
+    // 초기화
+    async function initViewer() {
+      try {
+        const resp = await fetch('manifest.json');
+        manifestData = await resp.json();
+        setupGradeDropdown();
+        loadUnitFromParams();
+      } catch (e) {
+        console.error("Manifest load error:", e);
+        document.getElementById('contentLoading').innerHTML = 
+          '<div style="color:red;">매니페스트를 불러오지 못했습니다.<br>' + e.message + '</div>';
+      }
+    }
+
+    function setupGradeDropdown() {
+      const gradeSelect = document.getElementById('gradeSelect');
+      gradeSelect.innerHTML = '';
+      manifestData.curriculum.forEach((grade, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${grade.gradeKo} (${grade.units.length}개 유닛)`;
+        gradeSelect.appendChild(opt);
+      });
+      updateUnitDropdown();
+    }
+
+    function updateUnitDropdown() {
+      const gradeIdx = parseInt(document.getElementById('gradeSelect').value) || 0;
+      const unitSelect = document.getElementById('unitSelect');
+      unitSelect.innerHTML = '';
+      const units = manifestData.curriculum[gradeIdx].units;
+      units.forEach((u, uIdx) => {
+        const opt = document.createElement('option');
+        opt.value = uIdx;
+        opt.textContent = `${u.order}. ${u.titleKo}`;
+        unitSelect.appendChild(opt);
+      });
+    }
+
+    function onGradeChange() {
+      updateUnitDropdown();
+      loadUnit(parseInt(document.getElementById('gradeSelect').value), 0);
+    }
+
+    function onUnitChange() {
+      const gradeIdx = parseInt(document.getElementById('gradeSelect').value);
+      const unitIdx = parseInt(document.getElementById('unitSelect').value);
+      loadUnit(gradeIdx, unitIdx);
+    }
+
+    async function loadUnit(gradeIdx, unitIdx) {
+      currentGradeIndex = gradeIdx;
+      currentUnitIndex = unitIdx;
+      document.getElementById('gradeSelect').value = gradeIdx;
+      document.getElementById('unitSelect').value = unitIdx;
+
+      const grade = manifestData.curriculum[gradeIdx];
+      const unitSummary = grade.units[unitIdx];
+
+      document.getElementById('contentLoading').style.display = 'block';
+      document.getElementById('unitContent').style.display = 'none';
+
+      try {
+        const unitResp = await fetch(unitSummary.file);
+        if (!unitResp.ok) throw new Error("단원 파일 없음: " + unitSummary.file);
+        currentUnitData = await unitResp.json();
+        renderCurrentUnit(grade, currentUnitData);
+        document.getElementById('contentLoading').style.display = 'none';
+        document.getElementById('unitContent').style.display = 'block';
+        window.scrollTo(0, 0);
+
+        // 이전/다음 버튼 갱신
+        updateNavButtons();
+      } catch (err) {
+        console.error("Unit load fail:", err);
+        document.getElementById('contentLoading').innerHTML = 
+          `<div style="color:red; padding:20px;">[오류] 단원 데이터를 불러올 수 없습니다: ${unitSummary.file}<br>${err.message}</div>`;
+      }
+    }
+
+    function renderCurrentUnit(grade, unit) {
+      document.getElementById('gradeBadge').textContent = `${grade.gradeKo} · ${unit.domain}`;
+      document.getElementById('unitTitleKo').textContent = unit.titleKo;
+      document.getElementById('unitTitleEn').textContent = unit.titleEn;
+
+      // 1. 애니메이션
+      const svgContainer = document.getElementById('svgContainer');
+      svgContainer.innerHTML = unit.animation.svgTemplate || '<p style="color:#aaa;">애니메이션 로드 실패</p>';
+      document.getElementById('animCaption').textContent = unit.animation.caption || '';
+
+      // 2. 개념
+      document.getElementById('corePrinciple').textContent = unit.concept.corePrinciple;
+      document.getElementById('intuitiveStory').innerHTML = `<strong>💡 직관적 이해:</strong> ${unit.concept.intuitiveStory}`;
+      
+      const termGrid = document.getElementById('termGrid');
+      termGrid.innerHTML = '';
+      (unit.concept.keyTerms || []).forEach(term => {
+        const div = document.createElement('div');
+        div.className = 'term-item';
+        div.innerHTML = `
+          <div class="term-header">
+            <span class="term-ko">${term.termKo}</span>
+            <button class="speak-btn" onclick="speakEnglish('${escapeQuotes(term.termEn)}')">🔊 ${term.termEn}</button>
+          </div>
+          <div class="term-def">${term.definition}</div>
+        `;
+        termGrid.appendChild(div);
+      });
+
+      // 3. 조판 공식 & 영어 낭독법
+      const formulasContainer = document.getElementById('formulasContainer');
+      formulasContainer.innerHTML = '';
+      (unit.formulas || []).forEach(formula => {
+        const fDiv = document.createElement('div');
+        fDiv.className = 'formula-card';
+        fDiv.innerHTML = `
+          <div class="formula-header">
+            <div class="formula-name-ko">${formula.nameKo}</div>
+            <div class="formula-name-en">${formula.nameEn}</div>
+          </div>
+          <div class="formula-math-display">\\[ ${formula.typesetMath} \\]</div>
+          <div class="reading-box">
+            <div>
+              <div style="font-size:0.8em; color:var(--text-muted); margin-bottom:2px;">🔊 How to read in English:</div>
+              <div class="reading-text">"${formula.howToReadEn}"</div>
+            </div>
+            <button class="speak-btn btn-action" onclick="speakEnglish('${escapeQuotes(formula.howToReadEn)}')">
+              🔊 듣기
+            </button>
+          </div>
+          <div class="formula-desc">${formula.explanation}</div>
+        `;
+        formulasContainer.appendChild(fDiv);
+      });
+
+      // 4. 문제 10선
+      const problemsContainer = document.getElementById('problemsContainer');
+      problemsContainer.innerHTML = '';
+      (unit.problems || []).forEach((prob, idx) => {
+        const pDiv = document.createElement('div');
+        pDiv.className = 'problem-card';
+        const stars = '★'.repeat(prob.difficultyLevel) + '☆'.repeat(5 - prob.difficultyLevel);
+        const stepsHtml = (prob.stepByStepSolution || []).map(step => `<div class="solution-step">${step}</div>`).join('');
+        
+        pDiv.innerHTML = `
+          <div class="problem-header">
+            <div class="problem-badge">
+              <span>문제 ${prob.problemNumber || (idx + 1)}. ${prob.title}</span>
+            </div>
+            <span class="star-rating">${stars}</span>
+          </div>
+          <div class="problem-body">
+            <div class="problem-question">${prob.question}</div>
+            <div class="problem-hint">💡 <strong>접근 힌트:</strong> ${prob.visualHint}</div>
+            <button class="solution-toggle-btn" onclick="toggleSolution(${idx})">
+              <span>📖 단계별 해설 &amp; 정답 보기</span>
+            </button>
+            <div class="solution-container" id="solution-${idx}">
+              <div style="font-weight:700; margin-bottom:8px; color:var(--primary);">[5단계 상세 풀이 과정]</div>
+              ${stepsHtml}
+              <div class="final-answer-box">✓ 최종 정답: ${prob.finalAnswer}</div>
+              <div class="pitfall-box">⚠️ <strong>주의할 함정 &amp; 팁:</strong> ${prob.pitfallAndTips}</div>
+            </div>
+          </div>
+        `;
+        problemsContainer.appendChild(pDiv);
+      });
+
+      // KaTeX 수식 자동 조판 렌더링
+      renderMathInElement(document.getElementById('unitContent'), {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    }
+
+    function toggleSolution(idx) {
+      const container = document.getElementById(`solution-${idx}`);
+      if (container.style.display === 'block') {
+        container.style.display = 'none';
+      } else {
+        container.style.display = 'block';
+        // KaTeX 재조판
+        renderMathInElement(container, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function updateNavButtons() {
+      const btnPrev = document.getElementById('btnPrevUnit');
+      const btnNext = document.getElementById('btnNextUnit');
+      btnPrev.disabled = (currentGradeIndex === 0 && currentUnitIndex === 0);
+      const isLastGrade = currentGradeIndex === manifestData.curriculum.length - 1;
+      const isLastUnit = currentUnitIndex === manifestData.curriculum[currentGradeIndex].units.length - 1;
+      btnNext.disabled = (isLastGrade && isLastUnit);
+    }
+
+    function navigateUnit(delta) {
+      let g = currentGradeIndex;
+      let u = currentUnitIndex + delta;
+      if (delta > 0) {
+        if (u >= manifestData.curriculum[g].units.length) {
+          if (g < manifestData.curriculum.length - 1) {
+            g += 1;
+            u = 0;
+          } else {
+            return;
+          }
+        }
+      } else {
+        if (u < 0) {
+          if (g > 0) {
+            g -= 1;
+            u = manifestData.curriculum[g].units.length - 1;
+          } else {
+            return;
+          }
+        }
+      }
+      updateUnitDropdown();
+      loadUnit(g, u);
+    }
+
+    function escapeQuotes(str) {
+      return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    function loadUnitFromParams() {
+      const params = new URLSearchParams(window.location.search);
+      const unitId = params.get('unit');
+      if (unitId) {
+        for (let gIdx = 0; gIdx < manifestData.curriculum.length; gIdx++) {
+          const uIdx = manifestData.curriculum[gIdx].units.findIndex(u => u.id === unitId);
+          if (uIdx !== -1) {
+            loadUnit(gIdx, uIdx);
+            return;
+          }
+        }
+      }
+      loadUnit(0, 0);
+    }
+
+    window.addEventListener('DOMContentLoaded', initViewer);
+  </script>
+</body>
+</html>

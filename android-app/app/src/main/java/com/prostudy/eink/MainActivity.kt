@@ -121,14 +121,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 📐 CS 수학 필사 화면 열기 (상단 버튼 및 자바스크립트 오른쪽 탭 버튼)
+        // 📐 중1~고3 수학 완전정복 화면 열기 (상단 버튼 및 탭 버튼)
         findViewById<Button>(R.id.btn_open_math).setOnClickListener {
-            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.MathTraceActivity::class.java)
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.math.K12MathViewerActivity::class.java)
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.btn_tab_math).setOnClickListener {
-            val intent = android.content.Intent(this, com.prostudy.eink.ui.tracing.MathTraceActivity::class.java)
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.math.K12MathViewerActivity::class.java)
             startActivity(intent)
         }
 

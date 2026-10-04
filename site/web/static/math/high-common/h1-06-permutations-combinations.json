@@ -1,0 +1,224 @@
+{
+  "id": "h1-06-permutations-combinations",
+  "grade": "high-common",
+  "domain": "경우의 수",
+  "order": 30,
+  "titleKo": "경우의 수(합·곱의 법칙)와 순열(nPr)·조합(nCr)",
+  "titleEn": "Fundamental Counting Principle, Permutations and Combinations",
+  "animation": {
+    "type": "tree-diagram-combinations",
+    "title": "수형도와 순열·조합 선택 구조의 시각화",
+    "caption": "사건의 연속적 분기(곱의 법칙)를 나타내는 트리 다이어그램과 순서를 고려하는 순열 nPr vs 순서 없이 그룹을 뽑는 조합 nCr = nPr / r!의 차이를 시각화합니다.",
+    "svgTemplate": "<svg viewBox='0 0 800 400' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='#0f172a'/><text x='400' y='36' fill='#f8fafc' font-size='20' font-weight='bold' text-anchor='middle'>경우의 수의 두 기둥: 순열(Permutation)과 조합(Combination)</text><g transform='translate(80, 80)'><rect x='0' y='0' width='300' height='260' rx='12' fill='#1e293b' stroke='#38bdf8' stroke-width='1.5'/><text x='150' y='35' fill='#38bdf8' font-size='18' font-weight='bold' text-anchor='middle'>순열 ⁿPᵣ (순서 고려 O)</text><text x='150' y='65' fill='#94a3b8' font-size='14' text-anchor='middle'>{A, B, C} 중 2개 나열 (³P₂ = 6)</text><g transform='translate(40, 85)'><text x='0' y='30' fill='#f59e0b' font-size='16' font-weight='bold'>A ➔</text><text x='50' y='20' fill='#f8fafc' font-size='14'>B (AB)</text><text x='50' y='45' fill='#f8fafc' font-size='14'>C (AC)</text><text x='0' y='80' fill='#f59e0b' font-size='16' font-weight='bold'>B ➔</text><text x='50' y='70' fill='#f8fafc' font-size='14'>A (BA)</text><text x='50' y='95' fill='#f8fafc' font-size='14'>C (BC)</text><text x='0' y='130' fill='#f59e0b' font-size='16' font-weight='bold'>C ➔</text><text x='50' y='120' fill='#f8fafc' font-size='14'>A (CA)</text><text x='50' y='145' fill='#f8fafc' font-size='14'>B (CB)</text></g></g><g transform='translate(420, 80)'><rect x='0' y='0' width='300' height='260' rx='12' fill='#1e293b' stroke='#10b981' stroke-width='1.5'/><text x='150' y='35' fill='#34d399' font-size='18' font-weight='bold' text-anchor='middle'>조합 ⁿCᵣ (순서 고려 X)</text><text x='150' y='65' fill='#94a3b8' font-size='14' text-anchor='middle'>{A, B, C} 중 2개 선택 (³C₂ = 3)</text><g transform='translate(50, 95)'><rect x='0' y='0' width='200' height='35' rx='6' fill='#047857' opacity='0.3'/><text x='100' y='24' fill='#a7f3d0' font-size='15' text-anchor='middle'>{A, B} = {B, A}</text><rect x='0' y='45' width='200' height='35' rx='6' fill='#047857' opacity='0.3'/><text x='100' y='69' fill='#a7f3d0' font-size='15' text-anchor='middle'>{B, C} = {C, B}</text><rect x='0' y='90' width='200' height='35' rx='6' fill='#047857' opacity='0.3'/><text x='100' y='114' fill='#a7f3d0' font-size='15' text-anchor='middle'>{C, A} = {A, C}</text></g><text x='150' y='240' fill='#fbbf24' font-size='14' font-weight='bold' text-anchor='middle'>ⁿCᵣ = ⁿPᵣ / r!</text></g></svg>"
+  },
+  "concept": {
+    "corePrinciple": "경우의 수 세기의 기초는 동시에 일어날 수 없는 사건들의 '합의 법칙'과 잇달아 연달아 일어나는 사건들의 '곱의 법칙(기본 계수 원리)'입니다. 서로 다른 n개 중에서 서로 다른 r개를 택하여 순서를 고려하여 일렬로 나열하는 경우의 수를 순열(Permutation, ⁿPᵣ = n!/(n-r)!)이라 하고, 순서를 고려하지 않고 단지 r개를 선택하여 모으는 경우의 수를 조합(Combination, ⁿCᵣ = ⁿPᵣ / r! = n! / [r!(n-r)!])이라 합니다. 순열 문제에서는 이웃하는 대상들을 한 묶음으로 취급하는 기법과, 이웃하지 않아야 하는 대상을 빈자리(사이사이)에 배치하는 기법이 핵심입니다. 조합에서는 ⁿCᵣ = ⁿCₙ₋ᵣ 대칭성과 파스칼의 항등식 ⁿCᵣ = ⁿ⁻¹Cᵣ₋₁ + ⁿ⁻¹Cᵣ, 그리고 대상을 서로 다른 조로 분할하고 분배하는 조 나누기 원리가 빈출됩니다.",
+    "intuitiveStory": "옷장에 상의 3벌과 하의 4벌이 있을 때 우리가 입을 수 있는 코디네이션은 왜 3×4=12가지일까요? 상의를 고르는 첫 번째 선택의 갈림길마다 하의를 고르는 4갈래의 길이 새롭게 열리기 때문입니다. 반면 대표 2명을 뽑을 때 철수와 영희를 뽑는 것이 영희와 철수를 뽑는 것과 같은 것은 순서가 사라지기 때문입니다. 순열에서 순서의 자유도(r!)를 거세하여 순수한 본질(그룹)만을 남기는 연산이 바로 조합(Combination)입니다.",
+    "keyTerms": [
+      {
+        "termKo": "합의 법칙",
+        "termEn": "Rule of Sum",
+        "definition": "두 사건 A, B가 동시에 일어나지 않을 때, A 또는 B가 일어나는 경우의 수는 n(A) + n(B)"
+      },
+      {
+        "termKo": "곱의 법칙",
+        "termEn": "Rule of Product",
+        "definition": "사건 A가 일어나는 경우가 m가지이고 그 각각에 대하여 사건 B가 잇달아 일어나는 경우가 n가지일 때, 두 사건이 연속하여 일어나는 경우의 수는 m × n"
+      },
+      {
+        "termKo": "순열 (ⁿPᵣ)",
+        "termEn": "Permutation",
+        "definition": "서로 다른 n개에서 r개를 택해 순서를 정하여 일렬로 나열하는 경우의 수"
+      },
+      {
+        "termKo": "조합 (ⁿCᵣ)",
+        "termEn": "Combination",
+        "definition": "서로 다른 n개에서 순서를 생각하지 않고 r개를 선택하는 경우의 수"
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "합의 법칙과 곱의 법칙",
+      "nameEn": "Fundamental Principles of Counting",
+      "typesetMath": "n(A \\cup B) = n(A) + n(B) \\; (A \\cap B = \\emptyset), \\quad n(A \\times B) = n(A) \\times n(B)",
+      "howToReadEn": "n of A union B equals n of A plus n of B when A intersection B is empty, and n of A times B equals n of A times n of B",
+      "explanation": "배타적 선택은 덧셈으로, 연속적 단계별 선택은 곱셈으로 경우의 수를 계산합니다."
+    },
+    {
+      "nameKo": "순열 공식",
+      "nameEn": "Permutation Formula",
+      "typesetMath": "{}_n P_r = \\frac{n!}{(n-r)!} = n(n-1)(n-2)\\cdots(n-r+1)",
+      "howToReadEn": "n P r equals n factorial over open parenthesis n minus r close parenthesis factorial, which equals n times n minus one down to n minus r plus one",
+      "explanation": "n개 중 r개를 택하여 첫 번째부터 r번째 자리까지 차례로 채우는 경우의 수입니다."
+    },
+    {
+      "nameKo": "조합 공식",
+      "nameEn": "Combination Formula",
+      "typesetMath": "{}_n C_r = \\frac{{}_n P_r}{r!} = \\frac{n!}{r!(n-r)!}",
+      "howToReadEn": "n C r equals n P r over r factorial, which equals n factorial over r factorial times open parenthesis n minus r close parenthesis factorial",
+      "explanation": "순열 ⁿPᵣ에서 r개의 원소가 줄을 서는 순서 r!을 나누어 순서 구분을 없앤 공식입니다."
+    },
+    {
+      "nameKo": "파스칼의 조합 항등식",
+      "nameEn": "Pascal's Combinatorial Identity",
+      "typesetMath": "{}_n C_r = {}_{n-1} C_{r-1} + {}_{n-1} C_r, \\quad {}_n C_r = {}_n C_{n-r}",
+      "howToReadEn": "n C r equals n minus one C r minus one plus n minus one C r, and n C r equals n C n minus r",
+      "explanation": "특정 원소를 포함하는 경우와 포함하지 않는 경우로 분할하여 전체 조합을 유도하는 항등식입니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "합의 법칙 기본",
+      "question": "1부터 20까지의 자연수가 적힌 20장의 카드에서 한 장을 뽑을 때, 4의 배수 또는 7의 배수가 적힌 카드가 나오는 경우의 수를 구하시오.",
+      "visualHint": "4의 배수 집합과 7의 배수 집합의 교집합(공배수)이 있는지 확인합니다.",
+      "stepByStepSolution": [
+        "1단계: 1부터 20까지 중 4의 배수는 4, 8, 12, 16, 20으로 5개입니다.",
+        "2단계: 1부터 20까지 중 7의 배수는 7, 14로 2개입니다.",
+        "3단계: 4와 7의 최소공배수는 28이므로 20 이하에는 공배수가 없습니다 (교집합 공집합).",
+        "4단계: 따라서 합의 법칙에 의해 5 + 2 = 7가지입니다."
+      ],
+      "finalAnswer": "7",
+      "pitfallAndTips": "공배수가 존재하는 경우에는 중복을 한 번 빼주어야 하지만, 여기서는 20 이하에 공배수가 없으므로 단순 합으로 계산됩니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "순열과 조합 기호의 계산",
+      "question": "⁵P₂ + ⁶C₃ 의 값을 계산하시오.",
+      "visualHint": "ⁿPᵣ = n(n-1)..., ⁿCᵣ = ⁿPᵣ / r! 공식을 적용합니다.",
+      "stepByStepSolution": [
+        "1단계: ⁵P₂ = 5 × 4 = 20 입니다.",
+        "2단계: ⁶C₃ = (6 × 5 × 4) / (3 × 2 × 1) = 120 / 6 = 20 입니다.",
+        "3단계: 두 값의 합을 구합니다. 20 + 20 = 40"
+      ],
+      "finalAnswer": "40",
+      "pitfallAndTips": "조합을 계산할 때 분모 3! = 6과 분자의 6을 먼저 약분하면 계산 실수를 방지할 수 있습니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "이웃하는 순열의 경우의 수",
+      "question": "남학생 3명과 여학생 2명을 일렬로 세울 때, 여학생 2명이 서로 이웃하여 서는 경우의 수를 구하시오.",
+      "visualHint": "이웃하는 여학생 2명을 하나의 덩어리(묶음)로 생각합니다.",
+      "stepByStepSolution": [
+        "1단계: 여학생 2명을 한 묶음으로 묶으면, 남학생 3명과 여학생 묶음 1개로 총 4개의 덩어리가 됩니다.",
+        "2단계: 4개의 덩어리를 일렬로 배열하는 경우의 수는 4! = 4 × 3 × 2 × 1 = 24가지입니다.",
+        "3단계: 묶음 안에서 여학생 2명이 자리를 바꾸는 경우의 수는 2! = 2가지입니다.",
+        "4단계: 곱의 법칙에 따라 24 × 2 = 48가지입니다."
+      ],
+      "finalAnswer": "48",
+      "pitfallAndTips": "묶음 전체를 나열한 후 묶음 내부 구성원의 자리바꿈 2!을 곱하는 것을 잊지 마세요."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "서로 다른 숫자로 세 자리 자연수 만들기",
+      "question": "1, 2, 3, 4, 5 의 다섯 개 숫자 중 서로 다른 3개를 택하여 만들 수 있는 세 자리 자연수 중 짝수의 개수를 구하시오.",
+      "visualHint": "짝수가 되려면 일의 자리에 짝수(2 또는 4)가 와야 합니다.",
+      "stepByStepSolution": [
+        "1단계: 일의 자리에 올 수 있는 수는 2 또는 4 로 2가지입니다.",
+        "2단계: 일의 자리 숫자를 정하고 나면, 남은 4개의 숫자 중에서 백의 자리와 십의 자리에 올 2개의 숫자를 순서대로 택합니다.",
+        "3단계: 백의 자리와 십의 자리를 채우는 경우의 수는 ⁴P₂ = 4 × 3 = 12가지입니다.",
+        "4단계: 곱의 법칙에 의해 전체 짝수의 개수는 2 × 12 = 24가지입니다."
+      ],
+      "finalAnswer": "24",
+      "pitfallAndTips": "조건이 걸려 있는 일의 자리부터 먼저 결정한 후 나머지 자리를 순열로 채워야 합니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "조건에 맞게 대표 선출하는 조합",
+      "question": "남학생 5명과 여학생 4명 중에서 남학생 3명과 여학생 2명을 뽑는 경우의 수를 구하시오.",
+      "visualHint": "남학생 선출과 여학생 선출은 독립된 조합 단계이므로 곱의 법칙을 적용합니다.",
+      "stepByStepSolution": [
+        "1단계: 남학생 5명 중 3명을 뽑는 경우의 수: ⁵C₃ = ⁵C₂ = (5 × 4) / (2 × 1) = 10가지",
+        "2단계: 여학생 4명 중 2명을 뽑는 경우의 수: ⁴C₂ = (4 × 3) / (2 × 1) = 6가지",
+        "3단계: 남학생과 여학생을 모두 뽑아야 하므로 곱의 법칙을 적용합니다. 10 × 6 = 60가지"
+      ],
+      "finalAnswer": "60",
+      "pitfallAndTips": "ⁿCᵣ = ⁿCₙ₋ᵣ 성질을 이용하여 ⁵C₃을 ⁵C₂로 바꾸면 계산이 훨씬 쉬워집니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "평면 위의 점으로 만드는 삼각형의 개수",
+      "question": "어느 세 점도 한 직선 위에 있지 않은 평면 위의 8개의 점으로 만들 수 있는 서로 다른 삼각형의 개수를 구하시오.",
+      "visualHint": "삼각형은 3개의 꼭짓점으로 결정되므로 순서 없는 조합 ⁸C₃입니다.",
+      "stepByStepSolution": [
+        "1단계: 삼각형 하나는 8개의 점 중 서로 다른 3개의 점을 택하면 하나로 결정됩니다.",
+        "2단계: 점을 선택하는 순서는 삼각형에 영향을 주지 않으므로 조합입니다.",
+        "3단계: ⁸C₃ = (8 × 7 × 6) / (3 × 2 × 1) = 336 / 6 = 56가지입니다."
+      ],
+      "finalAnswer": "56",
+      "pitfallAndTips": "만약 한 직선 위에 세 점 이상이 있다면 그 점들로 만든 조합은 삼각형이 되지 않으므로 빼주어야 합니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "사전식 배열 순서 구하기",
+      "question": "a, b, c, d, e 의 5개 문자를 한 번씩만 사용하여 사전식으로 배열할 때, 'cbaed'는 몇 번째로 나타나는 단어인지 구하시오.",
+      "visualHint": "a로 시작하는 단어 수, b로 시작하는 단어 수를 차례로 누적합니다.",
+      "stepByStepSolution": [
+        "1단계: 첫 글자가 a로 시작하는 단어: 4! = 24개",
+        "2단계: 첫 글자가 b로 시작하는 단어: 4! = 24개",
+        "3단계: 첫 글자가 c로 시작하는 단어 중 ca로 시작: 3! = 6개",
+        "4단계: cb로 시작하는 단어 중 cba로 시작하는 단어:",
+        "- cba 다음에 오는 문자는 d, e 순서이므로 첫 단어는 'cbade'",
+        "- 그 다음 두 번째 단어가 바로 'cbaed' 입니다.",
+        "5단계: 지금까지의 개수를 모두 합산합니다: 24 + 24 + 6 + 2 = 56번째"
+      ],
+      "finalAnswer": "56번째",
+      "pitfallAndTips": "사전식 배열에서는 알파벳 빠른 순서대로 단계별 팩토리얼을 정확히 누적해야 합니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "이웃하지 않는 순열의 끼워넣기 기법",
+      "question": "남학생 4명과 여학생 3명이 일렬로 설 때, 여학생끼리는 어느 두 명도 이웃하지 않도록 서는 경우의 수를 구하시오.",
+      "visualHint": "남학생 4명을 먼저 세운 뒤, 남학생 사이사이와 양 끝 총 5개의 빈자리에 여학생 3명을 배치합니다.",
+      "stepByStepSolution": [
+        "1단계: 조건이 없는 남학생 4명을 먼저 일렬로 세웁니다. 경우의 수는 4! = 24가지입니다.",
+        "2단계: 남학생 4명의 양 끝과 사이사이에 빈자리는 _ 남1 _ 남2 _ 남3 _ 남4 _ 로 총 5자리입니다.",
+        "3단계: 5개의 빈자리 중 3자리를 택해 여학생 3명을 순서대로 세웁니다. 경우의 수는 ⁵P₃ = 5 × 4 × 3 = 60가지입니다.",
+        "4단계: 곱의 법칙에 따라 24 × 60 = 1440가지입니다."
+      ],
+      "finalAnswer": "1440",
+      "pitfallAndTips": "전체에서 여학생이 이웃하는 경우를 빼려고 하면 2명 이웃과 3명 이웃의 포함 배제가 복잡해집니다. '이웃하지 않음' 문제는 반드시 사이사이 끼워넣기로 풀어야 실수가 없습니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "조 나누기(분할)와 분배",
+      "question": "서로 다른 9권의 책을 4권, 3권, 2권의 세 묶음으로 나누는 경우의 수를 구하시오.",
+      "visualHint": "묶음의 권수가 모두 다르므로 같은 수에 의한 중복 나눗셈 없이 순차적 조합으로 분할합니다.",
+      "stepByStepSolution": [
+        "1단계: 9권 중 4권을 택합니다: ⁹C₄ = (9 × 8 × 7 × 6) / (4 × 3 × 2 × 1) = 126가지",
+        "2단계: 남은 5권 중 3권을 택합니다: ⁵C₃ = ⁵C₂ = 10가지",
+        "3단계: 남은 2권 중 2권을 택합니다: ²C₂ = 1가지",
+        "4단계: 각 묶음의 개수(4, 3, 2)가 모두 다르므로 순서 구분에 따른 중복이 발생하지 않습니다.",
+        "5단계: 곱의 법칙을 적용합니다: 126 × 10 × 1 = 1260가지"
+      ],
+      "finalAnswer": "1260",
+      "pitfallAndTips": "만약 3권, 3권, 3권처럼 묶음의 원소 수가 같으면 같은 권수의 묶음 개수 팩토리얼(3!)로 나누어주어야 합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "증가함수의 개수와 조합의 대응",
+      "question": "집합 X = {1, 2, 3, 4} 에서 집합 Y = {1, 2, 3, 4, 5, 6, 7} 로의 함수 f 중 x₁ < x₂ 이면 f(x₁) < f(x₂) 를 만족하는 함수 f의 개수를 구하시오.",
+      "visualHint": "공역 Y의 7개 원소 중 함숫값으로 쓰일 4개를 고르기만 하면, 크기 순서대로 X의 원소와 자동으로 1:1 매칭됩니다.",
+      "stepByStepSolution": [
+        "1단계: 조건 x₁ < x₂ => f(x₁) < f(x₂) 는 f가 순증가(엄격 증가) 함수임을 뜻합니다.",
+        "2단계: 공역 Y의 원소 7개 중에서 서로 다른 4개의 원소를 선택합니다.",
+        "3단계: 선택된 4개의 수를 작은 것부터 크기 순서로 정렬하면, 제일 작은 것은 f(1), 두 번째는 f(2), 세 번째는 f(3), 가장 큰 것은 f(4)로 대응 방법이 유일하게 딱 1가지로 결정됩니다.",
+        "4단계: 따라서 구하는 함수의 개수는 순서 고려 없이 7개 중 4개를 고르는 조합의 수와 정확히 일치합니다.",
+        "5단계: ⁷C₄ = ⁷C₃ = (7 × 6 × 5) / (3 × 2 × 1) = 35가지입니다."
+      ],
+      "finalAnswer": "35",
+      "pitfallAndTips": "순서가 이미 크기 순으로 고정되어 있는 문제는 순열이 아니라 조합(Combination)으로 풀린다는 수학적 직관이 핵심입니다."
+    }
+  ]
+}

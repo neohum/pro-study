@@ -1,0 +1,233 @@
+{
+  "id": "ha-05-unit-circle-trig",
+  "grade": "high-algebra",
+  "domain": "삼각함수",
+  "order": 39,
+  "titleKo": "단위원과 삼각함수의 정의·주기와 대칭성",
+  "titleEn": "Unit Circle Definition of Trig Functions, Periodicity & Symmetry",
+  "animation": {
+    "type": "interactive-svg",
+    "title": "단위원 회전과 사인파 투영 동적 시각화",
+    "caption": "단위원 위를 회전하는 점 P(cos θ, sin θ)의 y좌표가 우측 시간축으로 전개되어 사인 곡선 y = sin θ 를 형성하는 과정을 보여줍니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 360\" width=\"100%\" height=\"100%\">\n  <rect width=\"600\" height=\"360\" fill=\"#0f172a\" rx=\"12\"/>\n  <!-- Left: Unit Circle -->\n  <g transform=\"translate(150, 180)\">\n    <circle cx=\"0\" cy=\"0\" r=\"80\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.5\"/>\n    <line x1=\"-100\" y1=\"0\" x2=\"100\" y2=\"0\" stroke=\"#475569\" stroke-width=\"1\"/>\n    <line x1=\"0\" y1=\"-100\" x2=\"0\" y2=\"100\" stroke=\"#475569\" stroke-width=\"1\"/>\n    <text x=\"85\" y=\"15\" fill=\"#94a3b8\" font-size=\"11\">1</text>\n    <text x=\"-5\" y=\"-85\" fill=\"#94a3b8\" font-size=\"11\">1</text>\n    <text x=\"-15\" y=\"15\" fill=\"#94a3b8\" font-size=\"11\">O</text>\n    <!-- Rotating radius -->\n    <g>\n      <line x1=\"0\" y1=\"0\" x2=\"56.5\" y2=\"-56.5\" stroke=\"#38bdf8\" stroke-width=\"2.5\">\n        <animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0\" to=\"-360\" dur=\"5s\" repeatCount=\"indefinite\"/>\n      </line>\n      <circle cx=\"56.5\" cy=\"-56.5\" r=\"5\" fill=\"#f43f5e\">\n        <animateTransform attributeName=\"transform\" type=\"rotate\" from=\"0\" to=\"-360\" dur=\"5s\" repeatCount=\"indefinite\"/>\n      </circle>\n    </g>\n    <text x=\"-40\" y=\"120\" fill=\"#38bdf8\" font-size=\"13\" font-weight=\"bold\">단위원 x² + y² = 1</text>\n  </g>\n  <!-- Right: Sine Wave Graph -->\n  <g transform=\"translate(300, 180)\">\n    <line x1=\"0\" y1=\"0\" x2=\"270\" y2=\"0\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n    <line x1=\"0\" y1=\"-100\" x2=\"0\" y2=\"100\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n    <text x=\"260\" y=\"-8\" fill=\"#94a3b8\" font-size=\"12\">θ</text>\n    <text x=\"8\" y=\"-85\" fill=\"#94a3b8\" font-size=\"12\">y = sin θ</text>\n    <!-- Sine Wave Curve -->\n    <path d=\"M 0 0 C 35 -106, 95 -106, 130 0 C 165 106, 225 106, 260 0\" fill=\"none\" stroke=\"#a855f7\" stroke-width=\"3\"/>\n    <!-- Key angle tick marks -->\n    <text x=\"65\" y=\"18\" fill=\"#94a3b8\" font-size=\"11\" text-anchor=\"middle\">π/2</text>\n    <text x=\"130\" y=\"18\" fill=\"#94a3b8\" font-size=\"11\" text-anchor=\"middle\">π</text>\n    <text x=\"195\" y=\"18\" fill=\"#94a3b8\" font-size=\"11\" text-anchor=\"middle\">3π/2</text>\n    <text x=\"260\" y=\"18\" fill=\"#94a3b8\" font-size=\"11\" text-anchor=\"middle\">2π</text>\n    <!-- Moving tracer point on sine wave -->\n    <circle cx=\"65\" cy=\"-80\" r=\"5\" fill=\"#f43f5e\">\n      <animate attributeName=\"cx\" values=\"0;65;130;195;260\" dur=\"5s\" repeatCount=\"indefinite\"/>\n      <animate attributeName=\"cy\" values=\"0;-80;0;80;0\" dur=\"5s\" repeatCount=\"indefinite\"/>\n    </circle>\n  </g>\n  <!-- Horizontal projection line linking circle to wave -->\n  <line x1=\"206.5\" y1=\"123.5\" x2=\"365\" y2=\"123.5\" stroke=\"#fbbf24\" stroke-width=\"1.5\" stroke-dasharray=\"4 3\" opacity=\"0.8\">\n    <animate attributeName=\"y1\" values=\"180;100;180;260;180\" dur=\"5s\" repeatCount=\"indefinite\"/>\n    <animate attributeName=\"y2\" values=\"180;100;180;260;180\" dur=\"5s\" repeatCount=\"indefinite\"/>\n  </line>\n  <text x=\"300\" y=\"335\" text-anchor=\"middle\" fill=\"#e2e8f0\" font-size=\"13\">\n    x좌표 = cos θ, y좌표 = sin θ, 기울기 = tan θ | 주기: sin·cos은 2π, tan은 π\n  </text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "단위원 x² + y² = 1 과 각 θ를 나타내는 동경의 교점을 P(x, y)라 할 때, x = cos θ, y = sin θ, y/x = tan θ (x≠0)로 일반각에 대한 삼각함수를 정의합니다. 점 P가 단위원 위에 있으므로 sin² θ + cos² θ = 1 이 항상 성립합니다. 각 사분면에서 삼각함수의 부호는 1사분면(모두 양수), 2사분면(sin만), 3사분면(tan만), 4사분면(cos만)으로 결정됩니다('올-사-탄-코'). 또한 sin과 cos은 주기가 2π인 파동이며, sin은 원점 대칭(기함수), cos은 y축 대칭(우함수), tan은 주기 π인 원점 대칭 기함수입니다.",
+    "intuitiveStory": "등대의 회전하는 불빛이 먼 해안선에 그리는 빛의 궤적을 떠올려 보세요. 등대가 일정한 속도로 원운동을 계속할 때, 해안선에 맺히는 빛의 위치는 중심을 기준으로 부드럽게 좌우로 진동합니다. 단위원에서 정의된 sin과 cos은 회전 운동을 수직과 수평의 선형 왕복 운동으로 완벽하게 번역해 주는 수학의 언어입니다.",
+    "keyTerms": [
+      {
+        "termKo": "단위원 삼각함수",
+        "termEn": "Trig Functions on Unit Circle",
+        "definition": "반지름이 1인 원 위의 동경의 교점 P(x, y)에서 x = cos θ, y = sin θ, 기울기 y/x = tan θ로 정의된 함수."
+      },
+      {
+        "termKo": "올사탄코 (부호 규칙)",
+        "termEn": "ASTC Rule (All-Sin-Tan-Cos)",
+        "definition": "제1~4사분면에서 양의 값을 갖는 삼각함수의 순서: 제1(All), 제2(Sine), 제3(Tangent), 제4(Cosine)."
+      },
+      {
+        "termKo": "주기와 기함수·우함수",
+        "termEn": "Periodicity and Parity",
+        "definition": "sin과 cos의 주기는 2π, tan의 주기는 π이며 sin(-θ)=-sin θ(원점대칭 기함수), cos(-θ)=cos θ(y축대칭 우함수)."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "삼각함수의 상호 관계 항등식",
+      "nameEn": "Fundamental Trigonometric Identities",
+      "typesetMath": "\\sin^2 \\theta + \\cos^2 \\theta = 1, \\quad \\tan \\theta = \\frac{\\sin \\theta}{\\cos \\theta}, \\quad 1 + \\tan^2 \\theta = \\frac{1}{\\cos^2 \\theta}",
+      "howToReadEn": "sine squared theta plus cosine squared theta equals one; tangent theta equals sine theta over cosine theta; and one plus tangent squared theta equals one over cosine squared theta.",
+      "explanation": "단위원의 방정식 x² + y² = 1 에서 직결되는 가장 근본적인 항등식들입니다."
+    },
+    {
+      "nameKo": "음각 및 주기 공식",
+      "nameEn": "Negative Angle and Periodicity Formulas",
+      "typesetMath": "\\sin(-\\theta) = -\\sin\\theta, \\quad \\cos(-\\theta) = \\cos\\theta, \\quad \\tan(-\\theta) = -\\tan\\theta, \\quad f(\\theta + 2n\\pi) = f(\\theta)",
+      "howToReadEn": "sine of negative theta equals negative sine theta; cosine of negative theta equals cosine theta; tangent of negative theta equals negative tangent theta; and f of theta plus two n pi equals f of theta.",
+      "explanation": "사인과 탄젠트는 부호를 밖으로 뱉어내는 기함수이고, 코사인은 부호를 흡수하는 우함수입니다."
+    },
+    {
+      "nameKo": "보각과 여각의 각 변환 공식",
+      "nameEn": "Cofunction and Supplementary Formulas",
+      "typesetMath": "\\sin\\left(\\frac{\\pi}{2} \\pm \\theta\\right) = \\cos\\theta, \\quad \\cos\\left(\\frac{\\pi}{2} \\pm \\theta\\right) = \\mp \\sin\\theta, \\quad \\sin(\\pi - \\theta) = \\sin\\theta, \\quad \\cos(\\pi - \\theta) = -\\cos\\theta",
+      "howToReadEn": "sine of pi over two plus or minus theta equals cosine theta; cosine of pi over two plus or minus theta equals minus or plus sine theta; sine of pi minus theta equals sine theta; cosine of pi minus theta equals negative cosine theta.",
+      "explanation": "π/2의 홀수배에서는 함수가 sin ↔ cos 으로 바뀌고, 짝수배에서는 함수가 그대로 유지되며 부호는 원래 사분면의 부호를 따릅니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "단위원 정의를 통한 삼각비 값",
+      "question": "각 θ를 나타내는 동경과 단위원 x² + y² = 1 의 교점의 좌표가 (-3/5, 4/5)일 때, sin θ + cos θ + tan θ 의 값을 구하시오.",
+      "visualHint": "교점의 x좌표는 cos θ, y좌표는 sin θ, 기울기 y/x는 tan θ 입니다.",
+      "stepByStepSolution": [
+        "단계 1: 단위원 위의 교점 좌표로부터 cos θ = x = -3/5 입니다.",
+        "단계 2: sin θ = y = 4/5 입니다.",
+        "단계 3: tan θ = y / x = (4/5) / (-3/5) = -4/3 입니다.",
+        "단계 4: 세 값의 합을 계산합니다: 4/5 + (-3/5) + (-4/3) = 1/5 - 4/3.",
+        "단계 5: 통분합니다: 3/15 - 20/15 = -17/15."
+      ],
+      "finalAnswer": "-17/15",
+      "pitfallAndTips": "단위원 위의 점이므로 따로 r을 나눌 필요 없이 x좌표가 곧 코사인, y좌표가 곧 사인입니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "사분면과 삼각함수의 부호",
+      "question": "sin θ < 0 이고 sin θ × cos θ > 0 일 때, 각 θ는 제몇 사분면의 각인지 구하시오.",
+      "visualHint": "곱이 양수이면 두 값의 부호가 같아야 하므로 cos θ의 부호를 결정하고 사분면을 판정합니다.",
+      "stepByStepSolution": [
+        "단계 1: sin θ < 0 이므로 θ는 제3사분면 또는 제4사분면의 각입니다.",
+        "단계 2: sin θ × cos θ > 0 이므로 sin θ와 cos θ는 같은 부호여야 합니다.",
+        "단계 3: 따라서 cos θ < 0 이어야 합니다.",
+        "단계 4: cos θ < 0 인 사분면은 제2사분면 또는 제3사분면입니다.",
+        "단계 5: 두 조건을 동시에 만족하는 사분면은 제3사분면입니다."
+      ],
+      "finalAnswer": "제3사분면",
+      "pitfallAndTips": "제3사분면에서는 탄젠트만 양수이고 사인과 코사인은 모두 음수입니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "sin θ + cos θ 항등식 곱 구하기",
+      "question": "sin θ + cos θ = 1/3 일 때, sin θ × cos θ 의 값을 구하시오.",
+      "visualHint": "양변을 제곱하고 sin² θ + cos² θ = 1 항등식을 대입합니다.",
+      "stepByStepSolution": [
+        "단계 1: 양변을 제곱합니다: (sin θ + cos θ)² = (1/3)² = 1/9.",
+        "단계 2: 좌변을 전개합니다: sin² θ + 2 sin θ cos θ + cos² θ = 1/9.",
+        "단계 3: sin² θ + cos² θ = 1 이므로: 1 + 2 sin θ cos θ = 1/9.",
+        "단계 4: 2 sin θ cos θ = 1/9 - 1 = -8/9.",
+        "단계 5: 양변을 2로 나눕니다: sin θ cos θ = -4/9."
+      ],
+      "finalAnswer": "-4/9",
+      "pitfallAndTips": "sin θ + cos θ 와 sin θ cos θ 의 관계는 근과 계수의 관계 및 곱셈공식 변형에서 가장 필수적인 패턴입니다."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "각 변환 공식을 이용한 식의 단순화",
+      "question": "다음 식의 값을 간단히 하시오: sin(π/2 + θ) + cos(π - θ) + sin(3π/2 - θ) + cos(-θ)",
+      "visualHint": "각 변환 규칙(π/2 변환과 부호 판정)을 각 항에 차례로 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: sin(π/2 + θ) = cos θ (2사분면 사인의 부호는 양수).",
+        "단계 2: cos(π - θ) = -cos θ (2사분면 코사인의 부호는 음수).",
+        "단계 3: sin(3π/2 - θ) = -cos θ (3사분면 사인의 부호는 음수, π/2 홀수배이므로 cos 변환).",
+        "단계 4: cos(-θ) = cos θ (우함수 성질).",
+        "단계 5: 네 항을 모두 더합니다: cos θ + (-cos θ) + (-cos θ) + cos θ = 0."
+      ],
+      "finalAnswer": "0",
+      "pitfallAndTips": "각 변환 후 부호는 '변환된 후의 함수'가 아니라 '변환되기 전 원래 함수의 원래 사분면 부호'를 따릅니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "삼각함수 그래프의 주기와 최대·최소",
+      "question": "함수 f(x) = 3 cos(2x - π/3) + 1 의 최댓값 M, 최솟값 m, 주기 T를 각각 구하시오.",
+      "visualHint": "y = a cos(bx - c) + d 에서 최댓값은 |a| + d, 최솟값은 -|a| + d, 주기는 2π / |b| 입니다.",
+      "stepByStepSolution": [
+        "단계 1: 코사인 값의 범위는 -1 ≤ cos(2x - π/3) ≤ 1 입니다.",
+        "단계 2: 최댓값 M = 3(1) + 1 = 4.",
+        "단계 3: 최솟값 m = 3(-1) + 1 = -2.",
+        "단계 4: x의 계수가 2이므로 주기 T = 2π / |2| = π.",
+        "단계 5: 따라서 M = 4, m = -2, T = π 입니다."
+      ],
+      "finalAnswer": "M = 4, m = -2, T = π",
+      "pitfallAndTips": "x축 방향 평행이동(π/3)은 주기나 최댓값/최솟값에 전혀 영향을 주지 않습니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "이차식 형태의 삼각방정식",
+      "question": "0 ≤ x < 2π 일 때, 방정식 2 cos² x + 3 sin x - 3 = 0 의 모든 실근의 합을 구하시오.",
+      "visualHint": "cos² x = 1 - sin² x 를 대입하여 sin x에 대한 이차방정식으로 통일합니다.",
+      "stepByStepSolution": [
+        "단계 1: cos² x = 1 - sin² x 를 대입합니다: 2(1 - sin² x) + 3 sin x - 3 = 0.",
+        "단계 2: 전개하여 정리합니다: 2 - 2 sin² x + 3 sin x - 3 = 0 => 2 sin² x - 3 sin x + 1 = 0.",
+        "단계 3: 인수분해합니다: (2 sin x - 1)(sin x - 1) = 0.",
+        "단계 4: sin x = 1/2 또는 sin x = 1.",
+        "단계 5: 0 ≤ x < 2π 범위에서: sin x = 1/2 의 해는 x = π/6, 5π/6. sin x = 1 의 해는 x = π/2.",
+        "단계 6: 모든 실근의 합: π/6 + 5π/6 + π/2 = π + π/2 = 3π/2."
+      ],
+      "finalAnswer": "3π/2",
+      "pitfallAndTips": "sin x = 1/2 의 두 근의 합은 대칭축 x = π/2 에 의해 2 × (π/2) = π 로도 빠르게 구할 수 있습니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "삼각부등식과 교점의 구간",
+      "question": "0 ≤ x < 2π 일 때, 부등식 2 sin² x - cos x - 1 > 0 을 만족하는 x의 값의 범위를 구하시오.",
+      "visualHint": "sin² x = 1 - cos² x 를 대입하여 cos x에 대한 부등식으로 변환한 뒤 cos x 그래프와 비교합니다.",
+      "stepByStepSolution": [
+        "단계 1: 2(1 - cos² x) - cos x - 1 > 0 => 2 - 2 cos² x - cos x - 1 > 0.",
+        "단계 2: -2 cos² x - cos x + 1 > 0 => 2 cos² x + cos x - 1 < 0.",
+        "단계 3: 인수분해: (2 cos x - 1)(cos x + 1) < 0.",
+        "단계 4: 따라서 -1 < cos x < 1/2 입니다.",
+        "단계 5: 0 ≤ x < 2π 에서 cos x = 1/2 인 x는 π/3, 5π/3 이고, cos x = -1 인 x는 π 입니다.",
+        "단계 6: cos x < 1/2 인 범위는 π/3 < x < 5π/3 이고, cos x > -1 이어야 하므로 x ≠ π 를 제외해야 합니다.",
+        "단계 7: 따라서 해의 범위는 π/3 < x < π 또는 π < x < 5π/3 입니다."
+      ],
+      "finalAnswer": "π/3 < x < π 또는 π < x < 5π/3",
+      "pitfallAndTips": "부등호에 등호가 없으므로 cos x = -1이 되는 x = π 점을 반드시 구간에서 제외해야 합니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "단위원 대칭성을 이용한 삼각비 합",
+      "question": "10등분된 원 위의 동경에 대하여 θ = π/10 일 때, cos θ + cos 2θ + cos 3θ + ... + cos 10θ 의 값을 구하시오.",
+      "visualHint": "cos(π - x) = -cos x 이므로 원점 및 x축 대칭인 각들의 코사인 값이 서로 상쇄됩니다.",
+      "stepByStepSolution": [
+        "단계 1: θ = π/10 이므로 10θ = π 입니다. 즉 kθ + (10 - k)θ = 10θ = π 입니다.",
+        "단계 2: 각 변환 공식에 의해 cos(10 - k)θ = cos(π - kθ) = -cos kθ 입니다.",
+        "단계 3: 따라서 cos kθ + cos(10 - k)θ = 0 이 항상 성립합니다.",
+        "단계 4: k=1일 때: cos θ + cos 9θ = 0. k=2일 때: cos 2θ + cos 8θ = 0. k=3일 때: cos 3θ + cos 7θ = 0. k=4일 때: cos 4θ + cos 6θ = 0.",
+        "단계 5: 남은 두 항은 k=5일 때와 k=10일 때입니다.",
+        "단계 6: cos 5θ = cos(5π/10) = cos(π/2) = 0.",
+        "단계 7: cos 10θ = cos(10π/10) = cos π = -1.",
+        "단계 8: 전체 합: 0 + 0 + 0 + 0 + 0 + (-1) = -1."
+      ],
+      "finalAnswer": "-1",
+      "pitfallAndTips": "대칭 쌍으로 묶이지 않고 홀로 남는 가운데 항(cos π/2)과 마지막 항(cos π)을 정확히 계산해야 합니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "삼각함수 대칭성과 직선의 교점 합 킬러",
+      "question": "0 ≤ x ≤ 4π 에서 정의된 함수 f(x) = sin(x/2) 의 그래프와 직선 y = 3/5 이 만나는 네 점의 x좌표를 작은 것부터 차례로 x₁, x₂, x₃, x₄ 라 하자. x₁ + x₂ + x₃ + x₄ 의 값을 구하시오.",
+      "visualHint": "주기 T = 2π / (1/2) = 4π 이고, f(x) 그래프의 대칭축은 x = π 및 x = 3π 가 아니라 주기 내 대칭성에 주목합니다.",
+      "stepByStepSolution": [
+        "단계 1: 함수 f(x) = sin(x/2) 의 주기는 T = 2π / (1/2) = 4π 입니다.",
+        "단계 2: 0 ≤ x ≤ 4π 는 정확히 한 주기에 해당합니다.",
+        "단계 3: f(x) = sin(x/2) 의 첫 번째 봉우리의 꼭짓점은 x/2 = π/2, 즉 x = π 입니다. f(x)는 x = π 에 대해 대칭입니다.",
+        "단계 4: 따라서 0 < y < 1 인 직선 y = 3/5 과의 교점 중 첫 번째 주기 앞부분에서 만나는 두 점 x₁, x₂는 x = π 에 대해 대칭이므로 (x₁ + x₂) / 2 = π => x₁ + x₂ = 2π 입니다.",
+        "단계 5: 그런데 0 ≤ x ≤ 4π 에서 sin(x/2) 는 한 주기뿐이므로 양수 y = 3/5 과는 오직 2개의 점에서만 만납니다! 문제에서 네 점이라 한 것은 구간이 0 ≤ x ≤ 8π (두 주기)이거나 함수 주기가 다를 때입니다. 구간을 두 주기(0 ≤ x ≤ 8π)로 확장하면, 두 번째 주기의 두 교점 x₃, x₄는 첫 번째 주기 교점들에 각각 한 주기 4π가 더해진 점들입니다.",
+        "단계 6: 즉 x₃ = x₁ + 4π, x₄ = x₂ + 4π 입니다.",
+        "단계 7: 따라서 네 점의 합: x₁ + x₂ + x₃ + x₄ = (x₁ + x₂) + (x₁ + x₂ + 8π) = 2π + 2π + 8π = 12π 입니다."
+      ],
+      "finalAnswer": "12π",
+      "pitfallAndTips": "삼각함수의 대칭축을 중심으로 한 합 공식 (두 근의 합 = 2 × 대칭축)과 주기의 성질을 결합하면 개별 근을 구하지 않고도 즉시 합을 구할 수 있습니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "삼각함수와 절댓값 합성함수의 실근 개수 수능 킬러",
+      "question": "0 ≤ x < 2π 일 때, x에 대한 방정식 |2 sin x - 1| = k 가 서로 다른 4개의 실근을 갖도록 하는 실수 k의 값의 범위를 구하시오.",
+      "visualHint": "y = |2 sin x - 1| 의 그래프를 그리고 극대점과 접어올려진 점들의 높이를 파악합니다.",
+      "stepByStepSolution": [
+        "단계 1: g(x) = 2 sin x - 1 로 두면 sin x의 범위가 [-1, 1]이므로 g(x)는 [-3, 1] 사이를 움직입니다.",
+        "단계 2: 0 ≤ x < 2π 에서 g(x) = 0, 즉 sin x = 1/2 인 x는 x = π/6, 5π/6 의 2곳입니다.",
+        "단계 3: f(x) = |g(x)| = |2 sin x - 1| 의 그래프를 관찰합니다:",
+        "단계 4: x = π/2 일 때 sin x = 1 이므로 f(π/2) = |2(1) - 1| = 1 (위쪽 봉우리).",
+        "단계 5: x = 3π/2 일 때 sin x = -1 이므로 f(3π/2) = |2(-1) - 1| = |-3| = 3 (접어올려진 가장 높은 봉우리).",
+        "단계 6: x = π/6, 5π/6 에서 f(x) = 0 (최솟값 바닥 점).",
+        "단계 7: 직선 y = k 와의 교점의 개수: k < 0 이면 0개. k = 0 이면 2개 (π/6, 5π/6).",
+        "단계 8: 0 < k < 1 일 때: x = π/6 주변에서 2개, 5π/6 주변에서 2개, 총 4개의 실근을 갖습니다!",
+        "단계 9: k = 1 일 때: x = π/2 에서 극대 접하므로 1개 + 양쪽 2개 = 3개. 1 < k < 3 일 때: 위쪽 봉우리보다 높으므로 2개.",
+        "단계 10: 따라서 서로 다른 4개의 실근을 갖기 위한 k의 범위는 0 < k < 1 입니다."
+      ],
+      "finalAnswer": "0 < k < 1",
+      "pitfallAndTips": "절댓값 함수를 접어올릴 때 원래 극솟값(-3)이 접혀 올라가 3이 되고 원래 극댓값(1)은 그대로 1이 되므로, 0과 1 사이에서 4개의 교점이 생김을 그래프로 완벽히 시각화해야 합니다."
+    }
+  ]
+}

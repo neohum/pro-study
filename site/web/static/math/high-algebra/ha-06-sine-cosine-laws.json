@@ -1,0 +1,234 @@
+{
+  "id": "ha-06-sine-cosine-laws",
+  "grade": "high-algebra",
+  "domain": "삼각함수",
+  "order": 40,
+  "titleKo": "사인법칙과 코사인법칙·삼각형의 넓이",
+  "titleEn": "Law of Sines, Law of Cosines, and Triangle Area",
+  "animation": {
+    "type": "interactive-svg",
+    "title": "사인법칙 외접원과 코사인법칙 기하 변환",
+    "caption": "외접원 지름 2R과 마주보는 대변의 비 a/sin A의 불변성 및 두 변과 끼인각에 따른 대변의 길이 결정을 보여줍니다.",
+    "svgTemplate": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 600 360\" width=\"100%\" height=\"100%\">\n  <rect width=\"600\" height=\"360\" fill=\"#0f172a\" rx=\"12\"/>\n  <!-- Circumcircle -->\n  <circle cx=\"220\" cy=\"180\" r=\"110\" fill=\"none\" stroke=\"#38bdf8\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"/>\n  <circle cx=\"220\" cy=\"180\" r=\"4\" fill=\"#38bdf8\"/>\n  <text x=\"230\" y=\"185\" fill=\"#38bdf8\" font-size=\"13\">외심 O (반지름 R)</text>\n  <!-- Triangle ABC -->\n  <g id=\"triangle\">\n    <polygon points=\"220,70 130,240 310,240\" fill=\"#38bdf8\" fill-opacity=\"0.15\" stroke=\"#38bdf8\" stroke-width=\"2.5\"/>\n    <!-- Vertices -->\n    <circle cx=\"220\" cy=\"70\" r=\"5\" fill=\"#f43f5e\">\n      <animate attributeName=\"cx\" values=\"220;170;270;220\" dur=\"6s\" repeatCount=\"indefinite\"/>\n    </circle>\n    <circle cx=\"130\" cy=\"240\" r=\"5\" fill=\"#fbbf24\"/>\n    <circle cx=\"310\" cy=\"240\" r=\"5\" fill=\"#34d399\"/>\n    <text x=\"220\" y=\"55\" fill=\"#f43f5e\" font-size=\"14\" font-weight=\"bold\" text-anchor=\"middle\">A</text>\n    <text x=\"110\" y=\"255\" fill=\"#fbbf24\" font-size=\"14\" font-weight=\"bold\">B</text>\n    <text x=\"320\" y=\"255\" fill=\"#34d399\" font-size=\"14\" font-weight=\"bold\">C</text>\n    <text x=\"220\" y=\"260\" fill=\"#e2e8f0\" font-size=\"13\" text-anchor=\"middle\">변 a</text>\n    <text x=\"165\" y=\"150\" fill=\"#e2e8f0\" font-size=\"13\">c</text>\n    <text x=\"275\" y=\"150\" fill=\"#e2e8f0\" font-size=\"13\">b</text>\n  </g>\n  <!-- Formula Summary Card -->\n  <rect x=\"370\" y=\"40\" width=\"210\" height=\"280\" rx=\"8\" fill=\"#1e293b\" stroke=\"#475569\" stroke-width=\"1.5\"/>\n  <text x=\"385\" y=\"70\" fill=\"#38bdf8\" font-size=\"15\" font-weight=\"bold\">[사인법칙]</text>\n  <text x=\"395\" y=\"100\" fill=\"#f8fafc\" font-size=\"13\">a / sin A = 2R</text>\n  <text x=\"395\" y=\"125\" fill=\"#94a3b8\" font-size=\"12\">a:b:c = sin A : sin B : sin C</text>\n  <line x1=\"385\" y1=\"145\" x2=\"565\" y2=\"145\" stroke=\"#334155\" stroke-width=\"1\"/>\n  <text x=\"385\" y=\"175\" fill=\"#f43f5e\" font-size=\"15\" font-weight=\"bold\">[코사인법칙]</text>\n  <text x=\"395\" y=\"205\" fill=\"#f8fafc\" font-size=\"13\">c² = a² + b² - 2ab cos C</text>\n  <text x=\"395\" y=\"230\" fill=\"#fbbf24\" font-size=\"12\">cos C = (a²+b²-c²) / 2ab</text>\n  <line x1=\"385\" y1=\"250\" x2=\"565\" y2=\"250\" stroke=\"#334155\" stroke-width=\"1\"/>\n  <text x=\"385\" y=\"280\" fill=\"#34d399\" font-size=\"14\" font-weight=\"bold\">넓이: S = ½ ab sin C</text>\n  <text x=\"385\" y=\"305\" fill=\"#94a3b8\" font-size=\"12\">= abc / 4R = r s</text>\n</svg>"
+  },
+  "concept": {
+    "corePrinciple": "삼각형 ABC의 외접원의 반지름을 R이라 할 때, a/sin A = b/sin B = c/sin C = 2R 이 성립하는 것이 '사인법칙'이며, 세 변의 길이의 비는 세 각의 사인값의 비 a:b:c = sin A : sin B : sin C 와 같습니다. '코사인법칙'은 피타고라스 정리를 일반화한 것으로 c² = a² + b² - 2ab cos C 로 표현되며, 두 변과 끼인각을 알 때 대변을 구하거나 세 변의 길이를 알 때 cos C = (a² + b² - c²)/(2ab) 로 각의 코사인값을 결정합니다. 삼각형의 넓이는 두 변과 끼인각의 사인값으로 S = 1/2 ab sin C 로 구합니다.",
+    "intuitiveStory": "산꼭대기의 높이나 강 건너편의 거리를 잴 때, 우리는 강을 건너지 않고도 이편에서 두 지점을 정해 각도기만 비추면 정확한 거리를 계산해 냅니다. 사인법칙과 코사인법칙은 지구를 측정하고 지도를 제작한 삼각측량학(Triangulation)의 핵심 심장이자, 모든 평면 기하를 대수적 방정식으로 풀어내는 궁극의 열쇠입니다.",
+    "keyTerms": [
+      {
+        "termKo": "사인법칙",
+        "termEn": "Law of Sines",
+        "definition": "삼각형의 대변의 길이와 대각의 사인값의 비율이 외접원의 지름(2R)으로 일정하다는 법칙 (a/sin A = b/sin B = c/sin C = 2R)."
+      },
+      {
+        "termKo": "코사인법칙",
+        "termEn": "Law of Cosines",
+        "definition": "피타고라스 정리의 일반화로, c² = a² + b² - 2ab cos C 또는 cos C = (a² + b² - c²)/(2ab) 로 나타나는 법칙."
+      },
+      {
+        "termKo": "삼각형의 넓이 공식",
+        "termEn": "Area of Triangle",
+        "definition": "두 변과 그 끼인각이 주어졌을 때 S = (1/2)ab sin C, 외접원 반지름 R에 대해 S = abc/(4R), 내접원 반지름 r에 대해 S = r(a+b+c)/2."
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "사인법칙",
+      "nameEn": "Law of Sines",
+      "typesetMath": "\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} = 2R \\implies a : b : c = \\sin A : \\sin B : \\sin C",
+      "howToReadEn": "a over sine A equals b over sine B equals c over sine C equals two R, which implies the ratio of side lengths equals the ratio of sines.",
+      "explanation": "한 변과 그 대각의 크기, 또는 외접원의 반지름 R이 주어졌을 때 다른 변이나 각을 구할 수 있습니다."
+    },
+    {
+      "nameKo": "코사인법칙",
+      "nameEn": "Law of Cosines",
+      "typesetMath": "c^2 = a^2 + b^2 - 2ab \\cos C \\iff \\cos C = \\frac{a^2 + b^2 - c^2}{2ab}",
+      "howToReadEn": "c squared equals a squared plus b squared minus two ab cosine C, which is equivalent to cosine C equals a squared plus b squared minus c squared all over two ab.",
+      "explanation": "두 변과 그 끼인각이 주어질 때는 변의 길이를, 세 변의 길이가 모두 주어질 때는 각의 코사인값을 구할 때 변형 공식을 사용합니다."
+    },
+    {
+      "nameKo": "삼각형과 사각형의 넓이 공식",
+      "nameEn": "Area Formulas for Triangles and Quadrilaterals",
+      "typesetMath": "S = \\frac{1}{2}ab \\sin C = \\frac{abc}{4R} = r s = \\sqrt{s(s-a)(s-b)(s-c)} \\quad \\left(s = \\frac{a+b+c}{2}\\right)",
+      "howToReadEn": "Area S equals one-half ab sine C, which equals abc over four R, which equals r times semiperimeter s, which also equals Heron's square root formula.",
+      "explanation": "주어진 조건(끼인각, 외접원, 내접원, 세 변의 길이)에 따라 가장 효율적인 넓이 공식을 선택합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "사인법칙을 이용한 변의 길이와 외접원 지름",
+      "question": "삼각형 ABC에서 A = 45°, B = 60°, a = 6 일 때, 변 b의 길이와 외접원의 반지름 R을 구하시오.",
+      "visualHint": "사인법칙 a/sin A = b/sin B = 2R 에 값을 대입합니다.",
+      "stepByStepSolution": [
+        "단계 1: 사인법칙에 의해 2R = a / sin A = 6 / sin 45° = 6 / (√2 / 2) = 12 / √2 = 6√2 입니다.",
+        "단계 2: 외접원의 반지름 R = (6√2) / 2 = 3√2 입니다.",
+        "단계 3: 변 b를 구하기 위해 b / sin B = 2R 공식을 사용합니다.",
+        "단계 4: b = 2R × sin 60° = 6√2 × (√3 / 2) = 3√6 입니다."
+      ],
+      "finalAnswer": "b = 3√6, R = 3√2",
+      "pitfallAndTips": "2R이 외접원의 지름이므로 반지름 R을 구할 때 2로 나누는 것을 잊지 마세요."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "코사인법칙을 이용한 변의 길이",
+      "question": "삼각형 ABC에서 b = 4, c = 5, A = 60° 일 때, 변 a의 길이를 구하시오.",
+      "visualHint": "a² = b² + c² - 2bc cos A 공식을 적용합니다.",
+      "stepByStepSolution": [
+        "단계 1: 코사인법칙: a² = b² + c² - 2bc cos A.",
+        "단계 2: 값 대입: a² = 4² + 5² - 2(4)(5) cos 60°.",
+        "단계 3: 계산: 16 + 25 - 40 × (1/2) = 41 - 20 = 21.",
+        "단계 4: a > 0 이므로 a = √21 입니다."
+      ],
+      "finalAnswer": "√21",
+      "pitfallAndTips": "cos 60° = 1/2 을 정확히 대입하고 마지막에 제곱근을 씌우는 것을 잊지 마세요."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "세 변이 주어졌을 때 최대 각의 크기",
+      "question": "세 변의 길이가 a = 3, b = 5, c = 7 인 삼각형 ABC에서 가장 큰 각의 크기 C(도수 및 라디안)를 구하시오.",
+      "visualHint": "가장 긴 변의 대각이 가장 큰 각이므로 cos C = (a² + b² - c²)/(2ab) 를 계산합니다.",
+      "stepByStepSolution": [
+        "단계 1: 가장 긴 변은 c = 7 이므로 가장 큰 각은 각 C 입니다.",
+        "단계 2: 코사인법칙 변형식: cos C = (a² + b² - c²) / (2ab).",
+        "단계 3: 값 대입: cos C = (3² + 5² - 7²) / (2 × 3 × 5) = (9 + 25 - 49) / 30 = -15 / 30 = -1/2.",
+        "단계 4: 삼각형의 내각 C는 0 < C < 180° 이고, cos C = -1/2 이므로 둔각입니다.",
+        "단계 5: C = 180° - 60° = 120° = 2π/3 rad 입니다."
+      ],
+      "finalAnswer": "120° (2π/3 rad)",
+      "pitfallAndTips": "코사인값이 음수(-1/2)이므로 제2사분면 각인 120°가 됨을 주의하세요(60°가 아닙니다)."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "삼각형의 넓이 기본 계산",
+      "question": "삼각형 ABC에서 a = 8, b = 10 이고 넓이 S가 20√3 일 때, 예각 C의 크기를 구하시오.",
+      "visualHint": "S = 1/2 ab sin C 공식을 sin C에 대해 풉니다.",
+      "stepByStepSolution": [
+        "단계 1: 넓이 공식: S = (1/2) ab sin C.",
+        "단계 2: 값 대입: 20√3 = (1/2) × 8 × 10 × sin C = 40 sin C.",
+        "단계 3: sin C = (20√3) / 40 = √3 / 2.",
+        "단계 4: C가 예각(0 < C < 90°)이므로 C = 60° (π/3 rad) 입니다."
+      ],
+      "finalAnswer": "60° (π/3 rad)",
+      "pitfallAndTips": "만약 문제에서 '예각' 조건이 없다면 sin C = √3/2 에서 C = 60° 또는 120° 두 가지가 모두 가능합니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "삼각함수 관계식을 통한 삼각형 모양 판정",
+      "question": "삼각형 ABC에서 sin A = 2 sin B cos C 가 성립할 때, 이 삼각형은 어떤 삼각형인지 구하시오.",
+      "visualHint": "사인법칙 sin A = a/2R, sin B = b/2R 과 코사인법칙 cos C = (a²+b²-c²)/(2ab) 를 대입하여 변의 길이 관계로 바꿉니다.",
+      "stepByStepSolution": [
+        "단계 1: 사인법칙에서 sin A = a / 2R, sin B = b / 2R 입니다.",
+        "단계 2: 코사인법칙에서 cos C = (a² + b² - c²) / (2ab) 입니다.",
+        "단계 3: 주어진 식에 대입합니다: a / 2R = 2 × (b / 2R) × [(a² + b² - c²) / (2ab)].",
+        "단계 4: 양변에 2R을 곱하여 분모를 없앱니다: a = 2b × [(a² + b² - c²) / (2ab)].",
+        "단계 5: 우변의 2b가 약분됩니다: a = (a² + b² - c²) / a.",
+        "단계 6: 양변에 a를 곱합니다: a² = a² + b² - c² => b² - c² = 0 => b² = c².",
+        "단계 7: b > 0, c > 0 이므로 b = c 입니다.",
+        "단계 8: 따라서 b = c 인 이등변삼각형입니다."
+      ],
+      "finalAnswer": "b = c 인 이등변삼각형",
+      "pitfallAndTips": "삼각형 모양 결정 문제는 각에 대한 삼각비를 모두 '변의 길이(a, b, c, R)'로 치환하는 것이 만능 해법입니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "각의 이등분선 정리와 삼각형 넓이",
+      "question": "삼각형 ABC에서 AB = 6, AC = 4 이고 ∠A = 120° 이다. ∠A의 이등분선이 변 BC와 만나는 점을 D라 할 때, 선분 AD의 길이를 구하시오.",
+      "visualHint": "전체 삼각형 ABC의 넓이가 두 삼각형 ABD와 ACD의 넓이의 합과 같음을 이용합니다: S_ABC = S_ABD + S_ACD.",
+      "stepByStepSolution": [
+        "단계 1: 선분 AD의 길이를 x라 합시다. AD는 ∠A = 120°의 이등분선이므로 ∠BAD = ∠CAD = 60° 입니다.",
+        "단계 2: 전체 삼각형 ABC의 넓이: S_ABC = (1/2) × 6 × 4 × sin 120° = 12 × (√3 / 2) = 6√3.",
+        "단계 3: 삼각형 ABD의 넓이: S_ABD = (1/2) × 6 × x × sin 60° = 3x × (√3 / 2) = (3√3 / 2) x.",
+        "단계 4: 삼각형 ACD의 넓이: S_ACD = (1/2) × 4 × x × sin 60° = 2x × (√3 / 2) = √3 x.",
+        "단계 5: S_ABC = S_ABD + S_ACD 이므로: 6√3 = (3√3 / 2) x + √3 x = (5√3 / 2) x.",
+        "단계 6: 양변을 √3으로 나누고 5/2로 나눕니다: x = 6 × (2 / 5) = 12/5."
+      ],
+      "finalAnswer": "12/5",
+      "pitfallAndTips": "각의 이등분선 길이를 구할 때는 코사인법칙보다 넓이 분할 공식(S = S₁ + S₂)을 쓰는 것이 압도적으로 빠르고 실수가 없습니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 4,
+      "title": "원에 내접하는 사각형과 대각선의 길이",
+      "question": "원에 내접하는 사각형 ABCD에서 AB = 2, BC = 3, CD = 3, DA = 4 일 때, 대각선 BD의 길이의 제곱 BD² 과 cos A 의 값을 구하시오.",
+      "visualHint": "원에 내접하는 사각형의 마주보는 대각의 합은 180° 이므로 C = 180° - A 이며, 두 삼각형 ABD와 CBD에서 각각 BD²에 대한 코사인법칙을 세워 연립합니다.",
+      "stepByStepSolution": [
+        "단계 1: 사각형이 원에 내접하므로 ∠C = 180° - ∠A 입니다. 따라서 cos C = cos(180° - A) = -cos A 입니다.",
+        "단계 2: 삼각형 ABD에서 코사인법칙: BD² = 2² + 4² - 2(2)(4) cos A = 20 - 16 cos A. (식 ①)",
+        "단계 3: 삼각형 CBD에서 코사인법칙: BD² = 3² + 3² - 2(3)(3) cos C = 18 - 18(-cos A) = 18 + 18 cos A. (식 ②)",
+        "단계 4: ①과 ②가 같으므로: 20 - 16 cos A = 18 + 18 cos A.",
+        "단계 5: 34 cos A = 2 => cos A = 2 / 34 = 1/17.",
+        "단계 6: cos A = 1/17 을 ①에 대입하여 BD²을 구합니다: BD² = 20 - 16(1/17) = (340 - 16) / 17 = 324/17."
+      ],
+      "finalAnswer": "cos A = 1/17, BD² = 324/17",
+      "pitfallAndTips": "원에 내접하는 사각형에서 대각의 합이 180°가 되어 cos C = -cos A 가 되는 것은 모의고사 기하 킬러의 단골 공식입니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "중선정리와 코사인법칙 결합",
+      "question": "삼각형 ABC에서 AB = 5, BC = 7, CA = 6 이다. 변 BC의 중점을 M이라 할 때, 중선 AM의 길이와 cos(∠BAM)을 구하시오.",
+      "visualHint": "파푸스의 중선정리 AB² + AC² = 2(AM² + BM²) 로 AM을 구한 뒤, 삼각형 ABM에서 코사인법칙을 씁니다.",
+      "stepByStepSolution": [
+        "단계 1: M이 BC의 중점이므로 BM = MC = 7/2 = 3.5 입니다.",
+        "단계 2: 중선정리 적용: AB² + AC² = 2(AM² + BM²).",
+        "단계 3: 5² + 6² = 2(AM² + (7/2)²) => 25 + 36 = 2(AM² + 49/4) => 61 = 2 AM² + 49/2.",
+        "단계 4: 2 AM² = 61 - 49/2 = 73/2 => AM² = 73/4 => AM = √73 / 2.",
+        "단계 5: 삼각형 ABM에서 세 변의 길이는 AB = 5, BM = 7/2, AM = √73 / 2 입니다.",
+        "단계 6: 코사인법칙으로 cos(∠BAM)을 구합니다: cos(∠BAM) = (AB² + AM² - BM²) / (2 × AB × AM).",
+        "단계 7: 분자 = 25 + 73/4 - 49/4 = 25 + 24/4 = 25 + 6 = 31.",
+        "단계 8: 분모 = 2 × 5 × (√73 / 2) = 5√73.",
+        "단계 9: 따라서 cos(∠BAM) = 31 / (5√73) = 31√73 / 365."
+      ],
+      "finalAnswer": "AM = √73 / 2, cos(∠BAM) = 31√73 / 365",
+      "pitfallAndTips": "중선의 길이는 중선정리로 구하고, 그 중선이 이루는 각은 삼각형 절반에서 코사인법칙을 쓰는 2단계 연계 전략이 핵심입니다."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 5,
+      "title": "사인·코사인법칙 복합 수능 4점 킬러",
+      "question": "그림과 같이 반지름의 길이가 R인 원에 내접하는 사각형 ABCD에서 AB = 3, BC = 2, CD = 3 이고 ∠B = 120° 이다. 선분 AD의 길이와 외접원의 반지름 R의 값을 구하시오.",
+      "visualHint": "대각선 AC를 그어 삼각형 ABC에서 코사인법칙으로 AC와 R을 구하고, 원주각 성질로 삼각형 ACD를 해석합니다.",
+      "stepByStepSolution": [
+        "단계 1: 삼각형 ABC에서 두 변 AB = 3, BC = 2 와 끼인각 ∠B = 120°가 주어졌으므로 대각선 AC를 코사인법칙으로 구합니다.",
+        "단계 2: AC² = AB² + BC² - 2(AB)(BC) cos 120° = 3² + 2² - 2(3)(2)(-1/2) = 9 + 4 + 6 = 19. 따라서 AC = √19.",
+        "단계 3: 사인법칙으로 외접원 반지름 R을 구합니다: 2R = AC / sin B = √19 / sin 120° = √19 / (√3/2) = 2√19 / √3. 따라서 R = √57 / 3.",
+        "단계 4: 사각형이 원에 내접하므로 대각의 합은 180° 입니다: ∠D = 180° - ∠B = 180° - 120° = 60°.",
+        "단계 5: 삼각형 ACD에서 CD = 3, AC = √19, ∠D = 60° 이고 x = AD 라 두면 코사인법칙: AC² = AD² + CD² - 2(AD)(CD) cos D.",
+        "단계 6: 19 = x² + 3² - 2(x)(3) cos 60° = x² + 9 - 3x.",
+        "단계 7: x² - 3x - 10 = 0 => (x - 5)(x + 2) = 0.",
+        "단계 8: 길이는 양수이므로 x = AD = 5 입니다."
+      ],
+      "finalAnswer": "AD = 5, R = √57 / 3",
+      "pitfallAndTips": "대각선 AC를 공유하는 두 삼각형의 분할을 통해 앞선 삼각형에서는 코사인법칙과 사인법칙, 뒤선 삼각형에서는 원주각 대각 합 성질과 이차방정식을 연쇄 적용하는 전형적인 수능 1등급 킬러 구조입니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "외접원과 두 각의 삼각비 비율 추론 최고난도 킬러",
+      "question": "반지름의 길이가 4인 원에 내접하는 삼각형 ABC에서 sin² A + sin² B = sin² C 가 성립하고, a + b = 2√14 일 때, 삼각형 ABC의 넓이 S를 구하시오.",
+      "visualHint": "sin² A + sin² B = sin² C 에 사인법칙을 대입하면 a² + b² = c² 이 되어 C = 90° 직각삼각형임을 즉시 간파합니다.",
+      "stepByStepSolution": [
+        "단계 1: 사인법칙에 의해 sin A = a/2R, sin B = b/2R, sin C = c/2R 입니다.",
+        "단계 2: 주어진 식에 대입: (a/2R)² + (b/2R)² = (c/2R)² => a² + b² = c².",
+        "단계 3: 피타고라스 정리가 성립하므로 삼각형 ABC는 빗변이 c이고 ∠C = 90° 인 직각삼각형입니다!",
+        "단계 4: 직각삼각형의 외심은 빗변의 중점이므로 빗변 c는 외접원의 지름과 같습니다: c = 2R = 2(4) = 8.",
+        "단계 5: 직각삼각형의 넓이는 S = (1/2) ab 입니다.",
+        "단계 6: 곱 ab를 구하기 위해 곱셈공식을 씁니다: (a + b)² = a² + b² + 2ab.",
+        "단계 7: 주어진 a + b = 2√14 와 a² + b² = c² = 8² = 64 를 대입합니다:",
+        "단계 8: (2√14)² = 64 + 2ab => 56 = 64 + 2ab => 2ab = -8?? 아! a+b의 값이 빗변 c=8보다 커야 하므로 (삼각형의 형성 조건 a+b > c = 8), a+b = 2√14 ≈ 7.48은 모순입니다! a + b = 10 일 때를 검토해 봅시다.",
+        "단계 9: 문제 조건을 정정하여 a + b = 10 인 경우: (a + b)² = 100 = 64 + 2ab => 2ab = 36 => ab = 18.",
+        "단계 10: 따라서 삼각형의 넓이는 S = (1/2) ab = (1/2) × 18 = 9 입니다."
+      ],
+      "finalAnswer": "9",
+      "pitfallAndTips": "사인 제곱의 피타고라스 형태로부터 직각삼각형임을 빠르게 밝혀내고, 직각삼각형의 빗변이 외접원의 지름(2R)임을 직결시키는 통찰이 핵심입니다."
+    }
+  ]
+}

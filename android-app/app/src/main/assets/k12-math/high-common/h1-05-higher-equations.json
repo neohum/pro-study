@@ -1,0 +1,237 @@
+{
+  "id": "h1-05-higher-equations",
+  "grade": "high-common",
+  "domain": "대수",
+  "order": 29,
+  "titleKo": "삼차·사차방정식과 연립이차방정식",
+  "titleEn": "Cubic, Quartic, and Systems of Quadratic Equations",
+  "animation": {
+    "type": "higher-order-omega",
+    "title": "고차방정식의 세 근과 허근 오메가(ω)의 대칭 구조",
+    "caption": "방정식 x³=1의 세 근(1, ω, ω²)이 복소평면 위 단위원에 정삼각형을 이루는 회전 대칭성과 연립이차방정식의 교점 해석을 시각화합니다.",
+    "svgTemplate": "<svg viewBox='0 0 800 400' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='#0f172a'/><text x='400' y='36' fill='#f8fafc' font-size='20' font-weight='bold' text-anchor='middle'>x³ = 1의 세 근과 단위원 위의 정삼각형 대칭</text><g transform='translate(220, 210)'><circle cx='0' cy='0' r='100' fill='none' stroke='#334155' stroke-width='2'/><line x1='-130' y1='0' x2='130' y2='0' stroke='#64748b' stroke-width='1.5'/><line x1='0' y1='-130' x2='0' y2='130' stroke='#64748b' stroke-width='1.5'/><polygon points='100,0 -50,-86.6 -50,86.6' fill='#38bdf8' fill-opacity='0.15' stroke='#38bdf8' stroke-width='2'/><circle cx='100' cy='0' r='7' fill='#4ade80'/><text x='115' y='6' fill='#4ade80' font-size='16' font-weight='bold'>1</text><circle cx='-50' cy='-86.6' r='7' fill='#f59e0b'/><text x='-95' y='-95' fill='#f59e0b' font-size='16' font-weight='bold'>ω = -1/2 + √3/2 i</text><circle cx='-50' cy='86.6' r='7' fill='#f59e0b'/><text x='-105' y='110' fill='#f59e0b' font-size='16' font-weight='bold'>ω² = -1/2 - √3/2 i</text><path d='M 80,-30 A 100 100 0 0 0 -30,-80' fill='none' stroke='#f59e0b' stroke-dasharray='4 4' stroke-width='2'/><text x='35' y='-70' fill='#f59e0b' font-size='14'>120°</text></g><g transform='translate(520, 90)'><rect x='0' y='0' width='240' height='240' rx='12' fill='#1e293b' stroke='#334155' stroke-width='1.5'/><text x='120' y='35' fill='#f8fafc' font-size='16' font-weight='bold' text-anchor='middle'>오메가(ω)의 황금 공식</text><line x1='20' y1='55' x2='220' y2='55' stroke='#475569'/><text x='30' y='90' fill='#38bdf8' font-size='15' font-family='monospace'>ω³ = 1</text><text x='30' y='125' fill='#38bdf8' font-size='15' font-family='monospace'>ω² + ω + 1 = 0</text><text x='30' y='160' fill='#38bdf8' font-size='15' font-family='monospace'>ω + ω̄ = -1</text><text x='30' y='195' fill='#38bdf8' font-size='15' font-family='monospace'>ω · ω̄ = 1,  ω̄ = ω²</text></g></svg>"
+  },
+  "concept": {
+    "corePrinciple": "3차 이상의 다항방정식을 고차방정식이라 부르며, 기본 풀이법은 인수정리와 조립제법을 통해 차수를 2차 이하로 낮추는 것입니다. 삼차방정식 ax³+bx²+cx+d=0 (a≠0)의 세 근을 α, β, γ라 하면 α+β+γ = -b/a, αβ+βγ+γα = c/a, αβγ = -d/a라는 3차 비에타 공식이 성립합니다. 특히 x³=1의 한 허근을 ω라 하면 x³-1 = (x-1)(x²+x+1) = 0에서 ω³=1, ω²+ω+1=0, ω̄=ω², ω+ω̄=-1, ωω̄=1이라는 강력한 순환 대칭성이 유도됩니다. 미지수가 2개인 연립이차방정식은 '일차식과 이차식의 대입법', '인수분해를 통한 일차식 분해', '대칭식 치환(u=x+y, v=xy)'을 통해 해결합니다. 또한 정수나 실수 조건에 의해 해가 제한되는 부정방정식은 (1차식)×(1차식)=(정수) 또는 A² + B² = 0 형태로 변형하여 접근합니다.",
+    "intuitiveStory": "16세기 타르탈리아와 카르다노의 3차방정식 해법 결투는 수학사상 가장 극적인 드라마 중 하나였습니다. 당시의 비밀 공식은 현대에 이르러 x³=1의 허근 ω가 단위원 위를 120도씩 점프하는 정삼각형의 대칭성으로 완전히 해명되었습니다. 3개의 꼭짓점을 잇는 ω의 춤은 대수학이 기하학적 대칭과 얼마나 완벽하게 맞물려 있는지를 보여주는 정수입니다.",
+    "keyTerms": [
+      {
+        "termKo": "고차방정식",
+        "termEn": "Higher-Order Polynomial Equations",
+        "definition": "차수가 3 이상인 다항방정식으로, 인수정리와 조립제법을 통해 차수를 낮추어 해결함"
+      },
+      {
+        "termKo": "허근 오메가(ω)",
+        "termEn": "Complex Cube Root of Unity ω",
+        "definition": "x³ = 1의 한 허근으로, x² + x + 1 = 0을 만족하고 3을 주기로 순환하는 복소수"
+      },
+      {
+        "termKo": "대칭 연립이차방정식",
+        "termEn": "Symmetric System of Quadratic Equations",
+        "definition": "x와 y를 서로 바꾸어도 식이 변하지 않는 연립방정식으로, x+y=u, xy=v 치환으로 해결함"
+      },
+      {
+        "termKo": "부정방정식",
+        "termEn": "Indeterminate Equation",
+        "definition": "식의 개수가 미지수보다 적지만 정수나 실수라는 특수 조건에 의해 해가 한정되는 방정식"
+      }
+    ]
+  },
+  "formulas": [
+    {
+      "nameKo": "삼차방정식 근과 계수의 관계",
+      "nameEn": "Vieta's Formulas for Cubic Equations",
+      "typesetMath": "\\alpha+\\beta+\\gamma = -\\frac{b}{a}, \\; \\alpha\\beta+\\beta\\gamma+\\gamma\\alpha = \\frac{c}{a}, \\; \\alpha\\beta\\gamma = -\\frac{d}{a}",
+      "howToReadEn": "alpha plus beta plus gamma equals negative b over a, alpha beta plus beta gamma plus gamma alpha equals c over a, and alpha beta gamma equals negative d over a",
+      "explanation": "삼차방정식 ax³+bx²+cx+d=0의 세 근의 합, 두 근씩의 곱의 합, 세 근의 곱을 계수비로 나타냅니다."
+    },
+    {
+      "nameKo": "허근 오메가(ω)의 주기 및 대칭 공식",
+      "nameEn": "Properties of the Cube Root of Unity Omega",
+      "typesetMath": "\\omega^3 = 1, \\quad \\omega^2 + \\omega + 1 = 0, \\quad \\omega + \\bar{\\omega} = -1, \\quad \\omega\\bar{\\omega} = 1",
+      "howToReadEn": "omega cubed equals one, omega squared plus omega plus one equals zero, omega plus omega bar equals negative one, and omega times omega bar equals one",
+      "explanation": "x³=1의 허근 ω는 3차 순환성을 가지며 켤레근 ω̄ = ω²의 관계를 만족합니다."
+    },
+    {
+      "nameKo": "대칭 연립이차방정식의 t-이차방정식 변환",
+      "nameEn": "Symmetric System to Quadratic Equation",
+      "typesetMath": "u = x+y, \\; v = xy \\implies t^2 - ut + v = 0 \\; (\\text{roots: } x, y)",
+      "howToReadEn": "u equals x plus y, v equals x y implies t squared minus u t plus v equals zero whose roots are x and y",
+      "explanation": "두 수의 합과 곱을 알면 t에 대한 이차방정식을 세워 x, y를 직접 구할 수 있습니다."
+    },
+    {
+      "nameKo": "정수 조건 부정방정식 표준형",
+      "nameEn": "Factoring Form for Integer Diophantine Equations",
+      "typesetMath": "(x - a)(y - b) = k \\quad (k \\in \\mathbb{Z})",
+      "howToReadEn": "open parenthesis x minus a close parenthesis times open parenthesis y minus b close parenthesis equals k where k is an integer",
+      "explanation": "xy+Ax+By+C=0 형태의 식을 강제로 인수분해하여 정수 약수들의 순서쌍으로 분해합니다."
+    }
+  ],
+  "problems": [
+    {
+      "problemNumber": 1,
+      "difficultyLevel": 1,
+      "title": "삼차방정식의 인수분해와 세 실근",
+      "question": "삼차방정식 x³ - 4x² + x + 6 = 0 의 세 실근을 모두 구하시오.",
+      "visualHint": "상수항 6의 약수 중 대입하여 0이 되는 값을 찾습니다. x = -1을 대입해 보세요.",
+      "stepByStepSolution": [
+        "1단계: f(-1) = (-1)³ - 4(-1)² + (-1) + 6 = -1 - 4 - 1 + 6 = 0 이므로 x + 1은 인수입니다.",
+        "2단계: 조립제법으로 계수 [1, -4, 1, 6]을 -1로 나눕니다. 몫은 x² - 5x + 6, 나머지는 0입니다.",
+        "3단계: 이차식 x² - 5x + 6을 인수분해합니다. (x - 2)(x - 3) = 0",
+        "4단계: 따라서 전체 방정식은 (x + 1)(x - 2)(x - 3) = 0 이므로 세 실근은 x = -1, 2, 3 입니다."
+      ],
+      "finalAnswer": "x = -1, 2, 3",
+      "pitfallAndTips": "인수정리로 한 근을 먼저 찾은 뒤 조립제법을 쓰면 삼차방정식은 손쉽게 이차방정식으로 축소됩니다."
+    },
+    {
+      "problemNumber": 2,
+      "difficultyLevel": 1,
+      "title": "일차와 이차 연립방정식 기본",
+      "question": "연립방정식 x - y = 1, x² + y² = 5 를 만족하는 양의 정수 순서쌍 (x, y)를 구하시오.",
+      "visualHint": "일차식 x = y + 1을 이차식에 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: 일차식을 정리합니다. x = y + 1",
+        "2단계: 이차식에 대입합니다. (y + 1)² + y² = 5",
+        "3단계: 전개하여 정리합니다. y² + 2y + 1 + y² = 5 => 2y² + 2y - 4 = 0 => y² + y - 2 = 0",
+        "4단계: 인수분해합니다. (y + 2)(y - 1) = 0 => y = 1 또는 y = -2",
+        "5단계: 양의 정수이므로 y = 1입니다. 이때 x = 1 + 1 = 2입니다. 따라서 (x, y) = (2, 1)입니다."
+      ],
+      "finalAnswer": "(2, 1)",
+      "pitfallAndTips": "y = -2일 때는 x = -1이 되어 문제의 '양의 정수' 조건을 만족하지 않습니다."
+    },
+    {
+      "problemNumber": 3,
+      "difficultyLevel": 2,
+      "title": "삼차방정식의 세 근의 제곱의 합",
+      "question": "삼차방정식 x³ - 3x² + 2x - 5 = 0 의 세 근을 α, β, γ라 할 때, α² + β² + γ² 의 값을 구하시오.",
+      "visualHint": "곱셈 공식 변형 (α+β+γ)² - 2(αβ+βγ+γα)를 적용합니다.",
+      "stepByStepSolution": [
+        "1단계: 비에타 근과 계수의 관계를 씁니다. α + β + γ = -(-3)/1 = 3, αβ + βγ + γα = 2/1 = 2",
+        "2단계: 제곱의 합 공식을 적습니다. α² + β² + γ² = (α + β + γ)² - 2(αβ + βγ + γα)",
+        "3단계: 값을 대입합니다. 3² - 2(2) = 9 - 4 = 5"
+      ],
+      "finalAnswer": "5",
+      "pitfallAndTips": "세 근을 직접 구하려 하지 말고 근과 계수의 관계를 통한 대칭식 변형을 활용하세요."
+    },
+    {
+      "problemNumber": 4,
+      "difficultyLevel": 2,
+      "title": "허근 오메가의 주기성 계산",
+      "question": "방정식 x³ = 1 의 한 허근을 ω라 할 때, ω²⁰ + ω¹⁰ + 1 의 값을 구하시오.",
+      "visualHint": "ω³ = 1 이므로 지수를 3으로 나눈 나머지로 차수를 낮춥니다.",
+      "stepByStepSolution": [
+        "1단계: ω³ = 1 이므로, ω²⁰ = (ω³)⁶ × ω² = 1⁶ × ω² = ω² 입니다.",
+        "2단계: ω¹⁰ = (ω³)³ × ω = 1³ × ω = ω 입니다.",
+        "3단계: 주어진 식은 ω² + ω + 1 이 됩니다.",
+        "4단계: x³ - 1 = (x - 1)(x² + x + 1) = 0 에서 허근 ω는 ω² + ω + 1 = 0을 만족합니다.",
+        "5단계: 따라서 식의 값은 0 입니다."
+      ],
+      "finalAnswer": "0",
+      "pitfallAndTips": "ω의 거듭제곱 문제는 항상 지수를 3으로 나눈 나머지를 취하고 ω²+ω+1=0을 적용하는 것이 기본입니다."
+    },
+    {
+      "problemNumber": 5,
+      "difficultyLevel": 3,
+      "title": "삼차방정식이 중근을 가질 조건",
+      "question": "삼차방정식 x³ - (k + 1)x² + k = 0 이 중근을 갖도록 하는 모든 실수 k의 값의 합을 구하시오.",
+      "visualHint": "x = 1을 대입하면 식이 항상 0이 됨을 확인하고 인수분해합니다.",
+      "stepByStepSolution": [
+        "1단계: 계수의 합이 1 - (k+1) + k = 0 이므로 x = 1이 근입니다.",
+        "2단계: 조립제법으로 x - 1을 묶어냅니다. (x - 1)(x² - kx - k) = 0",
+        "3단계: 중근을 갖는 경우는 두 가지입니다.",
+        "경우 A: 이차식 x² - kx - k = 0 자체가 중근을 가질 때: D = (-k)² - 4(1)(-k) = k² + 4k = k(k + 4) = 0 => k = 0 또는 k = -4",
+        "경우 B: 이차식 x² - kx - k = 0 이 x = 1을 근으로 가질 때: 1² - k(1) - k = 0 => 1 - 2k = 0 => k = 1/2",
+        "4단계: 가능한 모든 실수 k는 0, -4, 1/2 입니다.",
+        "5단계: 합을 구합니다. 0 + (-4) + 1/2 = -7/2 입니다."
+      ],
+      "finalAnswer": "-7/2",
+      "pitfallAndTips": "이차식의 판별식이 0인 경우(k=0, -4)만 생각하고, 앞의 근 x=1과 중복되는 경우(k=1/2)를 빠뜨리기 쉬우니 주의해야 합니다."
+    },
+    {
+      "problemNumber": 6,
+      "difficultyLevel": 3,
+      "title": "대칭 연립이차방정식",
+      "question": "연립방정식 x + y = 5, x² + y² = 13 을 만족하는 모든 실수 순서쌍 (x, y)를 구하시오.",
+      "visualHint": "x² + y² = (x+y)² - 2xy를 이용하여 xy의 값을 먼저 구합니다.",
+      "stepByStepSolution": [
+        "1단계: x + y = 5 입니다. x² + y² = (x + y)² - 2xy = 5² - 2xy = 13",
+        "2단계: 25 - 2xy = 13 이므로 2xy = 12 => xy = 6 입니다.",
+        "3단계: 합이 5이고 곱이 6인 두 수 x, y는 이차방정식 t² - 5t + 6 = 0 의 두 실근입니다.",
+        "4단계: (t - 2)(t - 3) = 0 이므로 t = 2 또는 t = 3 입니다.",
+        "5단계: 따라서 순서쌍 (x, y)는 (2, 3) 또는 (3, 2) 입니다."
+      ],
+      "finalAnswer": "(2, 3), (3, 2)",
+      "pitfallAndTips": "대칭식 연립방정식은 x와 y가 대칭적이므로 한 쌍이 나오면 x와 y가 뒤바뀐 쌍도 반드시 해가 됩니다."
+    },
+    {
+      "problemNumber": 7,
+      "difficultyLevel": 3,
+      "title": "사차 복이차방정식의 근",
+      "question": "사차방정식 x⁴ - 5x² + 4 = 0 의 네 실근 중 가장 큰 근을 M, 가장 작은 근을 m이라 할 때, M - m의 값을 구하시오.",
+      "visualHint": "X = x²으로 치환하여 X에 대한 이차방정식을 풉니다.",
+      "stepByStepSolution": [
+        "1단계: X = x² (X ≥ 0)으로 치환합니다. X² - 5X + 4 = 0",
+        "2단계: 인수분해합니다. (X - 1)(X - 4) = 0 => X = 1 또는 X = 4",
+        "3단계: 원래의 x로 환원합니다. x² = 1 => x = ±1, x² = 4 => x = ±2",
+        "4단계: 네 실근은 -2, -1, 1, 2 입니다.",
+        "5단계: 가장 큰 근 M = 2, 가장 작은 근 m = -2 이므로 M - m = 2 - (-2) = 4 입니다."
+      ],
+      "finalAnswer": "4",
+      "pitfallAndTips": "치환된 X의 값이 음수가 나오면 실근이 아니라 허근이 발생하게 됩니다."
+    },
+    {
+      "problemNumber": 8,
+      "difficultyLevel": 4,
+      "title": "허근 오메가의 다항식 연산",
+      "question": "방정식 x³ = 1 의 한 허근을 ω라 할 때, (1 + 2ω)(1 + 2ω²)의 값을 구하시오.",
+      "visualHint": "식을 전개한 뒤 ω³ = 1 및 ω² + ω = -1을 대입합니다.",
+      "stepByStepSolution": [
+        "1단계: 괄호를 전개합니다. 1 + 2ω² + 2ω + 4ω³ = 1 + 2(ω² + ω) + 4ω³",
+        "2단계: ω² + ω + 1 = 0 에서 ω² + ω = -1 입니다.",
+        "3단계: ω³ = 1 입니다.",
+        "4단계: 식에 대입합니다. 1 + 2(-1) + 4(1) = 1 - 2 + 4 = 3"
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "ω를 직접 구해 복소수를 대입하면 계산이 매우 복잡해집니다. 반드시 ω²+ω=-1, ω³=1의 대칭식을 사용하세요."
+    },
+    {
+      "problemNumber": 9,
+      "difficultyLevel": 4,
+      "title": "정수 조건의 부정방정식",
+      "question": "방정식 xy - 2x - 3y + 2 = 0 을 만족하는 자연수 x, y의 순서쌍 (x, y)를 모두 구하시오.",
+      "visualHint": "(x - a)(y - b) = k 꼴로 강제 인수분해합니다.",
+      "stepByStepSolution": [
+        "1단계: x로 묶습니다. x(y - 2) - 3(y - 2) - 6 + 2 = 0",
+        "2단계: 인수분해 정리합니다. (x - 3)(y - 2) - 4 = 0 => (x - 3)(y - 2) = 4",
+        "3단계: 4의 정수 약수 쌍 (A, B)를 구합니다. (1, 4), (2, 2), (4, 1), (-1, -4), (-2, -2), (-4, -1)",
+        "4단계: x = A + 3, y = B + 2 로 계산합니다.",
+        "- (1, 4) => (4, 6)",
+        "- (2, 2) => (5, 4)",
+        "- (4, 1) => (7, 3)",
+        "- (-1, -4) => (2, -2) : y가 자연수가 아니므로 제외",
+        "- (-2, -2) => (1, 0) : y가 자연수가 아니므로 제외",
+        "- (-4, -1) => (-1, 1) : x가 자연수가 아니므로 제외",
+        "5단계: 따라서 조건을 만족하는 자연수 순서쌍은 (4, 6), (5, 4), (7, 3) 입니다."
+      ],
+      "finalAnswer": "(4, 6), (5, 4), (7, 3)",
+      "pitfallAndTips": "약수 쌍 중 음수인 경우를 계산하여 최종적으로 '자연수' 조건에 부합하는지 반드시 확인해야 합니다."
+    },
+    {
+      "problemNumber": 10,
+      "difficultyLevel": 5,
+      "title": "실수 조건의 부정방정식과 완전제곱식의 합",
+      "question": "방정식 x² - 4xy + 5y² - 2y + 1 = 0 을 만족하는 실수 x, y에 대하여 x + y의 값을 구하시오.",
+      "visualHint": "5y²을 4y² + y²으로 분리하여 (x - 2y)² + (y - 1)² = 0 형태로 변형합니다.",
+      "stepByStepSolution": [
+        "1단계: 식을 x에 대한 내림차순으로 정리하거나 y항을 분리합니다. x² - 4xy + 4y² + y² - 2y + 1 = 0",
+        "2단계: 두 개의 완전제곱식으로 묶습니다. (x - 2y)² + (y - 1)² = 0",
+        "3단계: x, y가 실수이므로 (x - 2y)² ≥ 0 이고 (y - 1)² ≥ 0 입니다.",
+        "4단계: 두 실수의 제곱의 합이 0이 되려면 각각이 0이어야 합니다. 즉, x - 2y = 0 이고 y - 1 = 0",
+        "5단계: y = 1 이고, x = 2y = 2(1) = 2 입니다.",
+        "6단계: 따라서 x + y = 2 + 1 = 3 입니다."
+      ],
+      "finalAnswer": "3",
+      "pitfallAndTips": "실수 조건에서 A² + B² = 0 이면 A = 0 이고 B = 0 이라는 실수의 기본 공리를 사용하는 대표적인 킬러 패턴입니다."
+    }
+  ]
+}

@@ -135,4 +135,16 @@ object EinkHelper {
             // ignore
         }
     }
+
+    /**
+     * E-ink 패널의 잔상을 제거하기 위한 화면 전체 반전(Flash Invert) 기법
+     */
+    fun flashScreenRefresh(view: View) {
+        val originalColor = android.graphics.Color.WHITE
+        view.setBackgroundColor(android.graphics.Color.BLACK)
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            view.setBackgroundColor(originalColor)
+            view.invalidate()
+        }, 120)
+    }
 }
