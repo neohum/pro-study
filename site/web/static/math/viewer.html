@@ -460,27 +460,89 @@
       }
     }
 
+    // JSON 로더: 안드로이드 네이티브 브릿지 -> Fetch API -> XMLHttpRequest 3중 방어
+    async function loadJson(path) {
+      // 1. 안드로이드 네이티브 에셋 브릿지 우선 시도 (오프라인 앱에서 보안/CORS 0% 보장)
+      const bridge = window.AndroidBridge || window.AndroidTTS;
+      if (bridge && typeof bridge.getAssetJson === 'function') {
+        try {
+          const raw = bridge.getAssetJson(path);
+          if (raw && typeof raw === 'string' && raw.trim().length > 0) {
+            return JSON.parse(raw);
+          }
+        } catch (bridgeErr) {
+          console.warn("AndroidBridge getAssetJson failed, fallback to network:", bridgeErr);
+        }
+      }
+
+      // 2. Fetch API 시도
+      try {
+        const resp = await fetch(path);
+        if (resp.ok) {
+          return await resp.json();
+        }
+      } catch (fetchErr) {
+        console.warn("Fetch failed, fallback to XMLHttpRequest:", fetchErr);
+      }
+
+      // 3. XMLHttpRequest fallback (file:// 프로토콜 호환)
+      return new Promise((resolve, reject) => {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', path, true);
+          xhr.onload = function() {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
+              try {
+                resolve(JSON.parse(xhr.responseText));
+              } catch (parseErr) {
+                reject(new Error("JSON 파싱 에러: " + path));
+              }
+            } else {
+              reject(new Error("HTTP 에러 " + xhr.status + ": " + path));
+            }
+          };
+          xhr.onerror = function() {
+            reject(new Error("파일 로드 실패: " + path));
+          };
+          xhr.send();
+        } catch (xhrErr) {
+          reject(xhrErr);
+        }
+      });
+    }
+
+    function getGradesList() {
+      if (!manifestData) return [];
+      return manifestData.grades || manifestData.curriculum || [];
+    }
+
     // 초기화
     async function initViewer() {
       try {
-        const resp = await fetch('manifest.json');
-        manifestData = await resp.json();
+        manifestData = await loadJson('manifest.json');
         setupGradeDropdown();
         loadUnitFromParams();
       } catch (e) {
         console.error("Manifest load error:", e);
         document.getElementById('contentLoading').innerHTML = 
-          '<div style="color:red;">매니페스트를 불러오지 못했습니다.<br>' + e.message + '</div>';
+          '<div style="color:red; padding: 20px;">' +
+          '<h3>매니페스트를 불러오지 못했습니다.</h3>' +
+          '<p>' + e.message + '</p>' +
+          '<button onclick="location.reload()" style="margin-top:10px; padding:6px 12px;">다시 시도</button>' +
+          '</div>';
       }
     }
 
     function setupGradeDropdown() {
       const gradeSelect = document.getElementById('gradeSelect');
       gradeSelect.innerHTML = '';
-      manifestData.curriculum.forEach((grade, idx) => {
+      const grades = getGradesList();
+      grades.forEach((grade, idx) => {
         const opt = document.createElement('option');
         opt.value = idx;
-        opt.textContent = `${grade.gradeKo} (${grade.units.length}개 유닛)`;
+        const name = grade.nameKo || grade.gradeKo || `과정 ${idx + 1}`;
+        const unitCount = (grade.units || []).length;
+        opt.textContent = `${name} (${unitCount}개 유닛)`;
         gradeSelect.appendChild(opt);
       });
       updateUnitDropdown();
@@ -490,7 +552,9 @@
       const gradeIdx = parseInt(document.getElementById('gradeSelect').value) || 0;
       const unitSelect = document.getElementById('unitSelect');
       unitSelect.innerHTML = '';
-      const units = manifestData.curriculum[gradeIdx].units;
+      const grades = getGradesList();
+      if (!grades[gradeIdx]) return;
+      const units = grades[gradeIdx].units || [];
       units.forEach((u, uIdx) => {
         const opt = document.createElement('option');
         opt.value = uIdx;
@@ -516,16 +580,19 @@
       document.getElementById('gradeSelect').value = gradeIdx;
       document.getElementById('unitSelect').value = unitIdx;
 
-      const grade = manifestData.curriculum[gradeIdx];
+      const grades = getGradesList();
+      const grade = grades[gradeIdx];
+      if (!grade || !grade.units || !grade.units[unitIdx]) {
+        console.error("Invalid grade or unit index:", gradeIdx, unitIdx);
+        return;
+      }
       const unitSummary = grade.units[unitIdx];
 
       document.getElementById('contentLoading').style.display = 'block';
       document.getElementById('unitContent').style.display = 'none';
 
       try {
-        const unitResp = await fetch(unitSummary.file);
-        if (!unitResp.ok) throw new Error("단원 파일 없음: " + unitSummary.file);
-        currentUnitData = await unitResp.json();
+        currentUnitData = await loadJson(unitSummary.file);
         renderCurrentUnit(grade, currentUnitData);
         document.getElementById('contentLoading').style.display = 'none';
         document.getElementById('unitContent').style.display = 'block';
@@ -536,12 +603,14 @@
       } catch (err) {
         console.error("Unit load fail:", err);
         document.getElementById('contentLoading').innerHTML = 
-          `<div style="color:red; padding:20px;">[오류] 단원 데이터를 불러올 수 없습니다: ${unitSummary.file}<br>${err.message}</div>`;
+          `<div style="color:red; padding:20px;">[오류] 단원 데이터를 불러올 수 없습니다: ${unitSummary.file}<br>${err.message}<br>` +
+          `<button onclick="loadUnit(${gradeIdx}, ${unitIdx})" style="margin-top:10px; padding:6px 12px;">재시도</button></div>`;
       }
     }
 
     function renderCurrentUnit(grade, unit) {
-      document.getElementById('gradeBadge').textContent = `${grade.gradeKo} · ${unit.domain}`;
+      const gradeName = grade.nameKo || grade.gradeKo || '';
+      document.getElementById('gradeBadge').textContent = `${gradeName} · ${unit.domain}`;
       document.getElementById('unitTitleKo').textContent = unit.titleKo;
       document.getElementById('unitTitleEn').textContent = unit.titleEn;
 
@@ -662,18 +731,21 @@
     function updateNavButtons() {
       const btnPrev = document.getElementById('btnPrevUnit');
       const btnNext = document.getElementById('btnNextUnit');
+      const grades = getGradesList();
       btnPrev.disabled = (currentGradeIndex === 0 && currentUnitIndex === 0);
-      const isLastGrade = currentGradeIndex === manifestData.curriculum.length - 1;
-      const isLastUnit = currentUnitIndex === manifestData.curriculum[currentGradeIndex].units.length - 1;
+      const isLastGrade = currentGradeIndex >= grades.length - 1;
+      const isLastUnit = isLastGrade && (!grades[currentGradeIndex] || currentUnitIndex >= (grades[currentGradeIndex].units || []).length - 1);
       btnNext.disabled = (isLastGrade && isLastUnit);
     }
 
     function navigateUnit(delta) {
+      const grades = getGradesList();
+      if (!grades.length) return;
       let g = currentGradeIndex;
       let u = currentUnitIndex + delta;
       if (delta > 0) {
-        if (u >= manifestData.curriculum[g].units.length) {
-          if (g < manifestData.curriculum.length - 1) {
+        if (u >= (grades[g].units || []).length) {
+          if (g < grades.length - 1) {
             g += 1;
             u = 0;
           } else {
@@ -684,7 +756,7 @@
         if (u < 0) {
           if (g > 0) {
             g -= 1;
-            u = manifestData.curriculum[g].units.length - 1;
+            u = (grades[g].units || []).length - 1;
           } else {
             return;
           }
@@ -701,9 +773,11 @@
     function loadUnitFromParams() {
       const params = new URLSearchParams(window.location.search);
       const unitId = params.get('unit');
-      if (unitId) {
-        for (let gIdx = 0; gIdx < manifestData.curriculum.length; gIdx++) {
-          const uIdx = manifestData.curriculum[gIdx].units.findIndex(u => u.id === unitId);
+      const grades = getGradesList();
+      if (unitId && grades.length) {
+        for (let gIdx = 0; gIdx < grades.length; gIdx++) {
+          const units = grades[gIdx].units || [];
+          const uIdx = units.findIndex(u => u.id === unitId);
           if (uIdx !== -1) {
             loadUnit(gIdx, uIdx);
             return;
