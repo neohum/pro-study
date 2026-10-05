@@ -159,10 +159,16 @@ class MainActivity : AppCompatActivity() {
             closeCodeMode()
         }
 
-        // 소스 코드 자동 줄바꿈 토글
+        // 소스 코드 자동 줄바꿈 토글 (스마트폰 최적화)
         btnCodeWrap.setOnClickListener {
             val wrapped = codeViewer.toggleWrap()
             btnCodeWrap.text = if (wrapped) "↔ 가로스크롤" else "↩ 줄바꿈"
+            val msg = if (wrapped) {
+                "자동 줄바꿈 모드: 코드가 화면 너비에 맞게 아래로 배치됩니다."
+            } else {
+                "가로 스크롤 모드: 화면을 좌우로 넘겨서 코드를 볼 수 있습니다."
+            }
+            android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
         }
 
         // 소스 코드 글자 크기 축소 (A-)

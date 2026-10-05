@@ -54,12 +54,12 @@ class CodeViewer @JvmOverloads constructor(
     private val screenWidthDp = resources.displayMetrics.widthPixels / density
     private val isSmartphone = screenWidthDp < 600f
 
-    // 폰트 크기 (기본값: 스마트폰 13.5sp, 태블릿 16sp)
-    var fontSizeSp: Float = if (isSmartphone) 13.5f else 16.0f
+    // 폰트 크기 (기본값: 스마트폰 12.5sp, 태블릿 15.5sp)
+    var fontSizeSp: Float = if (isSmartphone) 12.5f else 15.5f
         private set
 
-    // 자동 줄바꿈(Soft Wrap) 모드
-    var isWrapMode: Boolean = false
+    // 자동 줄바꿈(Soft Wrap) 모드: 스마트폰에서는 기본 활성화(true)로 코드가 잘리지 않고 화면 아래로 내려감
+    var isWrapMode: Boolean = isSmartphone
         set(value) {
             if (field != value) {
                 field = value
@@ -191,12 +191,9 @@ class CodeViewer @JvmOverloads constructor(
         val list = ArrayList<VisualLine>(codeLines.size)
         var maxW = 0f
 
-        val viewW = width.toFloat()
-        val availCodeWidth = if (viewW > sepX + 40f * density) {
-            viewW - sepX - 20f * density
-        } else {
-            (screenWidthDp * density) - sepX - 20f * density
-        }
+        val viewW = if (width > 0) width.toFloat() else resources.displayMetrics.widthPixels.toFloat()
+        // 코드 텍스트는 sepX 기준 +12dp 위치에 출력되므로, 우측 16dp 여백을 포함해 28dp 안전 마진 확보
+        val availCodeWidth = max(80f * density, viewW - sepX - 28f * density)
 
         for ((idx, line) in codeLines.withIndex()) {
             if (line.isEmpty()) {
@@ -218,13 +215,15 @@ class CodeViewer @JvmOverloads constructor(
                 var isFirst = true
 
                 while (remaining.isNotEmpty()) {
-                    val count = codePaint.breakText(remaining, true, availCodeWidth, null)
+                    // 첫 줄은 availCodeWidth 전체, 다음 줄은 들여쓰기(16dp 상당) 고려한 너비
+                    val targetWidth = if (isFirst) availCodeWidth else max(60f * density, availCodeWidth - 16f * density)
+                    val count = codePaint.breakText(remaining, true, targetWidth, null)
                     if (count <= 0) {
                         list.add(VisualLine(idx, isFirst, remaining))
                         break
                     }
                     val sub = remaining.substring(0, count)
-                    list.add(VisualLine(idx, isFirst, if (isFirst) sub else "  $sub"))
+                    list.add(VisualLine(idx, isFirst, if (isFirst) sub else "    $sub"))
                     remaining = remaining.substring(count)
                     isFirst = false
                 }
@@ -276,6 +275,7 @@ class CodeViewer @JvmOverloads constructor(
                     val dy = rawY - lastTouchY
                     lastTouchX = rawX
                     lastTouchY = rawY
+                    parent?.requestDisallowInterceptTouchEvent(true)
                     scrollByOffset(dx, dy)
                     return true
                 }
@@ -304,17 +304,23 @@ class CodeViewer @JvmOverloads constructor(
 
     private fun getMaxScrollX(): Float {
         if (isWrapMode) return 0f
-        val availCodeWidth = width.toFloat() - sepX
-        val totalCodeWidth = maxLineWidthPx + 32f * density
-        return max(0f, totalCodeWidth - availCodeWidth)
+        val w = if (width > 0) width.toFloat() else resources.displayMetrics.widthPixels.toFloat()
+        val availCodeWidth = w - sepX
+        // 가장 긴 줄 끝에 48dp 텍스트 여백 + 36dp 가로 스크롤 여유 마진 확보
+        val totalCodeWidth = maxLineWidthPx + 48f * density
+        return max(0f, totalCodeWidth - availCodeWidth + 36f * density)
     }
 
     private fun scrollByOffset(dx: Float, dy: Float) {
         val maxScrollY = getMaxScrollY()
         scrollYOffset = (scrollYOffset + dy).coerceIn(-maxScrollY, 0f)
 
-        val maxScrollX = getMaxScrollX()
-        scrollXOffset = (scrollXOffset + dx).coerceIn(-maxScrollX, 0f)
+        if (!isWrapMode) {
+            val maxScrollX = getMaxScrollX()
+            scrollXOffset = (scrollXOffset + dx).coerceIn(-maxScrollX, 0f)
+        } else {
+            scrollXOffset = 0f
+        }
 
         invalidate()
     }

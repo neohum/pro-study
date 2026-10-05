@@ -80,16 +80,29 @@ class K12MathViewerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         settings.domStorageEnabled = true
         settings.allowFileAccess = true
         settings.allowContentAccess = true
+        @Suppress("DEPRECATION")
+        settings.allowFileAccessFromFileURLs = true
+        @Suppress("DEPRECATION")
+        settings.allowUniversalAccessFromFileURLs = true
         settings.builtInZoomControls = true
         settings.displayZoomControls = false
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
         settings.cacheMode = WebSettings.LOAD_DEFAULT
 
-        // JavaScript 인터페이스 브릿지 연결
-        webView.addJavascriptInterface(AndroidTTSBridge(), "AndroidTTS")
+        // JavaScript 인터페이스 브릿지 연결 (TTS 및 오프라인 에셋 직접 로더)
+        val bridge = AndroidTTSBridge()
+        webView.addJavascriptInterface(bridge, "AndroidTTS")
+        webView.addJavascriptInterface(bridge, "AndroidBridge")
 
-        webView.webChromeClient = WebChromeClient()
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage?): Boolean {
+                consoleMessage?.let {
+                    android.util.Log.d("WebViewMath", "[JS] ${it.sourceId()}:${it.lineNumber()} -> ${it.message()}")
+                }
+                return true
+            }
+        }
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
@@ -144,6 +157,18 @@ class K12MathViewerActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 } else {
                     Toast.makeText(this@K12MathViewerActivity, "발음: $text", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        @JavascriptInterface
+        fun getAssetJson(path: String?): String {
+            if (path.isNullOrBlank()) return ""
+            return try {
+                val cleanPath = path.trim().removePrefix("/").removePrefix("k12-math/")
+                assets.open("k12-math/$cleanPath").bufferedReader().use { it.readText() }
+            } catch (e: Exception) {
+                android.util.Log.e("K12MathViewer", "Failed to read asset: $path", e)
+                ""
             }
         }
     }
