@@ -1,0 +1,23 @@
+{
+  "id": "lisp/04-unit-test-framework",
+  "lang": "lisp",
+  "order": 4,
+  "title": "매크로 기반 단위 테스트 프레임워크",
+  "summary": "defmacro, gensym, 역따옴표 문법을 활용하여 위생적 코드 생성과 실패 리포팅을 제공하는 경량 단위 테스트 프레임워크",
+  "difficulty": 2,
+  "concepts": [
+    "defmacro",
+    "Backquote/Comma",
+    "위생성 (gensym)",
+    "다중 평가 방지",
+    "동적 변수 (defvar)"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 매크로 기반 단위 테스트 프레임워크 (Macro-driven Unit Test Framework)\n\n## 📌 프로젝트 개요\nCommon Lisp의 가장 강력한 기능인 **매크로(`defmacro`)**를 활용하여, 보일러플레이트 없는 테스트 정의(`deftest`)와 단언식(`assert-equal`)을 제공하는 테스트 러너를 작성합니다.\n\n## 🎯 학습 목표\n1. `defmacro`를 통한 컴파일 타임 코드 확장\n2. `gensym`을 사용한 변수 충돌 방지 및 다중 평가 방지\n3. 테스트 통과/실패 집계 및 컬러/서식화된 리포트 출력\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Unit Test Framework\n(defpackage :pro-study-testfw\n  (:use :cl)\n  (:export :deftest :assert-equal :run-all-tests))\n(in-package :pro-study-testfw)\n\n;; TODO(step-1): assert-equal 매크로 작성 (gensym 활용)\n(defmacro assert-equal (expected actual)\n  `(format t \"TODO assert-equal\"))\n\n;; TODO(step-2): deftest 매크로 작성\n(defmacro deftest (name &body body)\n  `(format t \"TODO deftest\"))\n\n(defun run-all-tests ()\n  (format t \"TODO run-all-tests\"))\n\n(run-all-tests)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Unit Test Framework\n(defpackage :pro-study-testfw\n  (:use :cl)\n  (:export :deftest :assert-equal :run-all-tests :*passed* :*failed*))\n(in-package :pro-study-testfw)\n\n(defvar *tests* '())\n(defvar *passed* 0)\n(defvar *failed* 0)\n\n(defmacro assert-equal (expected actual)\n  (let ((g-exp (gensym \"EXP-\"))\n        (g-act (gensym \"ACT-\")))\n    `(let ((,g-exp ,expected)\n           (,g-act ,actual))\n       (if (equal ,g-exp ,g-act)\n           (incf *passed*)\n           (progn\n             (incf *failed*)\n             (format t \"FAIL: expected ~S, got ~S~%\" ,g-exp ,g-act))))))\n\n(defmacro deftest (name &body body)\n  `(progn\n     (defun ,name ()\n       ,@body)\n     (pushnew ',name *tests*)))\n\n(defun run-all-tests ()\n  (setf *passed* 0)\n  (setf *failed* 0)\n  (dolist (test (reverse *tests*))\n    (funcall test))\n  (format t \"Passed: ~D, Failed: ~D~%\" *passed* *failed*))\n\n;; Sample tests\n(deftest test-math-add\n  (assert-equal 4 (+ 2 2))\n  (assert-equal 10 (* 2 5)))\n\n(deftest test-math-sub\n  (assert-equal 3 (- 5 2)))\n\n(run-all-tests)\n"
+  }
+}

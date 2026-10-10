@@ -1,0 +1,33 @@
+{
+  "id": "lisp/09-meta-circular-evaluator",
+  "title": "렉시컬 스코프 메타서큘러 인터프리터",
+  "summary": "환경 체인, 변수 바인딩 프레임, 일급 함수(클로저), 특수 형식을 갖춘 완전한 미니 Lisp 인터프리터 메타순환 평가기",
+  "lang": "lisp",
+  "order": 9,
+  "difficulty": 4,
+  "concepts": [
+    "메타순환 평가기 (eval/apply)",
+    "렉시컬 환경 체인",
+    "특수 형식 (define, lambda, if, begin)",
+    "일급 클로저"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

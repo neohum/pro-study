@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         val btnTabPython: Button = findViewById(R.id.btn_tab_python)
         val btnTabTypeScript: Button = findViewById(R.id.btn_tab_typescript)
         val btnTabJavaScript: Button = findViewById(R.id.btn_tab_javascript)
+        val btnTabLisp: Button = findViewById(R.id.btn_tab_lisp)
+        val btnTabNasm: Button = findViewById(R.id.btn_tab_nasm)
 
         tabButtons = listOf(
             null to btnTabAll,
@@ -84,7 +86,9 @@ class MainActivity : AppCompatActivity() {
             "rust" to btnTabRust,
             "python" to btnTabPython,
             "typescript" to btnTabTypeScript,
-            "javascript" to btnTabJavaScript
+            "javascript" to btnTabJavaScript,
+            "lisp" to btnTabLisp,
+            "nasm" to btnTabNasm
         )
 
         rvProjects = findViewById(R.id.rv_projects)

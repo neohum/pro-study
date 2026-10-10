@@ -1,0 +1,33 @@
+{
+  "id": "lisp/07-rpg-engine",
+  "title": "CLOS 다중 디스패치 RPG 전투 시뮬레이터",
+  "summary": "CLOS 클래스 상속과 다중 디스패치(Multiple Dispatch), :before/:after/:around 메서드 조합으로 구축한 턴제 RPG 전투 엔진",
+  "lang": "lisp",
+  "order": 7,
+  "difficulty": 3,
+  "concepts": [
+    "CLOS (defclass, defgeneric, defmethod)",
+    "다중 디스패치",
+    "메서드 조합 (:before, :after, :around)",
+    "call-next-method"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

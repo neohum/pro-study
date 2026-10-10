@@ -1,0 +1,36 @@
+{
+  "id": "nasm/01-cli-calc",
+  "title": "64비트 정수 CLI 식 계산기",
+  "summary": "x86-64 범용 레지스터, 부호 있는 산술/논리 플래그, ASCII 정수 변환 루틴을 직접 구현한 64비트 정수 계산기",
+  "lang": "nasm",
+  "order": 1,
+  "difficulty": 1,
+  "concepts": [
+    "x86-64 범용 레지스터",
+    "산술 연산 (add, sub, imul, idiv)",
+    "플래그 레지스터 (OF, ZF, SF)",
+    "System V AMD64 ABI",
+    "ASCII 변환"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

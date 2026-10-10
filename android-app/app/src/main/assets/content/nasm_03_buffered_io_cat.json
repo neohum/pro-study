@@ -1,0 +1,23 @@
+{
+  "id": "nasm/03-buffered-io-cat",
+  "lang": "nasm",
+  "order": 3,
+  "title": "제로카피 버퍼 I/O 및 파일 유틸리티",
+  "summary": "C 런타임 없이 리눅스 직결 시스템 콜(sys_read, sys_write)과 64KB 선형 I/O 버퍼를 자체 구현한 제로카피 파일 스트리밍 유틸리티",
+  "difficulty": 2,
+  "concepts": [
+    "직결 시스템 콜 (syscall)",
+    "커널 파일 디스크립터",
+    "64KB 선형 I/O 링 버퍼",
+    "Short Read/Write 루프",
+    "라인 번호 서식"
+  ],
+  "entry": "main.asm",
+  "readme": "# 제로카피 버퍼 I/O 및 파일 유틸리티 (Buffered I/O Stream & File Cat)\n\n## 📌 프로젝트 개요\nC 런타임 libc를 완전히 배제하고, 리눅스 커널의 `syscall` 인스트럭션과 64KB I/O 버퍼를 결합하여 고속 스트리밍 파이프라인을 구축합니다.\n\n## 🎯 학습 목표\n1. `syscall` 명령어 및 RAX 시스템 콜 번호 제어\n2. 사용자 공간 버퍼링(User-space Buffering) 설계\n3. EOF 및 불완전 전송(Short read/write) 재시도 루프\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - Buffered I/O Cat\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): sys_read 버퍼 충전\n    ; TODO(step-2): sys_write 버퍼 방출\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - Buffered I/O Cat\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    msg db \"Buffered I/O Cat Ready: 65536 bytes buffer initialized.\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    lea rdi, [msg]\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

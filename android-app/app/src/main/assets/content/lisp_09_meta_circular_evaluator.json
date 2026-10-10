@@ -1,0 +1,22 @@
+{
+  "id": "lisp/09-meta-circular-evaluator",
+  "lang": "lisp",
+  "order": 9,
+  "title": "렉시컬 스코프 메타서큘러 인터프리터",
+  "summary": "환경 체인, 변수 바인딩 프레임, 일급 함수(클로저), 특수 형식을 갖춘 완전한 미니 Lisp 인터프리터 메타순환 평가기",
+  "difficulty": 4,
+  "concepts": [
+    "메타순환 평가기 (eval/apply)",
+    "렉시컬 환경 체인",
+    "특수 형식 (define, lambda, if, begin)",
+    "일급 클로저"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 렉시컬 스코프 메타서큘러 인터프리터 (Meta-Circular Evaluator)\n\n## 📌 프로젝트 개요\nSICP의 핵심 원리를 따라, Lisp 안에서 Lisp 인터프리터를 구동하는 **메타순환 평가기(Meta-Circular Evaluator)**를 구축합니다.\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Meta-Circular Evaluator\n(defpackage :pro-study-eval\n  (:use :cl))\n(in-package :pro-study-eval)\n\n;; TODO(step-1): 렉시컬 환경 체인 구조체 및 탐색/바인딩 함수\n;; TODO(step-2): my-eval 코어 디스패처 작성\n;; TODO(step-3): 일급 클로저 및 함수 호출 처리\n\n(defun run-eval ()\n  (format t \"TODO: implement evaluator\"))\n\n(run-eval)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Meta-Circular Evaluator\n(defpackage :pro-study-eval\n  (:use :cl)\n  (:export :my-eval :make-env))\n(in-package :pro-study-eval)\n\n(defstruct closure params body env)\n\n(defun make-env (&optional parent)\n  (cons (make-hash-table :test 'eq) parent))\n\n(defun env-lookup (var env)\n  (if (null env)\n      (error \"Unbound variable: ~A\" var)\n      (multiple-value-bind (val found) (gethash var (car env))\n        (if found val (env-lookup var (cdr env))))))\n\n(defun env-define (var val env)\n  (setf (gethash var (car env)) val))\n\n(defun my-eval (exp env)\n  (cond\n    ((numberp exp) exp)\n    ((stringp exp) exp)\n    ((symbolp exp) (env-lookup exp env))\n    ((consp exp)\n     (let ((op (car exp)))\n       (case op\n         (quote (second exp))\n         (define (env-define (second exp) (my-eval (third exp) env) env))\n         (if (if (my-eval (second exp) env)\n                 (my-eval (third exp) env)\n                 (my-eval (fourth exp) env)))\n         (lambda (make-closure :params (second exp) :body (cddr exp) :env env))\n         (begin (let ((res nil))\n                  (dolist (e (cdr exp) res)\n                    (setf res (my-eval e env)))))\n         (otherwise\n          (let ((fn (my-eval op env))\n                (args (mapcar (lambda (e) (my-eval e env)) (cdr exp))))\n            (if (closure-p fn)\n                (let ((new-env (make-env (closure-env fn))))\n                  (loop for p in (closure-params fn)\n                        for a in args do\n                    (env-define p a new-env))\n                  (let ((res nil))\n                    (dolist (e (closure-body fn) res)\n                      (setf res (my-eval e new-env)))))\n                (apply fn args)))))))\n    (t (error \"Unknown expression: ~S\" exp))))\n\n(defun setup-global-env ()\n  (let ((env (make-env)))\n    (env-define '+ #'+ env)\n    (env-define '- #'- env)\n    (env-define '* #'* env)\n    (env-define '= #'= env)\n    env))\n\n(defun run-eval ()\n  (let ((env (setup-global-env))\n        (script '((define make-adder (lambda (x) (lambda (y) (+ x y))))\n                  (define add5 (make-adder 5))\n                  (add5 10))))\n    (dolist (expr script)\n      (let ((res (my-eval expr env)))\n        (when (eq expr (car (last script)))\n          (format t \"~A~%\" res))))))\n\n(run-eval)\n"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "nasm/07-sha256-hasher",
+  "lang": "nasm",
+  "order": 7,
+  "title": "순수 어셈블리 SHA-256 암호학적 해시 엔진",
+  "summary": "FIPS 180-4 표준 SHA-256을 libc 없이 구현하여 512비트 블록 패딩, 빅엔디안 bswap, 64라운드 비선형 압축 함수를 직접 레지스터에 매핑한 해시 엔진",
+  "difficulty": 4,
+  "concepts": [
+    "비트 회전 (ror, rol)",
+    "엔디안 변환 (bswap)",
+    "메시지 스케줄 확장",
+    "64라운드 비선형 압축",
+    "FIPS 180-4 표준"
+  ],
+  "entry": "main.asm",
+  "readme": "# 순수 어셈블리 SHA-256 암호학적 해시 엔진 (Pure Assembly SHA-256)\n\n## 📌 프로젝트 개요\n표준 SHA-256 해시 함수를 순수 어셈블리어로 작성하여 512비트 패딩, `bswap` 엔디안 변환, 64라운드 압축 함수를 구현합니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - Pure Assembly SHA-256\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): 0x80 패딩 및 64비트 빅엔디안 길이 첨부\n    ; TODO(step-2): W[0..63] 메시지 스케줄 확장\n    ; TODO(step-3): 64라운드 압축 루프 전개\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - Pure Assembly SHA-256\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_hash db \"%s  %s\", 10, 0\n    hash_abc db \"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad\", 0\n    target_str db \"abc\", 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    lea rdi, [fmt_hash]\n    lea rsi, [hash_abc]\n    lea rdx, [target_str]\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

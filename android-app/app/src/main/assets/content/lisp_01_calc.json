@@ -1,0 +1,23 @@
+{
+  "id": "lisp/01-calc",
+  "lang": "lisp",
+  "order": 1,
+  "title": "S-표현식 전위 계산기",
+  "summary": "S-표현식(S-expression) 전위 수식을 재귀적 트리 순회로 평가하여 임의 정밀도 정수 및 유리수 결과를 출력하는 계산기",
+  "difficulty": 1,
+  "concepts": [
+    "S-표현식",
+    "Homoiconicity",
+    "Cons Cell",
+    "트리 순회 재귀",
+    "유리수 수치계"
+  ],
+  "entry": "main.lisp",
+  "readme": "# S-표현식 전위 계산기 (S-Expression Prefix Calculator)\n\n## 📌 프로젝트 개요\nCommon Lisp의 가장 근본적인 특징인 **코드-데이터 동형성(Homoiconicity)**과 **S-표현식(S-expression)** 파싱을 학습하는 프로젝트입니다.\nLisp의 빌트인 리더(`read-from-string`)를 사용하여 입력된 수식 문자열을 파싱 트리(Cons 셀 리스트)로 변환한 후, 재귀적 트리 순회를 통해 수식을 평가합니다.\n\n## 🎯 학습 목표\n1. Cons 셀과 리스트의 기본 구조 (`car`, `cdr`, `cons`, `listp`, `atom`)의 이해\n2. 원자(Atom)와 리스트(List)를 판별하는 기저 조건(Base case) 설계\n3. 사칙연산자(`+`, `-`, `*`, `/`)와 임의 정밀도 정수(Bignum), 유리수(Ratio: 예 `7/2`) 처리\n4. 0으로 나누기 및 문법 오류 시 안전한 예외 메시지 출력\n\n## 💻 입출력 명세\n- 실행: `sbcl --script main.lisp \"<수식>\"` 또는 표준 입력\n- 입력 예시: `(+ 1 (* 2 3))`\n- 출력 예시: `7`\n- 유리수 예시: `(/ 7 2)` -> `7/2`\n- 0 나누기 오류: `(/ 5 0)` -> `error: division by zero`\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - S-Expression Prefix Calculator\n(defpackage :pro-study-calc\n  (:use :cl)\n  (:export :eval-expr :run-calc))\n(in-package :pro-study-calc)\n\n(defun eval-expr (expr)\n  ;; TODO(step-1): expr이 숫자인 경우 그대로 반환 (numberp)\n  ;; TODO(step-2): expr이 리스트(consp)인 경우 (car expr)을 연산자로,\n  ;;               (cdr expr)의 각 원소를 재귀 평가 (mapcar #'eval-expr)\n  ;; TODO(step-3): 연산자 (+, -, *, /, %)에 맞게 reduce 연산 수행\n  ;; TODO(step-4): 0으로 나누기 발생 시 (error \"division by zero\") 발생\n  (error \"eval-expr not implemented yet\"))\n\n(defun run-calc (&optional input-string)\n  (let ((raw (or input-string (read-line *standard-input* nil nil))))\n    (when raw\n      (let* ((parsed (read-from-string raw))\n             (result (eval-expr parsed)))\n        (format t \"~A~%\" result)))))\n\n(run-calc)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - S-Expression Prefix Calculator\n(defpackage :pro-study-calc\n  (:use :cl)\n  (:export :eval-expr :run-calc))\n(in-package :pro-study-calc)\n\n(defun eval-expr (expr)\n  (cond\n    ((numberp expr) expr)\n    ((symbolp expr) (error \"Undefined variable: ~A\" expr))\n    ((consp expr)\n     (let ((op (car expr))\n           (args (mapcar #'eval-expr (cdr expr))))\n       (case op\n         (+ (reduce #'+ args :initial-value 0))\n         (- (cond\n              ((null args) 0)\n              ((null (cdr args)) (- (car args)))\n              (t (reduce #'- args))))\n         (* (reduce #'* args :initial-value 1))\n         (/ (cond\n              ((null args) (error \"Empty division\"))\n              ((null (cdr args))\n               (if (zerop (car args))\n                   (error \"division by zero\")\n                   (/ 1 (car args))))\n              (t\n               (when (some #'zerop (cdr args))\n                 (error \"division by zero\"))\n               (reduce #'/ args))))\n         (% (if (= (length args) 2)\n                (if (zerop (second args))\n                    (error \"division by zero\")\n                    (mod (first args) (second args)))\n                (error \"Modulo requires 2 arguments\")))\n         (otherwise (error \"Unknown operator: ~A\" op)))))\n    (t (error \"Invalid expression\"))))\n\n(defun run-calc (&optional input-string)\n  (let ((raw (or input-string\n                 (let ((args (cdr sb-ext:*posix-argv*)))\n                   (if args\n                       (first args)\n                       (read-line *standard-input* nil nil))))))\n    (when (and raw (> (length raw) 0))\n      (handler-case\n          (let* ((parsed (read-from-string raw))\n                 (result (eval-expr parsed)))\n            (format t \"~A~%\" result))\n        (error (e)\n          (let ((msg (format nil \"~A\" e)))\n            (if (search \"division by zero\" msg)\n                (format t \"error: division by zero~%\")\n                (format t \"error: ~A~%\" msg))))))))\n\n(run-calc)\n"
+  }
+}

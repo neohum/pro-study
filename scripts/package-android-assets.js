@@ -39,7 +39,7 @@ function run() {
   fs.mkdirSync(ASSETS_DIR, { recursive: true });
 
   const manifest = { projects: [] };
-  const langs = ['c', 'go', 'rust', 'python', 'typescript', 'javascript'];
+  const langs = ['c', 'go', 'rust', 'python', 'typescript', 'javascript', 'lisp', 'nasm'];
   let totalCount = 0;
 
   for (const lang of langs) {

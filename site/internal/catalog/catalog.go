@@ -23,6 +23,8 @@ var langs = []struct{ Key, Name string }{
 	{"python", "Python"},
 	{"typescript", "TypeScript"},
 	{"javascript", "JavaScript"},
+	{"lisp", "Common Lisp"},
+	{"nasm", "NASM (x86-64)"},
 }
 
 var testKinds = map[string]bool{

@@ -1,0 +1,35 @@
+{
+  "id": "nasm/05-arena-allocator",
+  "title": "mmap 기반 메모리 풀 & 아레나 할당기",
+  "summary": "sys_mmap 가상 메모리 페이징과 16바이트 정렬 마스크를 사용하여 나노초 단위 속도로 청크를 배분하고 O(1)에 리셋하는 범프 할당기",
+  "lang": "nasm",
+  "order": 5,
+  "difficulty": 3,
+  "concepts": [
+    "가상 메모리 페이징 (sys_mmap)",
+    "16바이트 메모리 정렬 마스크",
+    "범프 포인터 (Bump Allocation)",
+    "O(1) 수명주기 리셋"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

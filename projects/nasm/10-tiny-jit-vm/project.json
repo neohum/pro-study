@@ -1,0 +1,35 @@
+{
+  "id": "nasm/10-tiny-jit-vm",
+  "title": "x86-64 JIT 동적 머신코드 컴파일러 및 바이트코드 VM",
+  "summary": "스택 바이트코드를 읽어 런타임에 x86-64 기계어 바이트열(Opcode)을 동적 방출하고 mprotect로 실행 권한을 부여하여 네이티브로 실행하는 미니 JIT 컴파일러",
+  "lang": "nasm",
+  "order": 10,
+  "difficulty": 5,
+  "concepts": [
+    "동적 기계어 방출 (Opcode Emitter)",
+    "W^X 보안 정책 (mprotect PROT_EXEC)",
+    "상대 오프셋 점프 백패칭",
+    "JIT 네이티브 함수 포인터 호출"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

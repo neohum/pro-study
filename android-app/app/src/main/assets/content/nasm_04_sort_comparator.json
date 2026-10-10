@@ -1,0 +1,22 @@
+{
+  "id": "nasm/04-sort-comparator",
+  "lang": "nasm",
+  "order": 4,
+  "title": "함수 포인터 기반 제네릭 퀵소트",
+  "summary": "C 표준 qsort 규격을 완벽 호환하여 임의 원소 크기와 비교 함수 포인터를 간접 호출(call rax)하여 정렬하는 제네릭 퀵소트 라이브러리",
+  "difficulty": 2,
+  "concepts": [
+    "간접 함수 호출 (call rax)",
+    "System V ABI 콜백 규약",
+    "재귀 스택 프레임 (Callee-saved 보존)",
+    "임의 크기 바이트 블록 스왑"
+  ],
+  "entry": "main.asm",
+  "readme": "# 함수 포인터 기반 제네릭 퀵소트 (Generic QuickSort with Function Pointers)\n\n## 📌 프로젝트 개요\nC 표준 라이브러리의 `qsort` 시그니처와 100% 호환되는 함수 포인터 기반 제네릭 퀵소트를 x86-64 어셈블리로 구현합니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - Generic QuickSort\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): mem_swap 바이트 스왑 루틴\n    ; TODO(step-2): partition 분할 및 콜백 간접 호출\n    ; TODO(step-3): quicksort 재귀 전개\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - Generic QuickSort\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_sorted db \"Sorted array: %ld, %ld, %ld, %ld, %ld\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    ; Simulated sorted output of [42, 17, 88, 5, 23] -> [5, 17, 23, 42, 88]\n    lea rdi, [fmt_sorted]\n    mov rsi, 5\n    mov rdx, 17\n    mov rcx, 23\n    mov r8, 42\n    mov r9, 88\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

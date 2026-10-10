@@ -1,0 +1,34 @@
+{
+  "id": "lisp/10-bytecode-vm",
+  "title": "스택 기반 바이트코드 가상머신 및 컴파일러",
+  "summary": "S-표현식 언어 코드를 선형 바이트코드 명령어 세트(Opcode)로 1-패스 컴파일하고 고속 스택 머신 루프로 실행하는 가상머신 시스템",
+  "lang": "lisp",
+  "order": 10,
+  "difficulty": 5,
+  "concepts": [
+    "가상머신 ISA",
+    "바이트코드 컴파일러",
+    "디스어셈블러",
+    "오퍼랜드 스택",
+    "PC(프로그램 카운터) 루프"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

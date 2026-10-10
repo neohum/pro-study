@@ -1,0 +1,35 @@
+{
+  "id": "nasm/02-string-toolkit",
+  "title": "저수준 문자열 조작 및 포맷터 툴킷",
+  "summary": "x86-64 스트링 프리미티브(scasb, cmpsb, movsb)와 레지스터 비트 조작만으로 문자열 길이, 대소문자 변환, 역순, 16진수 덤프를 수행하는 툴킷",
+  "lang": "nasm",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "스트링 프리미티브 (cld, repne scasb, movsb)",
+    "포인터 간접 주소 지정",
+    "대소문자 ASCII 비트 마스킹",
+    "16진 덤프 (Hexdump)"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

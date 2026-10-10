@@ -1,0 +1,34 @@
+{
+  "id": "lisp/04-unit-test-framework",
+  "title": "매크로 기반 단위 테스트 프레임워크",
+  "summary": "defmacro, gensym, 역따옴표 문법을 활용하여 위생적 코드 생성과 실패 리포팅을 제공하는 경량 단위 테스트 프레임워크",
+  "lang": "lisp",
+  "order": 4,
+  "difficulty": 2,
+  "concepts": [
+    "defmacro",
+    "Backquote/Comma",
+    "위생성 (gensym)",
+    "다중 평가 방지",
+    "동적 변수 (defvar)"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

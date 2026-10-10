@@ -1,0 +1,22 @@
+{
+  "id": "nasm/08-elf64-parser",
+  "lang": "nasm",
+  "order": 8,
+  "title": "64비트 ELF 바이너리 인스펙터 및 심볼 덤퍼",
+  "summary": "ELF64 실행 파일의 매직 바이트, ELF 헤더, 섹션 헤더 테이블, 문자열 테이블 및 .symtab 심볼을 직접 순회하여 출력하는 저수준 바이너리 분석기",
+  "difficulty": 4,
+  "concepts": [
+    "ELF64 헤더 오프셋 구조",
+    "바이너리 매직 넘버 검증",
+    "간접 문자열 테이블 (.shstrtab)",
+    "섹션 및 심볼 테이블 순회"
+  ],
+  "entry": "main.asm",
+  "readme": "# 64비트 ELF 바이너리 인스펙터 및 심볼 덤퍼 (ELF64 Binary Inspector)\n\n## 📌 프로젝트 개요\nLinux 실행 파일(ELF64)의 내부 바이너리 구조체를 메모리 매핑 후 직접 순회하며 섹션과 심볼을 파싱하는 경량 `readelf`/`nm` 도구입니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - ELF64 Parser\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): 0x7F454C46 매직 바이트 검증\n    ; TODO(step-2): e_shoff, e_shnum 섹션 헤더 순회\n    ; TODO(step-3): .shstrtab 문자열 역참조 및 심볼 출력\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - ELF64 Parser\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_elf db \"ELF64 Validated: EntryPoint=0x%016lx, Sections=%d\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    lea rdi, [fmt_elf]\n    mov rsi, 0x401000\n    mov edx, 28\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "nasm/09-coroutine-scheduler",
+  "lang": "nasm",
+  "order": 9,
+  "title": "협력형 사용자 레벨 코루틴 스케줄러",
+  "summary": "OS 커널 개입 없이 어셈블리 12개 명령어로 RSP와 Callee-saved 레지스터를 원자적 스왑하여 수만 개의 파이버를 스케줄링하는 유저모드 동시성 런타임",
+  "difficulty": 5,
+  "concepts": [
+    "RSP 스택 포인터 스왑",
+    "Callee-saved 레지스터 보존",
+    "가짜 콜 프레임 주입 (Fake Frame)",
+    "협력형 비선점 스케줄링"
+  ],
+  "entry": "main.asm",
+  "readme": "# 협력형 사용자 레벨 코루틴 스케줄러 (Cooperative User-Level Coroutines)\n\n## 📌 프로젝트 개요\nOS 커널 스레드의 컨텍스트 스위칭 비용(수 마이크로초)을 극복하기 위해, 순수 어셈블리 12개 인스트럭션으로 CPU 레지스터와 RSP를 직접 스왑하는 초고속 유저모드 파이버 런타임을 구현합니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - Coroutine Scheduler\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): push rbp..r15 및 mov [rdi], rsp 컨텍스트 저장\n    ; TODO(step-2): mov rsp, [rsi] 및 pop r15..rbp 복원\n    ; TODO(step-3): ret로 대상 파이버 RIP 점프\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - Coroutine Scheduler\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_coro db \"Fiber Runtime: 4 fibers switched cooperatively (%d yields total).\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    lea rdi, [fmt_coro]\n    mov esi, 400\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

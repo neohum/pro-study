@@ -1,0 +1,23 @@
+{
+  "id": "nasm/01-cli-calc",
+  "lang": "nasm",
+  "order": 1,
+  "title": "64비트 정수 CLI 식 계산기",
+  "summary": "x86-64 범용 레지스터, 부호 있는 산술/논리 플래그, ASCII 정수 변환 루틴을 직접 구현한 64비트 정수 계산기",
+  "difficulty": 1,
+  "concepts": [
+    "x86-64 범용 레지스터",
+    "산술 연산 (add, sub, imul, idiv)",
+    "플래그 레지스터 (OF, ZF, SF)",
+    "System V AMD64 ABI",
+    "ASCII 변환"
+  ],
+  "entry": "main.asm",
+  "readme": "# 64비트 정수 CLI 식 계산기 (64-bit Integer CLI Calculator)\n\n## 📌 프로젝트 개요\nx86-64 아키텍처의 기본 레지스터(RAX, RBX, RCX, RDX, RSI, RDI, RSP, RBP, R8~R15)와 산술 연산 인스트럭션(`add`, `sub`, `imul`, `idiv`), 플래그 레지스터를 활용한 64비트 정수 계산기입니다.\n\n## 🎯 학습 목표\n1. x86-64 레지스터 맵과 System V ABI 함수 호출 규약\n2. ASCII 문자열에서 64비트 부호 있는 정수로의 파싱(`parse_i64`) 및 역변환(`format_i64`)\n3. `cqo`와 `idiv`를 통한 부호 있는 나눗셈 및 0 나누기 예외 검출\n4. `jo`(Jump if Overflow)를 이용한 오버플로 검사\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - 64-bit Integer Calculator\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): parse_i64 구현\n    ; TODO(step-2): add, sub, imul, idiv 연산 및 오버플로 감지\n    ; TODO(step-3): format_i64 포맷팅 출력\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - 64-bit Integer Calculator\ndefault rel\nglobal main\nextern printf, puts, exit\n\nsection .data\n    fmt_res db \"%ld\", 10, 0\n    fmt_err db \"error: division by zero\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 32\n\n    ; Example evaluation: (+ 12 34) -> 46\n    mov rax, 12\n    mov rbx, 34\n    add rax, rbx\n\n    ; Print result\n    lea rdi, [fmt_res]\n    mov rsi, rax\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

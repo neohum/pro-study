@@ -1,0 +1,47 @@
+;;;; solution/main.lisp - Text Analyzer
+(defpackage :pro-study-textkit
+  (:use :cl)
+  (:export :analyze-text))
+(in-package :pro-study-textkit)
+
+(defun tokenize-string (str)
+  (let ((words '())
+        (curr (make-string-output-stream)))
+    (loop for ch across str do
+      (if (alphanumericp ch)
+          (write-char (char-downcase ch) curr)
+          (let ((w (get-output-stream-string curr)))
+            (when (> (length w) 0)
+              (push w words)))))
+    (let ((final (get-output-stream-string curr)))
+      (when (> (length final) 0)
+        (push final words)))
+    (nreverse words)))
+
+(defun count-word-frequencies (words)
+  (let ((table (make-hash-table :test 'equal)))
+    (dolist (w words)
+      (incf (gethash w table 0)))
+    table))
+
+(defun run-textkit ()
+  (let ((lines '()))
+    (loop for line = (read-line *standard-input* nil nil)
+          while line do (push line lines))
+    (let* ((full-text (format nil "~{~A~^ ~}" (nreverse lines)))
+           (words (tokenize-string full-text))
+           (table (count-word-frequencies words))
+           (entries '()))
+      (maphash (lambda (k v) (push (cons k v) entries)) table)
+      (setf entries (sort entries (lambda (a b)
+                                    (if (= (cdr a) (cdr b))
+                                        (string< (car a) (car b))
+                                        (> (cdr a) (cdr b))))))
+      (format t "Total words: ~D~%" (length words))
+      (format t "Unique words: ~D~%" (hash-table-count table))
+      (format t "Top words:~%")
+      (loop for i from 1 to (min 3 (length entries))
+            for (word . count) in entries do
+        (format t "~D. ~A: ~D~%" i word count)))))
+
+(run-textkit)

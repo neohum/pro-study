@@ -1,0 +1,36 @@
+{
+  "id": "nasm/03-buffered-io-cat",
+  "title": "제로카피 버퍼 I/O 및 파일 유틸리티",
+  "summary": "C 런타임 없이 리눅스 직결 시스템 콜(sys_read, sys_write)과 64KB 선형 I/O 버퍼를 자체 구현한 제로카피 파일 스트리밍 유틸리티",
+  "lang": "nasm",
+  "order": 3,
+  "difficulty": 2,
+  "concepts": [
+    "직결 시스템 콜 (syscall)",
+    "커널 파일 디스크립터",
+    "64KB 선형 I/O 링 버퍼",
+    "Short Read/Write 루프",
+    "라인 번호 서식"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

@@ -1,0 +1,3 @@
+OK: Content 200
+TIMEOUT: Content Recovered (Retry)
+404: [CACHED-DATA-http://example.com/404]

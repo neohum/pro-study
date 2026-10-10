@@ -1,0 +1,77 @@
+================================================================================
+LISP & NASM CURRICULUM SUITE VERIFICATION LOG
+Date: 2026-10-10 12:44:26 KST (UTC+9)
+Target Suite: Common Lisp (10 Projects) & NASM x86-64 (10 Projects)
+================================================================================
+
+[TEST 1] npx tsx scripts/verify-lisp-nasm.ts --all
+--------------------------------------------------------------------------------
+=== Lisp & NASM Curriculum Suite Verification ===
+
+[✓ PASS] project.schema.json includes lisp and nasm
+[✓ PASS] site/internal/catalog/catalog.go includes lisp and nasm
+[✓ PASS] scripts/package-android-assets.js includes lisp and nasm
+[✓ PASS] Android layout and MainActivity bind lisp and nasm tabs
+[✓ PASS] Lisp Project: lisp/01-calc
+[✓ PASS] Lisp Project: lisp/02-textkit
+[✓ PASS] Lisp Project: lisp/03-symbolic-math
+[✓ PASS] Lisp Project: lisp/04-unit-test-framework
+[✓ PASS] Lisp Project: lisp/05-html-dsl
+[✓ PASS] Lisp Project: lisp/06-resilient-crawler
+[✓ PASS] Lisp Project: lisp/07-rpg-engine
+[✓ PASS] Lisp Project: lisp/08-query-engine
+[✓ PASS] Lisp Project: lisp/09-meta-circular-evaluator
+[✓ PASS] Lisp Project: lisp/10-bytecode-vm
+[✓ PASS] NASM Project: nasm/01-cli-calc
+[✓ PASS] NASM Project: nasm/02-string-toolkit
+[✓ PASS] NASM Project: nasm/03-buffered-io-cat
+[✓ PASS] NASM Project: nasm/04-sort-comparator
+[✓ PASS] NASM Project: nasm/05-arena-allocator
+[✓ PASS] NASM Project: nasm/06-simd-vector-ops
+[✓ PASS] NASM Project: nasm/07-sha256-hasher
+[✓ PASS] NASM Project: nasm/08-elf64-parser
+[✓ PASS] NASM Project: nasm/09-coroutine-scheduler
+[✓ PASS] NASM Project: nasm/10-tiny-jit-vm
+
+All executed checks PASSED successfully! (100%)
+Exit Code: 0
+
+
+[TEST 2] SBCL Runtime Solution Verification (All 10 Lisp Projects)
+--------------------------------------------------------------------------------
+Testing projects/lisp/01-calc/solution/main.lisp... OK
+Testing projects/lisp/02-textkit/solution/main.lisp... OK
+Testing projects/lisp/03-symbolic-math/solution/main.lisp... OK
+Testing projects/lisp/04-unit-test-framework/solution/main.lisp... OK (Passed: 3, Failed: 0)
+Testing projects/lisp/05-html-dsl/solution/main.lisp... OK
+Testing projects/lisp/06-resilient-crawler/solution/main.lisp... OK (Restarts handled)
+Testing projects/lisp/07-rpg-engine/solution/main.lisp... OK (Multi-dispatch executed)
+Testing projects/lisp/08-query-engine/solution/main.lisp... OK (Hash join executed)
+Testing projects/lisp/09-meta-circular-evaluator/solution/main.lisp... OK (Closure result: 15)
+Testing projects/lisp/10-bytecode-vm/solution/main.lisp... OK (VM result: 60)
+Exit Code: 0
+
+
+[TEST 3] NASM Assembler Verification (All 10 NASM Projects)
+--------------------------------------------------------------------------------
+Assembling projects/nasm/01-cli-calc/solution/main.asm... OK
+Assembling projects/nasm/02-string-toolkit/solution/main.asm... OK
+Assembling projects/nasm/03-buffered-io-cat/solution/main.asm... OK
+Assembling projects/nasm/04-sort-comparator/solution/main.asm... OK
+Assembling projects/nasm/05-arena-allocator/solution/main.asm... OK
+Assembling projects/nasm/06-simd-vector-ops/solution/main.asm... OK
+Assembling projects/nasm/07-sha256-hasher/solution/main.asm... OK
+Assembling projects/nasm/08-elf64-parser/solution/main.asm... OK
+Assembling projects/nasm/09-coroutine-scheduler/solution/main.asm... OK
+Assembling projects/nasm/10-tiny-jit-vm/solution/main.asm... OK
+Exit Code: 0
+
+
+[TEST 4] node scripts/package-android-assets.js
+--------------------------------------------------------------------------------
+총 80개 프로젝트 에셋 패키징 완료: /Users/nm/works/pro-study/android-app/app/src/main/assets/content/manifest.json
+Exit Code: 0
+
+================================================================================
+ALL GATES PASSED (100% SUCCESSFUL)
+================================================================================
