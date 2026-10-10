@@ -9,6 +9,7 @@ echo "=========================================================="
 echo " 1. 최신 학습 콘텐츠 Android assets 패키징"
 echo "=========================================================="
 node scripts/package-android-assets.js
+npx tsx scripts/package-android-math-ee-assets.ts
 
 echo ""
 echo "=========================================================="
