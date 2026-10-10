@@ -1,0 +1,249 @@
+{
+  "categoryId": "set-logic",
+  "categoryNameKo": "집합론 및 수리논리학 기호",
+  "categoryNameEn": "Set Theory and Mathematical Logic",
+  "order": 2,
+  "description": "수학의 기초 공리 체계를 형성하는 집합, 수 체계, 논리 명제 및 추론 기호",
+  "symbols": [
+    {
+      "id": "sym-in",
+      "symbol": "∈",
+      "typesetMath": "\\in",
+      "nameKo": "원소 기호 (속함)",
+      "nameEn": "Element of (Belongs to)",
+      "howToReadKo": "속한다, 원소이다",
+      "howToReadEn": "is an element of, belongs to, in",
+      "unicode": "U+2208",
+      "historyAndOrigin": "1889년 이탈리아 수학자 주세페 페아노(Giuseppe Peano)가 그리스어 '에스티(εστί, ~이다)'의 첫 글자 $\\epsilon$에서 차용하여 도입함.",
+      "rigorousDefinition": "체르멜로-프렝켈 집합론(ZFC)의 무정의 원초 술어(Primitive Predicate)로, 원소 $x$가 집합 $A$에 속함을 나타냄: $x \\in A$.",
+      "usageAndExamples": [
+        {
+          "context": "수 체계 소속",
+          "typesetMath": "x \\in \\mathbb{R}",
+          "description": "변수 x가 실수 집합의 원소임"
+        }
+      ],
+      "commonPitfalls": "원소 관계($\\in$)와 부분집합 관계($\\subset$)를 구별해야 함. $\\{a\\} \\in A$가 아니라 $a \\in A$ 또는 $\\{a\\} \\subset A$임."
+    },
+    {
+      "id": "sym-notin",
+      "symbol": "∉",
+      "typesetMath": "\\notin",
+      "nameKo": "원소가 아님 (속하지 않음)",
+      "nameEn": "Not an element of",
+      "howToReadKo": "속하지 않는다, 원소가 아니다",
+      "howToReadEn": "is not an element of",
+      "unicode": "U+2209",
+      "historyAndOrigin": "주세페 페아노가 원소 기호에 사선을 그어 소속의 부정을 나타냄.",
+      "rigorousDefinition": "$x \\notin A \\iff \\neg(x \\in A)$.",
+      "usageAndExamples": [
+        {
+          "context": "정의역 배제",
+          "typesetMath": "0 \\notin \\{1, 2, 3\\}",
+          "description": "0은 집합 {1, 2, 3}의 원소가 아님"
+        }
+      ],
+      "commonPitfalls": "공집합 $\\emptyset$에 대해 모든 원소 $x$는 $x \\notin \\emptyset$을 만족함."
+    },
+    {
+      "id": "sym-subset",
+      "symbol": "⊆",
+      "typesetMath": "\\subseteq",
+      "nameKo": "부분집합 (포함 관계)",
+      "nameEn": "Subset of",
+      "howToReadKo": "부분집합이다, 포함된다",
+      "howToReadEn": "is a subset of, is included in",
+      "unicode": "U+2286",
+      "historyAndOrigin": "1890년대 에른스트 슈뢰더(Ernst Schröder)와 주세페 페아노가 부등호($\\le$)의 기하학적 형태를 둥글려 집합 포함 기호로 정립함.",
+      "rigorousDefinition": "$A \\subseteq B \\iff \\forall x (x \\in A \\implies x \\in B)$.",
+      "usageAndExamples": [
+        {
+          "context": "수 체계 포함 관계",
+          "typesetMath": "\\mathbb{N} \\subseteq \\mathbb{Z} \\subseteq \\mathbb{Q} \\subseteq \\mathbb{R} \\subseteq \\mathbb{C}",
+          "description": "자연수, 정수, 유리수, 실수, 복소수 집합의 계층적 부분집합 관계"
+        }
+      ],
+      "commonPitfalls": "진부분집합($\\subsetneq$ 또는 $\\subset$)과 자기 자신을 포함할 수 있는 일반 부분집합($\\subseteq$)의 ISO 표기 기준을 확인해야 함."
+    },
+    {
+      "id": "sym-cup",
+      "symbol": "∪",
+      "typesetMath": "\\cup",
+      "nameKo": "합집합",
+      "nameEn": "Union",
+      "howToReadKo": "합집합, 컵",
+      "howToReadEn": "union, cup",
+      "unicode": "U+222A",
+      "historyAndOrigin": "1888년 주세페 페아노가 라틴어 'Unitas(일치/결합)'의 머리글자 U 형태를 기반으로 창안함.",
+      "rigorousDefinition": "$A \\cup B = \\{x \\mid x \\in A \\lor x \\in B\\}$.",
+      "usageAndExamples": [
+        {
+          "context": "구간 결합",
+          "typesetMath": "(-\\infty, 0) \\cup (0, \\infty) = \\mathbb{R} \\setminus \\{0\\}",
+          "description": "0을 제외한 모든 실수의 집합"
+        }
+      ],
+      "commonPitfalls": "논리합($\\lor$)은 명제 간의 연산자이고, 합집합($\\cup$)은 집합 간의 연산자임."
+    },
+    {
+      "id": "sym-cap",
+      "symbol": "∩",
+      "typesetMath": "\\cap",
+      "nameKo": "교집합",
+      "nameEn": "Intersection",
+      "howToReadKo": "교집합, 캡",
+      "howToReadEn": "intersection, cap",
+      "unicode": "U+2229",
+      "historyAndOrigin": "페아노가 합집합 기호($\\cup$)를 뒤집어 교집합 기호로 도입함.",
+      "rigorousDefinition": "$A \\cap B = \\{x \\mid x \\in A \\land x \\in B\\}$.",
+      "usageAndExamples": [
+        {
+          "context": "서로소 집합",
+          "typesetMath": "A \\cap B = \\emptyset",
+          "description": "공통 원소가 전혀 없는 두 집합(Disjoint)"
+        }
+      ],
+      "commonPitfalls": "확률론에서 사건 $A, B$의 동시 발생 확률은 $P(A \\cap B)$로 표기함."
+    },
+    {
+      "id": "sym-emptyset",
+      "symbol": "∅",
+      "typesetMath": "\\emptyset",
+      "nameKo": "공집합",
+      "nameEn": "Empty set (Null set)",
+      "howToReadKo": "공집합, 파이(외형)",
+      "howToReadEn": "the empty set, null set",
+      "unicode": "U+2205",
+      "historyAndOrigin": "1939년 니콜라 부르바키(Nicolas Bourbaki) 그룹의 앙드레 베유(André Weil)가 노르웨이어 알파벳 Ø에서 착안하여 도입함.",
+      "rigorousDefinition": "원소를 전혀 갖지 않는 유일한 집합: $\\forall x (x \\notin \\emptyset)$. 기수 $|\\emptyset| = 0$.",
+      "usageAndExamples": [
+        {
+          "context": "해집합 부재",
+          "typesetMath": "\\{x \\in \\mathbb{R} \\mid x^2 + 1 = 0\\} = \\emptyset",
+          "description": "실수 범위에서 방정식의 해가 존재하지 않음"
+        }
+      ],
+      "commonPitfalls": "그리스 소문자 파이($\\phi$)나 숫자 0과 다르며, $\\{\\emptyset\\}$은 공집합을 원소로 갖는 크기 1의 집합이므로 $\\emptyset \\ne \\{\\emptyset\\}$임."
+    },
+    {
+      "id": "sym-number-sets",
+      "symbol": "ℕ, ℤ, ℚ, ℝ, ℂ",
+      "typesetMath": "\\mathbb{N}, \\mathbb{Z}, \\mathbb{Q}, \\mathbb{R}, \\mathbb{C}",
+      "nameKo": "수 체계 칠판 볼드체 기호",
+      "nameEn": "Blackboard Bold Number Sets",
+      "howToReadKo": "자연수, 정수, 유리수, 실수, 복소수 집합",
+      "howToReadEn": "the set of natural numbers, integers, rational numbers, real numbers, complex numbers",
+      "unicode": "U+2115, U+2124, U+211A, U+211D, U+2102",
+      "historyAndOrigin": "칠판에 굵은 볼드체(Bold)를 이중선으로 판서하던 관행에서 유래하여 20세기 중반 부르바키 학파의 교재를 통해 표준 수학 조판 활자로 정착됨. (Z: 독일어 Zahlen, Q: 이탈리아어 Quoziente).",
+      "rigorousDefinition": "자연수 $\\mathbb{N}$ (페아노 공리계) $\\subset$ 정수환 $\\mathbb{Z}$ $\\subset$ 유리수체 $\\mathbb{Q}$ (분수체) $\\subset$ 실수체 $\\mathbb{R}$ (완비 데데킨트 절단) $\\subset$ 복소수체 $\\mathbb{C}$ (대수적 폐포).",
+      "usageAndExamples": [
+        {
+          "context": "오일러 항등식",
+          "typesetMath": "e^{i\\pi} + 1 = 0 \\quad (i \\in \\mathbb{C})",
+          "description": "복소수 체계에서 5대 상수가 통합됨"
+        }
+      ],
+      "commonPitfalls": "자연수 $\\mathbb{N}$에 0을 포함하는지 여부는 국가/학파마다 다르므로($\\mathbb{N}_0 = \\mathbb{N} \\cup \\{0\\}$ 명시 권장) 엄밀한 정의를 확인해야 함."
+    },
+    {
+      "id": "sym-forall",
+      "symbol": "∀",
+      "typesetMath": "\\forall",
+      "nameKo": "전칭 한정기호 (모든)",
+      "nameEn": "Universal quantifier (For all)",
+      "howToReadKo": "모든, 임의의",
+      "howToReadEn": "for all, for any, for each",
+      "unicode": "U+2200",
+      "historyAndOrigin": "1935년 게르하르트 겐첸(Gerhard Gentzen)이 '모두(All)'를 뜻하는 영어 All의 머리글자 A를 거꾸로 뒤집어 고안함.",
+      "rigorousDefinition": "술어 논리에서 모든 정의역 원소 $x$에 대해 명제 $P(x)$가 참임을 선언: $\\forall x P(x)$.",
+      "usageAndExamples": [
+        {
+          "context": "실수의 성질",
+          "typesetMath": "\\forall x \\in \\mathbb{R}, \\; x^2 \\ge 0",
+          "description": "모든 실수 x에 대하여 x의 제곱은 0 이상임"
+        }
+      ],
+      "commonPitfalls": "전칭기호의 부정은 존재기호임: $\\neg(\\forall x P(x)) \\iff \\exists x (\\neg P(x))$."
+    },
+    {
+      "id": "sym-exists",
+      "symbol": "∃",
+      "typesetMath": "\\exists",
+      "nameKo": "존재 한정기호 (존재한다)",
+      "nameEn": "Existential quantifier (There exists)",
+      "howToReadKo": "존재한다, 적어도 하나 존재한다",
+      "howToReadEn": "there exists, there is at least one",
+      "unicode": "U+2203",
+      "historyAndOrigin": "1897년 주세페 페아노가 '존재(Exist)'의 머리글자 E를 좌우 반전하여 창안함.",
+      "rigorousDefinition": "술어 논리에서 적어도 하나의 원소 $x$가 $P(x)$를 만족함을 선언: $\\exists x P(x)$. 유일하게 하나만 존재할 때는 $\\exists! x P(x)$로 표기함.",
+      "usageAndExamples": [
+        {
+          "context": "입실론-델타 극한",
+          "typesetMath": "\\forall \\epsilon > 0, \\; \\exists \\delta > 0 \\text{ s.t. } 0 < |x - c| < \\delta \\implies |f(x) - L| < \\epsilon",
+          "description": "함수의 극한에 대한 엄밀한 바이어슈트라스 정의"
+        }
+      ],
+      "commonPitfalls": "한정기호의 순서가 바뀌면 의미가 완전히 달라짐. $\\forall x \\exists y$와 $\\exists y \\forall x$는 전혀 다른 명제임."
+    },
+    {
+      "id": "sym-implies",
+      "symbol": "⇒",
+      "typesetMath": "\\implies",
+      "nameKo": "함의 기호 (조건문)",
+      "nameEn": "Implies (Conditional / Logical consequence)",
+      "howToReadKo": "~이면 ~이다, 함의한다",
+      "howToReadEn": "implies, if ... then ...",
+      "unicode": "U+21D2",
+      "historyAndOrigin": "다비트 힐베르트(David Hilbert)와 빌헬름 아케르만(Wilhelm Ackermann)의 수리논리학 체계에서 실질 함의를 정규화하기 위해 화살표로 도입됨.",
+      "rigorousDefinition": "$P \\implies Q \\iff \\neg P \\lor Q$. 가정 $P$가 거짓이면 결론 $Q$의 참/거짓에 상관없이 명제 전체는 항상 참임(공허한 참, Vacuous Truth).",
+      "usageAndExamples": [
+        {
+          "context": "미분가능성과 연속성",
+          "typesetMath": "f \\text{ is differentiable at } x \\implies f \\text{ is continuous at } x",
+          "description": "함수가 x에서 미분가능하면 그 점에서 반드시 연속임"
+        }
+      ],
+      "commonPitfalls": "명제 $P \\implies Q$가 참이라고 해서 그 역(Converse) $Q \\implies P$가 참인 것은 아님."
+    },
+    {
+      "id": "sym-iff",
+      "symbol": "⇔",
+      "typesetMath": "\\iff",
+      "nameKo": "동치 기호 (필요충분조건)",
+      "nameEn": "If and only if (Biconditional / Equivalence)",
+      "howToReadKo": "필요충분조건이다, 동치이다",
+      "howToReadEn": "if and only if, is equivalent to",
+      "unicode": "U+21D4",
+      "historyAndOrigin": "20세기 수리논리학에서 양방향 함의($P \\implies Q \\land Q \\implies P$)를 축약하기 위해 양방향 이중 화살표로 제정됨.",
+      "rigorousDefinition": "$P \\iff Q \\iff (P \\implies Q) \\land (Q \\implies P)$. 두 명제의 진릿값이 항상 일치함을 의미.",
+      "usageAndExamples": [
+        {
+          "context": "가역행렬 정리",
+          "typesetMath": "\\det(\\mathbf{A}) \\ne 0 \\iff \\mathbf{A} \\text{ is invertible}",
+          "description": "정방행렬 A의 행렬식이 0이 아닌 것은 역행렬이 존재하기 위한 필요충분조건임"
+        }
+      ],
+      "commonPitfalls": "단방향 함의($\\implies$)와 양방향 동치($\\iff$)를 엄격히 구분하여 증명해야 함."
+    },
+    {
+      "id": "sym-qed",
+      "symbol": "■",
+      "typesetMath": "\\blacksquare, \\text{Q.E.D.}",
+      "nameKo": "증명 완료 기호 (할모스 기호 / Q.E.D.)",
+      "nameEn": "Halmos tombstone / Q.E.D.",
+      "howToReadKo": "증명 끝, 큅트, 증명 완료",
+      "howToReadEn": "end of proof, Q.E.D.",
+      "unicode": "U+220E",
+      "historyAndOrigin": "라틴어 'Quod Erat Demonstrandum(증명되어야 했던 것)'의 약어. 1950년 미국 수학자 폴 할모스(Paul Halmos)가 출판 인쇄에서 묘비 형태의 사각형(■)을 쓰면서 '할모스 심볼'로 대중화됨.",
+      "rigorousDefinition": "정리나 명제의 연역적 증명이 논리적 비약 없이 완전하게 종결되었음을 선언하는 메타-수학 종결 기호.",
+      "usageAndExamples": [
+        {
+          "context": "증명 종결",
+          "typesetMath": "\\text{Therefore, } \\sqrt{2} \\notin \\mathbb{Q}. \\quad \\blacksquare",
+          "description": "루트 2의 무리수성 증명 완료 표식"
+        }
+      ],
+      "commonPitfalls": "현대 학술 논문 및 교과서 조판에서는 오른쪽 끝 맞춤(Flush right)으로 검은 사각 상자($\\blacksquare$)를 배치함."
+    }
+  ]
+}

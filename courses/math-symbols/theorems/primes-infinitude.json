@@ -1,0 +1,69 @@
+{
+  "id": "primes-infinitude",
+  "order": 2,
+  "domain": "정수론",
+  "titleKo": "소수의 무한성 정리 (Euclid's Theorem on Primes)",
+  "titleEn": "Infinitude of Primes",
+  "statement": {
+    "typesetMath": "|\\mathbb{P}| = \\infty",
+    "explanationKo": "소수(Prime numbers)의 집합은 무한하다.",
+    "explanationEn": "There are infinitely many prime numbers."
+  },
+  "historicalSignificance": "기원전 300년경 유클리드가 저서 '원론' 제9권 명제 20에서 제시한 가장 우아하고 고전적인 귀류법(Reductio ad absurdum) 증명.",
+  "prerequisites": [
+    "소수의 정의",
+    "산술의 기본정리 (1보다 큰 모든 자연수는 소인수를 가짐)"
+  ],
+  "intuitiveIdea": "만약 소수가 유한개뿐이라면 그 모든 소수를 곱한 뒤 1을 더한 거대한 수 N을 만들 수 있는데, N은 기존의 어떤 소수로 나누어도 나머지가 1이 되므로 기존 목록에 없는 새로운 소수를 소인수로 가져야 하므로 모순임.",
+  "rigorousProof": {
+    "proofType": "귀류법 (Proof by Contradiction)",
+    "assumptions": [
+      "소수가 유한개만 존재한다고 가정하고, 그 전체 소수 집합을 S = {p_1, p_2, ..., p_k}라 하자."
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "유한 목록의 모든 소수의 곱에 1을 더한 수 구성",
+        "explanation": "알려진 모든 소수 $p_1, p_2, \\dots, p_k$의 총곱에 1을 더한 정수 N을 정의한다.",
+        "typesetMath": "N = (p_1 p_2 \\cdots p_k) + 1",
+        "justification": "유한 집합의 곱 및 정수 덧셈의 유효성"
+      },
+      {
+        "stepNumber": 2,
+        "title": "N의 소인수 존재성",
+        "explanation": "$N > 1$이므로 산술의 기본정리에 의해 N은 적어도 하나의 소수 q를 약수로 가져야 한다.",
+        "typesetMath": "\\exists q \\in \\mathbb{P} \\text{ s.t. } q \\mid N",
+        "justification": "1보다 큰 모든 정수는 적어도 하나의 소인수를 갖는다는 정리"
+      },
+      {
+        "stepNumber": 3,
+        "title": "q가 기존 소수 목록에 속한다고 가정 시 모순 유도",
+        "explanation": "만약 $q \\in S$라면 $q$는 $p_1, \\dots, p_k$ 중 하나이다. 따라서 $q \\mid (p_1 p_2 \\cdots p_k)$이다.",
+        "typesetMath": "q \\mid N \\quad \\text{and} \\quad q \\mid (p_1 p_2 \\cdots p_k)",
+        "justification": "가정 $S$의 완전성에 기인한 소속성"
+      },
+      {
+        "stepNumber": 4,
+        "title": "나머지 1의 분할 불가능성 도출",
+        "explanation": "$q$가 $N$과 $(p_1 \\cdots p_k)$를 모두 나눈다면, 두 수의 차이인 1도 나누어야 한다.",
+        "typesetMath": "q \\mid [N - (p_1 p_2 \\cdots p_k)] \\implies q \\mid 1",
+        "justification": "나눗셈의 선형 결합 성질: $q|A \\land q|B \\implies q|(A - B)$"
+      },
+      {
+        "stepNumber": 5,
+        "title": "모순 도출 및 결론",
+        "explanation": "소수 $q \\ge 2$이므로 $q \\mid 1$은 불가능하다. 이는 $q$가 기존 목록 $S$에 포함될 수 없음을 의미한다.",
+        "typesetMath": "q \\notin \\{p_1, p_2, \\dots, p_k\\} \\implies \\text{Contradiction}",
+        "justification": "소수가 유한하다는 가정이 모순을 초래함"
+      }
+    ],
+    "conclusion": "따라서 소수의 개수는 유한할 수 없으며 무한히 존재한다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "소수 정리 (Prime Number Theorem)",
+      "typesetMath": "\\pi(x) \\sim \\frac{x}{\\ln x}",
+      "description": "x 이하의 소수 개수 함수의 점근적 분포 법칙"
+    }
+  ]
+}

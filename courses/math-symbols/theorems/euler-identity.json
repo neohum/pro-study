@@ -1,0 +1,74 @@
+{
+  "id": "euler-identity",
+  "order": 5,
+  "domain": "복소해석학 및 대수학",
+  "titleKo": "오일러 공식 및 항등식 (Euler's Formula and Identity)",
+  "titleEn": "Euler's Formula and Identity",
+  "statement": {
+    "typesetMath": "e^{i\\theta} = \\cos\\theta + i\\sin\\theta, \\quad e^{i\\pi} + 1 = 0",
+    "explanationKo": "지수함수와 삼각함수는 복소평면 상에서 하나로 통합되며, 수학의 5대 상수(e, i, π, 1, 0)가 완벽한 조화를 이룬다.",
+    "explanationEn": "Complex exponential functions unify with trigonometric functions, relating the fundamental constants e, i, pi, 1, and 0."
+  },
+  "historicalSignificance": "1748년 레온하르트 오일러가 '무한 해석 개론'에서 발표하였으며, 리처드 파인만이 '수학에서 가장 주목할 만한 공식이자 보석'이라 칭송함.",
+  "prerequisites": [
+    "테일러 급수 (Maclaurin Series)",
+    "허수 단위 i (i^2 = -1)의 거듭제곱 주기성"
+  ],
+  "intuitiveIdea": "실수 거듭제곱 급수 e^x에 순허수 iθ를 대입하면, i의 거듭제곱 순환(1, i, -1, -i)에 의해 실수부 항들은 정확히 cosθ의 테일러 급수가 되고 허수부 항들은 sinθ의 테일러 급수가 됨.",
+  "rigorousProof": {
+    "proofType": "테일러(매클로린) 급수 전개 대조 증명 (Taylor Series Expansion)",
+    "assumptions": [
+      "지수함수, 코사인, 사인 함수의 무한 급수 수렴성"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "지수함수 e^z의 매클로린 급수 정의",
+        "explanation": "복소 지수함수의 절대수렴하는 테일러 급수를 전개한다.",
+        "typesetMath": "e^z = \\sum_{n=0}^\\infty \\frac{z^n}{n!} = 1 + z + \\frac{z^2}{2!} + \\frac{z^3}{3!} + \\frac{z^4}{4!} + \\frac{z^5}{5!} + \\cdots",
+        "justification": "지수함수의 해석적 확장 정의"
+      },
+      {
+        "stepNumber": 2,
+        "title": "z = iθ 대입 및 i의 거듭제곱 정리",
+        "explanation": "$z = i\\theta$를 대입하고 $i^2 = -1, i^3 = -i, i^4 = 1$의 주기를 적용한다.",
+        "typesetMath": "e^{i\\theta} = 1 + i\\theta + \\frac{(i\\theta)^2}{2!} + \\frac{(i\\theta)^3}{3!} + \\frac{(i\\theta)^4}{4!} + \\frac{(i\\theta)^5}{5!} + \\cdots",
+        "justification": "허수 단위의 대수적 거듭제곱"
+      },
+      {
+        "stepNumber": 3,
+        "title": "실수부와 허수부 항의 분리 재배열",
+        "explanation": "급수가 절대수렴하므로 실수부(짝수 항)와 허수부(홀수 항)로 순서를 재배열한다.",
+        "typesetMath": "e^{i\\theta} = \\left(1 - \\frac{\\theta^2}{2!} + \\frac{\\theta^4}{4!} - \\cdots\\right) + i \\left(\\theta - \\frac{\\theta^3}{3!} + \\frac{\\theta^5}{5!} - \\cdots\\right)",
+        "justification": "절대수렴 급수의 무조건 수렴 및 재배열 정리"
+      },
+      {
+        "stepNumber": 4,
+        "title": "삼각함수 테일러 급수와의 일치 판정",
+        "explanation": "앞 괄호는 $\\cos\\theta$의 정의 급수이고 뒤 괄호는 $\\sin\\theta$의 정의 급수이다.",
+        "typesetMath": "\\cos\\theta = \\sum_{k=0}^\\infty \\frac{(-1)^k \\theta^{2k}}{(2k)!}, \\quad \\sin\\theta = \\sum_{k=0}^\\infty \\frac{(-1)^k \\theta^{2k+1}}{(2k+1)!}",
+        "justification": "코사인 및 사인 함수의 매클로린 급수 정의"
+      },
+      {
+        "stepNumber": 5,
+        "title": "오일러 항등식 도출",
+        "explanation": "$\\theta = \\pi$를 대입하면 $\\cos\\pi = -1, \\sin\\pi = 0$이므로 가장 아름다운 등식이 도출된다.",
+        "typesetMath": "e^{i\\pi} = -1 + 0i \\implies e^{i\\pi} + 1 = 0",
+        "justification": "특수각 세타 = 파이 대입"
+      }
+    ],
+    "conclusion": "복소 지수함수와 삼각함수의 대수적 동등성이 증명되었다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "드무아브르 정리",
+      "typesetMath": "(\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta)",
+      "description": "복소수의 n제곱 회전 계산 공식"
+    },
+    {
+      "title": "전기전자 페이저(Phasor) 이론",
+      "typesetMath": "v(t) = V_m \\cos(\\omega t + \\phi) = \\operatorname{Re}\\{V_m e^{j\\phi} e^{j\\omega t}\\}",
+      "description": "교류 회로 해석의 핵심 복소 페이저 표현의 이론적 기반"
+    }
+  ]
+}

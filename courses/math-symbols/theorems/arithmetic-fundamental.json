@@ -1,0 +1,76 @@
+{
+  "id": "arithmetic-fundamental",
+  "order": 12,
+  "domain": "정수론 및 현대 대수학",
+  "titleKo": "산술의 기본정리 (Fundamental Theorem of Arithmetic)",
+  "titleEn": "Fundamental Theorem of Arithmetic (FTA)",
+  "statement": {
+    "typesetMath": "n = p_1^{a_1} p_2^{a_2} \\cdots p_k^{a_k} \\quad (p_1 < p_2 < \\dots < p_k)",
+    "explanationKo": "1보다 큰 모든 자연수는 소수들의 곱으로 표현(존재성)될 수 있으며, 소수들의 순서를 무시하면 그 분해는 유일(유일성)하다.",
+    "explanationEn": "Every integer greater than 1 can be represented uniquely as a product of prime numbers, up to the order of the factors."
+  },
+  "historicalSignificance": "유클리드 원론 제7권 명제 30(유클리드 보조정리)에 기원을 두고 1801년 가우스가 '산술 연구'에서 최초로 완전한 유일성 증명을 완성함.",
+  "prerequisites": [
+    "유클리드 보조정리: p | ab => p | a or p | b",
+    "수학적 귀납법 및 정렬 원리(Well-Ordering Principle)"
+  ],
+  "intuitiveIdea": "소수는 정수를 구성하는 '화학적 원소(Atoms)'와 같아서, 어떤 정수도 고유한 소수들의 조합으로 단 한 가지 방식으로만 조립됨.",
+  "rigorousProof": {
+    "proofType": "유클리드 보조정리와 최소 반례 귀류법 (Well-ordering & Euclid's Lemma)",
+    "assumptions": [
+      "1보다 큰 자연수 n"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "소인수분해 존재성 (강한 귀납법)",
+        "explanation": "$n=2$는 소수이므로 참이다. $2 \\le k < n$인 모든 정수가 소수의 곱으로 분해된다고 가정하자. $n$이 소수이면 끝이고, 합성수이면 $n = ab$ ($1 < a, b < n$)로 쓸 수 있으며 귀납 가정에 의해 $a, b$가 소수의 곱이므로 $n$도 소수의 곱이다.",
+        "typesetMath": "n = p_1 p_2 \\cdots p_r",
+        "justification": "강한 수학적 귀납법"
+      },
+      {
+        "stepNumber": 2,
+        "title": "유일성에 대한 반례 가정",
+        "explanation": "서로 다른 두 소인수분해를 갖는 1보다 큰 자연수가 존재한다고 가정하고, 정렬 원리에 의해 그러한 정수 중 가장 작은 최소 반례를 $m$이라 하자.",
+        "typesetMath": "m = p_1 p_2 \\cdots p_r = q_1 q_2 \\cdots q_s",
+        "justification": "자연수 정렬 원리(Well-Ordering Principle)"
+      },
+      {
+        "stepNumber": 3,
+        "title": "유클리드 보조정리 적용",
+        "explanation": "$p_1$은 $m$을 나누므로 우변 $q_1 q_2 \\dots q_s$를 나눈다. 유클리드 보조정리에 의해 $p_1$은 적어도 하나의 $q_j$를 나누어야 한다.",
+        "typesetMath": "p_1 \\mid (q_1 q_2 \\cdots q_s) \\implies \\exists j \\text{ s.t. } p_1 \\mid q_j",
+        "justification": "Euclid's Lemma: 소수가 곱을 나누면 적어도 하나의 인수를 나눔"
+      },
+      {
+        "stepNumber": 4,
+        "title": "소수의 소인수분해 특성에 의한 동일성 규명",
+        "explanation": "$q_j$ 역시 소수이므로 약수는 1과 자기 자신뿐이다. 따라서 $p_1 = q_j$이어야 한다. 순서를 재배열하여 $p_1 = q_1$이라 하자.",
+        "typesetMath": "p_1 = q_1",
+        "justification": "소수의 정의"
+      },
+      {
+        "stepNumber": 5,
+        "title": "양변 약분 및 최소 반례 모순 도출",
+        "explanation": "양변을 $p_1$으로 나누면 $m' = m / p_1 < m$인 더 작은 정수가 두 가지 다른 소인수분해를 갖게 된다.",
+        "typesetMath": "m' = p_2 \\cdots p_r = q_2 \\cdots q_s < m",
+        "justification": "양변 소거"
+      },
+      {
+        "stepNumber": 6,
+        "title": "모순 확정",
+        "explanation": "이는 $m$이 두 가지 소인수분해를 갖는 '최소'의 자연수라는 최초의 설정에 모순이다.",
+        "typesetMath": "\\text{Contradiction with minimality of } m",
+        "justification": "귀류법 종결"
+      }
+    ],
+    "conclusion": "모든 자연수의 소인수분해 표현은 순서를 제외하고 오직 유일하다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "약수의 개수 공식",
+      "typesetMath": "d(n) = (a_1 + 1)(a_2 + 1)\\cdots(a_k + 1)",
+      "description": "소인수분해 거듭제곱 지수로부터 약수 개수와 합을 구하는 기초 공식"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "ee-04",
+  "order": 4,
+  "domain": "교류 회로 및 페이저",
+  "titleKo": "정현파 교류 및 복소 페이저(Phasor) 해석",
+  "titleEn": "Sinusoidal AC & Complex Phasor Analysis",
+  "file": "modules/04-ac-phasor.json",
+  "overview": "단순 정현파 교류 신호의 실효값(RMS), 각주파수, 복소 페이저(Phasor) 변환 및 복소 임피던스(Z = R + jX)를 이용해 미분방정식을 대수 방정식으로 치환하는 현대 교류 회로 해석의 핵심을 학습합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "정현파 교류와 실효값 (RMS)",
+      "titleEn": "Sinusoidal AC and Root-Mean-Square",
+      "principle": "교류는 전압과 전류의 방향과 크기가 시간에 따라 주기적으로 변하며, 직류와 동일한 열 효과를 내는 유효 에너지 등가 전압을 실효값(RMS)이라 한다.",
+      "equations": [
+        {
+          "name": "정현파 전압 순시치",
+          "typesetMath": "v(t) = V_m \\cos(\\omega t + \\phi) \\quad (\\omega = 2\\pi f)",
+          "explanation": "최댓값 V_m, 각주파수 omega, 초기위상각 phi"
+        },
+        {
+          "name": "실효값 (RMS, Root-Mean-Square)",
+          "typesetMath": "V_{\\text{rms}} = \\sqrt{\\frac{1}{T}\\int_0^T v^2(t)\\,dt} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707 V_m",
+          "explanation": "대한민국 가정용 교류 220V는 실효값이며 최댓값은 약 311V임"
+        }
+      ]
+    },
+    {
+      "titleKo": "페이저(Phasor) 변환과 오일러 항등식",
+      "titleEn": "Phasor Transform and Complex Frequency Domain",
+      "principle": "오일러 공식을 이용하여 시간에 종속적인 정현파 cos(ωt + φ)를 복소평면의 회전 벡터 V_m e^(jφ) e^(jωt)로 표현하고, 공통 회전인자 e^(jωt)를 생략하여 주파수 영역의 정적 페이저 V로 변환한다.",
+      "equations": [
+        {
+          "name": "페이저 표현 (Phasor Representation)",
+          "typesetMath": "\\mathbf{V} = V_{\\text{rms}} \\angle \\phi = V_{\\text{rms}} e^{j\\phi} = V_{\\text{rms}} (\\cos\\phi + j\\sin\\phi)",
+          "explanation": "전기공학에서는 허수 단위를 전류 기호 i와 구분하기 위해 j를 사용함"
+        },
+        {
+          "name": "시간 미분의 페이저 변환",
+          "typesetMath": "\\frac{d}{dt} \\longleftrightarrow j\\omega, \\quad \\int dt \\longleftrightarrow \\frac{1}{j\\omega}",
+          "explanation": "미분방정식을 단순한 복소수 대수 곱셈/나눗셈으로 변환하는 마법의 도구"
+        }
+      ]
+    },
+    {
+      "titleKo": "복소 임피던스(Z)와 리액턴스(X)",
+      "titleEn": "Complex Impedance & Reactance",
+      "principle": "교류 회로에서 전류의 흐름을 방해하는 총체적 저항 성분을 임피던스(Impedance, Z)라 하며, 저항(R)과 위상을 90도 회전시키는 유도성/용량성 리액턴스(X)의 복소수 합으로 정의된다.",
+      "equations": [
+        {
+          "name": "복소 임피던스 정의",
+          "typesetMath": "\\mathbf{Z} = R + jX = |\\mathbf{Z}| e^{j\\theta} \\quad (|\\mathbf{Z}| = \\sqrt{R^2 + X^2}, \\; \\theta = \\arctan(X/R))",
+          "explanation": "저항 R(실수부)과 리액턴스 X(허수부)"
+        },
+        {
+          "name": "L과 C의 리액턴스",
+          "typesetMath": "Z_L = j\\omega L = j X_L \\; (X_L = \\omega L), \\quad Z_C = \\frac{1}{j\\omega C} = -j X_C \\; \\left(X_C = \\frac{1}{\\omega C}\\right)",
+          "explanation": "인덕터는 전압이 전류보다 90도 앞서고(진상), 커패시터는 전압이 전류보다 90도 뒤짐(지상)"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "교류 오디오 크로스오버 및 노이즈 필터링",
+      "practicalContext": "주파수에 따라 임피던스가 달라지는 원리(고주파에서 X_L은 커지고 X_C는 작아짐)를 활용하여, 저음은 우퍼 스피커(L 직렬 통과)로 보내고 고음은 트위터 스피커(C 직렬 통과)로 분리함.",
+      "engineeringNote": "임피던스 매칭(Impedance Matching)을 통해 오디오 앰프와 스피커 사이의 반사 손실 없이 최대 전력을 전달함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-phasor-power",
+    "type": "phasor-power",
+    "title": "AC 페이저 및 전력 삼각형 시뮬레이터",
+    "initialParams": {
+      "Vrms": 220,
+      "frequency": 60,
+      "R": 10,
+      "L": 0.05,
+      "C": 0.00005
+    },
+    "keyFormulas": [
+      "XL = 2*pi*f*L",
+      "XC = 1/(2*pi*f*C)",
+      "Z = sqrt(R^2 + (XL - XC)^2)",
+      "I = V/Z",
+      "theta = atan((XL-XC)/R)"
+    ]
+  },
+  "summary": "페이저 변환은 복잡한 시간 영역의 교류 미분방정식을 복소평면 상의 대수적 옴의 법칙(V = I*Z)으로 변환하여 신속하고 정확한 교류 회로 해석을 가능하게 합니다."
+}

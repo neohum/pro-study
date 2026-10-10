@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ElectricalEngineeringModule",
+  "type": "object",
+  "required": [
+    "id",
+    "order",
+    "domain",
+    "titleKo",
+    "titleEn",
+    "overview",
+    "coreConcepts",
+    "practicalApplications",
+    "simulationRef",
+    "summary"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "order": { "type": "integer" },
+    "domain": { "type": "string" },
+    "titleKo": { "type": "string" },
+    "titleEn": { "type": "string" },
+    "overview": { "type": "string" },
+    "coreConcepts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["titleKo", "titleEn", "principle", "equations"],
+        "properties": {
+          "titleKo": { "type": "string" },
+          "titleEn": { "type": "string" },
+          "principle": { "type": "string" },
+          "equations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "typesetMath", "explanation"],
+              "properties": {
+                "name": { "type": "string" },
+                "typesetMath": { "type": "string" },
+                "explanation": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "practicalApplications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "practicalContext", "engineeringNote"],
+        "properties": {
+          "title": { "type": "string" },
+          "practicalContext": { "type": "string" },
+          "engineeringNote": { "type": "string" }
+        }
+      }
+    },
+    "simulationRef": {
+      "type": "object",
+      "required": ["id", "type", "title", "initialParams", "keyFormulas"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "initialParams": { "type": "object" },
+        "keyFormulas": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "summary": { "type": "string" }
+  }
+}

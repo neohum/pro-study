@@ -1,0 +1,64 @@
+{
+  "id": "fundamental-calculus",
+  "order": 4,
+  "domain": "해석학 및 미적분학",
+  "titleKo": "미적분학의 기본정리 (Fundamental Theorem of Calculus)",
+  "titleEn": "Fundamental Theorem of Calculus (FTC)",
+  "statement": {
+    "typesetMath": "\\frac{d}{dx}\\int_a^x f(t) \\, dt = f(x), \\quad \\int_a^b f(x) \\, dx = F(b) - F(a)",
+    "explanationKo": "미분과 적분은 상호 역연산 관계이며, 연속함수의 정적분은 역도함수의 양 끝점 함숫값 차이로 계산할 수 있다.",
+    "explanationEn": "Differentiation and integration are inverse operations, and the definite integral can be evaluated using antiderivatives."
+  },
+  "historicalSignificance": "17세기 뉴턴과 라이프니츠가 독립적으로 기하학적 접선 문제(미분)와 면적 문제(적분)가 본질적으로 하나의 연산의 역과정임을 규명한 인류 과학사 최고의 발견.",
+  "prerequisites": [
+    "함수의 연속성",
+    "적분의 평균값 정리 (MVT for Integrals)",
+    "도함수의 극한 정의"
+  ],
+  "intuitiveIdea": "정적분 함수 A(x)는 면적의 누적 함수인데, x를 dx만큼 미세하게 늘릴 때 추가되는 얇은 직사각형의 면적 dA는 높이 f(x) 곱하기 밑변 dx가 되므로 dA/dx = f(x)가 됨.",
+  "rigorousProof": {
+    "proofType": "해석학적 극한 및 적분 평균값 정리 증명 (Analytical FTC 1 Proof)",
+    "assumptions": [
+      "구간 [a, b]에서 연속인 실함수 f",
+      "면적 누적 함수 g(x) = \\int_a^x f(t) dt"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "누적 함수의 미분계수 극한식 수립",
+        "explanation": "도함수의 극한 정의에 따라 $g'(x)$를 수립한다.",
+        "typesetMath": "g'(x) = \\lim_{h \\to 0} \\frac{g(x+h) - g(x)}{h} = \\lim_{h \\to 0} \\frac{1}{h} \\left( \\int_a^{x+h} f(t)\\,dt - \\int_a^x f(t)\\,dt \\right)",
+        "justification": "도함수 정의"
+      },
+      {
+        "stepNumber": 2,
+        "title": "정적분의 구간 분할 성질 적용",
+        "explanation": "적분의 구간 결합 성질 $\\int_a^{x+h} - \\int_a^x = \\int_x^{x+h}$을 적용한다.",
+        "typesetMath": "g'(x) = \\lim_{h \\to 0} \\frac{1}{h} \\int_x^{x+h} f(t) \\, dt",
+        "justification": "적분 구간의 가법성"
+      },
+      {
+        "stepNumber": 3,
+        "title": "적분의 평균값 정리(MVT) 적용",
+        "explanation": "$f$가 연속이므로 적분의 평균값 정리에 의해 $x$와 $x+h$ 사이에 $c_h$가 존재하여 적분값을 직사각형으로 바꿀 수 있다.",
+        "typesetMath": "\\frac{1}{h} \\int_x^{x+h} f(t) \\, dt = f(c_h) \\quad (c_h \\in [x, x+h])",
+        "justification": "적분의 평균값 정리"
+      },
+      {
+        "stepNumber": 4,
+        "title": "h가 0으로 갈 때의 극한 및 연속성 적용",
+        "explanation": "$h \\to 0$일 때 샌드위치 정리에 의해 $c_h \\to x$이며, $f$가 연속이므로 $f(c_h) \\to f(x)$이다.",
+        "typesetMath": "g'(x) = \\lim_{h \\to 0} f(c_h) = f\\left(\\lim_{h \\to 0} c_h\\right) = f(x)",
+        "justification": "연속함수의 성질: 극한과 함수 기호 교환 가능"
+      }
+    ],
+    "conclusion": "따라서 $\\frac{d}{dx}\\int_a^x f(t)dt = f(x)$가 엄밀히 성립한다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "정적분 계산 기본 공식",
+      "typesetMath": "\\int_a^b f(x) \\, dx = [F(x)]_a^b = F(b) - F(a)",
+      "description": "구분구적법의 극한 계산 없이 부정적분만으로 정적분을 즉시 계산 가능"
+    }
+  ]
+}

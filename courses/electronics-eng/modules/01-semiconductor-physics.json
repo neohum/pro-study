@@ -1,0 +1,79 @@
+{
+  "id": "el-01",
+  "order": 1,
+  "domain": "반도체 물리 기초",
+  "titleKo": "반도체 물성 및 PN 접합의 원리",
+  "titleEn": "Semiconductor Physics & PN Junction Principles",
+  "file": "modules/01-semiconductor-physics.json",
+  "overview": "실리콘 결정 구조, 에너지 밴드갭 이론, N형 및 P형 불순물 도핑(Doping), 페르미 준위와 캐리어 이동(드리프트와 확산) 및 PN 접합 공핍층의 양자물리적 거동을 학습합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "PN 접합 다이오드 (PN Junction Diode)",
+    "operationPrinciples": "P형 영역의 정공과 N형 영역의 전자가 경계면에서 재결합하여 가동 전하가 고갈된 공핍층(Depletion Region)과 전위 장벽(내장 전위 V_bi)을 형성함.",
+    "equivalentCircuit": "순방향 시 0.7V 전압원 + 미소 순방향 저항 R_f, 역방향 시 거대한 역저항 R_r"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "에너지 밴드와 도핑 (N형 및 P형)",
+      "titleEn": "Energy Bands & Extrinsic Semiconductors",
+      "principle": "원자가띠와 전도띠 사이의 금지대(밴드갭 $E_g$) 크기에 따라 물질의 전기 전도성이 결정되며, 실리콘에 5가 원소(인 P, 비소 As)를 주입하면 도너 전자가, 3가 원소(붕소 B)를 주입하면 억셉터 정공이 생성된다.",
+      "equations": [
+        {
+          "name": "질량 작용 법칙 (Mass-Action Law)",
+          "typesetMath": "n \\cdot p = n_i^2 \\quad (n_i = B T^{3/2} e^{-E_g / (2 k_B T)})",
+          "explanation": "열평형 상태에서 전자 농도 n과 정공 농도 p의 곱은 진성 캐리어 농도 n_i의 제곱으로 항상 일정"
+        }
+      ]
+    },
+    {
+      "titleKo": "캐리어 이동: 드리프트와 확산 전류",
+      "titleEn": "Carrier Transport: Drift & Diffusion",
+      "principle": "전기장에 의해 전하가 끌려가는 드리프트(Drift) 현상과, 농도 불균형에 의해 고농도에서 저농도로 퍼져나가는 확산(Diffusion) 현상이 반도체 전류를 형성한다.",
+      "equations": [
+        {
+          "name": "총 전류 밀도 (Total Current Density)",
+          "typesetMath": "J = J_{\\text{drift}} + J_{\\text{diff}} = (q n \\mu_n + q p \\mu_p) E + q D_n \\frac{dn}{dx} - q D_p \\frac{dp}{dx}",
+          "explanation": "전기장 E에 의한 표동 전류와 농도 기울기에 의한 확산 전류의 결합"
+        },
+        {
+          "name": "아인슈타인 관계식 (Einstein Relation)",
+          "typesetMath": "\\frac{D_n}{\\mu_n} = \\frac{D_p}{\\mu_p} = \\frac{k_B T}{q} = V_T",
+          "explanation": "확산 계수 D와 이동도 mu 사이의 열전압 V_T (상온 약 26mV) 비례성"
+        }
+      ]
+    },
+    {
+      "titleKo": "PN 접합 내장 전위(Built-in Potential)",
+      "titleEn": "Built-in Potential of PN Junction",
+      "principle": "도핑된 양측의 캐리어 확산과 공핍층 이온들의 전계에 의한 드리프트가 평형을 이룰 때 자연 발생하는 전위 장벽 V_bi.",
+      "equations": [
+        {
+          "name": "내장 전위 공식",
+          "typesetMath": "V_{\\text{bi}} = V_T \\ln\\left( \\frac{N_A N_D}{n_i^2} \\right)",
+          "explanation": "억셉터 도핑 N_A, 도너 도핑 N_D에 비례하여 형성되는 전위 장벽 (실리콘 기준 약 0.7V)"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "태양광 발전 패널(Solar Cell)과 광다이오드(Photodiode)",
+      "practicalContext": "PN 접합 공핍층에 밴드갭 에너지 이상의 빛(광자)이 입사하면 전자-정공 쌍(EHP)이 생성되고, 내장 전계에 의해 전자는 N층으로, 정공은 P층으로 분리되어 기전력을 생성함.",
+      "engineeringNote": "실리콘 반도체의 밴드갭은 1.12eV로 가시광선 영역의 태양광 흡수에 최적화되어 있음."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-semiconductor",
+    "type": "energy-band",
+    "title": "에너지 밴드 및 캐리어 확산 시뮬레이터",
+    "initialParams": {
+      "dopingNa": 10000000000000000,
+      "dopingNd": 10000000000000000,
+      "temperature": 300
+    },
+    "keyFormulas": [
+      "Vbi = 0.026 * ln(Na*Nd / ni^2)",
+      "W = sqrt(2*eps/q * (1/Na + 1/Nd) * Vbi)"
+    ]
+  },
+  "summary": "반도체는 도핑과 에너지 밴드 조절을 통해 전류의 전도 특성을 극적으로 제어할 수 있는 물질이며, PN 접합은 모든 현대 전자 소자의 기초입니다."
+}

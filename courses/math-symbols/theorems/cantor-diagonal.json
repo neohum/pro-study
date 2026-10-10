@@ -1,0 +1,62 @@
+{
+  "id": "cantor-diagonal",
+  "order": 10,
+  "domain": "집합론 및 무한론",
+  "titleKo": "칸토어의 대각선 논법 (Cantor's Diagonal Argument)",
+  "titleEn": "Cantor's Diagonal Argument",
+  "statement": {
+    "typesetMath": "|\\mathbb{R}| > |\\mathbb{N}|, \\quad 2^{\\aleph_0} > \\aleph_0",
+    "explanationKo": "실수 집합의 크기(기수)는 자연수 집합보다 엄격히 크며, 실수는 일대일 대응으로 셀 수 없는 비가산(Uncountable) 집합이다.",
+    "explanationEn": "The real numbers are uncountable, establishing that there are strictly larger infinities than the countable natural numbers."
+  },
+  "historicalSignificance": "1891년 게오르크 칸토어가 발표하여 '무한에도 크기(크기가 다른 무한)가 존재한다'는 사실을 입증한 수학사상 가장 혁명적인 논증.",
+  "prerequisites": [
+    "가산 집합(Countable Set)과 전단사 함수",
+    "실수의 십진법 무한소수 전개"
+  ],
+  "intuitiveIdea": "구간 (0,1)의 모든 실수를 빠짐없이 번호를 매겨 목록으로 만들었다고 가정하자. 이제 n번째 수의 n번째 자릿수를 피해서 새로운 수의 자릿수를 하나씩 조립하면, 이 새로운 수는 목록의 그 어떤 수와도 n번째 자리에서 달라 목록에 누락된 수가 되어 모순이 발생함.",
+  "rigorousProof": {
+    "proofType": "대각선 원소 변형 귀류법 (Diagonalization Contradiction)",
+    "assumptions": [
+      "구간 (0, 1)의 모든 실수가 가산적(Countable)이어서 자연수와 일대일 대응 목록화 가능하다고 가정"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "가산 가정에 따른 수열 나열 목록 작성",
+        "explanation": "구간 $(0, 1)$의 모든 실수를 $r_1, r_2, r_3, \\dots$로 나열하고 각각의 무한소수 전개를 표기한다.",
+        "typesetMath": "\\begin{aligned} r_1 &= 0.d_{11} d_{12} d_{13} d_{14} \\dots \\\\ r_2 &= 0.d_{21} d_{22} d_{23} d_{24} \\dots \\\\ r_3 &= 0.d_{31} d_{32} d_{33} d_{34} \\dots \\end{aligned}",
+        "justification": "가산 집합의 수열 나열 가능성"
+      },
+      {
+        "stepNumber": 4,
+        "title": "대각선 원소 d_nn을 회피하는 새로운 실수 x 구성",
+        "explanation": "새로운 실수 $x = 0.c_1 c_2 c_3 \\dots$를 다음과 같은 대각선 변환 규칙으로 정의한다: $c_n = \\begin{cases} 4 & (d_{nn} \\ne 4) \\\\ 5 & (d_{nn} = 4) \\end{cases}$.",
+        "typesetMath": "c_n \\ne d_{nn} \\quad (\\forall n \\in \\mathbb{N})",
+        "justification": "대각선 자릿수 변형 알고리즘"
+      },
+      {
+        "stepNumber": 5,
+        "title": "새로운 실수 x의 목록 대조 및 모순 판정",
+        "explanation": "명백히 $x \\in (0, 1)$이다. 만약 목록이 완전하다면 어떤 자연수 $k$에 대해 $x = r_k$이어야 한다.",
+        "typesetMath": "x = r_k \\implies c_k = d_{kk}",
+        "justification": "목록의 전사성 가정"
+      },
+      {
+        "stepNumber": 6,
+        "title": "자릿수 불일치 모순 확정",
+        "explanation": "그러나 $x$의 정의상 $c_k \\ne d_{kk}$이므로 $x = r_k$는 불가능하다. 즉 $x$는 목록 어디에도 존재하지 않는다.",
+        "typesetMath": "c_k \\ne d_{kk} \\implies x \\ne r_k \\quad (\\forall k \\in \\mathbb{N})",
+        "justification": "대각선 설계 자체에 의한 절대 모순"
+      }
+    ],
+    "conclusion": "구간 (0, 1)의 실수를 자연수 번호로 모두 나열할 수 없으므로 실수는 비가산 집합이다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "튜링의 정지 문제 불가능성",
+      "typesetMath": "\\text{Halting Problem is Undecidable}",
+      "description": "대각선 논법을 계산이론으로 확장하여 튜링 기계의 계산 불가능 함수 존재 증명"
+    }
+  ]
+}

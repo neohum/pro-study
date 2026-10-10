@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MathTheoremProof",
+  "type": "object",
+  "required": [
+    "id",
+    "order",
+    "domain",
+    "titleKo",
+    "titleEn",
+    "statement",
+    "historicalSignificance",
+    "intuitiveIdea",
+    "rigorousProof"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "order": { "type": "integer" },
+    "domain": { "type": "string" },
+    "titleKo": { "type": "string" },
+    "titleEn": { "type": "string" },
+    "statement": {
+      "type": "object",
+      "required": ["typesetMath", "explanationKo", "explanationEn"],
+      "properties": {
+        "typesetMath": { "type": "string" },
+        "explanationKo": { "type": "string" },
+        "explanationEn": { "type": "string" }
+      }
+    },
+    "historicalSignificance": { "type": "string" },
+    "prerequisites": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "intuitiveIdea": { "type": "string" },
+    "rigorousProof": {
+      "type": "object",
+      "required": ["proofType", "assumptions", "steps", "conclusion"],
+      "properties": {
+        "proofType": { "type": "string" },
+        "assumptions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["stepNumber", "title", "explanation", "typesetMath", "justification"],
+            "properties": {
+              "stepNumber": { "type": "integer" },
+              "title": { "type": "string" },
+              "explanation": { "type": "string" },
+              "typesetMath": { "type": "string" },
+              "justification": { "type": "string" }
+            }
+          }
+        },
+        "conclusion": { "type": "string" }
+      }
+    },
+    "corollariesAndApplications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "description"],
+        "properties": {
+          "title": { "type": "string" },
+          "typesetMath": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

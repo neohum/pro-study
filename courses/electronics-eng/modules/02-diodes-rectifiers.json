@@ -1,0 +1,80 @@
+{
+  "id": "el-02",
+  "order": 2,
+  "domain": "다이오드 및 정류 회로",
+  "titleKo": "다이오드 응용 회로: 정류기, 필터 및 제너 정전압",
+  "titleEn": "Diode Circuits: Rectifiers, Filters & Zener Regulation",
+  "file": "modules/02-diodes-rectifiers.json",
+  "overview": "쇼클리 다이오드 방정식, 순방향 도통과 역방향 항복 특성, 반파/전파/브리지 정류 회로, 평활 커패시터에 의한 리플 전압 계산, 제너 다이오드를 이용한 정전압 조절기 회로를 해석합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "다이오드 정류기 및 제너 다이오드",
+    "operationPrinciples": "순방향 전압 인가 시 지수함수적으로 전류가 급증하고, 역방향 시 미소 포화전류 I_s만 흐르다가 항복 전압(V_z)에서 전압이 일정하게 유지되는 제너 항복 발생.",
+    "equivalentCircuit": "정전압 강하 모델: 0.7V 이상에서 단락 도통"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "쇼클리 다이오드 방정식",
+      "titleEn": "Shockley Diode Equation",
+      "principle": "다이오드 전류는 양단 전압에 대해 순방향 바이어스에서 지수함수적으로 폭증하고, 역방향에서는 극미한 역방향 포화전류 I_s로 포화된다.",
+      "equations": [
+        {
+          "name": "쇼클리 방정식 (Shockley Equation)",
+          "typesetMath": "I_D = I_S \\left( e^{\\frac{V_D}{n V_T}} - 1 \\right)",
+          "explanation": "역방향 포화전류 I_s, 이상계수 n(1~2), 열전압 V_T = 26mV"
+        }
+      ]
+    },
+    {
+      "titleKo": "전파 브리지 정류 회로와 평활 리플 전압",
+      "titleEn": "Full-Wave Bridge Rectifier & Ripple Voltage",
+      "principle": "4개의 다이오드를 브리지 구조로 배치하면 교류의 양의 반주기와 음의 반주기 모두 부하에 동일한 방향의 전류를 공급하며, 병렬 평활 커패시터 C가 맥류를 직류로 평활화한다.",
+      "equations": [
+        {
+          "name": "피크 전압 (Bridge Rectifier Peak)",
+          "typesetMath": "V_{\\text{peak}} = V_m - 2 V_D \\approx V_m - 1.4\\text{ V}",
+          "explanation": "도통 경로에 항상 2개의 다이오드가 직렬 연결됨"
+        },
+        {
+          "name": "피크-투-피크 리플 전압 (Ripple Voltage)",
+          "typesetMath": "V_r = \\frac{I_L}{2 f C} = \\frac{V_{\\text{peak}}}{2 f R_L C}",
+          "explanation": "전파 정류 시 리플 주파수는 2배(120Hz)가 되어 평활화가 용이함"
+        }
+      ]
+    },
+    {
+      "titleKo": "제너 다이오드 정전압 원리 (Zener Regulation)",
+      "titleEn": "Zener Diode Voltage Regulation",
+      "principle": "역방향 항복 영역(양자 터널링 및 애벌랜치 항복)에서 전류가 크게 변해도 양단 전압이 거의 제너 전압 V_Z로 일정하게 유지되는 특성을 이용해 직류 전압을 안정화한다.",
+      "equations": [
+        {
+          "name": "제너 제한 저항 설계",
+          "typesetMath": "R_S = \\frac{V_{\\text{in}} - V_Z}{I_Z + I_L}",
+          "explanation": "입력 전압 변동 시 제너 다이오드의 과열 파손 방지 저항"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "스마트폰 충전기(AC-DC 아답터)의 1차 정류단",
+      "practicalContext": "벽면 220V 교류를 다이오드 브리지로 즉시 311V 맥류 직류로 변환하고, 400V 전해 커패시터로 평활화한 후 고주파 스위칭 전원(SMPS)의 입력으로 공급함.",
+      "engineeringNote": "입력 전원 역삽입 방지(Reverse Polarity Protection)를 위해 DC 입력단에 직렬 쇼트키 다이오드(낮은 전압강하 0.3V)를 배치함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-diode-rectifier",
+    "type": "rectifier",
+    "title": "다이오드 전파 브리지 정류 및 평활 시뮬레이터",
+    "initialParams": {
+      "Vin_rms": 24,
+      "frequency": 60,
+      "C": 0.001,
+      "RL": 100
+    },
+    "keyFormulas": [
+      "Vpeak = sqrt(2)*Vin_rms - 1.4",
+      "Vripple = Vpeak / (2*f*RL*C)"
+    ]
+  },
+  "summary": "다이오드는 단방향 전류 통과(정류) 특성을 가지며, 정류 회로, 리플 필터, 제너 전압 조절기를 통해 모든 전자기기의 안정된 직류 전원을 만듭니다."
+}

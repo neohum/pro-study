@@ -1,0 +1,75 @@
+{
+  "id": "pythagorean",
+  "order": 1,
+  "domain": "기하학 및 대수학",
+  "titleKo": "피타고라스 정리 (Pythagorean Theorem)",
+  "titleEn": "Pythagorean Theorem",
+  "statement": {
+    "typesetMath": "a^2 + b^2 = c^2",
+    "explanationKo": "직각삼각형에서 빗변의 길이의 제곱은 다른 두 변의 길이의 제곱의 합과 같다.",
+    "explanationEn": "In any right triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides."
+  },
+  "historicalSignificance": "고대 바빌로니아와 인도에서도 경험적으로 알려졌으나, 기원전 6세기 피타고라스 학파와 기원전 3세기 유클리드 '원론' 제1권 명제 47에서 연역적으로 완전 증명됨으로써 연역 기하학의 초석이 됨.",
+  "prerequisites": [
+    "유클리드 평면 기하 공리",
+    "삼각형의 넓이",
+    "곱셈 공식 $(a+b)^2$"
+  ],
+  "intuitiveIdea": "한 변의 길이가 (a+b)인 정사각형 안에 4개의 합동인 직각삼각형을 배치하면, 중앙에 남는 정사각형의 넓이는 빗변 c의 제곱이 되며 전체 면적 비교를 통해 $a^2 + b^2 = c^2$이 자연스럽게 유도됨.",
+  "rigorousProof": {
+    "proofType": "대수적 면적 분할 증명 (Algebraic Area Partition)",
+    "assumptions": [
+      "직각을 낀 두 변의 길이가 a, b이고 빗변의 길이가 c인 직각삼각형 ABC"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "외접 정사각형 구성",
+        "explanation": "한 변의 길이가 $(a + b)$인 큰 정사각형을 구성하고, 네 모퉁이에 밑변 a, 높이 b인 합동 직각삼각형 4개를 시계 방향으로 배치한다.",
+        "typesetMath": "S_{\\text{total}} = (a + b)^2",
+        "justification": "정사각형의 넓이 정의: 한 변의 길이의 제곱"
+      },
+      {
+        "stepNumber": 2,
+        "title": "내부 사각형의 형태 규명",
+        "explanation": "네 모퉁이 직각삼각형의 두 예각의 합은 $90^\\circ$이므로, 내부 사각형의 각 꼭짓점 각도는 $180^\\circ - 90^\\circ = 90^\\circ$이다. 또한 네 변의 길이는 모두 직각삼각형의 빗변 c로 같으므로 내부는 한 변이 c인 정사각형이다.",
+        "typesetMath": "S_{\\text{inner}} = c^2",
+        "justification": "네 각이 모두 직각이고 네 변의 길이가 같은 사각형은 정사각형임"
+      },
+      {
+        "stepNumber": 3,
+        "title": "4개 직각삼각형의 넓이 총합",
+        "explanation": "밑변 a, 높이 b인 직각삼각형 하나의 넓이는 $\\frac{1}{2}ab$이며, 4개의 총넓이는 다음과 같다.",
+        "typesetMath": "4 \\times \\left(\\frac{1}{2}ab\\right) = 2ab",
+        "justification": "직각삼각형 면적 공식"
+      },
+      {
+        "stepNumber": 4,
+        "title": "전체 면적 등식 수립 및 전개",
+        "explanation": "큰 정사각형의 넓이는 내부 정사각형 넓이와 4개 직각삼각형 넓이의 합과 정확히 일치한다.",
+        "typesetMath": "(a + b)^2 = c^2 + 2ab \\implies a^2 + 2ab + b^2 = c^2 + 2ab",
+        "justification": "면적의 가법성 공리 및 다항식 전개"
+      },
+      {
+        "stepNumber": 5,
+        "title": "양변 소거 및 결론 도출",
+        "explanation": "양변에서 공통항 $2ab$를 감산하면 증명이 완성된다.",
+        "typesetMath": "a^2 + b^2 = c^2",
+        "justification": "등식의 덧셈 역원 소거법칙"
+      }
+    ],
+    "conclusion": "임의의 평면 직각삼각형에 대하여 두 직각변의 제곱의 합은 항상 빗변의 제곱과 일치한다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "유클리드 거리 공식",
+      "typesetMath": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}",
+      "description": "데카르트 좌표계에서 두 점 사이의 거리를 계산하는 기저 공식"
+    },
+    {
+      "title": "삼각함수 기본 항등식",
+      "typesetMath": "\\sin^2\\theta + \\cos^2\\theta = 1",
+      "description": "단위원 상에서 빗변 c=1일 때의 피타고라스 정리의 삼각함수적 표현"
+    }
+  ]
+}

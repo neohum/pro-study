@@ -1,0 +1,91 @@
+{
+  "id": "el-03",
+  "order": 3,
+  "domain": "아날로그 증폭 및 트랜지스터",
+  "titleKo": "BJT 트랜지스터 증폭기 및 직류 부하선 해석",
+  "titleEn": "BJT Transistors, Amplifiers & DC Load Line",
+  "file": "modules/03-bjt-amplifiers.json",
+  "overview": "양극성 접합 트랜지스터(BJT)의 NPN/PNP 구조, 활성/포화/차단 영역의 동작 원리, 공통 이미터(CE) 전압 증폭기 설계, 전압분배 바이어스 안정화 및 직류 부하선(DC Load Line)과 동작점(Q-point)을 학습합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "BJT (Bipolar Junction Transistor)",
+    "operationPrinciples": "베이스의 미세한 전류 I_B로 컬렉터-이미터 간의 대전류 I_C = beta * I_B를 제어하는 전류 제어형 전류원(CCCS).",
+    "equivalentCircuit": "소신호 하이브리드-파이 모델: 베이스 r_pi 저항과 제어 전류원 gm * v_be"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "BJT의 3대 동작 영역",
+      "titleEn": "Three Operation Regions of BJT",
+      "principle": "베이스-이미터(BE) 접합과 베이스-컬렉터(BC) 접합의 바이어스 상태에 따라 차단(Off), 활성(증폭), 포화(스위치 On) 영역으로 구분된다.",
+      "equations": [
+        {
+          "name": "활성 영역 전류 증폭식",
+          "typesetMath": "I_C = \\beta I_B = h_{FE} I_B, \\quad I_E = I_B + I_C = (\\beta + 1) I_B",
+          "explanation": "전류 증폭률 beta(통상 100~300)에 의한 선형 전류 증폭"
+        },
+        {
+          "name": "베이스-이미터 도통 전압",
+          "typesetMath": "V_{BE} \\approx 0.7\\text{ V} \\quad (\\text{실리콘 NPN 기준 활성/포화 모드})",
+          "explanation": "순방향 바이어스된 PN 다이오드 전압 강하"
+        }
+      ]
+    },
+    {
+      "titleKo": "직류 부하선과 동작점(Q-point)",
+      "titleEn": "DC Load Line & Operating Point (Q-point)",
+      "principle": "출력 루프의 KVL 방정식 $V_{CE} = V_{CC} - I_C R_C$는 $I_C - V_{CE}$ 평면 상의 직선이며, 트랜지스터의 베이스 전류 특성 곡선과 만나는 교점이 동작점(Q-point)이다.",
+      "equations": [
+        {
+          "name": "직류 부하선 방정식",
+          "typesetMath": "I_C = -\\frac{1}{R_C} V_{CE} + \\frac{V_{CC}}{R_C}",
+          "explanation": "V_CE = 0일 때 최대 포화 전류 V_CC/R_C, I_C = 0일 때 차단 전압 V_CC"
+        },
+        {
+          "name": "최적 Q-point 조건",
+          "typesetMath": "V_{CEQ} \\approx \\frac{V_{CC}}{2}",
+          "explanation": "신호가 위아래로 대칭적으로 최대 스윙할 수 있어 클리핑 왜곡 방지"
+        }
+      ]
+    },
+    {
+      "titleKo": "공통 이미터(CE) 소신호 전압 이득",
+      "titleEn": "Common-Emitter Small-Signal Voltage Gain",
+      "principle": "베이스 입력 전압 v_in의 미세한 변화는 트랜스컨덕턴스 $g_m$을 통해 컬렉터 전류 $i_c$의 변화로 변환되고, 컬렉터 저항 $R_C$에 의해 역위상으로 크게 증폭된 전압 $v_{out}$으로 출력된다.",
+      "equations": [
+        {
+          "name": "트랜스컨덕턴스 (Transconductance)",
+          "typesetMath": "g_m = \\frac{I_{CQ}}{V_T} = \\frac{I_{CQ}}{26\\text{ mV}}",
+          "explanation": "동작점 컬렉터 전류에 비례하는 소신호 전도도"
+        },
+        {
+          "name": "소신호 전압 이득 (Voltage Gain)",
+          "typesetMath": "A_v = \\frac{v_{\\text{out}}}{v_{\\text{in}}} = -g_m (R_C \\parallel R_L)",
+          "explanation": "마이너스 부호는 입력과 출력 간의 180도 위상 반전을 의미함"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "마이크로폰 음성 신호 전치증폭기(Preamplifier)",
+      "practicalContext": "마이크에서 나오는 수 밀리볼트(mV)의 미세한 음성 교류 신호를 BJT CE 증폭기를 통해 수 볼트(V)의 라인 레벨로 증폭하여 파워 앰프로 전달함.",
+      "engineeringNote": "온도 변화에 따른 beta 변동으로 Q점이 틀어지는 현상을 방지하기 위해 이미터 저항 R_E와 바이패스 커패시터 C_E를 함께 사용함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-transistor-curves",
+    "type": "transistor-curves",
+    "title": "BJT/MOSFET 트랜지스터 특성 곡선 & 부하선 시뮬레이터",
+    "initialParams": {
+      "Vcc": 12,
+      "Rc": 1000,
+      "beta": 150,
+      "Ib_uA": 40
+    },
+    "keyFormulas": [
+      "Ic = beta * Ib",
+      "Vce = Vcc - Ic * Rc",
+      "Av = -Ic * Rc / 0.026"
+    ]
+  },
+  "summary": "BJT는 작은 베이스 전류로 큰 컬렉터 전류를 제어하는 핵심 능동 소자이며, 부하선 중앙에 Q점을 설정하여 왜곡 없는 선형 신호 증폭을 수행합니다."
+}

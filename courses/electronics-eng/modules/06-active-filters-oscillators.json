@@ -1,0 +1,85 @@
+{
+  "id": "el-06",
+  "order": 6,
+  "domain": "능동 필터 및 발진기",
+  "titleKo": "능동 필터, 보드 선도(Bode Plot) 및 신호 발진기",
+  "titleEn": "Active Filters, Bode Plots & Signal Generators",
+  "file": "modules/06-active-filters-oscillators.json",
+  "overview": "OP-Amp와 R, C를 결합한 능동 저역통과(LPF)/고역통과(HPF)/대역통과(BPF) 필터, 주파수 응답을 크기(dB)와 위상으로 나타내는 보드 선도(Bode Plot), 555 타이머 펄스 발생기 및 빈 브리지 발진기를 다룹니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "능동 필터 및 555 타이머 발진기",
+    "operationPrinciples": "주파수에 따라 변하는 복소 전달함수 H(s)를 이용한 주파수 선택성 증폭, 바크하우젠 발진 조건(루프 이득 1, 위상 360도)을 이용한 지속 발진.",
+    "equivalentCircuit": "전달함수 H(j*omega) = Gain(omega) * e^(j*phi(omega))"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "1차 및 2차 능동 저역통과 필터(LPF)",
+      "titleEn": "Active Low-Pass Filters (LPF) & Sallen-Key",
+      "principle": "인덕터 없이 저항과 커패시터만으로 차단 주파수 이상의 고주파 잡음을 감쇠시키며, 2차 Sallen-Key 구조는 차단 주파수 이후 -40dB/decade의 가파른 감쇠율을 갖는다.",
+      "equations": [
+        {
+          "name": "차단 주파수 (Cutoff Frequency, -3dB)",
+          "typesetMath": "f_c = \\frac{1}{2\\pi R C}",
+          "explanation": "출력 전력이 절반(전압은 0.707배, -3dB)으로 떨어지는 임계 주파수"
+        },
+        {
+          "name": "1차 LPF 전달함수",
+          "typesetMath": "H(s) = \\frac{V_{\\text{out}}(s)}{V_{\\text{in}}(s)} = \\frac{A_0}{1 + s R C} = \\frac{A_0}{1 + j\\frac{\\omega}{\\omega_c}}",
+          "explanation": "차단 주파수 이후 주파수가 10배 증가할 때마다 전압 이득이 20dB씩 감쇠"
+        }
+      ]
+    },
+    {
+      "titleKo": "보드 선도 (Bode Plot) 해석법",
+      "titleEn": "Bode Plot Magnitude & Phase Response",
+      "principle": "가로축을 로그 주파수로, 세로축을 데시벨 크기($20\\log_{10}|H(j\\omega)|$)와 위상각($\\angle H(j\\omega)$)으로 분리하여 광범위한 주파수 대역의 시스템 안정성과 필터링 특성을 시각화한다.",
+      "equations": [
+        {
+          "name": "데시벨 전압 이득 (Decibels)",
+          "typesetMath": "\\text{Gain [dB]} = 20 \\log_{10} |H(j\\omega)|",
+          "explanation": "이득 1 = 0dB, 이득 10 = 20dB, 이득 100 = 40dB, 이득 0.707 = -3dB"
+        }
+      ]
+    },
+    {
+      "titleKo": "555 타이머 비안정 멀티바이브레이터 (Astable Mode)",
+      "titleEn": "555 Timer Oscillator",
+      "principle": "2개의 비교기(Comparator), 1개의 SR 플립플롭, 방전 트랜지스터를 내장하여 외부 커패시터 C가 1/3 Vcc에서 2/3 Vcc 사이를 충방전하며 지속적인 구형파(Square wave)를 발생시킨다.",
+      "equations": [
+        {
+          "name": "555 타이머 발진 주파수",
+          "typesetMath": "f = \\frac{1.44}{(R_A + 2 R_B) C}",
+          "explanation": "저항 R_A, R_B와 커패시터 C에 의해 결정되는 정밀 클럭 주파수"
+        },
+        {
+          "name": "듀티 사이클 (Duty Cycle)",
+          "typesetMath": "D = \\frac{t_{\\text{high}}}{T} = \\frac{R_A + R_B}{R_A + 2 R_B}",
+          "explanation": "한 주기 중 전압이 High로 유지되는 시간의 비율"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "오디오 안티에일리어싱(Anti-Aliasing) 필터 및 PWM 클록원",
+      "practicalContext": "아날로그 음성을 디지털 ADC로 변환하기 전 나이퀴스트 주파수(f_s/2) 이상의 고주파 성분이 저주파 잡음으로 왜곡되는 현상을 방지하기 위해 4차 Butterworth 능동 LPF를 거침.",
+      "engineeringNote": "555 타이머는 모터 속도 조절용 PWM 신호 발생기, LED 깜빡이, 마이크로컨트롤러 클록 소스로 널리 쓰임."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-timer555",
+    "type": "timer555",
+    "title": "555 타이머 펄스 발생기 시뮬레이터",
+    "initialParams": {
+      "Ra": 10000,
+      "Rb": 10000,
+      "C": 0.000001
+    },
+    "keyFormulas": [
+      "Thigh = 0.693 * (Ra + Rb) * C",
+      "Tlow = 0.693 * Rb * C",
+      "f = 1.44 / ((Ra + 2*Rb)*C)"
+    ]
+  },
+  "summary": "능동 필터는 원하는 대역의 주파수 성분만 선택하고 잡음을 차단하며, 555 타이머와 발진기는 디지털 및 통신 시스템의 심장 박동인 클록 펄스를 만듭니다."
+}

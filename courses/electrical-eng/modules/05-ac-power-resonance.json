@@ -1,0 +1,86 @@
+{
+  "id": "ee-05",
+  "order": 5,
+  "domain": "교류 전력 및 공진",
+  "titleKo": "교류 전력, 역률 개선 및 RLC 공진 회로",
+  "titleEn": "AC Power, Power Factor Correction & Resonance",
+  "file": "modules/05-ac-power-resonance.json",
+  "overview": "유효전력(P), 무효전력(Q), 피상전력(S)으로 구성되는 복소 전력 삼각형, 산업 현장의 송배전 효율을 극대화하는 역률 개선(Power Factor Correction), 직렬/병렬 RLC 공진 현상을 분석합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "교류 전력 3총사: 유효, 무효, 피상전력",
+      "titleEn": "Active, Reactive, and Apparent Power",
+      "principle": "교류에서는 저항에서 열이나 일로 실제 소비되는 유효전력(P)과, L과 C 사이에서 에너지를 주기적으로 주고받기만 하는 무효전력(Q)이 존재하며, 둘의 벡터 합을 피상전력(S)이라 한다.",
+      "equations": [
+        {
+          "name": "복소 전력 (Complex Power)",
+          "typesetMath": "\\mathbf{S} = \\mathbf{V} \\mathbf{I}^* = P + jQ = |\\mathbf{S}| e^{j\\theta}",
+          "explanation": "복소수 전력 표현 (I*는 켤레 전류 페이저)"
+        },
+        {
+          "name": "전력의 크기 및 단위",
+          "typesetMath": "P = V_{\\text{rms}} I_{\\text{rms}} \\cos\\theta \\; [\\text{W}], \\quad Q = V_{\\text{rms}} I_{\\text{rms}} \\sin\\theta \\; [\\text{VAR}], \\quad S = V_{\\text{rms}} I_{\\text{rms}} \\; [\\text{VA}]",
+          "explanation": "유효전력(와트 W), 무효전력(바 VAR), 피상전력(볼트암페어 VA)"
+        }
+      ]
+    },
+    {
+      "titleKo": "역률(Power Factor)과 진상 커패시터 역률 개선",
+      "titleEn": "Power Factor & Capacitor Correction",
+      "principle": "역률 cosθ는 공급된 전체 피상전력 중 실제 유효하게 일하는 전력의 비율이다. 모터 등 유도성 부하(지상 역률)에 병렬로 진상 커패시터를 설치하면 유도성 무효전력을 상쇄하여 선로 전류와 송전 손실을 극적으로 감소시킨다.",
+      "equations": [
+        {
+          "name": "역률 공식",
+          "typesetMath": "\\text{PF} = \\cos\\theta = \\frac{P}{S} = \\frac{P}{\\sqrt{P^2 + Q^2}}",
+          "explanation": "전압과 전류의 위상차 세타의 코사인 값"
+        },
+        {
+          "name": "역률 개선 필요 커패시터 용량(Q_C)",
+          "typesetMath": "Q_C = P (\\tan\\theta_1 - \\tan\\theta_2) = \\omega C V^2",
+          "explanation": "역률을 cos theta_1에서 cos theta_2로 개선하기 위한 진상용량"
+        }
+      ]
+    },
+    {
+      "titleKo": "RLC 직렬 및 병렬 공진",
+      "titleEn": "Series and Parallel Resonance",
+      "principle": "유도 리액턴스와 용량 리액턴스의 크기가 같아져(X_L = X_C) 허수부가 완전히 상쇄되는 특정 주파수를 공진 주파수(Resonant Frequency)라 하며, 직렬 공진 시 임피던스는 최소가 되고 전류는 최대가 된다.",
+      "equations": [
+        {
+          "name": "공진 주파수 공식",
+          "typesetMath": "f_0 = \\frac{1}{2\\pi \\sqrt{LC}}, \\quad \\omega_0 = \\frac{1}{\\sqrt{LC}}",
+          "explanation": "L과 C의 값에 의해 결정되는 고유 진동 주파수"
+        },
+        {
+          "name": "품질 계수 (Quality Factor, Q)",
+          "typesetMath": "Q = \\frac{\\omega_0 L}{R} = \\frac{1}{\\omega_0 C R} = \\frac{f_0}{\\text{BW}}",
+          "explanation": "공진의 날카로움(선택도) 및 대역폭(Bandwidth)과의 관계"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "공장 변전실 진상 콘덴서 설치 및 한전 전기요금 할인",
+      "practicalContext": "공장의 수많은 전동기는 유도성 부하이므로 역률이 0.7~0.8로 낮음. 병렬 진상 커패시터 뱅크를 설치해 역률을 0.95 이상으로 올리면 선로 손실(I^2*R)이 줄고 한전 역률 요금 할인을 적용받음.",
+      "engineeringNote": "과보상(Over-compensation) 시 페란티 현상(Ferranti effect)으로 수전단 전압이 송전단보다 높아져 설비가 소손될 수 있으므로 자동 역률 제어기(APFC)를 사용함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-phasor-power",
+    "type": "phasor-power",
+    "title": "AC 페이저 및 전력 삼각형 시뮬레이터",
+    "initialParams": {
+      "P": 1000,
+      "QL": 800,
+      "QC": 400,
+      "V": 220
+    },
+    "keyFormulas": [
+      "Q_net = QL - QC",
+      "S = sqrt(P^2 + Q_net^2)",
+      "PF = P / S"
+    ]
+  },
+  "summary": "교류 전력은 P, Q, S의 삼각 기하학적 관계를 가지며, 역률 개선은 송배전 효율의 핵심이고, 공진 현상은 무선 주파수 튜닝과 필터의 기반이 됩니다."
+}

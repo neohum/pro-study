@@ -1,0 +1,79 @@
+{
+  "title": "전기공학 마스터 커리큘럼 (Electrical Engineering Curriculum)",
+  "description": "전자기학 기초부터 직류/교류 회로이론, RLC 과도현상, 페이저 해석, 3상 전력, 전기기기 및 실무 시퀀스/안전설비까지 8단계 정밀 학습",
+  "totalModules": 8,
+  "modules": [
+    {
+      "id": "ee-01",
+      "order": 1,
+      "domain": "전기공학 전자기초",
+      "titleKo": "전자기학 기초 및 맥스웰 방정식",
+      "titleEn": "Electromagnetics Fundamentals & Maxwell's Equations",
+      "file": "modules/01-electromagnetics.json",
+      "simId": "sim-em-field"
+    },
+    {
+      "id": "ee-02",
+      "order": 2,
+      "domain": "직류 회로 이론",
+      "titleKo": "직류(DC) 회로 해석 및 등가망 이론",
+      "titleEn": "DC Circuit Analysis & Network Theorems",
+      "file": "modules/02-dc-circuits.json",
+      "simId": "sim-dc-circuit"
+    },
+    {
+      "id": "ee-03",
+      "order": 3,
+      "domain": "과도 현상 및 에너지 소자",
+      "titleKo": "RLC 과도 현상과 시정수 해석",
+      "titleEn": "RLC Circuit Transients & Time Constant Analysis",
+      "file": "modules/03-transient-rlc.json",
+      "simId": "sim-rlc-transient"
+    },
+    {
+      "id": "ee-04",
+      "order": 4,
+      "domain": "교류 회로 및 페이저",
+      "titleKo": "정현파 교류 및 복소 페이저(Phasor) 해석",
+      "titleEn": "Sinusoidal AC & Complex Phasor Analysis",
+      "file": "modules/04-ac-phasor.json",
+      "simId": "sim-phasor-power"
+    },
+    {
+      "id": "ee-05",
+      "order": 5,
+      "domain": "교류 전력 및 공진",
+      "titleKo": "교류 전력, 역률 개선 및 RLC 공진 회로",
+      "titleEn": "AC Power, Power Factor Correction & Resonance",
+      "file": "modules/05-ac-power-resonance.json",
+      "simId": "sim-phasor-power"
+    },
+    {
+      "id": "ee-06",
+      "order": 6,
+      "domain": "3상 교류 및 전력 계통",
+      "titleKo": "3상 교류 전력 및 변압기 계통 해석",
+      "titleEn": "Three-Phase Power Systems & Transformers",
+      "file": "modules/06-three-phase-systems.json",
+      "simId": "sim-three-phase"
+    },
+    {
+      "id": "ee-07",
+      "order": 7,
+      "domain": "전기기기 및 모터 제어",
+      "titleKo": "전기기기: 직류기, 유도 전동기 및 모터 제어",
+      "titleEn": "Electric Machines: DC Motors, Induction Motors & VFD",
+      "file": "modules/07-electric-machines.json",
+      "simId": "sim-motor-torque"
+    },
+    {
+      "id": "ee-08",
+      "order": 8,
+      "domain": "실전 전기설비 및 시퀀스",
+      "titleKo": "실무 시퀀스 제어, 접지 및 전기안전 규정(KEC)",
+      "titleEn": "Relay Sequence Control, Grounding & Electrical Safety",
+      "file": "modules/08-sequence-and-safety.json",
+      "simId": "sim-relay-sequence"
+    }
+  ]
+}

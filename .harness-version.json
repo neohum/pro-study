@@ -5,8 +5,8 @@
   "projectName": "pro-study",
   "minNode": ">=22.18",
   "mode": "autonomous",
-  "commit": "72943d9add5cbd0c0a62c6553c223ee785951fb6",
+  "commit": "05f263633b1d6793fcb65ac9bb75124df00d00a3",
   "branch": "main",
   "remoteUrl": "github.com:neohum/create-agent-harness.git",
-  "stampedAt": "2026-10-10T01:09:42.523Z"
+  "stampedAt": "2026-10-10T03:05:36.900Z"
 }

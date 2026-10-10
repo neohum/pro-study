@@ -1,0 +1,89 @@
+{
+  "id": "el-07",
+  "order": 7,
+  "domain": "디지털 논리 회로",
+  "titleKo": "디지털 논리 게이트, 카르노 맵 및 플립플롭",
+  "titleEn": "Digital Logic Gates, Karnaugh Maps & Flip-Flops",
+  "file": "modules/07-digital-logic.json",
+  "overview": "불 대수 법칙, 기본 논리 게이트(AND, OR, NOT, NAND, NOR, XOR), 회로 최소화 기법인 카르노 맵(Karnaugh Map), 조합 논리 회로(가산기, MUX)와 메모리의 원형인 순차 회로(플립플롭, 카운터)를 구축합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "디지털 논리 게이트 및 플립플롭",
+    "operationPrinciples": "0V(Low, False)와 5V/3.3V(High, True)의 2진 전압 레벨로 불 대수 논리 연산을 물리적으로 구현함.",
+    "equivalentCircuit": "TTL/CMOS 게이트 어레이"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "불 대수와 드 모르간의 법칙",
+      "titleEn": "Boolean Algebra & De Morgan's Laws",
+      "principle": "논리곱(AND), 논리합(OR), 논리부정(NOT)의 3대 기본 연산자로 모든 디지털 연산이 가능하며, 드 모르간의 법칙은 NAND와 NOR 게이트만으로 모든 회로를 구현(Universal Gate)할 수 있음을 증명한다.",
+      "equations": [
+        {
+          "name": "드 모르간의 법칙 (De Morgan's Laws)",
+          "typesetMath": "\\overline{A \\cdot B} = \\overline{A} + \\overline{B}, \\quad \\overline{A + B} = \\overline{A} \\cdot \\overline{B}",
+          "explanation": "곱의 부정은 부정의 합이고, 합의 부정은 부정의 곱임"
+        },
+        {
+          "name": "배타적 논리합 (XOR)",
+          "typesetMath": "A \\oplus B = A \\overline{B} + \\overline{A} B",
+          "explanation": "두 입력이 서로 다를 때만 1이 출력되는 덧셈의 기초 연산자"
+        }
+      ]
+    },
+    {
+      "titleKo": "조합 논리: 반가산기 및 전가산기",
+      "titleEn": "Combinational Logic: Adders",
+      "principle": "2진수의 덧셈에서 합(Sum)은 XOR 게이트로 계산되고, 자리올림수(Carry)는 AND 게이트로 계산된다.",
+      "equations": [
+        {
+          "name": "반가산기 (Half Adder)",
+          "typesetMath": "S = A \\oplus B, \\quad C = A \\cdot B",
+          "explanation": "하위 자리올림이 없는 2비트 덧셈기"
+        },
+        {
+          "name": "전가산기 (Full Adder)",
+          "typesetMath": "S = A \\oplus B \\oplus C_{\\text{in}}, \\quad C_{\\text{out}} = A B + C_{\\text{in}}(A \\oplus B)",
+          "explanation": "하위 자리올림 C_in을 포함하여 연쇄 연결로 다비트 가산기 구축"
+        }
+      ]
+    },
+    {
+      "titleKo": "순차 논리: D 플립플롭과 1비트 메모리",
+      "titleEn": "Sequential Logic: D Flip-Flop & Memory",
+      "principle": "현재 입력뿐만 아니라 과거의 상태를 기억하는 회로로, 클럭 신호의 상승 에지(Rising Edge) 순간에만 입력 D의 상태를 출력 Q로 캡처하여 저장한다.",
+      "equations": [
+        {
+          "name": "D 플립플롭 특성식",
+          "typesetMath": "Q_{n+1} = D \\quad (\\text{At Clock Rising Edge})",
+          "explanation": "클럭에 동기화되어 1비트의 디지털 정보를 안정적으로 래치(저장)"
+        },
+        {
+          "name": "2분주 카운터 (Toggled Flip-Flop)",
+          "typesetMath": "D = \\overline{Q} \\implies f_{\\text{out}} = \\frac{f_{\\text{clock}}}{2}",
+          "explanation": "출력 반전을 입력으로 되먹여 클록 주파수를 절반으로 낮추는 2진 카운터"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "컴퓨터 산술논리연산장치(ALU) 및 레지스터 파일",
+      "practicalContext": "CPU의 ALU는 전가산기와 MUX의 조합으로 64비트 사칙연산과 비트 연산을 1클록(약 0.2나노초)에 수행하며, D 플립플롭 어레이가 초고속 캐시 레지스터를 형성함.",
+      "engineeringNote": "글리치(Glitch, 일시적 오류 펄스)와 레이스 컨디션을 방지하기 위해 모든 순차 회로는 단일 시스템 마스터 클록에 철저히 동기화(Synchronous Design)함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-logic-circuit",
+    "type": "logic-sim",
+    "title": "LogicSim 디지털 논리 회로 시뮬레이터",
+    "initialParams": {
+      "gateType": "XOR",
+      "inA": 1,
+      "inB": 0
+    },
+    "keyFormulas": [
+      "Out = A ^ B",
+      "Carry = A & B"
+    ]
+  },
+  "summary": "불 대수와 논리 게이트는 조합 논리를 형성하고, 플립플롭은 상태를 저장하는 순차 논리를 형성하여 현대 컴퓨터 프로세서의 모든 연산과 메모리를 구현합니다."
+}

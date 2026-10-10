@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eink_bg"
+    android:orientation="vertical">
+
+    <!-- 상단 툴바 (E-ink 스타일) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/eink_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <Button
+            android:id="@+id/btn_ee_back"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            android:text="◀ 뒤로"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_ee_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="📐⚡ 수학 기호·정리 &amp; 전기·전자공학 마스터"
+            android:textColor="@color/eink_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_ee_tts_toggle"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="🔊 음성 준비"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_ee_refresh"
+            style="@style/EinkButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="🔄 새로고침"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/eink_border" />
+
+    <!-- 웹뷰 컨테이너 (KaTeX 수식 조판 & 8대 시뮬레이터 캔버스 구동) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/eink_bg">
+
+        <WebView
+            android:id="@+id/wv_math_ee_viewer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/eink_bg" />
+    </FrameLayout>
+
+</LinearLayout>

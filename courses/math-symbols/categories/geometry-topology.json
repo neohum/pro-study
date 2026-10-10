@@ -1,0 +1,149 @@
+{
+  "categoryId": "geometry-topology",
+  "categoryNameKo": "기하학, 삼각법 및 위상수학 기호",
+  "categoryNameEn": "Geometry, Trigonometry and Topology",
+  "order": 5,
+  "description": "도형, 각도, 삼각비, 쌍곡선함수, 공간 및 연속 변형 위상 기호 체계",
+  "symbols": [
+    {
+      "id": "sym-angle",
+      "symbol": "∠",
+      "typesetMath": "\\angle ABC, \\; \\theta, \\; \\phi",
+      "nameKo": "각 (각도 기호)",
+      "nameEn": "Angle symbol",
+      "howToReadKo": "각 ABC, 세타, 파이",
+      "howToReadEn": "angle ABC, theta, phi",
+      "unicode": "U+2220",
+      "historyAndOrigin": "1634년 피에르 에리고누(Pierre Hérigone)가 기하학 증명에서 두 반직선이 만나는 꼭짓점을 나타내기 위해 창안함.",
+      "rigorousDefinition": "동일한 시점을 공유하는 두 반직선 사이의 회전량. 호도법(Radian)에서 각 $\\theta = \\frac{s}{r}$ (호의 길이 $s$, 반지름 $r$).",
+      "usageAndExamples": [
+        {
+          "context": "삼각형 내각의 합",
+          "typesetMath": "\\angle A + \\angle B + \\angle C = 180^\\circ = \\pi \\text{ rad}",
+          "description": "유클리드 평면 삼각형의 세 내각 합 공식"
+        }
+      ],
+      "commonPitfalls": "부등호($<$)와 각 기호($\\angle$)는 밑변의 수평성에서 명확히 구분됨."
+    },
+    {
+      "id": "sym-parallel-perp",
+      "symbol": "∥, ⟂",
+      "typesetMath": "\\parallel, \\; \\perp",
+      "nameKo": "평행 및 수직 기호",
+      "nameEn": "Parallel and Perpendicular",
+      "howToReadKo": "평행하다, 수직이다(직교한다)",
+      "howToReadEn": "is parallel to, is perpendicular to",
+      "unicode": "U+2225, U+22A5",
+      "historyAndOrigin": "1670년대 윌리엄 오트레드가 두 직선의 기하학적 직교($\\perp$)와 평행($\\parallel$) 관계를 명시하기 위해 고안함.",
+      "rigorousDefinition": "1) 평행: $\\vec{u} \\parallel \\vec{v} \\iff \\vec{u} \\times \\vec{v} = \\vec{0}$ 또는 $\\vec{u} = k\\vec{v}$. 2) 수직: $\\vec{u} \\perp \\vec{v} \\iff \\vec{u} \\cdot \\vec{v} = 0$.",
+      "usageAndExamples": [
+        {
+          "context": "벡터 직교 분해",
+          "typesetMath": "\\mathbf{v} = \\mathbf{v}_\\parallel + \\mathbf{v}_\\perp",
+          "description": "벡터를 평행 성분과 직교 성분으로 분해"
+        }
+      ],
+      "commonPitfalls": "선택공리나 비유클리드 기하학에서는 평행선 공준(Playfair axiom)의 성립 여부가 달라짐."
+    },
+    {
+      "id": "sym-triangle-cong",
+      "symbol": "△, ≅, ∼",
+      "typesetMath": "\\triangle ABC, \\; \\cong, \\; \\sim",
+      "nameKo": "삼각형, 합동, 닮음 기호",
+      "nameEn": "Triangle, Congruent to, Similar to",
+      "howToReadKo": "삼각형 ABC, 합동이다, 닮음이다",
+      "howToReadEn": "triangle ABC, is congruent to, is similar to",
+      "unicode": "U+25B3, U+2245, U+223C",
+      "historyAndOrigin": "라이프니츠가 등호(=) 위에 유사성을 뜻하는 물결(~)을 얹어 합동($\\cong$)을, 닮음에는 물결($\\sim$)을 사용하여 체계화함.",
+      "rigorousDefinition": "1) 합동($\\cong$): 강체 변환(회전, 평행이동, 대칭)을 통해 완전히 겹쳐짐. 2) 닮음($\\sim$): 등방 확대/축소 및 강체 변환을 통해 겹쳐짐 (대응각 일치, 대응변 길이비 일정).",
+      "usageAndExamples": [
+        {
+          "context": "도형 합동",
+          "typesetMath": "\\triangle ABC \\cong \\triangle DEF",
+          "description": "두 삼각형의 모든 대응변과 대응각이 완전히 일치함"
+        }
+      ],
+      "commonPitfalls": "한국/일본 교과서에서 닮음 기호로 눕힌 S(∽, U+223D)를 쓰기도 하나, 국제 표준 및 KaTeX에서는 $\\sim$을 사용함."
+    },
+    {
+      "id": "sym-pi",
+      "symbol": "π",
+      "typesetMath": "\\pi",
+      "nameKo": "원주율 파이",
+      "nameEn": "Archimedes' constant Pi",
+      "howToReadKo": "파이",
+      "howToReadEn": "pi",
+      "unicode": "U+03C0",
+      "historyAndOrigin": "1706년 윌리엄 존스(William Jones)가 그리스어로 둘레를 뜻하는 '페리메트로스(περίμετρος)'의 첫 글자에서 따왔으며, 오일러가 사용하면서 전 세계 표준으로 확립됨.",
+      "rigorousDefinition": "임의의 원의 지름에 대한 원둘레의 비율: $\\pi = \\frac{C}{d} = 3.1415926535\\dots$. 초월수(Transcendental Number, 린데만 1882년 증명).",
+      "usageAndExamples": [
+        {
+          "context": "원의 넓이",
+          "typesetMath": "A = \\pi r^2",
+          "description": "반지름 r인 원의 기하학적 넓이 공식"
+        }
+      ],
+      "commonPitfalls": "원주율 $\\pi$는 무리수이자 초월수이므로 유한 분수(예: 22/7)는 근사값에 불과함."
+    },
+    {
+      "id": "sym-trig",
+      "symbol": "sin, cos, tan",
+      "typesetMath": "\\sin\\theta, \\; \\cos\\theta, \\; \\tan\\theta",
+      "nameKo": "기본 삼각함수",
+      "nameEn": "Trigonometric functions (sine, cosine, tangent)",
+      "howToReadKo": "사인, 코사인, 탄젠트",
+      "howToReadEn": "sine of theta, cosine of theta, tangent of theta",
+      "unicode": "N/A",
+      "historyAndOrigin": "고대 인도 천문학의 '지야(Jya)'가 아랍어 '자이브(Jaib)'를 거쳐 라틴어 '시누스(Sinus: 굽은 곳, 주머니)'로 번역되며 탄생함.",
+      "rigorousDefinition": "단위원 $x^2 + y^2 = 1$ 상의 각 $\\theta$에 대응하는 점의 좌표 $(x, y) = (\\cos\\theta, \\sin\\theta)$ 및 $\\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}$. 복소수 정의: $\\sin z = \\frac{e^{iz} - e^{-iz}}{2i}$, $\\cos z = \\frac{e^{iz} + e^{-iz}}{2}$.",
+      "usageAndExamples": [
+        {
+          "context": "피타고라스 삼각항등식",
+          "typesetMath": "\\sin^2\\theta + \\cos^2\\theta = 1",
+          "description": "단위원 상의 기본 대칭 관계"
+        }
+      ],
+      "commonPitfalls": "$\\sin^{-1}(x)$는 역삼각함수($\\arcsin x$)를 의미하며, $\\frac{1}{\\sin x} = \\csc x$와 전혀 다름."
+    },
+    {
+      "id": "sym-hyperbolic",
+      "symbol": "sinh, cosh, tanh",
+      "typesetMath": "\\sinh x, \\; \\cosh x, \\; \\tanh x",
+      "nameKo": "쌍곡선함수",
+      "nameEn": "Hyperbolic functions",
+      "howToReadKo": "하이퍼볼릭 사인, 코사인, 탄젠트",
+      "howToReadEn": "hyperbolic sine, hyperbolic cosine, hyperbolic tangent (sinh, cosh, tanh)",
+      "unicode": "N/A",
+      "historyAndOrigin": "1760년대 요한 람베르트(Johann Heinrich Lambert)와 빈센초 리카티가 쌍곡선 $x^2 - y^2 = 1$ 매개변수화로 도입함.",
+      "rigorousDefinition": "$\\sinh x = \\frac{e^x - e^{-x}}{2}$, $\\cosh x = \\frac{e^x + e^{-x}}{2}$, $\\tanh x = \\frac{\\sinh x}{\\cosh x}$. 기본 항등식: $\\cosh^2 x - \\sinh^2 x = 1$.",
+      "usageAndExamples": [
+        {
+          "context": "현수선(Catenary) 방정식",
+          "typesetMath": "y = a \\cosh\\left(\\frac{x}{a}\\right)",
+          "description": "양 끝이 고정된 균일한 줄이 중력에 의해 자연스럽게 늘어진 곡선"
+        }
+      ],
+      "commonPitfalls": "삼각함수($\\cos^2 + \\sin^2 = 1$)와 달리 쌍곡선함수는 부호가 마이너스임($\\cosh^2 - \\sinh^2 = 1$)."
+    },
+    {
+      "id": "sym-topology",
+      "symbol": "τ, ∂A, Ā, A°",
+      "typesetMath": "\\tau, \\; \\partial A, \\; \\overline{A}, \\; A^\\circ",
+      "nameKo": "위상, 경계, 폐포, 내부 기호",
+      "nameEn": "Topology, Boundary, Closure, Interior",
+      "howToReadKo": "위상 타우, 경계 A, 폐포 A(A 바), 내부 A(A 인테리어)",
+      "howToReadEn": "topology tau, boundary of A, closure of A, interior of A",
+      "unicode": "U+03C4, U+2202",
+      "historyAndOrigin": "펠릭스 하우스도르프(Felix Hausdorff)와 카지미에시 쿠라토프스키(Kazimierz Kuratowski)가 20세기 초 점집합 위상수학의 공리계를 정립함.",
+      "rigorousDefinition": "위상 공간 $(X, \\tau)$: 1) $\\emptyset, X \\in \\tau$, 2) 임의 합집합에 닫힘, 3) 유한 교집합에 닫힘. 내부 $A^\\circ$: $A$에 포함된 가장 큰 개집합. 폐포 $\\overline{A}$: $A$를 포함하는 가장 작은 폐집합. 경계 $\\partial A = \\overline{A} \\setminus A^\\circ$.",
+      "usageAndExamples": [
+        {
+          "context": "열린 공의 경계",
+          "typesetMath": "\\partial B_r(\\mathbf{x}) = \\{\\mathbf{y} \\mid \\|\\mathbf{y} - \\mathbf{x}\\| = r\\}",
+          "description": "반지름 r인 유클리드 열린 구의 경계면은 구면(Sphere)임"
+        }
+      ],
+      "commonPitfalls": "편미분 기호 $\\partial$가 위상수학에서는 집합의 경계(Boundary) 연산자로 사용되므로 문맥을 파악해야 함."
+    }
+  ]
+}

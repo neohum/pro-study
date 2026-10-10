@@ -1,0 +1,84 @@
+{
+  "id": "el-08",
+  "order": 8,
+  "domain": "임베디드 시스템 및 실전 인터페이스",
+  "titleKo": "임베디드 인터페이싱: ADC, 통신(UART/I2C/SPI) 및 PCB 설계",
+  "titleEn": "Embedded Systems: ADC, Protocols & PCB Layout",
+  "file": "modules/08-embedded-interfacing.json",
+  "overview": "아날로그 세계와 마이크로컨트롤러를 잇는 아날로그-디지털 변환(ADC), 필수 통신 프로토콜(UART, I2C, SPI), 센서 인터페이싱 및 노이즈 없는 실전 PCB 레이아웃(디커플링 커패시터, 접지면)의 실무 엔지니어링을 완성합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "마이크로컨트롤러 인터페이스 (MCU Peripherals)",
+    "operationPrinciples": "SAR ADC의 연속 근사 레지스터, 오픈 드레인 풀업 I2C 통신, 전이중 SPI 동기 통신.",
+    "equivalentCircuit": "GPIO 입력/출력 버퍼 및 기생 인덕턴스/커패시턴스 모델"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "아날로그-디지털 변환 (ADC): 표본화와 양자화",
+      "titleEn": "Analog-to-Digital Conversion (ADC)",
+      "principle": "연속적인 아날로그 신호를 시간축에서 샘플링하고(나이퀴스트 표본화 정리: $f_s > 2 f_{\\max}$), 전압축에서 n비트의 2진수 값으로 양자화(Quantization)한다.",
+      "equations": [
+        {
+          "name": "ADC 전압 분해능 (Resolution)",
+          "typesetMath": "\\Delta V = \\frac{V_{\\text{ref}}}{2^n}, \\quad \\text{Digital Output} = \\left\\lfloor \\frac{V_{\\text{in}}}{V_{\\text{ref}}} \\times (2^n - 1) \\right\\rfloor",
+          "explanation": "10비트 ADC (5V 기준)의 최소 분해 전압은 5V / 1024 = 4.88mV"
+        },
+        {
+          "name": "신호 대 양자화 잡음비 (SQNR)",
+          "typesetMath": "\\text{SQNR} = 6.02 \\times n + 1.76 \\; [\\text{dB}]",
+          "explanation": "분해능 1비트 증가할 때마다 신호 품질 약 6dB 개선"
+        }
+      ]
+    },
+    {
+      "titleKo": "3대 임베디드 통신 프로토콜 비교 (UART, I2C, SPI)",
+      "titleEn": "Embedded Serial Protocols: UART, I2C, SPI",
+      "principle": "센서 및 칩셋 간 데이터 교환 방식: UART(비동기 2선식 점대점), I2C(동기 2선식 멀티마스터/멀티슬레이브), SPI(동기 4선식 고속 전이중).",
+      "equations": [
+        {
+          "name": "I2C 오픈 드레인 풀업 저항값 계산",
+          "typesetMath": "R_{\\text{pull-up}} \\le \\frac{t_r}{0.8473 \\times C_{\\text{bus}}}",
+          "explanation": "신호 상승 시간 t_r(통상 1000ns)과 버스 기생 커패시턴스를 만족하는 풀업 저항(통상 4.7kΩ)"
+        },
+        {
+          "name": "SPI 최대 전송 속도",
+          "typesetMath": "\\text{Data Rate} = f_{\\text{SCK}} \\; [\\text{bps}] \\quad (\\text{최대 수십 MHz 고속 통신})",
+          "explanation": "클록 선(SCK)에 동기화된 마스터-슬레이브 전이중 전송"
+        }
+      ]
+    },
+    {
+      "titleKo": "실전 PCB 설계 원칙: 디커플링과 접지 루프 방지",
+      "titleEn": "PCB Layout: Decoupling Capacitors & Ground Planes",
+      "principle": "디지털 IC가 스위칭할 때 순간적으로 발생하는 전원선 전압 강하(디지털 노이즈)를 억제하기 위해 IC 전원 핀 바로 옆에 0.1uF 세라믹 디커플링 커패시터를 배치해야 하며, 넓은 접지면(Ground Plane)을 깔아 인덕턴스를 최소화한다.",
+      "equations": [
+        {
+          "name": "전원선 인덕턴스 전압 바운스",
+          "typesetMath": "V_{\\text{noise}} = L_{\\text{trace}} \\frac{di}{dt}",
+          "explanation": "수 나노초 동안 수백 mA 스위칭 시 배선 인덕턴스에 의해 발생하는 글리치"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "온습도 센서(I2C) 및 OLED 디스플레이(SPI) 연동 아두이노 장치",
+      "practicalContext": "SHT31 온습도 센서에서 I2C 2가닥 선(SDA, SCL)으로 측정값을 읽어와, SPI 고속 4가닥 선(MOSI, SCK, CS, DC)으로 128x64 그래픽 OLED 화면에 초당 30프레임으로 렌더링함.",
+      "engineeringNote": "아날로그 센서 배선은 디지털 고주파 클록 라인과 교차하지 않도록 차폐(Shielding)하며 스타 접지(Star Ground)를 적용함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-embedded-comm",
+    "type": "protocol-timing",
+    "title": "UART/I2C/SPI 직렬 통신 타이밍 시뮬레이터",
+    "initialParams": {
+      "protocol": "I2C",
+      "baudRate": 100000,
+      "dataByte": 165
+    },
+    "keyFormulas": [
+      "Bit_period = 1 / baudRate",
+      "I2C_Ack = Low at 9th clock"
+    ]
+  },
+  "summary": "임베디드 엔지니어링은 ADC로 아날로그 신호를 수집하고 표준 시리얼 통신으로 센서와 IC를 연결하며, 저노이즈 PCB 레이아웃을 통해 견고한 상용 하드웨어를 완성합니다."
+}

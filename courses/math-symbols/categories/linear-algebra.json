@@ -1,0 +1,154 @@
+{
+  "categoryId": "linear-algebra",
+  "categoryNameKo": "선형대수학 및 텐서 기호",
+  "categoryNameEn": "Linear Algebra and Tensor Analysis",
+  "order": 4,
+  "description": "벡터, 행렬, 행렬식, 고윳값, 텐서곱 및 내적 공간을 다루는 핵심 기호 체계",
+  "symbols": [
+    {
+      "id": "sym-vector",
+      "symbol": "v⃗, v",
+      "typesetMath": "\\vec{v}, \\; \\mathbf{v}",
+      "nameKo": "벡터 표기법 (화살표 / 볼드체)",
+      "nameEn": "Vector notation",
+      "howToReadKo": "벡터 v",
+      "howToReadEn": "vector v",
+      "unicode": "U+20D7 (combining arrow)",
+      "historyAndOrigin": "19세기 조사이어 윌러드 기브스(Josiah Willard Gibbs)와 올리버 헤비사이드(Oliver Heaviside)가 사원수론을 단순화하여 현대식 3차원 벡터 해석학을 확립함.",
+      "rigorousDefinition": "체 $F$ 위의 벡터 공간 $V$의 원소: 덧셈과 스칼라 곱에 대해 닫혀 있는 8대 공리를 만족하는 수학적 대상.",
+      "usageAndExamples": [
+        {
+          "context": "벡터 성분 표시",
+          "typesetMath": "\\mathbf{v} = \\begin{pmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{pmatrix}",
+          "description": "3차원 열벡터의 성분별 표현"
+        }
+      ],
+      "commonPitfalls": "필기체에서는 상단 화살표($\\vec{v}$)를 주로 쓰고, 출판 인쇄물에서는 소문자 굵은 볼드체($\\mathbf{v}$)를 표준으로 씀."
+    },
+    {
+      "id": "sym-matrix",
+      "symbol": "A, [A]",
+      "typesetMath": "\\mathbf{A}, \\; [a_{ij}], \\; \\mathbf{I}_n",
+      "nameKo": "행렬 및 단위행렬 기호",
+      "nameEn": "Matrix and Identity matrix",
+      "howToReadKo": "행렬 A, n차 단위행렬",
+      "howToReadEn": "matrix A, identity matrix of size n",
+      "unicode": "U+1D400 (bold A)",
+      "historyAndOrigin": "1850년 제임스 조지프 실베스터(James Joseph Sylvester)가 행렬(Matrix: 자궁, 모체를 의미하는 라틴어)이라는 용어를 도입하고 아서 케일리(Arthur Cayley)가 행렬 대수학을 정립함.",
+      "rigorousDefinition": "$m \\times n$ 직사각형 수열 배열. 선형사상 $T: V \\to W$의 기저에 대한 가중치 표현. 단위행렬 $\\mathbf{I}_n$은 대각성분이 1이고 나머지가 0인 항등사상 행렬.",
+      "usageAndExamples": [
+        {
+          "context": "선형 연립방정식",
+          "typesetMath": "\\mathbf{A}\\mathbf{x} = \\mathbf{b}",
+          "description": "행렬과 벡터의 곱으로 표현된 연립 일차방정식"
+        }
+      ],
+      "commonPitfalls": "행렬 곱셈은 교환법칙이 성립하지 않음: $\\mathbf{A}\\mathbf{B} \\ne \\mathbf{B}\\mathbf{A}$ (일반적으로)."
+    },
+    {
+      "id": "sym-transpose",
+      "symbol": "Aᵀ",
+      "typesetMath": "\\mathbf{A}^T, \\; \\mathbf{A}^H",
+      "nameKo": "전치행렬 / 켤레 전치 (에르미트 전치)",
+      "nameEn": "Transpose / Conjugate transpose (Hermitian)",
+      "howToReadKo": "A 트랜스포즈, A 허미시안",
+      "howToReadEn": "A transpose, A Hermitian transpose",
+      "unicode": "U+1D40 (superscript T)",
+      "historyAndOrigin": "1858년 아서 케일리가 행과 열을 뒤바꾸는 대칭 연산으로 도입함.",
+      "rigorousDefinition": "$(\\mathbf{A}^T)_{ij} = a_{ji}$. 복소 행렬에서는 켤레복소수를 취한 에르미트 전치 $\\mathbf{A}^H = (\\mathbf{A}^*)^T$.",
+      "usageAndExamples": [
+        {
+          "context": "대칭행렬",
+          "typesetMath": "\\mathbf{A}^T = \\mathbf{A}",
+          "description": "전치행렬이 원래 행렬과 같은 대칭 구조"
+        },
+        {
+          "context": "직교행렬",
+          "typesetMath": "\\mathbf{Q}^T \\mathbf{Q} = \\mathbf{I}",
+          "description": "전치행렬이 곧 역행렬이 되는 직교 변환"
+        }
+      ],
+      "commonPitfalls": "곱셈의 전치는 순서가 뒤집힘: $(\\mathbf{A}\\mathbf{B})^T = \\mathbf{B}^T \\mathbf{A}^T$."
+    },
+    {
+      "id": "sym-det",
+      "symbol": "det(A), |A|",
+      "typesetMath": "\\det(\\mathbf{A}), \\; |\\mathbf{A}|",
+      "nameKo": "행렬식 (디터미넌트)",
+      "nameEn": "Determinant",
+      "howToReadKo": "디터미넌트 A, 댓 A",
+      "howToReadEn": "the determinant of A",
+      "unicode": "U+007C",
+      "historyAndOrigin": "1693년 라이프니츠와 세키 다카카즈가 독립적으로 발견하였으며, 코시가 'det'라는 현대적 축약어를 제정함.",
+      "rigorousDefinition": "라이프니츠 공식: $\\det(\\mathbf{A}) = \\sum_{\\sigma \\in S_n} \\operatorname{sgn}(\\sigma) \\prod_{i=1}^n a_{i, \\sigma(i)}$. 기하학적으로 기저 벡터들이 이루는 초부피(Hypervolume)의 부호화된 배율.",
+      "usageAndExamples": [
+        {
+          "context": "2x2 행렬식",
+          "typesetMath": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+          "description": "2차 정방행렬식의 기본 대각선 교차곱 차이"
+        }
+      ],
+      "commonPitfalls": "스칼라 수의 절댓값 표기 $|x|$와 혼동하기 쉬우므로, 명확성을 위해 $\\det(\\mathbf{A})$ 표기를 권장함."
+    },
+    {
+      "id": "sym-trace",
+      "symbol": "tr(A)",
+      "typesetMath": "\\operatorname{tr}(\\mathbf{A})",
+      "nameKo": "대각합 (트레이스)",
+      "nameEn": "Trace of a matrix",
+      "howToReadKo": "트레이스 A",
+      "howToReadEn": "the trace of A",
+      "unicode": "N/A",
+      "historyAndOrigin": "독일어 'Spur(흔적)'에서 유래하여 19세기 불변량 이론에서 주대각 원소의 합으로 정의됨.",
+      "rigorousDefinition": "정방행렬의 주대각선 원소들의 합: $\\operatorname{tr}(\\mathbf{A}) = \\sum_{i=1}^n a_{ii} = \\sum_{i=1}^n \\lambda_i$ (모든 고윳값의 합과 같음).",
+      "usageAndExamples": [
+        {
+          "context": "순환 불변성",
+          "typesetMath": "\\operatorname{tr}(\\mathbf{A}\\mathbf{B}\\mathbf{C}) = \\operatorname{tr}(\\mathbf{B}\\mathbf{C}\\mathbf{A}) = \\operatorname{tr}(\\mathbf{C}\\mathbf{A}\\mathbf{B})",
+          "description": "트레이스의 순환 순열 불변성 성질"
+        }
+      ],
+      "commonPitfalls": "$\\operatorname{tr}(\\mathbf{A}\\mathbf{B}) = \\operatorname{tr}(\\mathbf{B}\\mathbf{A})$이지만 $\\operatorname{tr}(\\mathbf{A}\\mathbf{B}) \\ne \\operatorname{tr}(\\mathbf{A})\\operatorname{tr}(\\mathbf{B})$임."
+    },
+    {
+      "id": "sym-norm",
+      "symbol": "‖x‖",
+      "typesetMath": "\\|\\mathbf{x}\\|_2, \\; \\|\\mathbf{A}\\|_F",
+      "nameKo": "노름 (벡터의 크기 / 행렬 노름)",
+      "nameEn": "Norm (Euclidean norm / Frobenius norm)",
+      "howToReadKo": "노름 x, x의 2-노름",
+      "howToReadEn": "the norm of x, the l2 norm of x",
+      "unicode": "U+2016",
+      "historyAndOrigin": "20세기 초 다비트 힐베르트와 스테판 바나흐(Stefan Banach)가 함수해석학에서 거리 공간의 일반화로 이중 세로선 기호를 정립함.",
+      "rigorousDefinition": "1) 양의 정부호성: $\\|\\mathbf{x}\\| \\ge 0$, $\\|\\mathbf{x}\\|=0 \\iff \\mathbf{x}=\\mathbf{0}$. 2) 동차성: $\\|\\alpha\\mathbf{x}\\| = |\\alpha|\\|\\mathbf{x}\\|$. 3) 삼각부등식: $\\|\\mathbf{x}+\\mathbf{y}\\| \\le \\|\\mathbf{x}\\| + \\|\\mathbf{y}\\|$. 유클리드 노름: $\\|\\mathbf{x}\\|_2 = \\sqrt{\\sum x_i^2}$.",
+      "usageAndExamples": [
+        {
+          "context": "단위벡터 정규화",
+          "typesetMath": "\\hat{\\mathbf{u}} = \\frac{\\mathbf{u}}{\\|\\mathbf{u}\\|}",
+          "description": "크기가 1인 단위 방향벡터 생성"
+        }
+      ],
+      "commonPitfalls": "단일 막대 $|x|$(절댓값)와 이중 막대 $\\|\\mathbf{x}\\|$(노름)의 의미적 위상을 구별하여 표기해야 함."
+    },
+    {
+      "id": "sym-tensor-prod",
+      "symbol": "⊗",
+      "typesetMath": "\\otimes",
+      "nameKo": "텐서곱 (크로네커 곱 / 직적)",
+      "nameEn": "Tensor product (Kronecker product)",
+      "howToReadKo": "텐서곱, 크로네커 곱",
+      "howToReadEn": "tensor product of, otimes",
+      "unicode": "U+2297",
+      "historyAndOrigin": "레오폴트 크로네커(Leopold Kronecker)의 행렬 곱 연구와 헤르만 그라스만의 다중선형대수학을 결합하여 양자역학 및 고등기하학에서 공식화됨.",
+      "rigorousDefinition": "벡터 공간 $V, W$의 텐서곱 $V \\otimes W$는 쌍선형 사상을 선형 사상으로 변환하는 보편 성질(Universal Property)을 만족하는 공간.",
+      "usageAndExamples": [
+        {
+          "context": "양자역학 큐비트 결합",
+          "typesetMath": "|\\psi\\rangle = |q_1\\rangle \\otimes |q_2\\rangle",
+          "description": "두 큐비트 상태 공간의 복합 텐서 상태 표현"
+        }
+      ],
+      "commonPitfalls": "직합($\\oplus$)과 텐서곱($\\otimes$)은 차원이 다름: $\\dim(V \\oplus W) = m+n$이지만 $\\dim(V \\otimes W) = m \\times n$임."
+    }
+  ]
+}
