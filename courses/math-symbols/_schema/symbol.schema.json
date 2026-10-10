@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MathSymbolCategory",
+  "type": "object",
+  "required": [
+    "categoryId",
+    "categoryNameKo",
+    "categoryNameEn",
+    "order",
+    "symbols"
+  ],
+  "properties": {
+    "categoryId": { "type": "string" },
+    "categoryNameKo": { "type": "string" },
+    "categoryNameEn": { "type": "string" },
+    "order": { "type": "integer" },
+    "description": { "type": "string" },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "symbol",
+          "typesetMath",
+          "nameKo",
+          "nameEn",
+          "howToReadKo",
+          "howToReadEn",
+          "historyAndOrigin",
+          "rigorousDefinition",
+          "usageAndExamples"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "symbol": { "type": "string" },
+          "typesetMath": { "type": "string" },
+          "nameKo": { "type": "string" },
+          "nameEn": { "type": "string" },
+          "howToReadKo": { "type": "string" },
+          "howToReadEn": { "type": "string" },
+          "unicode": { "type": "string" },
+          "historyAndOrigin": { "type": "string" },
+          "rigorousDefinition": { "type": "string" },
+          "usageAndExamples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["context", "typesetMath", "description"],
+              "properties": {
+                "context": { "type": "string" },
+                "typesetMath": { "type": "string" },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "commonPitfalls": { "type": "string" }
+        }
+      }
+    }
+  }
+}

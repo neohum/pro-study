@@ -1,0 +1,78 @@
+{
+  "id": "basel-problem",
+  "order": 9,
+  "domain": "해석학 및 급수론",
+  "titleKo": "바젤 문제 (The Basel Problem)",
+  "titleEn": "The Basel Problem",
+  "statement": {
+    "typesetMath": "\\sum_{n=1}^\\infty \\frac{1}{n^2} = 1 + \\frac{1}{4} + \\frac{1}{9} + \\frac{1}{16} + \\cdots = \\frac{\\pi^2}{6}",
+    "explanationKo": "모든 자연수의 제곱의 역수를 무한히 더한 급수는 정확히 6분의 파이 제곱으로 수렴한다.",
+    "explanationEn": "The infinite sum of the reciprocals of the squares of positive integers converges precisely to pi squared over 6."
+  },
+  "historicalSignificance": "야코프 베르누이가 1689년 제시한 후 베르누이 가문 전체가 풀지 못했던 난제를 1734년 28세의 레온하르트 오일러가 해결하여 전 유럽 수학계를 경악시킨 역사적 업적.",
+  "prerequisites": [
+    "테일러 급수",
+    "다항식의 근과 계수의 관계",
+    "비에타 정리의 무한차수 확장"
+  ],
+  "intuitiveIdea": "sin(x)/x 함수의 근들이 +-pi, +-2pi, +-3pi...라는 사실을 이용하여 무한 인수분해 식을 세우고, 이를 sin(x)/x의 테일러 급수 전개식의 x^2 항 계수와 비교하면 1/n^2의 합과 파이 제곱의 관계가 도출됨.",
+  "rigorousProof": {
+    "proofType": "오일러 사인 무한곱 근-계수 대조 증명 (Euler's Infinite Product for Sine)",
+    "assumptions": [
+      "sin(x)/x의 매클로린 급수",
+      "위이어슈트라스 분해 정리의 원형인 무한곱 전개"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "sin(x)/x의 테일러 급수 전개",
+        "explanation": "사인 함수의 매클로린 급수를 $x$로 나눈다.",
+        "typesetMath": "\\frac{\\sin x}{x} = 1 - \\frac{x^2}{3!} + \\frac{x^4}{5!} - \\frac{x^6}{7!} + \\cdots = 1 - \\frac{x^2}{6} + \\frac{x^4}{120} - \\cdots",
+        "justification": "사인 함수 테일러 급수"
+      },
+      {
+        "stepNumber": 2,
+        "title": "sin(x)/x의 영점(Roots) 분석",
+        "explanation": "$\\frac{\\sin x}{x} = 0$의 해는 $x = \\pm \\pi, \\pm 2\\pi, \\pm 3\\pi, \\dots$이다 ($x=0$은 특이점 아님).",
+        "typesetMath": "x = \\pm n\\pi \\quad (n = 1, 2, 3, \\dots)",
+        "justification": "삼각함수 영점"
+      },
+      {
+        "stepNumber": 3,
+        "title": "무한차수 다항식의 근을 통한 인수분해",
+        "explanation": "상수항이 1이고 근이 $\\pm n\\pi$인 다항식을 인수분해 형태로 무한곱으로 표현한다.",
+        "typesetMath": "\\frac{\\sin x}{x} = \\prod_{n=1}^\\infty \\left(1 - \\frac{x}{n\\pi}\\right)\\left(1 + \\frac{x}{n\\pi}\\right) = \\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)",
+        "justification": "합차공식을 통한 무한곱 결합"
+      },
+      {
+        "stepNumber": 4,
+        "title": "무한곱을 전개하여 x^2의 계수 추출",
+        "explanation": "무한곱에서 $x^2$ 항은 각 인수의 $-\\frac{x^2}{n^2\\pi^2}$들을 모두 더한 것과 같다.",
+        "typesetMath": "\\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right) = 1 - \\left( \\sum_{n=1}^\\infty \\frac{1}{n^2\\pi^2} \\right) x^2 + \\mathcal{O}(x^4)",
+        "justification": "무한 다항식 전개 계수 비교"
+      },
+      {
+        "stepNumber": 5,
+        "title": "1단계와 4단계의 x^2 계수 일치 비교",
+        "explanation": "동일한 함수이므로 $x^2$의 계수는 일치해야 한다.",
+        "typesetMath": "-\\frac{1}{6} = -\\frac{1}{\\pi^2} \\sum_{n=1}^\\infty \\frac{1}{n^2}",
+        "justification": "항등식의 미정계수법"
+      },
+      {
+        "stepNumber": 6,
+        "title": "양변에 -π^2을 곱하여 최종값 도출",
+        "explanation": "양변에 $-\\pi^2$을 곱하면 바젤 문제의 해답이 완성된다.",
+        "typesetMath": "\\sum_{n=1}^\\infty \\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+        "justification": "산술 정리"
+      }
+    ],
+    "conclusion": "자연수 제곱 역수의 무한합은 정확히 pi^2 / 6이다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "리만 제타 함수 특수값",
+      "typesetMath": "\\zeta(2) = \\frac{\\pi^2}{6}, \\quad \\zeta(2k) = (-1)^{k+1} \\frac{B_{2k} (2\\pi)^{2k}}{2(2k)!}",
+      "description": "리만 제타 함수의 짝수 정수점 닫힌 형태 값 일반화"
+    }
+  ]
+}

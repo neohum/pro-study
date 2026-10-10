@@ -1,0 +1,94 @@
+{
+  "id": "el-05",
+  "order": 5,
+  "domain": "아날로그 연산 및 신호 처리",
+  "titleKo": "OP-Amp 연산증폭기 및 아날로그 회로 해석",
+  "titleEn": "Operational Amplifiers (OP-Amp) & Analog Computation",
+  "file": "modules/05-opamp-circuits.json",
+  "overview": "연산증폭기(OP-Amp)의 2대 황금률(가상 단락, 가상 접지), 반전 및 비반전 증폭기, 버퍼, 가산기, 차동 증폭기, 아날로그 신호 미적분을 수행하는 적분기/미분기 회로를 체계적으로 해석합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "이상적 연산증폭기 (Ideal OP-Amp)",
+    "operationPrinciples": "개방 루프 이득 A_OL = 무한대, 입력 임피던스 R_in = 무한대, 출력 임피던스 R_out = 0, 대역폭 BW = 무한대.",
+    "equivalentCircuit": "출력 전압 V_out = A_OL * (V_+ - V_-)에 부귀환(Negative Feedback)을 걸어 안정화"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "OP-Amp의 2대 황금률 (Golden Rules)",
+      "titleEn": "Two Golden Rules of Ideal OP-Amp",
+      "principle": "부귀환(Negative Feedback)이 걸린 이상적 OP-Amp는 출력 전압이 포화되지 않는 한 1) 두 입력 단자로 들어가는 전류는 0이고(i_+ = i_- = 0), 2) 두 입력 단자의 전위는 가상으로 완전히 같아진다(V_+ = V_-, 가상 단락).",
+      "equations": [
+        {
+          "name": "가상 단락 (Virtual Short)",
+          "typesetMath": "V_+ \\approx V_- \\quad \\left(\\lim_{A_{OL} \\to \\infty} \\frac{V_{\\text{out}}}{A_{OL}} = 0\\right)",
+          "explanation": "무한한 차동 증폭도에 의해 반전 단자와 비반전 단자 전위 일치"
+        },
+        {
+          "name": "입력 전류 0 (Infinite Input Impedance)",
+          "typesetMath": "I_+ = I_- = 0",
+          "explanation": "신호원으로부터 어떠한 전류도 끌어오지 않아 로딩 효과 제거"
+        }
+      ]
+    },
+    {
+      "titleKo": "반전 및 비반전 증폭기 (Inverting & Non-Inverting)",
+      "titleEn": "Inverting and Non-Inverting Amplifiers",
+      "principle": "외장 저항 R1, R2의 비율만으로 회로의 전압 증폭률을 절대적으로 정밀하게 결정할 수 있다.",
+      "equations": [
+        {
+          "name": "반전 증폭기 이득 (Inverting Gain)",
+          "typesetMath": "\\frac{V_{\\text{out}}}{V_{\\text{in}}} = -\\frac{R_f}{R_{\\text{in}}}",
+          "explanation": "비반전 단자가 접지(0V)되어 반전 단자가 가상 접지(Virtual Ground) 형성"
+        },
+        {
+          "name": "비반전 증폭기 이득 (Non-Inverting Gain)",
+          "typesetMath": "\\frac{V_{\\text{out}}}{V_{\\text{in}}} = 1 + \\frac{R_f}{R_1}",
+          "explanation": "입력과 출력의 위상이 같고 이득은 항상 1 이상"
+        },
+        {
+          "name": "전압 팔로워 (버퍼, Voltage Follower)",
+          "typesetMath": "V_{\\text{out}} = V_{\\text{in}} \\quad (R_f = 0, R_1 = \\infty, A_v = 1)",
+          "explanation": "임피던스 변환기로 고저항 센서 출력을 저저항 부하로 완충"
+        }
+      ]
+    },
+    {
+      "titleKo": "아날로그 연산 회로: 가산기 및 적분기",
+      "titleEn": "Analog Computing: Summing Amplifier & Integrator",
+      "principle": "키르히호프의 전류 법칙과 커패시터의 V-I 관계를 결합하여 전압의 덧셈, 뺄셈, 수학적 시간 적분 연산을 아날로그 회로로 직접 수행한다.",
+      "equations": [
+        {
+          "name": "가산기 (Summing Amplifier)",
+          "typesetMath": "V_{\\text{out}} = -\\left( \\frac{R_f}{R_1}V_1 + \\frac{R_f}{R_2}V_2 + \\dots \\right)",
+          "explanation": "다중 아날로그 신호의 가중합"
+        },
+        {
+          "name": "이상적 적분기 (Ideal Integrator)",
+          "typesetMath": "V_{\\text{out}}(t) = -\\frac{1}{R C} \\int_0^t V_{\\text{in}}(\\tau) \\, d\\tau + V_{\\text{out}}(0)",
+          "explanation": "사각파 입력을 삼각파로 변환하는 아날로그 연산"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "의료용 생체 신호(ECG 심전도, EEG 뇌파) 계측 증폭기",
+      "practicalContext": "인체 피부에서 나오는 마이크로볼트(uV) 수준의 심전도 신호는 60Hz 전원선 노이즈에 둘러싸여 있으므로, 높은 공통모드 제거비(CMRR)를 갖는 3개 OP-Amp 계측 증폭기(In-Amp)로 노이즈만 제거하고 생체 신호만 증폭함.",
+      "engineeringNote": "실제 OP-Amp는 유한한 슬루율(Slew Rate, V/us)을 가지므로 신호 주파수가 높을 때 정현파가 삼각파로 왜곡될 수 있음."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-opamp-bode",
+    "type": "opamp-bode",
+    "title": "OP-Amp 및 능동필터 Bode Plot 시뮬레이터",
+    "initialParams": {
+      "R1": 10000,
+      "Rf": 100000,
+      "type": "inverting"
+    },
+    "keyFormulas": [
+      "Av = -Rf / R1",
+      "Gain_dB = 20 * log10(abs(Av))"
+    ]
+  },
+  "summary": "OP-Amp는 부귀환을 통해 능동 소자의 비선형성을 완전히 억제하고 정밀한 수학적 연산과 신호 증폭을 수행하는 아날로그 회로 설계의 핵심 블록입니다."
+}

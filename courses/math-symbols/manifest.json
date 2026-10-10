@@ -1,0 +1,63 @@
+{
+  "title": "수학 기호 백과사전 (Mathematical Symbols Encyclopedia)",
+  "description": "실제 수학 출판물 조판 수식 기반 전 분야 기호의 기원, 엄밀한 정의, 용법 및 한/영 수식 낭독 가이드",
+  "totalCategories": 7,
+  "categories": [
+    {
+      "categoryId": "arithmetic",
+      "nameKo": "기초 산술 및 대수 기호",
+      "nameEn": "Arithmetic and Elementary Algebra",
+      "order": 1,
+      "file": "categories/arithmetic.json",
+      "symbolCount": 15
+    },
+    {
+      "categoryId": "set-logic",
+      "nameKo": "집합론 및 수리논리학 기호",
+      "nameEn": "Set Theory and Mathematical Logic",
+      "order": 2,
+      "file": "categories/set-logic.json",
+      "symbolCount": 16
+    },
+    {
+      "categoryId": "calculus-analysis",
+      "nameKo": "해석학 및 미적분학 기호",
+      "nameEn": "Calculus and Mathematical Analysis",
+      "order": 3,
+      "file": "categories/calculus-analysis.json",
+      "symbolCount": 16
+    },
+    {
+      "categoryId": "linear-algebra",
+      "nameKo": "선형대수학 및 텐서 기호",
+      "nameEn": "Linear Algebra and Tensor Analysis",
+      "order": 4,
+      "file": "categories/linear-algebra.json",
+      "symbolCount": 15
+    },
+    {
+      "categoryId": "geometry-topology",
+      "nameKo": "기하학, 삼각법 및 위상수학 기호",
+      "nameEn": "Geometry, Trigonometry and Topology",
+      "order": 5,
+      "file": "categories/geometry-topology.json",
+      "symbolCount": 15
+    },
+    {
+      "categoryId": "probability-statistics",
+      "nameKo": "확률 및 통계학 기호",
+      "nameEn": "Probability and Statistics",
+      "order": 6,
+      "file": "categories/probability-statistics.json",
+      "symbolCount": 15
+    },
+    {
+      "categoryId": "algebra-number-theory",
+      "nameKo": "추상대수학 및 정수론 기호",
+      "nameEn": "Abstract Algebra and Number Theory",
+      "order": 7,
+      "file": "categories/algebra-number-theory.json",
+      "symbolCount": 15
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "id": "rank-nullity",
+  "order": 11,
+  "domain": "선형대수학",
+  "titleKo": "차원 정리 (Rank-Nullity Theorem)",
+  "titleEn": "Rank-Nullity Theorem",
+  "statement": {
+    "typesetMath": "\\dim(V) = \\operatorname{rank}(T) + \\operatorname{nullity}(T)",
+    "explanationKo": "유한차원 벡터공간 사이의 선형변환에서 정의역의 차원은 치역(상)의 차원(계수)과 영공간(핵)의 차원의 합과 같다.",
+    "explanationEn": "For a linear map from a finite-dimensional vector space, the dimension of the domain equals the rank plus the nullity."
+  },
+  "historicalSignificance": "제임스 조지프 실베스터가 1884년 정립한 선형대수학의 대기본정리로, 연립방정식의 해공간 차원과 행렬 계수 관계를 완전히 규명함.",
+  "prerequisites": [
+    "벡터공간의 기저와 차원",
+    "선형변환의 핵(Kernel)과 상(Image)"
+  ],
+  "intuitiveIdea": "선형사상에 의해 '0으로 압축되어 사라지는 차원(Nullity)'과 '살아서 목적지로 투영되는 차원(Rank)'을 합치면 원래 출발지의 총 차원이 된다는 차원 보존 법칙.",
+  "rigorousProof": {
+    "proofType": "기저 확장 및 선형독립성 증명 (Basis Extension Proof)",
+    "assumptions": [
+      "유한차원 벡터공간 V (차원 n)와 선형사상 T: V -> W",
+      "핵 ker(T)의 차원을 k (nullity)라 하자"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "핵 ker(T)의 기저 설정",
+        "explanation": "$\\ker(T)$의 기저를 $\\{\\mathbf{u}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_k\\}$라 하자 ($k = \\operatorname{nullity}(T)$).",
+        "typesetMath": "\\dim(\\ker T) = k, \\quad \\ker(T) = \\operatorname{span}(\\mathbf{u}_1, \\dots, \\mathbf{u}_k)",
+        "justification": "부분공간의 기저 존재 정리"
+      },
+      {
+        "stepNumber": 2,
+        "title": "전체 공간 V의 기저로 확장",
+        "explanation": "기저 확장 정리에 의해 $V$의 기저가 되도록 $n-k$개의 선형독립 벡터 $\\mathbf{v}_1, \\dots, \\mathbf{v}_{n-k}$를 추가한다.",
+        "typesetMath": "\\mathcal{B}_V = \\{\\mathbf{u}_1, \\dots, \\mathbf{u}_k, \\mathbf{v}_1, \\dots, \\mathbf{v}_{n-k}\\}",
+        "justification": "유한차원 기저 확장 정리"
+      },
+      {
+        "stepNumber": 3,
+        "title": "상공간 Im(T)의 생성원 구성",
+        "explanation": "임의의 $\\mathbf{x} \\in V$는 $\\mathcal{B}_V$의 일차결합으로 표현되므로, $T(\\mathbf{x})$를 취하면 $T(\\mathbf{u}_i) = \\mathbf{0}$에 의해 소멸한다.",
+        "typesetMath": "T(\\mathbf{x}) = \\sum_{i=1}^{n-k} c_i T(\\mathbf{v}_i) \\implies \\operatorname{Im}(T) = \\operatorname{span}(T(\\mathbf{v}_1), \\dots, T(\\mathbf{v}_{n-k}))",
+        "justification": "선형사상의 보존성 및 핵의 정의"
+      },
+      {
+        "stepNumber": 4,
+        "title": "{T(v_1), ..., T(v_{n-k})}의 선형독립성 증명",
+        "explanation": "$\\sum c_i T(\\mathbf{v}_i) = \\mathbf{0} \\implies T\\left(\\sum c_i \\mathbf{v}_i\\right) = \\mathbf{0}$. 따라서 $\\sum c_i \\mathbf{v}_i \\in \\ker(T)$이다.",
+        "typesetMath": "\\sum_{i=1}^{n-k} c_i \\mathbf{v}_i = \\sum_{j=1}^k d_j \\mathbf{u}_j \\implies \\sum c_i \\mathbf{v}_i - \\sum d_j \\mathbf{u}_j = \\mathbf{0}",
+        "justification": "핵의 원소 정의"
+      },
+      {
+        "stepNumber": 5,
+        "title": "모든 계수 c_i가 0임을 확정",
+        "explanation": "$\\mathcal{B}_V$는 $V$의 기저이므로 선형독립이다. 따라서 모든 $c_i = 0$이어야 한다. 즉 $\\{T(\\mathbf{v}_1), \\dots, T(\\mathbf{v}_{n-k})\\}$는 $\\operatorname{Im}(T)$의 기저이다.",
+        "typesetMath": "\\dim(\\operatorname{Im} T) = n - k = \\operatorname{rank}(T)",
+        "justification": "기저의 정의 (생성 + 선형독립)"
+      },
+      {
+        "stepNumber": 6,
+        "title": "차원 정리 등식 완성",
+        "explanation": "정의역의 차원 $n = \\dim(V)$는 $k + (n-k)$이므로 증명이 완결된다.",
+        "typesetMath": "\\dim(V) = k + (n-k) = \\operatorname{nullity}(T) + \\operatorname{rank}(T)",
+        "justification": "차원의 덧셈"
+      }
+    ],
+    "conclusion": "정의역의 차원은 rank와 nullity의 합과 정확히 일치한다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "가역 선형변환의 동치 조건",
+      "typesetMath": "\\operatorname{rank}(T) = n \\iff \\operatorname{nullity}(T) = 0 \\iff T \\text{ is invertible}",
+      "description": "정방행렬의 전사성, 단사성, 가역성의 완전한 일치성"
+    }
+  ]
+}

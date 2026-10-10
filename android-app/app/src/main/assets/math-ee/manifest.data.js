@@ -1,0 +1,3543 @@
+window.__MATH_EE_MANIFEST__ = {
+  "title": "수학 기호·정리 증명 및 전기·전자공학 마스터 스위트",
+  "version": "1.0.0",
+  "lastUpdated": "2026-10-10T03:21:46.473Z",
+  "mathSymbols": {
+    "title": "수학 기호 백과사전 (Mathematical Symbols Encyclopedia)",
+    "description": "실제 수학 출판물 조판 수식 기반 전 분야 기호의 기원, 엄밀한 정의, 용법 및 한/영 수식 낭독 가이드",
+    "categories": [
+      {
+        "categoryId": "arithmetic",
+        "categoryNameKo": "기초 산술 및 대수 기호",
+        "categoryNameEn": "Arithmetic and Elementary Algebra",
+        "order": 1,
+        "description": "수의 기본 연산, 대소 관계, 비례 및 절댓값 등을 나타내는 핵심 수학 조판 기호",
+        "symbols": [
+          {
+            "id": "sym-plus",
+            "symbol": "+",
+            "typesetMath": "+",
+            "nameKo": "더하기 (덧셈 기호)",
+            "nameEn": "Plus sign (Addition)",
+            "howToReadKo": "더하기, 플러스",
+            "howToReadEn": "plus, added to",
+            "unicode": "U+002B",
+            "historyAndOrigin": "1489년 독일 수학자 요하네스 비트만(Johannes Widmann)의 상업 산술서에서 모자람(-)과 남음(+)을 표시하기 위해 라틴어 'et'(&)의 흘림체에서 유래하여 최초로 인쇄됨.",
+            "rigorousDefinition": "가환군 $(G, +)$에서 이항 연산 $+: G \\times G \\to G$로 정의되며, 결합법칙 $a+(b+c)=(a+b)+c$과 항등원 $0$ ($a+0=a$)을 만족함.",
+            "usageAndExamples": [
+              {
+                "context": "초등 대수",
+                "typesetMath": "3 + 5 = 8",
+                "description": "3에 5를 더하면 8이 됨"
+              },
+              {
+                "context": "양수 부호",
+                "typesetMath": "x = +5",
+                "description": "값의 양의 방향성을 명시하는 단항 연산자"
+              }
+            ],
+            "commonPitfalls": "양의 부호(단항 연산자)와 두 수 사이의 덧셈(이항 연산자)의 문맥상 차이를 구별해야 함."
+          },
+          {
+            "id": "sym-minus",
+            "symbol": "−",
+            "typesetMath": "-",
+            "nameKo": "빼기 (뺄셈 기호 / 음수 부호)",
+            "nameEn": "Minus sign (Subtraction / Negative)",
+            "howToReadKo": "빼기, 마이너스",
+            "howToReadEn": "minus, subtracted by, negative",
+            "unicode": "U+2212",
+            "historyAndOrigin": "15세기 상인들이 상품 무게가 기준에 못 미칠 때 포대 표면에 긋던 막대 표시에서 유래하여 요하네스 비트만에 의해 정규 수학 기호로 정립됨.",
+            "rigorousDefinition": "덧셈에 대한 역원(Additive Inverse)의 가산으로 정의됨: $a - b \\equiv a + (-b)$.",
+            "usageAndExamples": [
+              {
+                "context": "초등 뺄셈",
+                "typesetMath": "10 - 4 = 6",
+                "description": "10에서 4를 감산한 결과는 6"
+              },
+              {
+                "context": "덧셈 역원",
+                "typesetMath": "x + (-x) = 0",
+                "description": "임의의 원소와 그 음수 역원의 합은 덧셈 항등원 0"
+              }
+            ],
+            "commonPitfalls": "컴퓨터 키보드의 하이픈-마이너스(-)와 수학 인쇄용 정규 마이너스 부호(U+2212)는 타이포그래피 너비와 높이가 다름."
+          },
+          {
+            "id": "sym-times",
+            "symbol": "×",
+            "typesetMath": "\\times",
+            "nameKo": "곱하기 (곱셈 기호 / 외적 기호)",
+            "nameEn": "Multiplication sign (Times / Cross product)",
+            "howToReadKo": "곱하기, 크로스",
+            "howToReadEn": "multiplied by, times, cross",
+            "unicode": "U+00D7",
+            "historyAndOrigin": "1631년 영국 수학자 윌리엄 오트레드(William Oughtred)의 저서 '수학의 열쇠(Clavis Mathematicae)'에서 최초로 사용됨.",
+            "rigorousDefinition": "환(Ring) 구조 $(R, +, \\cdot)$에서의 제2 이항 연산이며, 3차원 유클리드 공간 $\\mathbb{R}^3$에서는 두 벡터의 수직인 벡터를 생성하는 외적으로 정의됨: $\\vec{u} \\times \\vec{v} = (u_2 v_3 - u_3 v_2)\\hat{i} + \\cdots$.",
+            "usageAndExamples": [
+              {
+                "context": "스칼라 곱셈",
+                "typesetMath": "6 \\times 7 = 42",
+                "description": "6과 7의 산술적 곱"
+              },
+              {
+                "context": "벡터 외적",
+                "typesetMath": "\\vec{A} \\times \\vec{B} = \\vec{C}",
+                "description": "두 벡터에 동시에 수직인 제3의 벡터 형성"
+              }
+            ],
+            "commonPitfalls": "문자 변수 $x$와 혼동을 피하기 위해 고등수학에서는 가운뎃점($\\cdot$) 또는 생략 표기법을 주로 사용함."
+          },
+          {
+            "id": "sym-cdot",
+            "symbol": "⋅",
+            "typesetMath": "\\cdot",
+            "nameKo": "가운뎃점 (점곱 / 내적 기호)",
+            "nameEn": "Centered dot (Dot product / Scalar product)",
+            "howToReadKo": "도트, 점곱",
+            "howToReadEn": "dot, multiplied by",
+            "unicode": "U+22C5",
+            "historyAndOrigin": "1698년 고트프리트 라이프니츠(Gottfried Wilhelm Leibniz)가 변수 $x$와의 혼동을 방지하기 위해 곱셈 기호로 도입함.",
+            "rigorousDefinition": "내적 공간(Inner Product Space)에서 두 벡터 간의 사영 크기 곱: $\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\|\\vec{v}\\| \\cos\\theta$.",
+            "usageAndExamples": [
+              {
+                "context": "대수식 곱셈",
+                "typesetMath": "a \\cdot b",
+                "description": "변수 a와 b의 곱"
+              },
+              {
+                "context": "벡터 내적",
+                "typesetMath": "\\mathbf{u} \\cdot \\mathbf{v} = \\sum_{i=1}^n u_i v_i",
+                "description": "유클리드 내적의 성분별 합"
+              }
+            ],
+            "commonPitfalls": "소수점 마침표(.)와 가운뎃점($\\cdot$)은 베이스라인 높이가 다르므로 조판 시 구분해야 함."
+          },
+          {
+            "id": "sym-divide",
+            "symbol": "÷",
+            "typesetMath": "\\div",
+            "nameKo": "나누기 (나눗셈 기호)",
+            "nameEn": "Division sign (Obelus)",
+            "howToReadKo": "나누기",
+            "howToReadEn": "divided by",
+            "unicode": "U+00F7",
+            "historyAndOrigin": "1659년 스위스 수학자 요한 란(Johann Rahn)의 저서 '대수학(Teutsche Algebra)'에서 최초로 사용되었으며 '오벨루스(Obelus)'라 불림.",
+            "rigorousDefinition": "곱셈에 대한 역원(Multiplicative Inverse)의 곱: $a \\div b \\equiv a \\cdot b^{-1}$ (단, $b \\ne 0$).",
+            "usageAndExamples": [
+              {
+                "context": "초등 나눗셈",
+                "typesetMath": "20 \\div 4 = 5",
+                "description": "20을 4로 나눈 몫은 5"
+              },
+              {
+                "context": "분수 형식 대조",
+                "typesetMath": "a \\div b = \\frac{a}{b}",
+                "description": "인쇄 수학에서는 분수 표기를 표준으로 선호함"
+              }
+            ],
+            "commonPitfalls": "고등수학 및 논문에서는 연산 순서의 모호성 방지를 위해 $\\div$ 대신 분수($\\frac{a}{b}$) 형태를 사용하는 것이 국제 표준 규격임."
+          },
+          {
+            "id": "sym-equals",
+            "symbol": "=",
+            "typesetMath": "=",
+            "nameKo": "등호 (같음)",
+            "nameEn": "Equal sign (Equality)",
+            "howToReadKo": "는, 같다, 이퀄",
+            "howToReadEn": "equals, is equal to",
+            "unicode": "U+003D",
+            "historyAndOrigin": "1557년 웨일스 수학자 로버트 레코드(Robert Recorde)의 '지혜의 숫돌(The Whetstone of Witte)'에서 길이가 같은 두 평행선보다 더 같은 것은 없다는 철학으로 고안됨.",
+            "rigorousDefinition": "동치 관계(Equivalence Relation)로 반사율($a=a$), 대칭율($a=b \\implies b=a$), 추이율($a=b \\land b=c \\implies a=c$)을 만족함.",
+            "usageAndExamples": [
+              {
+                "context": "대수 방정식",
+                "typesetMath": "E = mc^2",
+                "description": "에너지와 질량-광속 제곱 간의 절대적 등가성"
+              }
+            ],
+            "commonPitfalls": "프로그래밍 언어의 변수 대입 연산자(=)와 수학적 동치 명제(=)를 혼동하지 말아야 함."
+          },
+          {
+            "id": "sym-ne",
+            "symbol": "≠",
+            "typesetMath": "\\ne",
+            "nameKo": "부등호 (같지 않음)",
+            "nameEn": "Not equal to",
+            "howToReadKo": "같지 않다, 다르다",
+            "howToReadEn": "is not equal to",
+            "unicode": "U+2260",
+            "historyAndOrigin": "레온하르트 오일러(Leonhard Euler)가 등호(=)에 부정의 사선을 그어 등치 부정의 의미로 보편화함.",
+            "rigorousDefinition": "등치 명제의 논리적 부정: $a \\ne b \\iff \\neg(a = b)$.",
+            "usageAndExamples": [
+              {
+                "context": "분모 조건",
+                "typesetMath": "f(x) = \\frac{1}{x} \\quad (x \\ne 0)",
+                "description": "분모가 0이 아님을 명시하는 정의역 제약 조건"
+              }
+            ],
+            "commonPitfalls": "컴퓨터 언어의 `!=`나 `<>`는 아스키 대체 표현이며 실제 수학 조판은 반드시 $\\ne$를 사용함."
+          },
+          {
+            "id": "sym-approx",
+            "symbol": "≈",
+            "typesetMath": "\\approx",
+            "nameKo": "근사 (거의 같음)",
+            "nameEn": "Almost equal to (Approximation)",
+            "howToReadKo": "거의 같다, 근사하다",
+            "howToReadEn": "is approximately equal to",
+            "unicode": "U+2248",
+            "historyAndOrigin": "1892년 영국 수학자 앨프리드 그린힐(Alfred George Greenhill)이 물리학적 근사 계산을 표기하기 위해 물결 등호 형태로 고안함.",
+            "rigorousDefinition": "오차 한계 $\\epsilon > 0$에 대해 $|a - b| < \\epsilon$이 성립함을 의미함.",
+            "usageAndExamples": [
+              {
+                "context": "원주율 근사",
+                "typesetMath": "\\pi \\approx 3.14159",
+                "description": "원주율의 유효숫자 5자리 근사값"
+              },
+              {
+                "context": "테일러 1차 근사",
+                "typesetMath": "\\sin\\theta \\approx \\theta \\quad (\\theta \\to 0)",
+                "description": "각도가 0에 가까울 때 삼각함수의 선형 근사"
+              }
+            ],
+            "commonPitfalls": "한국 일부 교과서에서 과거 일본식 $\\fallingdotseq$을 쓰기도 했으나 국제 ISO 표준은 $\\approx$임."
+          },
+          {
+            "id": "sym-equiv",
+            "symbol": "≡",
+            "typesetMath": "\\equiv",
+            "nameKo": "합동 / 항등 기호",
+            "nameEn": "Identical to / Congruence",
+            "howToReadKo": "항등이다, 합동이다",
+            "howToReadEn": "is identically equal to, is congruent to",
+            "unicode": "U+2261",
+            "historyAndOrigin": "1801년 카를 프리드리히 가우스(Carl Friedrich Gauss)가 저서 '산술 연구(Disquisitiones Arithmeticae)'에서 모듈러 합동식을 위해 3줄 등호로 창안함.",
+            "rigorousDefinition": "1) 항등식: 모든 정의역 원소에 대해 $f(x) \\equiv g(x)$. 2) 정수론: $a \\equiv b \\pmod m \\iff m \\mid (a - b)$.",
+            "usageAndExamples": [
+              {
+                "context": "정수론 모듈러",
+                "typesetMath": "17 \\equiv 2 \\pmod 5",
+                "description": "17과 2는 법 5에 대하여 합동임 (나머지가 2로 동일)"
+              },
+              {
+                "context": "삼각함수 항등식",
+                "typesetMath": "\\sin^2\\theta + \\cos^2\\theta \\equiv 1",
+                "description": "모든 실수 세타에 대해 항상 성립하는 항등 관계"
+              }
+            ],
+            "commonPitfalls": "특정 값에서만 참이 되는 조건부 방정식($=$)과 정의역 전체에서 성립하는 항등식($\\equiv$)의 위상 차이를 이해해야 함."
+          },
+          {
+            "id": "sym-le-ge",
+            "symbol": "≤ / ≥",
+            "typesetMath": "\\le, \\ge",
+            "nameKo": "작거나 같음 / 크거나 같음",
+            "nameEn": "Less than or equal to / Greater than or equal to",
+            "howToReadKo": "작거나 같다(이하), 크거나 같다(이상)",
+            "howToReadEn": "is less than or equal to, is greater than or equal to",
+            "unicode": "U+2264, U+2265",
+            "historyAndOrigin": "1734년 프랑스 자연철학자 피에르 부게(Pierre Bouguer)가 부등호 밑에 가로선을 더하여 개발함.",
+            "rigorousDefinition": "전순서 집합(Totally Ordered Set)에서 반사율($a \\le a$), 반대칭율($a \\le b \\land b \\le a \\implies a = b$), 추이율을 만족하는 부분순서 관계.",
+            "usageAndExamples": [
+              {
+                "context": "절댓값 부등식",
+                "typesetMath": "|x + y| \\le |x| + |y|",
+                "description": "삼각부등식: 합의 절댓값은 절댓값의 합 이하임"
+              }
+            ],
+            "commonPitfalls": "컴퓨터식 `<=`, `>=` 대신 수학 조판에서는 밑선이 수평인 $\\le, \\ge$를 사용함."
+          },
+          {
+            "id": "sym-sqrt",
+            "symbol": "√",
+            "typesetMath": "\\sqrt{x}",
+            "nameKo": "근호 (제곱근 기호, 루트)",
+            "nameEn": "Radical symbol (Square root)",
+            "howToReadKo": "루트, 제곱근",
+            "howToReadEn": "the square root of",
+            "unicode": "U+221A",
+            "historyAndOrigin": "1525년 크리스토프 루돌프(Christoff Rudolff)가 뿌리를 뜻하는 라틴어 'radix'의 첫 글자 $r$을 소문자 필기체로 변형하여 창안함.",
+            "rigorousDefinition": "비음의 실수 $x \\ge 0$에 대하여 $y^2 = x$를 만족하는 유일한 비음의 실수 $y \\ge 0$를 $\\sqrt{x}$로 정의함.",
+            "usageAndExamples": [
+              {
+                "context": "피타고라스 빗변",
+                "typesetMath": "c = \\sqrt{a^2 + b^2}",
+                "description": "직각삼각형의 빗변 길이 계산"
+              }
+            ],
+            "commonPitfalls": "$\\sqrt{4} = 2$이며 $\\pm 2$가 아님. $x^2 = 4$의 해는 $\\pm\\sqrt{4} = \\pm 2$이지만 근호 자체는 주제곱근(양수)만을 가리킴."
+          },
+          {
+            "id": "sym-abs",
+            "symbol": "|x|",
+            "typesetMath": "|x|",
+            "nameKo": "절댓값 (크기 / 노름)",
+            "nameEn": "Absolute value (Modulus / Magnitude)",
+            "howToReadKo": "절댓값 x, 바 x",
+            "howToReadEn": "absolute value of x, mod x",
+            "unicode": "U+007C",
+            "historyAndOrigin": "1841년 카를 바이어슈트라스(Karl Weierstrass)가 복소수의 모듈러스와 실수의 원점 거리 개념을 단일화하기 위해 수직선 기호를 도입함.",
+            "rigorousDefinition": "실수 $x$에 대해 $|x| = \\begin{cases} x & (x \\ge 0) \\\\ -x & (x < 0) \\end{cases}$. 복소수 $z = a + bi$에 대해 $|z| = \\sqrt{a^2 + b^2}$.",
+            "usageAndExamples": [
+              {
+                "context": "거리 정의",
+                "typesetMath": "d(x, y) = |x - y|",
+                "description": "수직선 상에서 두 실수 사이의 기하학적 유클리드 거리"
+              }
+            ],
+            "commonPitfalls": "행렬에서의 $|A|$는 절댓값이 아니라 행렬식($\\det(A)$)을 의미하므로 문맥에 따른 의미 구분이 필수적임."
+          },
+          {
+            "id": "sym-factorial",
+            "symbol": "!",
+            "typesetMath": "n!",
+            "nameKo": "팩토리얼 (계승)",
+            "nameEn": "Factorial",
+            "howToReadKo": "n 팩토리얼, n 계승",
+            "howToReadEn": "n factorial",
+            "unicode": "U+0021",
+            "historyAndOrigin": "1808년 프랑스 수학자 크리스티앙 크랑(Christian Kramp)이 복잡한 순열 곱셈 표기를 축약하기 위해 느낌표(!)를 도입함.",
+            "rigorousDefinition": "비음의 정수 $n \\in \\mathbb{N}_0$에 대해 $n! = \\prod_{k=1}^n k$ (단, $0! = 1$). 실수/복소수 영역으로는 감마 함수 $\\Gamma(n+1) = n!$로 확장됨.",
+            "usageAndExamples": [
+              {
+                "context": "순열과 조합",
+                "typesetMath": "5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120",
+                "description": "5개 원소의 전체 일렬 배열 가짓수"
+              },
+              {
+                "context": "0의 팩토리얼",
+                "typesetMath": "0! = 1",
+                "description": "공집합을 배열하는 1가지 방법 및 감마 함수 정합성"
+              }
+            ],
+            "commonPitfalls": "느낌표 때문에 문장의 마침표나 감탄 부호와 겹칠 수 있으므로 수식 조판 시 여백 제어가 중요함."
+          },
+          {
+            "id": "sym-prop",
+            "symbol": "∝",
+            "typesetMath": "\\propto",
+            "nameKo": "비례 기호",
+            "nameEn": "Proportional to",
+            "howToReadKo": "비례한다",
+            "howToReadEn": "is proportional to",
+            "unicode": "U+221D",
+            "historyAndOrigin": "1753년 윌리엄 에머슨(William Emerson)이 비례 관계를 간결하게 표현하기 위해 고안함.",
+            "rigorousDefinition": "$y \\propto x \\iff \\exists k \\ne 0 \\text{ s.t. } y = kx$ (여기서 $k$는 비례상수).",
+            "usageAndExamples": [
+              {
+                "context": "뉴턴 만유인력",
+                "typesetMath": "F \\propto \\frac{m_1 m_2}{r^2}",
+                "description": "인력은 두 질량의 곱에 비례하고 거리 제곱에 반비례함"
+              }
+            ],
+            "commonPitfalls": "무한대 기호($\\infty$)와 오른쪽이 열려 있는 비례 기호($\\propto$)를 형태상 혼동하지 않도록 주의."
+          },
+          {
+            "id": "sym-pm",
+            "symbol": "±",
+            "typesetMath": "\\pm",
+            "nameKo": "플러스마이너스 (복부호)",
+            "nameEn": "Plus-minus sign",
+            "howToReadKo": "플러스마이너스, 복부호",
+            "howToReadEn": "plus or minus",
+            "unicode": "U+00B1",
+            "historyAndOrigin": "1631년 윌리엄 오트레드가 양과 음의 두 가지 가능성을 하나의 수식으로 압축하기 위해 도입함.",
+            "rigorousDefinition": "$x = a \\pm b \\iff (x = a + b) \\lor (x = a - b)$.",
+            "usageAndExamples": [
+              {
+                "context": "근의 공식",
+                "typesetMath": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+                "description": "이차방정식의 2개 근을 복부호로 동시 표현"
+              }
+            ],
+            "commonPitfalls": "연립 방정식에서 복부호동순(복호동순, $\\mp$와 함께 쓰일 때) 여부를 반드시 확인해야 함."
+          }
+        ]
+      },
+      {
+        "categoryId": "set-logic",
+        "categoryNameKo": "집합론 및 수리논리학 기호",
+        "categoryNameEn": "Set Theory and Mathematical Logic",
+        "order": 2,
+        "description": "수학의 기초 공리 체계를 형성하는 집합, 수 체계, 논리 명제 및 추론 기호",
+        "symbols": [
+          {
+            "id": "sym-in",
+            "symbol": "∈",
+            "typesetMath": "\\in",
+            "nameKo": "원소 기호 (속함)",
+            "nameEn": "Element of (Belongs to)",
+            "howToReadKo": "속한다, 원소이다",
+            "howToReadEn": "is an element of, belongs to, in",
+            "unicode": "U+2208",
+            "historyAndOrigin": "1889년 이탈리아 수학자 주세페 페아노(Giuseppe Peano)가 그리스어 '에스티(εστί, ~이다)'의 첫 글자 $\\epsilon$에서 차용하여 도입함.",
+            "rigorousDefinition": "체르멜로-프렝켈 집합론(ZFC)의 무정의 원초 술어(Primitive Predicate)로, 원소 $x$가 집합 $A$에 속함을 나타냄: $x \\in A$.",
+            "usageAndExamples": [
+              {
+                "context": "수 체계 소속",
+                "typesetMath": "x \\in \\mathbb{R}",
+                "description": "변수 x가 실수 집합의 원소임"
+              }
+            ],
+            "commonPitfalls": "원소 관계($\\in$)와 부분집합 관계($\\subset$)를 구별해야 함. $\\{a\\} \\in A$가 아니라 $a \\in A$ 또는 $\\{a\\} \\subset A$임."
+          },
+          {
+            "id": "sym-notin",
+            "symbol": "∉",
+            "typesetMath": "\\notin",
+            "nameKo": "원소가 아님 (속하지 않음)",
+            "nameEn": "Not an element of",
+            "howToReadKo": "속하지 않는다, 원소가 아니다",
+            "howToReadEn": "is not an element of",
+            "unicode": "U+2209",
+            "historyAndOrigin": "주세페 페아노가 원소 기호에 사선을 그어 소속의 부정을 나타냄.",
+            "rigorousDefinition": "$x \\notin A \\iff \\neg(x \\in A)$.",
+            "usageAndExamples": [
+              {
+                "context": "정의역 배제",
+                "typesetMath": "0 \\notin \\{1, 2, 3\\}",
+                "description": "0은 집합 {1, 2, 3}의 원소가 아님"
+              }
+            ],
+            "commonPitfalls": "공집합 $\\emptyset$에 대해 모든 원소 $x$는 $x \\notin \\emptyset$을 만족함."
+          },
+          {
+            "id": "sym-subset",
+            "symbol": "⊆",
+            "typesetMath": "\\subseteq",
+            "nameKo": "부분집합 (포함 관계)",
+            "nameEn": "Subset of",
+            "howToReadKo": "부분집합이다, 포함된다",
+            "howToReadEn": "is a subset of, is included in",
+            "unicode": "U+2286",
+            "historyAndOrigin": "1890년대 에른스트 슈뢰더(Ernst Schröder)와 주세페 페아노가 부등호($\\le$)의 기하학적 형태를 둥글려 집합 포함 기호로 정립함.",
+            "rigorousDefinition": "$A \\subseteq B \\iff \\forall x (x \\in A \\implies x \\in B)$.",
+            "usageAndExamples": [
+              {
+                "context": "수 체계 포함 관계",
+                "typesetMath": "\\mathbb{N} \\subseteq \\mathbb{Z} \\subseteq \\mathbb{Q} \\subseteq \\mathbb{R} \\subseteq \\mathbb{C}",
+                "description": "자연수, 정수, 유리수, 실수, 복소수 집합의 계층적 부분집합 관계"
+              }
+            ],
+            "commonPitfalls": "진부분집합($\\subsetneq$ 또는 $\\subset$)과 자기 자신을 포함할 수 있는 일반 부분집합($\\subseteq$)의 ISO 표기 기준을 확인해야 함."
+          },
+          {
+            "id": "sym-cup",
+            "symbol": "∪",
+            "typesetMath": "\\cup",
+            "nameKo": "합집합",
+            "nameEn": "Union",
+            "howToReadKo": "합집합, 컵",
+            "howToReadEn": "union, cup",
+            "unicode": "U+222A",
+            "historyAndOrigin": "1888년 주세페 페아노가 라틴어 'Unitas(일치/결합)'의 머리글자 U 형태를 기반으로 창안함.",
+            "rigorousDefinition": "$A \\cup B = \\{x \\mid x \\in A \\lor x \\in B\\}$.",
+            "usageAndExamples": [
+              {
+                "context": "구간 결합",
+                "typesetMath": "(-\\infty, 0) \\cup (0, \\infty) = \\mathbb{R} \\setminus \\{0\\}",
+                "description": "0을 제외한 모든 실수의 집합"
+              }
+            ],
+            "commonPitfalls": "논리합($\\lor$)은 명제 간의 연산자이고, 합집합($\\cup$)은 집합 간의 연산자임."
+          },
+          {
+            "id": "sym-cap",
+            "symbol": "∩",
+            "typesetMath": "\\cap",
+            "nameKo": "교집합",
+            "nameEn": "Intersection",
+            "howToReadKo": "교집합, 캡",
+            "howToReadEn": "intersection, cap",
+            "unicode": "U+2229",
+            "historyAndOrigin": "페아노가 합집합 기호($\\cup$)를 뒤집어 교집합 기호로 도입함.",
+            "rigorousDefinition": "$A \\cap B = \\{x \\mid x \\in A \\land x \\in B\\}$.",
+            "usageAndExamples": [
+              {
+                "context": "서로소 집합",
+                "typesetMath": "A \\cap B = \\emptyset",
+                "description": "공통 원소가 전혀 없는 두 집합(Disjoint)"
+              }
+            ],
+            "commonPitfalls": "확률론에서 사건 $A, B$의 동시 발생 확률은 $P(A \\cap B)$로 표기함."
+          },
+          {
+            "id": "sym-emptyset",
+            "symbol": "∅",
+            "typesetMath": "\\emptyset",
+            "nameKo": "공집합",
+            "nameEn": "Empty set (Null set)",
+            "howToReadKo": "공집합, 파이(외형)",
+            "howToReadEn": "the empty set, null set",
+            "unicode": "U+2205",
+            "historyAndOrigin": "1939년 니콜라 부르바키(Nicolas Bourbaki) 그룹의 앙드레 베유(André Weil)가 노르웨이어 알파벳 Ø에서 착안하여 도입함.",
+            "rigorousDefinition": "원소를 전혀 갖지 않는 유일한 집합: $\\forall x (x \\notin \\emptyset)$. 기수 $|\\emptyset| = 0$.",
+            "usageAndExamples": [
+              {
+                "context": "해집합 부재",
+                "typesetMath": "\\{x \\in \\mathbb{R} \\mid x^2 + 1 = 0\\} = \\emptyset",
+                "description": "실수 범위에서 방정식의 해가 존재하지 않음"
+              }
+            ],
+            "commonPitfalls": "그리스 소문자 파이($\\phi$)나 숫자 0과 다르며, $\\{\\emptyset\\}$은 공집합을 원소로 갖는 크기 1의 집합이므로 $\\emptyset \\ne \\{\\emptyset\\}$임."
+          },
+          {
+            "id": "sym-number-sets",
+            "symbol": "ℕ, ℤ, ℚ, ℝ, ℂ",
+            "typesetMath": "\\mathbb{N}, \\mathbb{Z}, \\mathbb{Q}, \\mathbb{R}, \\mathbb{C}",
+            "nameKo": "수 체계 칠판 볼드체 기호",
+            "nameEn": "Blackboard Bold Number Sets",
+            "howToReadKo": "자연수, 정수, 유리수, 실수, 복소수 집합",
+            "howToReadEn": "the set of natural numbers, integers, rational numbers, real numbers, complex numbers",
+            "unicode": "U+2115, U+2124, U+211A, U+211D, U+2102",
+            "historyAndOrigin": "칠판에 굵은 볼드체(Bold)를 이중선으로 판서하던 관행에서 유래하여 20세기 중반 부르바키 학파의 교재를 통해 표준 수학 조판 활자로 정착됨. (Z: 독일어 Zahlen, Q: 이탈리아어 Quoziente).",
+            "rigorousDefinition": "자연수 $\\mathbb{N}$ (페아노 공리계) $\\subset$ 정수환 $\\mathbb{Z}$ $\\subset$ 유리수체 $\\mathbb{Q}$ (분수체) $\\subset$ 실수체 $\\mathbb{R}$ (완비 데데킨트 절단) $\\subset$ 복소수체 $\\mathbb{C}$ (대수적 폐포).",
+            "usageAndExamples": [
+              {
+                "context": "오일러 항등식",
+                "typesetMath": "e^{i\\pi} + 1 = 0 \\quad (i \\in \\mathbb{C})",
+                "description": "복소수 체계에서 5대 상수가 통합됨"
+              }
+            ],
+            "commonPitfalls": "자연수 $\\mathbb{N}$에 0을 포함하는지 여부는 국가/학파마다 다르므로($\\mathbb{N}_0 = \\mathbb{N} \\cup \\{0\\}$ 명시 권장) 엄밀한 정의를 확인해야 함."
+          },
+          {
+            "id": "sym-forall",
+            "symbol": "∀",
+            "typesetMath": "\\forall",
+            "nameKo": "전칭 한정기호 (모든)",
+            "nameEn": "Universal quantifier (For all)",
+            "howToReadKo": "모든, 임의의",
+            "howToReadEn": "for all, for any, for each",
+            "unicode": "U+2200",
+            "historyAndOrigin": "1935년 게르하르트 겐첸(Gerhard Gentzen)이 '모두(All)'를 뜻하는 영어 All의 머리글자 A를 거꾸로 뒤집어 고안함.",
+            "rigorousDefinition": "술어 논리에서 모든 정의역 원소 $x$에 대해 명제 $P(x)$가 참임을 선언: $\\forall x P(x)$.",
+            "usageAndExamples": [
+              {
+                "context": "실수의 성질",
+                "typesetMath": "\\forall x \\in \\mathbb{R}, \\; x^2 \\ge 0",
+                "description": "모든 실수 x에 대하여 x의 제곱은 0 이상임"
+              }
+            ],
+            "commonPitfalls": "전칭기호의 부정은 존재기호임: $\\neg(\\forall x P(x)) \\iff \\exists x (\\neg P(x))$."
+          },
+          {
+            "id": "sym-exists",
+            "symbol": "∃",
+            "typesetMath": "\\exists",
+            "nameKo": "존재 한정기호 (존재한다)",
+            "nameEn": "Existential quantifier (There exists)",
+            "howToReadKo": "존재한다, 적어도 하나 존재한다",
+            "howToReadEn": "there exists, there is at least one",
+            "unicode": "U+2203",
+            "historyAndOrigin": "1897년 주세페 페아노가 '존재(Exist)'의 머리글자 E를 좌우 반전하여 창안함.",
+            "rigorousDefinition": "술어 논리에서 적어도 하나의 원소 $x$가 $P(x)$를 만족함을 선언: $\\exists x P(x)$. 유일하게 하나만 존재할 때는 $\\exists! x P(x)$로 표기함.",
+            "usageAndExamples": [
+              {
+                "context": "입실론-델타 극한",
+                "typesetMath": "\\forall \\epsilon > 0, \\; \\exists \\delta > 0 \\text{ s.t. } 0 < |x - c| < \\delta \\implies |f(x) - L| < \\epsilon",
+                "description": "함수의 극한에 대한 엄밀한 바이어슈트라스 정의"
+              }
+            ],
+            "commonPitfalls": "한정기호의 순서가 바뀌면 의미가 완전히 달라짐. $\\forall x \\exists y$와 $\\exists y \\forall x$는 전혀 다른 명제임."
+          },
+          {
+            "id": "sym-implies",
+            "symbol": "⇒",
+            "typesetMath": "\\implies",
+            "nameKo": "함의 기호 (조건문)",
+            "nameEn": "Implies (Conditional / Logical consequence)",
+            "howToReadKo": "~이면 ~이다, 함의한다",
+            "howToReadEn": "implies, if ... then ...",
+            "unicode": "U+21D2",
+            "historyAndOrigin": "다비트 힐베르트(David Hilbert)와 빌헬름 아케르만(Wilhelm Ackermann)의 수리논리학 체계에서 실질 함의를 정규화하기 위해 화살표로 도입됨.",
+            "rigorousDefinition": "$P \\implies Q \\iff \\neg P \\lor Q$. 가정 $P$가 거짓이면 결론 $Q$의 참/거짓에 상관없이 명제 전체는 항상 참임(공허한 참, Vacuous Truth).",
+            "usageAndExamples": [
+              {
+                "context": "미분가능성과 연속성",
+                "typesetMath": "f \\text{ is differentiable at } x \\implies f \\text{ is continuous at } x",
+                "description": "함수가 x에서 미분가능하면 그 점에서 반드시 연속임"
+              }
+            ],
+            "commonPitfalls": "명제 $P \\implies Q$가 참이라고 해서 그 역(Converse) $Q \\implies P$가 참인 것은 아님."
+          },
+          {
+            "id": "sym-iff",
+            "symbol": "⇔",
+            "typesetMath": "\\iff",
+            "nameKo": "동치 기호 (필요충분조건)",
+            "nameEn": "If and only if (Biconditional / Equivalence)",
+            "howToReadKo": "필요충분조건이다, 동치이다",
+            "howToReadEn": "if and only if, is equivalent to",
+            "unicode": "U+21D4",
+            "historyAndOrigin": "20세기 수리논리학에서 양방향 함의($P \\implies Q \\land Q \\implies P$)를 축약하기 위해 양방향 이중 화살표로 제정됨.",
+            "rigorousDefinition": "$P \\iff Q \\iff (P \\implies Q) \\land (Q \\implies P)$. 두 명제의 진릿값이 항상 일치함을 의미.",
+            "usageAndExamples": [
+              {
+                "context": "가역행렬 정리",
+                "typesetMath": "\\det(\\mathbf{A}) \\ne 0 \\iff \\mathbf{A} \\text{ is invertible}",
+                "description": "정방행렬 A의 행렬식이 0이 아닌 것은 역행렬이 존재하기 위한 필요충분조건임"
+              }
+            ],
+            "commonPitfalls": "단방향 함의($\\implies$)와 양방향 동치($\\iff$)를 엄격히 구분하여 증명해야 함."
+          },
+          {
+            "id": "sym-qed",
+            "symbol": "■",
+            "typesetMath": "\\blacksquare, \\text{Q.E.D.}",
+            "nameKo": "증명 완료 기호 (할모스 기호 / Q.E.D.)",
+            "nameEn": "Halmos tombstone / Q.E.D.",
+            "howToReadKo": "증명 끝, 큅트, 증명 완료",
+            "howToReadEn": "end of proof, Q.E.D.",
+            "unicode": "U+220E",
+            "historyAndOrigin": "라틴어 'Quod Erat Demonstrandum(증명되어야 했던 것)'의 약어. 1950년 미국 수학자 폴 할모스(Paul Halmos)가 출판 인쇄에서 묘비 형태의 사각형(■)을 쓰면서 '할모스 심볼'로 대중화됨.",
+            "rigorousDefinition": "정리나 명제의 연역적 증명이 논리적 비약 없이 완전하게 종결되었음을 선언하는 메타-수학 종결 기호.",
+            "usageAndExamples": [
+              {
+                "context": "증명 종결",
+                "typesetMath": "\\text{Therefore, } \\sqrt{2} \\notin \\mathbb{Q}. \\quad \\blacksquare",
+                "description": "루트 2의 무리수성 증명 완료 표식"
+              }
+            ],
+            "commonPitfalls": "현대 학술 논문 및 교과서 조판에서는 오른쪽 끝 맞춤(Flush right)으로 검은 사각 상자($\\blacksquare$)를 배치함."
+          }
+        ]
+      },
+      {
+        "categoryId": "calculus-analysis",
+        "categoryNameKo": "해석학 및 미적분학 기호",
+        "categoryNameEn": "Calculus and Mathematical Analysis",
+        "order": 3,
+        "description": "연속 함수, 극한, 도함수, 적분, 다변수 벡터 미적분 및 점근 분석을 위한 정밀 수식 기호",
+        "symbols": [
+          {
+            "id": "sym-lim",
+            "symbol": "lim",
+            "typesetMath": "\\lim_{x \\to a} f(x)",
+            "nameKo": "극한 기호",
+            "nameEn": "Limit",
+            "howToReadKo": "리미트 x가 a로 갈 때 f of x",
+            "howToReadEn": "the limit of f of x as x approaches a",
+            "unicode": "U+2264 (operator)",
+            "historyAndOrigin": "1821년 오귀스탱 루이 코시(Augustin-Louis Cauchy)가 'lim.'으로 표기하기 시작했으며 바이어슈트라스가 현대식 아래 첨자 표기로 정형화함.",
+            "rigorousDefinition": "$\\forall \\epsilon > 0, \\exists \\delta > 0 \\text{ s.t. } 0 < |x - a| < \\delta \\implies |f(x) - L| < \\epsilon$일 때 $\\lim_{x \\to a} f(x) = L$.",
+            "usageAndExamples": [
+              {
+                "context": "미분계수의 정의",
+                "typesetMath": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+                "description": "평균변화율의 극한으로서의 순간변화율"
+              },
+              {
+                "context": "자연로그 밑 e",
+                "typesetMath": "e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n",
+                "description": "오일러 상수 e의 수열 극한 정의"
+              }
+            ],
+            "commonPitfalls": "함숫값 $f(a)$와 극한값 $\\lim_{x \\to a} f(x)$는 독립적이며 둘이 같아야 연속임."
+          },
+          {
+            "id": "sym-derivative",
+            "symbol": "df/dx, f'(x)",
+            "typesetMath": "\\frac{df}{dx}, \\; f'(x), \\; \\dot{x}",
+            "nameKo": "도함수 (라이프니츠 / 라그랑주 / 뉴턴 미분 표기법)",
+            "nameEn": "Derivative notations",
+            "howToReadKo": "dx분의 df, f 프라임 x, x 도트",
+            "howToReadEn": "d f by d x, f prime of x, x dot",
+            "unicode": "U+2032 (prime)",
+            "historyAndOrigin": "라이프니츠는 무한소 미분비 $\\frac{df}{dx}$를, 라그랑주는 도함수 $f'(x)$를, 뉴턴은 시간에 대한 변화율로 점 표기 $\\dot{x}$를 창안함.",
+            "rigorousDefinition": "$f'(x) = \\frac{df}{dx} = \\lim_{\\Delta x \\to 0} \\frac{\\Delta f}{\\Delta x}$. 선형사상 $Df(x): h \\mapsto f'(x)h$.",
+            "usageAndExamples": [
+              {
+                "context": "다항함수 미분",
+                "typesetMath": "\\frac{d}{dx}(x^n) = n x^{n-1}",
+                "description": "거듭제곱 함수의 도함수 공식"
+              }
+            ],
+            "commonPitfalls": "라이프니츠 표기 $\\frac{dy}{dx}$는 분수가 아니라 미분 연산자 $\\frac{d}{dx}$가 $y$에 작용한 것이나, 연쇄법칙 등에서는 분수처럼 다룰 수 있는 미분 형식(Differential Form)임."
+          },
+          {
+            "id": "sym-partial",
+            "symbol": "∂",
+            "typesetMath": "\\frac{\\partial f}{\\partial x}",
+            "nameKo": "편미분 기호 (파셜)",
+            "nameEn": "Partial derivative (del / curly d)",
+            "howToReadKo": "라운드 x분의 라운드 f, 파셜 x분의 파셜 f",
+            "howToReadEn": "partial f by partial x, the partial derivative of f with respect to x",
+            "unicode": "U+2202",
+            "historyAndOrigin": "1770년 콩도르세(Nicolas de Condorcet)가 처음 사용하고, 1841년 카를 야코비(Carl Gustav Jacobi)가 다변수 미적분학의 표준 기호로 정착시킴.",
+            "rigorousDefinition": "다변수 함수 $f(x_1, \\dots, x_n)$에서 다른 변수들을 상수로 고정하고 한 변수에 대해 취한 극한: $\\frac{\\partial f}{\\partial x_i} = \\lim_{h \\to 0} \\frac{f(x_1, \\dots, x_i+h, \\dots) - f(x_1, \\dots)}{h}$.",
+            "usageAndExamples": [
+              {
+                "context": "맥스웰 방정식",
+                "typesetMath": "\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+                "description": "패러데이 전자기 유도 법칙의 미분형"
+              }
+            ],
+            "commonPitfalls": "일변수 상미분 $d$와 다변수 편미분 $\\partial$를 혼용하지 말아야 함."
+          },
+          {
+            "id": "sym-integral",
+            "symbol": "∫",
+            "typesetMath": "\\int f(x) \\, dx",
+            "nameKo": "적분 기호 (인테그랄)",
+            "nameEn": "Integral sign",
+            "howToReadKo": "인테그랄 f of x dx",
+            "howToReadEn": "the integral of f of x with respect to x",
+            "unicode": "U+222B",
+            "historyAndOrigin": "1675년 라이프니츠가 라틴어 합(Summa)의 첫 글자 긴 'S'(ſ)를 길게 늘려 연속적인 미소량의 합을 표현하기 위해 도입함.",
+            "rigorousDefinition": "리만 적분: 분할 $\\mathcal{P}$에 대한 리만합의 극한: $\\int_a^b f(x)\\,dx = \\lim_{\\|\\mathcal{P}\\| \\to 0} \\sum_{i=1}^n f(x_i^*) \\Delta x_i$.",
+            "usageAndExamples": [
+              {
+                "context": "정적분 계산",
+                "typesetMath": "\\int_a^b f(x) \\, dx = F(b) - F(a)",
+                "description": "미적분학의 기본정리 (FTC 2)"
+              }
+            ],
+            "commonPitfalls": "부정적분에서는 반드시 적분상수 $+ C$를 누락하지 말아야 함."
+          },
+          {
+            "id": "sym-contour-integral",
+            "symbol": "∮",
+            "typesetMath": "\\oint_C f(z) \\, dz",
+            "nameKo": "폐곡선 적분 (선적분 / 주회적분)",
+            "nameEn": "Contour integral (Closed curve integral)",
+            "howToReadKo": "폐곡선 적분 인테그랄, 클로즈드 루프 인테그랄",
+            "howToReadEn": "the contour integral around C of f of z dz",
+            "unicode": "U+222E",
+            "historyAndOrigin": "복소해석학과 전자기학에서 닫힌 경로(Closed Loop)에 대한 적분을 명시하기 위해 적분 기호 중앙에 닫힌 원(Circle)을 합성함.",
+            "rigorousDefinition": "단순 폐곡선 $C$를 따라 회전하는 복소함수 또는 벡터장의 선적분: 코시 적분정리에 의해 유수(Residue)의 합과 직결됨: $\\oint_C f(z)\\,dz = 2\\pi i \\sum \\text{Res}(f, z_k)$.",
+            "usageAndExamples": [
+              {
+                "context": "앙페르 회로 법칙",
+                "typesetMath": "\\oint_{\\partial S} \\mathbf{B} \\cdot d\\boldsymbol{\\ell} = \\mu_0 I_{\\text{enc}}",
+                "description": "폐곡선을 따라 흐르는 자기장의 선적분은 관통 전류에 비례함"
+              }
+            ],
+            "commonPitfalls": "경로가 닫히지 않은 일반 곡선에는 원형 표식 없는 $\\int_C$를 써야 함."
+          },
+          {
+            "id": "sym-summation",
+            "symbol": "∑",
+            "typesetMath": "\\sum_{k=1}^n a_k",
+            "nameKo": "시그마 (수열의 합 기호)",
+            "nameEn": "Summation (Capital sigma)",
+            "howToReadKo": "시그마 k는 1부터 n까지 a sub k",
+            "howToReadEn": "the sum of a sub k from k equals 1 to n",
+            "unicode": "U+2211",
+            "historyAndOrigin": "1755년 레온하르트 오일러가 합을 뜻하는 Sum의 머리글자에 해당하는 그리스 대문자 시그마($\\Sigma$)를 수열의 합 기호로 공식화함.",
+            "rigorousDefinition": "유한 합: $\\sum_{k=1}^n a_k = a_1 + a_2 + \\dots + a_n$. 무한 급수: 부분합의 극한 $\\lim_{n \\to \\infty} \\sum_{k=1}^n a_k$.",
+            "usageAndExamples": [
+              {
+                "context": "등비급수",
+                "typesetMath": "\\sum_{k=0}^\\infty r^k = \\frac{1}{1 - r} \\quad (|r| < 1)",
+                "description": "수렴하는 무한 등비급수의 합 공식"
+              }
+            ],
+            "commonPitfalls": "소문자 시그마($\\sigma$)는 표준편차나 전도율에 쓰이고, 대문자 시그마($\\sum$)는 덧셈 총합 연산자로 쓰임."
+          },
+          {
+            "id": "sym-product",
+            "symbol": "∏",
+            "typesetMath": "\\prod_{k=1}^n a_k",
+            "nameKo": "파이 (수열의 곱 기호)",
+            "nameEn": "Product (Capital pi)",
+            "howToReadKo": "프로덕트 k는 1부터 n까지 a sub k",
+            "howToReadEn": "the product of a sub k from k equals 1 to n",
+            "unicode": "U+220F",
+            "historyAndOrigin": "1812년 카를 프리드리히 가우스가 그리스 대문자 파이($\\Pi$, Product의 첫 글자)를 수열의 연쇄 곱 기호로 도입함.",
+            "rigorousDefinition": "$\\prod_{k=1}^n a_k = a_1 \\times a_2 \\times \\dots \\times a_n$.",
+            "usageAndExamples": [
+              {
+                "context": "오일러 사인 무한곱",
+                "typesetMath": "\\frac{\\sin x}{x} = \\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)",
+                "description": "바젤 문제 해결의 기초가 된 삼각함수 무한곱 전개"
+              }
+            ],
+            "commonPitfalls": "원주율 상수 소문자 파이($\\pi \\approx 3.14$)와 연산자 대문자 파이($\\prod$)의 폰트 및 크기 구분이 필수적임."
+          },
+          {
+            "id": "sym-nabla",
+            "symbol": "∇",
+            "typesetMath": "\\nabla, \\; \\nabla f, \\; \\nabla \\cdot \\mathbf{F}, \\; \\nabla \\times \\mathbf{F}",
+            "nameKo": "나블라 (델 연산자)",
+            "nameEn": "Nabla / Del operator",
+            "howToReadKo": "나블라, 델",
+            "howToReadEn": "nabla, del, grad, div, curl",
+            "unicode": "U+2207",
+            "historyAndOrigin": "1853년 윌리엄 로언 해밀턴(William Rowan Hamilton)이 삼차원 편미분 벡터 연산자로 도입하였으며, 고대 히브리 하프 'Nabla'와 닮아 명명됨.",
+            "rigorousDefinition": "데카르트 좌표계의 형식적 미분 벡터: $\\nabla = \\hat{i}\\frac{\\partial}{\\partial x} + \\hat{j}\\frac{\\partial}{\\partial y} + \\hat{k}\\frac{\\partial}{\\partial z}$. 기울기($\\nabla f$), 발산($\\nabla \\cdot \\mathbf{F}$), 회전($\\nabla \\times \\mathbf{F}$), 라플라시안($\\nabla^2 = \\Delta$).",
+            "usageAndExamples": [
+              {
+                "context": "라플라스 방정식",
+                "typesetMath": "\\nabla^2 V = 0",
+                "description": "정전기학에서 전하가 없는 영역의 정전위 지배방정식"
+              }
+            ],
+            "commonPitfalls": "스칼라장에 작용하는 기울기($\\nabla f$)는 벡터가 되고, 벡터장에 작용하는 발산($\\nabla \\cdot \\mathbf{F}$)은 스칼라가 됨."
+          }
+        ]
+      },
+      {
+        "categoryId": "linear-algebra",
+        "categoryNameKo": "선형대수학 및 텐서 기호",
+        "categoryNameEn": "Linear Algebra and Tensor Analysis",
+        "order": 4,
+        "description": "벡터, 행렬, 행렬식, 고윳값, 텐서곱 및 내적 공간을 다루는 핵심 기호 체계",
+        "symbols": [
+          {
+            "id": "sym-vector",
+            "symbol": "v⃗, v",
+            "typesetMath": "\\vec{v}, \\; \\mathbf{v}",
+            "nameKo": "벡터 표기법 (화살표 / 볼드체)",
+            "nameEn": "Vector notation",
+            "howToReadKo": "벡터 v",
+            "howToReadEn": "vector v",
+            "unicode": "U+20D7 (combining arrow)",
+            "historyAndOrigin": "19세기 조사이어 윌러드 기브스(Josiah Willard Gibbs)와 올리버 헤비사이드(Oliver Heaviside)가 사원수론을 단순화하여 현대식 3차원 벡터 해석학을 확립함.",
+            "rigorousDefinition": "체 $F$ 위의 벡터 공간 $V$의 원소: 덧셈과 스칼라 곱에 대해 닫혀 있는 8대 공리를 만족하는 수학적 대상.",
+            "usageAndExamples": [
+              {
+                "context": "벡터 성분 표시",
+                "typesetMath": "\\mathbf{v} = \\begin{pmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{pmatrix}",
+                "description": "3차원 열벡터의 성분별 표현"
+              }
+            ],
+            "commonPitfalls": "필기체에서는 상단 화살표($\\vec{v}$)를 주로 쓰고, 출판 인쇄물에서는 소문자 굵은 볼드체($\\mathbf{v}$)를 표준으로 씀."
+          },
+          {
+            "id": "sym-matrix",
+            "symbol": "A, [A]",
+            "typesetMath": "\\mathbf{A}, \\; [a_{ij}], \\; \\mathbf{I}_n",
+            "nameKo": "행렬 및 단위행렬 기호",
+            "nameEn": "Matrix and Identity matrix",
+            "howToReadKo": "행렬 A, n차 단위행렬",
+            "howToReadEn": "matrix A, identity matrix of size n",
+            "unicode": "U+1D400 (bold A)",
+            "historyAndOrigin": "1850년 제임스 조지프 실베스터(James Joseph Sylvester)가 행렬(Matrix: 자궁, 모체를 의미하는 라틴어)이라는 용어를 도입하고 아서 케일리(Arthur Cayley)가 행렬 대수학을 정립함.",
+            "rigorousDefinition": "$m \\times n$ 직사각형 수열 배열. 선형사상 $T: V \\to W$의 기저에 대한 가중치 표현. 단위행렬 $\\mathbf{I}_n$은 대각성분이 1이고 나머지가 0인 항등사상 행렬.",
+            "usageAndExamples": [
+              {
+                "context": "선형 연립방정식",
+                "typesetMath": "\\mathbf{A}\\mathbf{x} = \\mathbf{b}",
+                "description": "행렬과 벡터의 곱으로 표현된 연립 일차방정식"
+              }
+            ],
+            "commonPitfalls": "행렬 곱셈은 교환법칙이 성립하지 않음: $\\mathbf{A}\\mathbf{B} \\ne \\mathbf{B}\\mathbf{A}$ (일반적으로)."
+          },
+          {
+            "id": "sym-transpose",
+            "symbol": "Aᵀ",
+            "typesetMath": "\\mathbf{A}^T, \\; \\mathbf{A}^H",
+            "nameKo": "전치행렬 / 켤레 전치 (에르미트 전치)",
+            "nameEn": "Transpose / Conjugate transpose (Hermitian)",
+            "howToReadKo": "A 트랜스포즈, A 허미시안",
+            "howToReadEn": "A transpose, A Hermitian transpose",
+            "unicode": "U+1D40 (superscript T)",
+            "historyAndOrigin": "1858년 아서 케일리가 행과 열을 뒤바꾸는 대칭 연산으로 도입함.",
+            "rigorousDefinition": "$(\\mathbf{A}^T)_{ij} = a_{ji}$. 복소 행렬에서는 켤레복소수를 취한 에르미트 전치 $\\mathbf{A}^H = (\\mathbf{A}^*)^T$.",
+            "usageAndExamples": [
+              {
+                "context": "대칭행렬",
+                "typesetMath": "\\mathbf{A}^T = \\mathbf{A}",
+                "description": "전치행렬이 원래 행렬과 같은 대칭 구조"
+              },
+              {
+                "context": "직교행렬",
+                "typesetMath": "\\mathbf{Q}^T \\mathbf{Q} = \\mathbf{I}",
+                "description": "전치행렬이 곧 역행렬이 되는 직교 변환"
+              }
+            ],
+            "commonPitfalls": "곱셈의 전치는 순서가 뒤집힘: $(\\mathbf{A}\\mathbf{B})^T = \\mathbf{B}^T \\mathbf{A}^T$."
+          },
+          {
+            "id": "sym-det",
+            "symbol": "det(A), |A|",
+            "typesetMath": "\\det(\\mathbf{A}), \\; |\\mathbf{A}|",
+            "nameKo": "행렬식 (디터미넌트)",
+            "nameEn": "Determinant",
+            "howToReadKo": "디터미넌트 A, 댓 A",
+            "howToReadEn": "the determinant of A",
+            "unicode": "U+007C",
+            "historyAndOrigin": "1693년 라이프니츠와 세키 다카카즈가 독립적으로 발견하였으며, 코시가 'det'라는 현대적 축약어를 제정함.",
+            "rigorousDefinition": "라이프니츠 공식: $\\det(\\mathbf{A}) = \\sum_{\\sigma \\in S_n} \\operatorname{sgn}(\\sigma) \\prod_{i=1}^n a_{i, \\sigma(i)}$. 기하학적으로 기저 벡터들이 이루는 초부피(Hypervolume)의 부호화된 배율.",
+            "usageAndExamples": [
+              {
+                "context": "2x2 행렬식",
+                "typesetMath": "\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc",
+                "description": "2차 정방행렬식의 기본 대각선 교차곱 차이"
+              }
+            ],
+            "commonPitfalls": "스칼라 수의 절댓값 표기 $|x|$와 혼동하기 쉬우므로, 명확성을 위해 $\\det(\\mathbf{A})$ 표기를 권장함."
+          },
+          {
+            "id": "sym-trace",
+            "symbol": "tr(A)",
+            "typesetMath": "\\operatorname{tr}(\\mathbf{A})",
+            "nameKo": "대각합 (트레이스)",
+            "nameEn": "Trace of a matrix",
+            "howToReadKo": "트레이스 A",
+            "howToReadEn": "the trace of A",
+            "unicode": "N/A",
+            "historyAndOrigin": "독일어 'Spur(흔적)'에서 유래하여 19세기 불변량 이론에서 주대각 원소의 합으로 정의됨.",
+            "rigorousDefinition": "정방행렬의 주대각선 원소들의 합: $\\operatorname{tr}(\\mathbf{A}) = \\sum_{i=1}^n a_{ii} = \\sum_{i=1}^n \\lambda_i$ (모든 고윳값의 합과 같음).",
+            "usageAndExamples": [
+              {
+                "context": "순환 불변성",
+                "typesetMath": "\\operatorname{tr}(\\mathbf{A}\\mathbf{B}\\mathbf{C}) = \\operatorname{tr}(\\mathbf{B}\\mathbf{C}\\mathbf{A}) = \\operatorname{tr}(\\mathbf{C}\\mathbf{A}\\mathbf{B})",
+                "description": "트레이스의 순환 순열 불변성 성질"
+              }
+            ],
+            "commonPitfalls": "$\\operatorname{tr}(\\mathbf{A}\\mathbf{B}) = \\operatorname{tr}(\\mathbf{B}\\mathbf{A})$이지만 $\\operatorname{tr}(\\mathbf{A}\\mathbf{B}) \\ne \\operatorname{tr}(\\mathbf{A})\\operatorname{tr}(\\mathbf{B})$임."
+          },
+          {
+            "id": "sym-norm",
+            "symbol": "‖x‖",
+            "typesetMath": "\\|\\mathbf{x}\\|_2, \\; \\|\\mathbf{A}\\|_F",
+            "nameKo": "노름 (벡터의 크기 / 행렬 노름)",
+            "nameEn": "Norm (Euclidean norm / Frobenius norm)",
+            "howToReadKo": "노름 x, x의 2-노름",
+            "howToReadEn": "the norm of x, the l2 norm of x",
+            "unicode": "U+2016",
+            "historyAndOrigin": "20세기 초 다비트 힐베르트와 스테판 바나흐(Stefan Banach)가 함수해석학에서 거리 공간의 일반화로 이중 세로선 기호를 정립함.",
+            "rigorousDefinition": "1) 양의 정부호성: $\\|\\mathbf{x}\\| \\ge 0$, $\\|\\mathbf{x}\\|=0 \\iff \\mathbf{x}=\\mathbf{0}$. 2) 동차성: $\\|\\alpha\\mathbf{x}\\| = |\\alpha|\\|\\mathbf{x}\\|$. 3) 삼각부등식: $\\|\\mathbf{x}+\\mathbf{y}\\| \\le \\|\\mathbf{x}\\| + \\|\\mathbf{y}\\|$. 유클리드 노름: $\\|\\mathbf{x}\\|_2 = \\sqrt{\\sum x_i^2}$.",
+            "usageAndExamples": [
+              {
+                "context": "단위벡터 정규화",
+                "typesetMath": "\\hat{\\mathbf{u}} = \\frac{\\mathbf{u}}{\\|\\mathbf{u}\\|}",
+                "description": "크기가 1인 단위 방향벡터 생성"
+              }
+            ],
+            "commonPitfalls": "단일 막대 $|x|$(절댓값)와 이중 막대 $\\|\\mathbf{x}\\|$(노름)의 의미적 위상을 구별하여 표기해야 함."
+          },
+          {
+            "id": "sym-tensor-prod",
+            "symbol": "⊗",
+            "typesetMath": "\\otimes",
+            "nameKo": "텐서곱 (크로네커 곱 / 직적)",
+            "nameEn": "Tensor product (Kronecker product)",
+            "howToReadKo": "텐서곱, 크로네커 곱",
+            "howToReadEn": "tensor product of, otimes",
+            "unicode": "U+2297",
+            "historyAndOrigin": "레오폴트 크로네커(Leopold Kronecker)의 행렬 곱 연구와 헤르만 그라스만의 다중선형대수학을 결합하여 양자역학 및 고등기하학에서 공식화됨.",
+            "rigorousDefinition": "벡터 공간 $V, W$의 텐서곱 $V \\otimes W$는 쌍선형 사상을 선형 사상으로 변환하는 보편 성질(Universal Property)을 만족하는 공간.",
+            "usageAndExamples": [
+              {
+                "context": "양자역학 큐비트 결합",
+                "typesetMath": "|\\psi\\rangle = |q_1\\rangle \\otimes |q_2\\rangle",
+                "description": "두 큐비트 상태 공간의 복합 텐서 상태 표현"
+              }
+            ],
+            "commonPitfalls": "직합($\\oplus$)과 텐서곱($\\otimes$)은 차원이 다름: $\\dim(V \\oplus W) = m+n$이지만 $\\dim(V \\otimes W) = m \\times n$임."
+          }
+        ]
+      },
+      {
+        "categoryId": "geometry-topology",
+        "categoryNameKo": "기하학, 삼각법 및 위상수학 기호",
+        "categoryNameEn": "Geometry, Trigonometry and Topology",
+        "order": 5,
+        "description": "도형, 각도, 삼각비, 쌍곡선함수, 공간 및 연속 변형 위상 기호 체계",
+        "symbols": [
+          {
+            "id": "sym-angle",
+            "symbol": "∠",
+            "typesetMath": "\\angle ABC, \\; \\theta, \\; \\phi",
+            "nameKo": "각 (각도 기호)",
+            "nameEn": "Angle symbol",
+            "howToReadKo": "각 ABC, 세타, 파이",
+            "howToReadEn": "angle ABC, theta, phi",
+            "unicode": "U+2220",
+            "historyAndOrigin": "1634년 피에르 에리고누(Pierre Hérigone)가 기하학 증명에서 두 반직선이 만나는 꼭짓점을 나타내기 위해 창안함.",
+            "rigorousDefinition": "동일한 시점을 공유하는 두 반직선 사이의 회전량. 호도법(Radian)에서 각 $\\theta = \\frac{s}{r}$ (호의 길이 $s$, 반지름 $r$).",
+            "usageAndExamples": [
+              {
+                "context": "삼각형 내각의 합",
+                "typesetMath": "\\angle A + \\angle B + \\angle C = 180^\\circ = \\pi \\text{ rad}",
+                "description": "유클리드 평면 삼각형의 세 내각 합 공식"
+              }
+            ],
+            "commonPitfalls": "부등호($<$)와 각 기호($\\angle$)는 밑변의 수평성에서 명확히 구분됨."
+          },
+          {
+            "id": "sym-parallel-perp",
+            "symbol": "∥, ⟂",
+            "typesetMath": "\\parallel, \\; \\perp",
+            "nameKo": "평행 및 수직 기호",
+            "nameEn": "Parallel and Perpendicular",
+            "howToReadKo": "평행하다, 수직이다(직교한다)",
+            "howToReadEn": "is parallel to, is perpendicular to",
+            "unicode": "U+2225, U+22A5",
+            "historyAndOrigin": "1670년대 윌리엄 오트레드가 두 직선의 기하학적 직교($\\perp$)와 평행($\\parallel$) 관계를 명시하기 위해 고안함.",
+            "rigorousDefinition": "1) 평행: $\\vec{u} \\parallel \\vec{v} \\iff \\vec{u} \\times \\vec{v} = \\vec{0}$ 또는 $\\vec{u} = k\\vec{v}$. 2) 수직: $\\vec{u} \\perp \\vec{v} \\iff \\vec{u} \\cdot \\vec{v} = 0$.",
+            "usageAndExamples": [
+              {
+                "context": "벡터 직교 분해",
+                "typesetMath": "\\mathbf{v} = \\mathbf{v}_\\parallel + \\mathbf{v}_\\perp",
+                "description": "벡터를 평행 성분과 직교 성분으로 분해"
+              }
+            ],
+            "commonPitfalls": "선택공리나 비유클리드 기하학에서는 평행선 공준(Playfair axiom)의 성립 여부가 달라짐."
+          },
+          {
+            "id": "sym-triangle-cong",
+            "symbol": "△, ≅, ∼",
+            "typesetMath": "\\triangle ABC, \\; \\cong, \\; \\sim",
+            "nameKo": "삼각형, 합동, 닮음 기호",
+            "nameEn": "Triangle, Congruent to, Similar to",
+            "howToReadKo": "삼각형 ABC, 합동이다, 닮음이다",
+            "howToReadEn": "triangle ABC, is congruent to, is similar to",
+            "unicode": "U+25B3, U+2245, U+223C",
+            "historyAndOrigin": "라이프니츠가 등호(=) 위에 유사성을 뜻하는 물결(~)을 얹어 합동($\\cong$)을, 닮음에는 물결($\\sim$)을 사용하여 체계화함.",
+            "rigorousDefinition": "1) 합동($\\cong$): 강체 변환(회전, 평행이동, 대칭)을 통해 완전히 겹쳐짐. 2) 닮음($\\sim$): 등방 확대/축소 및 강체 변환을 통해 겹쳐짐 (대응각 일치, 대응변 길이비 일정).",
+            "usageAndExamples": [
+              {
+                "context": "도형 합동",
+                "typesetMath": "\\triangle ABC \\cong \\triangle DEF",
+                "description": "두 삼각형의 모든 대응변과 대응각이 완전히 일치함"
+              }
+            ],
+            "commonPitfalls": "한국/일본 교과서에서 닮음 기호로 눕힌 S(∽, U+223D)를 쓰기도 하나, 국제 표준 및 KaTeX에서는 $\\sim$을 사용함."
+          },
+          {
+            "id": "sym-pi",
+            "symbol": "π",
+            "typesetMath": "\\pi",
+            "nameKo": "원주율 파이",
+            "nameEn": "Archimedes' constant Pi",
+            "howToReadKo": "파이",
+            "howToReadEn": "pi",
+            "unicode": "U+03C0",
+            "historyAndOrigin": "1706년 윌리엄 존스(William Jones)가 그리스어로 둘레를 뜻하는 '페리메트로스(περίμετρος)'의 첫 글자에서 따왔으며, 오일러가 사용하면서 전 세계 표준으로 확립됨.",
+            "rigorousDefinition": "임의의 원의 지름에 대한 원둘레의 비율: $\\pi = \\frac{C}{d} = 3.1415926535\\dots$. 초월수(Transcendental Number, 린데만 1882년 증명).",
+            "usageAndExamples": [
+              {
+                "context": "원의 넓이",
+                "typesetMath": "A = \\pi r^2",
+                "description": "반지름 r인 원의 기하학적 넓이 공식"
+              }
+            ],
+            "commonPitfalls": "원주율 $\\pi$는 무리수이자 초월수이므로 유한 분수(예: 22/7)는 근사값에 불과함."
+          },
+          {
+            "id": "sym-trig",
+            "symbol": "sin, cos, tan",
+            "typesetMath": "\\sin\\theta, \\; \\cos\\theta, \\; \\tan\\theta",
+            "nameKo": "기본 삼각함수",
+            "nameEn": "Trigonometric functions (sine, cosine, tangent)",
+            "howToReadKo": "사인, 코사인, 탄젠트",
+            "howToReadEn": "sine of theta, cosine of theta, tangent of theta",
+            "unicode": "N/A",
+            "historyAndOrigin": "고대 인도 천문학의 '지야(Jya)'가 아랍어 '자이브(Jaib)'를 거쳐 라틴어 '시누스(Sinus: 굽은 곳, 주머니)'로 번역되며 탄생함.",
+            "rigorousDefinition": "단위원 $x^2 + y^2 = 1$ 상의 각 $\\theta$에 대응하는 점의 좌표 $(x, y) = (\\cos\\theta, \\sin\\theta)$ 및 $\\tan\\theta = \\frac{\\sin\\theta}{\\cos\\theta}$. 복소수 정의: $\\sin z = \\frac{e^{iz} - e^{-iz}}{2i}$, $\\cos z = \\frac{e^{iz} + e^{-iz}}{2}$.",
+            "usageAndExamples": [
+              {
+                "context": "피타고라스 삼각항등식",
+                "typesetMath": "\\sin^2\\theta + \\cos^2\\theta = 1",
+                "description": "단위원 상의 기본 대칭 관계"
+              }
+            ],
+            "commonPitfalls": "$\\sin^{-1}(x)$는 역삼각함수($\\arcsin x$)를 의미하며, $\\frac{1}{\\sin x} = \\csc x$와 전혀 다름."
+          },
+          {
+            "id": "sym-hyperbolic",
+            "symbol": "sinh, cosh, tanh",
+            "typesetMath": "\\sinh x, \\; \\cosh x, \\; \\tanh x",
+            "nameKo": "쌍곡선함수",
+            "nameEn": "Hyperbolic functions",
+            "howToReadKo": "하이퍼볼릭 사인, 코사인, 탄젠트",
+            "howToReadEn": "hyperbolic sine, hyperbolic cosine, hyperbolic tangent (sinh, cosh, tanh)",
+            "unicode": "N/A",
+            "historyAndOrigin": "1760년대 요한 람베르트(Johann Heinrich Lambert)와 빈센초 리카티가 쌍곡선 $x^2 - y^2 = 1$ 매개변수화로 도입함.",
+            "rigorousDefinition": "$\\sinh x = \\frac{e^x - e^{-x}}{2}$, $\\cosh x = \\frac{e^x + e^{-x}}{2}$, $\\tanh x = \\frac{\\sinh x}{\\cosh x}$. 기본 항등식: $\\cosh^2 x - \\sinh^2 x = 1$.",
+            "usageAndExamples": [
+              {
+                "context": "현수선(Catenary) 방정식",
+                "typesetMath": "y = a \\cosh\\left(\\frac{x}{a}\\right)",
+                "description": "양 끝이 고정된 균일한 줄이 중력에 의해 자연스럽게 늘어진 곡선"
+              }
+            ],
+            "commonPitfalls": "삼각함수($\\cos^2 + \\sin^2 = 1$)와 달리 쌍곡선함수는 부호가 마이너스임($\\cosh^2 - \\sinh^2 = 1$)."
+          },
+          {
+            "id": "sym-topology",
+            "symbol": "τ, ∂A, Ā, A°",
+            "typesetMath": "\\tau, \\; \\partial A, \\; \\overline{A}, \\; A^\\circ",
+            "nameKo": "위상, 경계, 폐포, 내부 기호",
+            "nameEn": "Topology, Boundary, Closure, Interior",
+            "howToReadKo": "위상 타우, 경계 A, 폐포 A(A 바), 내부 A(A 인테리어)",
+            "howToReadEn": "topology tau, boundary of A, closure of A, interior of A",
+            "unicode": "U+03C4, U+2202",
+            "historyAndOrigin": "펠릭스 하우스도르프(Felix Hausdorff)와 카지미에시 쿠라토프스키(Kazimierz Kuratowski)가 20세기 초 점집합 위상수학의 공리계를 정립함.",
+            "rigorousDefinition": "위상 공간 $(X, \\tau)$: 1) $\\emptyset, X \\in \\tau$, 2) 임의 합집합에 닫힘, 3) 유한 교집합에 닫힘. 내부 $A^\\circ$: $A$에 포함된 가장 큰 개집합. 폐포 $\\overline{A}$: $A$를 포함하는 가장 작은 폐집합. 경계 $\\partial A = \\overline{A} \\setminus A^\\circ$.",
+            "usageAndExamples": [
+              {
+                "context": "열린 공의 경계",
+                "typesetMath": "\\partial B_r(\\mathbf{x}) = \\{\\mathbf{y} \\mid \\|\\mathbf{y} - \\mathbf{x}\\| = r\\}",
+                "description": "반지름 r인 유클리드 열린 구의 경계면은 구면(Sphere)임"
+              }
+            ],
+            "commonPitfalls": "편미분 기호 $\\partial$가 위상수학에서는 집합의 경계(Boundary) 연산자로 사용되므로 문맥을 파악해야 함."
+          }
+        ]
+      },
+      {
+        "categoryId": "probability-statistics",
+        "categoryNameKo": "확률 및 통계학 기호",
+        "categoryNameEn": "Probability and Statistics",
+        "order": 6,
+        "description": "불확실성 정량화, 확률변수, 통계적 추정, 분포 및 가설검정에 쓰이는 조판 수식 기호",
+        "symbols": [
+          {
+            "id": "sym-prob-event",
+            "symbol": "P(A), P(A|B)",
+            "typesetMath": "P(A), \\; P(A \\mid B)",
+            "nameKo": "확률 및 조건부 확률",
+            "nameEn": "Probability and Conditional probability",
+            "howToReadKo": "사건 A의 확률, B가 주어졌을 때 A의 조건부 확률",
+            "howToReadEn": "probability of A, probability of A given B",
+            "unicode": "U+2223 (divides/given)",
+            "historyAndOrigin": "1933년 안드레이 콜모고로프(Andrey Kolmogorov)가 측도론(Measure Theory)을 기반으로 현대 확률론의 3대 공리(비음성, 정규화, 가산가법성)를 확립함.",
+            "rigorousDefinition": "확률공간 $(\\Omega, \\mathcal{F}, P)$에서 사건 $A \\in \\mathcal{F}$의 측도 $P(A) \\in [0, 1]$. 조건부 확률: $P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}$ (단, $P(B) > 0$).",
+            "usageAndExamples": [
+              {
+                "context": "베이즈 정리",
+                "typesetMath": "P(A \\mid B) = \\frac{P(B \\mid A) P(A)}{P(B)}",
+                "description": "사전확률과 우도를 통한 사후확률 갱신 공식"
+              }
+            ],
+            "commonPitfalls": "조건부 확률 $P(A \\mid B)$에서 막대($\\mid$)는 나눗셈이 아니라 주어진 조건(Given)을 구분하는 구분자임."
+          },
+          {
+            "id": "sym-expectation",
+            "symbol": "E[X]",
+            "typesetMath": "E[X], \\; \\mathbb{E}[X]",
+            "nameKo": "기댓값 (평균)",
+            "nameEn": "Expected value (Expectation)",
+            "howToReadKo": "확률변수 X의 기댓값",
+            "howToReadEn": "the expected value of X, E of X",
+            "unicode": "U+2135 (blackboard E)",
+            "historyAndOrigin": "17세기 크리스티안 하위헌스(Christiaan Huygens)가 도박의 공정한 분배 문제에서 '기대(Expectation)' 개념을 최초로 수학화함.",
+            "rigorousDefinition": "이산 확률변수: $E[X] = \\sum x_i P(X = x_i)$. 연속 확률변수: $E[X] = \\int_{-\\infty}^\\infty x f(x) \\, dx$ (르베그 적분: $\\int_\\Omega X \\, dP$).",
+            "usageAndExamples": [
+              {
+                "context": "기댓값의 선형성",
+                "typesetMath": "E[aX + bY] = aE[X] + bE[Y]",
+                "description": "독립 여부와 무관하게 항상 성립하는 강력한 성질"
+              }
+            ],
+            "commonPitfalls": "곱의 기댓값 $E[XY] = E[X]E[Y]$는 $X, Y$가 독립(또는 무상관)일 때만 성립함."
+          },
+          {
+            "id": "sym-variance",
+            "symbol": "Var(X), σ²",
+            "typesetMath": "\\operatorname{Var}(X), \\; \\sigma^2, \\; \\sigma",
+            "nameKo": "분산 및 표준편차",
+            "nameEn": "Variance and Standard deviation",
+            "howToReadKo": "X의 분산, 시그마 제곱, 시그마(표준편차)",
+            "howToReadEn": "variance of X, sigma squared, standard deviation sigma",
+            "unicode": "U+03C3 (sigma)",
+            "historyAndOrigin": "1918년 로널드 피셔(Ronald Fisher)가 '분산(Variance)'이라는 용어를 도입하고 카를 피어슨(Karl Pearson)이 표준편차 기호 $\\sigma$를 정립함.",
+            "rigorousDefinition": "평균으로부터의 편차 제곱의 기댓값: $\\operatorname{Var}(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2$. 표준편차 $\\sigma = \\sqrt{\\operatorname{Var}(X)}$.",
+            "usageAndExamples": [
+              {
+                "context": "상수 배의 분산",
+                "typesetMath": "\\operatorname{Var}(aX + b) = a^2 \\operatorname{Var}(X)",
+                "description": "분산은 척도의 제곱 배로 증가하고 평행이동 상수는 무시됨"
+              }
+            ],
+            "commonPitfalls": "표본분산 계산 시 자유도 손실로 인해 분모에 $n$ 대신 $n-1$(베셀 보정)을 나누어야 불편추정량(Unbiased Estimator)이 됨."
+          },
+          {
+            "id": "sym-dist-norm",
+            "symbol": "~, 𝒩(μ, σ²)",
+            "typesetMath": "X \\sim \\mathcal{N}(\\mu, \\sigma^2)",
+            "nameKo": "분포 기호 및 정규분포 (가우스 분포)",
+            "nameEn": "Distributed as, Normal (Gaussian) distribution",
+            "howToReadKo": "X는 평균이 뮤, 분산이 시그마 제곱인 정규분포를 따른다",
+            "howToReadEn": "X is distributed as normal with mean mu and variance sigma squared",
+            "unicode": "U+223C (tilde)",
+            "historyAndOrigin": "아브라함 드무아브르와 카를 가우스가 오차론에서 도출한 종형 곡선(Bell curve) 확률밀도함수.",
+            "rigorousDefinition": "확률밀도함수(PDF): $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$. 물결표($\\sim$)는 좌측 확률변수가 우측의 확률분포 모델을 따름을 선언.",
+            "usageAndExamples": [
+              {
+                "context": "표준정규화",
+                "typesetMath": "Z = \\frac{X - \\mu}{\\sigma} \\sim \\mathcal{N}(0, 1)",
+                "description": "임의의 정규분포를 표준정규분포로 변환하는 공식"
+              }
+            ],
+            "commonPitfalls": "문맥에 따라 물결표($\\sim$)가 기하학의 닮음, 해석학의 점근 동등($f \\sim g$), 통계학의 분포 추종 등 여러 의미를 가지므로 구분해야 함."
+          },
+          {
+            "id": "sym-hypothesis",
+            "symbol": "H₀, H₁, α",
+            "typesetMath": "H_0, \\; H_1, \\; \\alpha, \\; p\\text{-value}",
+            "nameKo": "귀무가설, 대립가설, 유의수준",
+            "nameEn": "Null hypothesis, Alternative hypothesis, Significance level",
+            "howToReadKo": "에이치 제로(귀무가설), 에이치 원(대립가설), 알파(유의수준)",
+            "howToReadEn": "H naught (null hypothesis), H one (alternative hypothesis), alpha (significance level)",
+            "unicode": "U+03B1 (alpha)",
+            "historyAndOrigin": "예지 네이만(Jerzy Neyman)과 에곤 피어슨(Egon Pearson)이 가설검정의 결정이론 프레임워크를 수립함.",
+            "rigorousDefinition": "$H_0$: 차이가 없다는 기본 가정. $H_1$: 입증하고자 하는 가설. $\\alpha = P(\\text{Reject } H_0 \\mid H_0 \\text{ is True})$ (제1종 오류 허용 확률).",
+            "usageAndExamples": [
+              {
+                "context": "유의수준 판정",
+                "typesetMath": "p\\text{-value} < \\alpha \\implies \\text{Reject } H_0",
+                "description": "p값이 유의수준(통상 0.05)보다 작으면 귀무가설을 기각하고 대립가설 채택"
+              }
+            ],
+            "commonPitfalls": "p값은 '귀무가설이 참일 확률'이 아니라, '귀무가설이 참이라는 가정 하에 관측치 이상의 극단적인 결과가 나올 조건부 확률'임."
+          }
+        ]
+      },
+      {
+        "categoryId": "algebra-number-theory",
+        "categoryNameKo": "추상대수학 및 정수론 기호",
+        "categoryNameEn": "Abstract Algebra and Number Theory",
+        "order": 7,
+        "description": "소수, 합동식, 군(Group), 환(Ring), 체(Field) 및 대수적 구조를 나타내는 핵심 조판 기호",
+        "symbols": [
+          {
+            "id": "sym-divides",
+            "symbol": "|",
+            "typesetMath": "a \\mid b, \\; a \\nmid b",
+            "nameKo": "약수 기호 (나눈다 / 나누지 않는다)",
+            "nameEn": "Divides / Does not divide",
+            "howToReadKo": "a는 b를 나눈다(a는 b의 약수이다), 나누지 않는다",
+            "howToReadEn": "a divides b, a does not divide b",
+            "unicode": "U+2223, U+2224",
+            "historyAndOrigin": "1801년 가우스의 '산술 연구'에서 정수론의 나눗셈 관계를 명확히 분리하기 위해 수직 막대로 정립됨.",
+            "rigorousDefinition": "$a \\mid b \\iff \\exists k \\in \\mathbb{Z} \\text{ s.t. } b = ka$.",
+            "usageAndExamples": [
+              {
+                "context": "소수의 정의",
+                "typesetMath": "p > 1 \\text{ is prime} \\iff (d \\mid p \\implies d = 1 \\lor d = p)",
+                "description": "1과 자기 자신만을 약수로 갖는 1보다 큰 자연수"
+              }
+            ],
+            "commonPitfalls": "나눗셈 분수 슬래시($a / b = \\frac{a}{b}$)와 수직 막대 약수 관계($a \\mid b$)는 완전히 다름. $a / b$는 수(값)이고, $a \\mid b$는 참/거짓 명제임."
+          },
+          {
+            "id": "sym-gcd-lcm",
+            "symbol": "gcd, lcm",
+            "typesetMath": "\\gcd(a, b), \\; \\operatorname{lcm}(a, b), \\; (a, b)",
+            "nameKo": "최대공약수 및 최소공배수",
+            "nameEn": "Greatest Common Divisor and Least Common Multiple",
+            "howToReadKo": "a와 b의 최대공약수, 최소공배수",
+            "howToReadEn": "the greatest common divisor of a and b, the least common multiple of a and b",
+            "unicode": "N/A",
+            "historyAndOrigin": "고대 그리스 유클리드 호제법(BC 300년경)에서 기원하여 현대 정수론의 표준 함수 표기로 안착됨.",
+            "rigorousDefinition": "$\\gcd(a, b) = \\max\\{d \\in \\mathbb{Z}^+ \\mid d \\mid a \\land d \\mid b\\}$. 베주 항등식: $\\exists x, y \\in \\mathbb{Z} \\text{ s.t. } ax + by = \\gcd(a, b)$.",
+            "usageAndExamples": [
+              {
+                "context": "기본 관계식",
+                "typesetMath": "\\gcd(a, b) \\times \\operatorname{lcm}(a, b) = |ab|",
+                "description": "두 정수의 곱은 최대공약수와 최소공배수의 곱과 일치함"
+              }
+            ],
+            "commonPitfalls": "정수론 논문에서는 $\\gcd(a, b)$를 단순히 괄호 $(a, b)$로 축약 표기하므로 순서쌍이나 열린 구간과 혼동하지 않도록 문맥을 확인해야 함."
+          },
+          {
+            "id": "sym-euler-phi",
+            "symbol": "φ(n)",
+            "typesetMath": "\\phi(n)",
+            "nameKo": "오일러 피 함수 (토션트 함수)",
+            "nameEn": "Euler's totient function",
+            "howToReadKo": "오일러 파이 n, 피 n",
+            "howToReadEn": "phi of n, Euler's totient of n",
+            "unicode": "U+03C6",
+            "historyAndOrigin": "1763년 레온하르트 오일러가 페르마의 소정리를 임의의 합성수로 일반화하는 과정에서 도입함.",
+            "rigorousDefinition": "$\\phi(n) = |\\{k \\in \\mathbb{N} \\mid 1 \\le k \\le n, \\gcd(k, n) = 1\\}|$. 승법적 함수(Multiplicative): $\\gcd(m, n) = 1 \\implies \\phi(mn) = \\phi(m)\\phi(n)$. 소인수분해 공식: $\\phi(n) = n \\prod_{p \\mid n} (1 - \\frac{1}{p})$.",
+            "usageAndExamples": [
+              {
+                "context": "오일러 정리",
+                "typesetMath": "a^{\\phi(n)} \\equiv 1 \\pmod n \\quad (\\gcd(a, n) = 1)",
+                "description": "현대 RSA 공개키 암호 알고리즘의 수학적 기반"
+              }
+            ],
+            "commonPitfalls": "소수 $p$에 대해서는 항상 $\\phi(p) = p - 1$임."
+          },
+          {
+            "id": "sym-binomial",
+            "symbol": "binom",
+            "typesetMath": "\\binom{n}{k}, \\; {}_n C_k",
+            "nameKo": "이항계수 (조합)",
+            "nameEn": "Binomial coefficient (Combination)",
+            "howToReadKo": "n choose k, n 컴비네이션 k",
+            "howToReadEn": "n choose k",
+            "unicode": "N/A",
+            "historyAndOrigin": "1654년 블레즈 파스칼이 이항정리와 확률론 연구에서 정립하였으며, 가우스가 2단 괄호 $\\binom{n}{k}$ 표기를 표준화함.",
+            "rigorousDefinition": "$\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$. $(x + y)^n = \\sum_{k=0}^n \\binom{n}{k} x^{n-k} y^k$의 계수.",
+            "usageAndExamples": [
+              {
+                "context": "파스칼의 항등식",
+                "typesetMath": "\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}",
+                "description": "파스칼 삼각형을 생성하는 점화 관계"
+              }
+            ],
+            "commonPitfalls": "영미권 및 국제 표준 수학 논문에서는 ${}_n C_k$보다 괄호형 이항계수 $\\binom{n}{k}$를 거의 절대적으로 표준으로 사용함."
+          },
+          {
+            "id": "sym-abstract-algebra",
+            "symbol": "G/H, ker, Im, ⊕",
+            "typesetMath": "G/H, \\; \\ker(\\phi), \\; \\operatorname{Im}(\\phi), \\; G \\oplus H",
+            "nameKo": "잉여군, 핵, 상, 직합 기호",
+            "nameEn": "Quotient group, Kernel, Image, Direct sum",
+            "howToReadKo": "G 모드 H(상군), 커널 파이, 이미지 파이, 직합",
+            "howToReadEn": "G mod H, kernel of phi, image of phi, G direct sum H",
+            "unicode": "U+2295 (oplus)",
+            "historyAndOrigin": "19세기 에바리스트 갈루아(Évariste Galois)가 정규부분군과 군의 분해를 규명하며 근대 추상대수학을 창시함.",
+            "rigorousDefinition": "준동형사상 $\\phi: G \\to H$에 대해 $\\ker(\\phi) = \\{g \\in G \\mid \\phi(g) = e_H\\}$. 제1 동형정리: $G / \\ker(\\phi) \\cong \\operatorname{Im}(\\phi)$.",
+            "usageAndExamples": [
+              {
+                "context": "순환군 직합",
+                "typesetMath": "\\mathbb{Z}_6 \\cong \\mathbb{Z}_2 \\oplus \\mathbb{Z}_3",
+                "description": "중국인의 나머지 정리에 따른 유한 아벨군의 대수적 직합 분해"
+              }
+            ],
+            "commonPitfalls": "상군 $G/H$가 정의되려면 부분군 $H$가 반드시 정규부분군($H \\triangleleft G$)이어야 함."
+          }
+        ]
+      }
+    ]
+  },
+  "mathTheorems": {
+    "title": "수학 12대 핵심 이론 단계별 엄밀 증명",
+    "theorems": [
+      {
+        "id": "pythagorean",
+        "order": 1,
+        "domain": "기하학 및 대수학",
+        "titleKo": "피타고라스 정리 (Pythagorean Theorem)",
+        "titleEn": "Pythagorean Theorem",
+        "statement": {
+          "typesetMath": "a^2 + b^2 = c^2",
+          "explanationKo": "직각삼각형에서 빗변의 길이의 제곱은 다른 두 변의 길이의 제곱의 합과 같다.",
+          "explanationEn": "In any right triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides."
+        },
+        "historicalSignificance": "고대 바빌로니아와 인도에서도 경험적으로 알려졌으나, 기원전 6세기 피타고라스 학파와 기원전 3세기 유클리드 '원론' 제1권 명제 47에서 연역적으로 완전 증명됨으로써 연역 기하학의 초석이 됨.",
+        "prerequisites": [
+          "유클리드 평면 기하 공리",
+          "삼각형의 넓이",
+          "곱셈 공식 $(a+b)^2$"
+        ],
+        "intuitiveIdea": "한 변의 길이가 (a+b)인 정사각형 안에 4개의 합동인 직각삼각형을 배치하면, 중앙에 남는 정사각형의 넓이는 빗변 c의 제곱이 되며 전체 면적 비교를 통해 $a^2 + b^2 = c^2$이 자연스럽게 유도됨.",
+        "rigorousProof": {
+          "proofType": "대수적 면적 분할 증명 (Algebraic Area Partition)",
+          "assumptions": [
+            "직각을 낀 두 변의 길이가 a, b이고 빗변의 길이가 c인 직각삼각형 ABC"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "외접 정사각형 구성",
+              "explanation": "한 변의 길이가 $(a + b)$인 큰 정사각형을 구성하고, 네 모퉁이에 밑변 a, 높이 b인 합동 직각삼각형 4개를 시계 방향으로 배치한다.",
+              "typesetMath": "S_{\\text{total}} = (a + b)^2",
+              "justification": "정사각형의 넓이 정의: 한 변의 길이의 제곱"
+            },
+            {
+              "stepNumber": 2,
+              "title": "내부 사각형의 형태 규명",
+              "explanation": "네 모퉁이 직각삼각형의 두 예각의 합은 $90^\\circ$이므로, 내부 사각형의 각 꼭짓점 각도는 $180^\\circ - 90^\\circ = 90^\\circ$이다. 또한 네 변의 길이는 모두 직각삼각형의 빗변 c로 같으므로 내부는 한 변이 c인 정사각형이다.",
+              "typesetMath": "S_{\\text{inner}} = c^2",
+              "justification": "네 각이 모두 직각이고 네 변의 길이가 같은 사각형은 정사각형임"
+            },
+            {
+              "stepNumber": 3,
+              "title": "4개 직각삼각형의 넓이 총합",
+              "explanation": "밑변 a, 높이 b인 직각삼각형 하나의 넓이는 $\\frac{1}{2}ab$이며, 4개의 총넓이는 다음과 같다.",
+              "typesetMath": "4 \\times \\left(\\frac{1}{2}ab\\right) = 2ab",
+              "justification": "직각삼각형 면적 공식"
+            },
+            {
+              "stepNumber": 4,
+              "title": "전체 면적 등식 수립 및 전개",
+              "explanation": "큰 정사각형의 넓이는 내부 정사각형 넓이와 4개 직각삼각형 넓이의 합과 정확히 일치한다.",
+              "typesetMath": "(a + b)^2 = c^2 + 2ab \\implies a^2 + 2ab + b^2 = c^2 + 2ab",
+              "justification": "면적의 가법성 공리 및 다항식 전개"
+            },
+            {
+              "stepNumber": 5,
+              "title": "양변 소거 및 결론 도출",
+              "explanation": "양변에서 공통항 $2ab$를 감산하면 증명이 완성된다.",
+              "typesetMath": "a^2 + b^2 = c^2",
+              "justification": "등식의 덧셈 역원 소거법칙"
+            }
+          ],
+          "conclusion": "임의의 평면 직각삼각형에 대하여 두 직각변의 제곱의 합은 항상 빗변의 제곱과 일치한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "유클리드 거리 공식",
+            "typesetMath": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}",
+            "description": "데카르트 좌표계에서 두 점 사이의 거리를 계산하는 기저 공식"
+          },
+          {
+            "title": "삼각함수 기본 항등식",
+            "typesetMath": "\\sin^2\\theta + \\cos^2\\theta = 1",
+            "description": "단위원 상에서 빗변 c=1일 때의 피타고라스 정리의 삼각함수적 표현"
+          }
+        ]
+      },
+      {
+        "id": "primes-infinitude",
+        "order": 2,
+        "domain": "정수론",
+        "titleKo": "소수의 무한성 정리 (Euclid's Theorem on Primes)",
+        "titleEn": "Infinitude of Primes",
+        "statement": {
+          "typesetMath": "|\\mathbb{P}| = \\infty",
+          "explanationKo": "소수(Prime numbers)의 집합은 무한하다.",
+          "explanationEn": "There are infinitely many prime numbers."
+        },
+        "historicalSignificance": "기원전 300년경 유클리드가 저서 '원론' 제9권 명제 20에서 제시한 가장 우아하고 고전적인 귀류법(Reductio ad absurdum) 증명.",
+        "prerequisites": [
+          "소수의 정의",
+          "산술의 기본정리 (1보다 큰 모든 자연수는 소인수를 가짐)"
+        ],
+        "intuitiveIdea": "만약 소수가 유한개뿐이라면 그 모든 소수를 곱한 뒤 1을 더한 거대한 수 N을 만들 수 있는데, N은 기존의 어떤 소수로 나누어도 나머지가 1이 되므로 기존 목록에 없는 새로운 소수를 소인수로 가져야 하므로 모순임.",
+        "rigorousProof": {
+          "proofType": "귀류법 (Proof by Contradiction)",
+          "assumptions": [
+            "소수가 유한개만 존재한다고 가정하고, 그 전체 소수 집합을 S = {p_1, p_2, ..., p_k}라 하자."
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "유한 목록의 모든 소수의 곱에 1을 더한 수 구성",
+              "explanation": "알려진 모든 소수 $p_1, p_2, \\dots, p_k$의 총곱에 1을 더한 정수 N을 정의한다.",
+              "typesetMath": "N = (p_1 p_2 \\cdots p_k) + 1",
+              "justification": "유한 집합의 곱 및 정수 덧셈의 유효성"
+            },
+            {
+              "stepNumber": 2,
+              "title": "N의 소인수 존재성",
+              "explanation": "$N > 1$이므로 산술의 기본정리에 의해 N은 적어도 하나의 소수 q를 약수로 가져야 한다.",
+              "typesetMath": "\\exists q \\in \\mathbb{P} \\text{ s.t. } q \\mid N",
+              "justification": "1보다 큰 모든 정수는 적어도 하나의 소인수를 갖는다는 정리"
+            },
+            {
+              "stepNumber": 3,
+              "title": "q가 기존 소수 목록에 속한다고 가정 시 모순 유도",
+              "explanation": "만약 $q \\in S$라면 $q$는 $p_1, \\dots, p_k$ 중 하나이다. 따라서 $q \\mid (p_1 p_2 \\cdots p_k)$이다.",
+              "typesetMath": "q \\mid N \\quad \\text{and} \\quad q \\mid (p_1 p_2 \\cdots p_k)",
+              "justification": "가정 $S$의 완전성에 기인한 소속성"
+            },
+            {
+              "stepNumber": 4,
+              "title": "나머지 1의 분할 불가능성 도출",
+              "explanation": "$q$가 $N$과 $(p_1 \\cdots p_k)$를 모두 나눈다면, 두 수의 차이인 1도 나누어야 한다.",
+              "typesetMath": "q \\mid [N - (p_1 p_2 \\cdots p_k)] \\implies q \\mid 1",
+              "justification": "나눗셈의 선형 결합 성질: $q|A \\land q|B \\implies q|(A - B)$"
+            },
+            {
+              "stepNumber": 5,
+              "title": "모순 도출 및 결론",
+              "explanation": "소수 $q \\ge 2$이므로 $q \\mid 1$은 불가능하다. 이는 $q$가 기존 목록 $S$에 포함될 수 없음을 의미한다.",
+              "typesetMath": "q \\notin \\{p_1, p_2, \\dots, p_k\\} \\implies \\text{Contradiction}",
+              "justification": "소수가 유한하다는 가정이 모순을 초래함"
+            }
+          ],
+          "conclusion": "따라서 소수의 개수는 유한할 수 없으며 무한히 존재한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "소수 정리 (Prime Number Theorem)",
+            "typesetMath": "\\pi(x) \\sim \\frac{x}{\\ln x}",
+            "description": "x 이하의 소수 개수 함수의 점근적 분포 법칙"
+          }
+        ]
+      },
+      {
+        "id": "sqrt2-irrational",
+        "order": 3,
+        "domain": "수 체계 및 정수론",
+        "titleKo": "√2의 무리수성 증명 (Irrationality of √2)",
+        "titleEn": "Irrationality of Square Root of 2",
+        "statement": {
+          "typesetMath": "\\sqrt{2} \\notin \\mathbb{Q}",
+          "explanationKo": "2의 제곱근은 유리수가 아니며, 기약분수 형태로 나타낼 수 없는 무리수이다.",
+          "explanationEn": "The square root of 2 is an irrational number and cannot be expressed as a ratio of two integers."
+        },
+        "historicalSignificance": "고대 피타고라스 학파의 히파소스(Hippasus)가 발견한 수학사 최초의 무리수 존재 증명으로, 모든 양은 정수의 비로 표현된다는 피타고라스 우주관을 뒤흔든 제1차 수학 기초론 위기의 발단.",
+        "prerequisites": [
+          "유리수의 정의 (두 정수의 기약분수)",
+          "정수의 홀짝성 (偶奇性)"
+        ],
+        "intuitiveIdea": "루트 2를 서로소인 기약분수 p/q로 놓으면 2q^2 = p^2이 되어 p가 짝수여야 하고, p를 2k로 치환하면 q 역시 짝수가 되어 처음 가정한 기약분수(서로소) 조건에 모순이 발생함.",
+        "rigorousProof": {
+          "proofType": "기약분수 귀류법 (Proof by Contradiction via Coprime Fractions)",
+          "assumptions": [
+            "√2가 유리수라고 가정하자: √2 = p/q (단, p, q는 서로소인 자연수, gcd(p, q) = 1)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "유리수 가정 및 양변 제곱",
+              "explanation": "가정에 따라 양변을 제곱하여 분모 $q^2$를 곱한다.",
+              "typesetMath": "\\sqrt{2} = \\frac{p}{q} \\implies 2 = \\frac{p^2}{q^2} \\implies p^2 = 2q^2",
+              "justification": "등식의 양변 제곱 및 정수 정돈"
+            },
+            {
+              "stepNumber": 2,
+              "title": "p의 짝수성 규명",
+              "explanation": "$p^2 = 2q^2$이므로 $p^2$은 2의 배수(짝수)이다. 정수의 제곱이 짝수이면 원래 정수도 짝수이어야 하므로 $p$는 짝수이다.",
+              "typesetMath": "p^2 \\equiv 0 \\pmod 2 \\implies p = 2k \\quad (k \\in \\mathbb{Z})",
+              "justification": "홀수의 제곱은 홀수이므로 대우명제에 의해 짝수의 성질 성립"
+            },
+            {
+              "stepNumber": 3,
+              "title": "p 대입 및 q^2 표현",
+              "explanation": "$p = 2k$를 원래 식 $p^2 = 2q^2$에 대입한다.",
+              "typesetMath": "(2k)^2 = 2q^2 \\implies 4k^2 = 2q^2 \\implies q^2 = 2k^2",
+              "justification": "대수적 치환 및 양변을 2로 나눔"
+            },
+            {
+              "stepNumber": 4,
+              "title": "q의 짝수성 규명",
+              "explanation": "$q^2 = 2k^2$이므로 동일한 논리에 의해 $q^2$도 짝수이며, 따라서 $q$ 역시 짝수이다.",
+              "typesetMath": "q^2 \\equiv 0 \\pmod 2 \\implies q \\text{ is even} \\implies 2 \\mid q",
+              "justification": "짝수의 정의"
+            },
+            {
+              "stepNumber": 5,
+              "title": "기약분수 조건과의 모순 도출",
+              "explanation": "$p$와 $q$가 둘 다 짝수이므로 2를 공약수로 갖는다. 이는 최초의 가정 $\\gcd(p, q) = 1$ (서로소)과 모순이다.",
+              "typesetMath": "2 \\mid p \\land 2 \\mid q \\implies \\gcd(p, q) \\ge 2 \\quad (\\text{Contradiction with } \\gcd(p,q)=1)",
+              "justification": "기약분수 공리의 위배"
+            }
+          ],
+          "conclusion": "따라서 $\\sqrt{2}$를 분수로 나타낼 수 없으므로 무리수이다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "실수 체계의 완비성",
+            "typesetMath": "\\mathbb{R} = \\mathbb{Q} \\cup \\mathbb{I}",
+            "description": "유리수 집합의 조밀성 구멍을 메우는 데데킨트 절단과 완비 순서체 이론의 발전 촉발"
+          }
+        ]
+      },
+      {
+        "id": "fundamental-calculus",
+        "order": 4,
+        "domain": "해석학 및 미적분학",
+        "titleKo": "미적분학의 기본정리 (Fundamental Theorem of Calculus)",
+        "titleEn": "Fundamental Theorem of Calculus (FTC)",
+        "statement": {
+          "typesetMath": "\\frac{d}{dx}\\int_a^x f(t) \\, dt = f(x), \\quad \\int_a^b f(x) \\, dx = F(b) - F(a)",
+          "explanationKo": "미분과 적분은 상호 역연산 관계이며, 연속함수의 정적분은 역도함수의 양 끝점 함숫값 차이로 계산할 수 있다.",
+          "explanationEn": "Differentiation and integration are inverse operations, and the definite integral can be evaluated using antiderivatives."
+        },
+        "historicalSignificance": "17세기 뉴턴과 라이프니츠가 독립적으로 기하학적 접선 문제(미분)와 면적 문제(적분)가 본질적으로 하나의 연산의 역과정임을 규명한 인류 과학사 최고의 발견.",
+        "prerequisites": [
+          "함수의 연속성",
+          "적분의 평균값 정리 (MVT for Integrals)",
+          "도함수의 극한 정의"
+        ],
+        "intuitiveIdea": "정적분 함수 A(x)는 면적의 누적 함수인데, x를 dx만큼 미세하게 늘릴 때 추가되는 얇은 직사각형의 면적 dA는 높이 f(x) 곱하기 밑변 dx가 되므로 dA/dx = f(x)가 됨.",
+        "rigorousProof": {
+          "proofType": "해석학적 극한 및 적분 평균값 정리 증명 (Analytical FTC 1 Proof)",
+          "assumptions": [
+            "구간 [a, b]에서 연속인 실함수 f",
+            "면적 누적 함수 g(x) = \\int_a^x f(t) dt"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "누적 함수의 미분계수 극한식 수립",
+              "explanation": "도함수의 극한 정의에 따라 $g'(x)$를 수립한다.",
+              "typesetMath": "g'(x) = \\lim_{h \\to 0} \\frac{g(x+h) - g(x)}{h} = \\lim_{h \\to 0} \\frac{1}{h} \\left( \\int_a^{x+h} f(t)\\,dt - \\int_a^x f(t)\\,dt \\right)",
+              "justification": "도함수 정의"
+            },
+            {
+              "stepNumber": 2,
+              "title": "정적분의 구간 분할 성질 적용",
+              "explanation": "적분의 구간 결합 성질 $\\int_a^{x+h} - \\int_a^x = \\int_x^{x+h}$을 적용한다.",
+              "typesetMath": "g'(x) = \\lim_{h \\to 0} \\frac{1}{h} \\int_x^{x+h} f(t) \\, dt",
+              "justification": "적분 구간의 가법성"
+            },
+            {
+              "stepNumber": 3,
+              "title": "적분의 평균값 정리(MVT) 적용",
+              "explanation": "$f$가 연속이므로 적분의 평균값 정리에 의해 $x$와 $x+h$ 사이에 $c_h$가 존재하여 적분값을 직사각형으로 바꿀 수 있다.",
+              "typesetMath": "\\frac{1}{h} \\int_x^{x+h} f(t) \\, dt = f(c_h) \\quad (c_h \\in [x, x+h])",
+              "justification": "적분의 평균값 정리"
+            },
+            {
+              "stepNumber": 4,
+              "title": "h가 0으로 갈 때의 극한 및 연속성 적용",
+              "explanation": "$h \\to 0$일 때 샌드위치 정리에 의해 $c_h \\to x$이며, $f$가 연속이므로 $f(c_h) \\to f(x)$이다.",
+              "typesetMath": "g'(x) = \\lim_{h \\to 0} f(c_h) = f\\left(\\lim_{h \\to 0} c_h\\right) = f(x)",
+              "justification": "연속함수의 성질: 극한과 함수 기호 교환 가능"
+            }
+          ],
+          "conclusion": "따라서 $\\frac{d}{dx}\\int_a^x f(t)dt = f(x)$가 엄밀히 성립한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "정적분 계산 기본 공식",
+            "typesetMath": "\\int_a^b f(x) \\, dx = [F(x)]_a^b = F(b) - F(a)",
+            "description": "구분구적법의 극한 계산 없이 부정적분만으로 정적분을 즉시 계산 가능"
+          }
+        ]
+      },
+      {
+        "id": "euler-identity",
+        "order": 5,
+        "domain": "복소해석학 및 대수학",
+        "titleKo": "오일러 공식 및 항등식 (Euler's Formula and Identity)",
+        "titleEn": "Euler's Formula and Identity",
+        "statement": {
+          "typesetMath": "e^{i\\theta} = \\cos\\theta + i\\sin\\theta, \\quad e^{i\\pi} + 1 = 0",
+          "explanationKo": "지수함수와 삼각함수는 복소평면 상에서 하나로 통합되며, 수학의 5대 상수(e, i, π, 1, 0)가 완벽한 조화를 이룬다.",
+          "explanationEn": "Complex exponential functions unify with trigonometric functions, relating the fundamental constants e, i, pi, 1, and 0."
+        },
+        "historicalSignificance": "1748년 레온하르트 오일러가 '무한 해석 개론'에서 발표하였으며, 리처드 파인만이 '수학에서 가장 주목할 만한 공식이자 보석'이라 칭송함.",
+        "prerequisites": [
+          "테일러 급수 (Maclaurin Series)",
+          "허수 단위 i (i^2 = -1)의 거듭제곱 주기성"
+        ],
+        "intuitiveIdea": "실수 거듭제곱 급수 e^x에 순허수 iθ를 대입하면, i의 거듭제곱 순환(1, i, -1, -i)에 의해 실수부 항들은 정확히 cosθ의 테일러 급수가 되고 허수부 항들은 sinθ의 테일러 급수가 됨.",
+        "rigorousProof": {
+          "proofType": "테일러(매클로린) 급수 전개 대조 증명 (Taylor Series Expansion)",
+          "assumptions": [
+            "지수함수, 코사인, 사인 함수의 무한 급수 수렴성"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "지수함수 e^z의 매클로린 급수 정의",
+              "explanation": "복소 지수함수의 절대수렴하는 테일러 급수를 전개한다.",
+              "typesetMath": "e^z = \\sum_{n=0}^\\infty \\frac{z^n}{n!} = 1 + z + \\frac{z^2}{2!} + \\frac{z^3}{3!} + \\frac{z^4}{4!} + \\frac{z^5}{5!} + \\cdots",
+              "justification": "지수함수의 해석적 확장 정의"
+            },
+            {
+              "stepNumber": 2,
+              "title": "z = iθ 대입 및 i의 거듭제곱 정리",
+              "explanation": "$z = i\\theta$를 대입하고 $i^2 = -1, i^3 = -i, i^4 = 1$의 주기를 적용한다.",
+              "typesetMath": "e^{i\\theta} = 1 + i\\theta + \\frac{(i\\theta)^2}{2!} + \\frac{(i\\theta)^3}{3!} + \\frac{(i\\theta)^4}{4!} + \\frac{(i\\theta)^5}{5!} + \\cdots",
+              "justification": "허수 단위의 대수적 거듭제곱"
+            },
+            {
+              "stepNumber": 3,
+              "title": "실수부와 허수부 항의 분리 재배열",
+              "explanation": "급수가 절대수렴하므로 실수부(짝수 항)와 허수부(홀수 항)로 순서를 재배열한다.",
+              "typesetMath": "e^{i\\theta} = \\left(1 - \\frac{\\theta^2}{2!} + \\frac{\\theta^4}{4!} - \\cdots\\right) + i \\left(\\theta - \\frac{\\theta^3}{3!} + \\frac{\\theta^5}{5!} - \\cdots\\right)",
+              "justification": "절대수렴 급수의 무조건 수렴 및 재배열 정리"
+            },
+            {
+              "stepNumber": 4,
+              "title": "삼각함수 테일러 급수와의 일치 판정",
+              "explanation": "앞 괄호는 $\\cos\\theta$의 정의 급수이고 뒤 괄호는 $\\sin\\theta$의 정의 급수이다.",
+              "typesetMath": "\\cos\\theta = \\sum_{k=0}^\\infty \\frac{(-1)^k \\theta^{2k}}{(2k)!}, \\quad \\sin\\theta = \\sum_{k=0}^\\infty \\frac{(-1)^k \\theta^{2k+1}}{(2k+1)!}",
+              "justification": "코사인 및 사인 함수의 매클로린 급수 정의"
+            },
+            {
+              "stepNumber": 5,
+              "title": "오일러 항등식 도출",
+              "explanation": "$\\theta = \\pi$를 대입하면 $\\cos\\pi = -1, \\sin\\pi = 0$이므로 가장 아름다운 등식이 도출된다.",
+              "typesetMath": "e^{i\\pi} = -1 + 0i \\implies e^{i\\pi} + 1 = 0",
+              "justification": "특수각 세타 = 파이 대입"
+            }
+          ],
+          "conclusion": "복소 지수함수와 삼각함수의 대수적 동등성이 증명되었다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "드무아브르 정리",
+            "typesetMath": "(\\cos\\theta + i\\sin\\theta)^n = \\cos(n\\theta) + i\\sin(n\\theta)",
+            "description": "복소수의 n제곱 회전 계산 공식"
+          },
+          {
+            "title": "전기전자 페이저(Phasor) 이론",
+            "typesetMath": "v(t) = V_m \\cos(\\omega t + \\phi) = \\operatorname{Re}\\{V_m e^{j\\phi} e^{j\\omega t}\\}",
+            "description": "교류 회로 해석의 핵심 복소 페이저 표현의 이론적 기반"
+          }
+        ]
+      },
+      {
+        "id": "cauchy-schwarz",
+        "order": 6,
+        "domain": "선형대수학 및 해석학",
+        "titleKo": "코시-슈바르츠 부등식 (Cauchy-Schwarz Inequality)",
+        "titleEn": "Cauchy-Schwarz Inequality",
+        "statement": {
+          "typesetMath": "|\\langle \\mathbf{u}, \\mathbf{v} \\rangle|^2 \\le \\langle \\mathbf{u}, \\mathbf{u} \\rangle \\langle \\mathbf{v}, \\mathbf{v} \\rangle, \\quad \\left(\\sum_{i=1}^n a_i b_i\\right)^2 \\le \\left(\\sum_{i=1}^n a_i^2\\right) \\left(\\sum_{i=1}^n b_i^2\\right)",
+          "explanationKo": "두 벡터의 내적의 절댓값 제곱은 각 벡터의 노름 제곱의 곱 이하이며, 등호는 두 벡터가 일차종속(평행)할 때 성립한다.",
+          "explanationEn": "The absolute square of the inner product of two vectors is less than or equal to the product of their inner products with themselves."
+        },
+        "historicalSignificance": "코시가 1821년 유한합 부등식을 발표하고, 분야콥스키(1859)와 헤르만 슈바르츠(1888)가 적분 및 힐베르트 공간으로 일반화함.",
+        "prerequisites": [
+          "내적 공간(Inner Product Space) 공리",
+          "실수 이차방정식 판별식"
+        ],
+        "intuitiveIdea": "실수 t에 대한 이차함수 ||u*t + v||^2는 항상 0 이상이어야 하므로, 이 이차방정식이 실근을 최대 1개만 갖는다는 조건(판별식 D <= 0)에서 부등식이 즉시 유도됨.",
+        "rigorousProof": {
+          "proofType": "2차 다항식 판별식 증명 (Discriminant of Quadratic Polynomial)",
+          "assumptions": [
+            "실 내적 공간 V의 임의의 두 벡터 u, v"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "실수 매개변수 t에 대한 이차 다항함수 정의",
+              "explanation": "임의의 실수 $t \\in \\mathbb{R}$에 대해 내적의 양의 정부호성에 의해 노름 제곱은 항상 0 이상이다.",
+              "typesetMath": "f(t) = \\|t\\mathbf{u} + \\mathbf{v}\\|^2 = \\langle t\\mathbf{u} + \\mathbf{v}, t\\mathbf{u} + \\mathbf{v} \\rangle \\ge 0",
+              "justification": "내적 공간의 정의: 임의의 벡터 w에 대해 <w, w> >= 0"
+            },
+            {
+              "stepNumber": 2,
+              "title": "내적의 쌍선형성을 이용한 t에 대한 2차식 전개",
+              "explanation": "내적을 전개하여 $t$에 대한 2차 다항식 형태로 정돈한다.",
+              "typesetMath": "f(t) = \\langle \\mathbf{u}, \\mathbf{u} \\rangle t^2 + 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle t + \\langle \\mathbf{v}, \\mathbf{v} \\rangle \\ge 0",
+              "justification": "내적의 대칭성 및 선형성"
+            },
+            {
+              "stepNumber": 3,
+              "title": "계수 치환",
+              "explanation": "$A = \\langle \\mathbf{u}, \\mathbf{u} \\rangle$, $B = 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle$, $C = \\langle \\mathbf{v}, \\mathbf{v} \\rangle$라 놓으면 $At^2 + Bt + C \\ge 0$이다.",
+              "typesetMath": "A = \\|\\mathbf{u}\\|^2, \\quad B = 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle, \\quad C = \\|\\mathbf{v}\\|^2",
+              "justification": "이차함수 표준형"
+            },
+            {
+              "stepNumber": 4,
+              "title": "판별식 조건 적용",
+              "explanation": "모든 실수 $t$에 대해 $f(t) \\ge 0$이려면 이 이차함수의 그래프는 t축 위에 있거나 접해야 하므로 판별식 $\\Delta = B^2 - 4AC \\le 0$이어야 한다.",
+              "typesetMath": "\\Delta = (2\\langle \\mathbf{u}, \\mathbf{v} \\rangle)^2 - 4 \\|\\mathbf{u}\\|^2 \\|\\mathbf{v}\\|^2 \\le 0",
+              "justification": "실계수 이차부등식이 항상 성립할 조건"
+            },
+            {
+              "stepNumber": 5,
+              "title": "양변 정리 및 최종 부등식 완성",
+              "explanation": "4로 나누고 이항하면 코시-슈바르츠 부등식이 도출된다.",
+              "typesetMath": "4\\langle \\mathbf{u}, \\mathbf{v} \\rangle^2 \\le 4 \\|\\mathbf{u}\\|^2 \\|\\mathbf{v}\\|^2 \\implies |\\langle \\mathbf{u}, \\mathbf{v} \\rangle| \\le \\|\\mathbf{u}\\| \\|\\mathbf{v}\\|",
+              "justification": "부등식의 양의 상수 나눗셈"
+            }
+          ],
+          "conclusion": "임의의 내적 공간에서 코시-슈바르츠 부등식이 성립하며, 등호는 u와 v가 평행할 때만 성립한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "삼각부등식 증명",
+            "typesetMath": "\\|\\mathbf{u} + \\mathbf{v}\\| \\le \\|\\mathbf{u}\\| + \\|\\mathbf{v}\\|",
+            "description": "노름 공간의 거리 공리 성립의 핵심 근거"
+          },
+          {
+            "title": "하이젠베르크 불확정성 원리",
+            "typesetMath": "\\sigma_x \\sigma_p \\ge \\frac{\\hbar}{2}",
+            "description": "양자역학에서 두 관측가능량의 연산자 교환자 부등식 유도"
+          }
+        ]
+      },
+      {
+        "id": "central-limit",
+        "order": 7,
+        "domain": "확률 및 통계학",
+        "titleKo": "중심극한정리 (Central Limit Theorem)",
+        "titleEn": "Central Limit Theorem (CLT)",
+        "statement": {
+          "typesetMath": "Z_n = \\frac{\\bar{X}_n - \\mu}{\\sigma / \\sqrt{n}} \\xrightarrow{d} \\mathcal{N}(0, 1)",
+          "explanationKo": "모집단의 분포가 무엇이든 평균과 분산이 유한하다면, 표본의 크기 n이 충분히 커질 때 표본평균의 표준화 분포는 표준정규분포로 수렴한다.",
+          "explanationEn": "The normalized sum of independent and identically distributed random variables converges in distribution to a standard normal distribution."
+        },
+        "historicalSignificance": "자연계와 사회현상에서 가우스 정규분포가 보편적으로 나타나는 수학적 이유를 규명한 현대 추측통계학의 절대적 초석.",
+        "prerequisites": [
+          "독립동일분포 (i.i.d.)",
+          "적률생성함수 (MGF)",
+          "테일러 급수와 분포수렴"
+        ],
+        "intuitiveIdea": "표본평균의 적률생성함수(MGF)를 테일러 전개하면 n이 무한대로 갈 때 고차 모멘트 항들이 모두 소멸하고 오직 2차 모멘트 항만 남아 e^(t^2/2), 즉 표준정규분포의 MGF와 완전히 일치하게 됨.",
+        "rigorousProof": {
+          "proofType": "적률생성함수(MGF) 급수 전개 증명 (Moment Generating Function Proof)",
+          "assumptions": [
+            "i.i.d. 확률변수 X_1, ..., X_n (평균 mu, 분산 sigma^2 < inf)",
+            "표준화 변수 Y_i = (X_i - mu)/sigma"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "표준화 합 변수의 정의",
+              "explanation": "$E[Y_i] = 0, \\operatorname{Var}(Y_i) = 1$인 $Y_i$에 대해 $Z_n = \\frac{1}{\\sqrt{n}} \\sum_{i=1}^n Y_i$로 둔다.",
+              "typesetMath": "Z_n = \\sum_{i=1}^n \\frac{Y_i}{\\sqrt{n}}",
+              "justification": "표본평균의 표준화 변환"
+            },
+            {
+              "stepNumber": 2,
+              "title": "개별 변수 Y_i의 MGF 테일러 전개",
+              "explanation": "$Y_i$의 MGF $M_Y(t) = E[e^{tY}]$를 0 근방에서 2차 테일러 전개한다.",
+              "typesetMath": "M_Y(t) = 1 + E[Y]t + \\frac{E[Y^2]}{2!}t^2 + o(t^2) = 1 + 0 + \\frac{t^2}{2} + o(t^2)",
+              "justification": "MGF와 모멘트의 관계 ($E[Y]=0, E[Y^2]=1$)"
+            },
+            {
+              "stepNumber": 3,
+              "title": "Z_n의 적률생성함수 수립",
+              "explanation": "독립 확률변수들의 합의 MGF는 각 MGF의 곱이므로 다음과 같이 표현된다.",
+              "typesetMath": "M_{Z_n}(t) = \\left[ M_Y\\left(\\frac{t}{\\sqrt{n}}\\right) \\right]^n = \\left[ 1 + \\frac{t^2}{2n} + o\\left(\\frac{t^2}{n}\\right) \\right]^n",
+              "justification": "독립확률변수 합의 승법적 성질"
+            },
+            {
+              "stepNumber": 4,
+              "title": "n이 무한대로 갈 때의 극한 계산",
+              "explanation": "$\\lim_{n \\to \\infty} (1 + \\frac{x}{n})^n = e^x$의 극한 공식을 적용한다.",
+              "typesetMath": "\\lim_{n \\to \\infty} M_{Z_n}(t) = \\lim_{n \\to \\infty} \\left[ 1 + \\frac{t^2/2}{n} \\right]^n = e^{t^2 / 2}",
+              "justification": "오일러 자연상수 e의 극한 정의"
+            },
+            {
+              "stepNumber": 5,
+              "title": "연속성 정리 및 분포 수렴 판정",
+              "explanation": "$e^{t^2/2}$는 표준정규분포 $\\mathcal{N}(0, 1)$의 MGF이다. 레비 연속성 정리에 의해 MGF의 수렴은 분포수렴을 보장한다.",
+              "typesetMath": "M_{Z_n}(t) \\to e^{t^2/2} = M_{\\mathcal{N}(0,1)}(t) \\implies Z_n \\xrightarrow{d} \\mathcal{N}(0, 1)",
+              "justification": "Lévy's Continuity Theorem"
+            }
+          ],
+          "conclusion": "표본의 크기가 무한히 커짐에 따라 표본평균의 표준화 분포는 모집단 분포와 상관없이 표준정규분포로 수렴한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "신뢰구간 추정",
+            "typesetMath": "\\bar{x} \\pm 1.96 \\frac{\\sigma}{\\sqrt{n}}",
+            "description": "모평균에 대한 95% 신뢰구간 공식의 수학적 토대"
+          }
+        ]
+      },
+      {
+        "id": "fermat-little",
+        "order": 8,
+        "domain": "정수론 및 현대 암호학",
+        "titleKo": "페르마의 소정리 (Fermat's Little Theorem)",
+        "titleEn": "Fermat's Little Theorem",
+        "statement": {
+          "typesetMath": "a^{p-1} \\equiv 1 \\pmod p \\quad (\\gcd(a, p) = 1)",
+          "explanationKo": "소수 p와 서로소인 임의의 정수 a에 대하여, a를 (p-1)번 거듭제곱한 수를 p로 나눈 나머지는 항상 1이다.",
+          "explanationEn": "If p is a prime number and a is an integer coprime to p, then a raised to the power (p - 1) is congruent to 1 modulo p."
+        },
+        "historicalSignificance": "1640년 피에르 드 페르마가 발표하고 오일러가 증명하였으며, 오늘날 전자상거래와 블록체인을 지탱하는 RSA 공개키 암호 알고리즘의 심장.",
+        "prerequisites": [
+          "소수와 잉여계",
+          "모듈러 합동식 성질"
+        ],
+        "intuitiveIdea": "집합 {1, 2, ..., p-1}의 모든 원소에 a를 곱해도 법 p에 대한 나머지 집합은 단지 순서만 바뀔 뿐 동일하므로, 양변의 모든 원소를 곱한 뒤 공통항을 약분하면 a^(p-1) = 1이 남음.",
+        "rigorousProof": {
+          "proofType": "기약잉여계 곱셈 순열 증명 (Reduced Residue System Permutation)",
+          "assumptions": [
+            "소수 p와 gcd(a, p) = 1인 정수 a"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "법 p에 대한 기약잉여계 구성",
+              "explanation": "법 $p$에 대해 $p$와 서로소인 $p-1$개의 잉여류 집합 $S$를 고려한다.",
+              "typesetMath": "S = \\{1, 2, 3, \\dots, p-1\\}",
+              "justification": "소수 p의 기약잉여계 정의"
+            },
+            {
+              "stepNumber": 2,
+              "title": "각 원소에 a를 곱한 새로운 집합 구성",
+              "explanation": "$S$의 각 원소에 $a$를 곱한 집합 $T$를 구성한다.",
+              "typesetMath": "T = \\{a, 2a, 3a, \\dots, (p-1)a\\}",
+              "justification": "정수 스칼라 곱"
+            },
+            {
+              "stepNumber": 3,
+              "title": "T의 모든 원소가 법 p에 대해 서로 다름을 증명",
+              "explanation": "$1 \\le j < k \\le p-1$에 대해 $ja \\equiv ka \\pmod p \\implies (k-j)a \\equiv 0 \\pmod p$. $\\gcd(a, p) = 1$이므로 $p \\mid (k-j)$이어야 하나 $0 < k-j < p$이므로 모순이다.",
+              "typesetMath": "ja \\not\\equiv ka \\pmod p \\quad (j \\ne k)",
+              "justification": "유클리드 보조정리"
+            },
+            {
+              "stepNumber": 4,
+              "title": "두 집합 원소들의 총곱 비교",
+              "explanation": "$T$의 원소들은 $S$의 원소들을 재배열한 것에 불과하므로 모든 원소의 곱은 합동이어야 한다.",
+              "typesetMath": "a \\cdot 2a \\cdot 3a \\cdots (p-1)a \\equiv 1 \\cdot 2 \\cdot 3 \\cdots (p-1) \\pmod p",
+              "justification": "잉여류 곱셈의 불변성"
+            },
+            {
+              "stepNumber": 5,
+              "title": "a^(p-1) 인수분해 및 약분",
+              "explanation": "좌변에서 $a$를 $(p-1)$번 묶어내면 다음과 같다.",
+              "typesetMath": "a^{p-1} (p-1)! \\equiv (p-1)! \\pmod p",
+              "justification": "팩토리얼 묶음"
+            },
+            {
+              "stepNumber": 6,
+              "title": "최종 합동식 도출",
+              "explanation": "$p$는 소수이므로 $(p-1)!$은 $p$와 서로소이다. 따라서 양변을 $(p-1)!$로 나눌 수 있다.",
+              "typesetMath": "a^{p-1} \\equiv 1 \\pmod p",
+              "justification": "모듈러 나눗셈 소거법칙"
+            }
+          ],
+          "conclusion": "소수 p와 서로소인 모든 정수 a에 대해 페르마의 소정리가 증명되었다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "모듈러 역원 계산",
+            "typesetMath": "a^{-1} \\equiv a^{p-2} \\pmod p",
+            "description": "나눗셈을 거듭제곱으로 즉시 변환하는 고속 알고리즘"
+          }
+        ]
+      },
+      {
+        "id": "basel-problem",
+        "order": 9,
+        "domain": "해석학 및 급수론",
+        "titleKo": "바젤 문제 (The Basel Problem)",
+        "titleEn": "The Basel Problem",
+        "statement": {
+          "typesetMath": "\\sum_{n=1}^\\infty \\frac{1}{n^2} = 1 + \\frac{1}{4} + \\frac{1}{9} + \\frac{1}{16} + \\cdots = \\frac{\\pi^2}{6}",
+          "explanationKo": "모든 자연수의 제곱의 역수를 무한히 더한 급수는 정확히 6분의 파이 제곱으로 수렴한다.",
+          "explanationEn": "The infinite sum of the reciprocals of the squares of positive integers converges precisely to pi squared over 6."
+        },
+        "historicalSignificance": "야코프 베르누이가 1689년 제시한 후 베르누이 가문 전체가 풀지 못했던 난제를 1734년 28세의 레온하르트 오일러가 해결하여 전 유럽 수학계를 경악시킨 역사적 업적.",
+        "prerequisites": [
+          "테일러 급수",
+          "다항식의 근과 계수의 관계",
+          "비에타 정리의 무한차수 확장"
+        ],
+        "intuitiveIdea": "sin(x)/x 함수의 근들이 +-pi, +-2pi, +-3pi...라는 사실을 이용하여 무한 인수분해 식을 세우고, 이를 sin(x)/x의 테일러 급수 전개식의 x^2 항 계수와 비교하면 1/n^2의 합과 파이 제곱의 관계가 도출됨.",
+        "rigorousProof": {
+          "proofType": "오일러 사인 무한곱 근-계수 대조 증명 (Euler's Infinite Product for Sine)",
+          "assumptions": [
+            "sin(x)/x의 매클로린 급수",
+            "위이어슈트라스 분해 정리의 원형인 무한곱 전개"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "sin(x)/x의 테일러 급수 전개",
+              "explanation": "사인 함수의 매클로린 급수를 $x$로 나눈다.",
+              "typesetMath": "\\frac{\\sin x}{x} = 1 - \\frac{x^2}{3!} + \\frac{x^4}{5!} - \\frac{x^6}{7!} + \\cdots = 1 - \\frac{x^2}{6} + \\frac{x^4}{120} - \\cdots",
+              "justification": "사인 함수 테일러 급수"
+            },
+            {
+              "stepNumber": 2,
+              "title": "sin(x)/x의 영점(Roots) 분석",
+              "explanation": "$\\frac{\\sin x}{x} = 0$의 해는 $x = \\pm \\pi, \\pm 2\\pi, \\pm 3\\pi, \\dots$이다 ($x=0$은 특이점 아님).",
+              "typesetMath": "x = \\pm n\\pi \\quad (n = 1, 2, 3, \\dots)",
+              "justification": "삼각함수 영점"
+            },
+            {
+              "stepNumber": 3,
+              "title": "무한차수 다항식의 근을 통한 인수분해",
+              "explanation": "상수항이 1이고 근이 $\\pm n\\pi$인 다항식을 인수분해 형태로 무한곱으로 표현한다.",
+              "typesetMath": "\\frac{\\sin x}{x} = \\prod_{n=1}^\\infty \\left(1 - \\frac{x}{n\\pi}\\right)\\left(1 + \\frac{x}{n\\pi}\\right) = \\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)",
+              "justification": "합차공식을 통한 무한곱 결합"
+            },
+            {
+              "stepNumber": 4,
+              "title": "무한곱을 전개하여 x^2의 계수 추출",
+              "explanation": "무한곱에서 $x^2$ 항은 각 인수의 $-\\frac{x^2}{n^2\\pi^2}$들을 모두 더한 것과 같다.",
+              "typesetMath": "\\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right) = 1 - \\left( \\sum_{n=1}^\\infty \\frac{1}{n^2\\pi^2} \\right) x^2 + \\mathcal{O}(x^4)",
+              "justification": "무한 다항식 전개 계수 비교"
+            },
+            {
+              "stepNumber": 5,
+              "title": "1단계와 4단계의 x^2 계수 일치 비교",
+              "explanation": "동일한 함수이므로 $x^2$의 계수는 일치해야 한다.",
+              "typesetMath": "-\\frac{1}{6} = -\\frac{1}{\\pi^2} \\sum_{n=1}^\\infty \\frac{1}{n^2}",
+              "justification": "항등식의 미정계수법"
+            },
+            {
+              "stepNumber": 6,
+              "title": "양변에 -π^2을 곱하여 최종값 도출",
+              "explanation": "양변에 $-\\pi^2$을 곱하면 바젤 문제의 해답이 완성된다.",
+              "typesetMath": "\\sum_{n=1}^\\infty \\frac{1}{n^2} = \\frac{\\pi^2}{6}",
+              "justification": "산술 정리"
+            }
+          ],
+          "conclusion": "자연수 제곱 역수의 무한합은 정확히 pi^2 / 6이다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "리만 제타 함수 특수값",
+            "typesetMath": "\\zeta(2) = \\frac{\\pi^2}{6}, \\quad \\zeta(2k) = (-1)^{k+1} \\frac{B_{2k} (2\\pi)^{2k}}{2(2k)!}",
+            "description": "리만 제타 함수의 짝수 정수점 닫힌 형태 값 일반화"
+          }
+        ]
+      },
+      {
+        "id": "cantor-diagonal",
+        "order": 10,
+        "domain": "집합론 및 무한론",
+        "titleKo": "칸토어의 대각선 논법 (Cantor's Diagonal Argument)",
+        "titleEn": "Cantor's Diagonal Argument",
+        "statement": {
+          "typesetMath": "|\\mathbb{R}| > |\\mathbb{N}|, \\quad 2^{\\aleph_0} > \\aleph_0",
+          "explanationKo": "실수 집합의 크기(기수)는 자연수 집합보다 엄격히 크며, 실수는 일대일 대응으로 셀 수 없는 비가산(Uncountable) 집합이다.",
+          "explanationEn": "The real numbers are uncountable, establishing that there are strictly larger infinities than the countable natural numbers."
+        },
+        "historicalSignificance": "1891년 게오르크 칸토어가 발표하여 '무한에도 크기(크기가 다른 무한)가 존재한다'는 사실을 입증한 수학사상 가장 혁명적인 논증.",
+        "prerequisites": [
+          "가산 집합(Countable Set)과 전단사 함수",
+          "실수의 십진법 무한소수 전개"
+        ],
+        "intuitiveIdea": "구간 (0,1)의 모든 실수를 빠짐없이 번호를 매겨 목록으로 만들었다고 가정하자. 이제 n번째 수의 n번째 자릿수를 피해서 새로운 수의 자릿수를 하나씩 조립하면, 이 새로운 수는 목록의 그 어떤 수와도 n번째 자리에서 달라 목록에 누락된 수가 되어 모순이 발생함.",
+        "rigorousProof": {
+          "proofType": "대각선 원소 변형 귀류법 (Diagonalization Contradiction)",
+          "assumptions": [
+            "구간 (0, 1)의 모든 실수가 가산적(Countable)이어서 자연수와 일대일 대응 목록화 가능하다고 가정"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "가산 가정에 따른 수열 나열 목록 작성",
+              "explanation": "구간 $(0, 1)$의 모든 실수를 $r_1, r_2, r_3, \\dots$로 나열하고 각각의 무한소수 전개를 표기한다.",
+              "typesetMath": "\\begin{aligned} r_1 &= 0.d_{11} d_{12} d_{13} d_{14} \\dots \\\\ r_2 &= 0.d_{21} d_{22} d_{23} d_{24} \\dots \\\\ r_3 &= 0.d_{31} d_{32} d_{33} d_{34} \\dots \\end{aligned}",
+              "justification": "가산 집합의 수열 나열 가능성"
+            },
+            {
+              "stepNumber": 4,
+              "title": "대각선 원소 d_nn을 회피하는 새로운 실수 x 구성",
+              "explanation": "새로운 실수 $x = 0.c_1 c_2 c_3 \\dots$를 다음과 같은 대각선 변환 규칙으로 정의한다: $c_n = \\begin{cases} 4 & (d_{nn} \\ne 4) \\\\ 5 & (d_{nn} = 4) \\end{cases}$.",
+              "typesetMath": "c_n \\ne d_{nn} \\quad (\\forall n \\in \\mathbb{N})",
+              "justification": "대각선 자릿수 변형 알고리즘"
+            },
+            {
+              "stepNumber": 5,
+              "title": "새로운 실수 x의 목록 대조 및 모순 판정",
+              "explanation": "명백히 $x \\in (0, 1)$이다. 만약 목록이 완전하다면 어떤 자연수 $k$에 대해 $x = r_k$이어야 한다.",
+              "typesetMath": "x = r_k \\implies c_k = d_{kk}",
+              "justification": "목록의 전사성 가정"
+            },
+            {
+              "stepNumber": 6,
+              "title": "자릿수 불일치 모순 확정",
+              "explanation": "그러나 $x$의 정의상 $c_k \\ne d_{kk}$이므로 $x = r_k$는 불가능하다. 즉 $x$는 목록 어디에도 존재하지 않는다.",
+              "typesetMath": "c_k \\ne d_{kk} \\implies x \\ne r_k \\quad (\\forall k \\in \\mathbb{N})",
+              "justification": "대각선 설계 자체에 의한 절대 모순"
+            }
+          ],
+          "conclusion": "구간 (0, 1)의 실수를 자연수 번호로 모두 나열할 수 없으므로 실수는 비가산 집합이다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "튜링의 정지 문제 불가능성",
+            "typesetMath": "\\text{Halting Problem is Undecidable}",
+            "description": "대각선 논법을 계산이론으로 확장하여 튜링 기계의 계산 불가능 함수 존재 증명"
+          }
+        ]
+      },
+      {
+        "id": "rank-nullity",
+        "order": 11,
+        "domain": "선형대수학",
+        "titleKo": "차원 정리 (Rank-Nullity Theorem)",
+        "titleEn": "Rank-Nullity Theorem",
+        "statement": {
+          "typesetMath": "\\dim(V) = \\operatorname{rank}(T) + \\operatorname{nullity}(T)",
+          "explanationKo": "유한차원 벡터공간 사이의 선형변환에서 정의역의 차원은 치역(상)의 차원(계수)과 영공간(핵)의 차원의 합과 같다.",
+          "explanationEn": "For a linear map from a finite-dimensional vector space, the dimension of the domain equals the rank plus the nullity."
+        },
+        "historicalSignificance": "제임스 조지프 실베스터가 1884년 정립한 선형대수학의 대기본정리로, 연립방정식의 해공간 차원과 행렬 계수 관계를 완전히 규명함.",
+        "prerequisites": [
+          "벡터공간의 기저와 차원",
+          "선형변환의 핵(Kernel)과 상(Image)"
+        ],
+        "intuitiveIdea": "선형사상에 의해 '0으로 압축되어 사라지는 차원(Nullity)'과 '살아서 목적지로 투영되는 차원(Rank)'을 합치면 원래 출발지의 총 차원이 된다는 차원 보존 법칙.",
+        "rigorousProof": {
+          "proofType": "기저 확장 및 선형독립성 증명 (Basis Extension Proof)",
+          "assumptions": [
+            "유한차원 벡터공간 V (차원 n)와 선형사상 T: V -> W",
+            "핵 ker(T)의 차원을 k (nullity)라 하자"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "핵 ker(T)의 기저 설정",
+              "explanation": "$\\ker(T)$의 기저를 $\\{\\mathbf{u}_1, \\mathbf{u}_2, \\dots, \\mathbf{u}_k\\}$라 하자 ($k = \\operatorname{nullity}(T)$).",
+              "typesetMath": "\\dim(\\ker T) = k, \\quad \\ker(T) = \\operatorname{span}(\\mathbf{u}_1, \\dots, \\mathbf{u}_k)",
+              "justification": "부분공간의 기저 존재 정리"
+            },
+            {
+              "stepNumber": 2,
+              "title": "전체 공간 V의 기저로 확장",
+              "explanation": "기저 확장 정리에 의해 $V$의 기저가 되도록 $n-k$개의 선형독립 벡터 $\\mathbf{v}_1, \\dots, \\mathbf{v}_{n-k}$를 추가한다.",
+              "typesetMath": "\\mathcal{B}_V = \\{\\mathbf{u}_1, \\dots, \\mathbf{u}_k, \\mathbf{v}_1, \\dots, \\mathbf{v}_{n-k}\\}",
+              "justification": "유한차원 기저 확장 정리"
+            },
+            {
+              "stepNumber": 3,
+              "title": "상공간 Im(T)의 생성원 구성",
+              "explanation": "임의의 $\\mathbf{x} \\in V$는 $\\mathcal{B}_V$의 일차결합으로 표현되므로, $T(\\mathbf{x})$를 취하면 $T(\\mathbf{u}_i) = \\mathbf{0}$에 의해 소멸한다.",
+              "typesetMath": "T(\\mathbf{x}) = \\sum_{i=1}^{n-k} c_i T(\\mathbf{v}_i) \\implies \\operatorname{Im}(T) = \\operatorname{span}(T(\\mathbf{v}_1), \\dots, T(\\mathbf{v}_{n-k}))",
+              "justification": "선형사상의 보존성 및 핵의 정의"
+            },
+            {
+              "stepNumber": 4,
+              "title": "{T(v_1), ..., T(v_{n-k})}의 선형독립성 증명",
+              "explanation": "$\\sum c_i T(\\mathbf{v}_i) = \\mathbf{0} \\implies T\\left(\\sum c_i \\mathbf{v}_i\\right) = \\mathbf{0}$. 따라서 $\\sum c_i \\mathbf{v}_i \\in \\ker(T)$이다.",
+              "typesetMath": "\\sum_{i=1}^{n-k} c_i \\mathbf{v}_i = \\sum_{j=1}^k d_j \\mathbf{u}_j \\implies \\sum c_i \\mathbf{v}_i - \\sum d_j \\mathbf{u}_j = \\mathbf{0}",
+              "justification": "핵의 원소 정의"
+            },
+            {
+              "stepNumber": 5,
+              "title": "모든 계수 c_i가 0임을 확정",
+              "explanation": "$\\mathcal{B}_V$는 $V$의 기저이므로 선형독립이다. 따라서 모든 $c_i = 0$이어야 한다. 즉 $\\{T(\\mathbf{v}_1), \\dots, T(\\mathbf{v}_{n-k})\\}$는 $\\operatorname{Im}(T)$의 기저이다.",
+              "typesetMath": "\\dim(\\operatorname{Im} T) = n - k = \\operatorname{rank}(T)",
+              "justification": "기저의 정의 (생성 + 선형독립)"
+            },
+            {
+              "stepNumber": 6,
+              "title": "차원 정리 등식 완성",
+              "explanation": "정의역의 차원 $n = \\dim(V)$는 $k + (n-k)$이므로 증명이 완결된다.",
+              "typesetMath": "\\dim(V) = k + (n-k) = \\operatorname{nullity}(T) + \\operatorname{rank}(T)",
+              "justification": "차원의 덧셈"
+            }
+          ],
+          "conclusion": "정의역의 차원은 rank와 nullity의 합과 정확히 일치한다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "가역 선형변환의 동치 조건",
+            "typesetMath": "\\operatorname{rank}(T) = n \\iff \\operatorname{nullity}(T) = 0 \\iff T \\text{ is invertible}",
+            "description": "정방행렬의 전사성, 단사성, 가역성의 완전한 일치성"
+          }
+        ]
+      },
+      {
+        "id": "arithmetic-fundamental",
+        "order": 12,
+        "domain": "정수론 및 현대 대수학",
+        "titleKo": "산술의 기본정리 (Fundamental Theorem of Arithmetic)",
+        "titleEn": "Fundamental Theorem of Arithmetic (FTA)",
+        "statement": {
+          "typesetMath": "n = p_1^{a_1} p_2^{a_2} \\cdots p_k^{a_k} \\quad (p_1 < p_2 < \\dots < p_k)",
+          "explanationKo": "1보다 큰 모든 자연수는 소수들의 곱으로 표현(존재성)될 수 있으며, 소수들의 순서를 무시하면 그 분해는 유일(유일성)하다.",
+          "explanationEn": "Every integer greater than 1 can be represented uniquely as a product of prime numbers, up to the order of the factors."
+        },
+        "historicalSignificance": "유클리드 원론 제7권 명제 30(유클리드 보조정리)에 기원을 두고 1801년 가우스가 '산술 연구'에서 최초로 완전한 유일성 증명을 완성함.",
+        "prerequisites": [
+          "유클리드 보조정리: p | ab => p | a or p | b",
+          "수학적 귀납법 및 정렬 원리(Well-Ordering Principle)"
+        ],
+        "intuitiveIdea": "소수는 정수를 구성하는 '화학적 원소(Atoms)'와 같아서, 어떤 정수도 고유한 소수들의 조합으로 단 한 가지 방식으로만 조립됨.",
+        "rigorousProof": {
+          "proofType": "유클리드 보조정리와 최소 반례 귀류법 (Well-ordering & Euclid's Lemma)",
+          "assumptions": [
+            "1보다 큰 자연수 n"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "title": "소인수분해 존재성 (강한 귀납법)",
+              "explanation": "$n=2$는 소수이므로 참이다. $2 \\le k < n$인 모든 정수가 소수의 곱으로 분해된다고 가정하자. $n$이 소수이면 끝이고, 합성수이면 $n = ab$ ($1 < a, b < n$)로 쓸 수 있으며 귀납 가정에 의해 $a, b$가 소수의 곱이므로 $n$도 소수의 곱이다.",
+              "typesetMath": "n = p_1 p_2 \\cdots p_r",
+              "justification": "강한 수학적 귀납법"
+            },
+            {
+              "stepNumber": 2,
+              "title": "유일성에 대한 반례 가정",
+              "explanation": "서로 다른 두 소인수분해를 갖는 1보다 큰 자연수가 존재한다고 가정하고, 정렬 원리에 의해 그러한 정수 중 가장 작은 최소 반례를 $m$이라 하자.",
+              "typesetMath": "m = p_1 p_2 \\cdots p_r = q_1 q_2 \\cdots q_s",
+              "justification": "자연수 정렬 원리(Well-Ordering Principle)"
+            },
+            {
+              "stepNumber": 3,
+              "title": "유클리드 보조정리 적용",
+              "explanation": "$p_1$은 $m$을 나누므로 우변 $q_1 q_2 \\dots q_s$를 나눈다. 유클리드 보조정리에 의해 $p_1$은 적어도 하나의 $q_j$를 나누어야 한다.",
+              "typesetMath": "p_1 \\mid (q_1 q_2 \\cdots q_s) \\implies \\exists j \\text{ s.t. } p_1 \\mid q_j",
+              "justification": "Euclid's Lemma: 소수가 곱을 나누면 적어도 하나의 인수를 나눔"
+            },
+            {
+              "stepNumber": 4,
+              "title": "소수의 소인수분해 특성에 의한 동일성 규명",
+              "explanation": "$q_j$ 역시 소수이므로 약수는 1과 자기 자신뿐이다. 따라서 $p_1 = q_j$이어야 한다. 순서를 재배열하여 $p_1 = q_1$이라 하자.",
+              "typesetMath": "p_1 = q_1",
+              "justification": "소수의 정의"
+            },
+            {
+              "stepNumber": 5,
+              "title": "양변 약분 및 최소 반례 모순 도출",
+              "explanation": "양변을 $p_1$으로 나누면 $m' = m / p_1 < m$인 더 작은 정수가 두 가지 다른 소인수분해를 갖게 된다.",
+              "typesetMath": "m' = p_2 \\cdots p_r = q_2 \\cdots q_s < m",
+              "justification": "양변 소거"
+            },
+            {
+              "stepNumber": 6,
+              "title": "모순 확정",
+              "explanation": "이는 $m$이 두 가지 소인수분해를 갖는 '최소'의 자연수라는 최초의 설정에 모순이다.",
+              "typesetMath": "\\text{Contradiction with minimality of } m",
+              "justification": "귀류법 종결"
+            }
+          ],
+          "conclusion": "모든 자연수의 소인수분해 표현은 순서를 제외하고 오직 유일하다 (Q.E.D.)."
+        },
+        "corollariesAndApplications": [
+          {
+            "title": "약수의 개수 공식",
+            "typesetMath": "d(n) = (a_1 + 1)(a_2 + 1)\\cdots(a_k + 1)",
+            "description": "소인수분해 거듭제곱 지수로부터 약수 개수와 합을 구하는 기초 공식"
+          }
+        ]
+      }
+    ]
+  },
+  "electrical": {
+    "title": "전기공학 마스터 커리큘럼 (Electrical Engineering Curriculum)",
+    "description": "전자기학 기초부터 직류/교류 회로이론, RLC 과도현상, 페이저 해석, 3상 전력, 전기기기 및 실무 시퀀스/안전설비까지 8단계 정밀 학습",
+    "modules": [
+      {
+        "id": "ee-01",
+        "order": 1,
+        "domain": "전기공학 전자기초",
+        "titleKo": "전자기학 기초 및 맥스웰 방정식",
+        "titleEn": "Electromagnetics Fundamentals & Maxwell's Equations",
+        "file": "modules/01-electromagnetics.json",
+        "overview": "전하의 정전기적 상호작용부터 전류가 유도하는 자기장, 시간에 따라 변화하는 전자계의 상호 유도 현상과 맥스웰 4대 방정식의 물리적 본질을 학습합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "쿨롱의 법칙과 전계",
+            "titleEn": "Coulomb's Law and Electric Field",
+            "principle": "두 점전하 사이에 작용하는 정전기력은 두 전하량의 곱에 비례하고 거리의 제곱에 반비례하며, 전하는 주변 공간에 전계(Electric Field)를 형성한다.",
+            "equations": [
+              {
+                "name": "쿨롱의 힘 (Coulomb's Force)",
+                "typesetMath": "\\mathbf{F} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r^2} \\hat{\\mathbf{r}}",
+                "explanation": "진공 유전율 epsilon_0 하에서 두 전하 사이의 정전기적 인력/척력 벡터"
+              },
+              {
+                "name": "전계와 전위의 관계",
+                "typesetMath": "\\mathbf{E} = -\\nabla V",
+                "explanation": "전계는 전위(Electric Potential)의 음의 공간 기울기(Gradient)"
+              }
+            ]
+          },
+          {
+            "titleKo": "가우스 법칙 (전기장과 자기장)",
+            "titleEn": "Gauss's Laws",
+            "principle": "임의의 폐곡면을 통과하는 전기 선속은 내부 총전하량에 비례하며, 자기 홀극(Magnetic Monopole)은 존재하지 않으므로 닫힌 면을 통과하는 알짜 자기 선속은 항상 0이다.",
+            "equations": [
+              {
+                "name": "가우스 법칙 (전기장)",
+                "typesetMath": "\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}, \\quad \\oint_{\\partial V} \\mathbf{E} \\cdot d\\mathbf{A} = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}",
+                "explanation": "전하가 전기장의 원천(발산원)임을 규정"
+              },
+              {
+                "name": "가우스 법칙 (자기장)",
+                "typesetMath": "\\nabla \\cdot \\mathbf{B} = 0, \\quad \\oint_{\\partial V} \\mathbf{B} \\cdot d\\mathbf{A} = 0",
+                "explanation": "자기력선은 항상 닫힌 루프를 형성하며 자하(자기 단극자)가 없음"
+              }
+            ]
+          },
+          {
+            "titleKo": "패러데이 유도 법칙과 앙페르-맥스웰 법칙",
+            "titleEn": "Faraday's Law and Ampere-Maxwell Law",
+            "principle": "시간에 따라 변화하는 자기장은 전기장을 회전시키며(전자기 유도), 전도 전류뿐만 아니라 시간에 따라 변화하는 전기장(변위 전류) 역시 자기장을 회전시킨다.",
+            "equations": [
+              {
+                "name": "패러데이 전자기 유도",
+                "typesetMath": "\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+                "explanation": "자속의 시간 변화율이 유도 기전력(회전 전계)을 발생시킴"
+              },
+              {
+                "name": "앙페르-맥스웰 법칙",
+                "typesetMath": "\\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t}",
+                "explanation": "전류밀도 J와 변위전류가 자기장을 생성하여 전자기파 전파 가능"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "변압기 및 무선 전력 전송의 결합 원리",
+            "practicalContext": "변압기 1차 코일의 교류 전류가 철심 내에 교번 자속을 형성하고, 패러데이 법칙에 의해 2차 코일에 기전력이 유도되어 전기에너지가 절연된 상태로 전달됨.",
+            "engineeringNote": "철심 내 맴돌이 전류(와전류, Eddy Current) 손실을 줄이기 위해 규소강판을 얇게 적층(Lamination)하여 사용함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-em-field",
+          "type": "em-field",
+          "title": "정전계 및 자계 시각화 시뮬레이터",
+          "initialParams": {
+            "q1": 1,
+            "q2": -1,
+            "distance": 2
+          },
+          "keyFormulas": [
+            "E = k*q/r^2",
+            "V = k*q/r"
+          ]
+        },
+        "summary": "맥스웰 방정식은 전하와 전류가 전기장과 자기장을 어떻게 생성하고 상호작용하는지 규명하며, 빛이 전자기파임을 증명한 전기공학의 대원칙입니다."
+      },
+      {
+        "id": "ee-02",
+        "order": 2,
+        "domain": "직류 회로 이론",
+        "titleKo": "직류(DC) 회로 해석 및 등가망 이론",
+        "titleEn": "DC Circuit Analysis & Network Theorems",
+        "file": "modules/02-dc-circuits.json",
+        "overview": "옴의 법칙, 키르히호프의 전류/전압 법칙(KCL/KVL), 중첩의 원리, 테브난 및 노턴의 등가 회로를 통하여 복잡한 직류 회로망을 해석하는 체계적 기법을 습득합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "옴의 법칙과 줄의 법칙",
+            "titleEn": "Ohm's Law & Joule's Heating",
+            "principle": "도체에 흐르는 전류는 양단 전압에 비례하고 저항에 반비례하며, 저항에 전류가 흐르면 열에너지로 전력이 소모된다.",
+            "equations": [
+              {
+                "name": "옴의 법칙 (Ohm's Law)",
+                "typesetMath": "V = I R, \\quad I = \\frac{V}{R}, \\quad R = \\frac{V}{I}",
+                "explanation": "전압, 전류, 저항의 기본 비례 관계"
+              },
+              {
+                "name": "직류 전력 (DC Power)",
+                "typesetMath": "P = V I = I^2 R = \\frac{V^2}{R}",
+                "explanation": "단위 시간당 저항체에서 열로 방출되는 전력 (와트, W)"
+              }
+            ]
+          },
+          {
+            "titleKo": "키르히호프 법칙 (KCL과 KVL)",
+            "titleEn": "Kirchhoff's Current & Voltage Laws",
+            "principle": "전하량 보존 법칙에 의해 마디로 들어오는 전류의 합은 나가는 전류의 합과 같으며(KCL), 에너지 보존 법칙에 의해 임의의 폐회로를 따라 전위차를 모두 더하면 0이 된다(KVL).",
+            "equations": [
+              {
+                "name": "KCL (Kirchhoff's Current Law)",
+                "typesetMath": "\\sum_{k=1}^n I_k = 0",
+                "explanation": "임의의 접속점(Node)에서 유입/유출 전류의 대수적 합은 0"
+              },
+              {
+                "name": "KVL (Kirchhoff's Voltage Law)",
+                "typesetMath": "\\sum_{k=1}^m V_k = 0",
+                "explanation": "임의의 폐루프(Loop)를 일주하는 전압 상승과 강하의 총합은 0"
+              }
+            ]
+          },
+          {
+            "titleKo": "테브난 및 노턴 등가 회로",
+            "titleEn": "Thevenin & Norton Equivalent Circuits",
+            "principle": "아무리 복잡한 선형 저항 회로망이라도 부하 단자에서 바라보면 하나의 전압원과 직렬 저항(테브난), 또는 하나의 전류원과 병렬 저항(노턴)으로 완벽히 치환할 수 있다.",
+            "equations": [
+              {
+                "name": "테브난 등가 회로 (Thevenin)",
+                "typesetMath": "V_{\\text{Th}} = V_{\\text{oc}}, \\quad R_{\\text{Th}} = \\frac{V_{\\text{oc}}}{I_{\\text{sc}}}",
+                "explanation": "개방단자 전압과 단락 전류의 비로 등가 저항 산출"
+              },
+              {
+                "name": "최대 전력 전달 조건 (Maximum Power Transfer)",
+                "typesetMath": "R_L = R_{\\text{Th}} \\implies P_{\\max} = \\frac{V_{\\text{Th}}^2}{4 R_{\\text{Th}}}",
+                "explanation": "부하 저항이 내부 테브난 저항과 같을 때 부하에 최대 전력 전달"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "배터리 내부 저항 및 전압 강하 측정",
+            "practicalContext": "전원 장치는 이상적이지 않고 내부 저항을 가지므로, 대전류 부하가 연결되면 단자 전압이 V_terminal = E - I*R_int로 강하함.",
+            "engineeringNote": "자동차 시동 시 헤드라이트가 순간 어두워지는 현상이 전형적인 배터리 내부 저항에 의한 전압 강하 사례임."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-dc-circuit",
+          "type": "dc-network",
+          "title": "DC 브리지 회로 및 테브난 등가 시뮬레이터",
+          "initialParams": {
+            "Vs": 12,
+            "R1": 100,
+            "R2": 220,
+            "R3": 330,
+            "R4": 470,
+            "RL": 150
+          },
+          "keyFormulas": [
+            "Vth = Vs*(R2/(R1+R2) - R4/(R3+R4))",
+            "Rth = R1||R2 + R3||R4"
+          ]
+        },
+        "summary": "선형 직류 회로망은 KCL, KVL 및 테브난 등가 정리를 적용하여 복잡성에 상관없이 항상 단일 원천-부하 방정식으로 단순화하여 정확히 해석할 수 있습니다."
+      },
+      {
+        "id": "ee-03",
+        "order": 3,
+        "domain": "과도 현상 및 에너지 소자",
+        "titleKo": "RLC 과도 현상과 시정수 해석",
+        "titleEn": "RLC Circuit Transients & Time Constant Analysis",
+        "file": "modules/03-transient-rlc.json",
+        "overview": "커패시터의 전계 에너지 축적, 인덕터의 자계 에너지 축적 특성과 1차 RC/RL 회로의 지수적 충방전 시정수(τ), 2차 RLC 회로의 과도응답(과감쇠, 임계감쇠, 저감쇠) 2계 미분방정식을 깊이 탐구합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "커패시터와 인덕터의 V-I 미적분 관계",
+            "titleEn": "V-I Differential Equations of C and L",
+            "principle": "커패시터는 전압의 급격한 변화에 저항하며 전류는 전압의 미분에 비례하고, 인덕터는 전류의 급격한 변화에 저항하여 역기전력을 발생시킨다.",
+            "equations": [
+              {
+                "name": "커패시터 전류식",
+                "typesetMath": "i_C(t) = C \\frac{dv_C(t)}{dt}, \\quad v_C(t) = \\frac{1}{C}\\int_0^t i_C(\\tau)d\\tau + v_C(0)",
+                "explanation": "커패시터 양단 전압은 불연속적으로 급변할 수 없음"
+              },
+              {
+                "name": "인덕터 전압식",
+                "typesetMath": "v_L(t) = L \\frac{di_L(t)}{dt}, \\quad i_L(t) = \\frac{1}{L}\\int_0^t v_L(\\tau)d\\tau + i_L(0)",
+                "explanation": "인덕터에 흐르는 전류는 불연속적으로 급변할 수 없음"
+              }
+            ]
+          },
+          {
+            "titleKo": "1차 RC 및 RL 회로의 충방전 시정수(τ)",
+            "titleEn": "First-Order RC and RL Time Constant",
+            "principle": "1차 미분방정식을 풀면 과도응답은 자연지수 감쇠 곡선 e^(-t/τ)를 따르며, 시정수 τ(초)는 최종 목표값의 63.2%에 도달하는 시간이다.",
+            "equations": [
+              {
+                "name": "RC 회로 충전 전압",
+                "typesetMath": "v_C(t) = V_s \\left( 1 - e^{-t / \\tau} \\right) \\quad (\\tau = R C)",
+                "explanation": "5시정수(5τ) 경과 시 99.3% 도달하여 정상상태 간주"
+              },
+              {
+                "name": "RL 회로 방전 전류",
+                "typesetMath": "i_L(t) = I_0 e^{-t / \\tau} \\quad \\left(\\tau = \\frac{L}{R}\\right)",
+                "explanation": "인덕터 전류의 지수적 감소 곡선"
+              }
+            ]
+          },
+          {
+            "titleKo": "2차 RLC 회로의 감쇠 분류",
+            "titleEn": "Second-Order RLC Transient Response",
+            "principle": "RLC 직렬 회로는 2계 미분방정식 d^2v/dt^2 + 2α dv/dt + ω_0^2 v = 0을 따르며, 감쇠계수 α와 고유각진동수 ω_0의 상대적 크기에 따라 3가지 감쇠 상태로 나뉜다.",
+            "equations": [
+              {
+                "name": "2차 특성방정식",
+                "typesetMath": "s^2 + 2\\alpha s + \\omega_0^2 = 0 \\quad \\left(\\alpha = \\frac{R}{2L}, \\; \\omega_0 = \\frac{1}{\\sqrt{LC}}\\right)",
+                "explanation": "특성근 s = -alpha +- sqrt(alpha^2 - omega_0^2)"
+              },
+              {
+                "name": "감쇠 상태 분류",
+                "typesetMath": "\\begin{cases} \\alpha > \\omega_0 & \\text{과감쇠 (Overdamped: 진동 없음, 느린 수렴)} \\\\ \\alpha = \\omega_0 & \\text{임계감쇠 (Critically Damped: 최단 시간 수렴)} \\\\ \\alpha < \\omega_0 & \\text{저감쇠 (Underdamped: 감쇠 진동 파형)} \\end{cases}",
+                "explanation": "Q factor 및 댐핑비에 따른 과도 파형의 극적인 변화"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "스위칭 서지(Surge) 흡수 및 스너버(Snubber) 회로",
+            "practicalContext": "인덕티브 부하(릴레이 코일, 모터)를 스위치로 차단할 때 v_L = L*(di/dt)에 의해 수천 볼트의 고전압 아크가 발생하여 소자가 파괴될 수 있으므로, RC 스너버나 플라이백 다이오드를 병렬 연결하여 감쇠 과도상태로 서지를 흡수함.",
+            "engineeringNote": "계측기 오실로스코프 프로브 보정(Probe Compensation)도 임계감쇠 상태를 맞추어 방형파 왜곡을 없애는 대표적 응용임."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-rlc-transient",
+          "type": "rlc-transient",
+          "title": "RLC 과도현상 및 오실로스코프 시뮬레이터",
+          "initialParams": {
+            "R": 20,
+            "L": 0.1,
+            "C": 0.0001,
+            "Vin": 10,
+            "waveType": "step"
+          },
+          "keyFormulas": [
+            "alpha = R / (2*L)",
+            "omega0 = 1 / sqrt(L*C)",
+            "v(t) = Vin*(1 - exp(-alpha*t)*(cos(wd*t) + (alpha/wd)*sin(wd*t)))"
+          ]
+        },
+        "summary": "에너지 저장 소자(L, C)는 전압과 전류의 시간 미분 관계를 형성하며, RLC 회로의 과도 응답은 미분방정식의 특성근에 의해 과감쇠, 임계감쇠, 저감쇠 진동으로 결정됩니다."
+      },
+      {
+        "id": "ee-04",
+        "order": 4,
+        "domain": "교류 회로 및 페이저",
+        "titleKo": "정현파 교류 및 복소 페이저(Phasor) 해석",
+        "titleEn": "Sinusoidal AC & Complex Phasor Analysis",
+        "file": "modules/04-ac-phasor.json",
+        "overview": "단순 정현파 교류 신호의 실효값(RMS), 각주파수, 복소 페이저(Phasor) 변환 및 복소 임피던스(Z = R + jX)를 이용해 미분방정식을 대수 방정식으로 치환하는 현대 교류 회로 해석의 핵심을 학습합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "정현파 교류와 실효값 (RMS)",
+            "titleEn": "Sinusoidal AC and Root-Mean-Square",
+            "principle": "교류는 전압과 전류의 방향과 크기가 시간에 따라 주기적으로 변하며, 직류와 동일한 열 효과를 내는 유효 에너지 등가 전압을 실효값(RMS)이라 한다.",
+            "equations": [
+              {
+                "name": "정현파 전압 순시치",
+                "typesetMath": "v(t) = V_m \\cos(\\omega t + \\phi) \\quad (\\omega = 2\\pi f)",
+                "explanation": "최댓값 V_m, 각주파수 omega, 초기위상각 phi"
+              },
+              {
+                "name": "실효값 (RMS, Root-Mean-Square)",
+                "typesetMath": "V_{\\text{rms}} = \\sqrt{\\frac{1}{T}\\int_0^T v^2(t)\\,dt} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707 V_m",
+                "explanation": "대한민국 가정용 교류 220V는 실효값이며 최댓값은 약 311V임"
+              }
+            ]
+          },
+          {
+            "titleKo": "페이저(Phasor) 변환과 오일러 항등식",
+            "titleEn": "Phasor Transform and Complex Frequency Domain",
+            "principle": "오일러 공식을 이용하여 시간에 종속적인 정현파 cos(ωt + φ)를 복소평면의 회전 벡터 V_m e^(jφ) e^(jωt)로 표현하고, 공통 회전인자 e^(jωt)를 생략하여 주파수 영역의 정적 페이저 V로 변환한다.",
+            "equations": [
+              {
+                "name": "페이저 표현 (Phasor Representation)",
+                "typesetMath": "\\mathbf{V} = V_{\\text{rms}} \\angle \\phi = V_{\\text{rms}} e^{j\\phi} = V_{\\text{rms}} (\\cos\\phi + j\\sin\\phi)",
+                "explanation": "전기공학에서는 허수 단위를 전류 기호 i와 구분하기 위해 j를 사용함"
+              },
+              {
+                "name": "시간 미분의 페이저 변환",
+                "typesetMath": "\\frac{d}{dt} \\longleftrightarrow j\\omega, \\quad \\int dt \\longleftrightarrow \\frac{1}{j\\omega}",
+                "explanation": "미분방정식을 단순한 복소수 대수 곱셈/나눗셈으로 변환하는 마법의 도구"
+              }
+            ]
+          },
+          {
+            "titleKo": "복소 임피던스(Z)와 리액턴스(X)",
+            "titleEn": "Complex Impedance & Reactance",
+            "principle": "교류 회로에서 전류의 흐름을 방해하는 총체적 저항 성분을 임피던스(Impedance, Z)라 하며, 저항(R)과 위상을 90도 회전시키는 유도성/용량성 리액턴스(X)의 복소수 합으로 정의된다.",
+            "equations": [
+              {
+                "name": "복소 임피던스 정의",
+                "typesetMath": "\\mathbf{Z} = R + jX = |\\mathbf{Z}| e^{j\\theta} \\quad (|\\mathbf{Z}| = \\sqrt{R^2 + X^2}, \\; \\theta = \\arctan(X/R))",
+                "explanation": "저항 R(실수부)과 리액턴스 X(허수부)"
+              },
+              {
+                "name": "L과 C의 리액턴스",
+                "typesetMath": "Z_L = j\\omega L = j X_L \\; (X_L = \\omega L), \\quad Z_C = \\frac{1}{j\\omega C} = -j X_C \\; \\left(X_C = \\frac{1}{\\omega C}\\right)",
+                "explanation": "인덕터는 전압이 전류보다 90도 앞서고(진상), 커패시터는 전압이 전류보다 90도 뒤짐(지상)"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "교류 오디오 크로스오버 및 노이즈 필터링",
+            "practicalContext": "주파수에 따라 임피던스가 달라지는 원리(고주파에서 X_L은 커지고 X_C는 작아짐)를 활용하여, 저음은 우퍼 스피커(L 직렬 통과)로 보내고 고음은 트위터 스피커(C 직렬 통과)로 분리함.",
+            "engineeringNote": "임피던스 매칭(Impedance Matching)을 통해 오디오 앰프와 스피커 사이의 반사 손실 없이 최대 전력을 전달함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-phasor-power",
+          "type": "phasor-power",
+          "title": "AC 페이저 및 전력 삼각형 시뮬레이터",
+          "initialParams": {
+            "Vrms": 220,
+            "frequency": 60,
+            "R": 10,
+            "L": 0.05,
+            "C": 0.00005
+          },
+          "keyFormulas": [
+            "XL = 2*pi*f*L",
+            "XC = 1/(2*pi*f*C)",
+            "Z = sqrt(R^2 + (XL - XC)^2)",
+            "I = V/Z",
+            "theta = atan((XL-XC)/R)"
+          ]
+        },
+        "summary": "페이저 변환은 복잡한 시간 영역의 교류 미분방정식을 복소평면 상의 대수적 옴의 법칙(V = I*Z)으로 변환하여 신속하고 정확한 교류 회로 해석을 가능하게 합니다."
+      },
+      {
+        "id": "ee-05",
+        "order": 5,
+        "domain": "교류 전력 및 공진",
+        "titleKo": "교류 전력, 역률 개선 및 RLC 공진 회로",
+        "titleEn": "AC Power, Power Factor Correction & Resonance",
+        "file": "modules/05-ac-power-resonance.json",
+        "overview": "유효전력(P), 무효전력(Q), 피상전력(S)으로 구성되는 복소 전력 삼각형, 산업 현장의 송배전 효율을 극대화하는 역률 개선(Power Factor Correction), 직렬/병렬 RLC 공진 현상을 분석합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "교류 전력 3총사: 유효, 무효, 피상전력",
+            "titleEn": "Active, Reactive, and Apparent Power",
+            "principle": "교류에서는 저항에서 열이나 일로 실제 소비되는 유효전력(P)과, L과 C 사이에서 에너지를 주기적으로 주고받기만 하는 무효전력(Q)이 존재하며, 둘의 벡터 합을 피상전력(S)이라 한다.",
+            "equations": [
+              {
+                "name": "복소 전력 (Complex Power)",
+                "typesetMath": "\\mathbf{S} = \\mathbf{V} \\mathbf{I}^* = P + jQ = |\\mathbf{S}| e^{j\\theta}",
+                "explanation": "복소수 전력 표현 (I*는 켤레 전류 페이저)"
+              },
+              {
+                "name": "전력의 크기 및 단위",
+                "typesetMath": "P = V_{\\text{rms}} I_{\\text{rms}} \\cos\\theta \\; [\\text{W}], \\quad Q = V_{\\text{rms}} I_{\\text{rms}} \\sin\\theta \\; [\\text{VAR}], \\quad S = V_{\\text{rms}} I_{\\text{rms}} \\; [\\text{VA}]",
+                "explanation": "유효전력(와트 W), 무효전력(바 VAR), 피상전력(볼트암페어 VA)"
+              }
+            ]
+          },
+          {
+            "titleKo": "역률(Power Factor)과 진상 커패시터 역률 개선",
+            "titleEn": "Power Factor & Capacitor Correction",
+            "principle": "역률 cosθ는 공급된 전체 피상전력 중 실제 유효하게 일하는 전력의 비율이다. 모터 등 유도성 부하(지상 역률)에 병렬로 진상 커패시터를 설치하면 유도성 무효전력을 상쇄하여 선로 전류와 송전 손실을 극적으로 감소시킨다.",
+            "equations": [
+              {
+                "name": "역률 공식",
+                "typesetMath": "\\text{PF} = \\cos\\theta = \\frac{P}{S} = \\frac{P}{\\sqrt{P^2 + Q^2}}",
+                "explanation": "전압과 전류의 위상차 세타의 코사인 값"
+              },
+              {
+                "name": "역률 개선 필요 커패시터 용량(Q_C)",
+                "typesetMath": "Q_C = P (\\tan\\theta_1 - \\tan\\theta_2) = \\omega C V^2",
+                "explanation": "역률을 cos theta_1에서 cos theta_2로 개선하기 위한 진상용량"
+              }
+            ]
+          },
+          {
+            "titleKo": "RLC 직렬 및 병렬 공진",
+            "titleEn": "Series and Parallel Resonance",
+            "principle": "유도 리액턴스와 용량 리액턴스의 크기가 같아져(X_L = X_C) 허수부가 완전히 상쇄되는 특정 주파수를 공진 주파수(Resonant Frequency)라 하며, 직렬 공진 시 임피던스는 최소가 되고 전류는 최대가 된다.",
+            "equations": [
+              {
+                "name": "공진 주파수 공식",
+                "typesetMath": "f_0 = \\frac{1}{2\\pi \\sqrt{LC}}, \\quad \\omega_0 = \\frac{1}{\\sqrt{LC}}",
+                "explanation": "L과 C의 값에 의해 결정되는 고유 진동 주파수"
+              },
+              {
+                "name": "품질 계수 (Quality Factor, Q)",
+                "typesetMath": "Q = \\frac{\\omega_0 L}{R} = \\frac{1}{\\omega_0 C R} = \\frac{f_0}{\\text{BW}}",
+                "explanation": "공진의 날카로움(선택도) 및 대역폭(Bandwidth)과의 관계"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "공장 변전실 진상 콘덴서 설치 및 한전 전기요금 할인",
+            "practicalContext": "공장의 수많은 전동기는 유도성 부하이므로 역률이 0.7~0.8로 낮음. 병렬 진상 커패시터 뱅크를 설치해 역률을 0.95 이상으로 올리면 선로 손실(I^2*R)이 줄고 한전 역률 요금 할인을 적용받음.",
+            "engineeringNote": "과보상(Over-compensation) 시 페란티 현상(Ferranti effect)으로 수전단 전압이 송전단보다 높아져 설비가 소손될 수 있으므로 자동 역률 제어기(APFC)를 사용함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-phasor-power",
+          "type": "phasor-power",
+          "title": "AC 페이저 및 전력 삼각형 시뮬레이터",
+          "initialParams": {
+            "P": 1000,
+            "QL": 800,
+            "QC": 400,
+            "V": 220
+          },
+          "keyFormulas": [
+            "Q_net = QL - QC",
+            "S = sqrt(P^2 + Q_net^2)",
+            "PF = P / S"
+          ]
+        },
+        "summary": "교류 전력은 P, Q, S의 삼각 기하학적 관계를 가지며, 역률 개선은 송배전 효율의 핵심이고, 공진 현상은 무선 주파수 튜닝과 필터의 기반이 됩니다."
+      },
+      {
+        "id": "ee-06",
+        "order": 6,
+        "domain": "3상 교류 및 전력 계통",
+        "titleKo": "3상 교류 전력 및 변압기 계통 해석",
+        "titleEn": "Three-Phase Power Systems & Transformers",
+        "file": "modules/06-three-phase-systems.json",
+        "overview": "현대 대규모 발전, 송전, 배전의 표준인 3상 교류(Y결선 및 Δ결선)의 선간/상전압·전류 위상 관계, 3상 평형 전력 수식, 변압기의 권수비 및 임피던스 변환 원리를 학습합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "3상 교류 생성 및 위상차 120°",
+            "titleEn": "Three-Phase Generation (120° Phase Shift)",
+            "principle": "공간적으로 120도 각도로 배치된 3개의 권선 내부에서 자계가 회전하면 시간적으로 120도의 위상차를 갖는 동일 크기의 3상 정현파 기전력(A상, B상, C상)이 발생한다.",
+            "equations": [
+              {
+                "name": "평형 3상 전압",
+                "typesetMath": "v_a(t) = V_m \\cos(\\omega t), \\; v_b(t) = V_m \\cos(\\omega t - 120^\\circ), \\; v_c(t) = V_m \\cos(\\omega t - 240^\\circ)",
+                "explanation": "어느 순간에나 세 상의 순시 전압 합은 0: v_a + v_b + v_c = 0"
+              }
+            ]
+          },
+          {
+            "titleKo": "Y(와이) 결선과 Δ(델타) 결선",
+            "titleEn": "Wye (Y) and Delta (Δ) Connections",
+            "principle": "Y결선에서는 선간전압이 상전압의 루트 3배이고 30도 앞서며, 델타결선에서는 선전류가 상전류의 루트 3배이고 30도 뒤진다.",
+            "equations": [
+              {
+                "name": "Y결선 (성형 결선)",
+                "typesetMath": "V_L = \\sqrt{3} V_p \\angle 30^\\circ, \\quad I_L = I_p",
+                "explanation": "상전압 220V일 때 선간전압은 220 * sqrt(3) = 380V (한국 동력 표준)"
+              },
+              {
+                "name": "Δ결선 (환상 결선)",
+                "typesetMath": "V_L = V_p, \\quad I_L = \\sqrt{3} I_p \\angle -30^\\circ",
+                "explanation": "선간전압은 상전압과 같고 선전류가 상전류의 sqrt(3)배"
+              },
+              {
+                "name": "평형 3상 전력 총합",
+                "typesetMath": "P_{\\text{3\\phi}} = 3 V_p I_p \\cos\\theta = \\sqrt{3} V_L I_L \\cos\\theta",
+                "explanation": "결선 방식에 관계없이 선간전압과 선전류로 표현한 동일 공식"
+              }
+            ]
+          },
+          {
+            "titleKo": "이상적 변압기 권수비와 임피던스 변환",
+            "titleEn": "Ideal Transformer & Impedance Reflection",
+            "principle": "1차측 권선수와 2차측 권선수의 비에 따라 전압은 비례하여 승압/강압되고 전류는 반비례하며, 2차 부하 임피던스는 권수비의 제곱에 비례하여 1차측으로 반사된다.",
+            "equations": [
+              {
+                "name": "변압기 권수비 (Turns Ratio)",
+                "typesetMath": "a = \\frac{N_1}{N_2} = \\frac{V_1}{V_2} = \\frac{I_2}{I_1}",
+                "explanation": "에너지 보존: V1 * I1 = V2 * I2"
+              },
+              {
+                "name": "임피던스 변환 (Impedance Reflection)",
+                "typesetMath": "Z'_L = a^2 Z_L = \\left(\\frac{N_1}{N_2}\\right)^2 Z_L",
+                "explanation": "1차측에서 바라본 2차 부하의 등가 임피던스"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "초고압 송전(765kV, 345kV)과 송전 손실 1/a^2 감소",
+            "practicalContext": "동일한 전력 P를 보낼 때 전압 V를 a배 올리면 전류 I는 1/a로 줄어들고, 송전선로의 저항 손실 P_loss = I^2*R은 (1/a)^2으로 격감함. 이것이 테슬라의 교류 승압 송전이 에디슨의 직류를 이긴 핵심 이유임.",
+            "engineeringNote": "3상 평형 시스템은 중성선(Neutral line) 전류가 0이 되므로 구리 도선의 소모량을 단상에 비해 25% 절감할 수 있음."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-three-phase",
+          "type": "three-phase",
+          "title": "3상 교류 Y-Δ 결선 및 변압기 시뮬레이터",
+          "initialParams": {
+            "Vphase": 220,
+            "frequency": 60,
+            "connection": "Y",
+            "loadZ": 10
+          },
+          "keyFormulas": [
+            "Vline = sqrt(3)*Vphase",
+            "P_total = sqrt(3)*Vline*Iline*cos(theta)"
+          ]
+        },
+        "summary": "3상 교류는 평형 상태에서 순간 전력 공급이 일정하여 맥동이 없고 구리 도선을 획기적으로 절약할 수 있어 전 세계 전력 인프라의 표준입니다."
+      },
+      {
+        "id": "ee-07",
+        "order": 7,
+        "domain": "전기기기 및 모터 제어",
+        "titleKo": "전기기기: 직류기, 유도 전동기 및 모터 제어",
+        "titleEn": "Electric Machines: DC Motors, Induction Motors & VFD",
+        "file": "modules/07-electric-machines.json",
+        "overview": "플레밍의 왼손/오른손 법칙을 기반으로 하는 전자기적 동력 변환 원리, 직류 전동기의 토크-속도 제어, 3상 유도 전동기의 회전자계와 슬립(Slip), 인버터(VFD)를 통한 가변속 제어를 학습합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "로렌츠 힘과 전자기 동력 변환",
+            "titleEn": "Lorentz Force and Electromechanical Energy Conversion",
+            "principle": "자기장 B 내에서 전류 I가 흐르는 도선은 힘 F = I(L x B)을 받아 회전하고(전동기 모드), 자기장 내에서 도선이 속도 v로 움직이면 기전력 E = v x B가 유도된다(발전기 모드).",
+            "equations": [
+              {
+                "name": "전자기 토크 (Torque)",
+                "typesetMath": "T = K_t \\Phi I_a",
+                "explanation": "자속 Phi와 전기자 전류 I_a의 곱에 비례하는 회전 토크"
+              },
+              {
+                "name": "역기전력 (Back-EMF)",
+                "typesetMath": "E_b = K_e \\Phi \\omega_m",
+                "explanation": "모터 회전속도 omega_m에 비례하여 인가 전압에 대항하는 역전압"
+              }
+            ]
+          },
+          {
+            "titleKo": "3상 유도 전동기와 회전자계",
+            "titleEn": "Induction Motors and Rotating Magnetic Field",
+            "principle": "3상 고정자 권선에 120도 위상차의 교류 전류가 흐르면 공간적으로 일정한 크기로 회전하는 회전자계가 형성되며, 회전자는 이 자계를 따라가기 위해 슬립(Slip, s)을 발생시키며 유도 전류로 토크를 생성한다.",
+            "equations": [
+              {
+                "name": "동기 속도 (Synchronous Speed)",
+                "typesetMath": "N_s = \\frac{120 f}{P} \\; [\\text{rpm}]",
+                "explanation": "전원 주파수 f와 전동기 극수 P에 의해 결정되는 회전자계 속도"
+              },
+              {
+                "name": "슬립 (Slip)",
+                "typesetMath": "s = \\frac{N_s - N}{N_s} \\quad (0 < s < 1)",
+                "explanation": "회전자 속도 N과 동기속도 N_s 사이의 상대적 지연 비율"
+              }
+            ]
+          },
+          {
+            "titleKo": "인버터(VFD)와 V/f 일정 제어",
+            "titleEn": "Variable Frequency Drives (VFD) and V/f Control",
+            "principle": "유도 전동기의 속도를 제어하기 위해 인버터는 주파수 f를 가변시키는데, 이때 자속 포화를 방지하고 정격 토크를 유지하기 위해 전압과 주파수의 비(V/f)를 일정하게 유지한다.",
+            "equations": [
+              {
+                "name": "V/f 일정 법칙",
+                "typesetMath": "\\frac{V}{f} = \\text{const} \\implies \\Phi_m \\approx \\text{const}",
+                "explanation": "기저 주파수 이하에서 최대 토크 유지 제어"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "전기차(EV) 구동 모터 및 엘리베이터 인버터 제어",
+            "practicalContext": "전기차는 영구자석 동기모터(PMSM) 또는 유도전동기를 인버터의 공간벡터 PWM(SVPWM) 기법으로 초당 수천 번 스위칭하여 정지 상태에서부터 최대 토크를 부드럽게 발휘함.",
+            "engineeringNote": "감속 시 회생 제동(Regenerative Braking)을 통해 운동에너지를 전기에너지로 회수하여 배터리를 충전함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-motor-torque",
+          "type": "motor-control",
+          "title": "유도 전동기 토크-속도 곡선 시뮬레이터",
+          "initialParams": {
+            "f": 60,
+            "poles": 4,
+            "V": 380,
+            "R2": 0.5,
+            "X2": 1.5
+          },
+          "keyFormulas": [
+            "Ns = 120*f/P",
+            "Torque = (3/omega_s) * (V^2 * (R2/s)) / ((R1 + R2/s)^2 + (X1 + X2)^2)"
+          ]
+        },
+        "summary": "전기기기는 전자기 유도와 로렌츠 힘을 이용해 전기와 역학적 동력을 상호 변환하며, 인버터 전력전자는 모터의 속도와 토크를 정밀하게 제어합니다."
+      },
+      {
+        "id": "ee-08",
+        "order": 8,
+        "domain": "실전 전기설비 및 시퀀스",
+        "titleKo": "실무 시퀀스 제어, 접지 및 전기안전 규정(KEC)",
+        "titleEn": "Relay Sequence Control, Grounding & Electrical Safety",
+        "file": "modules/08-sequence-and-safety.json",
+        "overview": "산업 플랜트와 빌딩 제어의 핵심인 릴레이 시퀀스(자기유지, 인터록 회로), 배전 차단기(MCCB, ELCB), 인체 감전 보호 접지 계통(TN, TT, IT) 및 한국전기설비규정(KEC) 핵심을 체득합니다.",
+        "coreConcepts": [
+          {
+            "titleKo": "릴레이 시퀀스 기초: a접점, b접점, 자기유지",
+            "titleEn": "Relay Contacts & Self-Holding Circuit",
+            "principle": "푸시버튼을 누르면 릴레이 코일이 여자되어 a접점(Normally Open)이 닫히고, 버튼에서 손을 떼어도 릴레이 자체 a접점을 통해 통전 상태를 유지하는 것이 자기유지(Self-Holding) 회로이다.",
+            "equations": [
+              {
+                "name": "자기유지 논리식",
+                "typesetMath": "R = (\\text{PB}_{\\text{start}} + R) \\cdot \\overline{\\text{PB}_{\\text{stop}}}",
+                "explanation": "기동 버튼을 누르거나 릴레이가 켜져 있고 정지 버튼이 안 눌렸을 때 유지"
+              },
+              {
+                "name": "인터록 회로 (Interlock)",
+                "typesetMath": "R_1 = \\text{PB}_1 \\cdot \\overline{R_2}, \\quad R_2 = \\text{PB}_2 \\cdot \\overline{R_1}",
+                "explanation": "모터 정역회전 시 단락 사고를 막기 위해 상대방 b접점을 직렬로 걸어 동시 투입 방지"
+              }
+            ]
+          },
+          {
+            "titleKo": "인체 감전 메커니즘과 누전차단기(ELCB)",
+            "titleEn": "Electric Shock & Residual Current Circuit Breakers",
+            "principle": "인체에 30mA 이상의 교류 전류가 수십 밀리초 이상 흐르면 심실세동(Ventricular Fibrillation)이 발생하여 사망에 이를 수 있다. 누전차단기는 영상변류기(ZCT)로 왕복 전류 차이를 감지해 0.03초 이내에 차단한다.",
+            "equations": [
+              {
+                "name": "영상전류 누전 감지",
+                "typesetMath": "I_{\\Delta n} = |\\mathbf{I}_{\\text{hot}} + \\mathbf{I}_{\\text{neutral}}| > 30\\text{ mA} \\implies \\text{Trip within } 0.03\\text{ s}",
+                "explanation": "정상 시 왕복 전류 합은 0이나 누전 시 지락전류만큼 차이 발생"
+              }
+            ]
+          },
+          {
+            "titleKo": "접지 시스템의 분류 (TN, TT, IT 계통)",
+            "titleEn": "Grounding Systems (TN, TT, IT according to KEC)",
+            "principle": "한국전기설비규정(KEC) 국제표준(IEC 60364)에 따른 3대 접지 방식: 계통 전원측 접지(T/I)와 전기기기 외함 접지(N/T)의 결선 방식에 따라 고장 전류 경로와 차단 특성이 달라진다.",
+            "equations": [
+              {
+                "name": "지락 고장 전압",
+                "typesetMath": "V_{\\text{touch}} = I_{\\text{fault}} \\times R_{\\text{ground}} \\le 50\\text{ V}",
+                "explanation": "인체 허용 접촉 전압 50V 이하로 억제하는 접지 저항 설계"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "공장 모터 정역회전 및 비상정지 시퀀스 구성",
+            "practicalContext": "컨베이어 벨트나 크레인 모터에서 정회전과 역회전 접촉기(MC1, MC2)가 동시에 들어가면 380V 단선 단락(Short) 폭발 사고가 나므로, 전기적 인터록(상대방 b접점 직렬)과 기계적 인터록(기계적 빗장)의 2중 안전장치를 필수 구성함.",
+            "engineeringNote": "비상정지(Emergency Stop) 스위치는 접점이 고장 나 떨어져도 안전하게 차단되도록 항상 b접점(Fail-Safe 원칙)으로 결선함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-relay-sequence",
+          "type": "relay-sequence",
+          "title": "릴레이 시퀀스 제어 인터랙티브 시뮬레이터",
+          "initialParams": {
+            "pbStart": false,
+            "pbStop": false,
+            "relayState": false,
+            "lampState": false
+          },
+          "keyFormulas": [
+            "Relay = (PB_start || Relay) && !PB_stop",
+            "Lamp = Relay"
+          ]
+        },
+        "summary": "릴레이 시퀀스는 산업 자동화 제어의 뼈대이며, Fail-Safe 원칙, 누전차단기, KEC 규격 접지 시스템은 인명과 설비를 보호하는 전기 실무의 최우선 가치입니다."
+      }
+    ]
+  },
+  "electronics": {
+    "title": "전자공학 마스터 커리큘럼 (Electronic Engineering Curriculum)",
+    "description": "반도체 물성 기초부터 다이오드 정류, BJT/MOSFET 증폭기, OP-Amp 아날로그 연산, 능동필터, 디지털 논리회로, 임베디드 통신 및 PCB 설계까지 8단계 정밀 학습",
+    "modules": [
+      {
+        "id": "el-01",
+        "order": 1,
+        "domain": "반도체 물리 기초",
+        "titleKo": "반도체 물성 및 PN 접합의 원리",
+        "titleEn": "Semiconductor Physics & PN Junction Principles",
+        "file": "modules/01-semiconductor-physics.json",
+        "overview": "실리콘 결정 구조, 에너지 밴드갭 이론, N형 및 P형 불순물 도핑(Doping), 페르미 준위와 캐리어 이동(드리프트와 확산) 및 PN 접합 공핍층의 양자물리적 거동을 학습합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "PN 접합 다이오드 (PN Junction Diode)",
+          "operationPrinciples": "P형 영역의 정공과 N형 영역의 전자가 경계면에서 재결합하여 가동 전하가 고갈된 공핍층(Depletion Region)과 전위 장벽(내장 전위 V_bi)을 형성함.",
+          "equivalentCircuit": "순방향 시 0.7V 전압원 + 미소 순방향 저항 R_f, 역방향 시 거대한 역저항 R_r"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "에너지 밴드와 도핑 (N형 및 P형)",
+            "titleEn": "Energy Bands & Extrinsic Semiconductors",
+            "principle": "원자가띠와 전도띠 사이의 금지대(밴드갭 $E_g$) 크기에 따라 물질의 전기 전도성이 결정되며, 실리콘에 5가 원소(인 P, 비소 As)를 주입하면 도너 전자가, 3가 원소(붕소 B)를 주입하면 억셉터 정공이 생성된다.",
+            "equations": [
+              {
+                "name": "질량 작용 법칙 (Mass-Action Law)",
+                "typesetMath": "n \\cdot p = n_i^2 \\quad (n_i = B T^{3/2} e^{-E_g / (2 k_B T)})",
+                "explanation": "열평형 상태에서 전자 농도 n과 정공 농도 p의 곱은 진성 캐리어 농도 n_i의 제곱으로 항상 일정"
+              }
+            ]
+          },
+          {
+            "titleKo": "캐리어 이동: 드리프트와 확산 전류",
+            "titleEn": "Carrier Transport: Drift & Diffusion",
+            "principle": "전기장에 의해 전하가 끌려가는 드리프트(Drift) 현상과, 농도 불균형에 의해 고농도에서 저농도로 퍼져나가는 확산(Diffusion) 현상이 반도체 전류를 형성한다.",
+            "equations": [
+              {
+                "name": "총 전류 밀도 (Total Current Density)",
+                "typesetMath": "J = J_{\\text{drift}} + J_{\\text{diff}} = (q n \\mu_n + q p \\mu_p) E + q D_n \\frac{dn}{dx} - q D_p \\frac{dp}{dx}",
+                "explanation": "전기장 E에 의한 표동 전류와 농도 기울기에 의한 확산 전류의 결합"
+              },
+              {
+                "name": "아인슈타인 관계식 (Einstein Relation)",
+                "typesetMath": "\\frac{D_n}{\\mu_n} = \\frac{D_p}{\\mu_p} = \\frac{k_B T}{q} = V_T",
+                "explanation": "확산 계수 D와 이동도 mu 사이의 열전압 V_T (상온 약 26mV) 비례성"
+              }
+            ]
+          },
+          {
+            "titleKo": "PN 접합 내장 전위(Built-in Potential)",
+            "titleEn": "Built-in Potential of PN Junction",
+            "principle": "도핑된 양측의 캐리어 확산과 공핍층 이온들의 전계에 의한 드리프트가 평형을 이룰 때 자연 발생하는 전위 장벽 V_bi.",
+            "equations": [
+              {
+                "name": "내장 전위 공식",
+                "typesetMath": "V_{\\text{bi}} = V_T \\ln\\left( \\frac{N_A N_D}{n_i^2} \\right)",
+                "explanation": "억셉터 도핑 N_A, 도너 도핑 N_D에 비례하여 형성되는 전위 장벽 (실리콘 기준 약 0.7V)"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "태양광 발전 패널(Solar Cell)과 광다이오드(Photodiode)",
+            "practicalContext": "PN 접합 공핍층에 밴드갭 에너지 이상의 빛(광자)이 입사하면 전자-정공 쌍(EHP)이 생성되고, 내장 전계에 의해 전자는 N층으로, 정공은 P층으로 분리되어 기전력을 생성함.",
+            "engineeringNote": "실리콘 반도체의 밴드갭은 1.12eV로 가시광선 영역의 태양광 흡수에 최적화되어 있음."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-semiconductor",
+          "type": "energy-band",
+          "title": "에너지 밴드 및 캐리어 확산 시뮬레이터",
+          "initialParams": {
+            "dopingNa": 10000000000000000,
+            "dopingNd": 10000000000000000,
+            "temperature": 300
+          },
+          "keyFormulas": [
+            "Vbi = 0.026 * ln(Na*Nd / ni^2)",
+            "W = sqrt(2*eps/q * (1/Na + 1/Nd) * Vbi)"
+          ]
+        },
+        "summary": "반도체는 도핑과 에너지 밴드 조절을 통해 전류의 전도 특성을 극적으로 제어할 수 있는 물질이며, PN 접합은 모든 현대 전자 소자의 기초입니다."
+      },
+      {
+        "id": "el-02",
+        "order": 2,
+        "domain": "다이오드 및 정류 회로",
+        "titleKo": "다이오드 응용 회로: 정류기, 필터 및 제너 정전압",
+        "titleEn": "Diode Circuits: Rectifiers, Filters & Zener Regulation",
+        "file": "modules/02-diodes-rectifiers.json",
+        "overview": "쇼클리 다이오드 방정식, 순방향 도통과 역방향 항복 특성, 반파/전파/브리지 정류 회로, 평활 커패시터에 의한 리플 전압 계산, 제너 다이오드를 이용한 정전압 조절기 회로를 해석합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "다이오드 정류기 및 제너 다이오드",
+          "operationPrinciples": "순방향 전압 인가 시 지수함수적으로 전류가 급증하고, 역방향 시 미소 포화전류 I_s만 흐르다가 항복 전압(V_z)에서 전압이 일정하게 유지되는 제너 항복 발생.",
+          "equivalentCircuit": "정전압 강하 모델: 0.7V 이상에서 단락 도통"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "쇼클리 다이오드 방정식",
+            "titleEn": "Shockley Diode Equation",
+            "principle": "다이오드 전류는 양단 전압에 대해 순방향 바이어스에서 지수함수적으로 폭증하고, 역방향에서는 극미한 역방향 포화전류 I_s로 포화된다.",
+            "equations": [
+              {
+                "name": "쇼클리 방정식 (Shockley Equation)",
+                "typesetMath": "I_D = I_S \\left( e^{\\frac{V_D}{n V_T}} - 1 \\right)",
+                "explanation": "역방향 포화전류 I_s, 이상계수 n(1~2), 열전압 V_T = 26mV"
+              }
+            ]
+          },
+          {
+            "titleKo": "전파 브리지 정류 회로와 평활 리플 전압",
+            "titleEn": "Full-Wave Bridge Rectifier & Ripple Voltage",
+            "principle": "4개의 다이오드를 브리지 구조로 배치하면 교류의 양의 반주기와 음의 반주기 모두 부하에 동일한 방향의 전류를 공급하며, 병렬 평활 커패시터 C가 맥류를 직류로 평활화한다.",
+            "equations": [
+              {
+                "name": "피크 전압 (Bridge Rectifier Peak)",
+                "typesetMath": "V_{\\text{peak}} = V_m - 2 V_D \\approx V_m - 1.4\\text{ V}",
+                "explanation": "도통 경로에 항상 2개의 다이오드가 직렬 연결됨"
+              },
+              {
+                "name": "피크-투-피크 리플 전압 (Ripple Voltage)",
+                "typesetMath": "V_r = \\frac{I_L}{2 f C} = \\frac{V_{\\text{peak}}}{2 f R_L C}",
+                "explanation": "전파 정류 시 리플 주파수는 2배(120Hz)가 되어 평활화가 용이함"
+              }
+            ]
+          },
+          {
+            "titleKo": "제너 다이오드 정전압 원리 (Zener Regulation)",
+            "titleEn": "Zener Diode Voltage Regulation",
+            "principle": "역방향 항복 영역(양자 터널링 및 애벌랜치 항복)에서 전류가 크게 변해도 양단 전압이 거의 제너 전압 V_Z로 일정하게 유지되는 특성을 이용해 직류 전압을 안정화한다.",
+            "equations": [
+              {
+                "name": "제너 제한 저항 설계",
+                "typesetMath": "R_S = \\frac{V_{\\text{in}} - V_Z}{I_Z + I_L}",
+                "explanation": "입력 전압 변동 시 제너 다이오드의 과열 파손 방지 저항"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "스마트폰 충전기(AC-DC 아답터)의 1차 정류단",
+            "practicalContext": "벽면 220V 교류를 다이오드 브리지로 즉시 311V 맥류 직류로 변환하고, 400V 전해 커패시터로 평활화한 후 고주파 스위칭 전원(SMPS)의 입력으로 공급함.",
+            "engineeringNote": "입력 전원 역삽입 방지(Reverse Polarity Protection)를 위해 DC 입력단에 직렬 쇼트키 다이오드(낮은 전압강하 0.3V)를 배치함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-diode-rectifier",
+          "type": "rectifier",
+          "title": "다이오드 전파 브리지 정류 및 평활 시뮬레이터",
+          "initialParams": {
+            "Vin_rms": 24,
+            "frequency": 60,
+            "C": 0.001,
+            "RL": 100
+          },
+          "keyFormulas": [
+            "Vpeak = sqrt(2)*Vin_rms - 1.4",
+            "Vripple = Vpeak / (2*f*RL*C)"
+          ]
+        },
+        "summary": "다이오드는 단방향 전류 통과(정류) 특성을 가지며, 정류 회로, 리플 필터, 제너 전압 조절기를 통해 모든 전자기기의 안정된 직류 전원을 만듭니다."
+      },
+      {
+        "id": "el-03",
+        "order": 3,
+        "domain": "아날로그 증폭 및 트랜지스터",
+        "titleKo": "BJT 트랜지스터 증폭기 및 직류 부하선 해석",
+        "titleEn": "BJT Transistors, Amplifiers & DC Load Line",
+        "file": "modules/03-bjt-amplifiers.json",
+        "overview": "양극성 접합 트랜지스터(BJT)의 NPN/PNP 구조, 활성/포화/차단 영역의 동작 원리, 공통 이미터(CE) 전압 증폭기 설계, 전압분배 바이어스 안정화 및 직류 부하선(DC Load Line)과 동작점(Q-point)을 학습합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "BJT (Bipolar Junction Transistor)",
+          "operationPrinciples": "베이스의 미세한 전류 I_B로 컬렉터-이미터 간의 대전류 I_C = beta * I_B를 제어하는 전류 제어형 전류원(CCCS).",
+          "equivalentCircuit": "소신호 하이브리드-파이 모델: 베이스 r_pi 저항과 제어 전류원 gm * v_be"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "BJT의 3대 동작 영역",
+            "titleEn": "Three Operation Regions of BJT",
+            "principle": "베이스-이미터(BE) 접합과 베이스-컬렉터(BC) 접합의 바이어스 상태에 따라 차단(Off), 활성(증폭), 포화(스위치 On) 영역으로 구분된다.",
+            "equations": [
+              {
+                "name": "활성 영역 전류 증폭식",
+                "typesetMath": "I_C = \\beta I_B = h_{FE} I_B, \\quad I_E = I_B + I_C = (\\beta + 1) I_B",
+                "explanation": "전류 증폭률 beta(통상 100~300)에 의한 선형 전류 증폭"
+              },
+              {
+                "name": "베이스-이미터 도통 전압",
+                "typesetMath": "V_{BE} \\approx 0.7\\text{ V} \\quad (\\text{실리콘 NPN 기준 활성/포화 모드})",
+                "explanation": "순방향 바이어스된 PN 다이오드 전압 강하"
+              }
+            ]
+          },
+          {
+            "titleKo": "직류 부하선과 동작점(Q-point)",
+            "titleEn": "DC Load Line & Operating Point (Q-point)",
+            "principle": "출력 루프의 KVL 방정식 $V_{CE} = V_{CC} - I_C R_C$는 $I_C - V_{CE}$ 평면 상의 직선이며, 트랜지스터의 베이스 전류 특성 곡선과 만나는 교점이 동작점(Q-point)이다.",
+            "equations": [
+              {
+                "name": "직류 부하선 방정식",
+                "typesetMath": "I_C = -\\frac{1}{R_C} V_{CE} + \\frac{V_{CC}}{R_C}",
+                "explanation": "V_CE = 0일 때 최대 포화 전류 V_CC/R_C, I_C = 0일 때 차단 전압 V_CC"
+              },
+              {
+                "name": "최적 Q-point 조건",
+                "typesetMath": "V_{CEQ} \\approx \\frac{V_{CC}}{2}",
+                "explanation": "신호가 위아래로 대칭적으로 최대 스윙할 수 있어 클리핑 왜곡 방지"
+              }
+            ]
+          },
+          {
+            "titleKo": "공통 이미터(CE) 소신호 전압 이득",
+            "titleEn": "Common-Emitter Small-Signal Voltage Gain",
+            "principle": "베이스 입력 전압 v_in의 미세한 변화는 트랜스컨덕턴스 $g_m$을 통해 컬렉터 전류 $i_c$의 변화로 변환되고, 컬렉터 저항 $R_C$에 의해 역위상으로 크게 증폭된 전압 $v_{out}$으로 출력된다.",
+            "equations": [
+              {
+                "name": "트랜스컨덕턴스 (Transconductance)",
+                "typesetMath": "g_m = \\frac{I_{CQ}}{V_T} = \\frac{I_{CQ}}{26\\text{ mV}}",
+                "explanation": "동작점 컬렉터 전류에 비례하는 소신호 전도도"
+              },
+              {
+                "name": "소신호 전압 이득 (Voltage Gain)",
+                "typesetMath": "A_v = \\frac{v_{\\text{out}}}{v_{\\text{in}}} = -g_m (R_C \\parallel R_L)",
+                "explanation": "마이너스 부호는 입력과 출력 간의 180도 위상 반전을 의미함"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "마이크로폰 음성 신호 전치증폭기(Preamplifier)",
+            "practicalContext": "마이크에서 나오는 수 밀리볼트(mV)의 미세한 음성 교류 신호를 BJT CE 증폭기를 통해 수 볼트(V)의 라인 레벨로 증폭하여 파워 앰프로 전달함.",
+            "engineeringNote": "온도 변화에 따른 beta 변동으로 Q점이 틀어지는 현상을 방지하기 위해 이미터 저항 R_E와 바이패스 커패시터 C_E를 함께 사용함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-transistor-curves",
+          "type": "transistor-curves",
+          "title": "BJT/MOSFET 트랜지스터 특성 곡선 & 부하선 시뮬레이터",
+          "initialParams": {
+            "Vcc": 12,
+            "Rc": 1000,
+            "beta": 150,
+            "Ib_uA": 40
+          },
+          "keyFormulas": [
+            "Ic = beta * Ib",
+            "Vce = Vcc - Ic * Rc",
+            "Av = -Ic * Rc / 0.026"
+          ]
+        },
+        "summary": "BJT는 작은 베이스 전류로 큰 컬렉터 전류를 제어하는 핵심 능동 소자이며, 부하선 중앙에 Q점을 설정하여 왜곡 없는 선형 신호 증폭을 수행합니다."
+      },
+      {
+        "id": "el-04",
+        "order": 4,
+        "domain": "전계효과 트랜지스터 및 집적회로",
+        "titleKo": "MOSFET 소자 원리 및 디지털 CMOS 기술",
+        "titleEn": "MOSFET Circuits, Scaling & CMOS Technology",
+        "file": "modules/04-mosfet-circuits.json",
+        "overview": "금속 산화막 반도체 전계효과 트랜지스터(MOSFET)의 물리 구조, 문턱전압(V_th), 트라이오드/포화 영역의 V-I 특성식, 초저전력 디지털 집적회로의 기저인 CMOS 인버터 동작을 학습합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)",
+          "operationPrinciples": "게이트 산화막(절연체)에 걸리는 전계(Electric Field)로 소스와 드레인 사이의 전도 채널 전하 밀도를 제어하는 전압 제어형 전류원(VCCS). 게이트 전류 I_G = 0 (입력 저항 무한대).",
+          "equivalentCircuit": "포화 영역: id = gm * vgs + vds/ro"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "MOSFET의 문턱전압과 채널 형성",
+            "titleEn": "Threshold Voltage & Inversion Channel",
+            "principle": "게이트-소스 전압 V_GS가 문턱전압 V_th 이상으로 인가되면 산화막 아래 기판 표면에 강한 반전층(Inversion Layer) 채널이 형성되어 드레인-소스 간 전류 경로가 열린다.",
+            "equations": [
+              {
+                "name": "오버드라이브 전압 (Overdrive Voltage)",
+                "typesetMath": "V_{OV} = V_{GS} - V_{th} > 0",
+                "explanation": "채널이 형성되기 위한 필수 전압 조건"
+              }
+            ]
+          },
+          {
+            "titleKo": "트라이오드(선형) 및 포화(핀치오프) 영역 전류식",
+            "titleEn": "Triode and Saturation (Pinch-off) Equations",
+            "principle": "드레인 전압 V_DS가 낮을 때는 저항처럼 동작하다가(트라이오드), V_DS >= V_OV에 도달하면 드레인 부근 채널이 꼬집히는 핀치오프(Pinch-off)가 발생하여 전류가 V_DS에 무관하게 포화된다.",
+            "equations": [
+              {
+                "name": "트라이오드 영역 (V_DS < V_GS - V_th)",
+                "typesetMath": "I_D = \\mu_n C_{ox} \\frac{W}{L} \\left[ (V_{GS} - V_{th})V_{DS} - \\frac{1}{2}V_{DS}^2 \\right]",
+                "explanation": "가변 저항 영역으로 동작"
+              },
+              {
+                "name": "포화 영역 (Saturation, V_DS >= V_GS - V_th)",
+                "typesetMath": "I_D = \\frac{1}{2} \\mu_n C_{ox} \\frac{W}{L} (V_{GS} - V_{th})^2 (1 + \\lambda V_{DS})",
+                "explanation": "신호 증폭용 정전류원으로 동작 (lambda는 채널길이 변조 계수)"
+              }
+            ]
+          },
+          {
+            "titleKo": "CMOS 인버터와 정적 무전력 소비",
+            "titleEn": "CMOS Inverter and Static Zero-Power",
+            "principle": "상보형(Complementary) 구조로 PMOS 풀업과 NMOS 풀다운 트랜지스터를 직렬 연결하면, 입력이 High(1)일 땐 NMOS만 켜지고 입력이 Low(0)일 땐 PMOS만 켜지므로 정상 상태에서 전원과 접지 사이에 전류 경로가 없어 정적 소비 전력이 0에 수렴한다.",
+            "equations": [
+              {
+                "name": "CMOS 동적 전력 소모 (Dynamic Power)",
+                "typesetMath": "P_{\\text{dynamic}} = C_L V_{DD}^2 f",
+                "explanation": "오직 스위칭이 일어나는 순간에만 부하 커패시터 충방전 전력 소모"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "초미세 공정 CPU, GPU 및 고전력 스위칭 MOSFET",
+            "practicalContext": "현대 컴퓨터 프로세서는 수백억 개의 나노 스케일 FinFET/GAA CMOS 트랜지스터로 구성되며, 전력 전자에서는 수십 암페어를 손실 없이 켜고 끄는 파워 MOSFET이 사용됨.",
+            "engineeringNote": "정전기 방전(ESD)에 의해 게이트 산화막이 쉽게 파괴되므로 조립 및 취급 시 정전기 방지 손목 밴드와 보호 다이오드가 필수적임."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-transistor-curves",
+          "type": "transistor-curves",
+          "title": "BJT/MOSFET 트랜지스터 특성 곡선 & 부하선 시뮬레이터",
+          "initialParams": {
+            "Vth": 2,
+            "k": 0.001,
+            "Vgs": 4,
+            "Vdd": 12,
+            "Rd": 1000
+          },
+          "keyFormulas": [
+            "Id_sat = 0.5 * k * (Vgs - Vth)^2",
+            "Vds = Vdd - Id * Rd"
+          ]
+        },
+        "summary": "MOSFET은 게이트 전류가 흐르지 않는 전압 제어 소자로 집적도가 극도로 높으며, 상보형 CMOS 기술을 통해 오늘날 디지털 정보화 혁명을 이끌고 있습니다."
+      },
+      {
+        "id": "el-05",
+        "order": 5,
+        "domain": "아날로그 연산 및 신호 처리",
+        "titleKo": "OP-Amp 연산증폭기 및 아날로그 회로 해석",
+        "titleEn": "Operational Amplifiers (OP-Amp) & Analog Computation",
+        "file": "modules/05-opamp-circuits.json",
+        "overview": "연산증폭기(OP-Amp)의 2대 황금률(가상 단락, 가상 접지), 반전 및 비반전 증폭기, 버퍼, 가산기, 차동 증폭기, 아날로그 신호 미적분을 수행하는 적분기/미분기 회로를 체계적으로 해석합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "이상적 연산증폭기 (Ideal OP-Amp)",
+          "operationPrinciples": "개방 루프 이득 A_OL = 무한대, 입력 임피던스 R_in = 무한대, 출력 임피던스 R_out = 0, 대역폭 BW = 무한대.",
+          "equivalentCircuit": "출력 전압 V_out = A_OL * (V_+ - V_-)에 부귀환(Negative Feedback)을 걸어 안정화"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "OP-Amp의 2대 황금률 (Golden Rules)",
+            "titleEn": "Two Golden Rules of Ideal OP-Amp",
+            "principle": "부귀환(Negative Feedback)이 걸린 이상적 OP-Amp는 출력 전압이 포화되지 않는 한 1) 두 입력 단자로 들어가는 전류는 0이고(i_+ = i_- = 0), 2) 두 입력 단자의 전위는 가상으로 완전히 같아진다(V_+ = V_-, 가상 단락).",
+            "equations": [
+              {
+                "name": "가상 단락 (Virtual Short)",
+                "typesetMath": "V_+ \\approx V_- \\quad \\left(\\lim_{A_{OL} \\to \\infty} \\frac{V_{\\text{out}}}{A_{OL}} = 0\\right)",
+                "explanation": "무한한 차동 증폭도에 의해 반전 단자와 비반전 단자 전위 일치"
+              },
+              {
+                "name": "입력 전류 0 (Infinite Input Impedance)",
+                "typesetMath": "I_+ = I_- = 0",
+                "explanation": "신호원으로부터 어떠한 전류도 끌어오지 않아 로딩 효과 제거"
+              }
+            ]
+          },
+          {
+            "titleKo": "반전 및 비반전 증폭기 (Inverting & Non-Inverting)",
+            "titleEn": "Inverting and Non-Inverting Amplifiers",
+            "principle": "외장 저항 R1, R2의 비율만으로 회로의 전압 증폭률을 절대적으로 정밀하게 결정할 수 있다.",
+            "equations": [
+              {
+                "name": "반전 증폭기 이득 (Inverting Gain)",
+                "typesetMath": "\\frac{V_{\\text{out}}}{V_{\\text{in}}} = -\\frac{R_f}{R_{\\text{in}}}",
+                "explanation": "비반전 단자가 접지(0V)되어 반전 단자가 가상 접지(Virtual Ground) 형성"
+              },
+              {
+                "name": "비반전 증폭기 이득 (Non-Inverting Gain)",
+                "typesetMath": "\\frac{V_{\\text{out}}}{V_{\\text{in}}} = 1 + \\frac{R_f}{R_1}",
+                "explanation": "입력과 출력의 위상이 같고 이득은 항상 1 이상"
+              },
+              {
+                "name": "전압 팔로워 (버퍼, Voltage Follower)",
+                "typesetMath": "V_{\\text{out}} = V_{\\text{in}} \\quad (R_f = 0, R_1 = \\infty, A_v = 1)",
+                "explanation": "임피던스 변환기로 고저항 센서 출력을 저저항 부하로 완충"
+              }
+            ]
+          },
+          {
+            "titleKo": "아날로그 연산 회로: 가산기 및 적분기",
+            "titleEn": "Analog Computing: Summing Amplifier & Integrator",
+            "principle": "키르히호프의 전류 법칙과 커패시터의 V-I 관계를 결합하여 전압의 덧셈, 뺄셈, 수학적 시간 적분 연산을 아날로그 회로로 직접 수행한다.",
+            "equations": [
+              {
+                "name": "가산기 (Summing Amplifier)",
+                "typesetMath": "V_{\\text{out}} = -\\left( \\frac{R_f}{R_1}V_1 + \\frac{R_f}{R_2}V_2 + \\dots \\right)",
+                "explanation": "다중 아날로그 신호의 가중합"
+              },
+              {
+                "name": "이상적 적분기 (Ideal Integrator)",
+                "typesetMath": "V_{\\text{out}}(t) = -\\frac{1}{R C} \\int_0^t V_{\\text{in}}(\\tau) \\, d\\tau + V_{\\text{out}}(0)",
+                "explanation": "사각파 입력을 삼각파로 변환하는 아날로그 연산"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "의료용 생체 신호(ECG 심전도, EEG 뇌파) 계측 증폭기",
+            "practicalContext": "인체 피부에서 나오는 마이크로볼트(uV) 수준의 심전도 신호는 60Hz 전원선 노이즈에 둘러싸여 있으므로, 높은 공통모드 제거비(CMRR)를 갖는 3개 OP-Amp 계측 증폭기(In-Amp)로 노이즈만 제거하고 생체 신호만 증폭함.",
+            "engineeringNote": "실제 OP-Amp는 유한한 슬루율(Slew Rate, V/us)을 가지므로 신호 주파수가 높을 때 정현파가 삼각파로 왜곡될 수 있음."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-opamp-bode",
+          "type": "opamp-bode",
+          "title": "OP-Amp 및 능동필터 Bode Plot 시뮬레이터",
+          "initialParams": {
+            "R1": 10000,
+            "Rf": 100000,
+            "type": "inverting"
+          },
+          "keyFormulas": [
+            "Av = -Rf / R1",
+            "Gain_dB = 20 * log10(abs(Av))"
+          ]
+        },
+        "summary": "OP-Amp는 부귀환을 통해 능동 소자의 비선형성을 완전히 억제하고 정밀한 수학적 연산과 신호 증폭을 수행하는 아날로그 회로 설계의 핵심 블록입니다."
+      },
+      {
+        "id": "el-06",
+        "order": 6,
+        "domain": "능동 필터 및 발진기",
+        "titleKo": "능동 필터, 보드 선도(Bode Plot) 및 신호 발진기",
+        "titleEn": "Active Filters, Bode Plots & Signal Generators",
+        "file": "modules/06-active-filters-oscillators.json",
+        "overview": "OP-Amp와 R, C를 결합한 능동 저역통과(LPF)/고역통과(HPF)/대역통과(BPF) 필터, 주파수 응답을 크기(dB)와 위상으로 나타내는 보드 선도(Bode Plot), 555 타이머 펄스 발생기 및 빈 브리지 발진기를 다룹니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "능동 필터 및 555 타이머 발진기",
+          "operationPrinciples": "주파수에 따라 변하는 복소 전달함수 H(s)를 이용한 주파수 선택성 증폭, 바크하우젠 발진 조건(루프 이득 1, 위상 360도)을 이용한 지속 발진.",
+          "equivalentCircuit": "전달함수 H(j*omega) = Gain(omega) * e^(j*phi(omega))"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "1차 및 2차 능동 저역통과 필터(LPF)",
+            "titleEn": "Active Low-Pass Filters (LPF) & Sallen-Key",
+            "principle": "인덕터 없이 저항과 커패시터만으로 차단 주파수 이상의 고주파 잡음을 감쇠시키며, 2차 Sallen-Key 구조는 차단 주파수 이후 -40dB/decade의 가파른 감쇠율을 갖는다.",
+            "equations": [
+              {
+                "name": "차단 주파수 (Cutoff Frequency, -3dB)",
+                "typesetMath": "f_c = \\frac{1}{2\\pi R C}",
+                "explanation": "출력 전력이 절반(전압은 0.707배, -3dB)으로 떨어지는 임계 주파수"
+              },
+              {
+                "name": "1차 LPF 전달함수",
+                "typesetMath": "H(s) = \\frac{V_{\\text{out}}(s)}{V_{\\text{in}}(s)} = \\frac{A_0}{1 + s R C} = \\frac{A_0}{1 + j\\frac{\\omega}{\\omega_c}}",
+                "explanation": "차단 주파수 이후 주파수가 10배 증가할 때마다 전압 이득이 20dB씩 감쇠"
+              }
+            ]
+          },
+          {
+            "titleKo": "보드 선도 (Bode Plot) 해석법",
+            "titleEn": "Bode Plot Magnitude & Phase Response",
+            "principle": "가로축을 로그 주파수로, 세로축을 데시벨 크기($20\\log_{10}|H(j\\omega)|$)와 위상각($\\angle H(j\\omega)$)으로 분리하여 광범위한 주파수 대역의 시스템 안정성과 필터링 특성을 시각화한다.",
+            "equations": [
+              {
+                "name": "데시벨 전압 이득 (Decibels)",
+                "typesetMath": "\\text{Gain [dB]} = 20 \\log_{10} |H(j\\omega)|",
+                "explanation": "이득 1 = 0dB, 이득 10 = 20dB, 이득 100 = 40dB, 이득 0.707 = -3dB"
+              }
+            ]
+          },
+          {
+            "titleKo": "555 타이머 비안정 멀티바이브레이터 (Astable Mode)",
+            "titleEn": "555 Timer Oscillator",
+            "principle": "2개의 비교기(Comparator), 1개의 SR 플립플롭, 방전 트랜지스터를 내장하여 외부 커패시터 C가 1/3 Vcc에서 2/3 Vcc 사이를 충방전하며 지속적인 구형파(Square wave)를 발생시킨다.",
+            "equations": [
+              {
+                "name": "555 타이머 발진 주파수",
+                "typesetMath": "f = \\frac{1.44}{(R_A + 2 R_B) C}",
+                "explanation": "저항 R_A, R_B와 커패시터 C에 의해 결정되는 정밀 클럭 주파수"
+              },
+              {
+                "name": "듀티 사이클 (Duty Cycle)",
+                "typesetMath": "D = \\frac{t_{\\text{high}}}{T} = \\frac{R_A + R_B}{R_A + 2 R_B}",
+                "explanation": "한 주기 중 전압이 High로 유지되는 시간의 비율"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "오디오 안티에일리어싱(Anti-Aliasing) 필터 및 PWM 클록원",
+            "practicalContext": "아날로그 음성을 디지털 ADC로 변환하기 전 나이퀴스트 주파수(f_s/2) 이상의 고주파 성분이 저주파 잡음으로 왜곡되는 현상을 방지하기 위해 4차 Butterworth 능동 LPF를 거침.",
+            "engineeringNote": "555 타이머는 모터 속도 조절용 PWM 신호 발생기, LED 깜빡이, 마이크로컨트롤러 클록 소스로 널리 쓰임."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-timer555",
+          "type": "timer555",
+          "title": "555 타이머 펄스 발생기 시뮬레이터",
+          "initialParams": {
+            "Ra": 10000,
+            "Rb": 10000,
+            "C": 0.000001
+          },
+          "keyFormulas": [
+            "Thigh = 0.693 * (Ra + Rb) * C",
+            "Tlow = 0.693 * Rb * C",
+            "f = 1.44 / ((Ra + 2*Rb)*C)"
+          ]
+        },
+        "summary": "능동 필터는 원하는 대역의 주파수 성분만 선택하고 잡음을 차단하며, 555 타이머와 발진기는 디지털 및 통신 시스템의 심장 박동인 클록 펄스를 만듭니다."
+      },
+      {
+        "id": "el-07",
+        "order": 7,
+        "domain": "디지털 논리 회로",
+        "titleKo": "디지털 논리 게이트, 카르노 맵 및 플립플롭",
+        "titleEn": "Digital Logic Gates, Karnaugh Maps & Flip-Flops",
+        "file": "modules/07-digital-logic.json",
+        "overview": "불 대수 법칙, 기본 논리 게이트(AND, OR, NOT, NAND, NOR, XOR), 회로 최소화 기법인 카르노 맵(Karnaugh Map), 조합 논리 회로(가산기, MUX)와 메모리의 원형인 순차 회로(플립플롭, 카운터)를 구축합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "디지털 논리 게이트 및 플립플롭",
+          "operationPrinciples": "0V(Low, False)와 5V/3.3V(High, True)의 2진 전압 레벨로 불 대수 논리 연산을 물리적으로 구현함.",
+          "equivalentCircuit": "TTL/CMOS 게이트 어레이"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "불 대수와 드 모르간의 법칙",
+            "titleEn": "Boolean Algebra & De Morgan's Laws",
+            "principle": "논리곱(AND), 논리합(OR), 논리부정(NOT)의 3대 기본 연산자로 모든 디지털 연산이 가능하며, 드 모르간의 법칙은 NAND와 NOR 게이트만으로 모든 회로를 구현(Universal Gate)할 수 있음을 증명한다.",
+            "equations": [
+              {
+                "name": "드 모르간의 법칙 (De Morgan's Laws)",
+                "typesetMath": "\\overline{A \\cdot B} = \\overline{A} + \\overline{B}, \\quad \\overline{A + B} = \\overline{A} \\cdot \\overline{B}",
+                "explanation": "곱의 부정은 부정의 합이고, 합의 부정은 부정의 곱임"
+              },
+              {
+                "name": "배타적 논리합 (XOR)",
+                "typesetMath": "A \\oplus B = A \\overline{B} + \\overline{A} B",
+                "explanation": "두 입력이 서로 다를 때만 1이 출력되는 덧셈의 기초 연산자"
+              }
+            ]
+          },
+          {
+            "titleKo": "조합 논리: 반가산기 및 전가산기",
+            "titleEn": "Combinational Logic: Adders",
+            "principle": "2진수의 덧셈에서 합(Sum)은 XOR 게이트로 계산되고, 자리올림수(Carry)는 AND 게이트로 계산된다.",
+            "equations": [
+              {
+                "name": "반가산기 (Half Adder)",
+                "typesetMath": "S = A \\oplus B, \\quad C = A \\cdot B",
+                "explanation": "하위 자리올림이 없는 2비트 덧셈기"
+              },
+              {
+                "name": "전가산기 (Full Adder)",
+                "typesetMath": "S = A \\oplus B \\oplus C_{\\text{in}}, \\quad C_{\\text{out}} = A B + C_{\\text{in}}(A \\oplus B)",
+                "explanation": "하위 자리올림 C_in을 포함하여 연쇄 연결로 다비트 가산기 구축"
+              }
+            ]
+          },
+          {
+            "titleKo": "순차 논리: D 플립플롭과 1비트 메모리",
+            "titleEn": "Sequential Logic: D Flip-Flop & Memory",
+            "principle": "현재 입력뿐만 아니라 과거의 상태를 기억하는 회로로, 클럭 신호의 상승 에지(Rising Edge) 순간에만 입력 D의 상태를 출력 Q로 캡처하여 저장한다.",
+            "equations": [
+              {
+                "name": "D 플립플롭 특성식",
+                "typesetMath": "Q_{n+1} = D \\quad (\\text{At Clock Rising Edge})",
+                "explanation": "클럭에 동기화되어 1비트의 디지털 정보를 안정적으로 래치(저장)"
+              },
+              {
+                "name": "2분주 카운터 (Toggled Flip-Flop)",
+                "typesetMath": "D = \\overline{Q} \\implies f_{\\text{out}} = \\frac{f_{\\text{clock}}}{2}",
+                "explanation": "출력 반전을 입력으로 되먹여 클록 주파수를 절반으로 낮추는 2진 카운터"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "컴퓨터 산술논리연산장치(ALU) 및 레지스터 파일",
+            "practicalContext": "CPU의 ALU는 전가산기와 MUX의 조합으로 64비트 사칙연산과 비트 연산을 1클록(약 0.2나노초)에 수행하며, D 플립플롭 어레이가 초고속 캐시 레지스터를 형성함.",
+            "engineeringNote": "글리치(Glitch, 일시적 오류 펄스)와 레이스 컨디션을 방지하기 위해 모든 순차 회로는 단일 시스템 마스터 클록에 철저히 동기화(Synchronous Design)함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-logic-circuit",
+          "type": "logic-sim",
+          "title": "LogicSim 디지털 논리 회로 시뮬레이터",
+          "initialParams": {
+            "gateType": "XOR",
+            "inA": 1,
+            "inB": 0
+          },
+          "keyFormulas": [
+            "Out = A ^ B",
+            "Carry = A & B"
+          ]
+        },
+        "summary": "불 대수와 논리 게이트는 조합 논리를 형성하고, 플립플롭은 상태를 저장하는 순차 논리를 형성하여 현대 컴퓨터 프로세서의 모든 연산과 메모리를 구현합니다."
+      },
+      {
+        "id": "el-08",
+        "order": 8,
+        "domain": "임베디드 시스템 및 실전 인터페이스",
+        "titleKo": "임베디드 인터페이싱: ADC, 통신(UART/I2C/SPI) 및 PCB 설계",
+        "titleEn": "Embedded Systems: ADC, Protocols & PCB Layout",
+        "file": "modules/08-embedded-interfacing.json",
+        "overview": "아날로그 세계와 마이크로컨트롤러를 잇는 아날로그-디지털 변환(ADC), 필수 통신 프로토콜(UART, I2C, SPI), 센서 인터페이싱 및 노이즈 없는 실전 PCB 레이아웃(디커플링 커패시터, 접지면)의 실무 엔지니어링을 완성합니다.",
+        "devicePhysicsOrModel": {
+          "deviceType": "마이크로컨트롤러 인터페이스 (MCU Peripherals)",
+          "operationPrinciples": "SAR ADC의 연속 근사 레지스터, 오픈 드레인 풀업 I2C 통신, 전이중 SPI 동기 통신.",
+          "equivalentCircuit": "GPIO 입력/출력 버퍼 및 기생 인덕턴스/커패시턴스 모델"
+        },
+        "coreConcepts": [
+          {
+            "titleKo": "아날로그-디지털 변환 (ADC): 표본화와 양자화",
+            "titleEn": "Analog-to-Digital Conversion (ADC)",
+            "principle": "연속적인 아날로그 신호를 시간축에서 샘플링하고(나이퀴스트 표본화 정리: $f_s > 2 f_{\\max}$), 전압축에서 n비트의 2진수 값으로 양자화(Quantization)한다.",
+            "equations": [
+              {
+                "name": "ADC 전압 분해능 (Resolution)",
+                "typesetMath": "\\Delta V = \\frac{V_{\\text{ref}}}{2^n}, \\quad \\text{Digital Output} = \\left\\lfloor \\frac{V_{\\text{in}}}{V_{\\text{ref}}} \\times (2^n - 1) \\right\\rfloor",
+                "explanation": "10비트 ADC (5V 기준)의 최소 분해 전압은 5V / 1024 = 4.88mV"
+              },
+              {
+                "name": "신호 대 양자화 잡음비 (SQNR)",
+                "typesetMath": "\\text{SQNR} = 6.02 \\times n + 1.76 \\; [\\text{dB}]",
+                "explanation": "분해능 1비트 증가할 때마다 신호 품질 약 6dB 개선"
+              }
+            ]
+          },
+          {
+            "titleKo": "3대 임베디드 통신 프로토콜 비교 (UART, I2C, SPI)",
+            "titleEn": "Embedded Serial Protocols: UART, I2C, SPI",
+            "principle": "센서 및 칩셋 간 데이터 교환 방식: UART(비동기 2선식 점대점), I2C(동기 2선식 멀티마스터/멀티슬레이브), SPI(동기 4선식 고속 전이중).",
+            "equations": [
+              {
+                "name": "I2C 오픈 드레인 풀업 저항값 계산",
+                "typesetMath": "R_{\\text{pull-up}} \\le \\frac{t_r}{0.8473 \\times C_{\\text{bus}}}",
+                "explanation": "신호 상승 시간 t_r(통상 1000ns)과 버스 기생 커패시턴스를 만족하는 풀업 저항(통상 4.7kΩ)"
+              },
+              {
+                "name": "SPI 최대 전송 속도",
+                "typesetMath": "\\text{Data Rate} = f_{\\text{SCK}} \\; [\\text{bps}] \\quad (\\text{최대 수십 MHz 고속 통신})",
+                "explanation": "클록 선(SCK)에 동기화된 마스터-슬레이브 전이중 전송"
+              }
+            ]
+          },
+          {
+            "titleKo": "실전 PCB 설계 원칙: 디커플링과 접지 루프 방지",
+            "titleEn": "PCB Layout: Decoupling Capacitors & Ground Planes",
+            "principle": "디지털 IC가 스위칭할 때 순간적으로 발생하는 전원선 전압 강하(디지털 노이즈)를 억제하기 위해 IC 전원 핀 바로 옆에 0.1uF 세라믹 디커플링 커패시터를 배치해야 하며, 넓은 접지면(Ground Plane)을 깔아 인덕턴스를 최소화한다.",
+            "equations": [
+              {
+                "name": "전원선 인덕턴스 전압 바운스",
+                "typesetMath": "V_{\\text{noise}} = L_{\\text{trace}} \\frac{di}{dt}",
+                "explanation": "수 나노초 동안 수백 mA 스위칭 시 배선 인덕턴스에 의해 발생하는 글리치"
+              }
+            ]
+          }
+        ],
+        "practicalApplications": [
+          {
+            "title": "온습도 센서(I2C) 및 OLED 디스플레이(SPI) 연동 아두이노 장치",
+            "practicalContext": "SHT31 온습도 센서에서 I2C 2가닥 선(SDA, SCL)으로 측정값을 읽어와, SPI 고속 4가닥 선(MOSI, SCK, CS, DC)으로 128x64 그래픽 OLED 화면에 초당 30프레임으로 렌더링함.",
+            "engineeringNote": "아날로그 센서 배선은 디지털 고주파 클록 라인과 교차하지 않도록 차폐(Shielding)하며 스타 접지(Star Ground)를 적용함."
+          }
+        ],
+        "simulationRef": {
+          "id": "sim-embedded-comm",
+          "type": "protocol-timing",
+          "title": "UART/I2C/SPI 직렬 통신 타이밍 시뮬레이터",
+          "initialParams": {
+            "protocol": "I2C",
+            "baudRate": 100000,
+            "dataByte": 165
+          },
+          "keyFormulas": [
+            "Bit_period = 1 / baudRate",
+            "I2C_Ack = Low at 9th clock"
+          ]
+        },
+        "summary": "임베디드 엔지니어링은 ADC로 아날로그 신호를 수집하고 표준 시리얼 통신으로 센서와 IC를 연결하며, 저노이즈 PCB 레이아웃을 통해 견고한 상용 하드웨어를 완성합니다."
+      }
+    ]
+  }
+};

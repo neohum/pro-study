@@ -1,0 +1,109 @@
+{
+  "categoryId": "algebra-number-theory",
+  "categoryNameKo": "추상대수학 및 정수론 기호",
+  "categoryNameEn": "Abstract Algebra and Number Theory",
+  "order": 7,
+  "description": "소수, 합동식, 군(Group), 환(Ring), 체(Field) 및 대수적 구조를 나타내는 핵심 조판 기호",
+  "symbols": [
+    {
+      "id": "sym-divides",
+      "symbol": "|",
+      "typesetMath": "a \\mid b, \\; a \\nmid b",
+      "nameKo": "약수 기호 (나눈다 / 나누지 않는다)",
+      "nameEn": "Divides / Does not divide",
+      "howToReadKo": "a는 b를 나눈다(a는 b의 약수이다), 나누지 않는다",
+      "howToReadEn": "a divides b, a does not divide b",
+      "unicode": "U+2223, U+2224",
+      "historyAndOrigin": "1801년 가우스의 '산술 연구'에서 정수론의 나눗셈 관계를 명확히 분리하기 위해 수직 막대로 정립됨.",
+      "rigorousDefinition": "$a \\mid b \\iff \\exists k \\in \\mathbb{Z} \\text{ s.t. } b = ka$.",
+      "usageAndExamples": [
+        {
+          "context": "소수의 정의",
+          "typesetMath": "p > 1 \\text{ is prime} \\iff (d \\mid p \\implies d = 1 \\lor d = p)",
+          "description": "1과 자기 자신만을 약수로 갖는 1보다 큰 자연수"
+        }
+      ],
+      "commonPitfalls": "나눗셈 분수 슬래시($a / b = \\frac{a}{b}$)와 수직 막대 약수 관계($a \\mid b$)는 완전히 다름. $a / b$는 수(값)이고, $a \\mid b$는 참/거짓 명제임."
+    },
+    {
+      "id": "sym-gcd-lcm",
+      "symbol": "gcd, lcm",
+      "typesetMath": "\\gcd(a, b), \\; \\operatorname{lcm}(a, b), \\; (a, b)",
+      "nameKo": "최대공약수 및 최소공배수",
+      "nameEn": "Greatest Common Divisor and Least Common Multiple",
+      "howToReadKo": "a와 b의 최대공약수, 최소공배수",
+      "howToReadEn": "the greatest common divisor of a and b, the least common multiple of a and b",
+      "unicode": "N/A",
+      "historyAndOrigin": "고대 그리스 유클리드 호제법(BC 300년경)에서 기원하여 현대 정수론의 표준 함수 표기로 안착됨.",
+      "rigorousDefinition": "$\\gcd(a, b) = \\max\\{d \\in \\mathbb{Z}^+ \\mid d \\mid a \\land d \\mid b\\}$. 베주 항등식: $\\exists x, y \\in \\mathbb{Z} \\text{ s.t. } ax + by = \\gcd(a, b)$.",
+      "usageAndExamples": [
+        {
+          "context": "기본 관계식",
+          "typesetMath": "\\gcd(a, b) \\times \\operatorname{lcm}(a, b) = |ab|",
+          "description": "두 정수의 곱은 최대공약수와 최소공배수의 곱과 일치함"
+        }
+      ],
+      "commonPitfalls": "정수론 논문에서는 $\\gcd(a, b)$를 단순히 괄호 $(a, b)$로 축약 표기하므로 순서쌍이나 열린 구간과 혼동하지 않도록 문맥을 확인해야 함."
+    },
+    {
+      "id": "sym-euler-phi",
+      "symbol": "φ(n)",
+      "typesetMath": "\\phi(n)",
+      "nameKo": "오일러 피 함수 (토션트 함수)",
+      "nameEn": "Euler's totient function",
+      "howToReadKo": "오일러 파이 n, 피 n",
+      "howToReadEn": "phi of n, Euler's totient of n",
+      "unicode": "U+03C6",
+      "historyAndOrigin": "1763년 레온하르트 오일러가 페르마의 소정리를 임의의 합성수로 일반화하는 과정에서 도입함.",
+      "rigorousDefinition": "$\\phi(n) = |\\{k \\in \\mathbb{N} \\mid 1 \\le k \\le n, \\gcd(k, n) = 1\\}|$. 승법적 함수(Multiplicative): $\\gcd(m, n) = 1 \\implies \\phi(mn) = \\phi(m)\\phi(n)$. 소인수분해 공식: $\\phi(n) = n \\prod_{p \\mid n} (1 - \\frac{1}{p})$.",
+      "usageAndExamples": [
+        {
+          "context": "오일러 정리",
+          "typesetMath": "a^{\\phi(n)} \\equiv 1 \\pmod n \\quad (\\gcd(a, n) = 1)",
+          "description": "현대 RSA 공개키 암호 알고리즘의 수학적 기반"
+        }
+      ],
+      "commonPitfalls": "소수 $p$에 대해서는 항상 $\\phi(p) = p - 1$임."
+    },
+    {
+      "id": "sym-binomial",
+      "symbol": "binom",
+      "typesetMath": "\\binom{n}{k}, \\; {}_n C_k",
+      "nameKo": "이항계수 (조합)",
+      "nameEn": "Binomial coefficient (Combination)",
+      "howToReadKo": "n choose k, n 컴비네이션 k",
+      "howToReadEn": "n choose k",
+      "unicode": "N/A",
+      "historyAndOrigin": "1654년 블레즈 파스칼이 이항정리와 확률론 연구에서 정립하였으며, 가우스가 2단 괄호 $\\binom{n}{k}$ 표기를 표준화함.",
+      "rigorousDefinition": "$\\binom{n}{k} = \\frac{n!}{k!(n-k)!}$. $(x + y)^n = \\sum_{k=0}^n \\binom{n}{k} x^{n-k} y^k$의 계수.",
+      "usageAndExamples": [
+        {
+          "context": "파스칼의 항등식",
+          "typesetMath": "\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}",
+          "description": "파스칼 삼각형을 생성하는 점화 관계"
+        }
+      ],
+      "commonPitfalls": "영미권 및 국제 표준 수학 논문에서는 ${}_n C_k$보다 괄호형 이항계수 $\\binom{n}{k}$를 거의 절대적으로 표준으로 사용함."
+    },
+    {
+      "id": "sym-abstract-algebra",
+      "symbol": "G/H, ker, Im, ⊕",
+      "typesetMath": "G/H, \\; \\ker(\\phi), \\; \\operatorname{Im}(\\phi), \\; G \\oplus H",
+      "nameKo": "잉여군, 핵, 상, 직합 기호",
+      "nameEn": "Quotient group, Kernel, Image, Direct sum",
+      "howToReadKo": "G 모드 H(상군), 커널 파이, 이미지 파이, 직합",
+      "howToReadEn": "G mod H, kernel of phi, image of phi, G direct sum H",
+      "unicode": "U+2295 (oplus)",
+      "historyAndOrigin": "19세기 에바리스트 갈루아(Évariste Galois)가 정규부분군과 군의 분해를 규명하며 근대 추상대수학을 창시함.",
+      "rigorousDefinition": "준동형사상 $\\phi: G \\to H$에 대해 $\\ker(\\phi) = \\{g \\in G \\mid \\phi(g) = e_H\\}$. 제1 동형정리: $G / \\ker(\\phi) \\cong \\operatorname{Im}(\\phi)$.",
+      "usageAndExamples": [
+        {
+          "context": "순환군 직합",
+          "typesetMath": "\\mathbb{Z}_6 \\cong \\mathbb{Z}_2 \\oplus \\mathbb{Z}_3",
+          "description": "중국인의 나머지 정리에 따른 유한 아벨군의 대수적 직합 분해"
+        }
+      ],
+      "commonPitfalls": "상군 $G/H$가 정의되려면 부분군 $H$가 반드시 정규부분군($H \\triangleleft G$)이어야 함."
+    }
+  ]
+}

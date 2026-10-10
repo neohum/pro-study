@@ -1,0 +1,76 @@
+{
+  "id": "fermat-little",
+  "order": 8,
+  "domain": "정수론 및 현대 암호학",
+  "titleKo": "페르마의 소정리 (Fermat's Little Theorem)",
+  "titleEn": "Fermat's Little Theorem",
+  "statement": {
+    "typesetMath": "a^{p-1} \\equiv 1 \\pmod p \\quad (\\gcd(a, p) = 1)",
+    "explanationKo": "소수 p와 서로소인 임의의 정수 a에 대하여, a를 (p-1)번 거듭제곱한 수를 p로 나눈 나머지는 항상 1이다.",
+    "explanationEn": "If p is a prime number and a is an integer coprime to p, then a raised to the power (p - 1) is congruent to 1 modulo p."
+  },
+  "historicalSignificance": "1640년 피에르 드 페르마가 발표하고 오일러가 증명하였으며, 오늘날 전자상거래와 블록체인을 지탱하는 RSA 공개키 암호 알고리즘의 심장.",
+  "prerequisites": [
+    "소수와 잉여계",
+    "모듈러 합동식 성질"
+  ],
+  "intuitiveIdea": "집합 {1, 2, ..., p-1}의 모든 원소에 a를 곱해도 법 p에 대한 나머지 집합은 단지 순서만 바뀔 뿐 동일하므로, 양변의 모든 원소를 곱한 뒤 공통항을 약분하면 a^(p-1) = 1이 남음.",
+  "rigorousProof": {
+    "proofType": "기약잉여계 곱셈 순열 증명 (Reduced Residue System Permutation)",
+    "assumptions": [
+      "소수 p와 gcd(a, p) = 1인 정수 a"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "법 p에 대한 기약잉여계 구성",
+        "explanation": "법 $p$에 대해 $p$와 서로소인 $p-1$개의 잉여류 집합 $S$를 고려한다.",
+        "typesetMath": "S = \\{1, 2, 3, \\dots, p-1\\}",
+        "justification": "소수 p의 기약잉여계 정의"
+      },
+      {
+        "stepNumber": 2,
+        "title": "각 원소에 a를 곱한 새로운 집합 구성",
+        "explanation": "$S$의 각 원소에 $a$를 곱한 집합 $T$를 구성한다.",
+        "typesetMath": "T = \\{a, 2a, 3a, \\dots, (p-1)a\\}",
+        "justification": "정수 스칼라 곱"
+      },
+      {
+        "stepNumber": 3,
+        "title": "T의 모든 원소가 법 p에 대해 서로 다름을 증명",
+        "explanation": "$1 \\le j < k \\le p-1$에 대해 $ja \\equiv ka \\pmod p \\implies (k-j)a \\equiv 0 \\pmod p$. $\\gcd(a, p) = 1$이므로 $p \\mid (k-j)$이어야 하나 $0 < k-j < p$이므로 모순이다.",
+        "typesetMath": "ja \\not\\equiv ka \\pmod p \\quad (j \\ne k)",
+        "justification": "유클리드 보조정리"
+      },
+      {
+        "stepNumber": 4,
+        "title": "두 집합 원소들의 총곱 비교",
+        "explanation": "$T$의 원소들은 $S$의 원소들을 재배열한 것에 불과하므로 모든 원소의 곱은 합동이어야 한다.",
+        "typesetMath": "a \\cdot 2a \\cdot 3a \\cdots (p-1)a \\equiv 1 \\cdot 2 \\cdot 3 \\cdots (p-1) \\pmod p",
+        "justification": "잉여류 곱셈의 불변성"
+      },
+      {
+        "stepNumber": 5,
+        "title": "a^(p-1) 인수분해 및 약분",
+        "explanation": "좌변에서 $a$를 $(p-1)$번 묶어내면 다음과 같다.",
+        "typesetMath": "a^{p-1} (p-1)! \\equiv (p-1)! \\pmod p",
+        "justification": "팩토리얼 묶음"
+      },
+      {
+        "stepNumber": 6,
+        "title": "최종 합동식 도출",
+        "explanation": "$p$는 소수이므로 $(p-1)!$은 $p$와 서로소이다. 따라서 양변을 $(p-1)!$로 나눌 수 있다.",
+        "typesetMath": "a^{p-1} \\equiv 1 \\pmod p",
+        "justification": "모듈러 나눗셈 소거법칙"
+      }
+    ],
+    "conclusion": "소수 p와 서로소인 모든 정수 a에 대해 페르마의 소정리가 증명되었다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "모듈러 역원 계산",
+      "typesetMath": "a^{-1} \\equiv a^{p-2} \\pmod p",
+      "description": "나눗셈을 거듭제곱으로 즉시 변환하는 고속 알고리즘"
+    }
+  ]
+}

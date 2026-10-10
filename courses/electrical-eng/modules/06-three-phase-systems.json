@@ -1,0 +1,85 @@
+{
+  "id": "ee-06",
+  "order": 6,
+  "domain": "3상 교류 및 전력 계통",
+  "titleKo": "3상 교류 전력 및 변압기 계통 해석",
+  "titleEn": "Three-Phase Power Systems & Transformers",
+  "file": "modules/06-three-phase-systems.json",
+  "overview": "현대 대규모 발전, 송전, 배전의 표준인 3상 교류(Y결선 및 Δ결선)의 선간/상전압·전류 위상 관계, 3상 평형 전력 수식, 변압기의 권수비 및 임피던스 변환 원리를 학습합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "3상 교류 생성 및 위상차 120°",
+      "titleEn": "Three-Phase Generation (120° Phase Shift)",
+      "principle": "공간적으로 120도 각도로 배치된 3개의 권선 내부에서 자계가 회전하면 시간적으로 120도의 위상차를 갖는 동일 크기의 3상 정현파 기전력(A상, B상, C상)이 발생한다.",
+      "equations": [
+        {
+          "name": "평형 3상 전압",
+          "typesetMath": "v_a(t) = V_m \\cos(\\omega t), \\; v_b(t) = V_m \\cos(\\omega t - 120^\\circ), \\; v_c(t) = V_m \\cos(\\omega t - 240^\\circ)",
+          "explanation": "어느 순간에나 세 상의 순시 전압 합은 0: v_a + v_b + v_c = 0"
+        }
+      ]
+    },
+    {
+      "titleKo": "Y(와이) 결선과 Δ(델타) 결선",
+      "titleEn": "Wye (Y) and Delta (Δ) Connections",
+      "principle": "Y결선에서는 선간전압이 상전압의 루트 3배이고 30도 앞서며, 델타결선에서는 선전류가 상전류의 루트 3배이고 30도 뒤진다.",
+      "equations": [
+        {
+          "name": "Y결선 (성형 결선)",
+          "typesetMath": "V_L = \\sqrt{3} V_p \\angle 30^\\circ, \\quad I_L = I_p",
+          "explanation": "상전압 220V일 때 선간전압은 220 * sqrt(3) = 380V (한국 동력 표준)"
+        },
+        {
+          "name": "Δ결선 (환상 결선)",
+          "typesetMath": "V_L = V_p, \\quad I_L = \\sqrt{3} I_p \\angle -30^\\circ",
+          "explanation": "선간전압은 상전압과 같고 선전류가 상전류의 sqrt(3)배"
+        },
+        {
+          "name": "평형 3상 전력 총합",
+          "typesetMath": "P_{\\text{3\\phi}} = 3 V_p I_p \\cos\\theta = \\sqrt{3} V_L I_L \\cos\\theta",
+          "explanation": "결선 방식에 관계없이 선간전압과 선전류로 표현한 동일 공식"
+        }
+      ]
+    },
+    {
+      "titleKo": "이상적 변압기 권수비와 임피던스 변환",
+      "titleEn": "Ideal Transformer & Impedance Reflection",
+      "principle": "1차측 권선수와 2차측 권선수의 비에 따라 전압은 비례하여 승압/강압되고 전류는 반비례하며, 2차 부하 임피던스는 권수비의 제곱에 비례하여 1차측으로 반사된다.",
+      "equations": [
+        {
+          "name": "변압기 권수비 (Turns Ratio)",
+          "typesetMath": "a = \\frac{N_1}{N_2} = \\frac{V_1}{V_2} = \\frac{I_2}{I_1}",
+          "explanation": "에너지 보존: V1 * I1 = V2 * I2"
+        },
+        {
+          "name": "임피던스 변환 (Impedance Reflection)",
+          "typesetMath": "Z'_L = a^2 Z_L = \\left(\\frac{N_1}{N_2}\\right)^2 Z_L",
+          "explanation": "1차측에서 바라본 2차 부하의 등가 임피던스"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "초고압 송전(765kV, 345kV)과 송전 손실 1/a^2 감소",
+      "practicalContext": "동일한 전력 P를 보낼 때 전압 V를 a배 올리면 전류 I는 1/a로 줄어들고, 송전선로의 저항 손실 P_loss = I^2*R은 (1/a)^2으로 격감함. 이것이 테슬라의 교류 승압 송전이 에디슨의 직류를 이긴 핵심 이유임.",
+      "engineeringNote": "3상 평형 시스템은 중성선(Neutral line) 전류가 0이 되므로 구리 도선의 소모량을 단상에 비해 25% 절감할 수 있음."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-three-phase",
+    "type": "three-phase",
+    "title": "3상 교류 Y-Δ 결선 및 변압기 시뮬레이터",
+    "initialParams": {
+      "Vphase": 220,
+      "frequency": 60,
+      "connection": "Y",
+      "loadZ": 10
+    },
+    "keyFormulas": [
+      "Vline = sqrt(3)*Vphase",
+      "P_total = sqrt(3)*Vline*Iline*cos(theta)"
+    ]
+  },
+  "summary": "3상 교류는 평형 상태에서 순간 전력 공급이 일정하여 맥동이 없고 구리 도선을 획기적으로 절약할 수 있어 전 세계 전력 인프라의 표준입니다."
+}

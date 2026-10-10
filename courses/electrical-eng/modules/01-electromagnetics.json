@@ -1,0 +1,84 @@
+{
+  "id": "ee-01",
+  "order": 1,
+  "domain": "전기공학 전자기초",
+  "titleKo": "전자기학 기초 및 맥스웰 방정식",
+  "titleEn": "Electromagnetics Fundamentals & Maxwell's Equations",
+  "file": "modules/01-electromagnetics.json",
+  "overview": "전하의 정전기적 상호작용부터 전류가 유도하는 자기장, 시간에 따라 변화하는 전자계의 상호 유도 현상과 맥스웰 4대 방정식의 물리적 본질을 학습합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "쿨롱의 법칙과 전계",
+      "titleEn": "Coulomb's Law and Electric Field",
+      "principle": "두 점전하 사이에 작용하는 정전기력은 두 전하량의 곱에 비례하고 거리의 제곱에 반비례하며, 전하는 주변 공간에 전계(Electric Field)를 형성한다.",
+      "equations": [
+        {
+          "name": "쿨롱의 힘 (Coulomb's Force)",
+          "typesetMath": "\\mathbf{F} = \\frac{1}{4\\pi\\varepsilon_0} \\frac{q_1 q_2}{r^2} \\hat{\\mathbf{r}}",
+          "explanation": "진공 유전율 epsilon_0 하에서 두 전하 사이의 정전기적 인력/척력 벡터"
+        },
+        {
+          "name": "전계와 전위의 관계",
+          "typesetMath": "\\mathbf{E} = -\\nabla V",
+          "explanation": "전계는 전위(Electric Potential)의 음의 공간 기울기(Gradient)"
+        }
+      ]
+    },
+    {
+      "titleKo": "가우스 법칙 (전기장과 자기장)",
+      "titleEn": "Gauss's Laws",
+      "principle": "임의의 폐곡면을 통과하는 전기 선속은 내부 총전하량에 비례하며, 자기 홀극(Magnetic Monopole)은 존재하지 않으므로 닫힌 면을 통과하는 알짜 자기 선속은 항상 0이다.",
+      "equations": [
+        {
+          "name": "가우스 법칙 (전기장)",
+          "typesetMath": "\\nabla \\cdot \\mathbf{E} = \\frac{\\rho}{\\varepsilon_0}, \\quad \\oint_{\\partial V} \\mathbf{E} \\cdot d\\mathbf{A} = \\frac{Q_{\\text{enc}}}{\\varepsilon_0}",
+          "explanation": "전하가 전기장의 원천(발산원)임을 규정"
+        },
+        {
+          "name": "가우스 법칙 (자기장)",
+          "typesetMath": "\\nabla \\cdot \\mathbf{B} = 0, \\quad \\oint_{\\partial V} \\mathbf{B} \\cdot d\\mathbf{A} = 0",
+          "explanation": "자기력선은 항상 닫힌 루프를 형성하며 자하(자기 단극자)가 없음"
+        }
+      ]
+    },
+    {
+      "titleKo": "패러데이 유도 법칙과 앙페르-맥스웰 법칙",
+      "titleEn": "Faraday's Law and Ampere-Maxwell Law",
+      "principle": "시간에 따라 변화하는 자기장은 전기장을 회전시키며(전자기 유도), 전도 전류뿐만 아니라 시간에 따라 변화하는 전기장(변위 전류) 역시 자기장을 회전시킨다.",
+      "equations": [
+        {
+          "name": "패러데이 전자기 유도",
+          "typesetMath": "\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+          "explanation": "자속의 시간 변화율이 유도 기전력(회전 전계)을 발생시킴"
+        },
+        {
+          "name": "앙페르-맥스웰 법칙",
+          "typesetMath": "\\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J} + \\mu_0 \\varepsilon_0 \\frac{\\partial \\mathbf{E}}{\\partial t}",
+          "explanation": "전류밀도 J와 변위전류가 자기장을 생성하여 전자기파 전파 가능"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "변압기 및 무선 전력 전송의 결합 원리",
+      "practicalContext": "변압기 1차 코일의 교류 전류가 철심 내에 교번 자속을 형성하고, 패러데이 법칙에 의해 2차 코일에 기전력이 유도되어 전기에너지가 절연된 상태로 전달됨.",
+      "engineeringNote": "철심 내 맴돌이 전류(와전류, Eddy Current) 손실을 줄이기 위해 규소강판을 얇게 적층(Lamination)하여 사용함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-em-field",
+    "type": "em-field",
+    "title": "정전계 및 자계 시각화 시뮬레이터",
+    "initialParams": {
+      "q1": 1,
+      "q2": -1,
+      "distance": 2
+    },
+    "keyFormulas": [
+      "E = k*q/r^2",
+      "V = k*q/r"
+    ]
+  },
+  "summary": "맥스웰 방정식은 전하와 전류가 전기장과 자기장을 어떻게 생성하고 상호작용하는지 규명하며, 빛이 전자기파임을 증명한 전기공학의 대원칙입니다."
+}

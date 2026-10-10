@@ -1,0 +1,81 @@
+{
+  "id": "el-04",
+  "order": 4,
+  "domain": "전계효과 트랜지스터 및 집적회로",
+  "titleKo": "MOSFET 소자 원리 및 디지털 CMOS 기술",
+  "titleEn": "MOSFET Circuits, Scaling & CMOS Technology",
+  "file": "modules/04-mosfet-circuits.json",
+  "overview": "금속 산화막 반도체 전계효과 트랜지스터(MOSFET)의 물리 구조, 문턱전압(V_th), 트라이오드/포화 영역의 V-I 특성식, 초저전력 디지털 집적회로의 기저인 CMOS 인버터 동작을 학습합니다.",
+  "devicePhysicsOrModel": {
+    "deviceType": "MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)",
+    "operationPrinciples": "게이트 산화막(절연체)에 걸리는 전계(Electric Field)로 소스와 드레인 사이의 전도 채널 전하 밀도를 제어하는 전압 제어형 전류원(VCCS). 게이트 전류 I_G = 0 (입력 저항 무한대).",
+    "equivalentCircuit": "포화 영역: id = gm * vgs + vds/ro"
+  },
+  "coreConcepts": [
+    {
+      "titleKo": "MOSFET의 문턱전압과 채널 형성",
+      "titleEn": "Threshold Voltage & Inversion Channel",
+      "principle": "게이트-소스 전압 V_GS가 문턱전압 V_th 이상으로 인가되면 산화막 아래 기판 표면에 강한 반전층(Inversion Layer) 채널이 형성되어 드레인-소스 간 전류 경로가 열린다.",
+      "equations": [
+        {
+          "name": "오버드라이브 전압 (Overdrive Voltage)",
+          "typesetMath": "V_{OV} = V_{GS} - V_{th} > 0",
+          "explanation": "채널이 형성되기 위한 필수 전압 조건"
+        }
+      ]
+    },
+    {
+      "titleKo": "트라이오드(선형) 및 포화(핀치오프) 영역 전류식",
+      "titleEn": "Triode and Saturation (Pinch-off) Equations",
+      "principle": "드레인 전압 V_DS가 낮을 때는 저항처럼 동작하다가(트라이오드), V_DS >= V_OV에 도달하면 드레인 부근 채널이 꼬집히는 핀치오프(Pinch-off)가 발생하여 전류가 V_DS에 무관하게 포화된다.",
+      "equations": [
+        {
+          "name": "트라이오드 영역 (V_DS < V_GS - V_th)",
+          "typesetMath": "I_D = \\mu_n C_{ox} \\frac{W}{L} \\left[ (V_{GS} - V_{th})V_{DS} - \\frac{1}{2}V_{DS}^2 \\right]",
+          "explanation": "가변 저항 영역으로 동작"
+        },
+        {
+          "name": "포화 영역 (Saturation, V_DS >= V_GS - V_th)",
+          "typesetMath": "I_D = \\frac{1}{2} \\mu_n C_{ox} \\frac{W}{L} (V_{GS} - V_{th})^2 (1 + \\lambda V_{DS})",
+          "explanation": "신호 증폭용 정전류원으로 동작 (lambda는 채널길이 변조 계수)"
+        }
+      ]
+    },
+    {
+      "titleKo": "CMOS 인버터와 정적 무전력 소비",
+      "titleEn": "CMOS Inverter and Static Zero-Power",
+      "principle": "상보형(Complementary) 구조로 PMOS 풀업과 NMOS 풀다운 트랜지스터를 직렬 연결하면, 입력이 High(1)일 땐 NMOS만 켜지고 입력이 Low(0)일 땐 PMOS만 켜지므로 정상 상태에서 전원과 접지 사이에 전류 경로가 없어 정적 소비 전력이 0에 수렴한다.",
+      "equations": [
+        {
+          "name": "CMOS 동적 전력 소모 (Dynamic Power)",
+          "typesetMath": "P_{\\text{dynamic}} = C_L V_{DD}^2 f",
+          "explanation": "오직 스위칭이 일어나는 순간에만 부하 커패시터 충방전 전력 소모"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "초미세 공정 CPU, GPU 및 고전력 스위칭 MOSFET",
+      "practicalContext": "현대 컴퓨터 프로세서는 수백억 개의 나노 스케일 FinFET/GAA CMOS 트랜지스터로 구성되며, 전력 전자에서는 수십 암페어를 손실 없이 켜고 끄는 파워 MOSFET이 사용됨.",
+      "engineeringNote": "정전기 방전(ESD)에 의해 게이트 산화막이 쉽게 파괴되므로 조립 및 취급 시 정전기 방지 손목 밴드와 보호 다이오드가 필수적임."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-transistor-curves",
+    "type": "transistor-curves",
+    "title": "BJT/MOSFET 트랜지스터 특성 곡선 & 부하선 시뮬레이터",
+    "initialParams": {
+      "Vth": 2,
+      "k": 0.001,
+      "Vgs": 4,
+      "Vdd": 12,
+      "Rd": 1000
+    },
+    "keyFormulas": [
+      "Id_sat = 0.5 * k * (Vgs - Vth)^2",
+      "Vds = Vdd - Id * Rd"
+    ]
+  },
+  "summary": "MOSFET은 게이트 전류가 흐르지 않는 전압 제어 소자로 집적도가 극도로 높으며, 상보형 CMOS 기술을 통해 오늘날 디지털 정보화 혁명을 이끌고 있습니다."
+}

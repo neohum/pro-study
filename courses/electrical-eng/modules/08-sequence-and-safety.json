@@ -1,0 +1,75 @@
+{
+  "id": "ee-08",
+  "order": 8,
+  "domain": "실전 전기설비 및 시퀀스",
+  "titleKo": "실무 시퀀스 제어, 접지 및 전기안전 규정(KEC)",
+  "titleEn": "Relay Sequence Control, Grounding & Electrical Safety",
+  "file": "modules/08-sequence-and-safety.json",
+  "overview": "산업 플랜트와 빌딩 제어의 핵심인 릴레이 시퀀스(자기유지, 인터록 회로), 배전 차단기(MCCB, ELCB), 인체 감전 보호 접지 계통(TN, TT, IT) 및 한국전기설비규정(KEC) 핵심을 체득합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "릴레이 시퀀스 기초: a접점, b접점, 자기유지",
+      "titleEn": "Relay Contacts & Self-Holding Circuit",
+      "principle": "푸시버튼을 누르면 릴레이 코일이 여자되어 a접점(Normally Open)이 닫히고, 버튼에서 손을 떼어도 릴레이 자체 a접점을 통해 통전 상태를 유지하는 것이 자기유지(Self-Holding) 회로이다.",
+      "equations": [
+        {
+          "name": "자기유지 논리식",
+          "typesetMath": "R = (\\text{PB}_{\\text{start}} + R) \\cdot \\overline{\\text{PB}_{\\text{stop}}}",
+          "explanation": "기동 버튼을 누르거나 릴레이가 켜져 있고 정지 버튼이 안 눌렸을 때 유지"
+        },
+        {
+          "name": "인터록 회로 (Interlock)",
+          "typesetMath": "R_1 = \\text{PB}_1 \\cdot \\overline{R_2}, \\quad R_2 = \\text{PB}_2 \\cdot \\overline{R_1}",
+          "explanation": "모터 정역회전 시 단락 사고를 막기 위해 상대방 b접점을 직렬로 걸어 동시 투입 방지"
+        }
+      ]
+    },
+    {
+      "titleKo": "인체 감전 메커니즘과 누전차단기(ELCB)",
+      "titleEn": "Electric Shock & Residual Current Circuit Breakers",
+      "principle": "인체에 30mA 이상의 교류 전류가 수십 밀리초 이상 흐르면 심실세동(Ventricular Fibrillation)이 발생하여 사망에 이를 수 있다. 누전차단기는 영상변류기(ZCT)로 왕복 전류 차이를 감지해 0.03초 이내에 차단한다.",
+      "equations": [
+        {
+          "name": "영상전류 누전 감지",
+          "typesetMath": "I_{\\Delta n} = |\\mathbf{I}_{\\text{hot}} + \\mathbf{I}_{\\text{neutral}}| > 30\\text{ mA} \\implies \\text{Trip within } 0.03\\text{ s}",
+          "explanation": "정상 시 왕복 전류 합은 0이나 누전 시 지락전류만큼 차이 발생"
+        }
+      ]
+    },
+    {
+      "titleKo": "접지 시스템의 분류 (TN, TT, IT 계통)",
+      "titleEn": "Grounding Systems (TN, TT, IT according to KEC)",
+      "principle": "한국전기설비규정(KEC) 국제표준(IEC 60364)에 따른 3대 접지 방식: 계통 전원측 접지(T/I)와 전기기기 외함 접지(N/T)의 결선 방식에 따라 고장 전류 경로와 차단 특성이 달라진다.",
+      "equations": [
+        {
+          "name": "지락 고장 전압",
+          "typesetMath": "V_{\\text{touch}} = I_{\\text{fault}} \\times R_{\\text{ground}} \\le 50\\text{ V}",
+          "explanation": "인체 허용 접촉 전압 50V 이하로 억제하는 접지 저항 설계"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "공장 모터 정역회전 및 비상정지 시퀀스 구성",
+      "practicalContext": "컨베이어 벨트나 크레인 모터에서 정회전과 역회전 접촉기(MC1, MC2)가 동시에 들어가면 380V 단선 단락(Short) 폭발 사고가 나므로, 전기적 인터록(상대방 b접점 직렬)과 기계적 인터록(기계적 빗장)의 2중 안전장치를 필수 구성함.",
+      "engineeringNote": "비상정지(Emergency Stop) 스위치는 접점이 고장 나 떨어져도 안전하게 차단되도록 항상 b접점(Fail-Safe 원칙)으로 결선함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-relay-sequence",
+    "type": "relay-sequence",
+    "title": "릴레이 시퀀스 제어 인터랙티브 시뮬레이터",
+    "initialParams": {
+      "pbStart": false,
+      "pbStop": false,
+      "relayState": false,
+      "lampState": false
+    },
+    "keyFormulas": [
+      "Relay = (PB_start || Relay) && !PB_stop",
+      "Lamp = Relay"
+    ]
+  },
+  "summary": "릴레이 시퀀스는 산업 자동화 제어의 뼈대이며, Fail-Safe 원칙, 누전차단기, KEC 규격 접지 시스템은 인명과 설비를 보호하는 전기 실무의 최우선 가치입니다."
+}

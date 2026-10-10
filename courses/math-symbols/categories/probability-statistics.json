@@ -1,0 +1,109 @@
+{
+  "categoryId": "probability-statistics",
+  "categoryNameKo": "확률 및 통계학 기호",
+  "categoryNameEn": "Probability and Statistics",
+  "order": 6,
+  "description": "불확실성 정량화, 확률변수, 통계적 추정, 분포 및 가설검정에 쓰이는 조판 수식 기호",
+  "symbols": [
+    {
+      "id": "sym-prob-event",
+      "symbol": "P(A), P(A|B)",
+      "typesetMath": "P(A), \\; P(A \\mid B)",
+      "nameKo": "확률 및 조건부 확률",
+      "nameEn": "Probability and Conditional probability",
+      "howToReadKo": "사건 A의 확률, B가 주어졌을 때 A의 조건부 확률",
+      "howToReadEn": "probability of A, probability of A given B",
+      "unicode": "U+2223 (divides/given)",
+      "historyAndOrigin": "1933년 안드레이 콜모고로프(Andrey Kolmogorov)가 측도론(Measure Theory)을 기반으로 현대 확률론의 3대 공리(비음성, 정규화, 가산가법성)를 확립함.",
+      "rigorousDefinition": "확률공간 $(\\Omega, \\mathcal{F}, P)$에서 사건 $A \\in \\mathcal{F}$의 측도 $P(A) \\in [0, 1]$. 조건부 확률: $P(A \\mid B) = \\frac{P(A \\cap B)}{P(B)}$ (단, $P(B) > 0$).",
+      "usageAndExamples": [
+        {
+          "context": "베이즈 정리",
+          "typesetMath": "P(A \\mid B) = \\frac{P(B \\mid A) P(A)}{P(B)}",
+          "description": "사전확률과 우도를 통한 사후확률 갱신 공식"
+        }
+      ],
+      "commonPitfalls": "조건부 확률 $P(A \\mid B)$에서 막대($\\mid$)는 나눗셈이 아니라 주어진 조건(Given)을 구분하는 구분자임."
+    },
+    {
+      "id": "sym-expectation",
+      "symbol": "E[X]",
+      "typesetMath": "E[X], \\; \\mathbb{E}[X]",
+      "nameKo": "기댓값 (평균)",
+      "nameEn": "Expected value (Expectation)",
+      "howToReadKo": "확률변수 X의 기댓값",
+      "howToReadEn": "the expected value of X, E of X",
+      "unicode": "U+2135 (blackboard E)",
+      "historyAndOrigin": "17세기 크리스티안 하위헌스(Christiaan Huygens)가 도박의 공정한 분배 문제에서 '기대(Expectation)' 개념을 최초로 수학화함.",
+      "rigorousDefinition": "이산 확률변수: $E[X] = \\sum x_i P(X = x_i)$. 연속 확률변수: $E[X] = \\int_{-\\infty}^\\infty x f(x) \\, dx$ (르베그 적분: $\\int_\\Omega X \\, dP$).",
+      "usageAndExamples": [
+        {
+          "context": "기댓값의 선형성",
+          "typesetMath": "E[aX + bY] = aE[X] + bE[Y]",
+          "description": "독립 여부와 무관하게 항상 성립하는 강력한 성질"
+        }
+      ],
+      "commonPitfalls": "곱의 기댓값 $E[XY] = E[X]E[Y]$는 $X, Y$가 독립(또는 무상관)일 때만 성립함."
+    },
+    {
+      "id": "sym-variance",
+      "symbol": "Var(X), σ²",
+      "typesetMath": "\\operatorname{Var}(X), \\; \\sigma^2, \\; \\sigma",
+      "nameKo": "분산 및 표준편차",
+      "nameEn": "Variance and Standard deviation",
+      "howToReadKo": "X의 분산, 시그마 제곱, 시그마(표준편차)",
+      "howToReadEn": "variance of X, sigma squared, standard deviation sigma",
+      "unicode": "U+03C3 (sigma)",
+      "historyAndOrigin": "1918년 로널드 피셔(Ronald Fisher)가 '분산(Variance)'이라는 용어를 도입하고 카를 피어슨(Karl Pearson)이 표준편차 기호 $\\sigma$를 정립함.",
+      "rigorousDefinition": "평균으로부터의 편차 제곱의 기댓값: $\\operatorname{Var}(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2$. 표준편차 $\\sigma = \\sqrt{\\operatorname{Var}(X)}$.",
+      "usageAndExamples": [
+        {
+          "context": "상수 배의 분산",
+          "typesetMath": "\\operatorname{Var}(aX + b) = a^2 \\operatorname{Var}(X)",
+          "description": "분산은 척도의 제곱 배로 증가하고 평행이동 상수는 무시됨"
+        }
+      ],
+      "commonPitfalls": "표본분산 계산 시 자유도 손실로 인해 분모에 $n$ 대신 $n-1$(베셀 보정)을 나누어야 불편추정량(Unbiased Estimator)이 됨."
+    },
+    {
+      "id": "sym-dist-norm",
+      "symbol": "~, 𝒩(μ, σ²)",
+      "typesetMath": "X \\sim \\mathcal{N}(\\mu, \\sigma^2)",
+      "nameKo": "분포 기호 및 정규분포 (가우스 분포)",
+      "nameEn": "Distributed as, Normal (Gaussian) distribution",
+      "howToReadKo": "X는 평균이 뮤, 분산이 시그마 제곱인 정규분포를 따른다",
+      "howToReadEn": "X is distributed as normal with mean mu and variance sigma squared",
+      "unicode": "U+223C (tilde)",
+      "historyAndOrigin": "아브라함 드무아브르와 카를 가우스가 오차론에서 도출한 종형 곡선(Bell curve) 확률밀도함수.",
+      "rigorousDefinition": "확률밀도함수(PDF): $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$. 물결표($\\sim$)는 좌측 확률변수가 우측의 확률분포 모델을 따름을 선언.",
+      "usageAndExamples": [
+        {
+          "context": "표준정규화",
+          "typesetMath": "Z = \\frac{X - \\mu}{\\sigma} \\sim \\mathcal{N}(0, 1)",
+          "description": "임의의 정규분포를 표준정규분포로 변환하는 공식"
+        }
+      ],
+      "commonPitfalls": "문맥에 따라 물결표($\\sim$)가 기하학의 닮음, 해석학의 점근 동등($f \\sim g$), 통계학의 분포 추종 등 여러 의미를 가지므로 구분해야 함."
+    },
+    {
+      "id": "sym-hypothesis",
+      "symbol": "H₀, H₁, α",
+      "typesetMath": "H_0, \\; H_1, \\; \\alpha, \\; p\\text{-value}",
+      "nameKo": "귀무가설, 대립가설, 유의수준",
+      "nameEn": "Null hypothesis, Alternative hypothesis, Significance level",
+      "howToReadKo": "에이치 제로(귀무가설), 에이치 원(대립가설), 알파(유의수준)",
+      "howToReadEn": "H naught (null hypothesis), H one (alternative hypothesis), alpha (significance level)",
+      "unicode": "U+03B1 (alpha)",
+      "historyAndOrigin": "예지 네이만(Jerzy Neyman)과 에곤 피어슨(Egon Pearson)이 가설검정의 결정이론 프레임워크를 수립함.",
+      "rigorousDefinition": "$H_0$: 차이가 없다는 기본 가정. $H_1$: 입증하고자 하는 가설. $\\alpha = P(\\text{Reject } H_0 \\mid H_0 \\text{ is True})$ (제1종 오류 허용 확률).",
+      "usageAndExamples": [
+        {
+          "context": "유의수준 판정",
+          "typesetMath": "p\\text{-value} < \\alpha \\implies \\text{Reject } H_0",
+          "description": "p값이 유의수준(통상 0.05)보다 작으면 귀무가설을 기각하고 대립가설 채택"
+        }
+      ],
+      "commonPitfalls": "p값은 '귀무가설이 참일 확률'이 아니라, '귀무가설이 참이라는 가정 하에 관측치 이상의 극단적인 결과가 나올 조건부 확률'임."
+    }
+  ]
+}

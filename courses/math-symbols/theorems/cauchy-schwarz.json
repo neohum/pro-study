@@ -1,0 +1,74 @@
+{
+  "id": "cauchy-schwarz",
+  "order": 6,
+  "domain": "선형대수학 및 해석학",
+  "titleKo": "코시-슈바르츠 부등식 (Cauchy-Schwarz Inequality)",
+  "titleEn": "Cauchy-Schwarz Inequality",
+  "statement": {
+    "typesetMath": "|\\langle \\mathbf{u}, \\mathbf{v} \\rangle|^2 \\le \\langle \\mathbf{u}, \\mathbf{u} \\rangle \\langle \\mathbf{v}, \\mathbf{v} \\rangle, \\quad \\left(\\sum_{i=1}^n a_i b_i\\right)^2 \\le \\left(\\sum_{i=1}^n a_i^2\\right) \\left(\\sum_{i=1}^n b_i^2\\right)",
+    "explanationKo": "두 벡터의 내적의 절댓값 제곱은 각 벡터의 노름 제곱의 곱 이하이며, 등호는 두 벡터가 일차종속(평행)할 때 성립한다.",
+    "explanationEn": "The absolute square of the inner product of two vectors is less than or equal to the product of their inner products with themselves."
+  },
+  "historicalSignificance": "코시가 1821년 유한합 부등식을 발표하고, 분야콥스키(1859)와 헤르만 슈바르츠(1888)가 적분 및 힐베르트 공간으로 일반화함.",
+  "prerequisites": [
+    "내적 공간(Inner Product Space) 공리",
+    "실수 이차방정식 판별식"
+  ],
+  "intuitiveIdea": "실수 t에 대한 이차함수 ||u*t + v||^2는 항상 0 이상이어야 하므로, 이 이차방정식이 실근을 최대 1개만 갖는다는 조건(판별식 D <= 0)에서 부등식이 즉시 유도됨.",
+  "rigorousProof": {
+    "proofType": "2차 다항식 판별식 증명 (Discriminant of Quadratic Polynomial)",
+    "assumptions": [
+      "실 내적 공간 V의 임의의 두 벡터 u, v"
+    ],
+    "steps": [
+      {
+        "stepNumber": 1,
+        "title": "실수 매개변수 t에 대한 이차 다항함수 정의",
+        "explanation": "임의의 실수 $t \\in \\mathbb{R}$에 대해 내적의 양의 정부호성에 의해 노름 제곱은 항상 0 이상이다.",
+        "typesetMath": "f(t) = \\|t\\mathbf{u} + \\mathbf{v}\\|^2 = \\langle t\\mathbf{u} + \\mathbf{v}, t\\mathbf{u} + \\mathbf{v} \\rangle \\ge 0",
+        "justification": "내적 공간의 정의: 임의의 벡터 w에 대해 <w, w> >= 0"
+      },
+      {
+        "stepNumber": 2,
+        "title": "내적의 쌍선형성을 이용한 t에 대한 2차식 전개",
+        "explanation": "내적을 전개하여 $t$에 대한 2차 다항식 형태로 정돈한다.",
+        "typesetMath": "f(t) = \\langle \\mathbf{u}, \\mathbf{u} \\rangle t^2 + 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle t + \\langle \\mathbf{v}, \\mathbf{v} \\rangle \\ge 0",
+        "justification": "내적의 대칭성 및 선형성"
+      },
+      {
+        "stepNumber": 3,
+        "title": "계수 치환",
+        "explanation": "$A = \\langle \\mathbf{u}, \\mathbf{u} \\rangle$, $B = 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle$, $C = \\langle \\mathbf{v}, \\mathbf{v} \\rangle$라 놓으면 $At^2 + Bt + C \\ge 0$이다.",
+        "typesetMath": "A = \\|\\mathbf{u}\\|^2, \\quad B = 2\\langle \\mathbf{u}, \\mathbf{v} \\rangle, \\quad C = \\|\\mathbf{v}\\|^2",
+        "justification": "이차함수 표준형"
+      },
+      {
+        "stepNumber": 4,
+        "title": "판별식 조건 적용",
+        "explanation": "모든 실수 $t$에 대해 $f(t) \\ge 0$이려면 이 이차함수의 그래프는 t축 위에 있거나 접해야 하므로 판별식 $\\Delta = B^2 - 4AC \\le 0$이어야 한다.",
+        "typesetMath": "\\Delta = (2\\langle \\mathbf{u}, \\mathbf{v} \\rangle)^2 - 4 \\|\\mathbf{u}\\|^2 \\|\\mathbf{v}\\|^2 \\le 0",
+        "justification": "실계수 이차부등식이 항상 성립할 조건"
+      },
+      {
+        "stepNumber": 5,
+        "title": "양변 정리 및 최종 부등식 완성",
+        "explanation": "4로 나누고 이항하면 코시-슈바르츠 부등식이 도출된다.",
+        "typesetMath": "4\\langle \\mathbf{u}, \\mathbf{v} \\rangle^2 \\le 4 \\|\\mathbf{u}\\|^2 \\|\\mathbf{v}\\|^2 \\implies |\\langle \\mathbf{u}, \\mathbf{v} \\rangle| \\le \\|\\mathbf{u}\\| \\|\\mathbf{v}\\|",
+        "justification": "부등식의 양의 상수 나눗셈"
+      }
+    ],
+    "conclusion": "임의의 내적 공간에서 코시-슈바르츠 부등식이 성립하며, 등호는 u와 v가 평행할 때만 성립한다 (Q.E.D.)."
+  },
+  "corollariesAndApplications": [
+    {
+      "title": "삼각부등식 증명",
+      "typesetMath": "\\|\\mathbf{u} + \\mathbf{v}\\| \\le \\|\\mathbf{u}\\| + \\|\\mathbf{v}\\|",
+      "description": "노름 공간의 거리 공리 성립의 핵심 근거"
+    },
+    {
+      "title": "하이젠베르크 불확정성 원리",
+      "typesetMath": "\\sigma_x \\sigma_p \\ge \\frac{\\hbar}{2}",
+      "description": "양자역학에서 두 관측가능량의 연산자 교환자 부등식 유도"
+    }
+  ]
+}

@@ -132,6 +132,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // ⚡ 전기·전자 & 수학 기호/정리 증명 마스터 스위트 화면 열기
+        findViewById<Button>(R.id.btn_open_ee).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.mathee.MathEEViewerActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btn_tab_ee).setOnClickListener {
+            val intent = android.content.Intent(this, com.prostudy.eink.ui.mathee.MathEEViewerActivity::class.java)
+            startActivity(intent)
+        }
+
         // E-ink 화면 새로고침 (플래시 리프레시로 잔상 정리)
         findViewById<Button>(R.id.btn_refresh).setOnClickListener {
             flashScreenRefresh()

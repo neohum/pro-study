@@ -1,0 +1,79 @@
+{
+  "title": "전자공학 마스터 커리큘럼 (Electronic Engineering Curriculum)",
+  "description": "반도체 물성 기초부터 다이오드 정류, BJT/MOSFET 증폭기, OP-Amp 아날로그 연산, 능동필터, 디지털 논리회로, 임베디드 통신 및 PCB 설계까지 8단계 정밀 학습",
+  "totalModules": 8,
+  "modules": [
+    {
+      "id": "el-01",
+      "order": 1,
+      "domain": "반도체 물리 기초",
+      "titleKo": "반도체 물성 및 PN 접합의 원리",
+      "titleEn": "Semiconductor Physics & PN Junction Principles",
+      "file": "modules/01-semiconductor-physics.json",
+      "simId": "sim-semiconductor"
+    },
+    {
+      "id": "el-02",
+      "order": 2,
+      "domain": "다이오드 및 정류 회로",
+      "titleKo": "다이오드 응용 회로: 정류기, 필터 및 제너 정전압",
+      "titleEn": "Diode Circuits: Rectifiers, Filters & Zener Regulation",
+      "file": "modules/02-diodes-rectifiers.json",
+      "simId": "sim-diode-rectifier"
+    },
+    {
+      "id": "el-03",
+      "order": 3,
+      "domain": "아날로그 증폭 및 트랜지스터",
+      "titleKo": "BJT 트랜지스터 증폭기 및 직류 부하선 해석",
+      "titleEn": "BJT Transistors, Amplifiers & DC Load Line",
+      "file": "modules/03-bjt-amplifiers.json",
+      "simId": "sim-transistor-curves"
+    },
+    {
+      "id": "el-04",
+      "order": 4,
+      "domain": "전계효과 트랜지스터 및 집적회로",
+      "titleKo": "MOSFET 소자 원리 및 디지털 CMOS 기술",
+      "titleEn": "MOSFET Circuits, Scaling & CMOS Technology",
+      "file": "modules/04-mosfet-circuits.json",
+      "simId": "sim-transistor-curves"
+    },
+    {
+      "id": "el-05",
+      "order": 5,
+      "domain": "아날로그 연산 및 신호 처리",
+      "titleKo": "OP-Amp 연산증폭기 및 아날로그 회로 해석",
+      "titleEn": "Operational Amplifiers (OP-Amp) & Analog Computation",
+      "file": "modules/05-opamp-circuits.json",
+      "simId": "sim-opamp-bode"
+    },
+    {
+      "id": "el-06",
+      "order": 6,
+      "domain": "능동 필터 및 발진기",
+      "titleKo": "능동 필터, 보드 선도(Bode Plot) 및 신호 발진기",
+      "titleEn": "Active Filters, Bode Plots & Signal Generators",
+      "file": "modules/06-active-filters-oscillators.json",
+      "simId": "sim-timer555"
+    },
+    {
+      "id": "el-07",
+      "order": 7,
+      "domain": "디지털 논리 회로",
+      "titleKo": "디지털 논리 게이트, 카르노 맵 및 플립플롭",
+      "titleEn": "Digital Logic Gates, Karnaugh Maps & Flip-Flops",
+      "file": "modules/07-digital-logic.json",
+      "simId": "sim-logic-circuit"
+    },
+    {
+      "id": "el-08",
+      "order": 8,
+      "domain": "임베디드 시스템 및 실전 인터페이스",
+      "titleKo": "임베디드 인터페이싱: ADC, 통신(UART/I2C/SPI) 및 PCB 설계",
+      "titleEn": "Embedded Systems: ADC, Protocols & PCB Layout",
+      "file": "modules/08-embedded-interfacing.json",
+      "simId": "sim-embedded-comm"
+    }
+  ]
+}

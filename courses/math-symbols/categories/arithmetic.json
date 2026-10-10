@@ -1,0 +1,349 @@
+{
+  "categoryId": "arithmetic",
+  "categoryNameKo": "기초 산술 및 대수 기호",
+  "categoryNameEn": "Arithmetic and Elementary Algebra",
+  "order": 1,
+  "description": "수의 기본 연산, 대소 관계, 비례 및 절댓값 등을 나타내는 핵심 수학 조판 기호",
+  "symbols": [
+    {
+      "id": "sym-plus",
+      "symbol": "+",
+      "typesetMath": "+",
+      "nameKo": "더하기 (덧셈 기호)",
+      "nameEn": "Plus sign (Addition)",
+      "howToReadKo": "더하기, 플러스",
+      "howToReadEn": "plus, added to",
+      "unicode": "U+002B",
+      "historyAndOrigin": "1489년 독일 수학자 요하네스 비트만(Johannes Widmann)의 상업 산술서에서 모자람(-)과 남음(+)을 표시하기 위해 라틴어 'et'(&)의 흘림체에서 유래하여 최초로 인쇄됨.",
+      "rigorousDefinition": "가환군 $(G, +)$에서 이항 연산 $+: G \\times G \\to G$로 정의되며, 결합법칙 $a+(b+c)=(a+b)+c$과 항등원 $0$ ($a+0=a$)을 만족함.",
+      "usageAndExamples": [
+        {
+          "context": "초등 대수",
+          "typesetMath": "3 + 5 = 8",
+          "description": "3에 5를 더하면 8이 됨"
+        },
+        {
+          "context": "양수 부호",
+          "typesetMath": "x = +5",
+          "description": "값의 양의 방향성을 명시하는 단항 연산자"
+        }
+      ],
+      "commonPitfalls": "양의 부호(단항 연산자)와 두 수 사이의 덧셈(이항 연산자)의 문맥상 차이를 구별해야 함."
+    },
+    {
+      "id": "sym-minus",
+      "symbol": "−",
+      "typesetMath": "-",
+      "nameKo": "빼기 (뺄셈 기호 / 음수 부호)",
+      "nameEn": "Minus sign (Subtraction / Negative)",
+      "howToReadKo": "빼기, 마이너스",
+      "howToReadEn": "minus, subtracted by, negative",
+      "unicode": "U+2212",
+      "historyAndOrigin": "15세기 상인들이 상품 무게가 기준에 못 미칠 때 포대 표면에 긋던 막대 표시에서 유래하여 요하네스 비트만에 의해 정규 수학 기호로 정립됨.",
+      "rigorousDefinition": "덧셈에 대한 역원(Additive Inverse)의 가산으로 정의됨: $a - b \\equiv a + (-b)$.",
+      "usageAndExamples": [
+        {
+          "context": "초등 뺄셈",
+          "typesetMath": "10 - 4 = 6",
+          "description": "10에서 4를 감산한 결과는 6"
+        },
+        {
+          "context": "덧셈 역원",
+          "typesetMath": "x + (-x) = 0",
+          "description": "임의의 원소와 그 음수 역원의 합은 덧셈 항등원 0"
+        }
+      ],
+      "commonPitfalls": "컴퓨터 키보드의 하이픈-마이너스(-)와 수학 인쇄용 정규 마이너스 부호(U+2212)는 타이포그래피 너비와 높이가 다름."
+    },
+    {
+      "id": "sym-times",
+      "symbol": "×",
+      "typesetMath": "\\times",
+      "nameKo": "곱하기 (곱셈 기호 / 외적 기호)",
+      "nameEn": "Multiplication sign (Times / Cross product)",
+      "howToReadKo": "곱하기, 크로스",
+      "howToReadEn": "multiplied by, times, cross",
+      "unicode": "U+00D7",
+      "historyAndOrigin": "1631년 영국 수학자 윌리엄 오트레드(William Oughtred)의 저서 '수학의 열쇠(Clavis Mathematicae)'에서 최초로 사용됨.",
+      "rigorousDefinition": "환(Ring) 구조 $(R, +, \\cdot)$에서의 제2 이항 연산이며, 3차원 유클리드 공간 $\\mathbb{R}^3$에서는 두 벡터의 수직인 벡터를 생성하는 외적으로 정의됨: $\\vec{u} \\times \\vec{v} = (u_2 v_3 - u_3 v_2)\\hat{i} + \\cdots$.",
+      "usageAndExamples": [
+        {
+          "context": "스칼라 곱셈",
+          "typesetMath": "6 \\times 7 = 42",
+          "description": "6과 7의 산술적 곱"
+        },
+        {
+          "context": "벡터 외적",
+          "typesetMath": "\\vec{A} \\times \\vec{B} = \\vec{C}",
+          "description": "두 벡터에 동시에 수직인 제3의 벡터 형성"
+        }
+      ],
+      "commonPitfalls": "문자 변수 $x$와 혼동을 피하기 위해 고등수학에서는 가운뎃점($\\cdot$) 또는 생략 표기법을 주로 사용함."
+    },
+    {
+      "id": "sym-cdot",
+      "symbol": "⋅",
+      "typesetMath": "\\cdot",
+      "nameKo": "가운뎃점 (점곱 / 내적 기호)",
+      "nameEn": "Centered dot (Dot product / Scalar product)",
+      "howToReadKo": "도트, 점곱",
+      "howToReadEn": "dot, multiplied by",
+      "unicode": "U+22C5",
+      "historyAndOrigin": "1698년 고트프리트 라이프니츠(Gottfried Wilhelm Leibniz)가 변수 $x$와의 혼동을 방지하기 위해 곱셈 기호로 도입함.",
+      "rigorousDefinition": "내적 공간(Inner Product Space)에서 두 벡터 간의 사영 크기 곱: $\\vec{u} \\cdot \\vec{v} = \\|\\vec{u}\\| \\|\\vec{v}\\| \\cos\\theta$.",
+      "usageAndExamples": [
+        {
+          "context": "대수식 곱셈",
+          "typesetMath": "a \\cdot b",
+          "description": "변수 a와 b의 곱"
+        },
+        {
+          "context": "벡터 내적",
+          "typesetMath": "\\mathbf{u} \\cdot \\mathbf{v} = \\sum_{i=1}^n u_i v_i",
+          "description": "유클리드 내적의 성분별 합"
+        }
+      ],
+      "commonPitfalls": "소수점 마침표(.)와 가운뎃점($\\cdot$)은 베이스라인 높이가 다르므로 조판 시 구분해야 함."
+    },
+    {
+      "id": "sym-divide",
+      "symbol": "÷",
+      "typesetMath": "\\div",
+      "nameKo": "나누기 (나눗셈 기호)",
+      "nameEn": "Division sign (Obelus)",
+      "howToReadKo": "나누기",
+      "howToReadEn": "divided by",
+      "unicode": "U+00F7",
+      "historyAndOrigin": "1659년 스위스 수학자 요한 란(Johann Rahn)의 저서 '대수학(Teutsche Algebra)'에서 최초로 사용되었으며 '오벨루스(Obelus)'라 불림.",
+      "rigorousDefinition": "곱셈에 대한 역원(Multiplicative Inverse)의 곱: $a \\div b \\equiv a \\cdot b^{-1}$ (단, $b \\ne 0$).",
+      "usageAndExamples": [
+        {
+          "context": "초등 나눗셈",
+          "typesetMath": "20 \\div 4 = 5",
+          "description": "20을 4로 나눈 몫은 5"
+        },
+        {
+          "context": "분수 형식 대조",
+          "typesetMath": "a \\div b = \\frac{a}{b}",
+          "description": "인쇄 수학에서는 분수 표기를 표준으로 선호함"
+        }
+      ],
+      "commonPitfalls": "고등수학 및 논문에서는 연산 순서의 모호성 방지를 위해 $\\div$ 대신 분수($\\frac{a}{b}$) 형태를 사용하는 것이 국제 표준 규격임."
+    },
+    {
+      "id": "sym-equals",
+      "symbol": "=",
+      "typesetMath": "=",
+      "nameKo": "등호 (같음)",
+      "nameEn": "Equal sign (Equality)",
+      "howToReadKo": "는, 같다, 이퀄",
+      "howToReadEn": "equals, is equal to",
+      "unicode": "U+003D",
+      "historyAndOrigin": "1557년 웨일스 수학자 로버트 레코드(Robert Recorde)의 '지혜의 숫돌(The Whetstone of Witte)'에서 길이가 같은 두 평행선보다 더 같은 것은 없다는 철학으로 고안됨.",
+      "rigorousDefinition": "동치 관계(Equivalence Relation)로 반사율($a=a$), 대칭율($a=b \\implies b=a$), 추이율($a=b \\land b=c \\implies a=c$)을 만족함.",
+      "usageAndExamples": [
+        {
+          "context": "대수 방정식",
+          "typesetMath": "E = mc^2",
+          "description": "에너지와 질량-광속 제곱 간의 절대적 등가성"
+        }
+      ],
+      "commonPitfalls": "프로그래밍 언어의 변수 대입 연산자(=)와 수학적 동치 명제(=)를 혼동하지 말아야 함."
+    },
+    {
+      "id": "sym-ne",
+      "symbol": "≠",
+      "typesetMath": "\\ne",
+      "nameKo": "부등호 (같지 않음)",
+      "nameEn": "Not equal to",
+      "howToReadKo": "같지 않다, 다르다",
+      "howToReadEn": "is not equal to",
+      "unicode": "U+2260",
+      "historyAndOrigin": "레온하르트 오일러(Leonhard Euler)가 등호(=)에 부정의 사선을 그어 등치 부정의 의미로 보편화함.",
+      "rigorousDefinition": "등치 명제의 논리적 부정: $a \\ne b \\iff \\neg(a = b)$.",
+      "usageAndExamples": [
+        {
+          "context": "분모 조건",
+          "typesetMath": "f(x) = \\frac{1}{x} \\quad (x \\ne 0)",
+          "description": "분모가 0이 아님을 명시하는 정의역 제약 조건"
+        }
+      ],
+      "commonPitfalls": "컴퓨터 언어의 `!=`나 `<>`는 아스키 대체 표현이며 실제 수학 조판은 반드시 $\\ne$를 사용함."
+    },
+    {
+      "id": "sym-approx",
+      "symbol": "≈",
+      "typesetMath": "\\approx",
+      "nameKo": "근사 (거의 같음)",
+      "nameEn": "Almost equal to (Approximation)",
+      "howToReadKo": "거의 같다, 근사하다",
+      "howToReadEn": "is approximately equal to",
+      "unicode": "U+2248",
+      "historyAndOrigin": "1892년 영국 수학자 앨프리드 그린힐(Alfred George Greenhill)이 물리학적 근사 계산을 표기하기 위해 물결 등호 형태로 고안함.",
+      "rigorousDefinition": "오차 한계 $\\epsilon > 0$에 대해 $|a - b| < \\epsilon$이 성립함을 의미함.",
+      "usageAndExamples": [
+        {
+          "context": "원주율 근사",
+          "typesetMath": "\\pi \\approx 3.14159",
+          "description": "원주율의 유효숫자 5자리 근사값"
+        },
+        {
+          "context": "테일러 1차 근사",
+          "typesetMath": "\\sin\\theta \\approx \\theta \\quad (\\theta \\to 0)",
+          "description": "각도가 0에 가까울 때 삼각함수의 선형 근사"
+        }
+      ],
+      "commonPitfalls": "한국 일부 교과서에서 과거 일본식 $\\fallingdotseq$을 쓰기도 했으나 국제 ISO 표준은 $\\approx$임."
+    },
+    {
+      "id": "sym-equiv",
+      "symbol": "≡",
+      "typesetMath": "\\equiv",
+      "nameKo": "합동 / 항등 기호",
+      "nameEn": "Identical to / Congruence",
+      "howToReadKo": "항등이다, 합동이다",
+      "howToReadEn": "is identically equal to, is congruent to",
+      "unicode": "U+2261",
+      "historyAndOrigin": "1801년 카를 프리드리히 가우스(Carl Friedrich Gauss)가 저서 '산술 연구(Disquisitiones Arithmeticae)'에서 모듈러 합동식을 위해 3줄 등호로 창안함.",
+      "rigorousDefinition": "1) 항등식: 모든 정의역 원소에 대해 $f(x) \\equiv g(x)$. 2) 정수론: $a \\equiv b \\pmod m \\iff m \\mid (a - b)$.",
+      "usageAndExamples": [
+        {
+          "context": "정수론 모듈러",
+          "typesetMath": "17 \\equiv 2 \\pmod 5",
+          "description": "17과 2는 법 5에 대하여 합동임 (나머지가 2로 동일)"
+        },
+        {
+          "context": "삼각함수 항등식",
+          "typesetMath": "\\sin^2\\theta + \\cos^2\\theta \\equiv 1",
+          "description": "모든 실수 세타에 대해 항상 성립하는 항등 관계"
+        }
+      ],
+      "commonPitfalls": "특정 값에서만 참이 되는 조건부 방정식($=$)과 정의역 전체에서 성립하는 항등식($\\equiv$)의 위상 차이를 이해해야 함."
+    },
+    {
+      "id": "sym-le-ge",
+      "symbol": "≤ / ≥",
+      "typesetMath": "\\le, \\ge",
+      "nameKo": "작거나 같음 / 크거나 같음",
+      "nameEn": "Less than or equal to / Greater than or equal to",
+      "howToReadKo": "작거나 같다(이하), 크거나 같다(이상)",
+      "howToReadEn": "is less than or equal to, is greater than or equal to",
+      "unicode": "U+2264, U+2265",
+      "historyAndOrigin": "1734년 프랑스 자연철학자 피에르 부게(Pierre Bouguer)가 부등호 밑에 가로선을 더하여 개발함.",
+      "rigorousDefinition": "전순서 집합(Totally Ordered Set)에서 반사율($a \\le a$), 반대칭율($a \\le b \\land b \\le a \\implies a = b$), 추이율을 만족하는 부분순서 관계.",
+      "usageAndExamples": [
+        {
+          "context": "절댓값 부등식",
+          "typesetMath": "|x + y| \\le |x| + |y|",
+          "description": "삼각부등식: 합의 절댓값은 절댓값의 합 이하임"
+        }
+      ],
+      "commonPitfalls": "컴퓨터식 `<=`, `>=` 대신 수학 조판에서는 밑선이 수평인 $\\le, \\ge$를 사용함."
+    },
+    {
+      "id": "sym-sqrt",
+      "symbol": "√",
+      "typesetMath": "\\sqrt{x}",
+      "nameKo": "근호 (제곱근 기호, 루트)",
+      "nameEn": "Radical symbol (Square root)",
+      "howToReadKo": "루트, 제곱근",
+      "howToReadEn": "the square root of",
+      "unicode": "U+221A",
+      "historyAndOrigin": "1525년 크리스토프 루돌프(Christoff Rudolff)가 뿌리를 뜻하는 라틴어 'radix'의 첫 글자 $r$을 소문자 필기체로 변형하여 창안함.",
+      "rigorousDefinition": "비음의 실수 $x \\ge 0$에 대하여 $y^2 = x$를 만족하는 유일한 비음의 실수 $y \\ge 0$를 $\\sqrt{x}$로 정의함.",
+      "usageAndExamples": [
+        {
+          "context": "피타고라스 빗변",
+          "typesetMath": "c = \\sqrt{a^2 + b^2}",
+          "description": "직각삼각형의 빗변 길이 계산"
+        }
+      ],
+      "commonPitfalls": "$\\sqrt{4} = 2$이며 $\\pm 2$가 아님. $x^2 = 4$의 해는 $\\pm\\sqrt{4} = \\pm 2$이지만 근호 자체는 주제곱근(양수)만을 가리킴."
+    },
+    {
+      "id": "sym-abs",
+      "symbol": "|x|",
+      "typesetMath": "|x|",
+      "nameKo": "절댓값 (크기 / 노름)",
+      "nameEn": "Absolute value (Modulus / Magnitude)",
+      "howToReadKo": "절댓값 x, 바 x",
+      "howToReadEn": "absolute value of x, mod x",
+      "unicode": "U+007C",
+      "historyAndOrigin": "1841년 카를 바이어슈트라스(Karl Weierstrass)가 복소수의 모듈러스와 실수의 원점 거리 개념을 단일화하기 위해 수직선 기호를 도입함.",
+      "rigorousDefinition": "실수 $x$에 대해 $|x| = \\begin{cases} x & (x \\ge 0) \\\\ -x & (x < 0) \\end{cases}$. 복소수 $z = a + bi$에 대해 $|z| = \\sqrt{a^2 + b^2}$.",
+      "usageAndExamples": [
+        {
+          "context": "거리 정의",
+          "typesetMath": "d(x, y) = |x - y|",
+          "description": "수직선 상에서 두 실수 사이의 기하학적 유클리드 거리"
+        }
+      ],
+      "commonPitfalls": "행렬에서의 $|A|$는 절댓값이 아니라 행렬식($\\det(A)$)을 의미하므로 문맥에 따른 의미 구분이 필수적임."
+    },
+    {
+      "id": "sym-factorial",
+      "symbol": "!",
+      "typesetMath": "n!",
+      "nameKo": "팩토리얼 (계승)",
+      "nameEn": "Factorial",
+      "howToReadKo": "n 팩토리얼, n 계승",
+      "howToReadEn": "n factorial",
+      "unicode": "U+0021",
+      "historyAndOrigin": "1808년 프랑스 수학자 크리스티앙 크랑(Christian Kramp)이 복잡한 순열 곱셈 표기를 축약하기 위해 느낌표(!)를 도입함.",
+      "rigorousDefinition": "비음의 정수 $n \\in \\mathbb{N}_0$에 대해 $n! = \\prod_{k=1}^n k$ (단, $0! = 1$). 실수/복소수 영역으로는 감마 함수 $\\Gamma(n+1) = n!$로 확장됨.",
+      "usageAndExamples": [
+        {
+          "context": "순열과 조합",
+          "typesetMath": "5! = 5 \\times 4 \\times 3 \\times 2 \\times 1 = 120",
+          "description": "5개 원소의 전체 일렬 배열 가짓수"
+        },
+        {
+          "context": "0의 팩토리얼",
+          "typesetMath": "0! = 1",
+          "description": "공집합을 배열하는 1가지 방법 및 감마 함수 정합성"
+        }
+      ],
+      "commonPitfalls": "느낌표 때문에 문장의 마침표나 감탄 부호와 겹칠 수 있으므로 수식 조판 시 여백 제어가 중요함."
+    },
+    {
+      "id": "sym-prop",
+      "symbol": "∝",
+      "typesetMath": "\\propto",
+      "nameKo": "비례 기호",
+      "nameEn": "Proportional to",
+      "howToReadKo": "비례한다",
+      "howToReadEn": "is proportional to",
+      "unicode": "U+221D",
+      "historyAndOrigin": "1753년 윌리엄 에머슨(William Emerson)이 비례 관계를 간결하게 표현하기 위해 고안함.",
+      "rigorousDefinition": "$y \\propto x \\iff \\exists k \\ne 0 \\text{ s.t. } y = kx$ (여기서 $k$는 비례상수).",
+      "usageAndExamples": [
+        {
+          "context": "뉴턴 만유인력",
+          "typesetMath": "F \\propto \\frac{m_1 m_2}{r^2}",
+          "description": "인력은 두 질량의 곱에 비례하고 거리 제곱에 반비례함"
+        }
+      ],
+      "commonPitfalls": "무한대 기호($\\infty$)와 오른쪽이 열려 있는 비례 기호($\\propto$)를 형태상 혼동하지 않도록 주의."
+    },
+    {
+      "id": "sym-pm",
+      "symbol": "±",
+      "typesetMath": "\\pm",
+      "nameKo": "플러스마이너스 (복부호)",
+      "nameEn": "Plus-minus sign",
+      "howToReadKo": "플러스마이너스, 복부호",
+      "howToReadEn": "plus or minus",
+      "unicode": "U+00B1",
+      "historyAndOrigin": "1631년 윌리엄 오트레드가 양과 음의 두 가지 가능성을 하나의 수식으로 압축하기 위해 도입함.",
+      "rigorousDefinition": "$x = a \\pm b \\iff (x = a + b) \\lor (x = a - b)$.",
+      "usageAndExamples": [
+        {
+          "context": "근의 공식",
+          "typesetMath": "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+          "description": "이차방정식의 2개 근을 복부호로 동시 표현"
+        }
+      ],
+      "commonPitfalls": "연립 방정식에서 복부호동순(복호동순, $\\mp$와 함께 쓰일 때) 여부를 반드시 확인해야 함."
+    }
+  ]
+}

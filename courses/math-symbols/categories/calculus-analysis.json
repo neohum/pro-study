@@ -1,0 +1,174 @@
+{
+  "categoryId": "calculus-analysis",
+  "categoryNameKo": "해석학 및 미적분학 기호",
+  "categoryNameEn": "Calculus and Mathematical Analysis",
+  "order": 3,
+  "description": "연속 함수, 극한, 도함수, 적분, 다변수 벡터 미적분 및 점근 분석을 위한 정밀 수식 기호",
+  "symbols": [
+    {
+      "id": "sym-lim",
+      "symbol": "lim",
+      "typesetMath": "\\lim_{x \\to a} f(x)",
+      "nameKo": "극한 기호",
+      "nameEn": "Limit",
+      "howToReadKo": "리미트 x가 a로 갈 때 f of x",
+      "howToReadEn": "the limit of f of x as x approaches a",
+      "unicode": "U+2264 (operator)",
+      "historyAndOrigin": "1821년 오귀스탱 루이 코시(Augustin-Louis Cauchy)가 'lim.'으로 표기하기 시작했으며 바이어슈트라스가 현대식 아래 첨자 표기로 정형화함.",
+      "rigorousDefinition": "$\\forall \\epsilon > 0, \\exists \\delta > 0 \\text{ s.t. } 0 < |x - a| < \\delta \\implies |f(x) - L| < \\epsilon$일 때 $\\lim_{x \\to a} f(x) = L$.",
+      "usageAndExamples": [
+        {
+          "context": "미분계수의 정의",
+          "typesetMath": "f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}",
+          "description": "평균변화율의 극한으로서의 순간변화율"
+        },
+        {
+          "context": "자연로그 밑 e",
+          "typesetMath": "e = \\lim_{n \\to \\infty} \\left(1 + \\frac{1}{n}\\right)^n",
+          "description": "오일러 상수 e의 수열 극한 정의"
+        }
+      ],
+      "commonPitfalls": "함숫값 $f(a)$와 극한값 $\\lim_{x \\to a} f(x)$는 독립적이며 둘이 같아야 연속임."
+    },
+    {
+      "id": "sym-derivative",
+      "symbol": "df/dx, f'(x)",
+      "typesetMath": "\\frac{df}{dx}, \\; f'(x), \\; \\dot{x}",
+      "nameKo": "도함수 (라이프니츠 / 라그랑주 / 뉴턴 미분 표기법)",
+      "nameEn": "Derivative notations",
+      "howToReadKo": "dx분의 df, f 프라임 x, x 도트",
+      "howToReadEn": "d f by d x, f prime of x, x dot",
+      "unicode": "U+2032 (prime)",
+      "historyAndOrigin": "라이프니츠는 무한소 미분비 $\\frac{df}{dx}$를, 라그랑주는 도함수 $f'(x)$를, 뉴턴은 시간에 대한 변화율로 점 표기 $\\dot{x}$를 창안함.",
+      "rigorousDefinition": "$f'(x) = \\frac{df}{dx} = \\lim_{\\Delta x \\to 0} \\frac{\\Delta f}{\\Delta x}$. 선형사상 $Df(x): h \\mapsto f'(x)h$.",
+      "usageAndExamples": [
+        {
+          "context": "다항함수 미분",
+          "typesetMath": "\\frac{d}{dx}(x^n) = n x^{n-1}",
+          "description": "거듭제곱 함수의 도함수 공식"
+        }
+      ],
+      "commonPitfalls": "라이프니츠 표기 $\\frac{dy}{dx}$는 분수가 아니라 미분 연산자 $\\frac{d}{dx}$가 $y$에 작용한 것이나, 연쇄법칙 등에서는 분수처럼 다룰 수 있는 미분 형식(Differential Form)임."
+    },
+    {
+      "id": "sym-partial",
+      "symbol": "∂",
+      "typesetMath": "\\frac{\\partial f}{\\partial x}",
+      "nameKo": "편미분 기호 (파셜)",
+      "nameEn": "Partial derivative (del / curly d)",
+      "howToReadKo": "라운드 x분의 라운드 f, 파셜 x분의 파셜 f",
+      "howToReadEn": "partial f by partial x, the partial derivative of f with respect to x",
+      "unicode": "U+2202",
+      "historyAndOrigin": "1770년 콩도르세(Nicolas de Condorcet)가 처음 사용하고, 1841년 카를 야코비(Carl Gustav Jacobi)가 다변수 미적분학의 표준 기호로 정착시킴.",
+      "rigorousDefinition": "다변수 함수 $f(x_1, \\dots, x_n)$에서 다른 변수들을 상수로 고정하고 한 변수에 대해 취한 극한: $\\frac{\\partial f}{\\partial x_i} = \\lim_{h \\to 0} \\frac{f(x_1, \\dots, x_i+h, \\dots) - f(x_1, \\dots)}{h}$.",
+      "usageAndExamples": [
+        {
+          "context": "맥스웰 방정식",
+          "typesetMath": "\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+          "description": "패러데이 전자기 유도 법칙의 미분형"
+        }
+      ],
+      "commonPitfalls": "일변수 상미분 $d$와 다변수 편미분 $\\partial$를 혼용하지 말아야 함."
+    },
+    {
+      "id": "sym-integral",
+      "symbol": "∫",
+      "typesetMath": "\\int f(x) \\, dx",
+      "nameKo": "적분 기호 (인테그랄)",
+      "nameEn": "Integral sign",
+      "howToReadKo": "인테그랄 f of x dx",
+      "howToReadEn": "the integral of f of x with respect to x",
+      "unicode": "U+222B",
+      "historyAndOrigin": "1675년 라이프니츠가 라틴어 합(Summa)의 첫 글자 긴 'S'(ſ)를 길게 늘려 연속적인 미소량의 합을 표현하기 위해 도입함.",
+      "rigorousDefinition": "리만 적분: 분할 $\\mathcal{P}$에 대한 리만합의 극한: $\\int_a^b f(x)\\,dx = \\lim_{\\|\\mathcal{P}\\| \\to 0} \\sum_{i=1}^n f(x_i^*) \\Delta x_i$.",
+      "usageAndExamples": [
+        {
+          "context": "정적분 계산",
+          "typesetMath": "\\int_a^b f(x) \\, dx = F(b) - F(a)",
+          "description": "미적분학의 기본정리 (FTC 2)"
+        }
+      ],
+      "commonPitfalls": "부정적분에서는 반드시 적분상수 $+ C$를 누락하지 말아야 함."
+    },
+    {
+      "id": "sym-contour-integral",
+      "symbol": "∮",
+      "typesetMath": "\\oint_C f(z) \\, dz",
+      "nameKo": "폐곡선 적분 (선적분 / 주회적분)",
+      "nameEn": "Contour integral (Closed curve integral)",
+      "howToReadKo": "폐곡선 적분 인테그랄, 클로즈드 루프 인테그랄",
+      "howToReadEn": "the contour integral around C of f of z dz",
+      "unicode": "U+222E",
+      "historyAndOrigin": "복소해석학과 전자기학에서 닫힌 경로(Closed Loop)에 대한 적분을 명시하기 위해 적분 기호 중앙에 닫힌 원(Circle)을 합성함.",
+      "rigorousDefinition": "단순 폐곡선 $C$를 따라 회전하는 복소함수 또는 벡터장의 선적분: 코시 적분정리에 의해 유수(Residue)의 합과 직결됨: $\\oint_C f(z)\\,dz = 2\\pi i \\sum \\text{Res}(f, z_k)$.",
+      "usageAndExamples": [
+        {
+          "context": "앙페르 회로 법칙",
+          "typesetMath": "\\oint_{\\partial S} \\mathbf{B} \\cdot d\\boldsymbol{\\ell} = \\mu_0 I_{\\text{enc}}",
+          "description": "폐곡선을 따라 흐르는 자기장의 선적분은 관통 전류에 비례함"
+        }
+      ],
+      "commonPitfalls": "경로가 닫히지 않은 일반 곡선에는 원형 표식 없는 $\\int_C$를 써야 함."
+    },
+    {
+      "id": "sym-summation",
+      "symbol": "∑",
+      "typesetMath": "\\sum_{k=1}^n a_k",
+      "nameKo": "시그마 (수열의 합 기호)",
+      "nameEn": "Summation (Capital sigma)",
+      "howToReadKo": "시그마 k는 1부터 n까지 a sub k",
+      "howToReadEn": "the sum of a sub k from k equals 1 to n",
+      "unicode": "U+2211",
+      "historyAndOrigin": "1755년 레온하르트 오일러가 합을 뜻하는 Sum의 머리글자에 해당하는 그리스 대문자 시그마($\\Sigma$)를 수열의 합 기호로 공식화함.",
+      "rigorousDefinition": "유한 합: $\\sum_{k=1}^n a_k = a_1 + a_2 + \\dots + a_n$. 무한 급수: 부분합의 극한 $\\lim_{n \\to \\infty} \\sum_{k=1}^n a_k$.",
+      "usageAndExamples": [
+        {
+          "context": "등비급수",
+          "typesetMath": "\\sum_{k=0}^\\infty r^k = \\frac{1}{1 - r} \\quad (|r| < 1)",
+          "description": "수렴하는 무한 등비급수의 합 공식"
+        }
+      ],
+      "commonPitfalls": "소문자 시그마($\\sigma$)는 표준편차나 전도율에 쓰이고, 대문자 시그마($\\sum$)는 덧셈 총합 연산자로 쓰임."
+    },
+    {
+      "id": "sym-product",
+      "symbol": "∏",
+      "typesetMath": "\\prod_{k=1}^n a_k",
+      "nameKo": "파이 (수열의 곱 기호)",
+      "nameEn": "Product (Capital pi)",
+      "howToReadKo": "프로덕트 k는 1부터 n까지 a sub k",
+      "howToReadEn": "the product of a sub k from k equals 1 to n",
+      "unicode": "U+220F",
+      "historyAndOrigin": "1812년 카를 프리드리히 가우스가 그리스 대문자 파이($\\Pi$, Product의 첫 글자)를 수열의 연쇄 곱 기호로 도입함.",
+      "rigorousDefinition": "$\\prod_{k=1}^n a_k = a_1 \\times a_2 \\times \\dots \\times a_n$.",
+      "usageAndExamples": [
+        {
+          "context": "오일러 사인 무한곱",
+          "typesetMath": "\\frac{\\sin x}{x} = \\prod_{n=1}^\\infty \\left(1 - \\frac{x^2}{n^2\\pi^2}\\right)",
+          "description": "바젤 문제 해결의 기초가 된 삼각함수 무한곱 전개"
+        }
+      ],
+      "commonPitfalls": "원주율 상수 소문자 파이($\\pi \\approx 3.14$)와 연산자 대문자 파이($\\prod$)의 폰트 및 크기 구분이 필수적임."
+    },
+    {
+      "id": "sym-nabla",
+      "symbol": "∇",
+      "typesetMath": "\\nabla, \\; \\nabla f, \\; \\nabla \\cdot \\mathbf{F}, \\; \\nabla \\times \\mathbf{F}",
+      "nameKo": "나블라 (델 연산자)",
+      "nameEn": "Nabla / Del operator",
+      "howToReadKo": "나블라, 델",
+      "howToReadEn": "nabla, del, grad, div, curl",
+      "unicode": "U+2207",
+      "historyAndOrigin": "1853년 윌리엄 로언 해밀턴(William Rowan Hamilton)이 삼차원 편미분 벡터 연산자로 도입하였으며, 고대 히브리 하프 'Nabla'와 닮아 명명됨.",
+      "rigorousDefinition": "데카르트 좌표계의 형식적 미분 벡터: $\\nabla = \\hat{i}\\frac{\\partial}{\\partial x} + \\hat{j}\\frac{\\partial}{\\partial y} + \\hat{k}\\frac{\\partial}{\\partial z}$. 기울기($\\nabla f$), 발산($\\nabla \\cdot \\mathbf{F}$), 회전($\\nabla \\times \\mathbf{F}$), 라플라시안($\\nabla^2 = \\Delta$).",
+      "usageAndExamples": [
+        {
+          "context": "라플라스 방정식",
+          "typesetMath": "\\nabla^2 V = 0",
+          "description": "정전기학에서 전하가 없는 영역의 정전위 지배방정식"
+        }
+      ],
+      "commonPitfalls": "스칼라장에 작용하는 기울기($\\nabla f$)는 벡터가 되고, 벡터장에 작용하는 발산($\\nabla \\cdot \\mathbf{F}$)은 스칼라가 됨."
+    }
+  ]
+}

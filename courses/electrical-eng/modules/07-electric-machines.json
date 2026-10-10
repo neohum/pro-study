@@ -1,0 +1,81 @@
+{
+  "id": "ee-07",
+  "order": 7,
+  "domain": "전기기기 및 모터 제어",
+  "titleKo": "전기기기: 직류기, 유도 전동기 및 모터 제어",
+  "titleEn": "Electric Machines: DC Motors, Induction Motors & VFD",
+  "file": "modules/07-electric-machines.json",
+  "overview": "플레밍의 왼손/오른손 법칙을 기반으로 하는 전자기적 동력 변환 원리, 직류 전동기의 토크-속도 제어, 3상 유도 전동기의 회전자계와 슬립(Slip), 인버터(VFD)를 통한 가변속 제어를 학습합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "로렌츠 힘과 전자기 동력 변환",
+      "titleEn": "Lorentz Force and Electromechanical Energy Conversion",
+      "principle": "자기장 B 내에서 전류 I가 흐르는 도선은 힘 F = I(L x B)을 받아 회전하고(전동기 모드), 자기장 내에서 도선이 속도 v로 움직이면 기전력 E = v x B가 유도된다(발전기 모드).",
+      "equations": [
+        {
+          "name": "전자기 토크 (Torque)",
+          "typesetMath": "T = K_t \\Phi I_a",
+          "explanation": "자속 Phi와 전기자 전류 I_a의 곱에 비례하는 회전 토크"
+        },
+        {
+          "name": "역기전력 (Back-EMF)",
+          "typesetMath": "E_b = K_e \\Phi \\omega_m",
+          "explanation": "모터 회전속도 omega_m에 비례하여 인가 전압에 대항하는 역전압"
+        }
+      ]
+    },
+    {
+      "titleKo": "3상 유도 전동기와 회전자계",
+      "titleEn": "Induction Motors and Rotating Magnetic Field",
+      "principle": "3상 고정자 권선에 120도 위상차의 교류 전류가 흐르면 공간적으로 일정한 크기로 회전하는 회전자계가 형성되며, 회전자는 이 자계를 따라가기 위해 슬립(Slip, s)을 발생시키며 유도 전류로 토크를 생성한다.",
+      "equations": [
+        {
+          "name": "동기 속도 (Synchronous Speed)",
+          "typesetMath": "N_s = \\frac{120 f}{P} \\; [\\text{rpm}]",
+          "explanation": "전원 주파수 f와 전동기 극수 P에 의해 결정되는 회전자계 속도"
+        },
+        {
+          "name": "슬립 (Slip)",
+          "typesetMath": "s = \\frac{N_s - N}{N_s} \\quad (0 < s < 1)",
+          "explanation": "회전자 속도 N과 동기속도 N_s 사이의 상대적 지연 비율"
+        }
+      ]
+    },
+    {
+      "titleKo": "인버터(VFD)와 V/f 일정 제어",
+      "titleEn": "Variable Frequency Drives (VFD) and V/f Control",
+      "principle": "유도 전동기의 속도를 제어하기 위해 인버터는 주파수 f를 가변시키는데, 이때 자속 포화를 방지하고 정격 토크를 유지하기 위해 전압과 주파수의 비(V/f)를 일정하게 유지한다.",
+      "equations": [
+        {
+          "name": "V/f 일정 법칙",
+          "typesetMath": "\\frac{V}{f} = \\text{const} \\implies \\Phi_m \\approx \\text{const}",
+          "explanation": "기저 주파수 이하에서 최대 토크 유지 제어"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "전기차(EV) 구동 모터 및 엘리베이터 인버터 제어",
+      "practicalContext": "전기차는 영구자석 동기모터(PMSM) 또는 유도전동기를 인버터의 공간벡터 PWM(SVPWM) 기법으로 초당 수천 번 스위칭하여 정지 상태에서부터 최대 토크를 부드럽게 발휘함.",
+      "engineeringNote": "감속 시 회생 제동(Regenerative Braking)을 통해 운동에너지를 전기에너지로 회수하여 배터리를 충전함."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-motor-torque",
+    "type": "motor-control",
+    "title": "유도 전동기 토크-속도 곡선 시뮬레이터",
+    "initialParams": {
+      "f": 60,
+      "poles": 4,
+      "V": 380,
+      "R2": 0.5,
+      "X2": 1.5
+    },
+    "keyFormulas": [
+      "Ns = 120*f/P",
+      "Torque = (3/omega_s) * (V^2 * (R2/s)) / ((R1 + R2/s)^2 + (X1 + X2)^2)"
+    ]
+  },
+  "summary": "전기기기는 전자기 유도와 로렌츠 힘을 이용해 전기와 역학적 동력을 상호 변환하며, 인버터 전력전자는 모터의 속도와 토크를 정밀하게 제어합니다."
+}

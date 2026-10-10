@@ -54,6 +54,15 @@
             android:textSize="12sp" />
 
         <Button
+            android:id="@+id/btn_open_ee"
+            style="@style/EinkButton.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginEnd="6dp"
+            android:text="⚡ 전기·전자 &amp; 수학"
+            android:textSize="12sp" />
+
+        <Button
             android:id="@+id/btn_refresh"
             style="@style/EinkButton"
             android:layout_width="wrap_content"
@@ -169,6 +178,16 @@
                     android:layout_height="match_parent"
                     android:paddingHorizontal="12dp"
                     android:text="📐 교과 수학 (15)"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_tab_ee"
+                    style="@style/EinkButton.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:paddingHorizontal="12dp"
+                    android:text="⚡ 전기·전자 &amp; 수학기호 (16)"
                     android:textSize="13sp" />
             </LinearLayout>
         </HorizontalScrollView>

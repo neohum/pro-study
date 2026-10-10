@@ -1,0 +1,87 @@
+{
+  "id": "ee-03",
+  "order": 3,
+  "domain": "과도 현상 및 에너지 소자",
+  "titleKo": "RLC 과도 현상과 시정수 해석",
+  "titleEn": "RLC Circuit Transients & Time Constant Analysis",
+  "file": "modules/03-transient-rlc.json",
+  "overview": "커패시터의 전계 에너지 축적, 인덕터의 자계 에너지 축적 특성과 1차 RC/RL 회로의 지수적 충방전 시정수(τ), 2차 RLC 회로의 과도응답(과감쇠, 임계감쇠, 저감쇠) 2계 미분방정식을 깊이 탐구합니다.",
+  "coreConcepts": [
+    {
+      "titleKo": "커패시터와 인덕터의 V-I 미적분 관계",
+      "titleEn": "V-I Differential Equations of C and L",
+      "principle": "커패시터는 전압의 급격한 변화에 저항하며 전류는 전압의 미분에 비례하고, 인덕터는 전류의 급격한 변화에 저항하여 역기전력을 발생시킨다.",
+      "equations": [
+        {
+          "name": "커패시터 전류식",
+          "typesetMath": "i_C(t) = C \\frac{dv_C(t)}{dt}, \\quad v_C(t) = \\frac{1}{C}\\int_0^t i_C(\\tau)d\\tau + v_C(0)",
+          "explanation": "커패시터 양단 전압은 불연속적으로 급변할 수 없음"
+        },
+        {
+          "name": "인덕터 전압식",
+          "typesetMath": "v_L(t) = L \\frac{di_L(t)}{dt}, \\quad i_L(t) = \\frac{1}{L}\\int_0^t v_L(\\tau)d\\tau + i_L(0)",
+          "explanation": "인덕터에 흐르는 전류는 불연속적으로 급변할 수 없음"
+        }
+      ]
+    },
+    {
+      "titleKo": "1차 RC 및 RL 회로의 충방전 시정수(τ)",
+      "titleEn": "First-Order RC and RL Time Constant",
+      "principle": "1차 미분방정식을 풀면 과도응답은 자연지수 감쇠 곡선 e^(-t/τ)를 따르며, 시정수 τ(초)는 최종 목표값의 63.2%에 도달하는 시간이다.",
+      "equations": [
+        {
+          "name": "RC 회로 충전 전압",
+          "typesetMath": "v_C(t) = V_s \\left( 1 - e^{-t / \\tau} \\right) \\quad (\\tau = R C)",
+          "explanation": "5시정수(5τ) 경과 시 99.3% 도달하여 정상상태 간주"
+        },
+        {
+          "name": "RL 회로 방전 전류",
+          "typesetMath": "i_L(t) = I_0 e^{-t / \\tau} \\quad \\left(\\tau = \\frac{L}{R}\\right)",
+          "explanation": "인덕터 전류의 지수적 감소 곡선"
+        }
+      ]
+    },
+    {
+      "titleKo": "2차 RLC 회로의 감쇠 분류",
+      "titleEn": "Second-Order RLC Transient Response",
+      "principle": "RLC 직렬 회로는 2계 미분방정식 d^2v/dt^2 + 2α dv/dt + ω_0^2 v = 0을 따르며, 감쇠계수 α와 고유각진동수 ω_0의 상대적 크기에 따라 3가지 감쇠 상태로 나뉜다.",
+      "equations": [
+        {
+          "name": "2차 특성방정식",
+          "typesetMath": "s^2 + 2\\alpha s + \\omega_0^2 = 0 \\quad \\left(\\alpha = \\frac{R}{2L}, \\; \\omega_0 = \\frac{1}{\\sqrt{LC}}\\right)",
+          "explanation": "특성근 s = -alpha +- sqrt(alpha^2 - omega_0^2)"
+        },
+        {
+          "name": "감쇠 상태 분류",
+          "typesetMath": "\\begin{cases} \\alpha > \\omega_0 & \\text{과감쇠 (Overdamped: 진동 없음, 느린 수렴)} \\\\ \\alpha = \\omega_0 & \\text{임계감쇠 (Critically Damped: 최단 시간 수렴)} \\\\ \\alpha < \\omega_0 & \\text{저감쇠 (Underdamped: 감쇠 진동 파형)} \\end{cases}",
+          "explanation": "Q factor 및 댐핑비에 따른 과도 파형의 극적인 변화"
+        }
+      ]
+    }
+  ],
+  "practicalApplications": [
+    {
+      "title": "스위칭 서지(Surge) 흡수 및 스너버(Snubber) 회로",
+      "practicalContext": "인덕티브 부하(릴레이 코일, 모터)를 스위치로 차단할 때 v_L = L*(di/dt)에 의해 수천 볼트의 고전압 아크가 발생하여 소자가 파괴될 수 있으므로, RC 스너버나 플라이백 다이오드를 병렬 연결하여 감쇠 과도상태로 서지를 흡수함.",
+      "engineeringNote": "계측기 오실로스코프 프로브 보정(Probe Compensation)도 임계감쇠 상태를 맞추어 방형파 왜곡을 없애는 대표적 응용임."
+    }
+  ],
+  "simulationRef": {
+    "id": "sim-rlc-transient",
+    "type": "rlc-transient",
+    "title": "RLC 과도현상 및 오실로스코프 시뮬레이터",
+    "initialParams": {
+      "R": 20,
+      "L": 0.1,
+      "C": 0.0001,
+      "Vin": 10,
+      "waveType": "step"
+    },
+    "keyFormulas": [
+      "alpha = R / (2*L)",
+      "omega0 = 1 / sqrt(L*C)",
+      "v(t) = Vin*(1 - exp(-alpha*t)*(cos(wd*t) + (alpha/wd)*sin(wd*t)))"
+    ]
+  },
+  "summary": "에너지 저장 소자(L, C)는 전압과 전류의 시간 미분 관계를 형성하며, RLC 회로의 과도 응답은 미분방정식의 특성근에 의해 과감쇠, 임계감쇠, 저감쇠 진동으로 결정됩니다."
+}
