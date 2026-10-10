@@ -1,0 +1,23 @@
+{
+  "id": "lisp/10-bytecode-vm",
+  "lang": "lisp",
+  "order": 10,
+  "title": "스택 기반 바이트코드 가상머신 및 컴파일러",
+  "summary": "S-표현식 언어 코드를 선형 바이트코드 명령어 세트(Opcode)로 1-패스 컴파일하고 고속 스택 머신 루프로 실행하는 가상머신 시스템",
+  "difficulty": 5,
+  "concepts": [
+    "가상머신 ISA",
+    "바이트코드 컴파일러",
+    "디스어셈블러",
+    "오퍼랜드 스택",
+    "PC(프로그램 카운터) 루프"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 스택 기반 바이트코드 가상머신 및 컴파일러 (Bytecode Compiler & VM)\n\n## 📌 프로젝트 개요\nS-표현식 수식을 바이트코드 명령어 세트(Opcode)로 1-패스 컴파일하고, 콜스택과 오퍼랜드 스택 기반의 VM 실행 루프를 구축합니다.\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Bytecode VM\n(defpackage :pro-study-vm\n  (:use :cl))\n(in-package :pro-study-vm)\n\n;; TODO(step-1): Opcode 정의 및 Chunk 구조체 선언\n;; TODO(step-2): compile-ast 구현 (S-표현식 -> 바이트코드 방출)\n;; TODO(step-3): run-vm 구현 (오퍼랜드 스택 기반 실행 루프)\n\n(defun run-main ()\n  (format t \"TODO: implement bytecode vm\"))\n\n(run-main)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Bytecode VM\n(defpackage :pro-study-vm\n  (:use :cl)\n  (:export :compile-expr :run-vm))\n(in-package :pro-study-vm)\n\n(defconstant +op-const+ 1)\n(defconstant +op-add+   2)\n(defconstant +op-sub+   3)\n(defconstant +op-mul+   4)\n(defconstant +op-print+ 5)\n(defconstant +op-halt+  6)\n\n(defstruct chunk\n  (code (make-array 0 :element-type '(unsigned-byte 8) :adjustable t :fill-pointer 0))\n  (constants (make-array 0 :adjustable t :fill-pointer 0)))\n\n(defun emit-byte (chunk byte)\n  (vector-push-extend byte (chunk-code chunk)))\n\n(defun emit-constant (chunk val)\n  (let ((idx (vector-push-extend val (chunk-constants chunk))))\n    (emit-byte chunk +op-const+)\n    (emit-byte chunk idx)))\n\n(defun compile-ast (expr chunk)\n  (cond\n    ((numberp expr)\n     (emit-constant chunk expr))\n    ((consp expr)\n     (let ((op (car expr))\n           (a (second expr))\n           (b (third expr)))\n       (compile-ast a chunk)\n       (compile-ast b chunk)\n       (case op\n         (+ (emit-byte chunk +op-add+))\n         (- (emit-byte chunk +op-sub+))\n         (* (emit-byte chunk +op-mul+))\n         (otherwise (error \"Unknown VM op: ~A\" op)))))\n    (t (error \"Invalid AST\"))))\n\n(defun run-vm (chunk)\n  (let ((code (chunk-code chunk))\n        (consts (chunk-constants chunk))\n        (stack '())\n        (pc 0))\n    (loop\n      (when (>= pc (length code)) (return))\n      (let ((op (aref code pc)))\n        (incf pc)\n        (case op\n          (1 ;; CONST\n           (let ((idx (aref code pc)))\n             (incf pc)\n             (push (aref consts idx) stack)))\n          (2 ;; ADD\n           (let ((b (pop stack)) (a (pop stack)))\n             (push (+ a b) stack)))\n          (3 ;; SUB\n           (let ((b (pop stack)) (a (pop stack)))\n             (push (- a b) stack)))\n          (4 ;; MUL\n           (let ((b (pop stack)) (a (pop stack)))\n             (push (* a b) stack)))\n          (5 ;; PRINT\n           (format t \"~A~%\" (pop stack)))\n          (6 ;; HALT\n           (return))\n          (otherwise (error \"Unknown opcode: ~D\" op)))))))\n\n(defun run-main ()\n  (let ((c (make-chunk)))\n    (compile-ast '(* (+ 10 20) 2) c)\n    (emit-byte c +op-print+)\n    (emit-byte c +op-halt+)\n    (run-vm c)))\n\n(run-main)\n"
+  }
+}

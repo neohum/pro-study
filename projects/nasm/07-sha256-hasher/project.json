@@ -1,0 +1,36 @@
+{
+  "id": "nasm/07-sha256-hasher",
+  "title": "순수 어셈블리 SHA-256 암호학적 해시 엔진",
+  "summary": "FIPS 180-4 표준 SHA-256을 libc 없이 구현하여 512비트 블록 패딩, 빅엔디안 bswap, 64라운드 비선형 압축 함수를 직접 레지스터에 매핑한 해시 엔진",
+  "lang": "nasm",
+  "order": 7,
+  "difficulty": 4,
+  "concepts": [
+    "비트 회전 (ror, rol)",
+    "엔디안 변환 (bswap)",
+    "메시지 스케줄 확장",
+    "64라운드 비선형 압축",
+    "FIPS 180-4 표준"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

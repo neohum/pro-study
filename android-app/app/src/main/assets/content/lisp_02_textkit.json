@@ -1,0 +1,23 @@
+{
+  "id": "lisp/02-textkit",
+  "lang": "lisp",
+  "order": 2,
+  "title": "텍스트 분석기 및 단어 빈도 카운터",
+  "summary": "스트림에서 영숫자 토큰을 정규화 추출하고, 해시 테이블을 통해 단어 빈도를 집계 및 정렬하여 통계를 출력하는 텍스트 툴킷",
+  "difficulty": 1,
+  "concepts": [
+    "문자열/문자",
+    "해시 테이블 (equal)",
+    "고차 함수 (maphash)",
+    "리스트 정렬 (sort)",
+    "format 포맷팅"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 텍스트 분석기 및 단어 빈도 카운터 (Text Analyzer & Word Frequency Counter)\n\n## 📌 프로젝트 개요\n문자열과 문자(Character) 조작, Common Lisp의 빌트인 해시 테이블(`make-hash-table :test 'equal`), 고차 함수를 활용한 정렬 및 출력 스트림 포맷팅을 학습합니다.\n\n## 🎯 학습 목표\n1. `alphanumericp` 및 `char-downcase`를 활용한 텍스트 토큰화\n2. `gethash`와 `incf`를 통한 단어 카운트 빈도 집계\n3. `maphash`로 해시 엔트리를 alist로 변환하고 `sort`로 내림차순 정렬\n4. `format` 지시자(`~A`, `~D`, `~{~}`)를 사용한 정형화된 리포트 출력\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Text Analyzer\n(defpackage :pro-study-textkit\n  (:use :cl)\n  (:export :analyze-text))\n(in-package :pro-study-textkit)\n\n;; TODO(step-1): 문자열에서 영숫자만 소문자로 분리하여 단어 리스트 반환\n(defun tokenize-string (str)\n  '())\n\n;; TODO(step-2): make-hash-table :test 'equal을 사용하여 단어 빈도 카운팅\n(defun count-word-frequencies (words)\n  (make-hash-table :test 'equal))\n\n(defun run-textkit ()\n  (format t \"TODO: implement textkit\"))\n\n(run-textkit)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Text Analyzer\n(defpackage :pro-study-textkit\n  (:use :cl)\n  (:export :analyze-text))\n(in-package :pro-study-textkit)\n\n(defun tokenize-string (str)\n  (let ((words '())\n        (curr (make-string-output-stream)))\n    (loop for ch across str do\n      (if (alphanumericp ch)\n          (write-char (char-downcase ch) curr)\n          (let ((w (get-output-stream-string curr)))\n            (when (> (length w) 0)\n              (push w words)))))\n    (let ((final (get-output-stream-string curr)))\n      (when (> (length final) 0)\n        (push final words)))\n    (nreverse words)))\n\n(defun count-word-frequencies (words)\n  (let ((table (make-hash-table :test 'equal)))\n    (dolist (w words)\n      (incf (gethash w table 0)))\n    table))\n\n(defun run-textkit ()\n  (let ((lines '()))\n    (loop for line = (read-line *standard-input* nil nil)\n          while line do (push line lines))\n    (let* ((full-text (format nil \"~{~A~^ ~}\" (nreverse lines)))\n           (words (tokenize-string full-text))\n           (table (count-word-frequencies words))\n           (entries '()))\n      (maphash (lambda (k v) (push (cons k v) entries)) table)\n      (setf entries (sort entries (lambda (a b)\n                                    (if (= (cdr a) (cdr b))\n                                        (string< (car a) (car b))\n                                        (> (cdr a) (cdr b))))))\n      (format t \"Total words: ~D~%\" (length words))\n      (format t \"Unique words: ~D~%\" (hash-table-count table))\n      (format t \"Top words:~%\")\n      (loop for i from 1 to (min 3 (length entries))\n            for (word . count) in entries do\n        (format t \"~D. ~A: ~D~%\" i word count)))))\n\n(run-textkit)\n"
+  }
+}

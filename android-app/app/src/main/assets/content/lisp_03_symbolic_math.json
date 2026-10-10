@@ -1,0 +1,23 @@
+{
+  "id": "lisp/03-symbolic-math",
+  "lang": "lisp",
+  "order": 3,
+  "title": "기호 미분기 및 대수식 단순화기",
+  "summary": "S-표현식 다항식 및 초월함수를 지정 변수에 대해 기호 미분하고 대수적 항등원 규칙을 재귀 적용하여 최소 표현으로 단순화하는 엔진",
+  "difficulty": 2,
+  "concepts": [
+    "기호 심볼(Symbol)",
+    "패턴 매칭",
+    "구조 분해(destructuring-bind)",
+    "미분 연산자 규칙",
+    "대수적 단순화(Simplification)"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 기호 미분기 및 대수식 단순화기 (Symbolic Differentiator & Simplifier)\n\n## 📌 프로젝트 개요\n컴퓨터 대수 시스템(CAS, Computer Algebra System)의 핵심인 **기호 미분(Symbolic Differentiation)**과 **대수적 식 단순화(Simplification)**를 구현합니다.\n\n## 🎯 학습 목표\n1. 심볼과 쿼트(`'`)를 활용한 대수식의 기호적 표현\n2. 합(`+`), 차(`-`), 곱(`*`), 멱(`expt`)에 대한 미분 규칙 적용\n3. 항등원(`x + 0 = x`, `x * 1 = x`, `x * 0 = 0`) 규칙 및 상수 접기(Constant Folding)\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Symbolic Math\n(defpackage :pro-study-sym-math\n  (:use :cl)\n  (:export :diff :simplify))\n(in-package :pro-study-sym-math)\n\n;; TODO(step-1): 대수적 단순화 규칙 (+, *, expt)\n(defun simplify (expr)\n  expr)\n\n;; TODO(step-2): d/dx 미분 규칙 (상수=0, 변수=1, 합의법칙, 곱의법칙, 멱법칙)\n(defun diff (expr var)\n  0)\n\n(defun run-sym-math ()\n  (format t \"TODO: implement sym-math\"))\n\n(run-sym-math)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Symbolic Math\n(defpackage :pro-study-sym-math\n  (:use :cl)\n  (:export :diff :simplify))\n(in-package :pro-study-sym-math)\n\n(defun simplify (expr)\n  (if (atom expr)\n      expr\n      (let ((op (car expr))\n            (args (mapcar #'simplify (cdr expr))))\n        (case op\n          (+ (let ((non-zero (remove 0 args)))\n               (cond\n                 ((null non-zero) 0)\n                 ((null (cdr non-zero)) (car non-zero))\n                 ((every #'numberp non-zero) (reduce #'+ non-zero))\n                 (t (cons '+ non-zero)))))\n          (* (cond\n               ((member 0 args) 0)\n               (t (let ((filtered (remove 1 args)))\n                    (cond\n                      ((null filtered) 1)\n                      ((null (cdr filtered)) (car filtered))\n                      ((every #'numberp filtered) (reduce #'* filtered))\n                      (t (cons '* filtered)))))))\n          (expt (let ((base (first args)) (exp (second args)))\n                  (cond\n                    ((eql exp 0) 1)\n                    ((eql exp 1) base)\n                    (t (list 'expt base exp)))))\n          (otherwise (cons op args))))))\n\n(defun diff (expr var)\n  (cond\n    ((numberp expr) 0)\n    ((eq expr var) 1)\n    ((symbolp expr) 0)\n    ((consp expr)\n     (let ((op (car expr)))\n       (case op\n         (+ (simplify (cons '+ (mapcar (lambda (arg) (diff arg var)) (cdr expr)))))\n         (- (simplify (cons '- (mapcar (lambda (arg) (diff arg var)) (cdr expr)))))\n         (* (if (= (length (cdr expr)) 2)\n                (let ((u (second expr))\n                      (v (third expr)))\n                  (simplify (list '+ (list '* (diff u var) v)\n                                     (list '* u (diff v var)))))\n                (error \"Only binary multiplication supported in diff\")))\n         (expt (let ((u (second expr))\n                     (n (third expr)))\n                 (if (numberp n)\n                     (simplify (list '* (list '* n (list 'expt u (- n 1)))\n                                        (diff u var)))\n                     (error \"Unsupported exponent form\"))))\n         (otherwise (error \"Unknown operator: ~A\" op)))))\n    (t (error \"Invalid expression\"))))\n\n(defun run-sym-math ()\n  (let ((line (read-line *standard-input* nil nil)))\n    (when line\n      (let* ((parsed (read-from-string line))\n             (differentiated (diff parsed 'x))\n             (simplified (simplify differentiated)))\n        (format t \"~S~%\" simplified)))))\n\n(run-sym-math)\n"
+  }
+}

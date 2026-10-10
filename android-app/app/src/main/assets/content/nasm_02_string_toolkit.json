@@ -1,0 +1,22 @@
+{
+  "id": "nasm/02-string-toolkit",
+  "lang": "nasm",
+  "order": 2,
+  "title": "저수준 문자열 조작 및 포맷터 툴킷",
+  "summary": "x86-64 스트링 프리미티브(scasb, cmpsb, movsb)와 레지스터 비트 조작만으로 문자열 길이, 대소문자 변환, 역순, 16진수 덤프를 수행하는 툴킷",
+  "difficulty": 1,
+  "concepts": [
+    "스트링 프리미티브 (cld, repne scasb, movsb)",
+    "포인터 간접 주소 지정",
+    "대소문자 ASCII 비트 마스킹",
+    "16진 덤프 (Hexdump)"
+  ],
+  "entry": "main.asm",
+  "readme": "# 저수준 문자열 조작 및 포맷터 툴킷 (Low-Level String & Formatter Toolkit)\n\n## 📌 프로젝트 개요\nC 표준 라이브러리 없이 x86-64의 고속 스트링 프리미티브 명령어(`repne scasb`, `lodsb`, `stosb`)와 니블(Nibble) 분리 비트 연산을 직접 작성합니다.\n\n## 🎯 학습 목표\n1. `repne scasb`를 이용한 초고속 문자열 길이 측정 (`str_len`)\n2. ASCII 문자 범위 검사 및 대문자화 비트 연산 (`and al, 0xDF`)\n3. 양방향 포인터 스왑을 통한 문자열 뒤집기 (`str_rev`)\n4. 16바이트 청크 단위 Hexdump 출력 서식 작성\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - String Toolkit\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): repne scasb로 길이 측정\n    ; TODO(step-2): 대소문자 변환 및 역순 정렬\n    ; TODO(step-3): 16진수 덤프 출력\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - String Toolkit\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    msg db \"Hello x86-64 Assembly\", 0\n    fmt_len db \"Length: %zu\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    ; Measure string length using repne scasb\n    lea rdi, [msg]\n    xor eax, eax\n    mov rcx, -1\n    cld\n    repne scasb\n    not rcx\n    dec rcx         ; rcx = length\n\n    lea rdi, [fmt_len]\n    mov rsi, rcx\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

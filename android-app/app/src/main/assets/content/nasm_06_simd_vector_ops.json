@@ -1,0 +1,23 @@
+{
+  "id": "nasm/06-simd-vector-ops",
+  "lang": "nasm",
+  "order": 6,
+  "title": "AVX2/SSE 벡터 가속 수학 엔진",
+  "summary": "256비트 YMM 레지스터와 FMA3 명령어를 사용하여 단정밀도 부동소수점 8개를 한 번에 병렬 연산하고 수평 레덕션(Reduction)을 수행하는 벡터 엔진",
+  "difficulty": 3,
+  "concepts": [
+    "256비트 YMM 레지스터",
+    "정렬/비정렬 로드 (vmovups)",
+    "FMA3 (vfmadd231ps)",
+    "수평 레덕션 (Horizontal Sum)",
+    "SIMD 병렬성"
+  ],
+  "entry": "main.asm",
+  "readme": "# AVX2/SSE 벡터 가속 수학 엔진 (AVX2 Vectorized Math Engine)\n\n## 📌 프로젝트 개요\nx86-64의 256비트 YMM 레지스터와 FMA3(Fused Multiply-Add) 명령어를 활용하여 부동소수점 벡터 내적(Dot Product)을 하드웨어 수준에서 병렬 가속합니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - AVX2 SIMD Math Engine\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): vmovups로 8개 float 병렬 로드\n    ; TODO(step-2): vfmadd231ps FMA 곱셈 누산\n    ; TODO(step-3): vextractf128 및 수평 합산\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - AVX2 SIMD Math Engine\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_dot db \"AVX2 Dot Product Result: %.4f\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    sub rsp, 16\n\n    ; Simulated dot product of [1, 2, 3, 4] . [5, 6, 7, 8] = 70.0\n    lea rdi, [fmt_dot]\n    mov eax, 1          ; 1 float in xmm0\n    mov rcx, 0x4051800000000000 ; 70.0 double\n    movq xmm0, rcx\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "id": "lisp/02-textkit",
+  "title": "텍스트 분석기 및 단어 빈도 카운터",
+  "summary": "스트림에서 영숫자 토큰을 정규화 추출하고, 해시 테이블을 통해 단어 빈도를 집계 및 정렬하여 통계를 출력하는 텍스트 툴킷",
+  "lang": "lisp",
+  "order": 2,
+  "difficulty": 1,
+  "concepts": [
+    "문자열/문자",
+    "해시 테이블 (equal)",
+    "고차 함수 (maphash)",
+    "리스트 정렬 (sort)",
+    "format 포맷팅"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

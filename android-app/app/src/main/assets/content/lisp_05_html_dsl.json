@@ -1,0 +1,23 @@
+{
+  "id": "lisp/05-html-dsl",
+  "lang": "lisp",
+  "order": 5,
+  "title": "선언형 HTML 템플릿 DSL",
+  "summary": "중첩된 S-표현식 데이터 구조를 구문 분석하여 XSS 방지 엔티티 이스케이프 및 속성 포맷팅이 적용된 표준 HTML5 문자열로 렌더링하는 DSL",
+  "difficulty": 3,
+  "concepts": [
+    "키워드 심볼 (:class, :id)",
+    "plist 속성 파싱",
+    "HTML 이스케이프",
+    "Void 태그 처리",
+    "도메인 특화 언어(DSL)"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 선언형 HTML 템플릿 DSL (Declarative HTML Template DSL)\n\n## 📌 프로젝트 개요\nLisp S-표현식을 선언적 마크업 언어(HTML)로 직렬화하는 미니 CL-WHO 스타일의 템플릿 DSL을 작성합니다.\n\n## 🎯 학습 목표\n1. 키워드 심볼(`:class`, `:id`)과 속성 리스트(plist) 파싱\n2. 닫는 태그가 없는 Void 요소(`<input />`, `<br />`, `<img />`) 지원\n3. 악성 스크립트 방지를 위한 HTML 엔티티 이스케이프(`&, <, >, \"`)\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - HTML DSL\n(defpackage :pro-study-html-dsl\n  (:use :cl)\n  (:export :render-html))\n(in-package :pro-study-html-dsl)\n\n;; TODO(step-1): HTML 특수문자 (&, <, >, \") 이스케이프\n(defun escape-html (str)\n  str)\n\n;; TODO(step-2): S-표현식을 재귀적으로 <tag attr=\"val\">children</tag> 문자열로 변환\n(defun render-node (node)\n  \"\")\n\n(defun run-html-dsl ()\n  (format t \"TODO: implement html-dsl\"))\n\n(run-html-dsl)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - HTML DSL\n(defpackage :pro-study-html-dsl\n  (:use :cl)\n  (:export :render-html))\n(in-package :pro-study-html-dsl)\n\n(defparameter *void-tags* '(:img :br :hr :input :meta :link))\n\n(defun escape-html (str)\n  (with-output-to-string (s)\n    (loop for ch across (string str) do\n      (case ch\n        (#\\& (write-string \"&amp;\" s))\n        (#\\< (write-string \"&lt;\" s))\n        (#\\> (write-string \"&gt;\" s))\n        (#\\\" (write-string \"&quot;\" s))\n        (otherwise (write-char ch s))))))\n\n(defun render-node (node)\n  (cond\n    ((stringp node) (escape-html node))\n    ((numberp node) (write-to-string node))\n    ((consp node)\n     (let ((tag (car node))\n           (attrs '())\n           (children '())\n           (rest (cdr node)))\n       (loop while (and rest (keywordp (car rest))) do\n         (let ((attr-name (string-downcase (symbol-name (pop rest))))\n               (attr-val (pop rest)))\n           (push (format nil \" ~A=\\\"~A\\\"\" attr-name (escape-html attr-val)) attrs)))\n       (setf children (mapcar #'render-node rest))\n       (let ((tag-name (string-downcase (symbol-name tag)))\n             (attr-str (format nil \"~{~A~}\" (nreverse attrs))))\n         (if (member tag *void-tags*)\n             (format nil \"<~A~A />\" tag-name attr-str)\n             (format nil \"<~A~A>~{~A~}</~A>\" tag-name attr-str children tag-name)))))\n    (t \"\")))\n\n(defun run-html-dsl ()\n  (let ((line (read-line *standard-input* nil nil)))\n    (when line\n      (let* ((parsed (read-from-string line))\n             (html (render-node parsed)))\n        (format t \"~A~%\" html)))))\n\n(run-html-dsl)\n"
+  }
+}

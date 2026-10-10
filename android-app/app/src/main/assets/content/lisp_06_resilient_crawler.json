@@ -1,0 +1,23 @@
+{
+  "id": "lisp/06-resilient-crawler",
+  "lang": "lisp",
+  "order": 6,
+  "title": "컨디션 시스템 기반 장애 복구 다운로더",
+  "summary": "스택을 풀지 않는 Lisp의 독보적인 Condition & Restart 시스템으로 네트워크 타임아웃/404 발생 시 retry, use-cache를 동적 복구하는 엔진",
+  "difficulty": 3,
+  "concepts": [
+    "Condition System",
+    "define-condition",
+    "handler-bind vs handler-case",
+    "restart-case",
+    "invoke-restart"
+  ],
+  "entry": "main.lisp",
+  "readme": "# 컨디션 시스템 기반 장애 복구 다운로더 (Condition & Restart Resilient Downloader)\n\n## 📌 프로젝트 개요\nJava/Python의 try-catch와 달리 **콜스택을 되감지(unwind) 않고** 오류 지점에서 상위 정책에 따라 안전하게 복구하는 Common Lisp의 **Condition & Restart** 아키텍처를 학습합니다.\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - Resilient Crawler\n(defpackage :pro-study-crawler\n  (:use :cl)\n  (:export :fetch-url))\n(in-package :pro-study-crawler)\n\n;; TODO(step-1): network-error 조건 정의\n;; TODO(step-2): restart-case로 retry, use-cache 선언\n;; TODO(step-3): handler-bind로 스택 되감기 없이 재시작점 호출\n\n(defun run-crawler ()\n  (format t \"TODO: implement crawler\"))\n\n(run-crawler)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - Resilient Crawler\n(defpackage :pro-study-crawler\n  (:use :cl)\n  (:export :fetch-url :crawl-all))\n(in-package :pro-study-crawler)\n\n(define-condition network-error (error)\n  ((url :initarg :url :reader err-url)\n   (code :initarg :code :reader err-code)))\n\n(defvar *mock-network* (make-hash-table :test 'equal))\n(setf (gethash \"http://example.com/ok\" *mock-network*) \"Content 200\")\n(setf (gethash \"http://example.com/timeout\" *mock-network*) :timeout)\n(setf (gethash \"http://example.com/404\" *mock-network*) :404)\n\n(defun simulate-http-get (url)\n  (let ((val (gethash url *mock-network*)))\n    (cond\n      ((eq val :timeout) (error 'network-error :url url :code :timeout))\n      ((eq val :404) (error 'network-error :url url :code :404))\n      (val val)\n      (t (error 'network-error :url url :code :unknown)))))\n\n(defun fetch-with-retry (url)\n  (let ((attempts 0))\n    (loop\n      (restart-case\n          (return (simulate-http-get url))\n        (retry ()\n          :report \"Retry download\"\n          (incf attempts)\n          (if (> attempts 2)\n              (return (format nil \"[FALLBACK-CACHE-~A]\" url))\n              (setf (gethash url *mock-network*) \"Content Recovered (Retry)\")))\n        (use-cache ()\n          :report \"Use local cached snapshot\"\n          (return (format nil \"[CACHED-DATA-~A]\" url)))))))\n\n(defun run-crawler ()\n  (handler-bind ((network-error\n                   (lambda (c)\n                     (case (err-code c)\n                       (:timeout (invoke-restart 'retry))\n                       (:404 (invoke-restart 'use-cache))\n                       (otherwise (invoke-restart 'use-cache))))))\n    (format t \"OK: ~A~%\" (fetch-with-retry \"http://example.com/ok\"))\n    (format t \"TIMEOUT: ~A~%\" (fetch-with-retry \"http://example.com/timeout\"))\n    (format t \"404: ~A~%\" (fetch-with-retry \"http://example.com/404\"))))\n\n(run-crawler)\n"
+  }
+}

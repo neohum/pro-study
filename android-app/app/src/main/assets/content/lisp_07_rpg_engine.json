@@ -1,0 +1,22 @@
+{
+  "id": "lisp/07-rpg-engine",
+  "lang": "lisp",
+  "order": 7,
+  "title": "CLOS 다중 디스패치 RPG 전투 시뮬레이터",
+  "summary": "CLOS 클래스 상속과 다중 디스패치(Multiple Dispatch), :before/:after/:around 메서드 조합으로 구축한 턴제 RPG 전투 엔진",
+  "difficulty": 3,
+  "concepts": [
+    "CLOS (defclass, defgeneric, defmethod)",
+    "다중 디스패치",
+    "메서드 조합 (:before, :after, :around)",
+    "call-next-method"
+  ],
+  "entry": "main.lisp",
+  "readme": "# CLOS 다중 디스패치 RPG 전투 시뮬레이터\n\n## 📌 프로젝트 개요\n객체 지향 시스템인 **CLOS(Common Lisp Object System)**의 정수인 **다중 디스패치(Multiple Dispatch)**와 **메서드 조합(Method Combination)**을 학습합니다.\n",
+  "starterCode": {
+    "main.lisp": ";;;; starter/main.lisp - CLOS RPG Engine\n(defpackage :pro-study-rpg\n  (:use :cl))\n(in-package :pro-study-rpg)\n\n;; TODO(step-1): character-entity, warrior, slime, weapon, fire-sword 클래스 정의\n;; TODO(step-2): defgeneric execute-attack 선언\n;; TODO(step-3): 다중 특수화 defmethod 구현 및 :before, :after 조합\n\n(defun run-battle ()\n  (format t \"TODO: implement rpg\"))\n\n(run-battle)\n"
+  },
+  "solutionCode": {
+    "main.lisp": ";;;; solution/main.lisp - CLOS RPG Engine\n(defpackage :pro-study-rpg\n  (:use :cl)\n  (:export :run-battle))\n(in-package :pro-study-rpg)\n\n(defclass character-entity ()\n  ((name :initarg :name :accessor entity-name)\n   (hp :initarg :hp :accessor entity-hp)))\n\n(defclass warrior (character-entity) ())\n(defclass slime (character-entity) ())\n\n(defclass weapon () ())\n(defclass sword (weapon) ())\n(defclass fire-sword (sword) ())\n\n(defgeneric execute-attack (attacker defender weapon)\n  (:documentation \"Multi-dispatch attack interaction\"))\n\n(defmethod execute-attack :before ((atk warrior) def wpn)\n  (format t \"[BUFF] Warrior enters Battle Stance.~%\"))\n\n(defmethod execute-attack ((atk warrior) (def slime) (wpn fire-sword))\n  (format t \"[ACTION] ~A slashes ~A with Fire Sword!~%\" (entity-name atk) (entity-name def))\n  (decf (entity-hp def) 15))\n\n(defmethod execute-attack :after (atk (def slime) wpn)\n  (format t \"[PROC] Slime acid reacts to attack.~%\"))\n\n(defun run-battle ()\n  (let ((w (make-instance 'warrior :name \"Arthur\" :hp 50))\n        (s (make-instance 'slime :name \"GreenSlime\" :hp 20))\n        (f-sword (make-instance 'fire-sword)))\n    (execute-attack w s f-sword)\n    (format t \"Result HP: Slime=~D, Warrior=~D~%\" (entity-hp s) (entity-hp w))))\n\n(run-battle)\n"
+  }
+}

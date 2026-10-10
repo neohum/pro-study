@@ -1,0 +1,34 @@
+{
+  "id": "lisp/08-query-engine",
+  "title": "인메모리 관계형 쿼리 컴파일러",
+  "summary": "인메모리 테이블에 대해 선언적 S-표현식 쿼리(select, from, join, where)를 고속 실행 클로저 파이프라인으로 매크로 컴파일하는 쿼리 엔진",
+  "lang": "lisp",
+  "order": 8,
+  "difficulty": 4,
+  "concepts": [
+    "선언적 쿼리 AST",
+    "매크로 코드 컴파일",
+    "해시 조인(Hash Join)",
+    "렉시컬 클로저",
+    "인메모리 데이터베이스"
+  ],
+  "entry": "main.lisp",
+  "build": [
+    "sbcl",
+    "--noinform",
+    "--non-interactive",
+    "--load",
+    "main.lisp",
+    "--eval",
+    "(sb-ext:exit :code 0)"
+  ],
+  "run": [
+    "sbcl",
+    "--script",
+    "main.lisp"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

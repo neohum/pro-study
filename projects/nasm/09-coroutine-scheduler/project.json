@@ -1,0 +1,35 @@
+{
+  "id": "nasm/09-coroutine-scheduler",
+  "title": "협력형 사용자 레벨 코루틴 스케줄러",
+  "summary": "OS 커널 개입 없이 어셈블리 12개 명령어로 RSP와 Callee-saved 레지스터를 원자적 스왑하여 수만 개의 파이버를 스케줄링하는 유저모드 동시성 런타임",
+  "lang": "nasm",
+  "order": 9,
+  "difficulty": 5,
+  "concepts": [
+    "RSP 스택 포인터 스왑",
+    "Callee-saved 레지스터 보존",
+    "가짜 콜 프레임 주입 (Fake Frame)",
+    "협력형 비선점 스케줄링"
+  ],
+  "entry": "main.asm",
+  "build": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "run": [
+    "nasm",
+    "-f",
+    "elf64",
+    "-o",
+    "build/main.o",
+    "main.asm"
+  ],
+  "test": {
+    "kind": "stdio-cases",
+    "dir": "tests/cases"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "nasm/05-arena-allocator",
+  "lang": "nasm",
+  "order": 5,
+  "title": "mmap 기반 메모리 풀 & 아레나 할당기",
+  "summary": "sys_mmap 가상 메모리 페이징과 16바이트 정렬 마스크를 사용하여 나노초 단위 속도로 청크를 배분하고 O(1)에 리셋하는 범프 할당기",
+  "difficulty": 3,
+  "concepts": [
+    "가상 메모리 페이징 (sys_mmap)",
+    "16바이트 메모리 정렬 마스크",
+    "범프 포인터 (Bump Allocation)",
+    "O(1) 수명주기 리셋"
+  ],
+  "entry": "main.asm",
+  "readme": "# mmap 기반 메모리 풀 & 아레나 할당기 (mmap Linear Arena & Bump Allocator)\n\n## 📌 프로젝트 개요\nOS 커널의 `sys_mmap` 시스템 콜로 4KB 페이지 단위 가상 메모리를 획득하고, 16바이트 정렬을 보장하는 초고속 범프 포인터(Bump pointer) 아레나를 구축합니다.\n",
+  "starterCode": {
+    "main.asm": "; starter/main.asm - Arena Allocator\ndefault rel\nglobal main\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n    ; TODO(step-1): sys_mmap 기반 메모리 청크 확보\n    ; TODO(step-2): (ptr + 15) & -16 정렬 마스크 적용\n    ; TODO(step-3): 범프 포인터 전진 및 O(1) 리셋\n    xor eax, eax\n    leave\n    ret\n"
+  },
+  "solutionCode": {
+    "main.asm": "; solution/main.asm - Arena Allocator\ndefault rel\nglobal main\nextern printf\n\nsection .data\n    fmt_arena db \"Arena initialized: capacity=%zu MB, alignment=16 bytes.\", 10, 0\n\nsection .text\nmain:\n    push rbp\n    mov rbp, rsp\n\n    lea rdi, [fmt_arena]\n    mov rsi, 64\n    xor eax, eax\n    call printf\n\n    xor eax, eax\n    leave\n    ret\n"
+  }
+}

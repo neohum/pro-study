@@ -531,6 +531,338 @@
       "assetFile": "content/javascript_10_http_server.json"
     },
     {
+      "id": "lisp/01-calc",
+      "lang": "lisp",
+      "order": 1,
+      "title": "S-표현식 전위 계산기",
+      "summary": "S-표현식(S-expression) 전위 수식을 재귀적 트리 순회로 평가하여 임의 정밀도 정수 및 유리수 결과를 출력하는 계산기",
+      "difficulty": 1,
+      "concepts": [
+        "S-표현식",
+        "Homoiconicity",
+        "Cons Cell",
+        "트리 순회 재귀",
+        "유리수 수치계"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_01_calc.json"
+    },
+    {
+      "id": "lisp/02-textkit",
+      "lang": "lisp",
+      "order": 2,
+      "title": "텍스트 분석기 및 단어 빈도 카운터",
+      "summary": "스트림에서 영숫자 토큰을 정규화 추출하고, 해시 테이블을 통해 단어 빈도를 집계 및 정렬하여 통계를 출력하는 텍스트 툴킷",
+      "difficulty": 1,
+      "concepts": [
+        "문자열/문자",
+        "해시 테이블 (equal)",
+        "고차 함수 (maphash)",
+        "리스트 정렬 (sort)",
+        "format 포맷팅"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_02_textkit.json"
+    },
+    {
+      "id": "lisp/03-symbolic-math",
+      "lang": "lisp",
+      "order": 3,
+      "title": "기호 미분기 및 대수식 단순화기",
+      "summary": "S-표현식 다항식 및 초월함수를 지정 변수에 대해 기호 미분하고 대수적 항등원 규칙을 재귀 적용하여 최소 표현으로 단순화하는 엔진",
+      "difficulty": 2,
+      "concepts": [
+        "기호 심볼(Symbol)",
+        "패턴 매칭",
+        "구조 분해(destructuring-bind)",
+        "미분 연산자 규칙",
+        "대수적 단순화(Simplification)"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_03_symbolic_math.json"
+    },
+    {
+      "id": "lisp/04-unit-test-framework",
+      "lang": "lisp",
+      "order": 4,
+      "title": "매크로 기반 단위 테스트 프레임워크",
+      "summary": "defmacro, gensym, 역따옴표 문법을 활용하여 위생적 코드 생성과 실패 리포팅을 제공하는 경량 단위 테스트 프레임워크",
+      "difficulty": 2,
+      "concepts": [
+        "defmacro",
+        "Backquote/Comma",
+        "위생성 (gensym)",
+        "다중 평가 방지",
+        "동적 변수 (defvar)"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_04_unit_test_framework.json"
+    },
+    {
+      "id": "lisp/05-html-dsl",
+      "lang": "lisp",
+      "order": 5,
+      "title": "선언형 HTML 템플릿 DSL",
+      "summary": "중첩된 S-표현식 데이터 구조를 구문 분석하여 XSS 방지 엔티티 이스케이프 및 속성 포맷팅이 적용된 표준 HTML5 문자열로 렌더링하는 DSL",
+      "difficulty": 3,
+      "concepts": [
+        "키워드 심볼 (:class, :id)",
+        "plist 속성 파싱",
+        "HTML 이스케이프",
+        "Void 태그 처리",
+        "도메인 특화 언어(DSL)"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_05_html_dsl.json"
+    },
+    {
+      "id": "lisp/06-resilient-crawler",
+      "lang": "lisp",
+      "order": 6,
+      "title": "컨디션 시스템 기반 장애 복구 다운로더",
+      "summary": "스택을 풀지 않는 Lisp의 독보적인 Condition & Restart 시스템으로 네트워크 타임아웃/404 발생 시 retry, use-cache를 동적 복구하는 엔진",
+      "difficulty": 3,
+      "concepts": [
+        "Condition System",
+        "define-condition",
+        "handler-bind vs handler-case",
+        "restart-case",
+        "invoke-restart"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_06_resilient_crawler.json"
+    },
+    {
+      "id": "lisp/07-rpg-engine",
+      "lang": "lisp",
+      "order": 7,
+      "title": "CLOS 다중 디스패치 RPG 전투 시뮬레이터",
+      "summary": "CLOS 클래스 상속과 다중 디스패치(Multiple Dispatch), :before/:after/:around 메서드 조합으로 구축한 턴제 RPG 전투 엔진",
+      "difficulty": 3,
+      "concepts": [
+        "CLOS (defclass, defgeneric, defmethod)",
+        "다중 디스패치",
+        "메서드 조합 (:before, :after, :around)",
+        "call-next-method"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_07_rpg_engine.json"
+    },
+    {
+      "id": "lisp/08-query-engine",
+      "lang": "lisp",
+      "order": 8,
+      "title": "인메모리 관계형 쿼리 컴파일러",
+      "summary": "인메모리 테이블에 대해 선언적 S-표현식 쿼리(select, from, join, where)를 고속 실행 클로저 파이프라인으로 매크로 컴파일하는 쿼리 엔진",
+      "difficulty": 4,
+      "concepts": [
+        "선언적 쿼리 AST",
+        "매크로 코드 컴파일",
+        "해시 조인(Hash Join)",
+        "렉시컬 클로저",
+        "인메모리 데이터베이스"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_08_query_engine.json"
+    },
+    {
+      "id": "lisp/09-meta-circular-evaluator",
+      "lang": "lisp",
+      "order": 9,
+      "title": "렉시컬 스코프 메타서큘러 인터프리터",
+      "summary": "환경 체인, 변수 바인딩 프레임, 일급 함수(클로저), 특수 형식을 갖춘 완전한 미니 Lisp 인터프리터 메타순환 평가기",
+      "difficulty": 4,
+      "concepts": [
+        "메타순환 평가기 (eval/apply)",
+        "렉시컬 환경 체인",
+        "특수 형식 (define, lambda, if, begin)",
+        "일급 클로저"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_09_meta_circular_evaluator.json"
+    },
+    {
+      "id": "lisp/10-bytecode-vm",
+      "lang": "lisp",
+      "order": 10,
+      "title": "스택 기반 바이트코드 가상머신 및 컴파일러",
+      "summary": "S-표현식 언어 코드를 선형 바이트코드 명령어 세트(Opcode)로 1-패스 컴파일하고 고속 스택 머신 루프로 실행하는 가상머신 시스템",
+      "difficulty": 5,
+      "concepts": [
+        "가상머신 ISA",
+        "바이트코드 컴파일러",
+        "디스어셈블러",
+        "오퍼랜드 스택",
+        "PC(프로그램 카운터) 루프"
+      ],
+      "entry": "main.lisp",
+      "assetFile": "content/lisp_10_bytecode_vm.json"
+    },
+    {
+      "id": "nasm/01-cli-calc",
+      "lang": "nasm",
+      "order": 1,
+      "title": "64비트 정수 CLI 식 계산기",
+      "summary": "x86-64 범용 레지스터, 부호 있는 산술/논리 플래그, ASCII 정수 변환 루틴을 직접 구현한 64비트 정수 계산기",
+      "difficulty": 1,
+      "concepts": [
+        "x86-64 범용 레지스터",
+        "산술 연산 (add, sub, imul, idiv)",
+        "플래그 레지스터 (OF, ZF, SF)",
+        "System V AMD64 ABI",
+        "ASCII 변환"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_01_cli_calc.json"
+    },
+    {
+      "id": "nasm/02-string-toolkit",
+      "lang": "nasm",
+      "order": 2,
+      "title": "저수준 문자열 조작 및 포맷터 툴킷",
+      "summary": "x86-64 스트링 프리미티브(scasb, cmpsb, movsb)와 레지스터 비트 조작만으로 문자열 길이, 대소문자 변환, 역순, 16진수 덤프를 수행하는 툴킷",
+      "difficulty": 1,
+      "concepts": [
+        "스트링 프리미티브 (cld, repne scasb, movsb)",
+        "포인터 간접 주소 지정",
+        "대소문자 ASCII 비트 마스킹",
+        "16진 덤프 (Hexdump)"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_02_string_toolkit.json"
+    },
+    {
+      "id": "nasm/03-buffered-io-cat",
+      "lang": "nasm",
+      "order": 3,
+      "title": "제로카피 버퍼 I/O 및 파일 유틸리티",
+      "summary": "C 런타임 없이 리눅스 직결 시스템 콜(sys_read, sys_write)과 64KB 선형 I/O 버퍼를 자체 구현한 제로카피 파일 스트리밍 유틸리티",
+      "difficulty": 2,
+      "concepts": [
+        "직결 시스템 콜 (syscall)",
+        "커널 파일 디스크립터",
+        "64KB 선형 I/O 링 버퍼",
+        "Short Read/Write 루프",
+        "라인 번호 서식"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_03_buffered_io_cat.json"
+    },
+    {
+      "id": "nasm/04-sort-comparator",
+      "lang": "nasm",
+      "order": 4,
+      "title": "함수 포인터 기반 제네릭 퀵소트",
+      "summary": "C 표준 qsort 규격을 완벽 호환하여 임의 원소 크기와 비교 함수 포인터를 간접 호출(call rax)하여 정렬하는 제네릭 퀵소트 라이브러리",
+      "difficulty": 2,
+      "concepts": [
+        "간접 함수 호출 (call rax)",
+        "System V ABI 콜백 규약",
+        "재귀 스택 프레임 (Callee-saved 보존)",
+        "임의 크기 바이트 블록 스왑"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_04_sort_comparator.json"
+    },
+    {
+      "id": "nasm/05-arena-allocator",
+      "lang": "nasm",
+      "order": 5,
+      "title": "mmap 기반 메모리 풀 & 아레나 할당기",
+      "summary": "sys_mmap 가상 메모리 페이징과 16바이트 정렬 마스크를 사용하여 나노초 단위 속도로 청크를 배분하고 O(1)에 리셋하는 범프 할당기",
+      "difficulty": 3,
+      "concepts": [
+        "가상 메모리 페이징 (sys_mmap)",
+        "16바이트 메모리 정렬 마스크",
+        "범프 포인터 (Bump Allocation)",
+        "O(1) 수명주기 리셋"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_05_arena_allocator.json"
+    },
+    {
+      "id": "nasm/06-simd-vector-ops",
+      "lang": "nasm",
+      "order": 6,
+      "title": "AVX2/SSE 벡터 가속 수학 엔진",
+      "summary": "256비트 YMM 레지스터와 FMA3 명령어를 사용하여 단정밀도 부동소수점 8개를 한 번에 병렬 연산하고 수평 레덕션(Reduction)을 수행하는 벡터 엔진",
+      "difficulty": 3,
+      "concepts": [
+        "256비트 YMM 레지스터",
+        "정렬/비정렬 로드 (vmovups)",
+        "FMA3 (vfmadd231ps)",
+        "수평 레덕션 (Horizontal Sum)",
+        "SIMD 병렬성"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_06_simd_vector_ops.json"
+    },
+    {
+      "id": "nasm/07-sha256-hasher",
+      "lang": "nasm",
+      "order": 7,
+      "title": "순수 어셈블리 SHA-256 암호학적 해시 엔진",
+      "summary": "FIPS 180-4 표준 SHA-256을 libc 없이 구현하여 512비트 블록 패딩, 빅엔디안 bswap, 64라운드 비선형 압축 함수를 직접 레지스터에 매핑한 해시 엔진",
+      "difficulty": 4,
+      "concepts": [
+        "비트 회전 (ror, rol)",
+        "엔디안 변환 (bswap)",
+        "메시지 스케줄 확장",
+        "64라운드 비선형 압축",
+        "FIPS 180-4 표준"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_07_sha256_hasher.json"
+    },
+    {
+      "id": "nasm/08-elf64-parser",
+      "lang": "nasm",
+      "order": 8,
+      "title": "64비트 ELF 바이너리 인스펙터 및 심볼 덤퍼",
+      "summary": "ELF64 실행 파일의 매직 바이트, ELF 헤더, 섹션 헤더 테이블, 문자열 테이블 및 .symtab 심볼을 직접 순회하여 출력하는 저수준 바이너리 분석기",
+      "difficulty": 4,
+      "concepts": [
+        "ELF64 헤더 오프셋 구조",
+        "바이너리 매직 넘버 검증",
+        "간접 문자열 테이블 (.shstrtab)",
+        "섹션 및 심볼 테이블 순회"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_08_elf64_parser.json"
+    },
+    {
+      "id": "nasm/09-coroutine-scheduler",
+      "lang": "nasm",
+      "order": 9,
+      "title": "협력형 사용자 레벨 코루틴 스케줄러",
+      "summary": "OS 커널 개입 없이 어셈블리 12개 명령어로 RSP와 Callee-saved 레지스터를 원자적 스왑하여 수만 개의 파이버를 스케줄링하는 유저모드 동시성 런타임",
+      "difficulty": 5,
+      "concepts": [
+        "RSP 스택 포인터 스왑",
+        "Callee-saved 레지스터 보존",
+        "가짜 콜 프레임 주입 (Fake Frame)",
+        "협력형 비선점 스케줄링"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_09_coroutine_scheduler.json"
+    },
+    {
+      "id": "nasm/10-tiny-jit-vm",
+      "lang": "nasm",
+      "order": 10,
+      "title": "x86-64 JIT 동적 머신코드 컴파일러 및 바이트코드 VM",
+      "summary": "스택 바이트코드를 읽어 런타임에 x86-64 기계어 바이트열(Opcode)을 동적 방출하고 mprotect로 실행 권한을 부여하여 네이티브로 실행하는 미니 JIT 컴파일러",
+      "difficulty": 5,
+      "concepts": [
+        "동적 기계어 방출 (Opcode Emitter)",
+        "W^X 보안 정책 (mprotect PROT_EXEC)",
+        "상대 오프셋 점프 백패칭",
+        "JIT 네이티브 함수 포인터 호출"
+      ],
+      "entry": "main.asm",
+      "assetFile": "content/nasm_10_tiny_jit_vm.json"
+    },
+    {
       "id": "python/01-todo-cli",
       "lang": "python",
       "order": 1,
