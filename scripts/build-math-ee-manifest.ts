@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
 const rootDir = path.resolve(__dirname, '..');
 
 // 1. Math symbols
@@ -32,9 +34,25 @@ for (const mod of elManifest.modules) {
   elModulesData.push(JSON.parse(fs.readFileSync(modPath, 'utf8')));
 }
 
+// 5. EE vs ECE Comparative Analysis & Roadmaps
+const compPath = path.join(rootDir, 'courses', 'ee-comparative', 'comparative-data.json');
+const eeComparative = fs.existsSync(compPath) ? JSON.parse(fs.readFileSync(compPath, 'utf8')) : null;
+
+// 6. Advanced Mathematical Foundations & Derivations
+const mathPath = path.join(rootDir, 'courses', 'ee-advanced-math', 'advanced-math.json');
+const eeAdvancedMath = fs.existsSync(mathPath) ? JSON.parse(fs.readFileSync(mathPath, 'utf8')) : null;
+
+// 7. Classical Seminal Papers & Korean Translations
+const papersPath = path.join(rootDir, 'courses', 'ee-classical-papers', 'classical-papers.json');
+const eeClassicalPapers = fs.existsSync(papersPath) ? JSON.parse(fs.readFileSync(papersPath, 'utf8')) : null;
+
+// 8. Roadmap Curriculum In-Depth Modules
+const roadmapPath = path.join(rootDir, 'courses', 'ee-comparative', 'roadmap-curriculum.json');
+const eeRoadmapCurriculum = fs.existsSync(roadmapPath) ? JSON.parse(fs.readFileSync(roadmapPath, 'utf8')) : null;
+
 const consolidated = {
   title: "수학 기호·정리 증명 및 전기·전자공학 마스터 스위트",
-  version: "1.0.0",
+  version: "1.3.0",
   lastUpdated: new Date().toISOString(),
   mathSymbols: {
     title: symbolsManifest.title,
@@ -54,9 +72,14 @@ const consolidated = {
     title: elManifest.title,
     description: elManifest.description,
     modules: elModulesData
-  }
+  },
+  eeComparative,
+  eeRoadmapCurriculum,
+  eeAdvancedMath,
+  eeClassicalPapers
 };
 
 const outPath = path.join(rootDir, 'site', 'web', 'static', 'math-ee', 'manifest.json');
 fs.writeFileSync(outPath, JSON.stringify(consolidated, null, 2), 'utf8');
 console.log(`\n🎉 Consolidated manifest built successfully at ${outPath} (${(fs.statSync(outPath).size / 1024).toFixed(1)} KB).\n`);
+
