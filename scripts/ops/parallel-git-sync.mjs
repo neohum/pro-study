@@ -310,7 +310,7 @@ export async function syncRepoFull(repoPath, customMessage = null) {
   if (isDirty) {
     console.log(`${logPrefix} 📝 Staging and committing changes...`);
     await runCommandAsync('git', ['add', '-A'], cwd);
-    const commitMsg = customMessage || `feat(${repoName}): sync local updates & automated verification\n\nAutomated parallel git sync via subagent.`;
+    const commitMsg = customMessage || `feat(${repoName}): sync local updates & automated verification\n\nAutomated parallel git sync via subagent.\n\nAd-hoc: parallel git sync workspace updates`;
     const commitRes = await runCommandAsync('git', ['commit', '-m', commitMsg], cwd);
     if (!commitRes.success && !commitRes.stdout.includes('nothing to commit')) {
       return { success: false, step: 'commit', error: commitRes.stderr };
