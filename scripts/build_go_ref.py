@@ -1,0 +1,1404 @@
+# scripts/build_go_ref.py
+# -*- coding: utf-8 -*-
+"""
+Publication-grade Go 1.24+ Reference Generator.
+Produces content/reference/go.json and synchronizes android-app/app/src/main/assets/reference/go.json.
+Conforms strictly to projects/_schema/reference.schema.json.
+"""
+
+import json
+import os
+import sys
+
+go_grammar = [
+    {
+        "id": "go-vars-types",
+        "title": "1. 변수 선언 (var, 단축 대입 :=)과 기본 데이터 타입 (Zero Value)",
+        "category": "기본 문법과 타입",
+        "summary": "Go의 변수는 명시적 var 선언 또는 함수 내부 전용 단축 대입(:=)으로 정의합니다. 초기화되지 않은 변수는 쓰레기 값이 아닌 정수 0, 불리언 false, 빈 문자열 \"\", 포인터/인터페이스/슬라이스/맵/채널 nil 등 엄격한 제로값(Zero Value)으로 자동 초기화됩니다. Go는 암시적 형변환(Type Coercion)을 절대 허용하지 않는 엄격한 정적 타입 언어입니다.",
+        "syntax": "var a int = 10\nvar s string // 제로값 \"\"\nx, y := 20, \"hello\" // 함수 내부 단축 선언 및 다중 대입\nvar (\n    count int\n    rate  float64 = 0.05\n)",
+        "example": """package main
+
+import (
+    "fmt"
+    "strconv"
+)
+
+func main() {
+    // 1. var 선언과 타입별 제로값(Zero Value) 보장
+    var i int       // 0
+    var b bool      // false
+    var s string    // ""
+    var p *int      // nil
+    var sl []string // nil (len=0, cap=0)
+    fmt.Printf("Zero values: i=%d, b=%t, s=%q, p=%v, sl=%v\\n", i, b, s, p, sl)
+
+    // 2. 함수 내부 단축 변수 선언(:=) 및 다중 할당
+    name, age, score := "Gopher", 15, 98.5
+    fmt.Printf("User: %s (나이: %d, 점수: %.1f)\\n", name, age, score)
+
+    // 3. 명시적 형변환 (암시적 변환 불허)
+    var raw int = 42
+    var converted float64 = float64(raw) // 반드시 T(v) 명시
+    strVal := strconv.Itoa(raw)          // 정수를 십진수 문자열로 변환
+    fmt.Printf("Converted: float=%.2f, str=%s\\n", converted, strVal)
+
+    // 4. 유니코드 rune (int32 별칭)과 byte (uint8 별칭)
+    var r rune = '한'
+    fmt.Printf("Rune: %c (유니코드 코드포인트: U+%04X)\\n", r, r)
+}""",
+        "explanation": "Go 컴파일러는 미초기화 메모리로 인한 보안 취약점과 비결정적 동작을 원천 차단하기 위해 모든 변수를 해당 타입의 제로값(Zero Value)으로 초기화합니다. 패키지 수준(전역) 변수는 반드시 var를 써야 하며, := 연산자는 함수 내부에서만 유효합니다. := 선언 시 좌변에 최소 1개 이상의 새로운 식별자가 존재하면 기존 변수의 재할당과 새 변수 선언이 동시에 허용됩니다.",
+        "pitfalls": "중첩 블록(예: if문 내부)에서 :=를 무심코 사용하면 바깥 스코프의 동일 변수가 가려지는 변수 섀도잉(Variable Shadowing) 버그가 쉽게 발생합니다. 또한 string(65)처럼 정수를 string()으로 직접 변환하면 숫자 '65'가 아니라 유니코드 문자 'A'로 변환되므로 반드시 strconv.Itoa()를 써야 합니다.",
+        "practice": "문제: Go 언어에서 포인터, 슬라이스, 맵, 채널, 인터페이스 타입 변수가 명시적으로 초기화되지 않았을 때 갖는 제로값은 무엇일까요?\n정답: nil"
+    },
+    {
+        "id": "go-constants-iota",
+        "title": "2. 상수(const)와 열거형 패턴 iota",
+        "category": "기본 문법과 타입",
+        "summary": "상수(const)는 컴파일 타임에 평가되는 불변값으로 타입 지정(typed) 또는 미지정(untyped) 상수로 선언할 수 있습니다. const 블록 내의 iota 식별자는 0부터 시작하여 행(Line)마다 1씩 자동 증가하는 열거형 시퀀스와 비트마스크(Bitmask) 플래그를 정교하게 생성합니다.",
+        "syntax": "const Pi = 3.1415926535\nconst (\n    Sunday = iota // 0\n    Monday        // 1\n    Tuesday       // 2\n)\nconst (\n    _  = 1 << (10 * iota) // 첫 1 << 0 생략\n    KB                    // 1 << 10 (1024)\n    MB                    // 1 << 20\n)",
+        "example": """package main
+
+import "fmt"
+
+type Role int
+
+const (
+    RoleGuest Role = iota // 0
+    RoleMember            // 1
+    RoleAdmin             // 2
+)
+
+type Permission uint8
+
+const (
+    PermRead  Permission = 1 << iota // 1 (0001)
+    PermWrite                        // 2 (0010)
+    PermExec                         // 4 (0100)
+)
+
+func main() {
+    fmt.Printf("RoleAdmin ID: %d\\n", RoleAdmin)
+
+    // 비트 연산자를 활용한 권한 조합
+    userPerm := PermRead | PermWrite
+    hasExec := (userPerm & PermExec) != 0
+    fmt.Printf("User Perm: %04b, 실행 권한 보유: %t\\n", userPerm, hasExec)
+}""",
+        "explanation": "iota는 const 키워드가 나타날 때마다 0으로 리셋되며, const 괄호 블록 안에서 줄 단위로 1씩 증가합니다. 빈 식별자(_)를 조합하면 첫 번째 0 값을 건너뛸 수 있으며, 비트 시프트 연산(1 << (10 * iota))과 결합해 KB, MB, GB 등의 크기 단위를 우아하게 표현할 수 있습니다. 타입 미지정 상수는 최소 256비트 정밀도를 유지합니다.",
+        "pitfalls": "const 값은 반드시 컴파일 타임에 확정되어야 하므로 런타임에 결정되는 함수 호출(예: math.Sqrt(4) 또는 time.Now()) 결과는 const에 대입할 수 없으며 컴파일 에러가 발생합니다.",
+        "practice": "문제: Go의 const 블록 안에서 0부터 시작하여 행마다 자동으로 1씩 증가하는 정수 시퀀스를 생성하는 특수 식별자는 무엇일까요?\n정답: iota"
+    },
+    {
+        "id": "go-pointers",
+        "title": "3. 포인터(&, *)와 값 전달(pass-by-value) 시맨틱",
+        "category": "메모리와 포인터",
+        "summary": "Go의 모든 인자 전달은 오직 Pass-by-Value(값에 의한 호출)입니다. 포인터 변수 역시 메모리 주소라는 '값'이 복사되어 전달됩니다. C/C++와 달리 포인터 산술 연산(p++)이 금지되어 메모리 안전성을 보장하며, 컴파일러의 이스케이프 분석(Escape Analysis)을 통해 스택과 힙 할당이 자동 결정됩니다.",
+        "syntax": "p := &x // x의 메모리 주소 반환 (*int 타입)\n*p = 100 // 역참조(dereference)를 통한 값 수정\nvar ptr *MyStruct = new(MyStruct)",
+        "example": """package main
+
+import "fmt"
+
+type Config struct {
+    MaxRetries int
+}
+
+// 값 전달: 원본 객체의 복사본이 생성되므로 원본 불변
+func updateValue(c Config) {
+    c.MaxRetries = 99
+}
+
+// 포인터 전달: 메모리 주소 복사이므로 가리키는 원본 필드 수정
+func updatePointer(c *Config) {
+    c.MaxRetries = 99
+}
+
+// 지역 변수의 포인터를 반환해도 안전 (이스케이프 분석으로 힙 할당)
+func newConfig() *Config {
+    cfg := Config{MaxRetries: 3}
+    return &cfg
+}
+
+func main() {
+    c := Config{MaxRetries: 1}
+    updateValue(c)
+    fmt.Println("값 전달 후:", c.MaxRetries) // 1
+
+    updatePointer(&c)
+    fmt.Println("포인터 전달 후:", c.MaxRetries) // 99
+
+    heapCfg := newConfig()
+    fmt.Println("힙 할당 객체:", heapCfg.MaxRetries) // 3
+}""",
+        "explanation": "Go 컴파일러는 이스케이프 분석(Escape Analysis)을 실행하여 함수 종료 후에도 변수가 참조되면 힙(Heap)에 할당하고, 그렇지 않으면 초고속 스택(Stack)에 할당합니다. 개발자가 직접 free/delete를 신경 쓸 필요 없이 댕글링 포인터(Dangling Pointer) 문제를 원천 차단합니다.",
+        "pitfalls": "nil 포인터를 역참조하면 런타임 panic(invalid memory address or nil pointer dereference)이 발생합니다. 또한 unsafe 패키지를 쓰지 않는 한 p++ 같은 포인터 산술 연산은 컴파일되지 않습니다.",
+        "practice": "문제: 변수 v의 메모리 주소를 얻어 포인터를 생성할 때 변수명 앞에 붙이는 단항 연산자는 무엇일까요?\n정답: & (앰퍼샌드)"
+    },
+    {
+        "id": "go-control-flow",
+        "title": "4. 제어 흐름: if 초기화문(if short statement), 삼항 연산자 부재와 관용구",
+        "category": "제어 흐름",
+        "summary": "Go의 if 문은 조건식 직전에 세미콜론(;)으로 구분되는 짧은 초기화문(Short Statement)을 실행할 수 있습니다. 초기화문에서 선언된 변수의 유효 범위는 해당 if-else 블록 내부로 엄격히 제한됩니다. Go에는 가독성과 단순성을 위해 삼항 연산자(?:)가 의도적으로 존재하지 않으며 if-else 문을 일관되게 사용합니다.",
+        "syntax": "if err := doWork(); err != nil {\n    return err\n}\nif val, ok := cache[key]; ok {\n    use(val)\n} else {\n    fallback()\n}",
+        "example": """package main
+
+import (
+    "fmt"
+    "strconv"
+)
+
+func findUserRole(id int) (string, error) {
+    if id <= 0 {
+        return "", fmt.Errorf("invalid ID: %d", id)
+    }
+    return "admin", nil
+}
+
+func main() {
+    // 1. if 초기화문으로 에러 핸들링 스코프 격리
+    if role, err := findUserRole(1); err != nil {
+        fmt.Println("조회 에러:", err)
+    } else {
+        fmt.Println("조회 성공, 역할:", role)
+    }
+    // role과 err 변수는 if-else 블록 외부에서 소멸됨
+
+    // 2. 삼항 연산자 대체 관용구
+    score := 85
+    grade := "F"
+    if score >= 90 {
+        grade = "A"
+    } else if score >= 80 {
+        grade = "B"
+    }
+    fmt.Printf("점수: %d, 학점: %s\\n", score, grade)
+
+    // 3. 인라인 문자열 파싱 검증
+    if n, err := strconv.Atoi("100"); err == nil && n > 50 {
+        fmt.Printf("유효한 50 초과 숫자: %d\\n", n)
+    }
+}""",
+        "explanation": "초기화문 if 문법은 에러 처리 및 맵/채널 조회 시 변수의 생명주기를 즉시 소비되는 범위로 격리시켜 네임스페이스 오염과 실수에 의한 변수 재사용을 방지하는 Go의 핵심 관용구(Guard Clause)입니다. 조기 반환(Early Return) 패턴과 결합하여 중첩 들여쓰기를 제거합니다.",
+        "pitfalls": "초기화문에서 바깥 스코프의 동일한 변수명을 :=로 선언하면 외부 변수가 업데이트되지 않고 내부 로컬 변수만 변경되는 변수 섀도잉 버그가 자주 발생합니다.",
+        "practice": "문제: Go 언어에 다른 언어의 'condition ? a : b' 형태 삼항 연산자가 존재하지 않는 언어 설계상의 주된 이유는 무엇일까요?\n정답: 코드의 복잡성을 줄이고 가독성과 단순성을 일관되게 유지하기 위함 (또는 가독성/단순성)"
+    },
+    {
+        "id": "go-switch-type",
+        "title": "5. switch 문: 다중 조건, fallthrough 제어 및 타입 스위치(Type Switch)",
+        "category": "제어 흐름",
+        "summary": "Go의 switch 문은 각 case 끝에 break가 암시적으로 자동 적용됩니다. 콤마(,)로 여러 매칭 조건을 묶을 수 있고, 표현식을 생략하여 if-else 체인을 대체할 수 있으며, fallthrough 키워드로 명시적 하강을 제어합니다. 또한 any(인터페이스) 타입에 대해 switch v := i.(type) 형태의 타입 스위치를 제공합니다.",
+        "syntax": "switch x {\ncase 1, 2, 3: ...\ndefault: ...\n}\nswitch {\ncase score >= 90: ...\n}\nswitch v := iface.(type) {\ncase int: ...\ncase string: ...\n}",
+        "example": """package main
+
+import "fmt"
+
+func inspectType(val any) {
+    // 타입 스위치: 런타임 구체 타입 판별 및 타입 바인딩
+    switch v := val.(type) {
+    case int:
+        fmt.Printf("정수 타입: %d (제곱: %d)\\n", v, v*v)
+    case string:
+        fmt.Printf("문자열 타입: %s (길이: %d)\\n", v, len(v))
+    case bool:
+        fmt.Printf("불리언 타입: %t\\n", v)
+    case nil:
+        fmt.Println("nil 값입니다")
+    default:
+        fmt.Printf("기타 미지원 타입: %T\\n", v)
+    }
+}
+
+func main() {
+    inspectType(42)
+    inspectType("Go 1.24")
+    inspectType(true)
+    inspectType(nil)
+
+    // fallthrough 시맨틱
+    num := 1
+    switch num {
+    case 1:
+        fmt.Println("Step 1 통과")
+        fallthrough // 다음 케이스 조건 검사 없이 바로 실행
+    case 2:
+        fmt.Println("Step 2 통과")
+    }
+}""",
+        "explanation": "타입 스위치는 any(interface{}) 컨테이너에 담긴 실제 구체 타입을 안전하게 분기할 수 있는 Go 고유의 기능입니다. case 절 내부에서 v는 해당 케이스의 구체 타입으로 자동 캐스팅되므로 별도의 타입 단언 없이 전용 메서드와 필드에 즉시 접근할 수 있습니다.",
+        "pitfalls": "fallthrough는 다음 case의 조건식을 평가하지 않고 바로 내부 코드를 실행하므로 의도치 않은 분기 진입이 일어날 수 있습니다. 또한 i.(type) 구문은 switch 문의 헤더에서만 쓸 수 있습니다.",
+        "practice": "문제: Go의 switch 문에서 다음 case 블록의 코드를 조건 검사 없이 강제로 계속 실행하도록 지시하는 키워드는 무엇일까요?\n정답: fallthrough"
+    },
+    {
+        "id": "go-loops-range",
+        "title": "6. 반복문: 단일 for 키워드 (while/무한루프 대체), for-range",
+        "category": "제어 흐름",
+        "summary": "Go에는 while, do-while 키워드가 없으며 모든 루프는 오직 for 키워드 하나로 통일됩니다. 3단계 전통 루프, 조건식 루프(while 형태), 무한 루프(for {})를 모두 지원합니다. for-range 구문은 슬라이스, 맵, 채널, 문자열(rune 단위 디코딩) 및 정수(Go 1.22+)를 우아하게 순회합니다.",
+        "syntax": "for i := 0; i < n; i++ { ... }\nfor condition { ... } // while 형태\nfor { ... } // 무한 루프\nfor idx, val := range slice { ... }\nfor i := range 10 { ... } // Go 1.22+ 정수 범위 순회",
+        "example": """package main
+
+import "fmt"
+
+func main() {
+    // 1. Go 1.22+ range over integer (정수 순회)
+    total := 0
+    for i := range 5 { // 0, 1, 2, 3, 4
+        total += i
+    }
+    fmt.Println("0부터 4까지 합:", total)
+
+    // 2. 슬라이스 순회 및 값 복사 주의
+    nums := []int{10, 20, 30}
+    for idx, val := range nums {
+        fmt.Printf("[%d] = %d\\n", idx, val)
+    }
+
+    // 3. 문자열 rune(UTF-8) 순회 (바이트가 아닌 유니코드 단위)
+    kor := "Go언어"
+    for byteOffset, r := range kor {
+        fmt.Printf("오프셋 %d: 문자 %c\\n", byteOffset, r)
+    }
+
+    // 4. 레이블을 활용한 다중 중첩 루프 탈출
+Outer:
+    for x := 0; x < 3; x++ {
+        for y := 0; y < 3; y++ {
+            if x*y == 4 {
+                fmt.Printf("탈출 지점: (%d, %d)\\n", x, y)
+                break Outer
+            }
+        }
+    }
+}""",
+        "explanation": "Go 1.22부터 for 루프 변수 스코프 규칙이 혁신되었습니다. 루프 변수가 매 반복마다 새로 생성되므로, 루프 내부에서 클로저나 고루틴을 실행할 때 이전 버전에서 빈번했던 '루프 변수 캡처 버그'가 완전히 해결되었습니다. 정수 범위 for i := range n 문법도 1.22부터 정식 지원됩니다.",
+        "pitfalls": "for _, val := range slice에서 val은 원본 슬라이스 요소의 '복사본'입니다. val의 필드를 수정해도 원본 슬라이스는 전혀 변경되지 않으므로 slice[idx].field = ... 형태로 수정해야 합니다.",
+        "practice": "문제: Go 1.22부터 0부터 9까지 10번 반복하기 위해 'for i := 0; i < 10; i++' 대신 사용할 수 있는 간결한 range 문법은 무엇일까요?\n정답: for i := range 10"
+    },
+    {
+        "id": "go-functions-multi-return",
+        "title": "7. 다중 반환값과 명명된 반환값 (Named Return Values)",
+        "category": "함수와 제어",
+        "summary": "Go 함수는 여러 개의 값을 동시에 반환할 수 있어 (result, error) 또는 (val, ok) 형태의 표준 성공/실패 패턴을 자연스럽게 구현합니다. 반환 파라미터에 변수명을 부여하는 명명된 반환값(Named Return Values)을 선언할 수 있으며, 이 경우 인자 없는 naked return이 가능합니다.",
+        "syntax": "func Divide(a, b float64) (float64, error) { ... }\nfunc MinMax(nums []int) (min int, max int) { ... return }",
+        "example": """package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+// 다중 반환값 관용구 (결과, error)
+func safeDivide(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, errors.New("0으로 나눌 수 없습니다")
+    }
+    return a / b, nil
+}
+
+// 명명된 반환값과 defer의 결합
+func calculateWithAudit(n int) (result int, err error) {
+    defer func() {
+        // defer 클로저에서 명명된 반환값 관찰 및 변경 가능
+        if result < 0 {
+            err = errors.New("결과가 음수일 수 없습니다")
+        }
+    }()
+
+    result = n * 2
+    if n == -5 {
+        result = -10 // defer에서 err 세팅 트리거
+    }
+    return // naked return
+}
+
+func main() {
+    res, err := safeDivide(10, 2)
+    if err != nil {
+        fmt.Println("오류:", err)
+        return
+    }
+    fmt.Println("나눗셈 결과:", res)
+
+    val, auditErr := calculateWithAudit(-5)
+    fmt.Printf("감사 계산 결과: val=%d, err=%v\\n", val, auditErr)
+}""",
+        "explanation": "다중 반환값은 별도의 Pair, Result 래퍼 객체나 비싼 C++ 스타일 예외(throw) 없이도 호출자에게 실패 사유를 강제 전달하는 Go의 대표 디자인 패턴입니다. 명명된 반환값은 함수 도입 시점에 제로값으로 초기화되어 지역 변수처럼 동작하며, 지연 실행 defer에서 이를 가로채 수정할 수도 있습니다.",
+        "pitfalls": "함수가 10줄을 초과하는 복잡한 로직에서 naked return을 남용하면 어떤 변수가 반환되는지 가독성이 급격히 저하되므로, 명시적인 return result, err 형태를 권장합니다.",
+        "practice": "문제: Go에서 함수 종료 직전 defer로 등록된 클로저가 함수의 최종 반환값을 가로채거나 수정할 수 있으려면 반환 파라미터가 어떻게 선언되어 있어야 할까요?\n정답: 명명된 반환값 (Named Return Values)"
+    },
+    {
+        "id": "go-first-class-closures",
+        "title": "8. 일급 함수와 클로저(Closure) 및 스코프 캡처",
+        "category": "함수와 제어",
+        "summary": "Go의 함수는 일급 시민(First-Class Citizen)으로 변수에 할당되거나 인자로 전달되고 반환값으로 반환될 수 있습니다. 익명 함수가 외부 렉시컬 스코프의 변수를 참조할 때 클로저(Closure)가 형성되어 외부 함수가 종료되어도 캡처된 변수가 힙으로 이스케이프되어 상태를 유지합니다.",
+        "syntax": "fn := func(x int) int { return x * x }\ntype Operation func(int, int) int\nfunc MakeAdder(base int) func(int) int { ... }",
+        "example": """package main
+
+import "fmt"
+
+// 클로저 생성기: 외부 상태를 캡처하여 보존
+func createCounter(initial int) func() int {
+    count := initial
+    return func() int {
+        count++ // 외부 렉시컬 변수 count를 캡처
+        return count
+    }
+}
+
+// 고차 함수(Higher-Order Function): 함수를 인자로 받음
+func applyOperation(a, b int, op func(int, int) int) int {
+    return op(a, b)
+}
+
+func main() {
+    c1 := createCounter(0)
+    fmt.Println("c1:", c1()) // 1
+    fmt.Println("c1:", c1()) // 2
+
+    c2 := createCounter(100)
+    fmt.Println("c2:", c2()) // 101 (독립된 캡처 상태)
+
+    multiply := func(x, y int) int { return x * y }
+    fmt.Println("연산 결과:", applyOperation(5, 6, multiply)) // 30
+}""",
+        "explanation": "클로저가 참조하는 변수는 스택 프레임이 해제될 때 소멸되지 않고 컴파일러의 이스케이프 분석에 의해 힙(Heap)으로 승격됩니다. 이를 통해 함수형 팩토리, 미들웨어 체인, 콜백 핸들러, 설정 옵션 패턴(Functional Options Pattern)을 강력하게 구현할 수 있습니다.",
+        "pitfalls": "오래 지속되는 클로저가 대용량 슬라이스나 거대한 구조체의 포인터를 캡처하고 있으면 가비지 컬렉터가 해당 메모리를 해제하지 못해 메모리 누수가 발생할 수 있습니다.",
+        "practice": "문제: 자신이 선언된 외부 함수의 로컬 변수를 참조하여 외부 함수가 종료된 후에도 해당 변수의 상태를 보존하는 익명 함수 구조를 무엇이라 부를까요?\n정답: 클로저 (Closure)"
+    },
+    {
+        "id": "go-arrays-slices",
+        "title": "9. 슬라이스 내부 구조 (포인터, len, cap)와 서브 슬라이싱 ([low:high:max])",
+        "category": "컬렉션과 데이터 구조",
+        "summary": "슬라이스는 버킹 고정 배열(Backing Array)을 참조하는 3워드(24바이트) 크기의 런타임 헤더(Data 포인터, len 길이, cap 용량)입니다. 서브슬라이싱은 버킹 배열을 공유하며, Full Slice Expression [low:high:max] 문법으로 하위 슬라이스의 cap을 명시적으로 제한해 원본 훼손을 방지합니다.",
+        "syntax": "s := make([]int, len, cap)\nsub := s[low:high] // cap은 len(backing) - low\nsafe := s[low:high:max] // cap = max - low 로 안전하게 제한",
+        "example": """package main
+
+import "fmt"
+
+func main() {
+    // 1. 고정 배열과 기본 슬라이스
+    arr := [6]int{10, 20, 30, 40, 50, 60}
+    s1 := arr[1:4] // len=3 (인덱스 1,2,3), cap=5 (인덱스 1부터 배열 끝까지)
+    fmt.Printf("s1: %v, len=%d, cap=%d\\n", s1, len(s1), cap(s1))
+
+    // 2. 버킹 배열 공유로 인한 사이드 이펙트
+    s1[0] = 999
+    fmt.Println("arr 수정 결과:", arr) // arr[1]이 999로 변경됨
+
+    // 3. Full Slice Expression [low:high:max]로 cap 제한
+    // arr[1:3:3] -> len = 3-1 = 2, cap = 3-1 = 2
+    safeSlice := arr[1:3:3]
+    fmt.Printf("safeSlice: len=%d, cap=%d\\n", len(safeSlice), cap(safeSlice))
+
+    // safeSlice에 append하면 cap이 찼으므로 새 버킹 배열을 할당함 -> 원본 arr 보호!
+    safeSlice = append(safeSlice, 777)
+    fmt.Println("append 후 원본 arr:", arr) // 777이 원본을 덮어쓰지 않음
+}""",
+        "explanation": "슬라이스는 값 복사 시 24바이트 헤더(포인터 8B, len 8B, cap 8B)만 복사되므로 인자 전달 비용이 극도로 저렴합니다. 그러나 내부 Data 포인터가 동일한 연속 메모리 버킹 배열을 가리키므로 서브슬라이스의 변경이 원본에 즉시 전파됩니다.",
+        "pitfalls": "대용량 파일이나 1GB 슬라이스에서 `small := huge[0:2]`로 서브슬라이스를 뜨면 단 2개 원소 때문에 1GB 버킹 배열 전체가 GC 수거 대상에서 제외됩니다. 이 경우 반드시 `copy`를 써서 독립 할당해야 합니다.",
+        "practice": "문제: 슬라이스 s에서 s[low:high:max] 문법을 사용할 때 결과 슬라이스의 용량(capacity)은 어떻게 계산될까요?\n정답: max - low"
+    },
+    {
+        "id": "go-slices-growth-append",
+        "title": "10. append 분할 상환 성장과 copy 내장 함수",
+        "category": "컬렉션과 데이터 구조",
+        "summary": "append 내장 함수는 슬라이스에 요소를 추가하며, 용량(cap)이 부족하면 런타임이 새 메모리를 할당하여 요소를 복사한 뒤 반환합니다(분할 상환 O(1)). copy(dst, src)는 두 슬라이스 간 요소를 안전하게 독립 복제하며 min(len(dst), len(src))개수만큼 복사합니다.",
+        "syntax": "s = append(s, elem)\ns = append(s, otherSlice...)\nn := copy(dst, src)",
+        "example": """package main
+
+import "fmt"
+
+func main() {
+    var nums []int
+    fmt.Printf("초기: len=%d, cap=%d\\n", len(nums), cap(nums))
+
+    // 용량 확장 추적
+    for i := 1; i <= 5; i++ {
+        nums = append(nums, i*10)
+        fmt.Printf("추가 후: len=%d, cap=%d, 요소: %v\\n", len(nums), cap(nums), nums)
+    }
+
+    // copy 내장 함수를 통한 완전 독립 복제
+    clone := make([]int, len(nums)) // 반드시 필요한 길이(len)만큼 할당
+    copied := copy(clone, nums)
+    clone[0] = 999
+
+    fmt.Printf("복사된 개수: %d\\n", copied)
+    fmt.Printf("원본[0]=%d, 복제본[0]=%d (독립 보장)\\n", nums[0], clone[0])
+}""",
+        "explanation": "Go 런타임(runtime/slice.go)은 슬라이스 용량 확장 시 작은 크기에서는 2배씩 증가시키며, 용량이 커지면 메모리 단편화를 줄이고 GC 부하를 완화하기 위해 약 1.25배 및 메모리 할당 블록 크기에 맞춘 점진적 성장을 수행합니다.",
+        "pitfalls": "copy(dst, src)를 호출할 때 dst 슬라이스의 길이가 0이면(예: make([]int, 0, 10)) 아무것도 복사되지 않습니다. copy는 cap이 아니라 len을 기준으로 작동하기 때문입니다.",
+        "practice": "문제: copy(dst, src) 함수로 src의 모든 요소를 dst에 완전히 복제하려면 dst 슬라이스의 make 선언 시 반드시 무엇을 0이 아닌 len(src) 이상으로 지정해야 할까요?\n정답: 길이 (len 또는 length)"
+    },
+    {
+        "id": "go-maps",
+        "title": "11. 해시맵(map): make 할당, comma-ok 패턴, delete, 비결정론적 순회 순서",
+        "category": "컬렉션과 데이터 구조",
+        "summary": "Go의 map은 해시 테이블 기반의 참조 타입(런타임 hmap 포인터)입니다. make(map[K]V, hint) 또는 리터럴로 생성합니다. 미등록 키 조회 시 제로값을 반환하므로 키 존재 유무는 val, ok := m[key] (comma-ok) 패턴으로 확인합니다. 순회 순서는 의도적으로 무작위화되어 있습니다.",
+        "syntax": "m := make(map[string]int, 100)\nm[k] = v\ndelete(m, k)\nv, ok := m[k]\nfor k, v := range m { ... }",
+        "example": """package main
+
+import "fmt"
+
+func main() {
+    scores := make(map[string]int)
+    scores["Alice"] = 95
+    scores["Bob"] = 0 // 실제 값이 0인 경우
+
+    // comma-ok 패턴: 키 존재 여부 판별
+    val, exists := scores["Bob"]
+    fmt.Printf("Bob: val=%d, exists=%t\\n", val, exists) // 0, true
+
+    missingVal, missingExists := scores["Charlie"]
+    fmt.Printf("Charlie: val=%d, exists=%t\\n", missingVal, missingExists) // 0, false
+
+    delete(scores, "Alice")
+
+    // map 순회는 비결정론적(무작위 순서)
+    data := map[string]int{"A": 1, "B": 2, "C": 3, "D": 4}
+    for k, v := range data {
+        fmt.Printf("%s:%d ", k, v)
+    }
+    fmt.Println()
+}""",
+        "explanation": "Go 런타임은 개발자가 해시 맵의 순회 순서에 의존하는 취약한 코드를 작성하지 못하도록 range 순회 시 임의의 버킷 오프셋을 랜덤 시드로 선택합니다. 정렬된 순회가 필요할 때는 키를 슬라이스로 수집한 뒤 sort.Strings() 또는 slices.Sort()로 정렬하여 접근해야 합니다.",
+        "pitfalls": "초기화되지 않은 nil 맵(var m map[string]int)에서 읽기는 안전하게 제로값을 반환하지만, 쓰기(m[\"k\"] = 1)를 시도하면 즉시 런타임 panic(assignment to entry in nil map)이 발생합니다. 또한 여러 고루틴의 동시 맵 읽기/쓰기는 크래시를 유발합니다.",
+        "practice": "문제: Go 언어의 map에서 존재하지 않는 키를 조회할 때 에러나 패닉 대신 무엇이 반환될까요?\n정답: 해당 값 타입의 제로값 (Zero Value)"
+    },
+    {
+        "id": "go-structs-methods",
+        "title": "12. 구조체(struct)와 메서드 리시버 (값 리시버 vs 포인터 리시버)",
+        "category": "구조체와 객체 지향",
+        "summary": "구조체(struct)는 연관된 필드들을 묶는 사용자 정의 복합 데이터 타입입니다. 함수명 앞에 수신자(Receiver)를 선언하여 메서드를 정의합니다. 값 리시버 (v T)는 인스턴스의 얕은 복사본을 받아 수정 사항이 원본에 반영되지 않으며, 포인터 리시버 (p *T)는 메모리 주소를 전달받아 필드 변경이 가능하고 복사 오버헤드를 제거합니다.",
+        "syntax": "type Person struct {\n    Name string\n    Age  int\n}\nfunc (p Person) Greet() string { ... } // 값 리시버\nfunc (p *Person) HaveBirthday() { p.Age++ } // 포인터 리시버",
+        "example": """package main
+
+import "fmt"
+
+type Account struct {
+    Owner   string
+    Balance int
+}
+
+// 값 리시버: 불변 읽기용, 인스턴스 복사본 전달
+func (a Account) Summary() string {
+    return fmt.Sprintf("[%s] 잔액: %d원", a.Owner, a.Balance)
+}
+
+// 포인터 리시버: 인스턴스 상태 직접 변경
+func (a *Account) Deposit(amount int) {
+    if amount > 0 {
+        a.Balance += amount
+    }
+}
+
+func main() {
+    acc := Account{Owner: "민수", Balance: 1000}
+    fmt.Println("초기 상태:", acc.Summary())
+
+    acc.Deposit(500)
+    fmt.Println("입금 후 상태:", acc.Summary()) // 1500원
+}""",
+        "explanation": "메서드 세트(Method Sets) 규칙에 따라 포인터 리시버로 정의된 메서드는 주소 지정이 가능한(Addressable) 변수에서만 호출할 수 있습니다. 한 타입의 메서드 중 하나라도 상태를 변경하거나 구조체의 크기가 크다면 모든 메서드의 리시버를 포인터로 통일하는 것이 Go의 표준 관례입니다.",
+        "pitfalls": "값 리시버 내부에서 필드를 변경해도 호출자의 원본에는 아무런 영향이 없습니다. 맵 내부 요소는 주소 지정이 불가능하므로 `m[key].Deposit(100)` 같은 포인터 리시버 호출은 컴파일 에러가 발생합니다.",
+        "practice": "문제: 메서드 내부에서 구조체의 상태(필드 값)를 실제로 변경하고자 할 때 사용해야 하는 리시버 종류는 무엇일까요?\n정답: 포인터 리시버 (Pointer Receiver)"
+    },
+    {
+        "id": "go-struct-embedding",
+        "title": "13. 구조체 임베딩(Embedding, 익명 필드)을 통한 합성(Composition)",
+        "category": "구조체와 객체 지향",
+        "summary": "Go는 전통적인 클래스 상속(Inheritance)을 지원하지 않으며, '상속보다 합성(Composition over Inheritance)'을 원칙으로 삼습니다. 구조체 내부에 필드 이름 없이 다른 타입을 삽입하는 구조체 임베딩(익명 필드)을 통해 내부 필드와 메서드가 외부 구조체로 자동 승격(Promotion)됩니다.",
+        "syntax": "type Reader struct { ... }\ntype ReadWriter struct {\n    Reader // 익명 필드 임베딩\n    Writer\n}",
+        "example": """package main
+
+import "fmt"
+
+type Logger struct {
+    Prefix string
+}
+
+func (l *Logger) Log(msg string) {
+    fmt.Printf("[%s] %s\\n", l.Prefix, msg)
+}
+
+type Server struct {
+    Logger // Logger 구조체 임베딩 (익명 필드)
+    Host   string
+    Port   int
+}
+
+func main() {
+    srv := Server{
+        Logger: Logger{Prefix: "API-SERVER"},
+        Host:   "localhost",
+        Port:   8080,
+    }
+
+    // Logger의 메서드가 Server로 자동 승격되어 직접 호출 가능
+    srv.Log("서버가 시작되었습니다.")
+    // 명시적 접근도 가능
+    fmt.Printf("호스트: %s:%d, 로거 접두사: %s\\n", srv.Host, srv.Port, srv.Logger.Prefix)
+}""",
+        "explanation": "임베딩은 부모-자식 간의 취약한 상속 결합을 없애고 유연한 조합을 가능하게 합니다. 외부 구조체에 동일한 이름의 필드나 메서드가 정의되어 있다면 외부 타입의 것이 우선 호출(Method Shadowing/오버라이딩)됩니다.",
+        "pitfalls": "임베딩은 서브타이핑 다형성을 의미하지 않습니다. Logger를 인자로 받는 함수에 Server 타입을 그대로 넘길 수는 없습니다(인터페이스를 구현함으로써만 다형성 충족 가능).",
+        "practice": "문제: Go 언어에서 다른 언어의 상속 계층 대신 객체의 재사용성과 결합도 완화를 위해 지향하는 핵심 설계 원칙은 무엇일까요?\n정답: 합성 (Composition 또는 상속보다 합성)"
+    },
+    {
+        "id": "go-struct-tags",
+        "title": "14. 구조체 태그(Struct Tags: json, db)와 리플렉션",
+        "category": "구조체와 객체 지향",
+        "summary": "구조체 필드 정의 뒤에 백틱(`)으로 감싸 지정하는 구조체 태그(Struct Tag)는 필드에 메타데이터를 부여합니다. encoding/json, gorm, validator 등의 라이브러리가 reflect 패키지를 통해 런타임에 태그를 파싱하여 직렬화, 역직렬화, DB 컬럼 매핑, 유효성 검증을 수행합니다.",
+        "syntax": "type User struct {\n    ID        int64  `json:\"id\" db:\"user_id\"`\n    Email     string `json:\"email\"`\n    Password  string `json:\"-\"` // 직렬화 제외\n    Nickname  string `json:\"nickname,omitempty\"` // 제로값 시 생략\n}",
+        "example": """package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "reflect"
+)
+
+type Member struct {
+    ID     int    `json:"id" db:"member_id"`
+    Name   string `json:"name"`
+    Secret string `json:"-"` // 직렬화 마스킹
+    Role   string `json:"role,omitempty"`
+}
+
+func main() {
+    m := Member{ID: 1, Name: "홍길동", Secret: "topsecret", Role: ""}
+
+    // 1. JSON 직렬화 테스트
+    bytes, _ := json.Marshal(m)
+    fmt.Println("JSON 결과:", string(bytes)) // {"id":1,"name":"홍길동"}
+
+    // 2. reflect 패키지를 이용한 직접 태그 조회
+    t := reflect.TypeOf(m)
+    field, _ := t.FieldByName("ID")
+    dbTag := field.Tag.Get("db")
+    fmt.Println("ID 필드의 db 태그 값:", dbTag) // member_id
+}""",
+        "explanation": "구조체 태그는 공백으로 구분된 `key:\"value\"` 형식의 문자열입니다. reflect.StructTag.Get(\"key\") 메서드로 값을 조회할 수 있으며, 필드명이 대문자로 시작하는 공개(Exported) 필드여야만 리플렉션 기반 외부 직렬화 패키지가 읽을 수 있습니다.",
+        "pitfalls": "구조체 필드가 소문자로 시작하면 비공개(Unexported) 상태가 되어 json.Marshal 등의 외부 패키지가 리플렉션으로 읽거나 쓸 수 없으므로 JSON에서 완전히 누락됩니다.",
+        "practice": "문제: Go의 json 구조체 태그에서 특정 필드가 직렬화 시 JSON 출력 결과에 절대로 포함되지 않도록 마스킹(무시)할 때 사용하는 태그 값은 무엇일까요?\n정답: \"-\" (하이픈, 대시)"
+    },
+    {
+        "id": "go-interfaces-duck",
+        "title": "15. 인터페이스와 덕 타이핑(Duck Typing) 암묵적 구현",
+        "category": "인터페이스와 다형성",
+        "summary": "Go의 인터페이스는 메서드 시그니처들의 집합입니다. 어떤 타입이 인터페이스의 모든 메서드를 구현하면 별도의 'implements' 키워드 선언 없이도 컴파일 타임에 자동으로 해당 인터페이스를 만족하는 암묵적 구현(Duck Typing / 구조적 서브타이핑)을 채택합니다. Go 1.18+부터 interface{}의 공식 별칭으로 any가 표준화되었습니다.",
+        "syntax": "type Reader interface {\n    Read(p []byte) (n int, err error)\n}\ntype any = interface{}",
+        "example": """package main
+
+import "fmt"
+
+type Notifier interface {
+    Notify(message string) error
+}
+
+type EmailSender struct {
+    Email string
+}
+
+// implements 키워드 없이 시그니처를 충족하면 자동으로 Notifier 인터페이스 만족
+func (e *EmailSender) Notify(message string) error {
+    fmt.Printf("[이메일 전송 -> %s] %s\\n", e.Email, message)
+    return nil
+}
+
+// 컴파일 타임 인터페이스 구현 보장 관용구
+var _ Notifier = (*EmailSender)(nil)
+
+func SendAlert(n Notifier, msg string) {
+    _ = n.Notify(msg)
+}
+
+func main() {
+    sender := &EmailSender{Email: "admin@example.com"}
+    SendAlert(sender, "시스템 서버 점검 공지")
+}""",
+        "explanation": "인터페이스 변수는 런타임에 2워드 크기의 fat pointer(타입 디스크립터 itab 포인터 + 실제 데이터 포인터)로 표현됩니다. 구현체와 인터페이스 정의가 서로 다른 독립 패키지에 위치해도 완전한 디커플링이 성립합니다.",
+        "pitfalls": "nil 인터페이스와 nil 포인터를 담은 인터페이스는 다릅니다. nil 포인터 변수를 인터페이스에 대입하면 인터페이스 자체의 타입 정보(itab)가 존재하므로 if iface == nil 검사에서 false가 됩니다.",
+        "practice": "문제: 어떤 구조체가 특정 인터페이스를 올바르게 구현했는지 컴파일 타임에 정적으로 검증하기 위해 Go 개발자들이 사용하는 관용구는 무엇일까요?\n정답: var _ Interface = (*Struct)(nil) (또는 컴파일 타임 인터페이스 검증)"
+    },
+    {
+        "id": "go-type-assertions",
+        "title": "16. any/interface{} 타입 단언(Type Assertion: val.(T))",
+        "category": "인터페이스와 다형성",
+        "summary": "인터페이스나 any 변수에 보관된 구체 타입의 값이나 다른 하위 인터페이스를 추출할 때 타입 단언(Type Assertion: val.(T))을 사용합니다. 런타임 패닉을 방지하기 위해 반드시 val, ok := iface.(T) 형태의 comma-ok 패턴을 사용해야 안전하게 타입을 검증할 수 있습니다.",
+        "syntax": "v := iface.(string) // 불일치 시 panic 발생!\nv, ok := iface.(string) // 안전한 comma-ok 단언\nif ok { ... }",
+        "example": """package main
+
+import "fmt"
+
+func processData(item any) {
+    // 1. 단일 값 타입 단언 (불일치 시 패닉 위험)
+    // str := item.(string) // 위험!
+
+    // 2. 안전한 comma-ok 타입 단언
+    if str, ok := item.(string); ok {
+        fmt.Printf("문자열 처리: %s (길이: %d)\\n", str, len(str))
+        return
+    }
+
+    if num, ok := item.(int); ok {
+        fmt.Printf("정수 처리: %d\\n", num*2)
+        return
+    }
+
+    fmt.Println("처리 불가능한 타입입니다.")
+}
+
+func main() {
+    processData("안녕하세요")
+    processData(50)
+    processData(3.14)
+}""",
+        "explanation": "타입 단언은 인터페이스의 itab 정보를 검사하여 실제 구체 타입 또는 호환되는 인터페이스로의 안전한 변환을 수행합니다. 실패 시 첫 번째 반환값은 대상 타입의 제로값이 되고 두 번째 불리언 ok가 false가 됩니다.",
+        "pitfalls": "comma-ok를 생략한 `v := iface.(T)` 형태는 타입 불일치 시 `panic: interface conversion: interface {} is ... not ...` 런타임 크래시를 유발하므로 항상 ok 변수를 받아 확인해야 합니다.",
+        "practice": "문제: 타입 단언 시 인터페이스가 해당 타입을 보유하고 있지 않을 때 프로그램이 패닉으로 크래시되는 것을 방지하기 위해 두 번째 불리언 값을 함께 받는 패턴의 이름은 무엇일까요?\n정답: comma-ok 패턴 (또는 comma-ok 관용구)"
+    },
+    {
+        "id": "go-generics-types-constraints",
+        "title": "17. 제네릭 (Go 1.18+): 타입 파라미터 [T any]와 타입 제약 (~int, comparable)",
+        "category": "제네릭(Generics)",
+        "summary": "Go 1.18에 도입된 제네릭은 함수와 데이터 구조에 컴파일 타임 타입 매개변수 [T Constraint]를 부여합니다. any는 모든 타입, comparable은 == 및 != 동등 비교가 가능한 타입을 뜻하며, ~int 틸드(~) 연산자는 해당 타입을 기반으로 정의된 모든 커스텀 underlying 타입까지 포함하는 타입 근사치(Type Approximation) 제약을 정의합니다.",
+        "syntax": "func Map[T, U any](s []T, f func(T) U) []U\ntype Ordered interface {\n    ~int | ~int64 | ~float64 | ~string\n}",
+        "example": """package main
+
+import "fmt"
+
+// 타입 근사치(~) 제약 인터페이스 정의
+type Number interface {
+    ~int | ~int64 | ~float64
+}
+
+// 제네릭 덧셈 함수
+func Add[T Number](a, b T) T {
+    return a + b
+}
+
+// comparable 제약을 사용하는 제네릭 검색
+func Contains[T comparable](slice []T, target T) bool {
+    for _, v := range slice {
+        if v == target {
+            return true
+        }
+    }
+    return false
+}
+
+type MyInt int // ~int 제약에 매칭됨
+
+func main() {
+    fmt.Println("기본 int 덧셈:", Add(10, 20))
+    fmt.Println("커스텀 MyInt 덧셈:", Add(MyInt(5), MyInt(15)))
+
+    names := []string{"Go", "Rust", "Python"}
+    fmt.Println("Rust 포함 여부:", Contains(names, "Rust"))
+}""",
+        "explanation": "Go 제네릭은 Gcshape Stenciling 메커니즘을 통해 포인터형 타입들은 코드를 공유하고 값 타입들은 특화 컴파일하여 바이너리 크기 비대화(Binary Bloat)를 억제하면서도 런타임 오버헤드 없는 네이티브 성능을 제공합니다.",
+        "pitfalls": "any 제약 조건이 걸린 타입 T에는 == 나 != 연산자를 사용할 수 없습니다. 상등 비교가 필요할 때는 반드시 `comparable` 제약을 적용해야 합니다. 또한 구조체 메서드 자체에 추가 타입 매개변수를 둘 수 없습니다.",
+        "practice": "문제: 제네릭 타입 제약에서 `type MyID int`처럼 기존 기본 타입을 기반으로 새롭게 정의된 모든 커스텀 타입을 포함하도록 지정할 때 타입명 앞에 붙이는 연산자는 무엇일까요?\n정답: ~ (틸드)"
+    },
+    {
+        "id": "go-range-over-func",
+        "title": "18. Range over function iterators (Go 1.22/1.23+): iter.Seq, iter.Seq2",
+        "category": "모던 Go 이터레이터",
+        "summary": "Go 1.23에서 공식 도입된 표준 함수형 이터레이터(range-over-func)입니다. iter.Seq[V] 및 iter.Seq2[K, V] 시그니처를 따르는 yield 콜백 기반 함수를 반환하면, 관용적인 for ... := range 문법으로 사용자 정의 컬렉션이나 무한 스트림을 조기 탈출(break)을 완벽히 지원하며 순회할 수 있습니다.",
+        "syntax": "type Seq[V any] func(yield func(V) bool)\ntype Seq2[K, V any] func(yield func(K, V) bool)\nfor v := range MyIterator() { ... }\nfor k, v := range MyPairIterator() { ... }",
+        "example": """package main
+
+import (
+    "fmt"
+    "iter"
+)
+
+// 슬라이스를 역순으로 순회하는 표준 함수 이터레이터
+func Backward[E any](s []E) iter.Seq2[int, E] {
+    return func(yield func(int, E) bool) {
+        for i := len(s) - 1; i >= 0; i-- {
+            if !yield(i, s[i]) {
+                return // 호출자가 break하면 yield가 false 반환 -> 즉시 중단
+            }
+        }
+    }
+}
+
+func main() {
+    languages := []string{"Go", "Rust", "Zig", "C"}
+
+    // 표준 range 구문으로 직접 이터레이터 순회
+    for idx, lang := range Backward(languages) {
+        fmt.Printf("[%d] %s\\n", idx, lang)
+        if lang == "Rust" {
+            break // 조기 탈출 (yield가 false를 반환하여 안전 종료)
+        }
+    }
+}""",
+        "explanation": "함수 기반 이터레이터는 복잡한 채널이나 별도의 State 구조체 없이도 O(1) 추가 메모리로 지연 순회(Lazy evaluation)를 구현합니다. yield 콜백이 false를 반환하면 소비자가 break를 실행했음을 뜻하므로 이터레이터 함수는 즉시 클린업하고 반환해야 합니다.",
+        "pitfalls": "yield(v)의 반환값이 false인데도 이를 무시하고 계속 yield를 호출하면 Go 런타임에서 패닉이 발생합니다. 표준 slices, maps 패키지의 이터레이터 헬퍼들과 완벽히 호환됩니다.",
+        "practice": "문제: Go 1.23 iter 패키지에서 키와 값 2개의 요소를 쌍으로 순회하는 표준 함수 이터레이터 타입의 이름은 무엇일까요?\n정답: iter.Seq2 (또는 iter.Seq2[K, V])"
+    },
+    {
+        "id": "go-builtins-clear-min-max",
+        "title": "19. 최신 내장 함수: clear(슬라이스/맵 초기화 - Go 1.21+), min, max",
+        "category": "기본 문법과 내장 함수",
+        "summary": "Go는 import 없이 전역에서 즉시 호출 가능한 강력한 내장(Built-in) 함수들을 갖추고 있습니다. Go 1.21부터 추가된 clear()는 슬라이스의 모든 요소를 제로값으로 덮어쓰거나 맵의 모든 항목을 일괄 삭제하며, min()과 max()는 임의 개수의 순서 비교 가능 인자 중 최소/최대값을 간결하게 도출합니다.",
+        "syntax": "clear(slice) // 길이 유지, 요소들을 제로값으로 초기화\nclear(m) // 맵의 모든 키-값 삭제 (길이 0)\nminVal := min(a, b, c)\nmaxVal := max(x, y)",
+        "example": """package main
+
+import "fmt"
+
+func main() {
+    // 1. min / max 내장 함수 (임의 개수 인자 지원)
+    smallest := min(20, 5, 80, 1)
+    largest := max(1.5, 3.8, 2.1)
+    fmt.Printf("최솟값: %d, 최댓값: %.1f\\n", smallest, largest)
+
+    // 2. clear(slice): 길이는 그대로 유지되고 원소만 제로값으로 리셋
+    nums := []int{10, 20, 30}
+    clear(nums)
+    fmt.Printf("clear 후 슬라이스: %v (len=%d)\\n", nums, len(nums)) // [0 0 0] (len=3)
+
+    // 3. clear(map): 맵의 모든 항목이 즉시 비워짐
+    dict := map[string]int{"a": 1, "b": 2}
+    clear(dict)
+    fmt.Printf("clear 후 맵: %v (len=%d)\\n", dict, len(dict)) // map[] (len=0)
+}""",
+        "explanation": "clear 내장 함수는 슬라이스의 경우 SIMD/memset 벡터화 연산을 통해 극도로 빠르게 제로값으로 채우고, 맵의 경우 이미 할당된 내부 버킷 메모리를 재사용할 수 있도록 유지하면서 엔트리만 비워 향후 재삽입 시 할당 오버헤드를 줄입니다.",
+        "pitfalls": "슬라이스에 clear(s)를 실행해도 len(s)가 0으로 줄어들지 않습니다. 슬라이스를 완전히 비우려면 `s = s[:0]` 처럼 길이를 0으로 슬라이싱해야 합니다.",
+        "practice": "문제: 슬라이스 s의 길이를 0으로 만들지 않고 보존하면서 기존 모든 요소를 제로값으로 리셋할 때 사용하는 Go 1.21+ 내장 함수는 무엇일까요?\n정답: clear"
+    },
+    {
+        "id": "go-error-handling",
+        "title": "20. 에러 인터페이스, 커스텀 에러, fmt.Errorf(\"%w\")와 errors.Is / errors.As",
+        "category": "에러 처리",
+        "summary": "Go는 예외(Exception)를 던지지 않고 내장 error 인터페이스(Error() string) 값을 명시적으로 반환합니다. Go 1.13+의 에러 래핑(%w)을 통해 원인 에러의 맥락 체인을 구성하며, errors.Is로 특정 센티넬 에러를 감지하고, errors.As로 특정 커스텀 에러 구조체 인스턴스를 타입 안전하게 추출합니다.",
+        "syntax": "type error interface { Error() string }\nerr = fmt.Errorf(\"컨텍스트 추가: %w\", origErr)\nif errors.Is(err, sql.ErrNoRows) { ... }\nvar myErr *CustomError\nif errors.As(err, &myErr) { ... }",
+        "example": """package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+// 센티넬 에러 정의
+var ErrNotFound = errors.New("리소스를 찾을 수 없습니다")
+
+// 커스텀 에러 타입
+type QueryError struct {
+    Query string
+    Err   error
+}
+
+func (e *QueryError) Error() string {
+    return fmt.Sprintf("쿼리 실패 [%s]: %v", e.Query, e.Err)
+}
+
+func (e *QueryError) Unwrap() error {
+    return e.Err
+}
+
+func findUser(id int) error {
+    if id == 0 {
+        return &QueryError{Query: "SELECT * FROM users", Err: ErrNotFound}
+    }
+    return nil
+}
+
+func main() {
+    err := findUser(0)
+
+    // 1. errors.Is: 체인 내 센티넬 에러 일치 여부 검사
+    if errors.Is(err, ErrNotFound) {
+        fmt.Println("원인 에러는 ErrNotFound입니다.")
+    }
+
+    // 2. errors.As: 구체적인 커스텀 에러 타입 추출
+    var qErr *QueryError
+    if errors.As(err, &qErr) {
+        fmt.Printf("실패한 쿼리문 추출: %s\\n", qErr.Query)
+    }
+}""",
+        "explanation": "fmt.Errorf(\"...: %w\", err)는 Unwrap() 메서드를 자동으로 구현하는 래퍼 에러를 생성합니다. errors.Is와 errors.As는 재귀적으로 Unwrap()을 호출하며 트리 전체를 탐색하므로 상위 계층에서 맥락 정보를 덧붙이면서도 하위 계층의 구체 에러를 온전히 검사할 수 있습니다.",
+        "pitfalls": "fmt.Errorf에서 %w 대신 %v나 %s를 쓰면 에러가 단순 문자열로 치환되어 체인이 끊어지므로 errors.Is와 errors.As가 실패하게 됩니다.",
+        "practice": "문제: fmt.Errorf에서 내부 원인 에러를 래핑하여 errors.Is나 errors.As로 언래핑 탐색이 가능하도록 만들 때 사용하는 특수 포맷 서식 지정자는 무엇일까요?\n정답: %w"
+    },
+    {
+        "id": "go-defer-panic-recover",
+        "title": "21. 지연 실행 defer LIFO 규칙과 panic/recover 예외 처리",
+        "category": "에러 처리와 제어",
+        "summary": "defer는 감싸고 있는 함수가 반환되기 직전에 지정된 함수를 지연 실행하며, 여러 개의 defer는 LIFO(스택 후입선출) 순서로 호출됩니다. 복구 불가능한 치명적 상황에서는 panic()을 발생시켜 호출 스택을 언와인딩하며, defer 내부에서 recover()를 호출하여 패닉을 가로채고 정상 제어 흐름으로 복구합니다.",
+        "syntax": "defer file.Close()\npanic(\"치명적 장애 발생\")\ndefer func() {\n    if r := recover(); r != nil {\n        log.Printf(\"복구됨: %v\", r)\n    }\n}()",
+        "example": """package main
+
+import "fmt"
+
+func safeOperation(work func()) {
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Printf("[안전 복구] 패닉 가로챔: %v\\n", r)
+        }
+    }()
+    work()
+}
+
+func demonstrateDeferOrder() {
+    defer fmt.Println("defer 1 (가장 먼저 등록됨 -> 가장 늦게 실행)")
+    defer fmt.Println("defer 2 (두 번째 등록됨)")
+    defer fmt.Println("defer 3 (가장 늦게 등록됨 -> 가장 먼저 실행)")
+}
+
+func main() {
+    demonstrateDeferOrder()
+
+    safeOperation(func() {
+        fmt.Println("위험한 슬라이스 인덱스 접근 시도")
+        var s []int
+        _ = s[10] // panic: runtime error: index out of range
+    })
+
+    fmt.Println("프로그램이 크래시되지 않고 정상 종료됩니다.")
+}""",
+        "explanation": "defer는 파일 핸들, 뮤텍스 잠금 해제, 네트워크 커넥션 회수 등 리소스 누수를 막는 RAII 관용구를 완벽하게 지원합니다. 현대 Go는 오픈 코드 지연(Open-coded defers) 최적화로 루프가 없는 일반 defer의 오버헤드를 0ns 수준으로 최적화했습니다.",
+        "pitfalls": "긴 수명을 가진 for 루프 내부에서 `defer file.Close()`를 쓰면 루프가 끝날 때가 아니라 전체 감싸는 함수가 종료될 때까지 리소스가 닫히지 않아 파일 디스크립터 고갈을 유발합니다. 또한 recover()는 반드시 defer 함수 내부에서 직접 호출해야만 작동합니다.",
+        "practice": "문제: Go 함수 내에서 선언된 여러 개의 defer 문은 어떤 순서(자료구조 원칙)로 실행될까요?\n정답: LIFO (후입선출, Last-In First-Out 또는 역순)"
+    },
+    {
+        "id": "go-goroutines-concurrency",
+        "title": "22. 고루틴(Goroutine: go fn())과 M:N 협력적 스케줄링 모델",
+        "category": "동시성과 고루틴",
+        "summary": "고루틴(Goroutine)은 Go 런타임이 관리하는 초경량 사용자 공간 가상 스레드로 `go` 키워드로 즉시 생성됩니다. 시작 스택이 2KB에 불과하며 필요에 따라 동적으로 증가/감소합니다. Go 런타임은 G(고루틴), M(OS 스레드), P(논리 프로세서)로 구성된 M:N 협력적 스케줄러(Work-Stealing)를 통해 수십만 개의 고루틴을 극도의 효율로 병렬 분산 실행합니다.",
+        "syntax": "go doWork()\ngo func(id int) {\n    fmt.Println(\"워커\", id)\n}(1)",
+        "example": """package main
+
+import (
+    "fmt"
+    "sync"
+    "time"
+)
+
+func worker(id int, wg *sync.WaitGroup) {
+    defer wg.Done()
+    fmt.Printf("워커 %d 시작\\n", id)
+    time.Sleep(50 * time.Millisecond)
+    fmt.Printf("워커 %d 작업 완료\\n", id)
+}
+
+func main() {
+    var wg sync.WaitGroup
+
+    // 5개의 경량 고루틴 동시 실행
+    for i := 1; i <= 5; i++ {
+        wg.Add(1)
+        go worker(i, &wg)
+    }
+
+    // 모든 고루틴이 작업을 마칠 때까지 대기
+    wg.Wait()
+    fmt.Println("모든 고루틴 작업 완료")
+}""",
+        "explanation": "GMP 스케줄러에서 G는 고루틴, M은 운영체제 스레드, P는 실행 권한과 로컬 런큐를 가진 논리 프로세서(기본 CPU 코어 수)입니다. I/O 블로킹 시 M과 G를 분리하고 다른 실행 가능한 G를 유휴 OS 스레드로 스왑하며, 일할 거리가 떨어진 P는 다른 P의 런큐에서 작업을 훔쳐오는 워크 스틸링(Work-Stealing)을 수행합니다.",
+        "pitfalls": "main() 함수가 반환되면 백그라운드에서 실행 중이던 모든 고루틴은 즉시 강제 종료됩니다. 반드시 sync.WaitGroup이나 채널로 동기화해야 합니다. 또한 종료 조건이 없는 고루틴은 메모리를 영구 잠식하는 고루틴 누수(Goroutine Leak)를 일으킵니다.",
+        "practice": "문제: Go 런타임의 M:N 스케줄러 모델에서 CPU 코어 수에 대응하며 실행 컨텍스트와 로컬 실행 큐(Runqueue)를 보유하는 논리적 프로세서 구성 요소의 약칭은 무엇일까요?\n정답: P (Processor)"
+    },
+    {
+        "id": "go-channels-basics",
+        "title": "23. 채널(Channel): 버퍼 유무, 단방향 채널(<-chan, chan<-), close와 range",
+        "category": "동시성과 고루틴",
+        "summary": "채널(Channel)은 고루틴 간에 타입 안전한 메시지를 주고받는 동기화 파이프라인입니다. 언버퍼드 채널은 송수신 고루틴 간의 즉각적인 랑데부(Rendezvous) 동기화를 수행하며, 버퍼드 채널은 큐 크기만큼 비동기 버퍼링을 지원합니다. 단방향 채널(<-chan 수신 전용, chan<- 송신 전용)로 인터페이스를 엄격히 제한하며, close()와 for-range로 수신을 완결합니다.",
+        "syntax": "ch := make(chan int) // 언버퍼드\nchBuf := make(chan string, 100) // 버퍼드\nfunc Producer(out chan<- int) { ... }\nfunc Consumer(in <-chan int) { ... }\nclose(ch)",
+        "example": """package main
+
+import "fmt"
+
+// 송신 전용 채널 chan<-
+func produce(out chan<- int) {
+    for i := 1; i <= 3; i++ {
+        out <- i * 10
+    }
+    close(out) // 송신자가 채널을 명시적으로 닫음
+}
+
+// 수신 전용 채널 <-chan
+func consume(in <-chan int) {
+    // 채널이 닫힐 때까지 순회 수신
+    for val := range in {
+        fmt.Println("수신된 값:", val)
+    }
+}
+
+func main() {
+    ch := make(chan int, 2) // 버퍼 크기 2
+    go produce(ch)
+    consume(ch)
+}""",
+        "explanation": "\"메모리를 공유하여 통신하지 말고, 통신함으로써 메모리를 공유하라\"는 Go 동시성의 기본 철학입니다. 채널이 닫힌 뒤에도 버퍼에 남아있는 데이터는 끝까지 읽히며, 버퍼가 모두 빈 후 읽기를 시도하면 제로값과 함께 `val, ok := <-ch`의 ok가 false로 반환됩니다.",
+        "pitfalls": "이미 닫힌 채널에 값을 보내거나(`ch <- x`), 닫힌 채널을 다시 `close()`하면 즉시 런타임 panic이 발생합니다. nil 채널에 송신/수신을 시도하면 영원히 블로킹(Deadlock)됩니다.",
+        "practice": "문제: 채널이 닫혔을 때 `val, ok := <-ch` 구문으로 수신을 시도하면 두 번째 반환값 ok에는 어떤 불리언 값이 전달될까요?\n정답: false"
+    },
+    {
+        "id": "go-select-concurrency",
+        "title": "24. select 다중 채널 멀티플렉싱, default 비차단 I/O, time.After 타임아웃",
+        "category": "동시성과 고루틴",
+        "summary": "select 문은 하나의 고루틴이 여러 채널 I/O 작업 중 준비된 케이스를 기다리고 다중화(Multiplexing)합니다. 복수의 케이스가 동시에 준비되면 의사 난수(Pseudo-random) 방식으로 공정하게 선택합니다. default 절을 추가하면 논블로킹 즉시 처리가 가능하며, time.After()를 활용해 우아한 타임아웃 처리를 구현합니다.",
+        "syntax": "select {\ncase msg := <-ch1:\n    handle(msg)\ncase ch2 <- out:\n    fmt.Println(\"전송 완료\")\ncase <-time.After(1 * time.Second):\n    fmt.Println(\"타임아웃!\")\ndefault:\n    fmt.Println(\"논블로킹 즉시 실행\")\n}",
+        "example": """package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    ch := make(chan string)
+
+    go func() {
+        time.Sleep(100 * time.Millisecond)
+        ch <- "작업 완료 데이터"
+    }()
+
+    // 1. time.After를 이용한 타임아웃 제어
+    select {
+    case res := <-ch:
+        fmt.Println("응답 성공:", res)
+    case <-time.After(50 * time.Millisecond):
+        fmt.Println("타임아웃 발생! 응답이 50ms를 초과했습니다.")
+    }
+
+    // 2. default 분기를 통한 논블로킹 채널 폴링
+    select {
+    case msg := <-ch:
+        fmt.Println("데이터 읽음:", msg)
+    default:
+        fmt.Println("대기 중인 데이터 없음 (블로킹 없이 즉시 통과)")
+    }
+}""",
+        "explanation": "select 문은 네트워크 다중화(select 시스템 콜)와 유사하게 동작합니다. 모든 case가 블로킹 상태일 때 고루틴은 수면 상태로 전환되며 채널 중 하나라도 통신 준비가 되면 깨어납니다. default 분기가 있으면 결코 블로킹되지 않습니다.",
+        "pitfalls": "for 루프 내부에서 `case <-time.After(d):`를 매 틱마다 호출하면 매번 새로운 타이머 객체가 생성되어 메모리 누수가 발생합니다. 반복 루프에서는 `time.NewTimer`를 생성하고 매번 `Reset`해야 합니다.",
+        "practice": "문제: select 문에서 수신 또는 송신 대기 중인 모든 케이스가 블로킹 상태일 때 지연 없이 즉시 분기하여 실행되도록 만드는 절 키워드는 무엇일까요?\n정답: default"
+    },
+    {
+        "id": "go-sync-primitives",
+        "title": "25. sync 패키지: Mutex, RWMutex, WaitGroup, Once, Pool, atomic",
+        "category": "동시성 동기화",
+        "summary": "채널 통신 외에 공유 메모리의 임계 영역(Critical Section)을 직접 동기화할 때 sync 및 sync/atomic 패키지를 사용합니다. Mutex(상호 배제), RWMutex(다중 읽기/단일 쓰기), WaitGroup(고루틴 완료 대기), Once(단 1회 초기화 보장), Pool(GC 압박 완화 객체 재사용), atomic(CPU 하드웨어 수준 락프리 원자 연산)을 제공합니다.",
+        "syntax": "var mu sync.Mutex\nmu.Lock()\ndefer mu.Unlock()\nvar rw sync.RWMutex\nrw.RLock()\ndefer rw.RUnlock()\nvar once sync.Once\nonce.Do(initFunc)\nvar ops atomic.Int64\nops.Add(1)",
+        "example": """package main
+
+import (
+    "fmt"
+    "sync"
+    "sync/atomic"
+)
+
+type ThreadSafeStore struct {
+    mu   sync.RWMutex
+    data map[string]int
+}
+
+func (s *ThreadSafeStore) Set(key string, val int) {
+    s.mu.Lock() // 쓰기 배타 락
+    defer s.mu.Unlock()
+    s.data[key] = val
+}
+
+func (s *ThreadSafeStore) Get(key string) int {
+    s.mu.RLock() // 읽기 공유 락 (여러 고루틴 동시 읽기 허용)
+    defer s.mu.RUnlock()
+    return s.data[key]
+}
+
+func main() {
+    store := &ThreadSafeStore{data: make(map[string]int)}
+    var ops atomic.Int64 // 락프리 원자적 카운터
+
+    var wg sync.WaitGroup
+    for i := 0; i < 5; i++ {
+        wg.Add(1)
+        go func(id int) {
+            defer wg.Done()
+            store.Set("views", id*10)
+            ops.Add(1)
+        }(i)
+    }
+    wg.Wait()
+
+    fmt.Printf("최종 원자 카운트: %d, 읽기 결과: %d\\n", ops.Load(), store.Get("views"))
+}""",
+        "explanation": "RWMutex는 읽기 작업이 쓰기보다 압도적으로 많은 캐시나 설정 데이터에서 직렬화 병목을 제거하여 동시 처리량을 대폭 향상시킵니다. sync/atomic은 OS 컨텍스트 스위칭 없이 CPU 캐시 버스 수준에서 원자적으로 처리하므로 최고의 성능을 발휘합니다.",
+        "pitfalls": "sync.Mutex, sync.RWMutex, sync.WaitGroup 등의 동기화 객체는 절대로 값 복사(Pass-by-value)해서는 안 됩니다. 복사 시 락의 내부 상태가 분리되어 동기화가 깨지므로 항상 포인터로 전달해야 합니다.",
+        "practice": "문제: 고루틴 간에 동기화 객체(sync.Mutex, sync.WaitGroup 등)를 함수 인자로 전달할 때 복사로 인한 동기화 파괴를 방지하기 위해 반드시 지켜야 하는 전달 방식은 무엇일까요?\n정답: 포인터로 전달 (Pass by Pointer 또는 포인터 참조)"
+    },
+    {
+        "id": "go-context-cancellation",
+        "title": "26. context 패키지: Background, WithCancel, WithTimeout, 전파와 취소",
+        "category": "동시성 동기화",
+        "summary": "context.Context는 고루틴 트리 전반에 걸쳐 작업의 취소 신호(Cancellation Signal), 마감 시한(Deadline/Timeout), 요청 스코프 메타데이터를 전파하는 현대 Go의 표준 생명주기 제어 인터페이스입니다. 부모 컨텍스트가 취소되면 모든 하위 파생 컨텍스트로 취소 신호가 즉시 계단식(Cascading) 전파되어 고루틴 누수를 방지합니다.",
+        "syntax": "ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)\ndefer cancel()\nselect {\ncase <-ctx.Done():\n    return ctx.Err()\n}",
+        "example": """package main
+
+import (
+    "context"
+    "fmt"
+    "time"
+)
+
+func queryService(ctx context.Context, id int) (string, error) {
+    select {
+    case <-time.After(100 * time.Millisecond): // 100ms 소요되는 작업
+        return fmt.Sprintf("데이터-%d", id), nil
+    case <-ctx.Done(): // 상위 컨텍스트 취소 감지
+        return "", ctx.Err()
+    }
+}
+
+func main() {
+    // 50ms 타임아웃 컨텍스트 생성
+    ctx, cancel := context.WithTimeout(context.Background(), 50*time.Millisecond)
+    defer cancel() // 리소스 정리를 위한 cancel 호출
+
+    data, err := queryService(ctx, 42)
+    if err != nil {
+        fmt.Println("요청 실패 사유:", err) // context deadline exceeded
+        return
+    }
+    fmt.Println("수신 데이터:", data)
+}""",
+        "explanation": "Go의 모든 블로킹 I/O 함수(HTTP 클라이언트, 데이터베이스 쿼리, RPC 호출 등)는 첫 번째 인자로 `ctx context.Context`를 전달받는 것이 표준 규약입니다. 클라이언트가 연결을 끊으면 ctx.Done() 채널이 닫혀 하위 DB 쿼리와 작업 고루틴이 즉시 취소되고 리소스가 정리됩니다.",
+        "pitfalls": "WithCancel 또는 WithTimeout 생성 시 반환되는 `cancel` 함수를 `defer cancel()`로 호출하지 않으면 부모 컨텍스트와의 연결 링크가 남아 타이머와 메모리 누수(Context Leak)가 발생합니다.",
+        "practice": "문제: Go 표준 관례상 context.Context 타입의 변수는 함수의 매개변수 목록에서 몇 번째 인자로 위치해야 할까요?\n정답: 첫 번째 매개변수 (ctx context.Context)"
+    }
+]
+
+go_functions = [
+    {
+        "name": "fmt.Println",
+        "signature": "func Println(a ...any) (n int, err error)",
+        "module": "fmt",
+        "description": "기본 포맷을 사용하여 인자들을 공백으로 구분해 표준 출력(stdout)에 출력하고 개행을 추가합니다.",
+        "example": "fmt.Println(\"안녕하세요\", \"Go 1.24\")"
+    },
+    {
+        "name": "fmt.Printf",
+        "signature": "func Printf(format string, a ...any) (n int, err error)",
+        "module": "fmt",
+        "description": "지정한 포맷 서식 문자열(%d, %s, %v, %+v, %#v 등)에 따라 서식화된 문자열을 표준 출력에 씁니다.",
+        "example": "fmt.Printf(\"유저 ID: %d, 이름: %s\\n\", 10, \"Gopher\")"
+    },
+    {
+        "name": "fmt.Sprintf",
+        "signature": "func Sprintf(format string, a ...any) string",
+        "module": "fmt",
+        "description": "포맷 지정자에 따라 문자열을 생성하고 표준 출력 대신 결과 문자열을 반환합니다.",
+        "example": "msg := fmt.Sprintf(\"ID: %d, 이름: %s\", 10, \"Gopher\")"
+    },
+    {
+        "name": "fmt.Errorf",
+        "signature": "func Errorf(format string, a ...any) error",
+        "module": "fmt",
+        "description": "형식화된 메시지로 error 객체를 생성하며, %w 동사를 사용해 내부 원인 에러를 래핑할 수 있습니다.",
+        "example": "err := fmt.Errorf(\"설정 로드 실패: %w\", origErr)"
+    },
+    {
+        "name": "strings.Join",
+        "signature": "func Join(elems []string, sep string) string",
+        "module": "strings",
+        "description": "문자열 슬라이스의 모든 요소를 지정한 구분자(sep)로 이어 붙여 단일 문자열을 만듭니다.",
+        "example": "result := strings.Join([]string{\"A\", \"B\", \"C\"}, \", \") // \"A, B, C\""
+    },
+    {
+        "name": "strings.Split",
+        "signature": "func Split(s, sep string) []string",
+        "module": "strings",
+        "description": "문자열을 지정한 구분자(sep)를 기준으로 분할하여 문자열 슬라이스로 반환합니다.",
+        "example": "parts := strings.Split(\"apple,banana,cherry\", \",\")"
+    },
+    {
+        "name": "strings.Contains",
+        "signature": "func Contains(s, substr string) bool",
+        "module": "strings",
+        "description": "문자열 s 안에 부분 문자열 substr이 포함되어 있는지 여부를 참/거짓으로 반환합니다.",
+        "example": "hasGo := strings.Contains(\"Gopher Community\", \"Go\") // true"
+    },
+    {
+        "name": "strings.ReplaceAll",
+        "signature": "func ReplaceAll(s, old, new string) string",
+        "module": "strings",
+        "description": "문자열 s 내에서 일치하는 모든 old 부분 문자열을 new로 치환한 새 문자열을 반환합니다.",
+        "example": "cleaned := strings.ReplaceAll(\"foo_bar_baz\", \"_\", \"-\") // \"foo-bar-baz\""
+    },
+    {
+        "name": "strings.TrimSpace",
+        "signature": "func TrimSpace(s string) string",
+        "module": "strings",
+        "description": "문자열 앞뒤의 모든 유니코드 공백 문자(스페이스, 탭, 개행 등)를 제거한 부분 문자열을 반환합니다.",
+        "example": "trimmed := strings.TrimSpace(\"  hello world \\n\") // \"hello world\""
+    },
+    {
+        "name": "strconv.Atoi",
+        "signature": "func Atoi(s string) (int, error)",
+        "module": "strconv",
+        "description": "문자열을 10진수 정수(int)로 파싱합니다. 숫자가 아니면 에러를 반환합니다.",
+        "example": "num, err := strconv.Atoi(\"123\")"
+    },
+    {
+        "name": "strconv.Itoa",
+        "signature": "func Itoa(i int) string",
+        "module": "strconv",
+        "description": "정수(int)를 10진수 문자열로 빠르게 변환합니다 (FormatInt(int64(i), 10)의 단축형).",
+        "example": "str := strconv.Itoa(456) // \"456\""
+    },
+    {
+        "name": "strconv.FormatInt",
+        "signature": "func FormatInt(i int64, base int) string",
+        "module": "strconv",
+        "description": "int64 정수를 지정한 진법(base: 2~36)의 문자열로 변환합니다.",
+        "example": "hex := strconv.FormatInt(255, 16) // \"ff\""
+    },
+    {
+        "name": "strconv.ParseFloat",
+        "signature": "func ParseFloat(s string, bitSize int) (float64, error)",
+        "module": "strconv",
+        "description": "문자열을 지정한 비트 크기(bitSize: 32 또는 64)의 부동소수점(float64)으로 파싱합니다.",
+        "example": "val, err := strconv.ParseFloat(\"3.1415\", 64)"
+    },
+    {
+        "name": "slices.Sort",
+        "signature": "func Sort[S ~[]E, E cmp.Ordered](x S)",
+        "module": "slices",
+        "description": "Go 1.21+ 제네릭 슬라이스 패키지 함수로, 순서 비교가 가능한 타입의 슬라이스를 제자리(In-place) 오름차순 정렬합니다.",
+        "example": "nums := []int{5, 2, 8, 1}; slices.Sort(nums) // [1, 2, 5, 8]"
+    },
+    {
+        "name": "slices.Contains",
+        "signature": "func Contains[S ~[]E, E comparable](x S, target E) bool",
+        "module": "slices",
+        "description": "Go 1.21+ 제네릭 슬라이스 패키지 함수로, 슬라이스 안에 target 값이 존재하는지 여부를 검사합니다.",
+        "example": "exists := slices.Contains([]string{\"a\", \"b\"}, \"b\") // true"
+    },
+    {
+        "name": "maps.Clone",
+        "signature": "func Clone[M ~map[K]V, K comparable, V any](m M) M",
+        "module": "maps",
+        "description": "Go 1.21+ 제네릭 맵 패키지 함수로, 기존 맵의 얕은 복사본(Shallow copy) 새 맵을 생성하여 반환합니다.",
+        "example": "cloned := maps.Clone(originalMap)"
+    },
+    {
+        "name": "os.ReadFile",
+        "signature": "func ReadFile(name string) ([]byte, error)",
+        "module": "os",
+        "description": "지정된 경로의 파일 전체를 읽어 바이트 슬라이스로 반환합니다. 파일 열기와 닫기를 내부에서 자동 처리합니다.",
+        "example": "data, err := os.ReadFile(\"config.json\")"
+    },
+    {
+        "name": "os.WriteFile",
+        "signature": "func WriteFile(name string, data []byte, perm FileMode) error",
+        "module": "os",
+        "description": "지정된 경로에 전체 바이트 데이터를 파일로 씁니다. 파일이 없으면 지정된 권한(perm)으로 생성합니다.",
+        "example": "err := os.WriteFile(\"output.txt\", []byte(\"Hello\"), 0644)"
+    },
+    {
+        "name": "os.Getenv",
+        "signature": "func Getenv(key string) string",
+        "module": "os",
+        "description": "환경 변수 키에 해당하는 문자열 값을 가져옵니다. 미설정 시 빈 문자열을 반환합니다.",
+        "example": "port := os.Getenv(\"PORT\")"
+    },
+    {
+        "name": "os.Open",
+        "signature": "func Open(name string) (*File, error)",
+        "module": "os",
+        "description": "읽기 전용 모드로 파일을 엽니다. 성공 시 파일 포인터(*os.File)를 반환하며 호출자가 Close를 호출해야 합니다.",
+        "example": "f, err := os.Open(\"data.csv\"); if err == nil { defer f.Close() }"
+    },
+    {
+        "name": "io.ReadAll",
+        "signature": "func ReadAll(r Reader) ([]byte, error)",
+        "module": "io",
+        "description": "io.Reader 인터페이스로부터 EOF를 만날 때까지 모든 바이트 데이터를 한 번에 읽어 반환합니다.",
+        "example": "bodyBytes, err := io.ReadAll(resp.Body)"
+    },
+    {
+        "name": "io.Copy",
+        "signature": "func Copy(dst Writer, src Reader) (written int64, err error)",
+        "module": "io",
+        "description": "src로부터 EOF를 만날 때까지 읽어 dst로 스트리밍 복사합니다. 대용량 처리에 메모리를 효율적으로 사용합니다.",
+        "example": "written, err := io.Copy(destFile, srcFile)"
+    },
+    {
+        "name": "json.Marshal",
+        "signature": "func Marshal(v any) ([]byte, error)",
+        "module": "encoding/json",
+        "description": "Go 데이터 구조체를 JSON 형식의 바이트 슬라이스로 직렬화(인코딩)합니다.",
+        "example": "bytes, err := json.Marshal(user)"
+    },
+    {
+        "name": "json.Unmarshal",
+        "signature": "func Unmarshal(data []byte, v any) error",
+        "module": "encoding/json",
+        "description": "JSON 바이트 데이터를 파싱하여 가리키는 Go 구조체나 맵 포인터에 역직렬화(디코딩)합니다.",
+        "example": "var u User; err := json.Unmarshal(data, &u)"
+    },
+    {
+        "name": "http.Get",
+        "signature": "func Get(url string) (resp *Response, err error)",
+        "module": "net/http",
+        "description": "지정된 URL에 HTTP GET 요청을 보내고 응답 객체(*http.Response)를 반환합니다.",
+        "example": "resp, err := http.Get(\"https://api.github.com\"); if err == nil { defer resp.Body.Close() }"
+    },
+    {
+        "name": "http.ListenAndServe",
+        "signature": "func ListenAndServe(addr string, handler Handler) error",
+        "module": "net/http",
+        "description": "지정된 주소(addr)에서 TCP 리스너를 열고 들어오는 HTTP 요청을 핸들러로 전달하는 HTTP 서버를 실행합니다.",
+        "example": "err := http.ListenAndServe(\":8080\", nil)"
+    },
+    {
+        "name": "http.NewRequestWithContext",
+        "signature": "func NewRequestWithContext(ctx context.Context, method, url string, body io.Reader) (*Request, error)",
+        "module": "net/http",
+        "description": "주어진 컨텍스트(타임아웃/취소 가능)를 바인딩하여 새로운 HTTP 클라이언트 요청 객체를 생성합니다.",
+        "example": "req, err := http.NewRequestWithContext(ctx, \"GET\", \"https://example.com\", nil)"
+    },
+    {
+        "name": "time.Now",
+        "signature": "func Now() Time",
+        "module": "time",
+        "description": "현재 로컬 시스템 시각을 나타내는 time.Time 객체를 반환합니다.",
+        "example": "now := time.Now()"
+    },
+    {
+        "name": "time.Sleep",
+        "signature": "func Sleep(d Duration)",
+        "module": "time",
+        "description": "현재 고루틴의 실행을 지정한 기간(d) 동안 일시 중지(블로킹)합니다.",
+        "example": "time.Sleep(100 * time.Millisecond)"
+    },
+    {
+        "name": "time.After",
+        "signature": "func After(d Duration) <-chan Time",
+        "module": "time",
+        "description": "지정한 기간이 지난 후 현재 시각을 단 한 번 전송하는 수신 전용 채널을 반환합니다 (select 타임아웃에 최적).",
+        "example": "timeoutCh := time.After(2 * time.Second)"
+    },
+    {
+        "name": "time.Since",
+        "signature": "func Since(t Time) Duration",
+        "module": "time",
+        "description": "기준 시각 t로부터 현재 시각(Now())까지 경과한 시간 간격(Duration)을 계산합니다.",
+        "example": "elapsed := time.Since(startTime)"
+    },
+    {
+        "name": "errors.New",
+        "signature": "func New(text string) error",
+        "module": "errors",
+        "description": "주어진 텍스트 메시지를 갖는 기본적인 error 인터페이스 구현체를 생성합니다.",
+        "example": "var ErrNotFound = errors.New(\"not found\")"
+    },
+    {
+        "name": "errors.Is",
+        "signature": "func Is(err, target error) bool",
+        "module": "errors",
+        "description": "err의 체인 트리를 순회하며 target 에러와 일치하는 에러가 존재하는지 검사합니다.",
+        "example": "if errors.Is(err, os.ErrNotExist) { ... }"
+    },
+    {
+        "name": "errors.As",
+        "signature": "func As(err error, target any) bool",
+        "module": "errors",
+        "description": "err의 체인 트리에서 target이 가리키는 구체 에러 타입과 일치하는 에러를 찾아 바인딩합니다.",
+        "example": "var pathErr *os.PathError; if errors.As(err, &pathErr) { ... }"
+    },
+    {
+        "name": "errors.Join",
+        "signature": "func Join(errs ...error) error",
+        "module": "errors",
+        "description": "Go 1.20+ 도입된 함수로 여러 에러를 하나로 묶어 복합 에러를 생성하며 각 에러의 언래핑을 보존합니다.",
+        "example": "err := errors.Join(err1, err2, err3)"
+    },
+    {
+        "name": "context.Background",
+        "signature": "func Background() Context",
+        "module": "context",
+        "description": "취소되지 않고 마감 시한도 없는 비어 있는 최상위 루트 컨텍스트를 반환합니다.",
+        "example": "ctx := context.Background()"
+    },
+    {
+        "name": "context.WithTimeout",
+        "signature": "func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)",
+        "module": "context",
+        "description": "지정된 timeout 기간이 경과하면 자동으로 취소 신호(ctx.Done())를 보내는 파생 컨텍스트를 생성합니다.",
+        "example": "ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second); defer cancel()"
+    },
+    {
+        "name": "context.WithCancel",
+        "signature": "func WithCancel(parent Context) (ctx Context, cancel CancelFunc)",
+        "module": "context",
+        "description": "명시적으로 cancel() 함수를 호출하여 수동으로 취소할 수 있는 파생 컨텍스트를 생성합니다.",
+        "example": "ctx, cancel := context.WithCancel(context.Background()); defer cancel()"
+    },
+    {
+        "name": "sync.WaitGroup.Add",
+        "signature": "func (wg *WaitGroup) Add(delta int)",
+        "module": "sync",
+        "description": "대기해야 할 활성 고루틴 카운터를 delta만큼 증가(또는 감소)시킵니다.",
+        "example": "wg.Add(1); go worker(&wg)"
+    },
+    {
+        "name": "sync.Mutex.Lock",
+        "signature": "func (m *Mutex) Lock()",
+        "module": "sync",
+        "description": "뮤텍스 배타 잠금을 획득합니다. 다른 고루틴이 이미 락을 소유하고 있다면 해제될 때까지 블로킹됩니다.",
+        "example": "mu.Lock(); defer mu.Unlock()"
+    }
+]
+
+def main():
+    root = "/Users/nm/works/pro-study"
+    schema_path = os.path.join(root, "projects", "_schema", "reference.schema.json")
+    target_path = os.path.join(root, "content", "reference", "go.json")
+    android_path = os.path.join(root, "android-app", "app", "src", "main", "assets", "reference", "go.json")
+
+    doc = {
+        "lang": "go",
+        "name": "Go",
+        "version": "Go 1.24+",
+        "overview": "Go는 간결한 문법, 강력한 정적 타입 시스템, 고루틴(Goroutine)과 채널을 통한 경량 동시성, 가비지 컬렉션을 갖춘 고성능 현대 서버/시스템 프로그래밍 언어입니다.",
+        "grammar": go_grammar,
+        "functions": go_functions
+    }
+
+    # 1. Validation check
+    assert doc["lang"] == "go"
+    assert len(doc["grammar"]) >= 26, f"Grammar count must be >= 26, got {len(doc['grammar'])}"
+    assert len(doc["functions"]) >= 25, f"Functions count must be >= 25, got {len(doc['functions'])}"
+
+    required_grammar_fields = ["id", "title", "category", "summary", "syntax", "example", "explanation", "pitfalls", "practice"]
+    for idx, g in enumerate(doc["grammar"]):
+        for field in required_grammar_fields:
+            val = g.get(field)
+            if not isinstance(val, str) or len(val.strip()) == 0:
+                raise ValueError(f"grammar[{idx}] ('{g.get('id')}') field '{field}' is missing or empty")
+
+    required_func_fields = ["name", "signature", "module", "description", "example"]
+    for idx, fn in enumerate(doc["functions"]):
+        for field in required_func_fields:
+            val = fn.get(field)
+            if not isinstance(val, str) or len(val.strip()) == 0:
+                raise ValueError(f"functions[{idx}] ('{fn.get('name')}') field '{field}' is missing or empty")
+
+    # 2. Write to content/reference/go.json
+    with open(target_path, "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, indent=2)
+    print(f"✓ Saved to {target_path} (Grammar: {len(doc['grammar'])}, Functions: {len(doc['functions'])})")
+
+    # 3. Synchronize to android-app if directory exists
+    if os.path.isdir(os.path.dirname(android_path)):
+        with open(android_path, "w", encoding="utf-8") as f:
+            json.dump(doc, f, ensure_ascii=False, indent=2)
+        print(f"✓ Synchronized to {android_path}")
+
+    print("All validations passed successfully!")
+
+if __name__ == "__main__":
+    main()

@@ -88,6 +88,7 @@ const viewerHtml = `<!DOCTYPE html>
   <!-- Offline KaTeX Styles -->
   <link rel="stylesheet" href="katex/katex.min.css">
   <link rel="stylesheet" href="viewer.css">
+  <link rel="stylesheet" href="simulators/computer/cpu-sim.css">
 </head>
 <body>
 
@@ -101,6 +102,12 @@ const viewerHtml = `<!DOCTYPE html>
       <button class="tab-btn" data-tab="math-theorems">12대 수학 증명</button>
       <button class="tab-btn" data-tab="electrical">전기공학 &amp; 시뮬레이터</button>
       <button class="tab-btn" data-tab="electronics">전자공학 &amp; 시뮬레이터</button>
+      <button class="tab-btn" data-tab="ee-compare">전기 vs 전자 비교·로드맵</button>
+      <button class="tab-btn" data-tab="ee-math">공학수학 심층 유도</button>
+      <button class="tab-btn" data-tab="classical-papers">역사적 원전 논문 국역</button>
+      <button class="tab-btn" data-tab="sim-computer">💻 8-bit 가상 컴퓨터 &amp; CPU</button>
+      <button class="tab-btn" data-tab="sim-circuit">🔌 회로 샌드박스 &amp; 오실로스코프</button>
+      <button class="tab-btn" data-tab="sim-inverter">⚡ 3상 인버터 &amp; 모터</button>
     </nav>
   </header>
 
@@ -116,6 +123,24 @@ const viewerHtml = `<!DOCTYPE html>
 
     <!-- TAB 4: Electronic Engineering -->
     <section id="tab-electronics" class="tab-pane"></section>
+
+    <!-- TAB 5: EE vs ECE Comparison & Roadmaps -->
+    <section id="tab-ee-compare" class="tab-pane"></section>
+
+    <!-- TAB 6: Advanced EE Math Derivations -->
+    <section id="tab-ee-math" class="tab-pane"></section>
+
+    <!-- TAB 7: Classical Seminal Papers & Translations -->
+    <section id="tab-classical-papers" class="tab-pane"></section>
+
+    <!-- TAB 8: 8-bit Virtual Computer & CPU Simulator -->
+    <section id="tab-sim-computer" class="tab-pane"></section>
+
+    <!-- TAB 9: Circuit Sandbox & Dual-Trace Oscilloscope -->
+    <section id="tab-sim-circuit" class="tab-pane"></section>
+
+    <!-- TAB 10: 3-Phase Inverter & Motor Dynamics -->
+    <section id="tab-sim-inverter" class="tab-pane"></section>
   </main>
 
   <!-- Offline KaTeX Scripts -->
@@ -128,6 +153,7 @@ const viewerHtml = `<!DOCTYPE html>
   <script src="simulators/ee/phasor-power.js"></script>
   <script src="simulators/ee/three-phase.js"></script>
   <script src="simulators/ee/relay-sequence.js"></script>
+  <script src="simulators/ee/inverter-motor.js"></script>
 
   <!-- Electronic Engineering Simulators -->
   <script src="simulators/electronics/electronics-sim-core.js"></script>
@@ -135,6 +161,12 @@ const viewerHtml = `<!DOCTYPE html>
   <script src="simulators/electronics/opamp-bode.js"></script>
   <script src="simulators/electronics/transistor-curves.js"></script>
   <script src="simulators/electronics/timer555.js"></script>
+
+  <!-- Circuit Sandbox Simulator -->
+  <script src="simulators/circuit/circuit-sandbox.js"></script>
+
+  <!-- Computer Architecture CPU Simulator -->
+  <script src="simulators/computer/cpu-sim.js"></script>
 
   <!-- Manifest Preload Data & Main Controller -->
   <script src="manifest.data.js"></script>

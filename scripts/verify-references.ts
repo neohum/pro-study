@@ -35,7 +35,7 @@ interface ReferenceDoc {
 const ROOT = resolve(process.cwd());
 const REF_DIR = join(ROOT, 'content', 'reference');
 const SCHEMA_FILE = join(ROOT, 'projects', '_schema', 'reference.schema.json');
-const TARGET_LANGS = ['c', 'go', 'rust', 'python', 'typescript', 'javascript'];
+const TARGET_LANGS = ['c', 'go', 'rust', 'python', 'typescript', 'javascript', 'lisp', 'nasm'];
 
 function main() {
   console.log('== 다국어 문법/함수 레퍼런스 검증 시작 ==');
@@ -109,7 +109,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`\n[성공] 6개 언어 총 ${totalGrammar}개 문법 주제, 총 ${totalFunctions}개 표준 함수 레퍼런스 검증 100% 통과!`);
+  console.log(`\n[성공] 8개 언어 총 ${totalGrammar}개 문법 주제, 총 ${totalFunctions}개 표준 함수 레퍼런스 검증 100% 통과!`);
 }
 
 main();
