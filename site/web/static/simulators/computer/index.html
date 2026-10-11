@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8-bit 가상 컴퓨터 & CPU 시뮬레이터 (SAP-1 / 폰 노이만)</title>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="cpu-sim.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background-color: #ffffff;
+      color: #0f172a;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-container {
+      width: 100%;
+      max-width: 1280px;
+    }
+    .page-desc {
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div id="cpu-simulator-app"></div>
+  </div>
+
+  <script src="cpu-sim.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.sim = CpuComputerSim.init('#cpu-simulator-app', {
+        speed: 5
+      });
+    });
+  </script>
+</body>
+</html>

@@ -92,9 +92,14 @@
 
     ctx.clearRect(0, 0, width, height);
 
+    ctx.save();
+    // Pure crisp white canvas background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
     // Grid and axes
     const midY = height * 0.7; // baseline near bottom
-    core.drawGrid(ctx, width, height, { midY, stepX: width / 10, stepY: height / 8 });
+    core.drawGrid(ctx, width, height, { midY, stepX: width / 10, stepY: height / 8, gridColor: '#e2e8f0', axisColor: '#cbd5e1' });
 
     // Find scale
     const maxVc = Math.max(...res.vcValues, res.Vin * 1.2, 1);
@@ -106,6 +111,11 @@
     const padBottom = 30;
     const plotW = width - padLeft - padRight;
     const plotH = height - padTop - padBottom;
+
+    // Outer plot border
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(padLeft, padTop, plotW, plotH);
 
     // Map points for Vc (Voltage across C)
     const vcPoints = [];
@@ -121,41 +131,42 @@
     // Step input reference line (Vin)
     const targetY = (height - padBottom) - (res.Vin / (maxVc * 1.2)) * plotH;
     ctx.save();
-    ctx.strokeStyle = '#94a3b8';
+    ctx.strokeStyle = '#64748b';
     ctx.setLineDash([4, 4]);
     ctx.beginPath();
     ctx.moveTo(padLeft, targetY);
     ctx.lineTo(width - padRight, targetY);
     ctx.stroke();
-    ctx.fillStyle = '#64748b';
-    ctx.font = '11px sans-serif';
-    ctx.fillText(`Vin = ${res.Vin}V`, padLeft + 5, targetY - 4);
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(`Vin = ${res.Vin}V`, padLeft + 6, targetY - 5);
     ctx.restore();
 
-    // Draw Vc (Blue trace)
+    // Draw Vc (High-contrast Blue trace #2563eb)
     core.drawWaveform(ctx, vcPoints, '#2563eb', 2.5);
 
-    // Draw Current (Orange trace)
-    core.drawWaveform(ctx, iPoints, '#f97316', 1.8);
+    // Draw Current (High-contrast Amber trace #d97706)
+    core.drawWaveform(ctx, iPoints, '#d97706', 2.0);
 
-    // Legend and Info overlay
+    // Legend and Info overlay (#0f172a)
     ctx.save();
-    ctx.fillStyle = '#1e293b';
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 12px sans-serif';
     const typeLabel = res.dampingType === 'underdamped' ? '저감쇠 (Underdamped)'
       : res.dampingType === 'critically_damped' ? '임계감쇠 (Critically Damped)' : '과감쇠 (Overdamped)';
     ctx.fillText(`[RLC 과도응답] ${typeLabel} | α = ${res.alpha.toFixed(1)} rad/s, ω₀ = ${res.omega0.toFixed(1)} rad/s`, padLeft, 20);
 
     ctx.fillStyle = '#2563eb';
-    ctx.fillRect(width - 170, 10, 12, 12);
-    ctx.fillStyle = '#1e293b';
-    ctx.font = '11px sans-serif';
-    ctx.fillText('v_C(t) 전압 [V]', width - 152, 20);
+    ctx.fillRect(width - 180, 10, 12, 12);
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('v_C(t) 전압 [V]', width - 164, 20);
 
-    ctx.fillStyle = '#f97316';
+    ctx.fillStyle = '#d97706';
     ctx.fillRect(width - 90, 10, 12, 12);
-    ctx.fillStyle = '#1e293b';
-    ctx.fillText('i(t) 전류 [A]', width - 72, 20);
+    ctx.fillStyle = '#0f172a';
+    ctx.fillText('i(t) 전류 [A]', width - 74, 20);
+    ctx.restore();
     ctx.restore();
 
     return res;

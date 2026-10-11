@@ -43,7 +43,7 @@ type Store struct {
 	list []*Doc
 }
 
-var TargetLangs = []string{"c", "go", "rust", "python", "typescript", "javascript"}
+var TargetLangs = []string{"c", "go", "rust", "python", "typescript", "javascript", "lisp", "nasm"}
 
 // Load는 content/reference 디렉터리에서 모든 언어 레퍼런스 문서를 읽어 메모리에 적재한다.
 func Load(rootDir string) (*Store, error) {

@@ -1,5 +1,6 @@
 package com.prostudy.eink.ui.reference
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -49,6 +50,7 @@ class ReferenceActivity : AppCompatActivity() {
         setupListeners()
 
         selectLanguage("c")
+        updateModeButtons()
     }
 
     private fun bindViews() {
@@ -72,7 +74,9 @@ class ReferenceActivity : AppCompatActivity() {
             "rust" to findViewById(R.id.btn_ref_tab_rust),
             "python" to findViewById(R.id.btn_ref_tab_python),
             "typescript" to findViewById(R.id.btn_ref_tab_typescript),
-            "javascript" to findViewById(R.id.btn_ref_tab_javascript)
+            "javascript" to findViewById(R.id.btn_ref_tab_javascript),
+            "lisp" to findViewById(R.id.btn_ref_tab_lisp),
+            "nasm" to findViewById(R.id.btn_ref_tab_nasm)
         )
     }
 
@@ -122,12 +126,13 @@ class ReferenceActivity : AppCompatActivity() {
     private fun selectLanguage(lang: String) {
         currentLang = lang
         for ((l, btn) in tabButtons) {
+            btn.backgroundTintList = null
             if (l == lang) {
-                btn.setBackgroundResource(R.drawable.bg_eink_badge)
-                btn.setTextColor(resources.getColor(R.color.eink_bg, theme))
+                btn.setBackgroundResource(R.drawable.bg_eink_button_selected)
+                btn.setTextColor(Color.WHITE)
             } else {
-                btn.setBackgroundResource(R.drawable.bg_eink_card)
-                btn.setTextColor(resources.getColor(R.color.eink_text_primary, theme))
+                btn.setBackgroundResource(R.drawable.bg_eink_button_unselected)
+                btn.setTextColor(Color.BLACK)
             }
         }
 
@@ -143,16 +148,18 @@ class ReferenceActivity : AppCompatActivity() {
     }
 
     private fun updateModeButtons() {
+        btnModeGrammar.backgroundTintList = null
+        btnModeFunctions.backgroundTintList = null
         if (isGrammarMode) {
-            btnModeGrammar.setBackgroundResource(R.drawable.bg_eink_badge)
-            btnModeGrammar.setTextColor(resources.getColor(R.color.eink_bg, theme))
-            btnModeFunctions.setBackgroundResource(R.drawable.bg_eink_card)
-            btnModeFunctions.setTextColor(resources.getColor(R.color.eink_text_primary, theme))
+            btnModeGrammar.setBackgroundResource(R.drawable.bg_eink_button_selected)
+            btnModeGrammar.setTextColor(Color.WHITE)
+            btnModeFunctions.setBackgroundResource(R.drawable.bg_eink_button_unselected)
+            btnModeFunctions.setTextColor(Color.BLACK)
         } else {
-            btnModeGrammar.setBackgroundResource(R.drawable.bg_eink_card)
-            btnModeGrammar.setTextColor(resources.getColor(R.color.eink_text_primary, theme))
-            btnModeFunctions.setBackgroundResource(R.drawable.bg_eink_badge)
-            btnModeFunctions.setTextColor(resources.getColor(R.color.eink_bg, theme))
+            btnModeGrammar.setBackgroundResource(R.drawable.bg_eink_button_unselected)
+            btnModeGrammar.setTextColor(Color.BLACK)
+            btnModeFunctions.setBackgroundResource(R.drawable.bg_eink_button_selected)
+            btnModeFunctions.setTextColor(Color.WHITE)
         }
     }
 

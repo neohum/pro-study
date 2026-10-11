@@ -212,18 +212,20 @@ class MathTraceActivity : AppCompatActivity() {
     }
 
     private fun updateModeButtons() {
+        btnModeMathFormula.backgroundTintList = null
+        btnModeMathCode.backgroundTintList = null
         if (isMathMode) {
-            btnModeMathFormula.setBackgroundColor(Color.BLACK)
+            btnModeMathFormula.setBackgroundResource(R.drawable.bg_eink_button_selected)
             btnModeMathFormula.setTextColor(Color.WHITE)
-            btnModeMathCode.setBackgroundColor(Color.TRANSPARENT)
+            btnModeMathCode.setBackgroundResource(R.drawable.bg_eink_button_unselected)
             btnModeMathCode.setTextColor(Color.BLACK)
             scrollLangs.visibility = View.GONE
             layoutConceptContainer.visibility = View.VISIBLE
             layoutCodeContainer.visibility = View.GONE
         } else {
-            btnModeMathFormula.setBackgroundColor(Color.TRANSPARENT)
+            btnModeMathFormula.setBackgroundResource(R.drawable.bg_eink_button_unselected)
             btnModeMathFormula.setTextColor(Color.BLACK)
-            btnModeMathCode.setBackgroundColor(Color.BLACK)
+            btnModeMathCode.setBackgroundResource(R.drawable.bg_eink_button_selected)
             btnModeMathCode.setTextColor(Color.WHITE)
             scrollLangs.visibility = View.VISIBLE
             layoutConceptContainer.visibility = View.GONE
@@ -235,11 +237,12 @@ class MathTraceActivity : AppCompatActivity() {
 
     private fun updateLangButtons() {
         for ((lang, btn) in langButtons) {
+            btn.backgroundTintList = null
             if (lang == currentLang) {
-                btn.setBackgroundColor(Color.BLACK)
+                btn.setBackgroundResource(R.drawable.bg_eink_button_selected)
                 btn.setTextColor(Color.WHITE)
             } else {
-                btn.setBackgroundColor(Color.TRANSPARENT)
+                btn.setBackgroundResource(R.drawable.bg_eink_button_unselected)
                 btn.setTextColor(Color.BLACK)
             }
         }

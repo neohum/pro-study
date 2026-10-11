@@ -65,6 +65,11 @@
 
     ctx.clearRect(0, 0, width, height);
 
+    ctx.save();
+    // Pure crisp white canvas background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
     // Split view: Left = Phasor Polar Diagram (50%), Right = Power Triangle (50%)
     const midX = width / 2;
 
@@ -82,6 +87,13 @@
       ctx.arc(centerX, centerY, radius * r, 0, 2 * Math.PI);
       ctx.stroke();
     }
+    // Outer dial ring
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.stroke();
+
     ctx.strokeStyle = '#cbd5e1';
     ctx.beginPath();
     ctx.moveTo(centerX - radius, centerY);
@@ -98,27 +110,28 @@
     const iLen = radius * 0.7;
     const iX = centerX + iLen * Math.cos(angleRad);
     const iY = centerY + iLen * Math.sin(angleRad);
-    core.drawVectorArrow(ctx, centerX, centerY, iX, iY, '#f97316', `I (${res.Irms.toFixed(1)}A)`);
+    core.drawVectorArrow(ctx, centerX, centerY, iX, iY, '#d97706', `I (${res.Irms.toFixed(1)}A)`);
 
     // Arc for phase angle
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius * 0.25, 0, angleRad, angleRad < 0);
-    ctx.strokeStyle = '#64748b';
+    ctx.strokeStyle = '#0f172a';
     ctx.setLineDash([2, 2]);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = '#64748b';
-    ctx.font = '11px sans-serif';
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px sans-serif';
     ctx.fillText(`θ = ${res.theta_deg.toFixed(1)}°`, centerX + 30, centerY + (angleRad < 0 ? 15 : -15));
 
-    ctx.fillStyle = '#1e293b';
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 12px sans-serif';
     ctx.fillText('1. 복소평면 페이저 (Phasor)', 15, 20);
     ctx.restore();
 
     // Divider line
     ctx.save();
-    ctx.strokeStyle = '#cbd5e1';
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(midX, 10);
     ctx.lineTo(midX, height - 10);
@@ -135,7 +148,7 @@
     const qHeight = res.Q * scale;
 
     ctx.save();
-    ctx.fillStyle = '#1e293b';
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 12px sans-serif';
     ctx.fillText('2. 복소 전력 삼각형 (Power Triangle)', midX + 15, 20);
 
@@ -146,7 +159,7 @@
     core.drawVectorArrow(ctx, ptLeft + baseLen, ptBottom, ptLeft + baseLen, ptBottom - qHeight, '#dc2626', `Q=${res.Q.toFixed(0)}VAR`);
 
     // Apparent power S (Hypotenuse purple arrow)
-    core.drawVectorArrow(ctx, ptLeft, ptBottom, ptLeft + baseLen, ptBottom - qHeight, '#9333ea', `S=${res.S.toFixed(0)}VA`);
+    core.drawVectorArrow(ctx, ptLeft, ptBottom, ptLeft + baseLen, ptBottom - qHeight, '#7c3aed', `S=${res.S.toFixed(0)}VA`);
 
     // Corrected Q and S if C_corr applied
     if (res.C_corr > 0) {
@@ -156,13 +169,14 @@
     }
 
     // Power factor badges
-    ctx.fillStyle = '#1e293b';
-    ctx.font = '12px sans-serif';
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 12px sans-serif';
     ctx.fillText(`역률(PF): ${(res.PF * 100).toFixed(1)}% (${res.theta_deg > 0 ? '지상 Lagging' : '진상 Leading'})`, ptLeft, height - 35);
     if (res.C_corr > 0) {
       ctx.fillStyle = '#0284c7';
       ctx.fillText(`개선 역률(PF_new): ${(res.PF_new * 100).toFixed(1)}% (콘덴서 ${ (res.C_corr * 1e6).toFixed(1) }µF)`, ptLeft, height - 15);
     }
+    ctx.restore();
     ctx.restore();
 
     return res;

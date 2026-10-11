@@ -86,7 +86,7 @@
     ctx.clearRect(0, 0, width, height);
 
     ctx.save();
-    ctx.fillStyle = '#0f172a'; // Oscilloscope dark background
+    ctx.fillStyle = '#ffffff'; // Crisp white E-ink background
     ctx.fillRect(0, 0, width, height);
 
     const padL = 50;
@@ -96,8 +96,8 @@
     const plotW = width - padL - padR;
     const plotH = height - padT - padB;
 
-    // Draw Oscilloscope Reticle Grid
-    ctx.strokeStyle = '#1e293b';
+    // Draw Oscilloscope Reticle Grid (#e2e8f0)
+    ctx.strokeStyle = '#e2e8f0';
     ctx.lineWidth = 1;
     for (let x = padL; x <= padL + plotW; x += plotW / 10) {
       ctx.beginPath();
@@ -112,11 +112,16 @@
       ctx.stroke();
     }
 
+    // Outer Plot Border
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(padL, padT, plotW, plotH);
+
     // Reference Voltage Lines: 2/3 Vcc and 1/3 Vcc
     const y23 = (padT + plotH) - (res.vThreshold / (res.Vcc * 1.2)) * plotH;
     const y13 = (padT + plotH) - (res.vTrigger / (res.Vcc * 1.2)) * plotH;
 
-    ctx.strokeStyle = '#334155';
+    ctx.strokeStyle = '#64748b';
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
     ctx.moveTo(padL, y23);
@@ -126,10 +131,10 @@
     ctx.stroke();
     ctx.setLineDash([]);
 
-    ctx.fillStyle = '#64748b';
-    ctx.font = '10px sans-serif';
-    ctx.fillText('2/3 Vcc (Threshold)', padL + 5, y23 - 3);
-    ctx.fillText('1/3 Vcc (Trigger)', padL + 5, y13 - 3);
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('2/3 Vcc (Threshold)', padL + 5, y23 - 4);
+    ctx.fillText('1/3 Vcc (Trigger)', padL + 5, y13 - 4);
 
     // Map time points
     const vcPts = [];
@@ -142,8 +147,8 @@
       voutPts.push({ x: px, y: pyVout });
     }
 
-    // Trace 1: Output Square Wave (Glowing Cyan)
-    ctx.strokeStyle = '#06b6d4';
+    // Trace 1: Output Square Wave (#2563eb, high contrast)
+    ctx.strokeStyle = '#2563eb';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
     for (let i = 0; i < voutPts.length; i++) {
@@ -152,9 +157,9 @@
     }
     ctx.stroke();
 
-    // Trace 2: Capacitor Charging/Discharging Waveform (Bright Yellow)
-    ctx.strokeStyle = '#eab308';
-    ctx.lineWidth = 2;
+    // Trace 2: Capacitor Charging/Discharging Waveform (#d97706, high contrast)
+    ctx.strokeStyle = '#d97706';
+    ctx.lineWidth = 2.2;
     ctx.beginPath();
     for (let i = 0; i < vcPts.length; i++) {
       if (i === 0) ctx.moveTo(vcPts[i].x, vcPts[i].y);
@@ -162,23 +167,23 @@
     }
     ctx.stroke();
 
-    // Header info
-    ctx.fillStyle = '#f8fafc';
+    // Header info (#0f172a)
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 12px sans-serif';
     const fStr = res.frequency >= 1000 ? `${(res.frequency / 1000).toFixed(2)}kHz` : `${res.frequency.toFixed(1)}Hz`;
     ctx.fillText(`⏱️ 555 타이머 발진 파형 | 주파수 f = ${fStr} | 듀티비 D = ${(res.dutyCycle * 100).toFixed(1)}%`, padL, 20);
 
     // Legend
-    ctx.fillStyle = '#06b6d4';
-    ctx.fillRect(width - 190, 10, 10, 10);
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = '11px sans-serif';
-    ctx.fillText('Ch1: V_out 구형파', width - 175, 19);
+    ctx.fillStyle = '#2563eb';
+    ctx.fillRect(width - 200, 10, 12, 12);
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('Ch1: V_out 구형파', width - 184, 20);
 
-    ctx.fillStyle = '#eab308';
-    ctx.fillRect(width - 85, 10, 10, 10);
-    ctx.fillStyle = '#f8fafc';
-    ctx.fillText('Ch2: v_C(t)', width - 70, 19);
+    ctx.fillStyle = '#d97706';
+    ctx.fillRect(width - 90, 10, 12, 12);
+    ctx.fillStyle = '#0f172a';
+    ctx.fillText('Ch2: v_C(t)', width - 74, 20);
 
     ctx.restore();
     return res;

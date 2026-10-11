@@ -1,0 +1,623 @@
+{
+  "lang": "nasm",
+  "name": "NASM (x86_64)",
+  "version": "NASM 2.16+ / System V AMD64 ABI",
+  "overview": "NASM(Netwide Assembler)은 x86_64 아키텍처 및 Linux 환경에서 가장 널리 사용되는 모듈식 2패스 인텔 문법 어셈블러입니다. 16개의 64비트 범용 레지스터, System V AMD64 ABI 호출 규약, 복합 주소 지정 모드 [Base + Index*Scale + Disp], 리눅스 64비트 시스템 콜(syscall), 128비트 SSE/AVX SIMD 벡터 명령어를 직관적인 지시어와 함께 완벽히 제어하여 극한의 저수준 성능을 발휘합니다.",
+  "grammar": [
+    {
+      "id": "nasm-registers-gpr",
+      "title": "1. 64비트 범용 레지스터 체계와 서브 레지스터 (RAX ~ R15)",
+      "category": "아키텍처 및 레지스터",
+      "summary": "x86_64 아키텍처는 16개의 64비트 범용 레지스터(RAX, RBX, RCX, RDX, RSI, RDI, RBP, RSP, R8~R15)를 제공합니다. 각 레지스터는 하위 32비트(EAX), 16비트(AX), 8비트(AL, AH, R8B) 단위로 하위 호환 접근이 가능하며, 32비트 연산 시 상위 32비트 자동 제로 클리어 규칙이 적용됩니다.",
+      "syntax": "mov rax, 0x1122334455667788 ; 64비트 전체 쓰기\nmov eax, 0x00000042         ; 32비트 쓰기 -> 상위 32비트는 0으로 자동 클리어!\nmov al,  0x0F               ; 최하위 8비트만 수정 (나머지 비트 보존)",
+      "example": "section .text\nglobal _start\n\n_start:\n    ; 1. 64비트 레지스터 초기화\n    mov rax, 0x1122334455667788\n    \n    ; 2. 32비트 서브 레지스터에 쓰기 (중요: RAX의 상위 32비트가 0으로 클리어됨)\n    mov eax, 0xAABBCCDD\n    ; 이제 rax의 값은 0x00000000AABBCCDD 가 됨!\n    \n    ; 3. R8~R15 신규 레지스터 및 서브 레지스터 접근\n    mov r8,  0x1000             ; 64비트 r8\n    mov r8d, 0x2000             ; 32비트 r8d (상위 32비트 제로)\n    mov r8w, 0x3000             ; 16비트 r8w\n    mov r8b, 0x40               ; 8비트 r8b\n    \n    ; 종료 시스템 콜\n    mov eax, 60                 ; sys_exit (rax에 60 저장)\n    xor edi, edi                ; exit code 0 (rdi 초기화)\n    syscall",
+      "explanation": "x86_64의 핵심 하드웨어 규칙 중 하나는 '32비트 레지스터(eax, ebx, r8d 등)에 값을 쓰면 상위 32비트가 무조건 0으로 채워진다(Zero-extended)'는 점입니다. 반면 16비트(ax)나 8비트(al)에 쓸 때는 상위 비트들이 기존 값을 그대로 유지합니다.",
+      "pitfalls": "mov eax, 0 연산 후 rax의 상위 비트에 이전 값이 남아있을 것이라고 착각하지 마세요. 32비트 레지스터 연산은 언제나 64비트 레지스터의 상위 32비트를 파괴하고 0으로 리셋합니다.",
+      "practice": "문제: RAX 레지스터의 최하위 1바이트(8비트)를 지칭하는 서브 레지스터 이름은 무엇일까요?\n정답: AL (단, RAX의 8~15번째 비트는 AH)"
+    },
+    {
+      "id": "nasm-rip-rflags",
+      "title": "2. 명령 포인터 (RIP)와 플래그 레지스터 (RFLAGS: ZF, CF, SF, OF)",
+      "category": "아키텍처 및 레지스터",
+      "summary": "RIP는 CPU가 다음에 인출하여 실행할 명령어의 메모리 주소를 가리킵니다. RFLAGS는 직전 산술/비교 연산의 결과를 상태 비트(ZF=0 결과, CF=자리올림/빌림, SF=음수 부호, OF=부호 오버플로우)로 저장하여 조건 분기를 결정합니다.",
+      "syntax": "test reg, reg ; ZF, SF 플래그 갱신\ncmp  a, b      ; a - b 결과로 ZF, CF, SF, OF 갱신",
+      "example": "section .text\nglobal _start\n\n_start:\n    mov rax, 10\n    mov rbx, 10\n\n    cmp rax, rbx     ; rax - rbx = 0 -> ZF(Zero Flag) = 1로 세트\n    je  labels_equal ; ZF가 1이므로 점프 수행\n\n    mov edi, 1       ; 미실행\n    jmp exit_prog\n\nlabels_equal:\n    mov edi, 0       ; 성공 코드\n\nexit_prog:\n    mov eax, 60      ; sys_exit\n    syscall",
+      "explanation": "ZF(Zero Flag)는 연산 결과가 0일 때 1이 됩니다. CF(Carry Flag)는 부호 없는(Unsigned) 연산에서 자리올림이나 빌림이 일어났을 때 1이 되고, OF(Overflow Flag)는 부호 있는(Signed) 연산에서 표현 가능한 범위를 초과했을 때 1이 됩니다. SF(Sign Flag)는 결과의 최상위 부호 비트를 반영합니다.",
+      "pitfalls": "RIP 레지스터는 mov rip, rax 처럼 직접 값을 대입할 수 없습니다. RIP는 오직 jmp, call, ret, jcc 같은 제어 전송 명령어를 통해서만 간접적으로 변경됩니다.",
+      "practice": "문제: cmp rax, rbx 명령 수행 결과 두 레지스터의 값이 정확히 일치할 때 1로 설정되는 RFLAGS 비트는 무엇일까요?\n정답: ZF (Zero Flag)"
+    },
+    {
+      "id": "nasm-sections",
+      "title": "3. 프로그램 섹션 구조 (.text, .data, .rodata, .bss)",
+      "category": "어셈블리 구조",
+      "summary": "어셈블리 소스는 역할별로 ELF 메모리 세그먼트에 대응하는 섹션으로 나뉩니다. 실행 코드는 .text, 초기화된 전역 데이터는 .data, 읽기 전용 상수는 .rodata, 초기화되지 않은 메모리 버퍼는 .bss 섹션에 배치합니다.",
+      "syntax": "section .text   ; 실행 기계어 코드 (Read + Execute)\nsection .rodata ; 읽기 전용 상수 (Read Only)\nsection .data   ; 초기화된 전역/정적 데이터 (Read + Write)\nsection .bss    ; 미초기화 데이터 버퍼 (BSS: Block Started by Symbol)",
+      "example": "section .rodata\n    prompt db \"Enter name: \", 0\n    prompt_len equ $ - prompt\n\nsection .data\n    counter dq 0                ; 8바이트 초기화 데이터\n    status_flag db 1            ; 1바이트 초기화 데이터\n\nsection .bss\n    input_buffer resb 256       ; 256바이트 미초기화 버퍼\n    temp_qword   resq 1         ; 8바이트 미초기화 공간\n\nsection .text\n    global _start\n_start:\n    ; .rodata의 문자열을 화면에 출력\n    mov rax, 1                  ; sys_write\n    mov rdi, 1                  ; stdout\n    mov rsi, prompt             ; 버퍼 주소\n    mov rdx, prompt_len         ; 길이\n    syscall\n\n    ; sys_exit\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": ".bss 섹션에 선언된 변수들은 실행 바이너리 파일 크기를 늘리지 않습니다. ELF 헤더에 필요한 총 바이트 크기만 기록되며, 운영체제가 프로그램을 메모리에 로드할 때 페이지를 할당하고 0으로 자동 클리어합니다.",
+      "pitfalls": ".rodata 섹션에 배치된 메모리 주소에 mov [prompt], al 처럼 쓰기 작업을 시도하면 CPU 하드웨어 페이지 보호 메커니즘에 의해 즉시 'Segmentation fault' 크래시가 발생합니다.",
+      "practice": "문제: 대용량 1MB 버퍼를 선언할 때 실행 파일(.exe/ELF) 바이너리 자체의 크기를 불필요하게 1MB 증가시키지 않기 위해 사용해야 하는 섹션은 무엇일까요?\n정답: section .bss"
+    },
+    {
+      "id": "nasm-data-directives",
+      "title": "4. 초기화된 데이터 정의 지시어 (db, dw, dd, dq, dt)",
+      "category": "데이터 정의",
+      "summary": "메모리에 초기화된 바이트 단위 데이터를 생성하는 의사 명령어(Directive)입니다. db(1바이트), dw(2바이트), dd(4바이트), dq(8바이트), dt(10바이트)를 사용하여 정수, 주소, 문자열을 배치합니다.",
+      "syntax": "label db val1, val2, ... ; Define Byte (1B)\nlabel dw val1            ; Define Word (2B)\nlabel dd val1            ; Define Doubleword (4B)\nlabel dq val1            ; Define Quadword (8B, 64비트 포인터/정수)",
+      "example": "section .data\n    ; 1. 바이트 및 문자열 정의\n    byte_val   db  0xFF\n    hello_msg  db  \"Hello, Assembly!\", 0x0A, 0  ; 개행(\\n)과 널 종단('\\0')\n\n    ; 2. 16비트 워드 및 32비트 더블워드\n    word_val   dw  1000\n    dword_val  dd  100000\n\n    ; 3. 64비트 쿼드워드 (포인터 주소 및 64비트 대형 정수)\n    qword_val  dq  0x1122334455667788\n    ptr_msg    dq  hello_msg                    ; hello_msg의 64비트 주소 저장\n\n    ; 4. 다중 값 연속 배열 정의\n    numbers    dd  10, 20, 30, 40, 50           ; 4바이트 정수 5개 (총 20바이트)",
+      "explanation": "NASM은 리틀 엔디안(Little-Endian) 방식으로 정수를 메모리에 저장합니다. 예를 들어 dq 0x1122334455667788은 메모리 최저 주소부터 0x88, 0x77, 0x66 ... 0x11 순으로 바이트가 역순 배치됩니다.",
+      "pitfalls": "문자열을 선언할 때 끝에 널 종단 바이트(0)나 개행 문자(0x0A)를 빠뜨리기 쉽습니다. 시스템 콜 write는 길이를 명시하지만 C 라이브러리 함수(printf 등)와 연동할 때는 반드시 끝에 , 0을 붙여야 합니다.",
+      "practice": "문제: x86_64 아키텍처에서 64비트 메모리 주소(포인터)나 64비트 정수를 초기화하기 위해 NASM에서 사용하는 데이터 정의 지시어는 무엇일까요?\n정답: dq (Define Quadword, 8바이트)"
+    },
+    {
+      "id": "nasm-bss-resb",
+      "title": "5. 미초기화 메모리 예약 지시어 (resb, resw, resd, resq)",
+      "category": "데이터 정의",
+      "summary": ".bss 섹션에서 초기화되지 않은 메모리 공간을 바이트 단위로 예약합니다. resb(바이트), resw(워드), resd(더블워드), resq(쿼드워드)를 사용하며, 대괄호 연산자를 통해 런타임 버퍼로 활용합니다.",
+      "syntax": "buffer_name resb count ; count 바이트만큼 메모리 예약\nqword_buf   resq count ; count * 8바이트만큼 메모리 예약",
+      "example": "section .bss\n    char_buffer  resb 1024       ; 1KB 입력 버퍼\n    int_array    resd 100        ; 4바이트 int 100개 공간 (400바이트)\n    stack_space  resq 64         ; 8바이트 쿼드워드 64개 공간 (512바이트)\n\nsection .text\nglobal _start\n_start:\n    ; 버퍼의 첫 번째 바이트에 문자 'A' 저장\n    mov byte [char_buffer], 'A'\n\n    ; int_array의 2번째 인덱스([1])에 99 저장 (오프셋 1 * 4 = 4)\n    mov dword [int_array + 4], 99\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "resb 계열 지시어는 초기화 값이 들어가지 않으므로 인수로는 '예약할 요소의 개수'를 전달합니다. 컴파일된 ELF 파일 내부에는 이 섹션의 총 바이트 합계 크기만 기록되므로 수십 메가바이트를 예약해도 파일 크기는 수 킬로바이트에 불과합니다.",
+      "pitfalls": "resb를 .data 섹션에서 사용하면 NASM 문법 에러가 발생합니다. resb, resw, resd, resq는 반드시 section .bss 안에서만 선언해야 합니다.",
+      "practice": "문제: section .bss에서 8바이트 크기의 쿼드워드 10개를 예약하기 위한 올바른 NASM 지시어 표현식은 무엇일까요?\n정답: resq 10"
+    },
+    {
+      "id": "nasm-symbols-equ",
+      "title": "6. 심볼과 상수 정의 (equ, $, $$ 위치 카운터)",
+      "category": "전처리기 및 기호",
+      "summary": "equ 지시어는 메모리를 할당하지 않고 컴파일 타임에 기호 상수를 정의합니다. 현재 어셈블리 라인의 주소를 뜻하는 $와 현재 섹션의 시작 주소를 나타내는 $$를 조합하여 문자열 길이를 자동 계산합니다.",
+      "syntax": "CONSTANT_NAME equ value\nmsg_len       equ $ - msg ; ($ 현재 위치) - (msg 시작 위치) = 바이트 길이",
+      "example": "section .rodata\n    msg db \"Hello, World of x86_64!\", 0x0A\n    ; $는 msg 바로 다음 주소를 가리키므로, ($ - msg)는 순수 바이트 길이가 됨\n    msg_len equ $ - msg\n\n    MAX_CONNECTIONS equ 1024\n    SYS_WRITE       equ 1\n    SYS_EXIT        equ 60\n    STDOUT_FILENO   equ 1\n\nsection .text\nglobal _start\n_start:\n    mov rax, SYS_WRITE\n    mov rdi, STDOUT_FILENO\n    mov rsi, msg\n    mov rdx, msg_len        ; 컴파일러가 계산한 24가 즉시값으로 치환됨\n    syscall\n\n    mov rax, SYS_EXIT\n    xor rdi, rdi\n    syscall",
+      "explanation": "문자열을 수정할 때마다 글자 수를 손으로 세어 rdx에 적는 것은 매우 위험합니다. msg_len equ $ - msg 관용구를 사용하면 문자열 내용을 바꾸어도 어셈블러가 컴파일 타임에 정확한 길이를 재계산해 줍니다.",
+      "pitfalls": "equ로 정의된 상수는 런타임 메모리 주소를 갖는 변수가 아니므로, mov [MAX_CONNECTIONS], rax 처럼 equ 심볼에 메모리 쓰기를 시도하면 컴파일 오류가 발생합니다.",
+      "practice": "문제: NASM에서 현재 명령어 또는 현재 어셈블리 위치의 주소를 나타내는 위치 카운터 특수 기호는 무엇일까요?\n정답: $ (달러 기호)"
+    },
+    {
+      "id": "nasm-preprocessor-define",
+      "title": "7. 전처리기 기본 지시어 (%define, %undef, %include)",
+      "category": "전처리기 및 기호",
+      "summary": "컴파일 전에 텍스트 매크로 치환을 수행하는 NASM 전처리기입니다. 단일 라인 매크로(%define), 매크로 정의 취소(%undef), 외부 헤더/파일을 불러오는 %include 지시어를 지원합니다.",
+      "syntax": "%define MACRO_NAME replacement\n%define ADD_FIVE(reg) add reg, 5\n%include \"syscalls.inc\"",
+      "example": "; 단일 라인 상수 및 인자 매크로 정의\n%define BUFFER_SIZE 4096\n%define PUSH_ALL    push rbx \\\n                    push r12 \\\n                    push r13 \\\n                    push r14 \\\n                    push r15\n\n%define POP_ALL     pop r15 \\\n                    pop r14 \\\n                    pop r13 \\\n                    pop r12 \\\n                    pop rbx\n\nsection .text\nglobal _start\n_start:\n    mov rax, BUFFER_SIZE\n    \n    ; 매크로 확장\n    PUSH_ALL\n    ; ... 작업 수행 ...\n    POP_ALL\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "%define은 C 언어의 #define과 완전히 동일하게 동작합니다. 여러 줄을 이어 붙일 때는 역슬래시(\\)를 사용하며, 대소문자를 구분하지 않는 매크로는 %idefine을 사용합니다.",
+      "pitfalls": "매크로 내부에서 레이블을 정의할 때 일반 레이블을 사용하면, 매크로를 소스 코드 내에서 2번 이상 호출할 때 심볼 중복 정의(Duplicate symbol) 컴파일 오류가 발생합니다.",
+      "practice": "문제: 외부 어셈블리 소스 파일이나 상수 정의 헤더 파일(예: sys.inc)을 현재 파일에 포함시킬 때 사용하는 NASM 전처리기 지시어는 무엇일까요?\n정답: %include"
+    },
+    {
+      "id": "nasm-macros-multiline",
+      "title": "8. 다중 라인 매크로 (%macro, %endmacro, %0, %1, %%local_label)",
+      "category": "전처리기 및 기호",
+      "summary": "복잡한 어셈블리 코드 템플릿을 재사용하기 위한 다중 라인 매크로 블록입니다. 전달된 인자 개수(%0), 위치 인자(%1, %2), 그리고 매크로 호출마다 고유한 레이블을 자동 생성해 충돌을 방지하는 로컬 레이블(%%label)을 지원합니다.",
+      "syntax": "%macro MACRO_NAME arg_count\n    ; statements using %1, %2\n    %%local_label:\n%endmacro",
+      "example": "; 2개 인자를 받아 max 값을 계산하는 매크로\n%macro GET_MAX 2\n    mov rax, %1\n    cmp rax, %2\n    jge %%is_greater\n    mov rax, %2\n%%is_greater:\n    ; 최종 최댓값이 rax에 저장됨\n%endmacro\n\n; 시스템 콜 write 단축 매크로 (3개 인자: fd, buf, len)\n%macro WRITE_STDOUT 2\n    mov rax, 1\n    mov rdi, 1\n    mov rsi, %1\n    mov rdx, %2\n    syscall\n%endmacro\n\nsection .data\n    msg db \"Hello!\", 0x0A\n    len equ $ - msg\n\nsection .text\nglobal _start\n_start:\n    GET_MAX 100, 250        ; rax = 250\n    GET_MAX 50, 10          ; rax = 50 (레이블 충돌 없음!)\n    \n    WRITE_STDOUT msg, len\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "매크로 내부의 레이블 앞에 %%를 붙이면(예: %%is_greater), NASM은 매크로가 호출될 때마다 ..@1.is_greater, ..@2.is_greater 처럼 내부적으로 고유한 일련번호 심볼을 만들어 레이블 중복 충돌을 원천 방지합니다.",
+      "pitfalls": "매크로 정의 시 지정한 인자 개수와 다른 개수로 매크로를 호출하면 에러가 발생합니다. 가변 인자를 수용하려면 %macro MY_MACRO 1-3 처럼 범위 인자를 지정해야 합니다.",
+      "practice": "문제: NASM 다중 라인 매크로(%macro) 내부에서 반복 확장 시 레이블 중복 정의 오류를 막기 위해 로컬 레이블 이름 앞에 붙여야 하는 접두사 기호는 무엇일까요?\n정답: %% (퍼센트 2개)"
+    },
+    {
+      "id": "nasm-mov-sizes",
+      "title": "9. 데이터 이동 (mov)과 메모리 크기 지정자 (byte, word, dword, qword)",
+      "category": "데이터 이동",
+      "summary": "레지스터 간, 레지스터와 메모리 간, 즉시값과 레지스터/메모리 간 데이터를 복사합니다. 피연산자 중 적어도 하나는 레지스터여야 하며, 크기가 모호한 메모리 접근에는 크기 지정자(byte, dword, qword)를 반드시 명시해야 합니다.",
+      "syntax": "mov dest, src\nmov qword [rbp - 8], 100 ; 64비트 크기 명시\nmov byte [rdi], 0        ; 8비트 크기 명시",
+      "example": "section .bss\n    buffer resb 64\n\nsection .text\nglobal _start\n_start:\n    ; 1. 레지스터 간 이동\n    mov rax, 0x1234\n    mov rbx, rax\n\n    ; 2. 메모리에 즉시값 쓰기 (크기 지정자 필수!)\n    ; mov [buffer], 10          ; 오류! 크기가 1B인지 4B인지 8B인지 모호함\n    mov byte [buffer], 10       ; 1바이트 쓰기\n    mov dword [buffer + 4], 500 ; 4바이트 쓰기\n    mov qword [buffer + 8], rbx ; 레지스터가 64비트이므로 크기 유추 가능\n\n    ; 3. 메모리에서 레지스터로 읽기\n    mov al, byte [buffer]       ; al에 10 로드\n    mov edx, dword [buffer + 4] ; edx에 500 로드\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "x86_64 아키텍처는 하드웨어 레벨에서 '메모리에서 메모리로의 직접 mov'를 지원하지 않습니다(mov [dest], [src] 불가). 반드시 메모리에서 레지스터로 읽어들인 후(mov rax, [src]), 그 레지스터를 대상 메모리에 써야 합니다(mov [dest], rax).",
+      "pitfalls": "mov [rax], 0 처럼 즉시값을 메모리에 직접 쓸 때 byte, word, dword, qword 크기 지정자를 생략하면 NASM 어셈블러는 'operation size not specified' 에러를 내며 컴파일을 거부합니다.",
+      "practice": "문제: NASM에서 메모리 주소 [rdi]에 8바이트 크기의 숫자 0을 저장하고자 할 때 모호성을 없애기 위해 작성해야 하는 올바른 명령어는 무엇일까요?\n정답: mov qword [rdi], 0"
+    },
+    {
+      "id": "nasm-movzx-movsx",
+      "title": "10. 확장 이동: 제로 확장 (movzx)과 부호 확장 (movsx, movsxd)",
+      "category": "데이터 이동",
+      "summary": "작은 크기(8비트, 16비트)의 데이터를 더 큰 레지스터(32비트, 64비트)로 로드할 때, 빈 상위 비트들을 0으로 채우는 제로 확장(movzx)과 최상위 부호 비트로 채우는 부호 확장(movsx, movsxd)을 사용합니다.",
+      "syntax": "movzx dest_reg, src_reg_or_mem ; 부호 없는 확장 (상위 비트 0 채움)\nmovsx dest_reg, src_reg_or_mem ; 부호 있는 확장 (상위 비트 부호 복사)\nmovsxd dest_64, src_32_reg_or_mem ; 32비트 -> 64비트 전용 부호 확장",
+      "example": "section .data\n    byte_neg db -5              ; 0xFB (8비트 부호 있는 음수)\n    byte_pos db 120             ; 0x78 (8비트 양수)\n\nsection .text\nglobal _start\n_start:\n    ; 1. movzx (부호 없는 8비트 -> 32/64비트 레지스터 확장)\n    movzx eax, byte [byte_pos]  ; eax = 0x00000078 (120)\n    movzx rbx, byte [byte_neg]  ; rbx = 0x00000000000000FB (251로 해석)\n\n    ; 2. movsx (부호 있는 8비트 -> 32/64비트 부호 보존 확장)\n    movsx rcx, byte [byte_neg]  ; rcx = 0xFFFFFFFFFFFFFFFB (-5 그대로 유지!)\n\n    ; 3. movsxd (32비트 정수 -> 64비트 레지스터 부호 확장)\n    mov   edx, -100\n    movsxd rsi, edx             ; rsi에 -100의 64비트 부호 확장 복사\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "C 언어에서 (int64_t)short_val 또는 (uint64_t)uint8_val 처럼 작은 정수를 큰 정수로 형변환할 때 컴파일러가 바로 이 movzx/movsx 명령어를 방출합니다. 음수의 경우 부호 비트를 상위로 전파하지 않으면 양수의 거대한 숫자로 왜곡됩니다.",
+      "pitfalls": "32비트에서 64비트로 부호 확장할 때는 movsx가 아닌 movsxd(Doubleword to Quadword) 명령어를 써야 합니다. 반면 32비트에서 64비트로의 제로 확장은 일반 mov eax, [mem]을 실행하면 하드웨어 규칙에 의해 상위 32비트가 자동으로 0이 되므로 별도의 명령어가 필요 없습니다.",
+      "practice": "문제: 1바이트 부호 있는 음수 char를 64비트 RAX 레지스터로 부호를 보존하며 안전하게 읽어오는 올바른 어셈블리 명령어는 무엇일까요?\n정답: movsx rax, byte [mem] (또는 대상이 레지스터인 경우 movsx rax, bl)"
+    },
+    {
+      "id": "nasm-lea-instruction",
+      "title": "11. 유효 주소 계산 (lea: Load Effective Address)",
+      "category": "데이터 이동 및 주소",
+      "summary": "lea 명령어는 대괄호 안의 주소 수식을 평가하여 실제 메모리를 역참조(읽기)하지 않고, 순수한 계산 결과 주소값 자체를 대상 레지스터에 로드합니다. 고속 산술 연산(덧셈, 곱셈 결합)의 치트키로도 애용됩니다.",
+      "syntax": "lea dest_reg, [address_expression]\nlea rax, [rbx + rcx*4 + 16] ; 메모리 읽기 없이 산술 주소만 rax에 대입",
+      "example": "section .data\n    array dd 10, 20, 30, 40, 50\n\nsection .text\nglobal _start\n_start:\n    ; 1. 순수 주소 포인터 로드 (C의 &array[2] 와 동일)\n    mov rbx, array              ; rbx = array 시작 주소\n    mov rcx, 2                  ; index = 2\n    lea rdx, [rbx + rcx*4]      ; rdx에는 30이 아닌, array[2]의 메모리 주소 자체가 저장됨!\n\n    ; 2. mov와 lea의 결정적 차이\n    mov eax, [rbx + rcx*4]      ; eax = 30 (메모리에서 실제 값을 역참조하여 읽음)\n    lea rax, [rbx + rcx*4]      ; rax = 주소값 (메모리를 전혀 읽지 않음)\n\n    ; 3. 비메모리 고속 산술 연산: rax = rdi * 5 + 7\n    mov rdi, 10\n    lea rax, [rdi + rdi*4 + 7]  ; 10 + 40 + 7 = 57 을 단 1사이클에 계산! (플래그 변경 없음)\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "CPU 내부의 주소 생성 장치(AGU)는 산술논리연산장치(ALU)와 별도로 동작하므로, lea는 플래그(RFLAGS)를 전혀 변경하지 않고 레지스터 곱셈(1, 2, 4, 8)과 덧셈 2개를 1클럭 사이클에 처리하는 뛰어난 최적화 명령입니다.",
+      "pitfalls": "대괄호 []가 쓰였다고 해서 무조건 메모리 접근이라고 착각하면 안 됩니다. lea [수식]은 메모리 버스를 전혀 건드리지 않는 순수 주소 산술입니다.",
+      "practice": "문제: RDI에 정수 x가 들어있을 때, lea rax, [rdi + rdi*8] 명령을 수행하면 RAX에는 x의 몇 배의 값이 저장될까요?\n정답: 9배 (x + 8*x = 9x)"
+    },
+    {
+      "id": "nasm-addressing-modes",
+      "title": "12. 복합 메모리 주소 지정 [Base + Index*Scale + Disp] 및 RIP 상대 주소",
+      "category": "주소 지정 방식",
+      "summary": "x86_64의 메모리 주소 지정은 [베이스 레지스터 + 인덱스 레지스터 * 스케일(1,2,4,8) + 변위]의 형태를 단일 명령어로 지원합니다. 위치 독립 코드(PIC) 생성을 위해 심볼 접근 시 [rel label] 형태의 RIP 상대 주소를 표준으로 사용합니다.",
+      "syntax": "mov rax, [rbp - 16]                 ; 베이스 + 음수 변위 (지역 변수)\nmov eax, [rbx + rcx*4 + 8]          ; 배열 구조체 인덱싱\nmov rdi, [rel my_global_var]        ; RIP 상대 주소 지정 (PIC 필수)",
+      "example": "default rel ; 모든 레이블 참조에 rel을 기본 적용하도록 지시\n\nsection .data\n    matrix dd 1, 2, 3, 4\n           dd 5, 6, 7, 8\n\nsection .text\nglobal _start\n_start:\n    ; 1. RIP 상대 주소 지정 (Position Independent Code)\n    lea rbx, [matrix]           ; default rel에 의해 [rel matrix]로 컴파일됨\n\n    ; 2. 2차원 배열 인덱싱: matrix[row][col] (row=1, col=2 -> 값 7)\n    mov r8, 1                   ; row\n    mov r9, 2                   ; col\n\n    ; row_offset = row * (4개 원소 * 4바이트) = 1 * 16 = 16\n    imul r8, 16\n    ; matrix[row]의 시작 주소로 r8 전진\n    add r8, rbx\n\n    ; Base(r8) + Index(r9)*Scale(4) + Disp(0)\n    mov eax, [r8 + r9*4]        ; eax = 7\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "리눅스 공유 라이브러리(.so)나 PIE(Position Independent Executable) 바이너리는 실행 시마다 메모리의 임의 위치에 로드(ASLR)되므로 절대 주소를 쓰면 크래시가 납니다. [rel symbol]은 현재 명령어(RIP)로부터의 상대적 거리(오프셋)로 주소를 계산하므로 위치에 무관하게 안전합니다.",
+      "pitfalls": "스케일 인자(Scale factor) 자리에 올 수 있는 숫자는 하드웨어상 1, 2, 4, 8 뿐입니다. [rbx + rcx*3] 이나 [rbx + rcx*5] 처럼 임의의 숫자를 스케일로 지정하면 컴파일 에러가 발생합니다.",
+      "practice": "문제: x86_64 복합 주소 지정 모드 [Base + Index * Scale + Displacement]에서 허용되는 스케일(Scale) 배수 4가지는 무엇일까요?\n정답: 1, 2, 4, 8"
+    },
+    {
+      "id": "nasm-arithmetic-basic",
+      "title": "13. 기본 산술 연산 (add, sub, inc, dec, neg)",
+      "category": "산술 및 논리 연산",
+      "summary": "덧셈(add), 뺄셈(sub), 1 증가(inc), 1 감소(dec), 2의 보수 부호 반전(neg) 명령어를 제공합니다. 연산 결과에 따라 RFLAGS의 상태 비트(ZF, CF, SF, OF)를 갱신합니다.",
+      "syntax": "add dest, src ; dest = dest + src\nsub dest, src ; dest = dest - src\ninc reg_or_mem; dest = dest + 1 (CF 플래그는 미변경!)\ndec reg_or_mem; dest = dest - 1 (CF 플래그는 미변경!)\nneg reg_or_mem; dest = 0 - dest (2의 보수 부호 반전)",
+      "example": "section .text\nglobal _start\n_start:\n    mov rax, 100\n    add rax, 50      ; rax = 150\n    sub rax, 20      ; rax = 130\n\n    inc rax          ; rax = 131\n    dec rax          ; rax = 130\n\n    mov rbx, 5\n    neg rbx          ; rbx = -5 (2의 보수)\n    add rax, rbx     ; rax = 130 + (-5) = 125\n\n    ; 64비트 덧셈 시 자리올림(Carry) 확인\n    mov rcx, 0xFFFFFFFFFFFFFFFF\n    add rcx, 1       ; rcx = 0, CF = 1 (Carry 발생), ZF = 1\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "inc와 dec 명령어는 이전 carry 상태를 보존하기 위해 설계되었으므로 CF(Carry Flag)를 전혀 갱신하지 않습니다. 따라서 루프 카운터를 돌릴 때 캐리 플래그가 보존되는 장점이 있습니다.",
+      "pitfalls": "자리올림을 수반하는 다중 정밀도(128비트) 덧셈 체인에서 add 대신 inc를 쓰면 Carry 플래그가 전달되지 않아 큰 계산 오류를 낳습니다. 캐리 전파 덧셈에는 adc(Add with Carry)를 써야 합니다.",
+      "practice": "문제: inc 및 dec 명령어가 add, sub 명령어와 달리 변경하지 않고 원본 상태를 그대로 유지하는 RFLAGS 비트는 무엇일까요?\n정답: CF (Carry Flag)"
+    },
+    {
+      "id": "nasm-arithmetic-mul-div",
+      "title": "14. 정수 곱셈과 나눗셈 (imul, idiv, cqo, cdq 부호 확장)",
+      "category": "산술 및 논리 연산",
+      "summary": "부호 있는 곱셈 imul은 1개, 2개, 3개의 피연산자 형식을 유연하게 지원합니다. 나눗셈 idiv는 RDX:RAX 128비트 레지스터 쌍을 피제수로 요구하므로, 나눗셈 직전에 RAX를 RDX로 부호 확장하는 cqo(또는 cdq) 명령어가 반드시 선행되어야 합니다.",
+      "syntax": "imul dest, src             ; 2-operand: dest = dest * src\nimul dest, src, imm        ; 3-operand: dest = src * imm\nidiv divisor               ; RDX:RAX / divisor -> 몫: RAX, 나머지: RDX",
+      "example": "section .text\nglobal _start\n_start:\n    ; 1. 2-피연산자 및 3-피연산자 곱셈 (imul)\n    mov rax, 25\n    imul rax, 4             ; rax = 100\n    imul rbx, rax, 10       ; rbx = rax * 10 = 1000 (rax는 불변)\n\n    ; 2. 부호 있는 나눗셈 (idiv)\n    ; 1000을 7로 나누기 (몫: 142, 나머지: 6)\n    mov rax, 1000\n    cqo                     ; 필수: RAX의 부호를 RDX로 확장 (RDX:RAX = 1000)\n    mov rcx, 7\n    idiv rcx                ; rax = 142 (몫), rdx = 6 (나머지)\n\n    ; 음수 나눗셈 테스트 (-100 / 3)\n    mov rax, -100\n    cqo                     ; RDX가 0xFFFFFFFFFFFFFFFF로 채워짐\n    mov r8, 3\n    idiv r8                 ; rax = -33 (몫), rdx = -1 (나머지)\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "idiv는 단일 64비트 레지스터가 아니라 RDX와 RAX가 결합된 128비트 정수를 나눕니다. 만약 cqo를 빼먹으면 이전에 RDX에 남아있던 쓰레기 값이 피제수의 상위 64비트로 취급되어 엄청난 거대 숫자로 나누어지거나 'Floating point exception (core dumped)' 즉 Division by Zero 크래시가 납니다.",
+      "pitfalls": "idiv 실행 시 cqo(64비트용) 또는 cdq(32비트용)를 누락하는 것은 어셈블리 초심자의 가장 대표적인 크래시 원인입니다.",
+      "practice": "문제: 64비트 idiv 명령어를 실행하기 전, RAX의 부호 비트를 RDX로 전파하여 128비트 RDX:RAX 피제수를 완성하는 x86_64 명령어는 무엇일까요?\n정답: cqo (Convert Quadword to Octoword)"
+    },
+    {
+      "id": "nasm-logic-bitwise",
+      "title": "15. 비트 논리 연산 (and, or, xor, not)과 레지스터 제로잉 기법",
+      "category": "산술 및 논리 연산",
+      "summary": "비트 단위 AND, OR, XOR, NOT 연산을 수행합니다. 특히 xor reg, reg는 즉시값 0을 mov하는 것보다 바이트 수가 적고 실행 속도가 빠르며 레지스터 의존성을 끊어주어 CPU 파이프라인에서 0사이클로 처리되는 표준 레지스터 제로 초기화 관용구입니다.",
+      "syntax": "and dest, src ; 비트 마스킹 (특정 비트 추출)\nor  dest, src ; 특정 비트 세트\nxor reg, reg  ; 레지스터를 0으로 고속 초기화\nnot reg       ; 1의 보수 비트 반전",
+      "example": "section .text\nglobal _start\n_start:\n    ; 1. 레지스터 0 초기화의 최고 효율 패턴\n    ; mov rax, 0  ; 7바이트 기계어\n    xor eax, eax  ; 단 2바이트 기계어 (상위 32비트도 제로 확장되어 rax 전체가 0이 됨!)\n\n    ; 2. 비트 마스킹과 세트\n    mov rbx, 0x12345678\n    and rbx, 0x0000FFFF       ; rbx = 0x00005678 (하위 16비트만 남김)\n    or  rbx, 0x00010000       ; rbx = 0x00015678 (16번 비트 켬)\n\n    ; 3. 비트 토글(XOR)\n    xor rbx, 0x00000001       ; 0번 비트 반전\n\n    ; 4. NOT (1의 보수)\n    mov rcx, 0\n    not rcx                   ; rcx = 0xFFFFFFFFFFFFFFFF\n\n    mov eax, 60\n    xor edi, edi              ; return code 0\n    syscall",
+      "explanation": "현대 x86_64 프로세서의 Out-of-Order 실행 엔진은 xor eax, eax 명령어를 감지하면 실제 연산 유닛(ALU)을 거치지 않고 레지스터 이름 바꾸기(Register Renaming) 단계에서 즉시 0으로 매핑하므로 지연 시간(Latency)이 사실상 0클럭입니다.",
+      "pitfalls": "not 연산자는 1의 보수(모든 비트 반전)를 취하므로 음수로 바꾸려면 not 후 inc를 하거나 neg 명령어를 써야 2의 보수 음수가 됩니다.",
+      "practice": "문제: x86_64 환경에서 RAX 레지스터를 0으로 초기화할 때, 코드 크기를 최소화하고 CPU 파이프라인 의존성을 끊기 위해 권장되는 가장 빠른 관용구는 무엇일까요?\n정답: xor eax, eax (또는 xor rax, rax)"
+    },
+    {
+      "id": "nasm-shift-rotate",
+      "title": "16. 비트 시프트 및 회전 (shl, shr, sal, sar, rol, ror)",
+      "category": "산술 및 논리 연산",
+      "summary": "비트를 왼쪽/오른쪽으로 밀어내는 논리 시프트(shl, shr)와 부호 비트를 유지하는 산술 시프트(sar), 비트를 순환시키는 회전(rol, ror)을 수행합니다. 시프트 횟수는 즉시값 또는 오직 CL 레지스터로만 지정할 수 있습니다.",
+      "syntax": "shl dest, count ; 논리 왼쪽 시프트 (2^count 곱셈 효과, 빈자리는 0 채움)\nshr dest, count ; 논리 오른쪽 시프트 (부호 없는 2^count 나눗셈 효과, 빈자리 0)\nsar dest, count ; 산술 오른쪽 시프트 (부호 있는 음수 2^count 나눗셈, 빈자리 부호 복사)\nrol dest, count ; 비트 왼쪽 순환 회전",
+      "example": "section .text\nglobal _start\n_start:\n    ; 1. 2의 거듭제곱 고속 곱셈과 나눗셈\n    mov rax, 10\n    shl rax, 3          ; 10 * (2^3) = 10 * 8 = 80\n\n    mov rbx, 64\n    shr rbx, 2          ; 64 / (2^2) = 16\n\n    ; 2. 산술 시프트 (음수 부호 보존)\n    mov rcx, -16\n    sar rcx, 2          ; -16 / 4 = -4 (최상위 부호 1이 보존됨)\n\n    ; 3. 변수 시프트 횟수는 반드시 CL 레지스터 사용\n    mov rdx, 1\n    mov cl,  5          ; 시프트 횟수 5\n    shl rdx, cl         ; rdx = 1 << 5 = 32\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "부호 있는 음수 정수를 shr로 시프트하면 최상위 부호 비트가 0으로 채워져 거대한 양수로 변질됩니다. 음수를 2로 나눌 때는 반드시 부호 비트를 복사해서 채워주는 sar(Shift Arithmetic Right)를 사용해야 합니다.",
+      "pitfalls": "시프트 횟수로 일반 레지스터(예: shl rax, rbx)를 지정하면 어셈블리 문법 오류가 납니다. 횟수로 레지스터를 사용할 때는 x86_64 하드웨어 규칙상 오직 rcx의 하위 8비트인 cl 레지스터만 지정할 수 있습니다.",
+      "practice": "문제: 가변적인 횟수만큼 레지스터를 시프트(shl, shr, sar)할 때, 시프트할 횟수 값을 담아야 하는 유일한 전용 8비트 레지스터는 무엇일까요?\n정답: CL 레지스터"
+    },
+    {
+      "id": "nasm-cmp-test",
+      "title": "17. 플래그 설정 및 검사 (cmp, test)",
+      "category": "비교 및 제어",
+      "summary": "cmp는 내부적으로 (dest - src) 감산을 수행하여 결과값을 버리고 RFLAGS만 갱신합니다. test는 내부적으로 (dest & src) 비트 AND를 수행하여 0인지 여부를 검사(ZF 세트)합니다. 레지스터의 NULL 검사에는 test rax, rax가 표준입니다.",
+      "syntax": "cmp  reg_or_mem, val ; (dest - src) 기반 플래그 갱신\ntest reg_or_mem, val ; (dest & src) 기반 플래그 갱신 (레지스터 0/NULL 검사)",
+      "example": "section .text\nglobal _start\n_start:\n    mov rax, 42\n    cmp rax, 100        ; 42 - 100 = 음수 -> SF = 1, ZF = 0, CF = 1\n    jl  is_less         ; Signed Less 조건 점프 실행\n\n    ; 포인터 NULL 검사 패턴\n    mov rbx, 0\n    test rbx, rbx       ; rbx & rbx = 0 -> ZF = 1\n    jz  is_null         ; ZF=1 이므로 NULL 분기 실행\n\nis_less:\n    nop\n\nis_null:\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "cmp rbx, 0을 쓰는 것보다 test rbx, rbx를 쓰는 것이 기계어 바이트 수가 1바이트 더 적어 전 세계 모든 컴파일러(GCC, Clang)가 포인터의 NULL 체크에 test reg, reg를 기본으로 생성합니다.",
+      "pitfalls": "cmp a, b 에서 순서에 유의하세요. a가 10이고 b가 20일 때 cmp a, b 후 jg(Jump if Greater)를 쓰면 '10이 20보다 큰가?'를 묻는 것이므로 거짓이 되어 점프하지 않습니다.",
+      "practice": "문제: RAX 레지스터의 값이 0(NULL)인지 검사하여 조건 플래그(ZF)를 세트할 때 가장 적은 바이트로 수행하는 표준 x86_64 관용구는 무엇일까요?\n정답: test rax, rax"
+    },
+    {
+      "id": "nasm-jumps-conditional",
+      "title": "18. 무조건 점프(jmp)와 기본 조건부 점프 (je/jz, jne/jnz)",
+      "category": "비교 및 제어",
+      "summary": "jmp는 조건 없이 지정된 레이블로 제어를 이동시킵니다. je/jz(같거나 0이면 점프)와 jne/jnz(같지 않거나 0이 아니면 점프)는 직전 연산에 의해 설정된 ZF(Zero Flag)의 상태를 확인하여 분기합니다.",
+      "syntax": "jmp target_label\nje  target_label ; Jump if Equal / Jump if Zero (ZF == 1)\njne target_label ; Jump if Not Equal / Jump if Not Zero (ZF == 0)",
+      "example": "section .text\nglobal _start\n_start:\n    mov rcx, 5          ; 루프 카운터 5\n\nloop_start:\n    ; 루프 본문 실행\n    dec rcx             ; 카운터 1 감소 (rcx가 0이 되면 ZF = 1 세트)\n    jnz loop_start      ; ZF가 0이 아니면(아직 0에 도달 안 했으면) 루프 반복!\n\n    ; 무조건 탈출 점프\n    jmp program_exit\n\n    ; 절대 실행되지 않는 데드 코드\n    mov rbx, 999\n\nprogram_exit:\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "je와 jz는 완전히 동일한 기계어(Opcode 0x74 또는 0x0F 84)를 공유합니다. cmp 후에 쓸 때는 '일치하는가'의 의미로 je를 쓰고, dec나 test 후에 쓸 때는 '0인가'의 의미로 jz를 써서 가독성을 높입니다.",
+      "pitfalls": "조건부 점프 직전에 플래그를 변경하는 다른 산술 명령어가 끼어들지 않도록 주의해야 합니다. cmp와 jcc 사이에 mov가 오면 플래그가 유지되지만 add나 sub가 오면 플래그가 오염됩니다.",
+      "practice": "문제: dec rcx 연산 후 rcx가 0이 아닐 때 계속 반복하도록 분기하는 조건부 점프 명령어는 무엇일까요?\n정답: jnz (또는 jne)"
+    },
+    {
+      "id": "nasm-jumps-signed-unsigned",
+      "title": "19. 부호 있는 조건 분기(jg, jl)와 부호 없는 조건 분기(ja, jb)",
+      "category": "비교 및 제어",
+      "summary": "x86_64는 부호 있는 정수 비교와 부호 없는 정수 비교에 서로 다른 점프 명령어를 제공합니다. 부호 있는 비교는 jg(크다), jge(이상), jl(작다), jle(이하)를 쓰며, 부호 없는 비교는 ja(Above), jae, jb(Below), jbe를 사용합니다.",
+      "syntax": "; 부호 있는 비교 (Signed: SF, OF, ZF 검사)\njg  label ; Greater (>)\njl  label ; Less (<)\n\n; 부호 없는 비교 (Unsigned: CF, ZF 검사)\nja  label ; Above (>)\njb  label ; Below (<)",
+      "example": "section .text\nglobal _start\n_start:\n    mov rax, -10        ; 부호 있는 음수 (-10)이자 부호 없는 거대 정수 (0xFFFFFFFFFFFFFFF6)\n    mov rbx, 5\n\n    cmp rax, rbx\n\n    ; 1. 부호 있는 비교 (Signed): -10 은 5보다 작음!\n    jl  signed_branch   ; 점프 실행됨!\n\n    ; 2. 부호 없는 비교 (Unsigned): 0xFFFFFF... 는 5보다 훨씬 큼!\n    ja  unsigned_branch ; 만약 ja를 썼다면 이쪽이 실행됨\n\nsigned_branch:\n    mov edi, 0\n    jmp exit_prog\n\nunsigned_branch:\n    mov edi, 1\n\nexit_prog:\n    mov eax, 60\n    syscall",
+      "explanation": "-10과 5를 비교할 때, 인간의 관점(Signed)에서는 -10이 작으므로 jl이 분기하지만, 메모리 주소나 데이터 크기(Unsigned) 관점에서는 -10의 16진수 표현(0xFFFFFFFFFFFFFFF6)이 5보다 훨씬 크므로 ja가 분기합니다. 포인터 주소 비교나 size_t 비교에는 무조건 ja/jb 계열을 써야 합니다.",
+      "pitfalls": "배열 인덱스나 메모리 버퍼 크기 비교에 jl/jg를 사용하면 음수 오버플로우 공격에 취약해지는 심각한 보안 취약점(취약한 경계 검사)이 발생합니다.",
+      "practice": "문제: 부호 없는 정수(Unsigned integer) 비교에서 A가 B보다 클 때(A > B) 사용하는 전용 조건 점프 명령어는 무엇일까요?\n정답: ja (Jump if Above)"
+    },
+    {
+      "id": "nasm-cmovcc",
+      "title": "20. 조건부 이동 (cmovcc: cmovz, cmovne, cmovg)과 Branchless 최적화",
+      "category": "고급 제어 최적화",
+      "summary": "플래그 조건이 만족될 때만 소스 레지스터의 값을 대상 레지스터로 복사합니다. 점프 명령어(jcc)를 사용하지 않으므로 CPU의 분기 예측 실패(Branch Misprediction)에 따른 파이프라인 지연을 원천 차단하는 Branchless 프로그래밍의 핵심입니다.",
+      "syntax": "cmovz  dest, src ; 직전 연산 결과가 0(ZF=1)이면 dest = src\ncmovne dest, src ; 0이 아니면 dest = src\ncmovg  dest, src ; Signed Greater이면 dest = src",
+      "example": "section .text\nglobal _start\n_start:\n    ; max(a, b) 계산을 분기문(점프) 없이 1클럭으로 처리\n    mov rax, 42         ; a\n    mov rbx, 99         ; b\n\n    cmp rax, rbx        ; rax와 rbx 비교\n    cmovl rax, rbx      ; rax < rbx 이면 rax에 rbx(99)를 복사!\n    ; 이제 rax에는 최댓값 99가 저장되어 있음 (파이프라인 플러시 0!)\n\n    ; min(x, y)\n    mov rcx, 10\n    mov rdx, 20\n    cmp rcx, rdx\n    cmovg rcx, rdx      ; rcx > rdx 이면 rcx에 rdx 복사\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "현대 CPU는 루프나 조건문에서 분기 방향을 추측하여 미리 명령어를 실행(Speculative Execution)합니다. 만약 점프 방향이 틀리면 파이프라인 전체를 비우는 15~20사이클의 패널티가 발생합니다. cmovcc는 데이터 흐름만 조건부로 변경하므로 분기 예측 실패가 없습니다.",
+      "pitfalls": "cmovcc의 대상 피연산자는 반드시 레지스터여야 하며, 메모리에는 쓸 수 없습니다(cmovz [mem], rax 불가).",
+      "practice": "문제: x86_64에서 if 분기 점프 명령어(jcc)를 대체하여 분기 예측 실패 없이 조건에 따라 레지스터 값을 복사하는 명령어 군을 무엇이라 부를까요?\n정답: cmovcc (Conditional Move)"
+    },
+    {
+      "id": "nasm-stack-operations",
+      "title": "21. 스택 아키텍처와 연산 (push, pop, rsp 하향 확장)",
+      "category": "스택과 프로시저",
+      "summary": "x86_64의 스택은 고위 메모리 주소에서 저위 메모리 주소로 하향(Downward) 성장합니다. push 명령은 스택 포인터 RSP를 8바이트 감소시킨 후 값을 메모리에 쓰고, pop 명령은 값을 읽어 레지스터에 담은 후 RSP를 8바이트 증가시킵니다.",
+      "syntax": "push reg_or_mem_or_imm ; rsp -= 8, [rsp] = val\npop  dest_reg_or_mem    ; dest = [rsp], rsp += 8",
+      "example": "section .text\nglobal _start\n_start:\n    ; 1. 값 저장과 역순 복원 (LIFO: Last In First Out)\n    mov rax, 0xAAAA\n    mov rbx, 0xBBBB\n\n    push rax            ; rsp가 8 감소하고 0xAAAA 기록\n    push rbx            ; rsp가 8 감소하고 0xBBBB 기록\n\n    ; 꺼낼 때는 들어간 순서의 역순으로 복원\n    pop rcx             ; rcx = 0xBBBB\n    pop rdx             ; rdx = 0xAAAA\n\n    ; 2. 임시 레지스터 보존 패턴\n    push rdi\n    ; ... rdi를 임시 작업용으로 마음껏 사용 ...\n    pop rdi             ; 원래 값으로 안전 복구\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "스택 포인터(RSP)는 현재 스택에 유효하게 들어있는 최상단 데이터의 메모리 주소를 항상 가리킵니다. push와 pop은 항상 64비트 아키텍처에서 8바이트 단위로 작동합니다.",
+      "pitfalls": "함수 내부에서 push한 횟수와 pop한 횟수가 맞지 않으면 스택 불균형이 발생하여, 함수가 ret 명령어를 만났을 때 원래 호출자가 아닌 엉뚱한 주소로 점프해 즉시 프로세스가 크래시됩니다.",
+      "practice": "문제: 64비트 모드에서 push rax 명령어를 실행할 때 스택 포인터 레지스터 RSP의 주소값은 몇 바이트 감소할까요?\n정답: 8바이트 감소"
+    },
+    {
+      "id": "nasm-call-ret",
+      "title": "22. 서브루틴 호출(call)과 복귀(ret) 및 반환 주소 메커니즘",
+      "category": "스택과 프로시저",
+      "summary": "call 명령은 다음 명령어의 주소(Return Address)를 스택에 자동으로 push하고 대상 프로시저로 점프합니다. 피호출 함수의 ret 명령은 스택 상단에서 반환 주소를 pop하여 RIP 레지스터에 복원함으로써 호출자에게 복귀합니다.",
+      "syntax": "call procedure_name\nret",
+      "example": "section .text\nglobal _start\n\n; 두 정수를 더해 RAX로 반환하는 서브루틴\n; 입력 인자: RDI, RSI (System V ABI)\nadd_numbers:\n    mov rax, rdi\n    add rax, rsi\n    ret                 ; 스택의 복귀 주소로 점프\n\n_start:\n    mov rdi, 30\n    mov rsi, 70\n    call add_numbers    ; 1. 다음 명령 주소 push, 2. add_numbers로 점프\n    ; 복귀 후 rax에는 100이 저장되어 있음\n\n    mov rdi, rax        ; exit code = 100\n    mov eax, 60\n    syscall",
+      "explanation": "call 명령어는 내부적으로 push rip_next 후 jmp target 과 정확히 같습니다. ret 명령어는 pop rip 와 같습니다. 따라서 함수 내부에서 스택 포인터(RSP)를 잘못 건드려 놓으면 원래 호출자로 돌아가지 못하고 크래시가 발생합니다.",
+      "pitfalls": "스택에 지역 변수를 할당한 후 해제(add rsp, N 또는 leave)하지 않은 채 ret을 호출하면, 지역 변수 데이터를 반환 주소로 오인하여 엉뚱한 곳으로 점프하는 보안 취약점(ROP 유발)이 발생합니다.",
+      "practice": "문제: ret 명령어가 스택 상단에서 꺼내어(pop) RIP 레지스터에 복원하는 메모리 값은 무엇일까요?\n정답: 반환 주소 (Return Address)"
+    },
+    {
+      "id": "nasm-stack-frame",
+      "title": "23. 스택 프레임 생성 프롤로그 (Prologue)와 에필로그 (Epilogue, leave)",
+      "category": "스택과 프로시저",
+      "summary": "함수의 독립된 실행 공간(스택 프레임)을 구성하기 위해 이전 베이스 포인터를 저장하고 RBP를 고정하는 표준 프롤로그(Prologue)와, 공간을 정리하고 복원하는 에필로그(Epilogue / leave)를 사용합니다.",
+      "syntax": "; 표준 프롤로그 (Prologue)\npush rbp\nmov  rbp, rsp\nsub  rsp, 32            ; 32바이트 지역 변수 공간 확보\n\n; 표준 에필로그 (Epilogue)\nmov  rsp, rbp\npop  rbp\nret\n; 또는 간결하게:\nleave                   ; mov rsp, rbp; pop rbp 를 1명령어로 수행\nret",
+      "example": "section .text\nglobal _start\n\nmy_function:\n    ; 1. 프롤로그\n    push rbp\n    mov  rbp, rsp\n    sub  rsp, 16            ; 지역 변수 16바이트 할당\n\n    ; 지역 변수 사용 ([rbp - 8], [rbp - 16])\n    mov qword [rbp - 8], 42\n    mov qword [rbp - 16], 100\n\n    mov rax, [rbp - 8]\n    add rax, [rbp - 16]     ; rax = 142\n\n    ; 2. 에필로그 (leave는 mov rsp, rbp + pop rbp 와 동일)\n    leave\n    ret\n\n_start:\n    call my_function\n    mov rdi, rax            ; exit code 142\n    mov eax, 60\n    syscall",
+      "explanation": "RBP(Base Pointer)는 함수가 실행되는 동안 스택의 고정된 기준점 역할을 수행합니다. 지역 변수는 [rbp - offset], 스택으로 전달받은 인자는 [rbp + offset]으로 접근하여 RSP의 잦은 변동 속에서도 안정적인 메모리 참조를 보장합니다.",
+      "pitfalls": "지역 변수 공간을 확보하기 위해 sub rsp, N을 수행할 때, N은 System V ABI의 16바이트 정렬 규칙을 준수하도록 계산되어야 합니다.",
+      "practice": "문제: mov rsp, rbp 와 pop rbp 두 명령어를 단 하나의 기계어로 수행하여 스택 프레임을 해제하는 x86 명령어는 무엇일까요?\n정답: leave"
+    },
+    {
+      "id": "nasm-systemv-abi-args",
+      "title": "24. System V AMD64 ABI: 레지스터 인자 전달 (RDI, RSI, RDX, RCX, R8, R9) 및 반환값",
+      "category": "ABI 및 함수 호출 규약",
+      "summary": "Linux 및 Unix 계열 x86_64의 표준 호출 규약(Calling Convention)입니다. 정수 및 포인터 인자 처음 6개는 순서대로 RDI, RSI, RDX, RCX, R8, R9 레지스터를 통해 전달되며, 7번째 이후는 스택을 통해 전달됩니다. 함수 반환값은 RAX에 담깁니다.",
+      "syntax": "; 인자 전달 순서: 1st: RDI, 2nd: RSI, 3rd: RDX, 4th: RCX, 5th: R8, 6th: R9\n; 7번째 이상: 스택 역순 push\n; 반환값: RAX (128비트는 RDX:RAX)",
+      "example": "section .text\nglobal _start\n\n; C 언어 시그니처: int sum6(int a, int b, int c, int d, int e, int f)\nsum6:\n    mov rax, rdi        ; 1번째 인자 (a)\n    add rax, rsi        ; 2번째 인자 (b)\n    add rax, rdx        ; 3번째 인자 (c)\n    add rax, rcx        ; 4번째 인자 (d)\n    add rax, r8         ; 5번째 인자 (e)\n    add rax, r9         ; 6번째 인자 (f)\n    ret                 ; 결과 반환값은 RAX에 보존됨\n\n_start:\n    ; sum6(1, 2, 3, 4, 5, 6) 호출 준비\n    mov rdi, 1\n    mov rsi, 2\n    mov rdx, 3\n    mov rcx, 4\n    mov r8,  5\n    mov r9,  6\n    call sum6\n    ; rax = 21\n\n    mov rdi, rax        ; exit code 21\n    mov eax, 60\n    syscall",
+      "explanation": "과거 32비트 x86(cdecl)에서는 모든 인자를 스택에 push하여 전달했으나, 64비트 System V ABI에서는 CPU 레지스터를 적극 활용하여 메모리 접근 오버헤드를 없애고 극적인 함수 호출 가속을 달성했습니다.",
+      "pitfalls": "Windows 64비트 ABI는 Linux와 완전히 다릅니다(RCX, RDX, R8, R9 순서 및 32바이트 섀도 스페이스 필수). Linux에서는 반드시 System V 규약(RDI부터 시작)을 따라야 합니다.",
+      "practice": "문제: System V AMD64 ABI에서 함수에 전달되는 첫 번째와 두 번째 정수형 인자를 담는 레지스터는 각각 무엇일까요?\n정답: RDI (첫 번째), RSI (두 번째)"
+    },
+    {
+      "id": "nasm-systemv-abi-calling-rules",
+      "title": "25. System V AMD64 ABI: 16바이트 스택 정렬 규칙 및 레지스터 보존 (Callee-saved)",
+      "category": "ABI 및 함수 호출 규약",
+      "summary": "call 명령어 실행 직전 RSP는 반드시 16바이트 정렬(RSP % 16 == 0) 상태여야 합니다. 또한 피호출 함수는 Callee-saved 레지스터(RBX, RSP, RBP, R12~R15)의 값을 보존해야 하며, Caller-saved 레지스터(RAX, RCX, RDX, RSI, RDI, R8~R11)는 자유롭게 변경할 수 있습니다.",
+      "syntax": "; 보존 의무 레지스터 (Callee-saved): RBX, RSP, RBP, R12, R13, R14, R15\n; 자유 사용 레지스터 (Caller-saved): RAX, RCX, RDX, RSI, RDI, R8, R9, R10, R11\n; 스택 정렬 규칙: call 직전 (RSP & 0xF) == 0",
+      "example": "section .text\nextern printf           ; C 표준 라이브러리 함수 호출\nglobal main\n\nmain:\n    ; 1. 함수 진입 시점: call main에 의해 8바이트 return address가 push되었으므로\n    ;    현재 RSP % 16 == 8 상태임!\n    push rbp            ; rbp push -> 8바이트 감소 -> 이제 RSP % 16 == 0 정렬 완료!\n    mov  rbp, rsp\n    sub  rsp, 16        ; 16바이트 추가 할당 (여전히 16의 배수 유지)\n\n    ; Callee-saved 레지스터 r12를 사용하기 위해 보존\n    push r12            ; 注意: push하면 다시 정렬이 깨지므로 짝을 맞추어야 함\n    sub  rsp, 8         ; 8바이트 더 빼서 16바이트 정렬 재복구\n\n    mov r12, 1234       ; 안전하게 보존 레지스터 사용\n\n    ; 16바이트 정렬 상태에서 printf 등 외부 C 함수 안전 호출\n    ; ...\n\n    add  rsp, 8\n    pop  r12            ; r12 복구\n\n    leave               ; rsp, rbp 복구\n    ret",
+      "explanation": "16바이트 정렬 규칙을 위반한 상태에서 C 표준 라이브러리(printf, malloc)를 호출하면 내부에서 128비트 SSE 벡터 명령어(movaps)를 실행하다가 정렬 불량 예외(General Protection Fault)로 크래시가 발생합니다.",
+      "pitfalls": "자신의 함수에서 rbx나 r12~r15를 사용했다면 반환하기 전에 반드시 pop으로 원래 값을 복원해야 합니다. 그렇지 않으면 호출자 함수의 레지스터 상태가 파괴되어 알 수 없는 곳에서 버그가 터집니다.",
+      "practice": "문제: System V AMD64 ABI에서 피호출 함수(Callee)가 값을 변경했을 경우 반드시 원래대로 복원해야 하는 보존 레지스터(Callee-saved) 5가지를 적으시오.\n정답: RBX, RBP, R12, R13, R14, R15 (RSP 포함)"
+    },
+    {
+      "id": "nasm-linux-syscalls",
+      "title": "26. Linux 64비트 시스템 콜 (syscall: sys_read, sys_write, sys_exit)",
+      "category": "운영체제 및 시스템 콜",
+      "summary": "x86_64 리눅스에서 커널 모드로 진입하기 위해 syscall 명령어를 사용합니다. 시스템 콜 번호는 RAX에 넣고, 인자는 RDI, RSI, RDX, R10, R8, R9 순으로 전달합니다. (주의: 일반 함수 호출의 RCX 대신 R10 사용!)",
+      "syntax": "; sys_read  (0): rdi=fd, rsi=buf, rdx=count\n; sys_write (1): rdi=fd, rsi=buf, rdx=count\n; sys_open  (2): rdi=path, rsi=flags, rdx=mode\n; sys_close (3): rdi=fd\n; sys_exit (60): rdi=error_code\nsyscall",
+      "example": "section .data\n    msg db \"Linux 64-bit Direct Syscall!\", 0x0A\n    len equ $ - msg\n\nsection .bss\n    buffer resb 128\n\nsection .text\nglobal _start\n_start:\n    ; 1. sys_write (syscall 번호 1)\n    mov rax, 1          ; sys_write\n    mov rdi, 1          ; fd = stdout (1)\n    mov rsi, msg        ; const char *buf\n    mov rdx, len        ; size_t count\n    syscall\n\n    ; 2. sys_read (syscall 번호 0)\n    mov rax, 0          ; sys_read\n    mov rdi, 0          ; fd = stdin (0)\n    mov rsi, buffer     ; char *buf\n    mov rdx, 128        ; count\n    syscall\n    ; 반환된 실제 읽은 바이트 수가 rax에 저장됨\n\n    ; 3. sys_exit (syscall 번호 60)\n    mov rax, 60         ; sys_exit\n    xor rdi, rdi        ; status = 0\n    syscall",
+      "explanation": "syscall 명령어 실행 시 CPU 하드웨어는 RCX에 현재 RIP를, R11에 RFLAGS를 자동으로 백업합니다. 따라서 4번째 시스템 콜 인자 레지스터로는 RCX가 파괴되므로 반드시 R10을 사용해야 합니다. 시스템 콜 실패 시 RAX에는 -errno 음수 코드가 반환됩니다.",
+      "pitfalls": "32비트 리눅스 인터럽트 int 0x80을 64비트 코드에서 혼용하면 레지스터 매핑이 완전히 깨집니다. 64비트 리눅스에서는 오직 syscall 명령어를 사용해야 합니다.",
+      "practice": "문제: Linux x86_64 시스템 콜 호출 시 4번째 인자를 전달하기 위해 RCX 대신 사용해야 하는 전용 레지스터는 무엇일까요?\n정답: R10 레지스터 (RCX는 syscall 실행 시 RIP 보존용으로 하드웨어가 덮어씀)"
+    },
+    {
+      "id": "nasm-string-block-ops",
+      "title": "27. 문자열 및 메모리 블록 연속 처리 (cld/std, rep movsb, rep stosb)",
+      "category": "문자열 및 블록 연산",
+      "summary": "연속된 메모리 블록을 바이트 단위로 고속 복사(memcpy)하거나 특정 값으로 채우는(memset) 하드웨어 가속 명령어입니다. cld로 방향을 설정하고, RCX에 반복 횟수를 지정한 뒤 rep movsb 또는 rep stosb를 실행합니다.",
+      "syntax": "cld             ; Clear Direction Flag (DF=0: 인덱스 자동 증가)\nrep movsb       ; RSI에서 RDI로 RCX 바이트만큼 메모리 고속 복사 (memcpy)\nrep stosb       ; RDI 메모리를 AL 바이트 값으로 RCX만큼 채움 (memset)",
+      "example": "section .data\n    src_data db \"Fast Memory Block Copy\", 0\n    data_len equ $ - src_data\n\nsection .bss\n    dest_data resb 64\n\nsection .text\nglobal _start\n_start:\n    ; 1. memset: dest_data 전체를 0으로 초기화\n    cld                 ; 방향 플래그 전진 설정 (DF = 0)\n    lea rdi, [dest_data]; 대상 주소 RDI\n    mov al,  0          ; 채울 값 0\n    mov rcx, 64         ; 채울 바이트 수 64\n    rep stosb           ; [rdi++] = al 반복\n\n    ; 2. memcpy: src_data의 내용을 dest_data로 복사\n    lea rsi, [src_data] ; 소스 주소 RSI\n    lea rdi, [dest_data]; 대상 주소 RDI\n    mov rcx, data_len   ; 복사할 바이트 수\n    rep movsb           ; [rdi++] = [rsi++] 반복\n\n    ; 화면에 출력\n    mov rax, 1\n    mov rdi, 1\n    lea rsi, [dest_data]\n    mov rdx, data_len\n    syscall\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "cld 명령어는 RFLAGS의 방향 플래그(DF)를 0으로 지워 주소가 앞으로 증가하도록 만듭니다(반대는 std). rep 접두사는 RCX가 0이 될 때까지 명령어를 반복하며 매 반복마다 RCX를 1 감소시킵니다. CPU 내부 마이크로코드에 의해 최적화되어 대용량 메모리를 매우 빠르게 처리합니다.",
+      "pitfalls": "방향 플래그(DF)가 1인 상태(std 실행 후)에서 rep movsb를 돌리면 주소가 거꾸로 감소하여 엉뚱한 이전 메모리를 덮어쓰는 대형 메모리 오염 참사가 발생합니다. 블록 연산 전 cld를 항상 확인해야 합니다.",
+      "practice": "문제: rep movsb 명령어를 실행하기 전, RSI와 RDI 포인터가 역방향이 아닌 순방향(증가 방향)으로 진행하도록 방향 플래그(DF)를 0으로 리셋하는 명령어는 무엇일까요?\n정답: cld (Clear Direction Flag)"
+    },
+    {
+      "id": "nasm-simd-sse-basics",
+      "title": "28. SIMD / SSE 벡터 연산 기초 (XMM0~XMM15, movaps, movups, addps, mulps)",
+      "category": "SIMD 및 벡터 연산",
+      "summary": "128비트 XMM 레지스터를 사용하여 4개의 32비트 float 단정밀도 실수를 단 한 번의 명령어로 동시 연산(SIMD: Single Instruction, Multiple Data)합니다. 16바이트 메모리 정렬이 보장될 때는 movaps, 미정렬 상태일 때는 movups를 사용합니다.",
+      "syntax": "movaps xmm0, [aligned_16_mem] ; 16바이트 정렬 벡터 로드\nmovups xmm0, [unaligned_mem]  ; 미정렬 벡터 안전 로드\naddps  xmm0, xmm1             ; 4쌍의 float 동시 덧셈\nmulps  xmm0, xmm1             ; 4쌍의 float 동시 곱셈",
+      "example": "section .data\n    ; 16바이트 메모리 정렬 지시어\n    align 16\n    vec_a dd 1.0, 2.0, 3.0, 4.0   ; 4개의 float (총 16바이트)\n    align 16\n    vec_b dd 10.0, 20.0, 30.0, 40.0\n\nsection .bss\n    align 16\n    vec_res resd 4\n\nsection .text\nglobal _start\n_start:\n    ; 1. 128비트 벡터 로드 (16바이트 정렬된 메모리이므로 movaps 사용)\n    movaps xmm0, [vec_a]        ; xmm0 = [1.0, 2.0, 3.0, 4.0]\n    movaps xmm1, [vec_b]        ; xmm1 = [10.0, 20.0, 30.0, 40.0]\n\n    ; 2. 병렬 덧셈 (Parallel Packed Add)\n    addps  xmm0, xmm1           ; xmm0 = [11.0, 22.0, 33.0, 44.0]\n\n    ; 3. 병렬 곱셈\n    mulps  xmm0, xmm1           ; xmm0 = [110.0, 440.0, 990.0, 1760.0]\n\n    ; 4. 결과 저장\n    movaps [vec_res], xmm0\n\n    mov eax, 60\n    xor edi, edi\n    syscall",
+      "explanation": "movaps(Move Aligned Packed Single-precision)는 주소가 16바이트 경계(0x...0)에 완벽히 정렬되어 있을 때만 동작하며 일반 로드보다 빠릅니다. 만약 정렬되지 않은 주소에 movaps를 쓰면 CPU 하드웨어 예외(#GP)가 발생하므로, 정렬 여부가 불확실할 때는 안전한 movups(Uninitialized/Unaligned)를 써야 합니다.",
+      "pitfalls": "movaps 명령어에 16의 배수가 아닌 주소를 전달하면 즉시 SIGSEGV(크래시)가 발생합니다. 데이터 섹션에 align 16 지시어를 반드시 명시하세요.",
+      "practice": "문제: 4개의 32비트 float 데이터를 담은 128비트 XMM 레지스터 2개를 동시에 요소별로 병렬 덧셈하는 SSE 명령어는 무엇일까요?\n정답: addps (Add Packed Single-Precision)"
+    },
+    {
+      "id": "nasm-c-interfacing",
+      "title": "29. C 언어 및 표준 라이브러리 연동 (global, extern, printf 호출)",
+      "category": "상호 운용성",
+      "summary": "어셈블리에서 C 표준 라이브러리 함수(printf, puts, malloc 등)를 호출하거나 어셈블리 함수를 C 코드에서 호출할 수 있도록 심볼을 export(global) 및 import(extern)합니다. printf 같은 가변 인자 함수 호출 시 AL 레지스터에 부동소수점 인자 개수를 명시해야 합니다.",
+      "syntax": "global function_name ; 링커에 심볼 공개\nextern printf        ; 외부 라이브러리 심볼 참조\nmov al, 0            ; 가변 인자 호출 시 XMM 레지스터 사용 개수 명시",
+      "example": "; 빌드: nasm -f elf64 prog.asm && gcc -no-pie prog.o -o prog\nsection .rodata\n    fmt_str db \"Hello from Assembly! Number=%d, Float=%.2f\", 0x0A, 0\n\nsection .text\nextern printf\nextern exit\nglobal main\n\nmain:\n    push rbp\n    mov  rbp, rsp\n    sub  rsp, 16            ; 16바이트 스택 정렬 준수\n\n    ; printf(fmt_str, 42, 3.14)\n    ; 1번째 인자: RDI (포맷 스트링 주소)\n    lea  rdi, [rel fmt_str]\n    ; 2번째 인자: RSI (정수 42)\n    mov  rsi, 42\n    ; 3번째 인자: XMM0 (실수 3.14)\n    movsd xmm0, [rel float_val]\n    ; 가변 인자(Variadic) 함수 규칙: AL에 사용된 벡터 레지스터 개수 기록 (XMM 1개이므로 1)\n    mov  al, 1\n    call printf\n\n    leave\n    xor  edi, edi\n    call exit\n\nsection .rodata\n    float_val dq 3.14",
+      "explanation": "System V AMD64 ABI에 따르면 printf처럼 ... 가변 인자를 갖는 함수를 호출할 때는 EAX/AL 레지스터에 인자로 전달된 부동소수점 XMM 레지스터의 총 개수(0~8)를 반드시 적어야 합니다. 실수를 안 넘기면 xor eax, eax 또는 mov al, 0을 꼭 해주어야 크래시를 방지할 수 있습니다.",
+      "pitfalls": "printf 호출 전 mov al, 0을 생략하면 가비지 값이 AL에 들어가 printf 내부에서 존재하지 않는 XMM 레지스터를 스택에 덤프하려다 크래시가 발생합니다.",
+      "practice": "문제: NASM에서 C 라이브러리의 printf 같은 가변 인자(Variadic) 함수를 호출할 때 부동소수점(XMM) 인자를 전혀 사용하지 않는 경우 AL 레지스터에 대입해야 하는 값은 얼마일까요?\n정답: 0 (xor eax, eax 또는 mov al, 0)"
+    }
+  ],
+  "functions": [
+    {
+      "name": "mov",
+      "signature": "mov dest, src",
+      "module": "Data Transfer",
+      "description": "소스(레지스터, 메모리, 즉시값)의 데이터를 대상(레지스터, 메모리)으로 복사합니다. (메모리 간 직접 복사 불가)",
+      "example": "mov rax, [rbp - 8]\nmov [rdi], rbx"
+    },
+    {
+      "name": "movzx",
+      "signature": "movzx dest_reg, src_reg_or_mem",
+      "module": "Data Transfer",
+      "description": "작은 크기의 부호 없는 데이터를 큰 레지스터로 복사하면서 상위 비트를 모두 0으로 채웁니다.",
+      "example": "movzx rax, byte [rsi] ; 1바이트를 64비트 rax로 제로 확장 로드"
+    },
+    {
+      "name": "movsx",
+      "signature": "movsx dest_reg, src_reg_or_mem",
+      "module": "Data Transfer",
+      "description": "작은 크기의 부호 있는 데이터를 큰 레지스터로 복사하면서 최상위 부호 비트를 상위로 확장합니다.",
+      "example": "movsx rax, byte [rsi] ; 1바이트 음수를 부호 유지하며 64비트로 확장"
+    },
+    {
+      "name": "movsxd",
+      "signature": "movsxd dest_64, src_32",
+      "module": "Data Transfer",
+      "description": "32비트 정수 피연산자를 64비트 목적지 레지스터로 부호 확장(Sign Extend)하여 로드합니다.",
+      "example": "movsxd rax, dword [rbp - 4]"
+    },
+    {
+      "name": "lea",
+      "signature": "lea dest_reg, [address_expr]",
+      "module": "Data Transfer",
+      "description": "메모리를 역참조하지 않고 주소 수식(Base + Index*Scale + Disp)의 유효 주소 계산 결과만을 레지스터에 로드합니다.",
+      "example": "lea rax, [rdi + rsi*4 + 16]"
+    },
+    {
+      "name": "push",
+      "signature": "push src",
+      "module": "Stack & Procedures",
+      "description": "스택 포인터 RSP를 8바이트 감소시키고 소스 값을 스택 상단([rsp])에 기록합니다.",
+      "example": "push rbp\npush rbx"
+    },
+    {
+      "name": "pop",
+      "signature": "pop dest",
+      "module": "Stack & Procedures",
+      "description": "스택 상단([rsp])에서 값을 읽어 목적지에 저장하고 RSP를 8바이트 증가시킵니다.",
+      "example": "pop rbx\npop rbp"
+    },
+    {
+      "name": "call",
+      "signature": "call procedure_label",
+      "module": "Stack & Procedures",
+      "description": "다음 실행할 명령어 주소(반환 주소)를 스택에 push하고 지정된 프로시저 레이블로 점프합니다.",
+      "example": "call my_function"
+    },
+    {
+      "name": "ret",
+      "signature": "ret",
+      "module": "Stack & Procedures",
+      "description": "스택 상단에서 반환 주소를 꺼내어(pop) RIP 레지스터에 복원함으로써 호출자 함수로 복귀합니다.",
+      "example": "ret"
+    },
+    {
+      "name": "leave",
+      "signature": "leave",
+      "module": "Stack & Procedures",
+      "description": "스택 프레임을 고속 해제합니다. 'mov rsp, rbp'와 'pop rbp'를 단일 명령어로 수행합니다.",
+      "example": "leave\nret"
+    },
+    {
+      "name": "syscall",
+      "signature": "syscall",
+      "module": "System & OS",
+      "description": "x86_64 리눅스에서 커널 모드로 진입하여 시스템 콜(RAX=번호, RDI, RSI, RDX, R10, R8, R9=인자)을 실행합니다.",
+      "example": "mov rax, 60 ; sys_exit\nxor edi, edi\nsyscall"
+    },
+    {
+      "name": "cmp",
+      "signature": "cmp dest, src",
+      "module": "Flags & Comparison",
+      "description": "대상에서 소스를 뺀 결과(dest - src)에 따라 RFLAGS(ZF, CF, SF, OF)만 갱신하고 결과값은 버립니다.",
+      "example": "cmp rax, 10\njge greater_or_equal"
+    },
+    {
+      "name": "test",
+      "signature": "test dest, src",
+      "module": "Flags & Comparison",
+      "description": "두 피연산자의 비트 AND(dest & src) 연산 결과에 따라 플래그(ZF, SF)만 설정하여 0 또는 NULL 여부를 검사합니다.",
+      "example": "test rax, rax\njz is_null"
+    },
+    {
+      "name": "jmp",
+      "signature": "jmp target",
+      "module": "Control Flow & Jumps",
+      "description": "조건 없이 지정된 레이블이나 메모리/레지스터 주소로 무조건 실행 흐름을 점프시킵니다.",
+      "example": "jmp loop_start"
+    },
+    {
+      "name": "je",
+      "signature": "je target ; 또는 jz",
+      "module": "Control Flow & Jumps",
+      "description": "직전 비교 결과가 같거나 연산 결과가 0인 경우(ZF == 1) 지정된 레이블로 분기합니다.",
+      "example": "cmp rax, rbx\nje values_match"
+    },
+    {
+      "name": "jne",
+      "signature": "jne target ; 또는 jnz",
+      "module": "Control Flow & Jumps",
+      "description": "직전 비교 결과가 다르거나 연산 결과가 0이 아닌 경우(ZF == 0) 지정된 레이블로 분기합니다.",
+      "example": "dec rcx\njne loop_start"
+    },
+    {
+      "name": "jg",
+      "signature": "jg target",
+      "module": "Control Flow & Jumps",
+      "description": "부호 있는(Signed) 정수 비교에서 왼쪽 값이 더 큰 경우(Greater: SF == OF and ZF == 0) 분기합니다.",
+      "example": "cmp rax, rbx\njg rax_is_greater"
+    },
+    {
+      "name": "jl",
+      "signature": "jl target",
+      "module": "Control Flow & Jumps",
+      "description": "부호 있는(Signed) 정수 비교에서 왼쪽 값이 더 작은 경우(Less: SF != OF) 분기합니다.",
+      "example": "cmp rax, 0\njl is_negative"
+    },
+    {
+      "name": "ja",
+      "signature": "ja target",
+      "module": "Control Flow & Jumps",
+      "description": "부호 없는(Unsigned) 정수 비교에서 왼쪽 값이 더 큰 경우(Above: CF == 0 and ZF == 0) 분기합니다.",
+      "example": "cmp rsi, buffer_len\nja buffer_overflow"
+    },
+    {
+      "name": "jb",
+      "signature": "jb target",
+      "module": "Control Flow & Jumps",
+      "description": "부호 없는(Unsigned) 정수 비교에서 왼쪽 값이 더 작은 경우(Below: CF == 1) 분기합니다.",
+      "example": "cmp rax, rbx\njb rax_is_below"
+    },
+    {
+      "name": "cmovz",
+      "signature": "cmovz dest_reg, src",
+      "module": "Data Transfer",
+      "description": "제로 플래그(ZF == 1)가 설정되어 있을 때만 소스 값을 대상 레지스터로 복사하여 분기 예측 실패를 방지합니다.",
+      "example": "cmp rax, 0\ncmovz rbx, default_val"
+    },
+    {
+      "name": "cmovnz",
+      "signature": "cmovnz dest_reg, src",
+      "module": "Data Transfer",
+      "description": "제로 플래그(ZF == 0)가 클리어되어 있을 때만 소스 값을 대상 레지스터로 복사합니다.",
+      "example": "cmp rax, 0\ncmovnz rbx, rax"
+    },
+    {
+      "name": "add",
+      "signature": "add dest, src",
+      "module": "Arithmetic",
+      "description": "dest에 src를 더하여 그 결과를 dest에 저장하고 산술 플래그를 갱신합니다.",
+      "example": "add rax, 10\nadd [rbp - 8], rdx"
+    },
+    {
+      "name": "sub",
+      "signature": "sub dest, src",
+      "module": "Arithmetic",
+      "description": "dest에서 src를 뺀 결과를 dest에 저장하고 자리빌림 및 부호 플래그를 갱신합니다.",
+      "example": "sub rsp, 32 ; 스택 공간 32바이트 확보"
+    },
+    {
+      "name": "inc",
+      "signature": "inc dest",
+      "module": "Arithmetic",
+      "description": "피연산자의 값을 1 증가시킵니다. (주의: Carry Flag는 변경하지 않음)",
+      "example": "inc rcx"
+    },
+    {
+      "name": "dec",
+      "signature": "dec dest",
+      "module": "Arithmetic",
+      "description": "피연산자의 값을 1 감소시킵니다. (주의: Carry Flag는 변경하지 않음)",
+      "example": "dec rcx"
+    },
+    {
+      "name": "imul",
+      "signature": "imul dest, src ; 또는 imul dest, src, imm",
+      "module": "Arithmetic",
+      "description": "부호 있는 정수 곱셈을 수행합니다. 2개 또는 3개의 피연산자 형식을 지원합니다.",
+      "example": "imul rax, rbx\nimul rdx, rcx, 100"
+    },
+    {
+      "name": "idiv",
+      "signature": "idiv divisor",
+      "module": "Arithmetic",
+      "description": "128비트 피제수 RDX:RAX를 제수로 나누어 몫은 RAX에, 나머지는 RDX에 저장합니다. (사전 cqo 필수)",
+      "example": "cqo\nidiv rbx ; rax = 몫, rdx = 나머지"
+    },
+    {
+      "name": "and",
+      "signature": "and dest, src",
+      "module": "Logic & Shifts",
+      "description": "비트 단위 논리 AND 연산을 수행하여 특정 비트를 마스킹하거나 추출합니다.",
+      "example": "and rax, 0xFF"
+    },
+    {
+      "name": "or",
+      "signature": "or dest, src",
+      "module": "Logic & Shifts",
+      "description": "비트 단위 논리 OR 연산을 수행하여 특정 비트를 1로 세트합니다.",
+      "example": "or qword [flags], (1 << 3)"
+    },
+    {
+      "name": "xor",
+      "signature": "xor dest, src",
+      "module": "Logic & Shifts",
+      "description": "비트 단위 배타적 논리합(XOR)을 수행합니다. 자기 자신을 XOR하여 0으로 고속 초기화하는 데 애용됩니다.",
+      "example": "xor eax, eax ; rax 전체 0 초기화"
+    },
+    {
+      "name": "not",
+      "signature": "not dest",
+      "module": "Logic & Shifts",
+      "description": "피연산자의 모든 비트를 1의 보수(0->1, 1->0)로 반전시킵니다.",
+      "example": "not rax"
+    },
+    {
+      "name": "shl",
+      "signature": "shl dest, count",
+      "module": "Logic & Shifts",
+      "description": "비트를 왼쪽으로 count(즉시값 또는 CL 레지스터)만큼 이동시키며 빈자리를 0으로 채웁니다.",
+      "example": "shl rax, 3 ; rax * 8"
+    },
+    {
+      "name": "shr",
+      "signature": "shr dest, count",
+      "module": "Logic & Shifts",
+      "description": "비트를 오른쪽으로 논리 이동시키며 최상위 빈자리를 0으로 채웁니다. (부호 없는 나눗셈)",
+      "example": "shr rbx, 2 ; rbx / 4"
+    },
+    {
+      "name": "sar",
+      "signature": "sar dest, count",
+      "module": "Logic & Shifts",
+      "description": "비트를 오른쪽으로 산술 이동시키며 최상위 부호 비트를 복사 유지합니다. (부호 있는 나눗셈)",
+      "example": "sar rax, 1 ; 부호 보존 나누기 2"
+    },
+    {
+      "name": "rep",
+      "signature": "rep string_instruction",
+      "module": "String & Block",
+      "description": "RCX 레지스터가 0이 될 때까지 movsb, stosb 등의 문자열 블록 처리 명령어를 반복 실행합니다.",
+      "example": "cld\nrep movsb ; memcpy"
+    },
+    {
+      "name": "movaps",
+      "signature": "movaps xmm_dest, xmm_src",
+      "module": "SIMD / SSE",
+      "description": "16바이트로 정렬된 128비트 메모리나 XMM 레지스터 간에 4개의 단정밀도 실수를 고속 로드/저장합니다.",
+      "example": "movaps xmm0, [rel aligned_vec]"
+    },
+    {
+      "name": "movups",
+      "signature": "movups xmm_dest, xmm_src",
+      "module": "SIMD / SSE",
+      "description": "정렬되지 않은 128비트 메모리에서 4개의 단정밀도 실수를 안전하게 XMM 레지스터로 로드/저장합니다.",
+      "example": "movups xmm1, [rsi]"
+    },
+    {
+      "name": "addps",
+      "signature": "addps xmm_dest, xmm_src",
+      "module": "SIMD / SSE",
+      "description": "두 128비트 XMM 레지스터에 포함된 4쌍의 32비트 float 데이터를 병렬로 동시 덧셈합니다.",
+      "example": "addps xmm0, xmm1"
+    },
+    {
+      "name": "db",
+      "signature": "name db val1, val2, ...",
+      "module": "Directives & Macros",
+      "description": "1바이트(Byte) 크기의 초기화된 데이터나 아스키 문자열을 메모리에 정의합니다.",
+      "example": "msg db \"Hello\", 0x0A, 0"
+    },
+    {
+      "name": "resb",
+      "signature": "name resb count",
+      "module": "Directives & Macros",
+      "description": "section .bss에서 초기화되지 않은 메모리 공간을 count 바이트만큼 예약합니다.",
+      "example": "buffer resb 1024"
+    },
+    {
+      "name": "%macro",
+      "signature": "%macro name arg_count ... %endmacro",
+      "module": "Directives & Macros",
+      "description": "인자를 전달받아 다중 라인 어셈블리 코드로 전개되는 재사용 매크로 블록을 정의합니다.",
+      "example": "%macro PUSH64 1\n    push %1\n%endmacro"
+    }
+  ]
+}

@@ -1,15 +1,16 @@
-/* viewer.css — Stylesheet for Math & EE Master Suite */
+/* viewer.css — Stylesheet for Math & EE Master Suite (Crisp Color E-ink Optimized) */
 :root {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --bg-page: #f8fafc;
+  --primary: #0f172a;
+  --primary-hover: #000000;
+  --bg-page: #ffffff;
   --bg-card: #ffffff;
   --text-main: #0f172a;
-  --text-muted: #64748b;
-  --border: #e2e8f0;
-  --accent-ee: #059669;
-  --accent-el: #d97706;
-  --accent-math: #7c3aed;
+  --text-muted: #334155;
+  --border: #0f172a;
+  --border-light: #cbd5e1;
+  --accent-ee: #047857;
+  --accent-el: #b45309;
+  --accent-math: #6d28d9;
   --radius: 8px;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -31,7 +32,7 @@ body {
 
 header.app-header {
   background: #ffffff;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
   padding: 12px 20px;
   position: sticky;
   top: 0;
@@ -54,38 +55,53 @@ header.app-header {
 
 nav.tab-nav {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
+/* ===================================================
+   Tab Buttons (.tab-btn)
+   =================================================== */
 .tab-btn {
   padding: 8px 14px;
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1.5px solid #0f172a;
   background: #ffffff;
-  color: var(--text-muted);
+  color: #0f172a;
   cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
+  transition: all 0.15s ease;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
 .tab-btn:hover {
   background: #f1f5f9;
-  color: var(--text-main);
+  border: 1.5px solid #000000;
+  color: #000000;
 }
 
 .tab-btn.active {
-  background: var(--primary);
-  color: #ffffff;
-  border-color: var(--primary);
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1.5px solid #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.tab-btn.active * {
+  color: #ffffff !important;
+}
+
+.tab-btn.active:hover {
+  background: #000000 !important;
+  border: 1.5px solid #000000 !important;
+  color: #ffffff !important;
 }
 
 main.container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 20px auto;
   padding: 0 16px 60px 16px;
 }
@@ -98,7 +114,9 @@ main.container {
   display: block;
 }
 
-/* Search and Filter bar */
+/* ===================================================
+   Search and Filter Bar
+   =================================================== */
 .filter-bar {
   display: flex;
   gap: 12px;
@@ -111,20 +129,64 @@ main.container {
   min-width: 240px;
   padding: 10px 16px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1.5px solid #0f172a;
   font-size: 0.95rem;
   background: #ffffff;
+  color: #0f172a;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.search-input::placeholder {
+  color: #64748b;
 }
 
 .category-select {
   padding: 10px 16px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1.5px solid #0f172a;
   background: #ffffff;
+  color: #0f172a;
   font-size: 0.95rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
 }
 
-/* Math Symbols Grid */
+.category-select:focus {
+  border-color: #000000;
+}
+
+/* ===================================================
+   General Card Outlines & High Contrast
+   =================================================== */
+.symbol-card,
+.theorem-item,
+.theorem-card,
+.math-module-card,
+.paper-card,
+.subdisc-card,
+.step-content,
+.concept-card,
+.sim-container,
+.compare-intro-card,
+.lab-box,
+.quiz-card,
+.proof-step-card,
+.curriculum-content-body,
+.sim-host-pane {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+}
+
+/* ===================================================
+   Tab 1: Math Symbols Grid
+   =================================================== */
 .symbols-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -132,27 +194,25 @@ main.container {
 }
 
 .symbol-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: none;
 }
 
 .symbol-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1.5px solid #cbd5e1;
   padding-bottom: 10px;
 }
 
 .symbol-display {
   font-size: 1.8rem;
-  color: var(--accent-math);
+  color: #0f172a;
   min-height: 48px;
   display: flex;
   align-items: center;
@@ -163,43 +223,46 @@ main.container {
 }
 
 .symbol-name-ko {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
+  color: #0f172a;
 }
 
 .symbol-name-en {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  color: #334155;
 }
 
 .symbol-read-en {
-  background: #f1f5f9;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  padding: 6px 10px;
+  border-radius: 6px;
   font-size: 0.85rem;
-  color: #334155;
+  color: #0f172a;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .symbol-definition {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   line-height: 1.5;
+  color: #0f172a;
 }
 
 .symbol-origin {
-  font-size: 0.8rem;
-  color: #64748b;
-  border-left: 2px solid #cbd5e1;
-  padding-left: 8px;
+  font-size: 0.85rem;
+  color: #334155;
+  border-left: 3px solid #0f172a;
+  padding-left: 10px;
 }
 
-/* Theorems Accordion */
+/* ===================================================
+   Tab 2: Math Theorems & Proofs
+   =================================================== */
 .theorem-item,
 .theorem-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   margin-bottom: 16px;
   overflow: hidden;
@@ -212,26 +275,29 @@ main.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1.5px solid transparent;
+  transition: all 0.15s ease;
 }
 
 .theorem-header:hover {
-  background: #f8fafc;
+  background: #f1f5f9;
 }
 
 .theorem-header.open {
-  border-bottom-color: var(--border);
+  border-bottom: 1.5px solid #0f172a;
   background: #f8fafc;
 }
 
 .theorem-title {
   font-size: 1.15rem;
   font-weight: 700;
+  color: #0f172a;
 }
 
 .theorem-body {
   padding: 20px;
   display: none;
+  background: #ffffff;
 }
 
 .theorem-body.open {
@@ -239,33 +305,39 @@ main.container {
 }
 
 .theorem-statement-box {
-  background: #faf5ff;
-  border-left: 4px solid var(--accent-math);
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-left: 5px solid var(--accent-math);
   padding: 14px 18px;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 16px;
   font-size: 1.05rem;
+  color: #0f172a;
 }
 
 .proof-step-card {
-  background: #f8fafc;
-  border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 12px 16px;
-  margin-bottom: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
 }
 
-.step-badge {
+.proof-step-card .step-badge {
   display: inline-block;
-  background: #e2e8f0;
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 6px;
+  color: #0f172a;
+  width: auto;
+  height: auto;
 }
 
-/* Engineering Modules & Simulators */
+/* ===================================================
+   Engineering Modules & Simulators
+   =================================================== */
 .module-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -279,10 +351,8 @@ main.container {
 }
 
 .module-sidebar {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 12px;
+  padding: 14px;
   height: fit-content;
 }
 
@@ -292,32 +362,48 @@ main.container {
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--text-muted);
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
   transition: all 0.15s ease;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .module-nav-item:hover {
   background: #f1f5f9;
-  color: var(--text-main);
+  border-color: #0f172a;
+  color: #000000;
 }
 
 .module-nav-item.active {
-  background: #eff6ff;
-  color: var(--primary);
-  font-weight: 700;
+  border: 2px solid #0f172a !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.module-nav-item.active * {
+  color: #ffffff !important;
+}
+
+.module-nav-item.active:hover {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
 }
 
 .module-content-pane {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 24px;
 }
 
+.concept-card {
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
 .sim-container {
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
   border-radius: var(--radius);
   padding: 16px;
   margin: 20px 0;
@@ -330,14 +416,15 @@ main.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #0f172a;
 }
 
 .sim-canvas {
   width: 100%;
   height: 320px;
   display: block;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
   border-radius: 6px;
 }
 
@@ -347,7 +434,8 @@ main.container {
   flex-wrap: wrap;
   margin-top: 14px;
   align-items: center;
-  background: #f8fafc;
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
   padding: 10px 14px;
   border-radius: 6px;
 }
@@ -358,32 +446,449 @@ main.container {
   gap: 8px;
   font-size: 0.85rem;
   font-weight: 600;
+  color: #0f172a;
 }
 
 .control-group input[type="range"] {
   width: 120px;
+  accent-color: #0f172a;
 }
 
+/* ===================================================
+   General Action Buttons (.btn-action)
+   =================================================== */
 .btn-action {
-  padding: 6px 14px;
+  padding: 7px 14px;
   border-radius: 6px;
-  border: none;
+  border: 1.5px solid #0f172a;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  background: var(--primary);
-  color: #ffffff;
-  transition: opacity 0.2s;
+  background: #ffffff;
+  color: #0f172a;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .btn-action:hover {
-  opacity: 0.9;
+  background: #f1f5f9;
+  border-color: #000000;
+  color: #000000;
+}
+
+.btn-action.active,
+.btn-action:active {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.btn-action.active * {
+  color: #ffffff !important;
 }
 
 .btn-action.btn-danger {
-  background: #ef4444;
+  background: #ffffff;
+  color: #b91c1c;
+  border: 1.5px solid #dc2626;
+}
+
+.btn-action.btn-danger:hover {
+  background: #fef2f2;
+  border-color: #991b1b;
+  color: #991b1b;
+}
+
+.btn-action.btn-danger.active,
+.btn-action.btn-danger:active {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border-color: #dc2626 !important;
 }
 
 .btn-action.btn-success {
-  background: #22c55e;
+  background: #ffffff;
+  color: #15803d;
+  border: 1.5px solid #16a34a;
+}
+
+.btn-action.btn-success:hover {
+  background: #f0fdf4;
+  border-color: #166534;
+  color: #166534;
+}
+
+.btn-action.btn-success.active,
+.btn-action.btn-success:active {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border-color: #16a34a !important;
+}
+
+/* ===================================================
+   Tab 5: EE vs ECE Comparison & Roadmaps
+   =================================================== */
+.compare-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.compare-intro-card {
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 0.9rem;
+}
+
+.matrix-table th, .matrix-table td {
+  border: 1.5px solid #0f172a;
+  padding: 12px 14px;
+  text-align: left;
+  color: #0f172a;
+}
+
+.matrix-table th {
+  background: #ffffff;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.matrix-table tr:nth-child(even) {
+  background: #ffffff;
+}
+
+.subdisc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.subdisc-card {
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.subdisc-card h4 {
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.roadmap-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.roadmap-step .step-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 1.5px solid #0f172a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.tech-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #0f172a;
+  color: #0f172a;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+/* ===================================================
+   Tab 6: EE Advanced Math Derivations
+   =================================================== */
+.math-module-card {
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.derivation-step {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-left: 5px solid var(--accent-math);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.step-title {
+  font-weight: 700;
+  color: var(--accent-math);
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.math-formula-box {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 8px 0;
+  overflow-x: auto;
+  color: #0f172a;
+}
+
+/* ===================================================
+   Tab 7: Classical Papers & Translations
+   =================================================== */
+.paper-card {
+  border-radius: 8px;
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.paper-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.paper-year {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid #0f172a;
+}
+
+.paper-author {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.paper-quote-box {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-left: 5px solid #eab308;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-style: italic;
+  color: #713f12;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.paper-impact-box {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-left: 5px solid #22c55e;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  color: #14532d;
+  font-size: 0.9rem;
+}
+
+/* ===================================================
+   Roadmap Curriculum Drawer & Expandable Content
+   =================================================== */
+.roadmap-curriculum-drawer {
+  margin-top: 12px;
+  border-top: 1.5px dashed #0f172a;
+  padding-top: 10px;
+}
+
+.curriculum-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.curriculum-toggle-btn:hover {
+  background: #f1f5f9;
+  border: 1.5px solid #000000;
+  color: #000000;
+}
+
+.curriculum-toggle-btn.active,
+.curriculum-toggle-btn.open {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1.5px solid #0f172a !important;
+}
+
+.curriculum-toggle-btn.active *,
+.curriculum-toggle-btn.open * {
+  color: #ffffff !important;
+}
+
+.curriculum-toggle-btn.active:hover,
+.curriculum-toggle-btn.open:hover {
+  background: #000000 !important;
+  border: 1.5px solid #000000 !important;
+  color: #ffffff !important;
+}
+
+.curriculum-content-body {
+  margin-top: 14px;
+  border-radius: 8px;
+  padding: 18px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.curriculum-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 14px 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.curriculum-section-title:first-child {
+  margin-top: 0;
+}
+
+.lab-box {
+  border-left: 5px solid #2563eb;
+  border-radius: 6px;
+  padding: 14px;
+  margin: 10px 0;
+}
+
+.lab-box h5 {
+  font-size: 0.95rem;
+  color: #0f172a;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.lab-code {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.quiz-card {
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.quiz-question {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.quiz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1.5px solid #0f172a;
+  background: #ffffff;
+  color: #0f172a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quiz-btn:hover {
+  background: #f1f5f9;
+  border-color: #000000;
+  color: #000000;
+}
+
+.quiz-btn.active {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.quiz-btn.active * {
+  color: #ffffff !important;
+}
+
+.quiz-answer-box {
+  background: #ffffff;
+  border: 2px solid #16a34a;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  margin-top: 8px;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
+.quiz-answer-box strong {
+  color: #166534;
+}
+
+/* ===================================================
+   Tabs 8, 9, 10: Simulator Host Panes
+   =================================================== */
+.sim-host-pane {
+  border-radius: var(--radius);
+  padding: 20px;
+  min-height: 600px;
 }

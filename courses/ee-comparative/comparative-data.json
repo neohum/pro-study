@@ -1,0 +1,1643 @@
+{
+  "id": "ee-vs-ece-master-compendium",
+  "titleKo": "전기공학(EE) vs 전자공학(ECE) 학문·산업 심층 비교 대전 및 첨단 테크 로드맵",
+  "titleEn": "Comprehensive Comparative Analysis: Electrical Engineering vs Electronic Engineering & Advanced Technology Roadmaps",
+  "version": "1.0.0",
+  "lastUpdated": "2026-10-10T11:01:11.325Z",
+  "executiveSummary": {
+    "korean": "전기공학(Electrical Engineering, EE)과 전자공학(Electronic Engineering, ECE)은 모두 맥스웰(James Clerk Maxwell)의 전자기학적 기본 원리 위에 서 있으나, 지향하는 궁극적 목적함수와 시스템의 물리적/시간적 스케일에서 근본적으로 분화된 두 개의 거대한 공학 축입니다. 전기공학이 에너지의 대규모 생성, 변환, 전송, 고전압 제어를 중심으로 국가 기간 인프라와 중공업, 전력망의 물리적 안정성을 보장하는 학문이라면, 전자공학은 미세 전하 수송을 통한 정보의 획득, 증폭, 변환, 초고속 연산 및 무선 전송을 축으로 마이크로/나노 스케일 반도체와 통신, 컴퓨터 아키텍처를 창조하는 학문입니다.",
+    "coreDichotomy": {
+      "electricalEngineering": {
+        "paradigm": "에너지 & 중전력 동역학 (Energy & Electromechanical Dynamics)",
+        "coreMission": "전력 에너지의 무손실 생성, 변환, 장거리 전송 및 전기역학적 기계 구동",
+        "targetEntity": "전자들의 거시적 집단 유동에 의한 대규모 에너지 선속 (Poynting Vector S = E x H)",
+        "systemScales": "수백 볼트(V) ~ 수백 킬로볼트(kV), 수백 암페어(A) ~ 수만 암페어(kA), 메가와트(MW) ~ 기가와트(GW)"
+      },
+      "electronicEngineering": {
+        "paradigm": "정보 & 나노스케일 전하 연산 (Information & Nanoscale Charge Computation)",
+        "coreMission": "신호(Signal)의 비트화, 노이즈 억제 증폭, 초미세 반도체 스위칭 및 병렬 정보 처리",
+        "targetEntity": "양자화된 캐리어(전자 및 정공)의 미세 수송 및 확률론적 정보 엔트로피 (H = -sum p_i log_2 p_i)",
+        "systemScales": "밀리볼트(mV) ~ 수 볼트(V), 피코암페어(pA) ~ 수 암페어(A), 마이크로와트(uW) ~ 수백 와트(W), 나노미터(nm) ~ 수 cm"
+      }
+    }
+  },
+  "detailedComparison": [
+    {
+      "dimensionKo": "핵심 철학 및 궁극적 목적 (Core Philosophy & Ultimate Paradigm)",
+      "dimensionEn": "Core Philosophy & Ultimate Objective",
+      "electricalEngineering": {
+        "korean": "대규모 에너지의 물리적 생성, 변환, 장거리 전송 및 전기역학적 기계 구동(Energy Transport & Power Transformation). 열역학적 1/2법칙과 에너지 보존에 기반하여 손실을 최소화하고, 수십 년 동안 지속되는 국가 기간 인프라의 절대적 신뢰성을 담보하는 것.",
+        "english": "Physical generation, conversion, transmission, and electromechanical transformation of bulk energy. Grounded in thermodynamics and energy conservation, aiming for maximum power efficiency and multi-decade infrastructure reliability."
+      },
+      "electronicEngineering": {
+        "korean": "미세 전하의 양자역학적 제어를 통한 정보의 획득, 증폭, 변환, 초고속 연산 및 무선 통신(Information Processing & Signal Manipulation). 불 대수(Boolean Logic) 추상화와 집적도 스케일링을 통해 계산 복잡도를 극복하고 초저전력으로 지능을 구현하는 것.",
+        "english": "Quantum-level manipulation of microscopic charge carriers for information acquisition, amplification, conversion, ultra-fast computation, and wireless transmission. Leveraging Boolean logic abstraction and scaling to implement low-power intelligence."
+      }
+    },
+    {
+      "dimensionKo": "공간적 스케일 (Spatial Scales)",
+      "dimensionEn": "Spatial Scales",
+      "electricalEngineering": {
+        "korean": "대륙 및 국가 단위 송전망(수백 km ~ 수천 km), 초대형 발전소 및 변전소(수백 미터), 수만 kg 중량의 고전압 변압기 및 대형 터빈 발전기(수 미터 ~ 십수 미터).",
+        "english": "Continental/national power grids (hundreds to thousands of km), massive power plants/substations (hundreds of meters), and heavy transformers/generators weighing tens of metric tons (meters to tens of meters)."
+      },
+      "electronicEngineering": {
+        "korean": "원자 및 나노 스케일 반도체 트랜지스터 게이트 선폭(2nm ~ 3nm, 수십 개의 실리콘 격자 원자 층), 초미세 금속 배선 피치(20nm ~ 50nm), 단일 실리콘 다이 및 패키지 칩셋(수 mm² ~ 수천 mm²).",
+        "english": "Atomic/nanometer scale gate lengths (2nm ~ 3nm, tens of silicon atomic layers), ultra-fine interconnect pitches (20nm ~ 50nm), and monolithic silicon dies/chip packages (several mm² to thousands of mm²)."
+      }
+    },
+    {
+      "dimensionKo": "시간적 스케일 및 동작 주파수 (Temporal Scales & Operating Frequency)",
+      "dimensionEn": "Temporal Scales & Operating Frequency",
+      "electricalEngineering": {
+        "korean": "계통 기본 주파수 교류 50Hz 또는 60Hz. 기계적 관성 및 조속기 응답 시정수는 수 초(s) ~ 수십 초 단위이며, 전력 전자 스위칭 주파수는 수 kHz ~ 수백 kHz(IGBT/SiC 기준). 낙뢰 서지 과도현상은 마이크로초(µs) 영역.",
+        "english": "Grid base frequencies of 50Hz or 60Hz. Mechanical inertia and governor time constants span seconds to tens of seconds. Power electronics switching operates at kHz to hundreds of kHz (IGBT/SiC). Lightning surge transients occur in microseconds (µs)."
+      },
+      "electronicEngineering": {
+        "korean": "기가헤르츠(GHz) CPU/GPU 클록 주파수(클록 주기 수백 피코초, $10^{-12}\\text{ s}$), 5G/6G 및 밀리미터파(mmWave) 통신 대역(28GHz ~ 300GHz), 광통신 펨토초($10^{-15}\\text{ s}$) 레이저 펄스.",
+        "english": "Gigahertz (GHz) digital processor clocks (cycle times down to hundreds of picoseconds, $10^{-12}\\text{ s}$), mmWave and sub-THz RF frequencies (28GHz ~ 300GHz), and femtosecond ($10^{-15}\\text{ s}$) optical laser pulses."
+      }
+    },
+    {
+      "dimensionKo": "운용 전압 및 전류 레벨 (Operational Voltage & Current Regimes)",
+      "dimensionEn": "Operational Voltage & Current Regimes",
+      "electricalEngineering": {
+        "korean": "전압: 110V/220V/380V(저압 배전)부터 22.9kV, 154kV, 345kV, 765kV(초고압 송전망), ±500kV~±800kV(초고압 직류 HVDC). 전류: 수십 암페어부터 단락 사고 전류 수만 암페어(10kA ~ 63kA). 전력: 메가와트(MW) ~ 기가와트(GW).",
+        "english": "Voltages: 110V/220V/380V (distribution) up to 22.9kV, 154kV, 345kV, 765kV (EHV transmission) and ±500kV~±800kV (UHVDC). Currents: tens of Amperes to fault currents exceeding tens of kiloamperes (10kA ~ 63kA). Power: MW to GW."
+      },
+      "electronicEngineering": {
+        "korean": "전압: 최첨단 로직 코어 전압 $0.65\\text{V} \\sim 0.9\\text{V}$, I/O 전압 $1.2\\text{V} \\sim 3.3\\text{V}$, 센서 미소 생체 신호 마이크로볼트($\\mu\\text{V}$). 전류: 대기 상태 누설전류 피코암페어(pA) ~ 나노암페어(nA), 온칩 전류 수 mA ~ 수십 A(고성능 GPU 코어 합산). 전력: 나노와트(nW) ~ 수백 와트(W).",
+        "english": "Voltages: Core logic voltages at $0.65\\text{V} \\sim 0.9\\text{V}$, I/O at $1.2\\text{V} \\sim 3.3\\text{V}$, bio-signals at $\\mu\\text{V}$. Currents: standby leakage at pA ~ nA, on-chip operational currents from mA to tens of Amperes (GPU total). Power: nW to hundreds of Watts."
+      }
+    },
+    {
+      "dimensionKo": "지배 물리 법칙 및 거동 원리 (Governing Physical Laws & Phenomena)",
+      "dimensionEn": "Governing Physical Laws & Phenomena",
+      "electricalEngineering": {
+        "korean": "패러데이 전자기 유도 법칙, 앙페르-맥스웰 법칙, 비오-사바르 법칙, 키르히호프 전압/전류 법칙(KVL/KCL), 렌츠의 법칙, 오일러-라그랑주 기계 동역학, 나비에-스톡스 기반 유입 변압기 냉각 유체역학, 대기 아크 방전 및 절연 파괴(Paschen's Law).",
+        "english": "Faraday's Law of Induction, Ampere-Maxwell Law, Biot-Savart Law, Kirchhoff's Laws (KVL/KCL), Lenz's Law, Euler-Lagrange electromechanical dynamics, thermal-fluid dynamics in oil transformers, and electrical arc breakdown (Paschen's Law)."
+      },
+      "electronicEngineering": {
+        "korean": "양자역학(Schrödinger 파동 방정식, 파울리 배타 원리, 페르미-디락 통계), 고체 전자론(에너지 밴드 갭, 유효 질량, 상태 밀도), 드리프트-확산 수송 방정식, 포아송-볼츠만 방정식, 핫 캐리어 주입(HCI), 바이어스 온도 불안정성(BTI), 전자이동(Electromigration, Black's Law).",
+        "english": "Quantum Mechanics (Schrödinger equation, Pauli exclusion, Fermi-Dirac statistics), Solid-State Physics (energy bandgap, effective mass, density of states), Drift-Diffusion transport, Poisson-Boltzmann equation, Hot Carrier Injection, BTI, and Electromigration (Black's Law)."
+      }
+    },
+    {
+      "dimensionKo": "수학적 분석 도구 및 모델링 기법 (Mathematical Tools & Modeling Frameworks)",
+      "dimensionEn": "Mathematical Tools & Modeling Frameworks",
+      "electricalEngineering": {
+        "korean": "복소 페이저(Phasor) 대수, 복소 전력($S = P + jQ$), 대칭 좌표법(Symmetrical Components Matrix), 라플라스 변환, 미분 방정식 수치 해석(Newton-Raphson 조류 계산, Runge-Kutta 계통 안정도 적분), 상태 공간 해석(State-Space), 리야푸노프 안정도 판별법.",
+        "english": "Complex Phasor algebra, Complex Power ($S = P + jQ$), Symmetrical Components transformation matrix, Laplace transforms, numerical differential equation solvers (Newton-Raphson load flow, Runge-Kutta transient stability), State-Space modeling, and Lyapunov stability criteria."
+      },
+      "electronicEngineering": {
+        "korean": "이산 푸리에 변환(DFT/FFT), Z-변환, 선형 시불변(LTI) 콘볼루션, 확률 및 랜덤 프로세스(확률밀도함수, 자기상관함수, 화이트 가우시안 노이즈), 불 대수 및 카르노 맵, 그래프 이론(Graph Partitioning, Steiner Tree P&R 배선 알고리즘), 몬테카를로 통계 분석.",
+        "english": "Discrete Fourier Transform (DFT/FFT), Z-transform, LTI convolution, Probability & Stochastic Processes (PDF, Autocorrelation, AWGN), Boolean Algebra & Karnaugh maps, Graph Theory (Partitioning, Steiner Tree routing algorithms), and Monte Carlo statistical PVT yield analysis."
+      }
+    },
+    {
+      "dimensionKo": "주력 산업 응용처 및 대상 시스템 (Target Systems & Industrial Ecosystem)",
+      "dimensionEn": "Target Systems & Industrial Ecosystem",
+      "electricalEngineering": {
+        "korean": "원자력/복합화력/수력 발전소, 전국 초고압 송배전 전력망(Grid), 대규모 공장 수변전 수전 설비, 전기철도 급전망(KTX/SRT 25kV 고속철), 선박 추진 전동기 및 해양 플랜트, 초대형 산업용 인버터 및 3상 유도/동기 전동기, 고전압 배터리 팩(BESS).",
+        "english": "Nuclear/thermal/hydro power stations, national high-voltage transmission & distribution grids, industrial plant substations, electric railway catenary networks (25kV high-speed rail), marine electric propulsion, megawatt-class industrial drives, and utility BESS."
+      },
+      "electronicEngineering": {
+        "korean": "최첨단 AI 가속기(GPU/NPU) 및 초고밀도 HBM 메모리 칩, 5G/6G 기지국 및 스마트폰 RF 트랜시버, 자율주행 차량용 카메라/라이다 센서 ISP 및 도메인 컨트롤러, 저전력 사물인터넷(IoT) 에지 디바이스, 의료 영상(MRI/초음파) DSP 시스템.",
+        "english": "Cutting-edge AI accelerators (GPU/NPU) and high-density HBM memory dies, 5G/6G base stations and smartphone RF transceivers, autonomous vehicle camera/LiDAR ISPs, low-power edge IoT microcontrollers, and medical imaging (MRI/ultrasound) DSP systems."
+      }
+    },
+    {
+      "dimensionKo": "핵심 설계 제약 및 최적화 목적함수 (Design Constraints & Optimization Metrics)",
+      "dimensionEn": "Design Constraints & Optimization Metrics",
+      "electricalEngineering": {
+        "korean": "송전 및 변환 효율 극대화($\\eta \\to 100\\%$), 역률 개선($\\cos\\phi \\to 1.0$), 전압 강하율 규정 준수($\\le 3\\%$), 전고조파 왜곡률(THD $\\le 5\\%$), N-1 단일 상정 고장 시 계통 전락 방지, 아크 플래시 및 감전 안전 기준(KEC/NFPA 70E), 30년 이상의 설비 기대 수명.",
+        "english": "Transmission/conversion efficiency maximization ($eta \\to 100\\%$), Power Factor correction ($cos\\phi \\to 1.0$), voltage regulation limits ($le 3\\%$), Total Harmonic Distortion (THD $le 5\\%$), N-1 contingency resilience, arc flash/shock safety standards (KEC/NFPA 70E), and 30+ year service life."
+      },
+      "electronicEngineering": {
+        "korean": "PPA(Power, Performance, Area) 트레이드오프 최적화, 정적 타이밍 분석(STA) 셋업/홀드 타임 슬랙 여유 확보($\\ge 0\\text{ ps}$), 비트 오류율(BER $\\le 10^{-12}$), 동적 전력 소모 $\\alpha C V^2 f$ 최소화, 신호 무결성(SI: 지터/아이 다이어그램) 및 전력 무결성(PI: IR Drop) 보장, 웨이퍼 수율(Yield $\\ge 90\\%$).",
+        "english": "PPA (Power, Performance, Area) co-optimization, Static Timing Analysis (STA) setup/hold slack closure ($ge 0\\text{ ps}$), Bit Error Rate (BER $le 10^{-12}$), dynamic power suppression $\\alpha C V^2 f$, Signal/Power Integrity (SI/PI: jitter/eye diagram & IR drop), and wafer yield ($ge 90\\%$)."
+      }
+    },
+    {
+      "dimensionKo": "시험·측정 장비 및 프로토타이핑 환경 (Test & Measurement Instrumentation)",
+      "dimensionEn": "Test & Measurement Instrumentation",
+      "electricalEngineering": {
+        "korean": "전력 품질 분석기(Power Quality Analyzer), 고전압 절연저항계(Megger 5kV/10kV), 변압기 권선저항 및 변비 측정기, 대전류 클램프 미터, 접지저항계, 고전압 차동 프로브(High-Voltage Differential Probe), 계통 실시간 시뮬레이터(RTDS, OPAL-RT).",
+        "english": "Power Quality Analyzers, High-voltage insulation testers (Meggers up to 10kV), Transformer Turns Ratio (TTR) meters, high-current Rogowski coils, ground resistance testers, high-voltage differential probes, and Real-Time Digital Simulators (RTDS, OPAL-RT)."
+      },
+      "electronicEngineering": {
+        "korean": "수십 GHz급 초고대역폭 디지털 스토리지 오실로스코프(DSO), 벡터 네트워크 분석기(VNA 40GHz+), 스펙트럼 분석기(Spectrum Analyzer), 로직 분석기(Logic Analyzer), ATE 반도체 테스트 장비(Advantest V93000, Teradyne), 실리콘 웨이퍼 프로브 스테이션.",
+        "english": "Multi-GHz real-time Digital Storage Oscilloscopes (DSO), Vector Network Analyzers (VNA 40GHz+), RF Spectrum Analyzers, Multi-channel Logic Analyzers, Automated Test Equipment (ATE: Advantest V93000, Teradyne), and semi-automatic wafer probe stations."
+      }
+    },
+    {
+      "dimensionKo": "산학 커리어 패스 및 국가기술자격 (Career Paths & Professional Qualifications)",
+      "dimensionEn": "Career Paths & Professional Qualifications",
+      "electricalEngineering": {
+        "korean": "한국전력공사 및 발전 5사, 전력거래소, 현대일렉트릭, LS일렉트릭, 효성중공업, 플랜트 EPC 대형 건설사, 전기안전공사. 필수 자격증: 전기기사, 전기공사기사, 발송배전기술사, 건축전기설비기술사, 전기안전관리자 법정 선임 자격.",
+        "english": "Utility operators (KEPCO, Regional Gencos), Power Exchange (KPX), heavy electrical equipment OEMs (HD Hyundai Electric, LS ELECTRIC, Hyosung Heavy), EPC engineering contractors. Key certifications: Professional Engineer (PE) in Power Generation/Transmission, Building Electrical Facilities, Electrical Safety."
+      },
+      "electronicEngineering": {
+        "korean": "삼성전자 DS부문, SK하이닉스, TSMC, 인텔, 엔비디아, 애플, 퀄컴, 브로드컴, 국내외 팹리스 및 디자인하우스, 자동차 전장(현대모비스). 핵심 직군: 디지털 RTL 설계, 백엔드 P&R, 아날로그/RF IC 설계, 반도체 공정 기술(PIE), 펌웨어/BSP 엔지니어 (학위 및 깃허브/EDA 포트폴리오 중심).",
+        "english": "Global semiconductor giants (Samsung DS, SK Hynix, TSMC, Intel, Nvidia, Apple, Qualcomm, Broadcom), fabless IC startups, design houses, and automotive Tier-1s (Mobis). Roles: RTL Design, Physical Design (P&R), Analog/RF IC, Process Integration (PIE), Embedded Firmware (degree & EDA/tape-out portfolio driven)."
+      }
+    }
+  ],
+  "epistemologicalFoundations": {
+    "historicalEvolution": [
+      {
+        "era": "19세기 후반 (1880s~1900s): 전자기학의 수학적 집대성과 '전류 전쟁(War of the Currents)'",
+        "titleEn": "Electromagnetics Synthesis & The Birth of Electric Power Grids",
+        "description": "제임스 클러크 맥스웰(James Clerk Maxwell)의 1865년 전자기장 논문과 하인리히 헤르츠(Heinrich Hertz)의 전자기파 실증(1887)을 바탕으로, 올리버 헤비사이드(Oliver Heaviside)가 맥스웰 방정식을 현대의 4대 벡터 미분형으로 정립하였습니다. 이 시기 토머스 에디슨(Thomas Edison)의 직류(DC) 진영과 니콜라 테슬라(Nikola Tesla)·조지 웨스팅하우스(George Westinghouse)의 교류(AC) 진영 간의 '전류 전쟁'이 발발했습니다. 테슬라의 3상 교류 유도 전동기 및 변압기를 통한 고전압 장거리 송전 방식이 최종 승리하면서 현대 전기공학(Heavy Current / Power Engineering)의 근간이 확립되었습니다.",
+        "keyMilestones": [
+          "1865년: 맥스웰 20개 미분방정식 발표 (전자기 통일장 이론)",
+          "1882년: 에디슨 펄 스트리트(Pearl Street) 직류 발전소 가동 (110V DC)",
+          "1888년: 테슬라 다상 교류(Polyphase AC) 시스템 및 유도전동기 미국 특허 취득",
+          "1895년: 나이아가라 폭포 수력 발전소 교류 송전 상용화 성공 (25Hz 2상/3상)",
+          "1897년: J.J. 톰슨(J.J. Thomson)의 음극선 실험을 통한 전자(Electron)의 기본 입자 발견"
+        ]
+      },
+      {
+        "era": "20세기 전반 (1900s~1940s): 진공관(Vacuum Tube)의 발명과 '약전(Light Current)'의 분화",
+        "titleEn": "Thermionic Emission, Vacuum Tubes & The Emergence of Electronics",
+        "description": "열전자 방출 현상을 응용한 존 앰브로즈 플레밍(John Ambrose Fleming)의 2극 진공관(Fleming Valve, 1904)과 리 드포레스트(Lee de Forest)의 3극 진공관(Audion, 1906) 발명은 공학 역사상 거대한 분기점을 만들었습니다. 에너지를 수송하던 기존의 전기공학('강전', Heavy Current)과 달리, 진공관의 그리드(Grid) 전압 제어를 통해 미약한 전류를 증폭(Amplification)하고 고주파 스위칭(Switching)할 수 있게 됨으로써 신호와 정보를 다루는 '전자공학(Light Current / Electronics)'이 학문적으로 완전히 독립하게 되었습니다.",
+        "keyMilestones": [
+          "1904년: 플레밍의 2극 진공관(Diode) 발명 (교류 고주파 정류 실현)",
+          "1906년: 리 드포레스트의 3극 진공관(Triode Audion) 발명 (미약 음성/고주파 신호의 연속 증폭 실현)",
+          "1912년: 에드윈 암스트롱(Edwin Armstrong)의 재생 회로(Regenerative Circuit) 및 초외이차(Superheterodyne) 수신기 발명",
+          "1928년: 나이퀴스트(Harry Nyquist)의 열잡음 이론 및 전송 대역폭/표본화 기초 이론 정립",
+          "1940년: 제2차 세계대전을 거치며 레이더(Radar), 마그네트론(Magnetron), 펄스 부호 변조(PCM) 기술 급진적 발전"
+        ]
+      },
+      {
+        "era": "20세기 중반 (1947~1970s): 고체 물리학, 트랜지스터 및 실리콘 집적회로(IC) 혁명",
+        "titleEn": "Solid-State Physics, Transistor Invention & Monolithic IC Revolution",
+        "description": "양자역학의 발전과 에너지 밴드 이론(Band Theory)을 바탕으로, 1947년 벨 연구소(Bell Labs)의 존 바딘(John Bardeen), 월터 브래튼(Walter Brattain), 윌리엄 쇼클리(William Shockley)가 점접촉 및 접합형 트랜지스터(BJT)를 발명하였습니다. 진공관의 고열, 고전력 소비, 짧은 수명을 극복한 고체 상태(Solid-State) 스위칭의 시작이었습니다. 이어 1958년 텍사스 인스트루먼츠의 잭 킬비(Jack Kilby)와 1959년 페어차일드 세미컨덕터의 로버트 노이스(Robert Noyce)가 평면 공정(Planar Process) 기반의 집적회로(IC)를 독자적으로 발명하였고, 1960년 칸(Dawon Kahng)과 아탈라(Martin Atalla)가 현대 전자기술의 핵인 MOSFET을 개발하였습니다.",
+        "keyMilestones": [
+          "1947년: 벨 연구소에서 세계 최초 점접촉 트랜지스터(Point-Contact Transistor) 동작 실증",
+          "1948년: 클로드 섀넌(Claude Shannon)의 '통신의 수학적 이론(A Mathematical Theory of Communication)' 발표",
+          "1958~1959년: 잭 킬비의 하이브리드 IC 및 로버트 노이스의 실리콘 평면 모놀리식 IC 특허 출원",
+          "1960년: 강대원(Dawon Kahng) 박사와 마틴 아탈라의 $SiO_2$ 게이트 절연막 기반 MOSFET 개발",
+          "1965년: 고든 무어(Gordon Moore)의 무어의 법칙(Moore's Law: 칩당 트랜지스터 수 2년마다 2배 증가) 예측"
+        ]
+      },
+      {
+        "era": "20세기 후반 (1970s~2010s): 초고밀도 집적(VLSI), 마이크로프로세서 및 디지털 혁명",
+        "titleEn": "VLSI Scaling, Microprocessors & The Digital Computation Era",
+        "description": "1971년 인텔의 4004 마이크로프로세서 탄생 이후, 반도체 산업은 데너드 스케일링(Dennard Scaling) 법칙에 힘입어 기하급수적으로 축소되었습니다. 회로 설계는 수작업 레이아웃에서 하드웨어 기술 언어(Verilog, VHDL)와 전자설계자동화(EDA: Synopsys, Cadence)를 활용한 초고밀도 집적회로(VLSI) 시대로 진입했습니다. 한편 전기공학은 대용량 전력망 안정화를 위한 에너지 관리 시스템(EMS), 초고압 원자력/화력 발전 및 고효율 유도전동기 벡터 제어 기술을 통해 현대 국가 산업 전력망을 안정화시켰습니다.",
+        "keyMilestones": [
+          "1971년: 인텔 4004 세계 최초 단일 칩 마이크로프로세서 출시 (2,300개 트랜지스터, 10um 공정)",
+          "1974년: 로버트 데너드(Robert Dennard)의 MOSFET 전압/치수 동시 비례 축소 법칙(Dennard Scaling) 정립",
+          "1980년: 미드 & 콘웨이(Mead & Conway)의 'Introduction to VLSI Systems' 출판 (구조적 VLSI 설계 표준화)",
+          "1990년대: GSM, CDMA 무선 통신 보급 및 DSP 기반 이동통신 네트워크 인프라 구축",
+          "2000년대 중반: 누설전류 증가로 인한 데너드 스케일링 종말 및 멀티코어(Multi-core) 병렬 아키텍처로의 전환"
+        ]
+      },
+      {
+        "era": "21세기 현대 (2010s~현재): 초미세 나노공학, 와이드밴드갭 전력반도체 및 전기·전자 대융합",
+        "titleEn": "Nanometer Quantum Scaling, Wide-Bandgap Power Semis & The Great Convergence",
+        "description": "현대는 3nm/2nm 이하의 원자 스케일 GAA(Gate-All-Around) 나노시트와 2.5D/3D Chiplet 이종 집적 패키징 기술이 주도하고 있습니다. 동시에 전기차(EV), 도심항공교통(UAM), 인공지능 데이터센터의 폭발적 전력 수요, 신재생 에너지 그리드 전환으로 인해 전기공학과 전자공학의 경계가 급격히 허물어지고 있습니다. 실리콘(Si)의 물리적 한계를 돌파하는 SiC(탄화규소) 및 GaN(질화갈륨) 와이드밴드갭(WBG) 전력반도체가 고전압 전기 시스템에 전면 도입되며, 정보 처리 지능(ECE)과 대전력 에너지 변환(EE)이 완벽히 결합된 거대한 융합 체계가 도래하였습니다.",
+        "keyMilestones": [
+          "2011년: 인텔 22nm 3차원 Tri-Gate(FinFET) 상용화 (평면 MOSFET의 단채널 한계 극복)",
+          "2019년: ASML 극자외선(EUV, 13.5nm) 노광 장비 7nm 파운드리 양산 적용",
+          "2022년: 세계 최초 3nm GAA(MBCFET) 파운드리 양산 출하",
+          "2024~2026년: TSMC CoWoS, 삼성 I-Cube 등 첨단 2.5D 인터포저 기반 HBM3e/HBM4와 AI 가속기(GPU/NPU) 패키징 대량 양산",
+          "현재: 전기차 800V 고전압 배터리 시스템 및 兆(Tera)와트급 AI 데이터센터를 위한 SiC/GaN 고효율 전력 아키텍처 표준화"
+        ]
+      }
+    ],
+    "fundamentalPhysicsParadigm": {
+      "electricalEngineering": {
+        "physicalGrounding": "거시적 전자기장 보존 법칙 및 고전 열역학·전기역학",
+        "governingPillars": [
+          {
+            "lawName": "맥스웰-헤비사이드 거시 전자기 방정식 (Macroscopic Maxwell's Equations)",
+            "formula": "\\nabla \\times \\mathbf{H} = \\mathbf{J} + \\frac{\\partial \\mathbf{D}}{\\partial t}, \\quad \\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+            "physicalMeaning": "전하의 집단적 흐름에 의한 대전류 전도와 유도 기전력, 공간을 통한 대규모 포인팅 벡터 전력 전달의 수학적 절대 법칙"
+          },
+          {
+            "lawName": "에너지 보존 및 주울 발열 법칙 (Joule Heating & Conservation)",
+            "formula": "P_{\\text{loss}} = I^2 R = \\int_V \\mathbf{J} \\cdot \\mathbf{E} \\, dV, \\quad Q = m c \\Delta T",
+            "physicalMeaning": "도체 내부 저항에 의한 거시적 열에너지 발생 및 냉각 시스템 설계의 기본 제약"
+          },
+          {
+            "lawName": "회전 전동기 기계 동역학 (Electromechanical Torque Dynamics)",
+            "formula": "J \\frac{d\\omega_m}{dt} = T_e - T_m - B_m \\omega_m, \\quad T_e = \\frac{3}{2} p \\left(\\psi_d i_q - \\psi_q i_d\\right)",
+            "physicalMeaning": "전자기적 자속과 회전자 전류의 상호작용에 의해 생성되는 토크와 기계적 부하 간의 회전 평형 동역학"
+          }
+        ]
+      },
+      "electronicEngineering": {
+        "physicalGrounding": "미시적 양자역학, 반도체 고체 물리 및 정보 엔트로피 이론",
+        "governingPillars": [
+          {
+            "lawName": "슈뢰딩거 파동 방정식 및 터널링 현상 (Time-Independent Schrödinger Equation)",
+            "formula": "-\\frac{\\hbar^2}{2m^*} \\nabla^2 \\psi(\\mathbf{r}) + V(\\mathbf{r})\\psi(\\mathbf{r}) = E\\psi(\\mathbf{r}), \\quad T \\approx \\exp\\left(-2\\int \\sqrt{\\frac{2m^*(V(x)-E)}{\\hbar^2}}dx\\right)",
+            "physicalMeaning": "나노미터 게이트 산화막 및 초미세 채널에서의 파동함수 거동과 양자 기계적 누설 전류(Quantum Tunneling)의 물리적 근원"
+          },
+          {
+            "lawName": "반도체 드리프트-확산 연속 방정식 (Drift-Diffusion Continuity Equation)",
+            "formula": "\\mathbf{J}_n = q n \\mu_n \\mathbf{E} + q D_n \\nabla n, \\quad \\frac{\\partial n}{\\partial t} = \\frac{1}{q} \\nabla \\cdot \\mathbf{J}_n + G_n - R_n",
+            "physicalMeaning": "전계에 의한 표류(Drift)와 농도 구배에 의한 확산(Diffusion), 생성/재결합에 따른 미소 전하 수송의 유체역학적 모델"
+          },
+          {
+            "lawName": "섀넌 정보 엔트로피 및 채널 용량 법칙 (Shannon Information Capacity)",
+            "formula": "H(X) = -\\sum_{i} P(x_i) \\log_2 P(x_i), \\quad C = B \\log_2\\left(1 + \\frac{S}{N}\\right)",
+            "physicalMeaning": "가우시안 잡음 환경 하에서 대역폭 B와 신호 대 잡음비(SNR)가 허용하는 오류 없는 최대 정보 전송 한계"
+          }
+        ]
+      }
+    }
+  },
+  "subdisciplines": {
+    "electrical": [
+      {
+        "id": "ee-sub-power-energy",
+        "titleKo": "전력 시스템 및 에너지 공학",
+        "titleEn": "Power Systems & Energy Engineering",
+        "scopeAndDefinition": "전력 시스템 및 에너지 공학은 대규모 발전원(원자력, 화력, 복합화력, 수력, 태양광 및 해상 풍력)에서 생산된 기가와트(GW)급 전력을 초고압 송전망(Transmission Grid)과 배전망(Distribution Network)을 통해 수용가 부하까지 손실 없이 안정적으로 수송·공급하는 전력망 인프라의 해석, 최적화 및 보호 제어를 다루는 전기공학의 핵심 기둥입니다. 현대 전력공학은 재생에너지의 간헐성을 극복하는 스마트 그리드(Smart Grid), 초고압 직류 송전(HVDC), 마이크로그리드, 대용량 전력저장장치(BESS) 및 전력 시장(Electricity Market) 경제 급전(Economic Dispatch)을 아우릅니다.",
+        "theoreticalFoundations": "전력 시스템 해석의 이론적 기초는 복소 교류 회로망 해석, 대칭 좌표법(Symmetrical Components)을 이용한 비대칭 고장 해석, 비선형 대수 방정식 체계의 수치해법(Newton-Raphson 조류 계산), 그리고 다기 동기 발전기의 전기-기계적 과도 결합을 설명하는 동요 방정식(Swing Equation)입니다. 계통 주파수($\\Delta f$)는 시스템 내 총 기계적 발전력과 유효전력 부하의 순시 균형에 의해 결정되며, 모선 전압 크기($|V|$)는 무효전력(Reactive Power, Q)의 국소적 수급 평형에 의해 엄밀히 좌우됩니다.",
+        "governingEquations": [
+          {
+            "name": "비선형 복소 조류 방정식 (Nonlinear Complex Power Flow Equations)",
+            "typesetMath": "P_i - jQ_i = V_i^* \\sum_{k=1}^{N} Y_{ik} V_k = V_i^* \\sum_{k=1}^{N} (G_{ik} + jB_{ik}) |V_k| e^{j\\theta_k}",
+            "variablesDefinition": "$P_i, Q_i$: $i$번 모선의 유효 및 무효전력, $V_i = |V_i|e^{j\\theta_i}$: 모선 복소 전압, $Y_{ik} = G_{ik} + jB_{ik}$: 계통 버스 어드미턴스 행렬 원소.",
+            "physicalInterpretation": "키르히호프의 전류 법칙(KCL)을 대규모 전력망의 모든 모선에 적용한 복소 전력 평형 방정식으로, 각 모선에 주입되는 전력과 인접 모선으로 흘러나가는 전력의 합이 보존됨을 나타냅니다.",
+            "engineeringSignificance": "Newton-Raphson 반복법이나 Fast Decoupled 조류 계산 알고리즘을 사용하여 수천 개 모선의 전압 크기와 위상각을 수렴시키고, 선로 조류 과부하 여부와 무효전력 보상 위치를 결정하는 계통 운용의 기초입니다."
+          },
+          {
+            "name": "발전기 회전자 동요 방정식 (Generator Rotor Swing Equation)",
+            "typesetMath": "M \\frac{d^2\\delta}{dt^2} = \\frac{2H}{\\omega_s} \\frac{d^2\\delta}{dt^2} = P_m - P_e - D \\frac{d\\delta}{dt} = P_m - P_{\\max} \\sin\\delta - D \\frac{d\\delta}{dt}",
+            "variablesDefinition": "$M$: 회전자 각운동량, $H$: 관성 정수(Inertia Constant, [s]), $\\delta$: 동기 회전 좌표계 대비 회전자 부하각, $P_m$: 기계적 입력 동력, $P_e$: 전자기적 출력 전력, $D$: 댐핑 계수.",
+            "physicalInterpretation": "터빈에서 공급되는 기계적 입력 토크와 전력망으로 방출되는 전자기적 반작용 토크 간의 불균형이 발생할 때, 거대한 발전기 회전자(수십~수백 톤)의 각가속도 거동을 기술하는 2계 비선형 상미분방정식입니다.",
+            "engineeringSignificance": "송전선로 단락 고장 발생 시 고장 제거 시간(Critical Clearing Time, CCT)을 산출하고, 발전기간 동기화 탈조(Loss of Synchronism)를 방지하기 위한 과도 안정도(Transient Stability) 판정의 핵심 근거가 됩니다."
+          },
+          {
+            "name": "대칭 좌표법에 의한 3상 불평형 고장 해석 (Symmetrical Components Transformation)",
+            "typesetMath": "\\begin{bmatrix} V_0 \\\\ V_1 \\\\ V_2 \\end{bmatrix} = \\frac{1}{3} \\begin{bmatrix} 1 & 1 & 1 \\\\ 1 & a & a^2 \\\\ 1 & a^2 & a \\end{bmatrix} \\begin{bmatrix} V_a \\\\ V_b \\\\ V_c \\end{bmatrix}, \\quad a = e^{j\\frac{2\\pi}{3}} = -\\frac{1}{2} + j\\frac{\\sqrt{3}}{2}",
+            "variablesDefinition": "$V_a, V_b, V_c$: 3상 비대칭 상전압, $V_0, V_1, V_2$: 각각 영상분(Zero-sequence), 정상분(Positive-sequence), 역상분(Negative-sequence) 대칭 복소 전압.",
+            "physicalInterpretation": "임의의 비대칭 3상 교류 전압/전류 벡터를 상호 독립적인 세 개의 대칭 회전 성분(영상분: 동일 위상, 정상분: 정회전 $120^\\circ$, 역상분: 역회전 $120^\\circ$)으로 정규 직교 분해합니다.",
+            "engineeringSignificance": "1선 지락 고장(SLG), 선간 단락 고장 등 비대칭 사고 발생 시, 상호 유도 결합이 배제된 독립적 영상/정상/역상 임피던스 회로망을 합성하여 고장 전류를 해석하고 디지털 보호계전기(Relay) 동작 정정치를 계산합니다."
+          },
+          {
+            "name": "단락 용량 및 퍼센트 임피던스 (%Z) 관계식 (Short-Circuit Capacity Formula)",
+            "typesetMath": "I_s = \\frac{100}{\\%Z} I_n, \\quad P_s = \\sqrt{3} V_n I_s = \\frac{100}{\\%Z} P_n = \\frac{V_n^2}{Z_{\\text{actual}}}",
+            "variablesDefinition": "$I_s$: 3상 대칭 단락 전류, $I_n$: 정격 정현파 전류, $\\%Z$: 기준 용량 $P_n$ 기준의 퍼센트 임피던스, $P_s$: 3상 대칭 단락 용량(MVA), $V_n$: 공칭 선간 전압.",
+            "physicalInterpretation": "계통의 모든 전원 임피던스와 변압기/선로 누설 리액턴스의 합에 의해 전력망 단락 사고 시 흐를 수 있는 최대 사고 전류의 크기를 규정합니다.",
+            "engineeringSignificance": "수변전 설비의 가스절연개폐장치(GIS) 및 진공차단기(VCB)의 정격 차단 용량(kA/MVA)을 선정하여 폭발적 아크 방전 파괴로부터 전력 설비를 물리적으로 방호합니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "초고압 전압형 직류 송전 (VSC-HVDC, Voltage Source Converter HVDC): MMC(Modular Multilevel Converter) 서브모듈 스위칭을 통해 무효전력을 독립 제어하고 장거리 해저 케이블 및 대규모 해상풍력 연계에 최적화.",
+          "유연 송전 시스템 (FACTS, Flexible AC Transmission Systems): STATCOM, UPFC, TCSC 등을 송전선로에 배치하여 계통 전압 동적 안정화 및 선로 전송 용량 극한 한계선까지 확장.",
+          "광역 측정 시스템 (WAMS, Wide Area Measurement Systems) & PMU: GPS 시각 동기화 기반 페이저 측정 장치(PMU)를 초당 30~60회 데이터 샘플링하여 광역 계통의 동적 동요를 실시간 관측 및 붕괴 사전 차단.",
+          "그리드 포밍 인버터 (Grid-Forming Inverter): 동기 발전기 회전자의 물리적 관성 저하를 대체하기 위해 가상 동기기(Virtual Synchronous Machine) 제어 알고리즘을 탑재하여 주파수 및 전압 기준을 능동 수립.",
+          "유틸리티급 BESS(Battery Energy Storage Systems): 리튬이온/레독스 플로우 배터리를 수백 MWh 단위로 연계하여 주파수 조정(Frequency Regulation) 및 재생에너지 출력 평탄화(Curtailment 완화)."
+        ],
+        "industrialApplications": [
+          "한국전력공사(KEPCO) 765kV/345kV/154kV 초고압 국가 전력 기간망 운용 및 서해안 에너지고속도로 ±500kV HVDC 송전망 프로젝트.",
+          "원자력 발전소(APR1400 1.4GW급 주발전기) 및 복합화력 발전소 터빈 조속기-여자 제어 시스템.",
+          "대규모 해상 풍력 단지(신안 8.2GW) 집전 변전소 및 초고압 해저 전력 케이블 송전 인프라.",
+          "산업 플랜트(포스코 제철소, 삼성전자 반도체 팹 평택 사업장) 무정전 초고신뢰성 이중화 수변전 변전소(154kV GIS)."
+        ],
+        "keyEngineeringChallenges": [
+          "재생에너지 인버터 기반 전원(IBR) 비중 급증에 따른 계통 관성 정수(Inertia Constant, H)의 치명적 감소 및 RoCoF(주파수 변동률) 폭증 위험.",
+          "태양광 정오 발전 피크와 일몰 후 부하 급증이 야기하는 덕 커브(Duck Curve) 극복 및 램핑(Ramping) 발전소 확보.",
+          "송전선로 신설 주민 수용성 저하로 인한 송전망 혼잡(Congestion) 심화 및 동해안-수도권 전력 융통 병목 현상."
+        ]
+      },
+      {
+        "id": "ee-sub-control-robotics",
+        "titleKo": "제어공학 및 로보틱스 동역학",
+        "titleEn": "Control Engineering & Robotics Dynamics",
+        "scopeAndDefinition": "제어공학 및 로보틱스는 물리적 동적 시스템(전동기, 발전기, 산업용 다관절 로봇 매니퓰레이터, 자율이동체, 항공우주 비행체)의 수학적 모델링을 수립하고, 외란과 파라미터 불확실성 하에서도 원하는 궤적을 오차 없이 정밀하게 추종하도록 피드백 제어 루프를 설계·구현하는 전기공학의 핵심 학문입니다. 센서로부터 측정된 상태를 관측(Observer)하고, 최적화 이론(LQR, MPC)과 비선형 동역학을 결합하여 초고속·고신뢰성 모션 제어를 실현합니다.",
+        "theoreticalFoundations": "라플라스 변환 기반의 주파수 영역 전달함수(보드 선도, 나이퀴스트 안정도 판정법, 근궤적법)에서 시작하여, 다입출력(MIMO) 시스템을 위한 시간 영역 상태 공간(State-Space) 기법으로 진화했습니다. 시스템의 가제어성(Controllability)과 가관측성(Observability) 판별, 상태 피드백 게인 설계를 위한 폴 배치(Pole Placement), 루엔버거 관측기 및 통계적 최적 추정기인 칼만 필터(Kalman Filter), 그리고 목적함수를 최소화하는 선형 2차 조절기(LQR)와 모델 예측 제어(MPC)가 핵심 수리적 뼈대를 구성합니다.",
+        "governingEquations": [
+          {
+            "name": "연속시간 선형 상태 방정식 및 가제어성 판별식 (State-Space & Controllability Matrix)",
+            "typesetMath": "\\dot{\\mathbf{x}}(t) = \\mathbf{A}\\mathbf{x}(t) + \\mathbf{B}\\mathbf{u}(t), \\quad \\mathbf{y}(t) = \\mathbf{C}\\mathbf{x}(t) + \\mathbf{D}\\mathbf{u}(t), \\quad \\operatorname{rank}\\left(\\begin{bmatrix} \\mathbf{B} & \\mathbf{A}\\mathbf{B} & \\mathbf{A}^2\\mathbf{B} & \\cdots & \\mathbf{A}^{n-1}\\mathbf{B} \\end{bmatrix}\\right) = n",
+            "variablesDefinition": "$\\mathbf{x} \\in \\mathbb{R}^n$: 시스템 상태 벡터, $\\mathbf{u} \\in \\mathbb{R}^m$: 제어 입력 벡터, $\\mathbf{y} \\in \\mathbb{R}^p$: 출력 벡터, $\\mathbf{A}, \\mathbf{B}, \\mathbf{C}, \\mathbf{D}$: 시스템, 입력, 출력, 직달 행렬.",
+            "physicalInterpretation": "다차원 동적 시스템의 내부 에너지 저장 상태(위치, 속도, 전류, 전압 등)를 1계 행렬 미분 방정식으로 통합 기술하며, 입력 $\\mathbf{u}$를 통해 임의의 초기 상태를 유한 시간 내에 원하는 목표 상태로 이동시킬 수 있는 대수적 필요충분조건을 규정합니다.",
+            "engineeringSignificance": "MIMO 다변수 복합 제어 시스템에서 모든 고유값(극점)을 좌반평면 원하는 위치로 재배치할 수 있는 상태 피드백 제어기($\\mathbf{u} = -\\mathbf{K}\\mathbf{x}$)의 존재성을 수학적으로 엄밀히 보장합니다."
+          },
+          {
+            "name": "LQR 최적 제어와 연속시간 대수 리카티 방정식 (CARE, Continuous-Time Algebraic Riccati Equation)",
+            "typesetMath": "J = \\int_0^{\\infty} \\left(\\mathbf{x}^T \\mathbf{Q} \\mathbf{x} + \\mathbf{u}^T \\mathbf{R} \\mathbf{u}\\right) dt, \\quad \\mathbf{A}^T \\mathbf{P} + \\mathbf{P} \\mathbf{A} - \\mathbf{P} \\mathbf{B} \\mathbf{R}^{-1} \\mathbf{B}^T \\mathbf{P} + \\mathbf{Q} = \\mathbf{0}, \\quad \\mathbf{K} = \\mathbf{R}^{-1} \\mathbf{B}^T \\mathbf{P}",
+            "variablesDefinition": "$J$: 2차 성능 비용 함수, $\\mathbf{Q} \\succeq 0$: 상태 오차 가중치 반양정부호 행렬, $\\mathbf{R} \\succ 0$: 제어 입력 에너지 소모 가중치 양정부호 행렬, $\\mathbf{P}$: 리카티 해 행렬, $\\mathbf{K}$: 최적 상태 피드백 게인 행렬.",
+            "physicalInterpretation": "시스템의 오차 수렴 속도(상태 $\\mathbf{x}$의 편차 최소화)와 액추에이터 구동 에너지 소모(입력 $\\mathbf{u}$의 크기 절감) 사이의 상충 관계를 수학적으로 정량화하여 최적의 제어 입력을 도출합니다.",
+            "engineeringSignificance": "무한 시간 영역에서 점근적 안정도를 보장함과 동시에 최소 $60^\\circ$ 이상의 위상 여유(Phase Margin)와 무한대의 이득 상한 여유(Gain Margin)를 본질적으로 확보하는 강인한 다변수 제어기를 합성합니다."
+          },
+          {
+            "name": "이산시간 칼만 필터 예측 및 갱신 순환 방정식 (Discrete Kalman Filter Cycle)",
+            "typesetMath": "\\hat{\\mathbf{x}}_{k|k-1} = \\mathbf{A}\\hat{\\mathbf{x}}_{k-1|k-1}, \\quad \\mathbf{K}_k = \\mathbf{P}_{k|k-1} \\mathbf{H}^T \\left(\\mathbf{H} \\mathbf{P}_{k|k-1} \\mathbf{H}^T + \\mathbf{R}\\right)^{-1}, \\quad \\hat{\\mathbf{x}}_{k|k} = \\hat{\\mathbf{x}}_{k|k-1} + \\mathbf{K}_k \\left(\\mathbf{z}_k - \\mathbf{H}\\hat{\\mathbf{x}}_{k|k-1}\\right)",
+            "variablesDefinition": "$\\hat{\\mathbf{x}}$: 상태 추정 벡터, $\\mathbf{P}$: 오차 공분산 행렬, $\\mathbf{K}_k$: 최적 칼만 게인 행렬, $\\mathbf{z}_k$: 센서 측정치 벡터, $\\mathbf{R}$: 측정 잡음 공분산 행렬, $\\mathbf{H}$: 측정 행렬.",
+            "physicalInterpretation": "시스템 모델 기반의 사전 상태 예측치와 잡음이 섞인 실제 센서 관측치 사이의 오차(Innovation)를, 두 불확실성의 공분산 비율에 기반한 가중치(칼만 게인)로 가중 평균하여 사후 최소 분산 비편향 추정치(MMSE)를 계산합니다.",
+            "engineeringSignificance": "자율주행, 위성 항법(GPS-INS 통합), 로봇 모션 센서 융합 및 전동기 센서리스 벡터 제어에서 측정 노이즈를 완벽히 필터링하고 내부 상태를 실시간 복원합니다."
+          },
+          {
+            "name": "다관절 로봇 매니퓰레이터 오일러-라그랑주 동역학 (Euler-Lagrange Manipulator Dynamics)",
+            "typesetMath": "\\mathbf{M}(\\mathbf{q})\\ddot{\\mathbf{q}} + \\mathbf{C}(\\mathbf{q}, \\dot{\\mathbf{q}})\\dot{\\mathbf{q}} + \\mathbf{g}(\\mathbf{q}) = \\boldsymbol{\\tau} - \\mathbf{J}^T(\\mathbf{q})\\mathbf{F}_{\\text{ext}}",
+            "variablesDefinition": "$\\mathbf{q}, \\dot{\\mathbf{q}}, \\ddot{\\mathbf{q}}$: 관절 각도, 각속도, 각가속도 벡터, $\\mathbf{M}(\\mathbf{q})$: 양정부호 대칭 질량 관성 행렬, $\\mathbf{C}(\\mathbf{q}, \\dot{\\mathbf{q}})$: 코리올리 및 원심력 행렬, $\\mathbf{g}(\\mathbf{q})$: 중력 토크 벡터, $\\boldsymbol{\\tau}$: 관절 모터 구동 토크, $\\mathbf{J}$: 기구학 자코비안 행렬, $\\mathbf{F}_{\\text{ext}}$: 작업 공간 외력.",
+            "physicalInterpretation": "다자유도 로봇 관절의 운동에너지와 위치에너지를 라그랑지안($L = T - V$)으로 정식화하여, 관절 간의 동적 결합력, 비선형 회전 관성 및 중력 모멘트가 모터 액추에이터 토크와 평형을 이루는 운동 법칙을 나타냅니다.",
+            "engineeringSignificance": "산업용 다관절 로봇 및 협동로봇의 비선형 계산 토크 제어(Computed Torque Control) 및 임피던스/어드미턴스(Impedance/Admittance) 유연 접촉 제어 알고리즘의 기초 모델입니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "모델 예측 제어 (MPC, Model Predictive Control): 액추에이터 전압/전류 포화 및 작업 영역 제한 조건을 능동적 최적화 제약식(Quadratic Programming)으로 실시간 처리.",
+          "외란 관측기 기반 강인 제어 (DOB, Disturbance Observer): 공칭 모델 역함수를 이용하여 기구부 마찰, 백래시, 파라미터 변동을 등가 외란으로 실시간 추정하여 상쇄.",
+          "토크 센서 피드백 기반 힘-임피던스 제어 (Compliant Joint Control): 협동로봇(Cobot)의 각 관절에 정밀 스트레인게이지 토크 센서를 내장하여 인간과의 충돌 안전성 보장.",
+          "자율이동로봇(AMR) LiDAR/Visual SLAM: 확장 칼만 필터(EKF) 및 그래프 기반 번들 조정(Bundle Adjustment)을 결합한 실시간 위치 추정 및 동적 장애물 회피 궤적 생성.",
+          "서보 모터 디지털 트윈 동특성 파라미터 식별: 모터 고정자 저항($R_s$), 인덕턴스($L_d, L_q$), 관성 모멘트($J$)를 고주파 전압 주입법 및 재귀 최소자승법(RLS)으로 오프라인/온라인 자동 튜닝."
+        ],
+        "industrialApplications": [
+          "현대차·기아 자동차 조립 라인의 고속 스폿 용접 및 도장 6축 산업용 다관절 로봇 매니퓰레이터(현대 로보틱스, 화낙, 야스카와).",
+          "반도체 팹 클린룸 내 웨이퍼 이송 무인반송차(OHT, Overhead Hoist Transport)의 서브 밀리미터 정밀 제어.",
+          "수력/화력 발전소 증기 터빈 밸브 위치 디지털 조속기(DEGOV) 및 전압 조정기(AVR).",
+          "방위산업 유도무기 핀 구동 액추에이터 및 위성 3축 자세 제어 리액션 휠(Reaction Wheel) 피드백 제어기."
+        ],
+        "keyEngineeringChallenges": [
+          "밀리초(ms) 단위의 짧은 제어 샘플링 주기 내에서 고차원 비선형 MPC 최적화 솔버(QP Solver)의 실시간 수렴성 보장 문제.",
+          "감속기 백래시(Backlash), 하모닉 드라이브의 각 전달 오차(Kinematic Error) 및 케이블 마찰로 인한 초정밀 위치 결정의 비선형 한계.",
+          "센서 시간 지연(Latency) 및 패킷 손실이 발생하는 무선 산업용 제어망(Industrial IoT) 환경에서의 폐루프 안정도 유지."
+        ]
+      },
+      {
+        "id": "ee-sub-circuits-systems",
+        "titleKo": "전기 회로망 이론 및 전기설비 시스템",
+        "titleEn": "Circuits Theory & Electrical Facility Systems",
+        "scopeAndDefinition": "전기 회로망 이론 및 전기설비 시스템은 집중 정수(Lumped) 및 분포 정수(Distributed) 회로 모델을 기초로 하여 수동 회로망의 신호 전송, 공진, 과도 현상을 해석하고, 이를 건축물, 공장, 플랜트, 데이터센터의 수변전 수전 설비, 차단 보호 계통, 배선, 접지 시스템 엔지니어링으로 구체화하는 전기공학의 전통적이면서도 가장 실무적인 기반 학문입니다. 전기설비기술기준(KEC), NEC, IEC 표준에 부합하는 안전성, 신뢰성, 전력 품질을 물리적으로 설계합니다.",
+        "theoreticalFoundations": "2포트 회로망 이론(Z, Y, h, ABCD 전송 파라미터와 상호 상호성), 라플라스 변환을 이용한 RLC 과도 임펄스 응답, 전송선로(Transmission Line)의 특성 임피던스($Z_0$) 및 파동 방정식, 그리고 대지(Earth)를 반무한체(Semi-infinite Medium)로 가정한 맥스웰 포아송 방정식 기반의 접지 전위 상승(Ground Potential Rise, GPR) 및 전자기 호환성(EMC) 접지 이론이 수리적 기초를 형성합니다.",
+        "governingEquations": [
+          {
+            "name": "2포트 회로망 ABCD 전송 파라미터 방정식 (Two-Port Transmission ABCD Matrix)",
+            "typesetMath": "\\begin{bmatrix} V_1 \\\\ I_1 \\end{bmatrix} = \\begin{bmatrix} A & B \\\\ C & D \\end{bmatrix} \\begin{bmatrix} V_2 \\\\ -I_2 \\end{bmatrix}, \\quad AD - BC = 1 \\quad (\\text{상반 회로망 조건})",
+            "variablesDefinition": "$V_1, I_1$: 입력단 전압 및 유입 전류, $V_2, -I_2$: 출력단 전압 및 부하 유출 전류, $A$: 개방 전압 이득의 역수, $B$: 단락 전달 임피던스, $C$: 개방 전달 어드미턴스, $D$: 단락 전류 이득의 역수.",
+            "physicalInterpretation": "임의의 복잡한 선형 수동 회로망(변압기, $\\pi$형 송전선로, 필터)을 입출력 4단자망으로 추상화하여, 캐스케이드 종속 접속 시 행렬 곱셈만으로 전체 합성 전송 특성을 계산합니다.",
+            "engineeringSignificance": "수십~수백 km 장거리 송전선로의 전압 강하, 페란티 현상(Ferranti Effect: 경부하 시 수전단 전압 상승) 및 수변전 설비의 정합 상태를 정확히 계산하는 표준 수식입니다."
+          },
+          {
+            "name": "유도전동기 테브난 등가회로 기반 정상상태 토크 공식 (Induction Motor Steady-State Torque)",
+            "typesetMath": "T_e = \\frac{3 V_{\\text{th}}^2 \\frac{R_2'}{s}}{\\omega_s \\left[ \\left(R_{\\text{th}} + \\frac{R_2'}{s}\\right)^2 + \\left(X_{\\text{th}} + X_2'\\right)^2 \\right]}",
+            "variablesDefinition": "$V_{\\text{th}}, R_{\\text{th}}, X_{\\text{th}}$: 고정자 단자 테브난 등가 전압, 저항, 리액턴스, $R_2', X_2'$: 회전자 2차 권선의 고정자 측 환산 저항 및 누설 리액턴스, $s = \\frac{\\omega_s - \\omega_m}{\\omega_s}$: 슬립(Slip), $\\omega_s$: 동기 각속도.",
+            "physicalInterpretation": "고정자 3상 권선이 형성하는 회전 자기장과 회전자 도체에 유도된 2차 교류 전류의 외적(Cross Product)에 의해 발생하는 전자기적 구동 토크의 슬립 의존성을 나타냅니다.",
+            "engineeringSignificance": "전동기 기동 시 기동 전류(정격의 6~8배) 및 기동 토크를 예측하고, 기동 장치(와이-델타, 리액터, 소프트스타터) 선정 및 펌프/팬 부하 곡선과의 동작점 정합을 보장합니다."
+          },
+          {
+            "name": "분포정수 전송선로 무손실 파동 방정식 및 서지 임피던스 (Lossless Wave Equation & Surge Impedance)",
+            "typesetMath": "\\frac{\\partial^2 v(x,t)}{\\partial x^2} = L' C' \\frac{\\partial^2 v(x,t)}{\\partial t^2}, \\quad Z_0 = \\sqrt{\\frac{L'}{C'}}, \\quad v_{\\text{prop}} = \\frac{1}{\\sqrt{L'C'}} \\approx \\frac{c}{\\sqrt{\\varepsilon_r}}",
+            "variablesDefinition": "$L', C'$: 선로 단위 길이당 인덕턴스(H/m) 및 커패시턴스(F/m), $Z_0$: 서지 특성 임피던스($\\Omega$), $v_{\\text{prop}}$: 전자파 선로 전파 속도(m/s).",
+            "physicalInterpretation": "선로의 물리적 길이가 파장의 수분의 일 이상으로 길어질 때, 전압과 전류가 집중 소자가 아닌 공간적 진행파(Traveling Wave)로 전파됨을 나타내는 편미분 파동 방정식입니다.",
+            "engineeringSignificance": "낙뢰 및 차단기 개폐 서지 발생 시 전압파의 전파, 반사, 투과 계수를 버거론(Bergeron) 선도나 EMTP 시뮬레이션으로 해석하여 피뢰기(SA, Surge Arrester) 정격을 결정합니다."
+          },
+          {
+            "name": "KEC/IEEE 80 접지 시스템 허용 접촉 전압 공식 (Tolerable Touch Voltage Standard)",
+            "typesetMath": "V_{\\text{touch}} \\le \\frac{1000 + 1.5 C_s \\rho_s}{\\sqrt{t_s}} \\times 0.116 \\quad (50\\text{kg 인체 기준})",
+            "variablesDefinition": "$V_{\\text{touch}}$: 허용 접촉 전압(V), $C_s$: 표면층 감쇄 계수, $\\rho_s$: 변전소 표면 자갈층 저항률($\\Omega\\cdot\\text{m}$), $t_s$: 고장 지속 시간(차단 시간, [s]).",
+            "physicalInterpretation": "변전소 지락 사고 시 접지망 전위 상승으로 인해 기기 외함에 접촉한 인체의 손과 양 발 사이에 인가되는 전압이 심실세동을 유발하지 않도록 규정하는 생체전기학적 안전 한계식입니다.",
+            "engineeringSignificance": "초고압 변전소 및 데이터센터의 메시(Mesh) 접지망 매설 간격, 접지봉 수량 및 자갈 포장 두께를 결정하는 법적 절대 안전 기준입니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "스마트 디지털 수배전반 (Digital Switchgear): 기존의 아날로그 변류기(CT)/변성기(PT)를 로고스키 코일(Rogowski Coil) 및 광학식 전압 센서로 대체하고, IEC 61850 프로세스 버스로 통신.",
+          "친환경 $SF_6$-Free 가스절연개폐장치 (Eco-GIS): 지구온난화지수(GWP)가 23,500에 달하는 $SF_6$ 가스 대신 건조 공기(Dry Air) 및 진공 인터럽터(VI)를 채용한 170kV급 친환경 차단 설비.",
+          "아크 플래시 감지 및 초고속 광학 소호 시스템: 광섬유 센서로 수변전반 내부 아크 플래시 발생을 1ms 내에 감지하고 고속 접지 스위치를 투입하여 아크 폭발 압력 방출 차단.",
+          "능동형 고조파 필터 (AHF, Active Harmonic Filter): 비선형 부하(인버터, 정류기)가 발생하는 5차, 7차, 11차 등 역위상 고조파 전류를 순시 주입하여 전고조파 왜곡률(THD)을 3% 이하로 정밀 보상.",
+          "동적 전압 복원기 (DVR, Dynamic Voltage Restorer): 계통 순간 전압 강하(Voltage Sag) 발생 시 직렬 인버터를 통해 밀리초 이내에 부족 전압을 보상하여 정밀 공정 라인 정지 예방."
+        ],
+        "industrialApplications": [
+          "초대형 하이퍼스케일 AI 데이터센터(카카오, 네이버, AWS)의 22.9kV 특고압 수전 및 2N 무정전 전원 공급(UPS)·비상 디젤 발전기(EDG) 연계 계통.",
+          "삼성전자 기흥/화성/평택 반도체 라인의 초고품질 전력 공급용 154kV 전용 수변전소 및 초고압 모선 버스덕트(Busduct) 설비.",
+          "LG에너지솔루션 오창 배터리 기가팩토리의 대용량 건식 몰드 변압기 및 고조파 억제 필터 시스템.",
+          "KTX/SRT 고속철도 변전소의 25kV 스콧(Scott) 결선 변압기(3상 $\\to$ 2상 직교 변환) 및 전차선로 카테너리 급전망."
+        ],
+        "keyEngineeringChallenges": [
+          "데이터센터 초고밀도 서버 랙(Rack당 40~100kW) 도입에 따른 수배전반 단락 용량 증가 및 초대형 버스덕트 열변형 억제.",
+          "유입 변압기의 노후화 및 절연유 열화로 인한 화재 폭발 리스크 방지를 위한 유중가스 온라인 분석(DGA) 신뢰도 확보.",
+          "비선형 전력전자 기기 대량 보급에 따른 계통 공진(Parallel/Series Resonance) 발생 및 변압기 국부 과열(K-Factor 초과) 억제."
+        ]
+      },
+      {
+        "id": "ee-sub-power-rf-em",
+        "titleKo": "전력 전자 및 고전력 RF/전자계 응용",
+        "titleEn": "Power Electronics & High-Power Applied Electromagnetics",
+        "scopeAndDefinition": "전력 전자는 전력용 반도체 스위칭 소자(IGBT, SiC MOSFET, GaN HEMT)를 고주파 온/오프 제어하여 전기에너지의 형태(AC-DC 정류, DC-DC 변환, DC-AC 인버터, AC-AC 변환)를 98% 이상의 초고효율로 변환·제어하는 학문입니다. 또한 고전력 RF 및 응용 전자계는 메가와트급 전자기 에너지를 유도가열, 플라즈마 발생, 마이크로파 가열, 펄스 파워(Pulsed Power) 시스템 및 무선 전력 전송(WPT)에 응용하는 전기공학의 첨단 융합 영역입니다.",
+        "theoreticalFoundations": "인덕터의 볼트-초 평형(Volt-Second Balance) 및 커패시터의 전하 평형(Charge Balance) 원리, 푸리에 급수 기반 스위칭 리플 해석, 공간 벡터 펄스 폭 변조(SVPWM), 직교 좌표 변환(Clarke-Park 변환)을 통한 전동기 벡터 제어, 그리고 고주파 스위칭 손실을 제거하기 위한 공진형 소프트 스위칭(ZVS, ZCS) 이론이 기반을 이룹니다. 전자기계적으로는 페라이트 코어 히스테리시스 손실을 기술하는 슈타인메츠(Steinmetz) 방정식과 표피 효과(Skin Effect) 및 근접 효과(Proximity Effect) 해석이 필수적입니다.",
+        "governingEquations": [
+          {
+            "name": "인덕터 전압-초 평형 및 벅/부스트 변환비 (Volt-Second Balance & Converter Transfer Ratio)",
+            "typesetMath": "\\int_{0}^{T_s} v_L(t) \\, dt = 0 \\implies \\text{Buck: } \\frac{V_o}{V_{\\text{in}}} = D, \\quad \\text{Boost: } \\frac{V_o}{V_{\\text{in}}} = \\frac{1}{1-D}",
+            "variablesDefinition": "$v_L(t)$: 인덕터 순시 양단 전압, $T_s$: 스위칭 주기, $D = \\frac{T_{\\text{on}}}{T_s}$: 스위치 듀티비(Duty Ratio, $0 \\le D < 1$), $V_o$: 직류 출력 전압, $V_{\\text{in}}$: 직류 입력 전압.",
+            "physicalInterpretation": "정상상태에서 순시 인덕터 전류가 한 주기 후 원래 값으로 복귀해야 하므로, 한 스위칭 주기 동안 인덕터 전압의 순 적분(자속 쇄교수 순변화)은 반드시 0이어야 한다는 패러데이 법칙의 회로적 보존 원리입니다.",
+            "engineeringSignificance": "모든 비절연형/절연형 스위칭 모드 전원공급장치(SMPS)의 정적 입출력 전압 전달비를 도출하고 인덕터 전류 연속 모드(CCM)와 불연속 모드(DCM) 경계를 결정하는 기본 수식입니다."
+          },
+          {
+            "name": "하드 스위칭 소자의 스위칭 전력 손실 공식 (Power Transistor Switching Loss)",
+            "typesetMath": "P_{\\text{sw}} = f_{\\text{sw}} \\left[ \\frac{1}{2} V_{\\text{ds}} I_d \\left(t_r + t_f\\right) + \\frac{1}{2} C_{\\text{oss}} V_{\\text{ds}}^2 + Q_{rr} V_{\\text{ds}} \\right]",
+            "variablesDefinition": "$f_{\\text{sw}}$: 스위칭 주파수(Hz), $V_{\\text{ds}}$: 오프 시 드레인-소스 차단 전압, $I_d$: 온 시 통전 전류, $t_r, t_f$: 상승 및 하강 시간, $C_{\\text{oss}}$: 출력 기생 커패시턴스, $Q_{rr}$: 바디 다이오드 역회복 전하.",
+            "physicalInterpretation": "전력 반도체가 턴온/턴오프 상태를 전이하는 유한한 시간($t_r, t_f$) 동안 전압과 전류가 동시에 중첩되어 인가됨으로써 발생하는 불가피한 에너지 손실과 기생 커패시턴스/역회복 전하 방전에 의한 발열 손실을 나타냅니다.",
+            "engineeringSignificance": "스위칭 주파수 증가의 열역학적 물리 한계를 규정하며, 고주파 동작 시 Si 대비 $Q_{rr} \\approx 0$인 GaN HEMT나 초저손실 SiC MOSFET 도입 및 ZVS 공진 회로 채택의 공학적 정당성을 부여합니다."
+          },
+          {
+            "name": "3상 인버터 공간 벡터 PWM 최대 전압 이용률 (Space Vector PWM Voltage Utilization)",
+            "typesetMath": "\\mathbf{V}_{\\text{ref}} = \\frac{T_1}{T_s}\\mathbf{V}_1 + \\frac{T_2}{T_s}\\mathbf{V}_2 + \\frac{T_0}{T_s}\\mathbf{V}_0, \\quad V_{\\text{line,max(linear)}} = \\frac{V_{dc}}{\\sqrt{3}} \\approx 0.577 V_{dc} \\quad (\\text{SPWM 대비 } 15.5\\% \\uparrow)",
+            "variablesDefinition": "$\\mathbf{V}_{\\text{ref}}$: 목표 합성 전압 공간 벡터, $\\mathbf{V}_1, \\mathbf{V}_2$: 섹터를 둘러싼 인접 유효 전압 벡터, $\\mathbf{V}_0$: 영 벡터, $V_{dc}$: 직류 링크 전압, $V_{\\text{line,max}}$: 선형 변조 영역 내 최대 기본파 상전압 피크치.",
+            "physicalInterpretation": "3상 하프 브리지 6개 스위치가 생성할 수 있는 8개의 이산 전압 벡터 공간에서 기본파 전압 벡터를 시간 가중 평균으로 합성하며, 3차 고조파를 영상 전압으로 자율 주입하여 DC 전압 이용률을 기하학적 극한까지 끌어올립니다.",
+            "engineeringSignificance": "전기차 견인 인버터 및 산업용 고압 인버터에서 동일한 배터리/직류 전압으로 전동기에 최대 선간 전압을 인가하고 전류 리플 고조파를 최소화하는 표준 PWM 변조 기법입니다."
+          },
+          {
+            "name": "고주파 자기 코어 손실 슈타인메츠 방정식 (Modified Steinmetz Equation for Core Loss)",
+            "typesetMath": "P_v = k \\, f^\\alpha \\, B_m^\\beta \\quad [\\text{W/m}^3 또는 \\text{mW/cm}^3]",
+            "variablesDefinition": "$P_v$: 단위 체적당 코어 발열 손실 밀도, $f$: 교번 자속 주파수, $B_m$: 최대 자속 밀도 피크치(Tesla), $k, \\alpha, \\beta$: 자성체 재료 고유의 슈타인메츠 파라미터 (일반적으로 $\\alpha \\approx 1.2 \\sim 2.0, \\beta \\approx 2.0 \\sim 3.0$).",
+            "physicalInterpretation": "고주파 교번 자기장 하에서 페라이트, 나노크리스탈린, 규소강판 등 자성체 내부에서 발생하는 자기 히스테리시스 루프 면적 손실과 미세 와전류(Micro Eddy Current) 손실의 주파수 및 자속 밀도 비선형 의존성을 모델링합니다.",
+            "engineeringSignificance": "고효율 고주파 변압기 및 인덕터 설계 시 코어의 포화 자속 밀도($B_{\\text{sat}}$) 마진을 확보하고, 열폭주(Thermal Runaway)를 방지하는 최적 코어 크기와 턴 수(Turns)를 결정합니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "와이드밴드갭(WBG) SiC/GaN 전력 반도체 파워 모듈: 1200V/1700V SiC MOSFET을 적용한 800V 전기차 급속 충전용 인버터 및 650V GaN HEMT 기반 고밀도 온보드 차저(OBC).",
+          "LLC 직렬 공진형 하프/풀 브리지 컨버터: 변압기 누설 인덕턴스($L_r$)와 자화 인덕턴스($L_m$), 공진 커패시터($C_r$)를 결합하여 전 부하 영역 영전압 스위칭(ZVS) 달성.",
+          "양방향 능동 브리지(DAB, Dual Active Bridge) DC-DC 컨버터: 1차측과 2차측 풀브리지 사이의 위상 천이(Phase-Shift) 각을 제어하여 신재생에너지 및 ESS 양방향 고전력 전송.",
+          "반도체 플라즈마 RF 발생기 (13.56MHz/60MHz Generator): 반도체 챔버 내 정밀 건식 식각(Etch) 및 증착(PECVD) 플라즈마 밀도를 제어하기 위해 수십 kW급 고전력 RF를 생성하고 고속 자동 임피던스 매칭(Auto Matcher) 수행.",
+          "자기 공진 결합형 대용량 무선 전력 전송 (WPT, Wireless Power Transfer): 수십 kHz 공진 회로망을 통해 수십 kW급 전력을 20cm 이상의 공극(Air-gap)을 넘어 95% 이상 효율로 전기차 하부에 무선 전송."
+        ],
+        "industrialApplications": [
+          "테슬라(Tesla Model 3/Y/Cybertruck) 및 현대차(아이오닉 5/6 E-GMP 플랫폼)의 SiC 파워 인버터 모듈 및 모터 통합 드라이브(e-Axle).",
+          "반도체 전공정 플라즈마 공정 장비(Lam Research, Applied Materials)에 탑재되는 13.56MHz 고주파 RF 제너레이터 및 매칭 네트워크.",
+          "수십 MW급 해상 풍력 타워 내 4-레벨 능동 중성점 클램프(ANPC) 컨버터 및 대용량 태양광 PCS(Power Conditioning System).",
+          "입자 가속기(포항 가속기 연구소 4세대 방사광 가속기) 및 핵융합로(KSTAR) 초전도 자석 전원 공급용 메가와트 펄스 파워 시스템."
+        ],
+        "keyEngineeringChallenges": [
+          "SiC/GaN 소자의 급격한 스위칭 속도로 인한 초고속 전압/전류 변화율($dv/dt > 100\\text{V/ns}, di/dt > 5\\text{A/ns}$)이 야기하는 극심한 전자기 간섭(EMI) 및 기생 발진.",
+          "소형화에 따른 파워 모듈 내부 열유속(Heat Flux) 급증 및 접합부 온도($T_j > 175^\\circ\\text{C}$) 극복을 위한 양면 냉각(Double-Sided Cooling) 및 은 소결(Silver Sintering) 패키징.",
+          "WBG 게이트 드라이버의 높은 밀러 플래토(Miller Plateau) 구간 유도 턴온(Cross-conduction Shoot-through) 방지 및 절연형 게이트 전원 신뢰성."
+        ]
+      }
+    ],
+    "electronics": [
+      {
+        "id": "ece-sub-semiconductor-nano",
+        "titleKo": "반도체 물성 및 나노 소자 공학",
+        "titleEn": "Semiconductor Physics & Nano Devices",
+        "scopeAndDefinition": "반도체 물성 및 나노 소자 공학은 양자역학 및 고체물리학 이론을 기반으로 실리콘(Si), 화합물 반도체(GaAs, GaN, SiC) 및 2차원 원자층 신소재(TMD, 그래핀) 내부의 에너지 밴드 구조와 전하 캐리어(전자 및 정공) 수송 역학을 규명하고, 이를 바탕으로 나노미터 스케일의 전계효과 트랜지스터(FET), 메모리 셀(DRAM 커패시터, 3D V-NAND 플래시, MRAM, PRAM) 및 광소자(LED, Laser Diode, CIS 이미지센서)를 설계·개발하는 전자공학의 가장 근원적인 물리 기반 학문입니다.",
+        "theoreticalFoundations": "결정 격자의 주기적 전위 하에서 블로흐 정리(Bloch Theorem), 에너지 밴드 갭($E_g$), 유효 질량($m^*$), 상태 밀도($g(E)$) 및 페르미-디락 통계 분포($f(E)$)가 전자와 정공의 거동을 기술합니다. 연속체 영역에서는 드리프트-확산 수송 방정식(Drift-Diffusion Equation)과 포아송 방정식이 결합되어 p-n 접합, 쇼트키 접합 및 MOS 커패시터의 전위 분포를 결정하며, 3nm 이하 극한 미세화에서는 양자역학적 파동성으로 인한 직접 터널링(Direct Tunneling), 양자 구속 효과(Quantum Confinement), 탄도 수송(Ballistic Transport)이 지배적 현상으로 대두됩니다.",
+        "governingEquations": [
+          {
+            "name": "진성 캐리어 농도 및 질량 작용 법칙 (Intrinsic Carrier Density & Law of Mass Action)",
+            "typesetMath": "n_i = \\sqrt{N_c N_v} \\exp\\left(-\\frac{E_g}{2 k_B T}\\right), \\quad n \\cdot p = n_i^2",
+            "variablesDefinition": "$n_i$: 진성 반도체 캐리어 농도, $N_c, N_v$: 전도대 및 가전자대 유효 상태 밀도, $E_g$: 반도체 밴드갭 에너지, $k_B$: 볼츠만 상수, $T$: 절대온도, $n, p$: 열평형 상태 전자 및 정공 농도.",
+            "physicalInterpretation": "열에너지($k_B T$)에 의해 가전자대의 전자가 밴드갭을 넘어 전도대로 여기되는 확률과 상태 밀도의 적분 결과이며, 도핑 농도에 무관하게 열평형 상태에서 전자와 정공 농도의 곱은 온도만의 함수로 일정하게 유지됨을 나타냅니다.",
+            "engineeringSignificance": "도펀트(Dopant: P, As, B) 주입을 통해 다수 캐리어 농도를 제어할 때 소수 캐리어 농도를 즉각 결정하며, 고온 동작 시 $n_i$의 지수함수적 급증에 따른 소자 오동작(누설전류 폭증) 한계 온도를 규정합니다."
+          },
+          {
+            "name": "드리프트-확산 연속 수송 방정식 (Drift-Diffusion Continuity Equation)",
+            "typesetMath": "\\mathbf{J}_n = q n \\mu_n \\mathbf{E} + q D_n \\nabla n, \\quad \\frac{\\partial n}{\\partial t} = \\frac{1}{q} \\nabla \\cdot \\mathbf{J}_n + G_n - R_n, \\quad \\frac{D_n}{\\mu_n} = \\frac{k_B T}{q} = V_t",
+            "variablesDefinition": "$\\mathbf{J}_n$: 전자 전류 밀도 벡터, $q$: 기본 전하량, $\\mu_n$: 전자 이동도(Mobility), $\\mathbf{E}$: 내부 전계, $D_n$: 확산 계수, $G_n, R_n$: 전자 생성 및 재결합률, $V_t$: 열전압(실온 약 25.9mV).",
+            "physicalInterpretation": "인가된 전기장에 의해 전하가 끌려가는 표류(Drift) 현상과 브라운 운동에 의한 농도 불균일의 자발적 확산(Diffusion) 현상을 합산한 것으로, 아인슈타인 관계식을 통해 이동도와 확산 계수가 열역학적으로 결합됨을 보여줍니다.",
+            "engineeringSignificance": "TCAD(Technology CAD) 반도체 시뮬레이터가 트랜지스터 내부의 국소 전하 분포와 전류-전압(I-V) 특성을 3차원 공간에서 유한차분법(FDM/FEM)으로 수치 해석하는 핵심 미분방정식입니다."
+          },
+          {
+            "name": "MOSFET 문턱 전압 수식 (Threshold Voltage Formulation)",
+            "typesetMath": "V_{\\text{th}} = V_{\\text{FB}} + 2\\phi_F + \\frac{\\sqrt{2\\varepsilon_s q N_a \\left(2\\phi_F - V_{\\text{BS}}\\right)}}{C_{\\text{ox}}} = \\Phi_{ms} - \\frac{Q_{\\text{ox}}}{C_{\\text{ox}}} + 2\\phi_F + \\gamma\\sqrt{2\\phi_F - V_{\\text{BS}}}",
+            "variablesDefinition": "$V_{\\text{FB}}$: 평탄 밴드 전압, $\\phi_F = \\frac{k_B T}{q}\\ln\\frac{N_a}{n_i}$: 페르미 준위 전위, $\\varepsilon_s$: 실리콘 유전율, $N_a$: 기판 도핑 농도, $C_{\\text{ox}} = \\frac{\\varepsilon_{\\text{ox}}}{t_{\\text{ox}}}$: 게이트 산화막 단위면적당 커패시턴스, $V_{\\text{BS}}$: 바디-소스 역바이어스 전압, $\\gamma$: 바디 효과 계수.",
+            "physicalInterpretation": "반도체 표면에 전도 채널이 형성되는 강반전(Strong Inversion: 표면 전위 $\\psi_s = 2\\phi_F$) 상태를 달성하기 위해 게이트 단자에 인가해야 하는 최소 전압을 일함수 차이, 산화막 고정 전하, 기판 공핍 영역 전하의 정전기적 합으로 규정합니다.",
+            "engineeringSignificance": "고성능 연산용 저문턱 전압(LVT), 저전력 대기용 고문턱 전압(HVT) 등 반도체 칩의 멀티 $V_{th}$ 라이브러리 설계 및 바디 효과(Body Bias)를 이용한 전력-속도 튜닝의 기초입니다."
+          },
+          {
+            "name": "서브스레숄드 스윙 및 DIBL 단채널 효과 공식 (Subthreshold Swing & DIBL)",
+            "typesetMath": "S = \\left(\\frac{d \\log_{10} I_D}{d V_{\\text{GS}}}\\right)^{-1} = \\ln 10 \\cdot \\frac{k_B T}{q} \\left(1 + \\frac{C_{\\text{dep}}}{C_{\\text{ox}}}\\right) \\ge 60\\text{ mV/dec}, \\quad \\text{DIBL} = -\\frac{\\Delta V_{\\text{th}}}{\\Delta V_{\\text{DS}}}",
+            "variablesDefinition": "$S$: 서브스레숄드 스윙(Subthreshold Swing, mV/decade), $C_{\\text{dep}}$: 채널 하부 공핍층 커패시턴스, DIBL: 드레인 유도 장벽 감소(Drain-Induced Barrier Lowering) 계수.",
+            "physicalInterpretation": "트랜지스터가 오프 상태에서 온 상태로 전환될 때 드레인 전류를 10배 증가시키는 데 필요한 게이트 전압의 크기를 나타내며, 실온에서 열방출 통계 한계로 인해 $60\\text{mV/dec}$ 이하로 낮출 수 없음을 증명합니다. DIBL은 드레인 고전압이 채널 전위 장벽을 강제로 낮춰 문턱전압을 감소시키는 단채널 결함을 나타냅니다.",
+            "engineeringSignificance": "미세화에 따른 대기 전력 누설의 근본 원인을 설명하며, $C_{\\text{dep}} \\approx 0$으로 만들어 이상적인 $S = 60\\text{mV/dec}$에 도달하기 위해 게이트가 채널 4면을 완전히 감싸는 GAA(Gate-All-Around) 나노시트 구조로 혁신해야 하는 물리적 당위성을 제공합니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "GAA (Gate-All-Around) MBCFET (Multi-Bridge-Channel FET): 채널을 수평 나노시트(Nanosheet) 형태로 복수 적층하고 게이트가 채널의 상하좌우 4면을 완전히 포위하여 단채널 효과를 원천 억제하고 구동 전류를 극대화 (삼성전자 3nm/2nm 및 TSMC N2 공정).",
+          "CFET (Complementary FET): n형 FET와 p형 FET를 평면 상에 나란히 배치하지 않고 수직으로 3차원 적층하여 표준 셀(Standard Cell) 면적을 50% 절감하는 1nm 세대 차세대 트랜지스터 구조.",
+          "후면 전력 공급망 (BSPDN, Backside Power Delivery Network): 웨이퍼 전면에는 신호 배선만 배치하고, 웨이퍼 후면을 박막화하여 TSV(Through-Silicon Via)를 통해 나노 소자에 직접 전원을 공급함으로써 IR Drop을 대폭 줄이고 동작 주파수를 향상 (Intel PowerVia, TSMC A16).",
+          "고유전율 메탈 게이트 (HKMG) 및 초박막 ALD $HfO_2$: 원자층 증착(ALD)으로 서브 나노미터 두께의 하프늄 산화막을 형성하여 양자 터널링 게이트 누설전류를 차단하고 등가 산화막 두께(EOT)를 0.5nm 이하로 축소.",
+          "3D V-NAND 플래시 300단+ 수직 적층: 워드라인 셀을 수직 원통형 채널(Macaroni Channel)로 관통하여 300단 이상 적층하고, ONO(Oxide-Nitride-Oxide) 전하 트랩(CTF) 층에 전자를 저장하는 초고밀도 테라비트 플래시 메모리."
+        ],
+        "industrialApplications": [
+          "삼성전자 파운드리 사업부(화성/평택 EUV 전용 라인) 및 TSMC(Fab 18/20)의 3nm/2nm 모바일 AP 및 HPC AI 가속기 칩 파운드리 양산.",
+          "SK하이닉스 이천/청주 및 삼성전자 평택 사업장의 1b/1c(10nm 초반) 3D 구조 D1b/D1c EUV DRAM 및 300단 이상 QLC V-NAND 플래시 양산.",
+          "소니 및 삼성전자 시스템LSI의 2억 화소(200MP) 초미세 픽셀 아이소셀(ISOCELL) 후면조사형(BSI) CMOS 이미지 센서(CIS).",
+          "Wolfspeed 및 STMicroelectronics의 8인치 SiC 웨이퍼 기반 고전압 전력 트랜지스터 제조 공정."
+        ],
+        "keyEngineeringChallenges": [
+          "게이트 길이 10nm 미만 영역에서의 소스-드레인 간 직접 양자 터널링 누설전류 억제 한계.",
+          "초박막 채널 표면 거칠기 산란(Surface Roughness Scattering) 및 포논 산란에 의한 전자 이동도의 급격한 저하.",
+          "도펀트 원자의 이산적 통계 요동(Random Dopant Fluctuation, RDF)으로 인해 인접 트랜지스터 간 문턱전압($V_{th}$)의 심각한 불일치(Mismatch) 발생."
+        ]
+      },
+      {
+        "id": "ece-sub-vlSI-circuits",
+        "titleKo": "집적회로 및 초고밀도 집적설계 (VLSI & Circuit Design)",
+        "titleEn": "VLSI Design & Integrated Circuits",
+        "scopeAndDefinition": "초고밀도 집적회로(VLSI) 및 집적회로 설계는 수억~수백억 개의 트랜지스터를 단일 실리콘 칩에 집적하여 복잡한 디지털 연산기, 고성능 프로세서 코어, 아날로그 신호 증폭기, 정밀 전압 기준원, 데이터 변환기(ADC/DAC) 및 초고속 인터페이스(SerDes)를 구현하는 전자공학의 중추 학문입니다. 시스템 설계 수준부터 논리 게이트 합성, 레이아웃, 기생 추출, 전력/신호 무결성 분석에 이르는 전 과정을 컴퓨터 지원 설계(EDA) 툴체인과 융합하여 수행합니다.",
+        "theoreticalFoundations": "디지털 영역에서는 CMOS 반전 회로의 전달 특성, 잡음 여유(Noise Margin), 논리 노력(Logical Effort) 이론에 기반한 지연 시간 최적화, 정적 타이밍 분석(STA) 수립이 이론적 토대입니다. 아날로그/믹스드 시그널 영역에서는 소신호(Small-Signal) 등가 모델($g_m, r_o, C_{gs}, C_{gd}$), 부궤환(Negative Feedback) 루프의 안정도(보드 플롯, 위상 여유, 극점 분리 Pole-Splitting), 열잡음 및 플리커($1/f$) 잡음 이론, 밴드갭 기준전압(Bandgap Reference) 온도 보상 이론이 지배합니다.",
+        "governingEquations": [
+          {
+            "name": "CMOS 로직 동적 및 정적 총 소비 전력 수식 (Total Power Dissipation)",
+            "typesetMath": "P_{\\text{total}} = \\alpha C_L V_{\\text{dd}}^2 f_{\\text{clk}} + V_{\\text{dd}} I_{\\text{sc}} + V_{\\text{dd}} I_{\\text{leak}} = \\alpha C_L V_{\\text{dd}}^2 f_{\\text{clk}} + V_{\\text{dd}} I_{\\text{sub}} + V_{\\text{dd}} I_{\\text{gate}}",
+            "variablesDefinition": "$\\alpha$: 스위칭 활동도 계수(Activity Factor), $C_L$: 출력 부하 커패시턴스, $V_{\\text{dd}}$: 전원 전압, $f_{\\text{clk}}$: 클록 주파수, $I_{\\text{sc}}$: 숏서킷 관통 전류, $I_{\\text{sub}}$: 서브스레숄드 누설전류, $I_{\\text{gate}}$: 게이트 산화막 양자 터널링 누설전류.",
+            "physicalInterpretation": "부하 커패시터 충방전에 의해 전원공급장치로부터 공급된 에너지의 절반이 NMOS/PMOS 채널에서 열로 소산되는 동적 스위칭 손실과, 트랜지스터가 꺼져 있을 때도 양자 터널링 및 열방출로 흘러나가는 정적 누설 전력의 합을 나타냅니다.",
+            "engineeringSignificance": "전력 밀도 폭증(Power Wall)을 억제하기 위해 전원 전압($V_{\\text{dd}}$)을 낮추는 전압 스케일링(DVFS), 미사용 블록의 전원을 완전히 차단하는 파워 게이팅(Power Gating) 및 클록 게이팅(Clock Gating) 기법의 수학적 기준식입니다."
+          },
+          {
+            "name": "설덜랜드의 논리 노력(Logical Effort) 경로 지연 모델 (Path Delay by Logical Effort)",
+            "typesetMath": "D = \\sum (g_i h_i + p_i) = \\sum \\left(g_i \\frac{C_{\\text{out},i}}{C_{\\text{in},i}} + p_i\\right), \\quad \\text{최적 단계 노력: } \\hat{f} = F^{1/N} = (G B H)^{1/N}",
+            "variablesDefinition": "$D$: 총 정규화 전파 지연 시간, $g_i$: 게이트 논리 노력(인버터 대비 입력 커패시턴스 비율), $h_i$: 전기적 노력(Electrical Effort, 팬아웃), $p_i$: 기생 지연(Parasitic Delay), $F$: 총 경로 노력, $N$: 논리 단계 수.",
+            "physicalInterpretation": "복잡한 다단 논리 게이트 네트워크(NAND, NOR, XOR 등)의 지연 시간을 각 게이트의 토폴로지 고유 특성(논리 노력)과 외부 부하 구동 능력(전기적 노력)의 곱으로 단순 분해하여 최적의 단수와 트랜지스터 사이징을 결정합니다.",
+            "engineeringSignificance": "수천만 개의 디지털 논리 경로 중에서 임계 경로(Critical Path)의 전파 지연을 수치 해석적 최적화 알고리즘으로 계산하여 디지털 합성 툴(Design Compiler)의 자동 사이징 엔진에 내장됩니다."
+          },
+          {
+            "name": "쿠오-브로코 밴드갭 기준전압 발생기 수식 (Kuijk-Brokaw Bandgap Reference)",
+            "typesetMath": "V_{\\text{ref}} = V_{\\text{BE3}} + \\left(\\frac{R_2}{R_1}\\right) \\cdot \\Delta V_{\\text{BE}} = V_{\\text{BE3}} + M \\cdot \\left(\\frac{k_B T}{q} \\ln N\\right) \\approx 1.25\\text{ V}, \\quad \\left. \\frac{\\partial V_{\\text{ref}}}{\\partial T} \\right|_{T=T_0} = 0",
+            "variablesDefinition": "$V_{\\text{BE}}$: BJT 베이스-에미터 전압(CTAT, 음의 온도계수 $\\approx -2\\text{mV/}^\\circ\\text{C}$), $\\Delta V_{\\text{BE}} = V_t \\ln N$: 전류 밀도가 $N$배 다른 두 BJT의 전압차(PTAT, 양의 온도계수 $+0.086\\text{mV/}^\\circ\\text{C}$), $M$: 저항비 증폭 계수.",
+            "physicalInterpretation": "온도가 올라갈수록 감소하는 순방향 다이오드 전압(CTAT)과 온도가 올라갈수록 비례하여 증가하는 열전압차(PTAT)를 정확한 저항비 가중치로 선형 결합하여, 실리콘 밴드갭 전압 수준에서 1차 온도 미분계수가 0이 되는 절대 기준 전압을 생성합니다.",
+            "engineeringSignificance": "온도($-40^\\circ\\text{C} \\sim +125^\\circ\\text{C}$) 및 전원 전압 요동에 무관하게 마이크로볼트 단위로 정밀한 기준 전압을 제공하여 ADC, DAC, LDO 및 DRAM 센스 앰프의 동작 기준을 수립합니다."
+          },
+          {
+            "name": "나이퀴스트 ADC 이상적 신호 대 잡음 왜곡비 (Ideal ADC SNDR & ENOB)",
+            "typesetMath": "\\text{SNR}_{\\text{ideal}} = 6.02 \\, N + 1.76 \\, [\\text{dB}], \\quad \\text{ENOB} = \\frac{\\text{SNDR}_{\\text{actual}} - 1.76}{6.02}",
+            "variablesDefinition": "$N$: 이상적인 아날로그-디지털 변환기(ADC)의 분해능 비트 수, $\\text{SNR}_{\\text{ideal}}$: 양자화 잡음(Quantization Noise)만 존재할 때의 신호 대 잡음비, ENOB: 유효 비트 수(Effective Number of Bits).",
+            "physicalInterpretation": "연속 신호를 $\\Delta = V_{\\text{ref}}/2^N$ 스텝 크기로 양자화할 때 발생하는 양자화 오차의 분산($\\sigma_e^2 = \\Delta^2/12$)과 정현파 신호의 평균 전력 간의 수학적 비율을 데시벨(dB)로 나타냅니다.",
+            "engineeringSignificance": "실제 회로의 열잡음($k_B T/C$), 클록 지터, 비선형 왜곡(INL/DNL)으로 인해 저하된 실제 SNDR로부터 ADC의 실제 유효 분해능(ENOB)을 객관적으로 평가하는 표준 척도입니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "초고속 112Gbps / 224Gbps PAM4 SerDes IP: 차세대 AI 데이터센터 스위치 및 PCIe Gen 6/7을 위한 펄스 진폭 변조(PAM4) 기반 아날로그 전치 증폭기(CTLE), 판정 궤환 등화기(DFE) 및 클록 데이터 복원(CDR) 회로.",
+          "초저전력 시간 인터리브 SAR ADC (Time-Interleaved Successive Approximation ADC): 수 GHz 샘플링 속도와 8~12비트 분해능을 수십 mW 이하의 소비전력으로 달성하여 5G 밀리미터파 수신단에 직접 내장.",
+          "올-디지털 위상 동기 루프 (ADPLL, All-Digital PLL): 아날로그 루프 필터와 전압 제어 발진기(VCO)를 디지털 시간-디지털 변환기(TDC) 및 디지털 제어 발진기(DCO)로 완전 대체하여 첨단 나노 공정 면적 절감.",
+          "하위 임계값(Sub-threshold) 및 근접 임계값(Near-threshold) 컴퓨팅 회로: 전원 전압을 문턱 전압 근방($0.3\\text{V} \\sim 0.5\\text{V}$)으로 극단적으로 낮추어 에너지 효율을 10배 이상 향상시키는 초저전력 의료용 임플란트 IC.",
+          "온칩 실리콘 포토닉스(Silicon Photonics) 광 인터커넥트: 전자 트랜지스터 칩 상에 마이크로 링 공진기(MRR) 및 광도파로를 모놀리식 집적하여 구리 배선의 기생 RC 지연 한계를 돌파."
+        ],
+        "industrialApplications": [
+          "엔비디아(Hopper H100, Blackwell B200) 및 AMD(MI300X)의 초대형 AI GPU 코어 로직 및 다이간(Die-to-Die) 초고속 인터페이스 D2D PHY.",
+          "애플 M-시리즈(M3/M4 Max) 실리콘 칩셋의 통합 메모리 아키텍처(UMA) 컨트롤러 및 저전력 고효율 CPU/GPU 코어.",
+          "퀄컴 스냅드래곤 8 및 삼성 엑시노스 2400 모바일 AP의 아날로그 RFIC 및 전력 관리 반도체(PMIC).",
+          "브로드컴(Tomahawk 5 51.2Tbps) 네트워크 스위치 칩 내 초고밀도 112G PAM4 SerDes 트랜시버 블록."
+        ],
+        "keyEngineeringChallenges": [
+          "3nm 이하 공정에서 전원 전압($V_{\\text{dd}} \\approx 0.75\\text{V}$) 하강으로 인한 아날로그 트랜지스터의 포화 영역 전압 여유(Voltage Headroom) 극소화 및 동적 범위(Dynamic Range) 압축.",
+          "초미세 금속 배선의 비저항 급증(구리 표면 산란 및 결정립계 산란)에 따른 기생 저항-커패시턴스($RC$) 배선 지연의 폭발적 증가.",
+          "PVT(공정, 전압, 온도) 변동성 심화 및 몬테카를로 6-시그마($6\\sigma$) 신뢰성을 보장해야 하는 초고밀도 SRAM 비트셀 안정성 확보."
+        ]
+      },
+      {
+        "id": "ece-sub-comp-arch-embedded",
+        "titleKo": "컴퓨터 구조 및 임베디드 컴퓨팅 시스템",
+        "titleEn": "Computer Architecture & Embedded Computing Systems",
+        "scopeAndDefinition": "컴퓨터 구조 및 임베디드 컴퓨팅 시스템은 명령어 집합 구조(ISA: x86, ARM, RISC-V)를 물리적 하드웨어 파이프라인, 캐시 메모리 계층, 메모리 컨트롤러, 인터커넥트 버스로 구체화하여 소프트웨어 프로그램을 최단 시간에 최소 에너지로 실행하는 하드웨어-소프트웨어 경계 학문입니다. 범용 마이크로프로세서부터 전장/로봇/사물인터넷을 구동하는 실시간 임베디드 마이크로컨트롤러(MCU), 그리고 인공지능 딥러닝 텐서 연산을 전담하는 도메인 특화 가속기(NPU/TPU)의 아키텍처 설계를 총괄합니다.",
+        "theoreticalFoundations": "정량적 컴퓨터 설계 원리(CPU 성능 공식, 암달의 법칙, 구스타프슨의 법칙), 명령어 수준 병렬성(ILP)을 추출하는 파이프라인 분기 예측, 레지스터 리네이밍, 비순차적 실행(Out-of-Order Execution, Tomasulo 알고리즘), 메모리 참조 국소성(시간적·공간적 국소성)에 기반한 다단계 캐시 계층 구조와 캐시 일관성 프로토콜(MESI/MOESI), 그리고 메모리 가상화(TLB 및 페이징)가 근간을 형성합니다.",
+        "governingEquations": [
+          {
+            "name": "정량적 프로세서 CPU 실행 시간 기본 방정식 (Iron Law of Processor Performance)",
+            "typesetMath": "\\text{CPU Time} = \\text{Instruction Count} \\times \\text{CPI} \\times T_{\\text{clk}} = \\frac{\\text{Instruction Count} \\times \\text{CPI}}{f_{\\text{clk}}}",
+            "variablesDefinition": "Instruction Count (IC): 프로그램 실행을 위해 수행된 총 명령어 수(컴파일러 및 ISA 의존), CPI: 명령어당 평균 클록 사이클 수(Clock Cycles Per Instruction, 마이크로아키텍처 의존), $T_{\\text{clk}} = 1/f_{\\text{clk}}$: 클록 주기(반도체 공정 및 회로 지연 의존).",
+            "physicalInterpretation": "컴퓨터 시스템의 실제 프로그램 실행 속도를 결정하는 3대 독립적 공학 매개변수의 곱을 나타내며, 어느 한 요소를 개선하기 위해 다른 요소가 희생되는 트레이드오프 관계를 규명합니다.",
+            "engineeringSignificance": "RISC 아키텍처가 단순 명령어를 채택하여 IC를 늘리는 대신 CPI를 1에 가깝게 낮추고 클록 주파수를 높여 CISC 대비 고성능을 달성했던 근본적인 설계 철학적 지표입니다."
+          },
+          {
+            "name": "암달의 법칙 및 병렬 가속 한계식 (Amdahl's Law for Speedup)",
+            "typesetMath": "S_{\\text{latency}}(s) = \\frac{1}{(1 - p) + \\frac{p}{s}}, \\quad \\lim_{s \\to \\infty} S_{\\text{latency}}(s) = \\frac{1}{1 - p}",
+            "variablesDefinition": "$S_{\\text{latency}}$: 전체 프로그램의 실행 속도 향상비(Speedup), $p$: 병렬화가 가능한 부분의 실행 시간 비율($0 \\le p \\le 1$), $s$: 병렬 처리 코어 수 또는 전용 가속기에 의한 가속비.",
+            "physicalInterpretation": "시스템의 특정 컴포넌트를 아무리 무한대의 코어로 병렬화하거나 전용 가속기로 가속하더라도, 전체 성능 향상은 병렬화할 수 없는 본질적인 순차 실행 부분($1-p$)에 의해 엄격히 제한됨을 증명합니다.",
+            "engineeringSignificance": "현대 이종 컴퓨팅(Heterogeneous Computing: CPU + GPU + NPU)에서 단일 스레드 성능이 뛰어난 고성능 빅 코어(Big Core)와 대규모 병렬 가속 코어를 효율적으로 안배하는 아키텍처 분할의 근거가 됩니다."
+          },
+          {
+            "name": "평균 메모리 접근 시간 수식 (Average Memory Access Time, AMAT)",
+            "typesetMath": "\\text{AMAT} = T_{\\text{hit}} + \\text{MR}_{L1} \\times \\left( T_{\\text{hit},L2} + \\text{MR}_{L2} \\times \\left( T_{\\text{hit},L3} + \\text{MR}_{L3} \\times T_{\\text{DRAM}} \\right) \\right)",
+            "variablesDefinition": "$T_{\\text{hit}}$: 해당 캐시 레벨의 적중 접근 시간(Hit Latency), $\\text{MR}$: 캐시 실패율(Miss Rate), $T_{\\text{DRAM}}$: 메인 메모리 DRAM 접근 지연 시간.",
+            "physicalInterpretation": "프로세서의 초고속 연산 장치가 필요로 하는 데이터를 메모리 계층(L1 $\\to$ L2 $\\to$ L3 $\\to$ DRAM)을 따라 탐색할 때 경험하는 통계적 기대 지연 시간을 나타냅니다.",
+            "engineeringSignificance": "연산 속도에 비해 메모리 대역폭/지연 시간이 지나치게 느려 발생하는 메모리 벽(Memory Wall) 문제를 해결하기 위해 하드웨어 프리페처(Prefetcher), 비차단 캐시(Non-blocking Cache), HBM 고대역폭 메모리 배치를 정량적으로 최적화합니다."
+          },
+          {
+            "name": "멀티코어 캐시 일관성 디렉토리/스누핑 오버헤드 공식 (Cache Coherence Invalidation Latency)",
+            "typesetMath": "T_{\\text{inv}} = T_{\\text{net}} + \\sum_{i \\in \\text{Sharers}} T_{\\text{ack},i}, \\quad \\text{Bandwidth}_{\\text{snoop}} \\propto N_{\\text{cores}}^2",
+            "variablesDefinition": "$T_{\\text{inv}}$: 캐시 라인 쓰기 전 무효화(Invalidation) 완료 지연, $T_{\\text{net}}$: NoC 네트워크 전송 시간, Sharers: 해당 메모리 주소를 공유 중인 코어 집합, $N_{\\text{cores}}$: 시스템 내 활성 코어 수.",
+            "physicalInterpretation": "공유 메모리 멀티프로세서에서 한 코어가 캐시 라인을 수정할 때, 모든 다른 코어의 캐시 복사본을 무효화(Invalidate)하고 승인(ACK)을 받아야 하는 MESI/MOESI 프로토콜의 통신 병목을 나타냅니다.",
+            "engineeringSignificance": "코어 수가 수십 개 이상으로 증가할 때 브로드캐스트 기반 버스 스누핑(Snooping)이 한계에 부딪혀 분산 디렉토리 기반(Directory-Based) 프로토콜 및 NoC(Network-on-Chip) 라우터 메시 토폴로지로 전환해야 하는 수학적 이유를 제시합니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "도메인 특화 NPU 텐서 가속기 (Systolic Array Architecture): 구글 TPU 및 테슬라 FSD 칩과 같이 2차원 수축기 배열(Systolic Array)을 통해 가중치 행렬과 활성화 데이터를 레지스터 간에 직접 전파하여 DRAM 접근을 극소화.",
+          "CXL (Compute Express Link) 3.0/3.1 프로토콜: PCIe 6.0 물리 계층 위에서 CPU, GPU, 메모리 가속기간 캐시 일관성(Cache Coherency) 및 메모리 풀링(Memory Pooling)을 지원하는 차세대 인터커넥트 표준.",
+          "고급 비순차 실행(Out-of-Order) 슈퍼스칼라 코어: TAGE 분기 예측기, 수백 개의 명령어를 동시에 재정렬하는 대용량 ROB(Reorder Buffer), 물리 레지스터 파일(PRF) 기반의 마이크로아키텍처.",
+          "Chiplet 기반 NoC (Network-on-Chip) 2.5D 인터커넥트: UCIe(Universal Chiplet Interconnect Express) 표준을 통해 서로 다른 파운드리/공정에서 생산된 연산 다이와 I/O 다이를 초저지연 패킷 스위칭 네트워크로 결합.",
+          "RISC-V 벡터 확장(RVV) 및 오픈 하드웨어 에코시스템: 오픈소스 ISA를 기반으로 사용자 정의 명령어(Custom Extension)를 추가하여 온디바이스 AI 및 보안 프로세서를 자율 설계."
+        ],
+        "industrialApplications": [
+          "엔비디아 Grace Hopper / Blackwell 슈퍼칩의 NVLink 기반 CPU-GPU 결합 아키텍처.",
+          "애플 Silicon A17/M4의 고성능 P-코어 및 고효율 E-코어 비대칭 멀티프로세싱(big.LITTLE) 아키텍처.",
+          "테슬라 FSD(Full Self-Driving) 듀얼 NPU 자율주행 락스텝(Lockstep) 안전 임베디드 컴퓨터.",
+          "한국 팹리스 스타트업(리벨리온 ATOM/REBEL, 퓨리오사AI WARBOY/RENEGADE)의 데이터센터용 고성능 LLM 서빙 NPU 가속기."
+        ],
+        "keyEngineeringChallenges": [
+          "메모리 벽(Memory Wall) 현상 심화: 프로세서 연산 플롭스(FLOPS) 증가 속도 대비 외부 메모리 대역폭(Byte/FLOP)의 상대적 결핍.",
+          "다크 실리콘(Dark Silicon) 현상: 칩 내 트랜지스터 밀도는 증가하나 냉각 한계(TDP 300~700W)로 인해 칩 전체 면적의 상당 부분을 동시에 켜지 못하는 열적 제약.",
+          "복잡성 폭증에 따른 하드웨어 보안 취약점: Meltdown, Spectre, Rowhammer 등 마이크로아키텍처 투기적 실행(Speculative Execution) 및 DRAM 물리적 누화 취약점 방어."
+        ]
+      },
+      {
+        "id": "ece-sub-comm-dsp",
+        "titleKo": "무선 통신 및 디지털 신호 처리 (Communications & DSP)",
+        "titleEn": "Communications & Digital Signal Processing",
+        "scopeAndDefinition": "무선 통신 및 디지털 신호 처리는 음성, 영상, 데이터 등 모든 물리적 아날로그 정보를 비트(Bit) 디지털 데이터로 표본화·양자화하고, 수학적 필터링, 압축 부호화, 오류 정정 부호화, 변복조(Modulation)를 거쳐 잡음과 다중 경로 페이딩이 존재하는 유무선 채널을 통해 섀넌 한계에 근접하는 초고속 전송을 달성하는 전자공학의 핵심 정보 이론 학문입니다. 5G/6G 이동통신, Wi-Fi 7, 위성 통신(스타링크) 및 딥러닝 음성/영상 처리의 이론적 근간입니다.",
+        "theoreticalFoundations": "섀넌(Shannon)의 정보 엔트로피 및 채널 용량 정리, 나이퀴스트 표본화 정리(Nyquist Sampling Theorem), 이산 시간 푸리에 변환(DTFT/DFT) 및 Z-변환, 2차원/다차원 선형 시불변(LTI) 시스템 해석, 랜덤 신호의 위너-킨친 정리(Wiener-Khinchin Theorem: 전력스펙트럼밀도와 자기상관함수의 푸리에 변환 쌍), 다중 안테나 MIMO 채널의 특이값 분해(SVD), 그리고 현대 오류 정정 부호인 LDPC(Low-Density Parity-Check) 및 극부호(Polar Codes)의 팩터 그래프 이론이 수학적 토대를 구성합니다.",
+        "governingEquations": [
+          {
+            "name": "섀넌-하틀리 채널 용량 정리 (Shannon-Hartley Channel Capacity)",
+            "typesetMath": "C = B \\log_2 \\left(1 + \\frac{S}{N}\\right) = B \\log_2 \\left(1 + \\frac{P}{N_0 B}\\right) \\quad [\\text{bits/second}]",
+            "variablesDefinition": "$C$: 가산성 백색 가우시안 잡음(AWGN) 채널의 최대 전송 용량(bps), $B$: 채널 물리적 대역폭(Hz), $S$: 수신 신호 평균 전력, $N = N_0 B$: 대역 내 총 잡음 전력, $N_0$: 양면 잡음 전력 스펙트럼 밀도.",
+            "physicalInterpretation": "주어진 대역폭과 신호 대 잡음비(SNR) 조건 하에서, 오류 정정 부호화를 통해 전송 오류율을 임의로 0에 수렴시키면서 달성할 수 있는 물리적 정보 전송의 절대적 상한선을 규정합니다.",
+            "engineeringSignificance": "대역폭 $B$를 넓히는 밀리미터파(mmWave) 도입 및 SNR을 높이는 빔포밍(Beamforming) 기술 등 무선 이동통신 세대 진화(3G $\\to$ 4G $\\to$ 5G $\\to$ 6G)의 모든 아키텍처 결정을 지배하는 최고 법률입니다."
+          },
+          {
+            "name": "OFDM 직교 부반송파 주파수 합성 방정식 (OFDM Multicarrier Modulation)",
+            "typesetMath": "s(t) = \\sum_{k=0}^{N-1} X_k \\, e^{j 2\\pi f_k t} = \\sum_{k=0}^{N-1} X_k \\, e^{j 2\\pi (f_0 + k \\Delta f) t}, \\quad \\Delta f = \\frac{1}{T_{\\text{sym}}} = \\frac{f_s}{N}",
+            "variablesDefinition": "$s(t)$: 시간 영역 송신 기저대역 복소 신호, $X_k$: $k$번째 부반송파에 매핑된 복소 QAM 심볼, $\\Delta f$: 부반송파 간격, $T_{\\text{sym}}$: 유효 심볼 구간 길이, $N$: IFFT 크기.",
+            "physicalInterpretation": "광대역 주파수 선택성 페이딩(Frequency-Selective Fading) 채널을 상호 직교성($\\int e^{j2\\pi k \\Delta f t} e^{-j2\\pi m \\Delta f t} dt = 0$)을 만족하는 무수히 많은 협대역 평탄 페이딩(Flat Fading) 채널들로 분할하여, IFFT 역고속 푸리에 변환만으로 간단히 일괄 합성합니다.",
+            "engineeringSignificance": "다중 경로 지연 확산(Delay Spread)에 의한 심볼 간 간섭(ISI)을 순환 전치(Cyclic Prefix, CP) 삽입으로 완벽히 제거함으로써 LTE, 5G NR 및 Wi-Fi의 기본 물리 계층 다중 변조 표준으로 자리잡았습니다."
+          },
+          {
+            "name": "MIMO 공간 다중화 채널 모델 및 특이값 분해 (MIMO SVD Channel Capacity)",
+            "typesetMath": "\\mathbf{y} = \\mathbf{H}\\mathbf{x} + \\mathbf{n}, \\quad \\mathbf{H} = \\mathbf{U} \\boldsymbol{\\Sigma} \\mathbf{V}^H, \\quad C_{\\text{MIMO}} = \\sum_{i=1}^{r} \\log_2 \\left(1 + \\frac{P_i \\sigma_i^2}{N_0}\\right), \\quad r = \\operatorname{rank}(\\mathbf{H})",
+            "variablesDefinition": "$\\mathbf{y} \\in \\mathbb{C}^{N_r}$: 수신 안테나 신호 벡터, $\\mathbf{x} \\in \\mathbb{C}^{N_t}$: 송신 안테나 신호 벡터, $\\mathbf{H}$: 채널 전송 행렬, $\\mathbf{U}, \\mathbf{V}$: 송수신 유니터리 행렬, $\\boldsymbol{\\Sigma}$: 특이값 대각 행렬, $\\sigma_i$: 고유 채널 이득, $P_i$: 워터필링(Water-Filling) 할당 전력.",
+            "physicalInterpretation": "송수신 다중 안테나 간의 복잡한 공간적 간섭 채널을 특이값 분해(SVD)를 통해 $r$개의 상호 간섭이 전혀 없는 독립적인 공간 가상 파이프(Eigenmodes)로 정규 직교 분해합니다.",
+            "engineeringSignificance": "동일한 주파수 대역폭과 송신 전력 하에서도 안테나 개수에 비례하여 전송 속도를 선형적으로 배가시키는 공간 다중화(Spatial Multiplexing) 및 Massive MIMO 빔포밍의 핵심 수리적 기반입니다."
+          },
+          {
+            "name": "쿨리-튜키 기저-2 고속 푸리에 변환 (Cooley-Tukey Radix-2 FFT Decomposition)",
+            "typesetMath": "X[k] = \\sum_{n=0}^{N-1} x[n] W_N^{kn} = E[k] + W_N^k O[k], \\quad W_N = e^{-j\\frac{2\\pi}{N}}, \\quad O(N^2) \\longrightarrow O(N \\log_2 N)",
+            "variablesDefinition": "$X[k]$: 이산 푸리에 변환(DFT) 출력 계수, $E[k]$: 짝수 인덱스 표본들의 $N/2$-point DFT, $O[k]$: 홀수 인덱스 표본들의 $N/2$-point DFT, $W_N^k$: 회전 인자(Twiddle Factor).",
+            "physicalInterpretation": "길이 $N$의 DFT 연산을 짝수와 홀수 표본으로 분할 정복(Divide-and-Conquer)하고, 회전 인자의 대칭성($W_N^{k + N/2} = -W_N^k$)과 주기성을 활용하여 중복 복소수 곱셈을 획기적으로 제거합니다.",
+            "engineeringSignificance": "$N=4096$ 기준 연산량을 약 1,600만 번에서 49,000번으로 300배 이상 단축시켜, 현대 모든 디지털 레이더, 5G 기저대역 모뎀, 오디오 코덱, 스펙트럼 분석기의 실시간 구현을 가능케 한 세기의 알고리즘입니다."
+          }
+        ],
+        "stateOfTheArtTechnologies": [
+          "Massive MIMO 및 능동형 안테나 시스템 (AAS, Active Antenna Systems): 기지국에 64T64R 또는 128T128R 이상의 대규모 트랜시버 안테나 배열을 배치하여 디지털 빔포밍으로 특정 사용자에게 전파 에너지를 정밀 집중.",
+          "밀리미터파(mmWave, 28GHz/39GHz) 및 서브 테라헤르츠(Sub-THz, 140GHz+) 무선 기술: 수십 GHz의 초광대역 주파수 채널을 활용하여 초당 수십 기가비트(Gbps) 데이터 전송 달성.",
+          "LDPC (Low-Density Parity-Check) 및 극부호 (Polar Codes): 5G eMBB 데이터 채널 및 제어 채널의 표준 오류 정정 부호로 채택되어 섀넌 한계로부터 불과 0.01dB 이내로 근접하는 강력한 채널 코딩.",
+          "AI/딥러닝 기반 신경망 통신 수신기 (Neural Network Receiver): 기존의 채널 추정, 등화기, 복조기 블록을 딥러닝 신경망 모델로 일체화하여 비선형 왜곡 채널에서의 비트 오류율(BER) 획기적 개선.",
+          "소프트웨어 정의 무선 (SDR, Software-Defined Radio): RF 프론트엔드를 광대역 고속 ADC/DAC와 FPGA로 직결하여 복조, 필터링, 프로토콜 처리를 소프트웨어 펌웨어 변경만으로 즉각 전환."
+        ],
+        "industrialApplications": [
+          "삼성전자 네트워크사업부 및 에릭슨, 노키아의 5G NR 매시브 마이모 상용 기지국 및 vRAN(가상화 기지국).",
+          "퀄컴(Snapdragon X75/X80) 및 삼성전자 시스템LSI(Exynos Modem 5400)의 모바일 5G/위성통신 통합 베이스밴드 모뎀 SoC.",
+          "스페이스X 스타링크(Starlink) 위성 콘스텔레이션의 위성 간 레이저 광통신(ISL) 및 지상 단말기 위상 배열 전자식 빔 스티어링 안테나.",
+          "자율주행용 77GHz 밀리미터파 고분해능 레이더(Radar) DSP 시스템(TI, 인피니온, NXP)."
+        ],
+        "keyEngineeringChallenges": [
+          "밀리미터파 및 테라헤르츠 대역의 극심한 대기 산소/수증기 흡수 감쇄와 높은 경로 손실(Free-Space Path Loss) 극복.",
+          "수천 개의 안테나 소자 도입 시 초고속 광대역 ADC/DAC의 엄청난 전력 소모와 방열 문제를 해결하기 위한 하이브리드 빔포밍 최적화.",
+          "다중 경로 페이딩 및 고속 이동 환경(KTX 300km/h 주행 시)에서의 급격한 도플러 확산(Doppler Spread)으로 인한 부반송파 간 직교성 파괴(ICI) 억제."
+        ]
+      }
+    ]
+  },
+  "vlsiRoadmap": [
+    {
+      "stageId": "stage-1-frontend-rtl",
+      "order": 1,
+      "titleKo": "프론트엔드 디지털/RTL 설계 및 기능 검증",
+      "titleEn": "Frontend RTL Design & Functional Verification",
+      "roleDefinition": "시스템 아키텍트가 정의한 칩 아키텍처 및 마이크로아키텍처 명세서(Spec)를 바탕으로, 클록 사이클 단위로 정확한(Cycle-Accurate) 하드웨어 로직을 SystemVerilog/Verilog 코드로 기술하고, 시뮬레이션 및 정형 기법(Formal Verification)을 통해 기능적 무결성을 100% 검증한 후, 논리 합성(Logic Synthesis)과 DFT(Design for Test)를 거쳐 게이트 레벨 넷리스트(Gate-level Netlist)를 생성하는 직무입니다.",
+      "keyCareerProfiles": [
+        "ASIC/SoC Digital RTL Design Engineer (로직 설계 엔지니어)",
+        "Design Verification (DV) Engineer (UVM 기능 검증 엔지니어)",
+        "Formal Verification Engineer (정형 검증 및 수학적 동등성 검증 엔지니어)",
+        "Design for Test (DFT) Engineer (스캔 체인 및 ATPG 테스트성 설계 엔지니어)",
+        "Frontend Synthesis & Timing Budgeting Engineer (논리 합성 엔지니어)"
+      ],
+      "requiredCompetencies": [
+        "하드웨어 기술 언어: SystemVerilog (IEEE 1800-2017), Verilog-2005, VHDL, Chisel (기초).",
+        "검증 방법론: UVM (Universal Verification Methodology), SVA (SystemVerilog Assertions), Functional Coverage.",
+        "정형 검증: Model Checking, LTL (Linear Temporal Logic), JasperGold Property Checking.",
+        "버스 및 인터커넥트 프로토콜: AMBA 4/5 (AXI, AHB, APB, CHI), PCIe, OCP, TileLink.",
+        "스크립팅 및 자동화: Python, Perl, Bash, Tcl (EDA 툴 자동화 필수)."
+      ],
+      "industryStandardToolchain": [
+        {
+          "toolName": "Synopsys VCS / Cadence Xcelium / Siemens Questa",
+          "category": "Logic Simulation",
+          "purpose": "대규모 디지털 회로의 이벤트 기반(Event-Driven) 및 사이클 기반 고속 RTL/게이트 레벨 시뮬레이션."
+        },
+        {
+          "toolName": "Synopsys SpyGlass Lint / CDC",
+          "category": "Static Analysis",
+          "purpose": "코딩 스타일 위반, 래치(Latch) 유발 방지 및 비동기 클록 도메인 크로싱(CDC) 메타스태빌리티 정적 검출."
+        },
+        {
+          "toolName": "Cadence JasperGold / Synopsys VC Formal",
+          "category": "Formal Verification",
+          "purpose": "테스트벤치 없이 수학적 정형 증명을 통해 상태 머신 데드락 및 프로토콜 규약 위반을 전수 검증."
+        },
+        {
+          "toolName": "Synopsys Design Compiler (DC) / Cadence Genus",
+          "category": "Logic Synthesis",
+          "purpose": "RTL 코드를 타깃 파운드리 표준 셀 라이브러리(.lib) 기반의 게이트 레벨 넷리스트로 자동 매핑 및 타이밍/면적 최적화."
+        },
+        {
+          "toolName": "Siemens Tessent / Synopsys TestMAX",
+          "category": "DFT & ATPG",
+          "purpose": "스캔 플립플롭 체인 삽입, MBIST (메모리 내장 자체 테스트) 생성 및 고장 검출용 ATPG 테스트 패턴 자동 생성."
+        }
+      ],
+      "stepByStepWorkflow": [
+        {
+          "stepNumber": 1,
+          "name": "Microarchitecture Specification & Register Map Definition",
+          "description": "블록 다이어그램, 파이프라인 스테이지 분할, 레이턴시/처리량 예산, CSR (Control & Status Register) 메모리 맵 명세서 작성."
+        },
+        {
+          "stepNumber": 2,
+          "name": "RTL Implementation (SystemVerilog Coding)",
+          "description": "유한 상태 기계(FSM), 데이터패스(Datapath), 파이프라인 레지스터, 클록 게이팅 셀 및 AMBA AXI4 인터페이스 모듈 코딩."
+        },
+        {
+          "stepNumber": 3,
+          "name": "Static Linting & Clock Domain Crossing (CDC) Sign-off",
+          "description": "SpyGlass를 통한 문법적 결함 검사 및 서로 다른 비동기 클록 간 2FF 동기화기(Synchronizer), 핸드셰이크, 비동기 FIFO 구조 완벽 검증."
+        },
+        {
+          "stepNumber": 4,
+          "name": "UVM Testbench Construction & Constrained-Random Simulation",
+          "description": "UVM Driver, Monitor, Sequencer, Scoreboard를 구축하고, 제약 랜덤(Constrained-Random) 자극을 생성하여 기능 커버리지(Functional Coverage) 100% 달성."
+        },
+        {
+          "stepNumber": 5,
+          "name": "Logic Synthesis & Timing Constraint (.sdc) Application",
+          "description": "클록 주기, I/O 딜레이, False Path, Multicycle Path를 기술한 SDC 제약조건 하에서 Design Compiler를 실행하여 최적 게이트 넷리스트 도출."
+        },
+        {
+          "stepNumber": 6,
+          "name": "Scan Chain Insertion & ATPG (DFT Sign-off)",
+          "description": "일반 D-FF을 Scan D-FF으로 치환하여 체인을 연결하고, Stuck-At 및 At-Speed 지연 고장을 99% 이상 검출하는 테스트 벡터 추출 후 백엔드에 인계."
+        }
+      ],
+      "coreMathAndPhysicsFormulas": [
+        {
+          "formulaName": "고장 검출율 공식 (Fault Coverage & Test Coverage)",
+          "typesetMath": "\\text{FC} = \\frac{\\text{Detected Faults}}{\\text{Total Faults}} \\ge 99.0\\%, \\quad \\text{TC} = \\frac{\\text{Detected Faults}}{\\text{Total Faults} - \\text{Undetectable Faults}} \\ge 99.5\\%",
+          "description": "스캔 기반 제조 결함 테스트에서 단일 고착(Stuck-at-0, Stuck-at-1) 고장 모델에 대한 ATPG 검출 능력의 수학적 척도."
+        },
+        {
+          "formulaName": "메타스태빌리티 MTBF 수식 (Mean Time Between Failures for Synchronizers)",
+          "typesetMath": "\\text{MTBF} = \\frac{e^{\\frac{t_{\\text{resolve}}}{\\tau}}}{T_{\\text{w}} \\cdot f_{\\text{clk}} \\cdot f_{\\text{data}}}",
+          "description": "비동기 클록 도메인 신호 전달 시 플립플롭이 셋업/홀드 타임 위반으로 중간 전위(메타스태빌리티)에 머물다 안정화되는 평균 고장 시간 간격."
+        }
+      ],
+      "signoffMetricsAndKPIs": [
+        "Code Coverage: Line Coverage 100%, Branch Coverage 100%, Toggle Coverage > 95%.",
+        "Functional Coverage: 정의된 Covergroup 및 Coverpoint 100% 수렴.",
+        "CDC Clean: No unsynchronized clock crossing, zero structural metastability violations.",
+        "Synthesis QoR: Zero Negative Slack (WNS >= 0ps under target clock frequency), Area & Leakage power budget met.",
+        "DFT: Stuck-at Fault Coverage >= 99.0%, Transition Fault Coverage >= 92.0%."
+      ],
+      "modernIndustryPractices": "애플 실리콘 및 엔비디아의 대규모 AI 칩 개발에서는 에뮬레이션 장비(Synopsys ZeBu, Cadence Palladium)를 통해 수억 게이트 넷리스트를 FPGA 하드웨어 팜에 직접 로드하여 실시간 부팅 및 드라이버 소프트웨어 동시 검증(Co-verification)을 수행합니다.",
+      "curriculumModuleId": "vlsi-stage-1-rtl",
+      "curriculumSummary": "현대 초미세 SoC 및 고성능 프로세서의 마이크로아키텍처를 정의하고, SystemVerilog를 이용한 합성 가능한 RTL(Register-Transfer Level) 구현 및 UVM(Universal Verification Methodology) 기반의 객체지향 기능 검증 환경을 구축하는 프론트엔드 핵심 엔지니어링 과정입니다. 유한상태머신(FSM) 설계, 파이프라인 해저드 해결, 이종 클록 도메인 교차(CDC) 메타안정성 방지, UVM Driver/Monitor/Scoreboard 기반 100% 기능 커버리지 달성을 심층적으로 다룹니다.",
+      "curriculumLabTitle": "8-bit Pipelined RISC Processor RTL Implementation & UVM Testbench",
+      "curriculumObjectives": [
+        "무어(Moore)와 밀리(Mealy) FSM의 글리치 특성 및 타이밍 마진을 분석하고 3-항 프로세스 안전 FSM을 설계할 수 있다.",
+        "RISC 파이프라인의 구조적(Structural), 데이터(RAW/WAR/WAW), 제어(Control) 해저드를 포워딩 및 분기 예측 기법으로 해결할 수 있다.",
+        "이종 클록 도메인 간 신호 전송 시 2-FF 동기화기 및 그레이 코드(Gray Code) 비동기 FIFO 구조를 구현하고 MTBF를 수학적으로 계산할 수 있다.",
+        "UVM 테스트벤치 아키텍처(Driver, Monitor, Sequencer, Scoreboard, Functional Coverage)를 구축하여 완벽한 검증 폐루프를 완성할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-2-backend-pd",
+      "order": 2,
+      "titleKo": "백엔드 물리 설계 및 타이밍 수렴 (P&R / Physical Design)",
+      "titleEn": "Backend Physical Design & Timing Closure",
+      "roleDefinition": "합성된 게이트 레벨 넷리스트와 파운드리 설계 규칙(PDK)을 입력으로 받아, 수천만~수백억 개의 셀을 다이 면적 내에 배치(Placement)하고, 전력 공급망(Power Mesh)을 구축하며, 클록 트리 합성(CTS)과 신호선 배선(Routing)을 수행하여, 타이밍(STA), 신호/전력 무결성(SI/PI), 제조성(DRC/LVS/DFM) 기준을 100% 만족시켜 최종 마스크 제작용 GDSII/OASIS 포맷 파일로 테이프아웃(Tape-out)하는 직무입니다.",
+      "keyCareerProfiles": [
+        "Physical Design (P&R) Engineer (물리 설계 및 P&R 엔지니어)",
+        "Static Timing Analysis (STA) Sign-off Engineer (타이밍 수렴 전문 엔지니어)",
+        "Power Integrity & IR-Drop Analysis Engineer (전력 무결성 해석 엔지니어)",
+        "Physical Verification Engineer (DRC/LVS/ERC 검증 엔지니어)",
+        "CAD / Methodology Specialist (파운드리 PDK 및 EDA 플로우 개발 엔지니어)"
+      ],
+      "requiredCompetencies": [
+        "물리 설계 자동화 스크립트: Tcl (Tool Command Language), Python.",
+        "설계 제약 및 라이브러리: SDC (Synopsys Design Constraints), UPF (Unified Power Format), Liberty (.lib), LEF/DEF.",
+        "정적 타이밍 분석(STA): 셋업/홀드 타임, OCV (On-Chip Variation), AOCV, POCV (Parametric OCV).",
+        "물리 검증 지식: Design Rule Manual (DRM), 안테나 효과(Antenna Effect), 전자이동(Electromigration, EM).",
+        "P&R 알고리즘: Floorplanning, Global/Detailed Placement, Clock Tree Optimization, Global/Detailed Routing."
+      ],
+      "industryStandardToolchain": [
+        {
+          "toolName": "Synopsys IC Compiler II (ICC2) / Fusion Compiler",
+          "category": "Place & Route (P&R)",
+          "purpose": "첨단 나노 공정 표준 셀 배치, 클록 트리 합성, 멀티 레이어 신호 라우팅 및 동시성 물리 최적화."
+        },
+        {
+          "toolName": "Cadence Innovus Implementation System",
+          "category": "Place & Route (P&R)",
+          "purpose": "대용량 기가스케일 블록 분할 및 고성능 CPU/GPU 코어 물리 구현."
+        },
+        {
+          "toolName": "Synopsys PrimeTime (PT-SI)",
+          "category": "Static Timing Analysis",
+          "purpose": "크로스토크 지연 노이즈를 고려한 멀티코너 멀티모드(MCMM) 골든 STA 사인오프."
+        },
+        {
+          "toolName": "Siemens Calibre (nmDRC / nmLVS / xACT)",
+          "category": "Physical Verification & PEX",
+          "purpose": "수천 가지 파운드리 기하학적 룰(DRC) 검증, 회로도 대 레이아웃 일치(LVS) 검증 및 고정밀 3D 기생 $RC$ 추출."
+        },
+        {
+          "toolName": "Ansys RedHawk-SC",
+          "category": "Power Integrity (IR-Drop / EM)",
+          "purpose": "빅데이터 기반 동적 전력 무결성 시뮬레이션, 과도 IR 드롭 및 전자이동(EM) 신뢰성 사인오프."
+        }
+      ],
+      "stepByStepWorkflow": [
+        {
+          "stepNumber": 1,
+          "name": "Design Import & Floorplanning",
+          "description": "다이 면적 및 가로세로비 결정, 코어/IO 영역 구획, 아날로그 IP 및 SRAM 매크로 셀 배치, 채널 간격 확보."
+        },
+        {
+          "stepNumber": 2,
+          "name": "Power Mesh & Power Grid Planning (PG Synthesis)",
+          "description": "최상위 두꺼운 금속 배선 레이어(M8~M12)를 활용하여 저저항 VDD/VSS 격자 메시를 생성하고 전압 강하 예산 배분."
+        },
+        {
+          "stepNumber": 3,
+          "name": "Standard Cell Placement & Congestion Optimization",
+          "description": "수천만 개의 표준 논리 셀을 타이밍 및 배선 혼잡도(Congestion)를 최소화하도록 배치하고 하이 팬아웃 네트(HFN) 합성."
+        },
+        {
+          "stepNumber": 4,
+          "name": "Clock Tree Synthesis (CTS)",
+          "description": "클록 루트에서 모든 수신 플립플롭까지의 클록 스큐(Skew)와 삽입 지연(Insertion Delay)을 최소화하도록 H-Tree 또는 메시 버퍼 네트워크 구축."
+        },
+        {
+          "stepNumber": 5,
+          "name": "Signal Routing (Global & Detailed Route)",
+          "description": "그리드에 따라 구리 배선을 연결하고 나노미터 공정 금속 밀도 규칙 및 비아(Via) 최적화, 기생 커패시턴스 억제."
+        },
+        {
+          "stepNumber": 6,
+          "name": "Sign-off ECO, STA, DRC/LVS, IR-Drop & Tape-out",
+          "description": "PrimeTime으로 셋업/홀드 바이올레이션을 타이밍 ECO(버퍼 삽입/셀 리사이징)로 제거하고 Calibre DRC/LVS 무결점 확인 후 파운드리로 GDSII 송부."
+        }
+      ],
+      "coreMathAndPhysicsFormulas": [
+        {
+          "formulaName": "정적 타이밍 분석 셋업 타임 여유 공식 (Setup Slack Equation)",
+          "typesetMath": "\\text{Slack}_{\\text{setup}} = T_{\\text{clk}} - \\left(T_{\\text{launch}} + T_{\\text{cq}} + T_{\\text{comb}} + T_{\\text{setup}} - T_{\\text{capture}} + T_{\\text{jitter}}\\right) \\ge 0",
+          "description": "클록 주파수의 최대 상한을 결정하며, 론치 플립플롭에서 출력된 데이터가 캡처 플립플롭의 셋업 타임 윈도우 이전에 도착해야 함을 보장."
+        },
+        {
+          "formulaName": "정적 타이밍 분석 홀드 타임 여유 공식 (Hold Slack Equation)",
+          "typesetMath": "\\text{Slack}_{\\text{hold}} = \\left(T_{\\text{launch}} + T_{\\text{cq}} + T_{\\text{comb}} - T_{\\text{capture}}\\right) - T_{\\text{hold}} \\ge 0",
+          "description": "클록 주기와 무관하게 동작하며, 새로운 데이터가 너무 빨리 도착하여 이전 사이클의 데이터를 덮어쓰지 않도록 최소 경로 지연을 보장."
+        },
+        {
+          "formulaName": "블랙의 전자이동(Electromigration) 평균 수명 공식 (Black's Equation)",
+          "typesetMath": "\\text{MTTF} = A \\, J^{-n} \\, \\exp\\left(\\frac{E_a}{k_B T}\\right), \\quad n \\approx 2",
+          "description": "초미세 금속 배선에 흐르는 전류 밀도 $J$가 높을 때 전자의 운동량 전달에 의해 금속 원자가 물리적으로 이동하여 단선(Void)이나 단락(Hillock)을 유발하는 수명 예측식."
+        }
+      ],
+      "signoffMetricsAndKPIs": [
+        "Worst Negative Slack (WNS) = 0.0 ps, Total Negative Slack (TNS) = 0.0 ps across all MCMM corners.",
+        "DRC (Design Rule Check): Zero violations on Calibre nmDRC.",
+        "LVS (Layout Versus Schematic): Exact 1:1 netlist equivalence verified.",
+        "Dynamic IR-Drop: Peak drop < 5% of Vdd (e.g., < 37.5mV at 0.75V Vdd).",
+        "Electromigration (EM): All signal and power vias/wires below 파운드리 DC/RMS current limit."
+      ],
+      "modernIndustryPractices": "TSMC N3/N2 공정에서는 통계적 온칩 변동성(POCV)과 함께 전원 전압 변동이 지연 시간에 미치는 영향(Voltage Drop-aware STA)을 연계 해석하는 것이 필수적인 표준 절차입니다.",
+      "curriculumModuleId": "vlsi-stage-2-pd",
+      "curriculumSummary": "합성된 게이트 레벨 네트리스트(Gate-level Netlist)를 실제 실리콘 다이(Die)의 2차원/3차원 기하학적 레이아웃으로 변환하고, 1GHz 이상의 초고주파에서 정적 타이밍 분석(STA), 전력 무결성(IR-drop), 신뢰성(EM, DFM)을 만족하며 테이프아웃(Tapeout)을 달성하는 백엔드 전주기 과정입니다. 플로어플래닝, 전력 격자망, 글로벌/디테일 배치, 클록 트리 합성(CTS), 라우팅 및 타이밍 에코(ECO) 기법을 심층적으로 다룹니다.",
+      "curriculumLabTitle": "TSMC N5 Library based 1.2 GHz Subsystem P&R and PrimeTime Timing Closure",
+      "curriculumObjectives": [
+        "코어-다이 마진, I/O 패드 및 아날로그/메모리 매크로 배치를 최적화하고 헤일로(Halo)와 킵아웃(Keepout) 영역을 설정할 수 있다.",
+        "정적/동적 IR-드롭 및 일렉트로마이그레이션(EM)을 방지하는 다층 전력 분배망(Power Mesh)을 설계할 수 있다.",
+        "H-트리 및 멀티 소스 클록 트리 합성(CTS)을 통해 클록 스큐(Skew)와 지터(Jitter)를 수십 피코초 이내로 수렴시킬 수 있다.",
+        "셋업 및 홀드 타임 슬랙 방정식을 기반으로 프라임타임(PrimeTime) 타이밍 위반 패스를 분석하고 버퍼 삽입/사이징 ECO를 실행할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-3-fab-process",
+      "order": 3,
+      "titleKo": "첨단 팹 제조 공정 (8대 공정 & 초미세 수율 공학)",
+      "titleEn": "Advanced Fab Manufacturing Process (8 Core Processes & Yield Engineering)",
+      "roleDefinition": "전자설계자동화(EDA)에서 전송된 마스크 패턴을 바탕으로, 1,000단계 이상의 극도로 정밀한 화학적·물리적 단위 공정을 300mm 단결정 실리콘 웨이퍼 상에 반복 수행하여, 결함률이 극소화된 3차원 트랜지스터(GAA/FinFET) 및 다층 구리 배선 네트워크를 클래스 1(Class 1) 초청정 클린룸에서 물리적으로 양산 제조하는 직무입니다.",
+      "keyCareerProfiles": [
+        "Process Integration Engineer (PIE, 단위 공정 통합 엔지니어)",
+        "Photo / Lithography Process Engineer (EUV 노광 공정 엔지니어)",
+        "Dry Etch Process Engineer (플라즈마 건식 식각 공정 엔지니어)",
+        "Thin Film & Deposition Engineer (ALD/CVD 박막 증착 엔지니어)",
+        "Yield Enhancement Engineer (YEE, 결함 분석 및 수율 향상 엔지니어)"
+      ],
+      "requiredCompetencies": [
+        "반도체 8대 공정 지식: 웨이퍼 제조, 열산화, 포토리소그래피, 식각, 박막 증착, 이온 주입, 금속 배선, 화학기계적 연마(CMP) 및 세정.",
+        "광학 및 플라즈마 물리: 레일리 회절 한계, 개구수(NA), 광근접보정(OPC), RIE 식각 챔버 플라즈마 시스(Sheath) 동역학.",
+        "재료 및 박막 분석 장비: 주사전자현미경(SEM), 투과전자현미경(TEM), 원자간력현미경(AFM), X-ray 회절(XRD), 오제 전자 분광법(AES).",
+        "통계적 공정 제어(SPC): 6-시그마, $C_p/C_{pk}$ 공정 능력 지수, 수율 모델링(Poisson, Murphy 모델), 결함 파레토 분석."
+      ],
+      "industryStandardToolchain": [
+        {
+          "toolName": "ASML Twinscan EXE / NXE EUV Scanner",
+          "category": "Photolithography",
+          "purpose": "13.5nm 극자외선 파장과 0.33 NA 및 0.55 High-NA 광학계를 이용한 서브 10nm 초미세 회로 패턴 노광."
+        },
+        {
+          "toolName": "Lam Research Kiyo / Coronus / Vector",
+          "category": "Etch & Deposition",
+          "purpose": "고밀도 유도결합 플라즈마(ICP)를 이용한 원자층 식각(ALE) 및 수직 고종횡비 접촉창 형성."
+        },
+        {
+          "toolName": "Applied Materials Endura / Centura / Producer",
+          "category": "PVD / CVD / CMP",
+          "purpose": "Cu 다마신 장벽 금속(Ta/TaN/Ru) 증착, ALD High-k 유전체 형성 및 웨이퍼 전면 초정밀 평탄화."
+        },
+        {
+          "toolName": "KLA Archer / SpectraShape / 29xx",
+          "category": "Metrology & Defect Inspection",
+          "purpose": "다층 오버레이(Overlay) 나노미터 정밀도 측정, 광학/전자선 기반 웨이퍼 결함 인라인 자동 전수 검사."
+        }
+      ],
+      "stepByStepWorkflow": [
+        {
+          "stepNumber": 1,
+          "name": "Wafer Prep & Czochralski Ingot Growth",
+          "description": "초고순도 다결정 실리콘(99.999999999%, 11N)을 용융하여 단결정 잉곳을 성장시키고 와이어 쏘로 300mm 웨이퍼 슬라이싱 및 에칭/연마."
+        },
+        {
+          "stepNumber": 2,
+          "name": "Thermal Oxidation & Well Formation",
+          "description": "고온 확산로에서 초순수 산소/수증기를 주입하여 $SiO_2$ 버퍼 산화막을 형성하고, 깊은 이온 주입을 통해 n-Well 및 p-Well 형성."
+        },
+        {
+          "stepNumber": 3,
+          "name": "High-NA EUV Lithography with OPC",
+          "description": "웨이퍼 표면에 감광액(PR)을 스핀 코팅하고, 광근접효과(OPC)가 적용된 펠리클 마스크를 통해 13.5nm EUV 광선으로 나노 패턴 노광 및 현상(Development)."
+        },
+        {
+          "stepNumber": 4,
+          "name": "Atomic Layer Etching (ALE) & STI Isolation",
+          "description": "플라즈마 건식 식각으로 이웃 소자 간 전기적 격리를 위한 얕은 트렌치 격리(STI)를 형성하고 수직 채널 핀(Fin) 및 나노시트 방출 식각 수행."
+        },
+        {
+          "stepNumber": 5,
+          "name": "Atomic Layer Deposition (ALD) of High-k & Metal Gate",
+          "description": "전구체(Precursor)와 반응 가스를 번갈아 주입하여 하프늄 산화막($HfO_2$)을 원자 1개 층 단위로 정밀 증착하여 게이트 절연막 형성."
+        },
+        {
+          "stepNumber": 6,
+          "name": "Dual Damascene Cu Interconnect & CMP Polishing",
+          "description": "층간 절연막(Low-k)에 비아와 트렌치를 파고 확산 방지막 및 Cu 전해도금 후, CMP 화학기계적 연마로 평탄화하여 15개 이상의 금속 배선층 구축."
+        }
+      ],
+      "coreMathAndPhysicsFormulas": [
+        {
+          "formulaName": "레일리 리소그래피 분해능 및 초점 심도 공식 (Rayleigh Resolution & DOF)",
+          "typesetMath": "R = k_1 \\frac{\\lambda}{\\text{NA}}, \\quad \\text{DOF} = k_2 \\frac{\\lambda}{\\text{NA}^2}",
+          "description": "노광 장비가 투영할 수 있는 최소 선폭 $R$과 허용 초점 심도(DOF)를 결정하며, 파장 $\\lambda$ 단축(EUV 13.5nm) 및 개구수 $\\text{NA}$ 확장(High-NA 0.55)의 이론적 근거."
+        },
+        {
+          "formulaName": "딜-그로브 열산화 성장 모델 (Deal-Grove Oxidation Model)",
+          "typesetMath": "x_o^2 + A x_o = B(t + \\tau) \\implies x_o(t) \\approx \\begin{cases} \\frac{B}{A}(t+\\tau) & (\\text{선형 영역: 반응 속도 제한}) \\\\ \\sqrt{Bt} & (\\text{포물선 영역: 확산 제한}) \\end{cases}",
+          "description": "고온 산화로에서 실리콘 표면에 형성되는 이산화규소 산화막의 두께 $x_o$와 산화 시간 $t$ 사이의 물리화학적 관계식."
+        },
+        {
+          "formulaName": "포아송 및 머피 반도체 다이 수율 통계 모델 (Poisson & Murphy Yield Models)",
+          "typesetMath": "Y_{\\text{Poisson}} = \\exp(-A \\cdot D_0), \\quad Y_{\\text{Murphy}} = \\left( \\frac{1 - \\exp(-A \\cdot D_0)}{A \\cdot D_0} \\right)^2",
+          "description": "다이 면적 $A$와 단위 면적당 치명적 결함 밀도 $D_0$로부터 양품 칩의 비율(수율 $Y$)을 통계적으로 예측하는 반도체 경제성의 핵심 수식."
+        }
+      ],
+      "signoffMetricsAndKPIs": [
+        "Critical Dimension (CD) Uniformity: 3-sigma variation < 0.3 nm across full 300mm wafer.",
+        "Overlay Error: Multi-patterning overlay alignment error < 1.2 nm.",
+        "Defect Density ($D_0$): < 0.05 defects/cm² on production wafer runs.",
+        "Cp / Cpk: Process capability index Cpk >= 1.67 on critical film thicknesses and etch depths."
+      ],
+      "modernIndustryPractices": "EUV 공정에서는 광자 수의 통계적 요동으로 인한 확률론적 결함(Stochastic Defects, 나노 브리지 및 나노 오픈)을 방지하기 위해 광화학 증폭형 감광액 대신 건식 레지스트(Dry Resist) 기술을 도입하고 있습니다.",
+      "curriculumModuleId": "vlsi-stage-3-fab",
+      "curriculumSummary": "실리콘 잉곳 성장 및 베어 웨이퍼 준비부터 극자외선(High-NA 0.55 EUV) 노광, 원자층 식각(ALE), 원자층 증착(ALD), 이온 주입 및 급속 열처리(RTP), 구리 다마신 화학기계연마(CMP), 고순도 세정까지 이어지는 반도체 제조 8대 핵심 단위 공정을 종합 탐구합니다. 2nm 공정 이하의 핵심 구조인 나노시트 게이트-올-어라운드(GAA MBCFET) 트랜지스터 제작의 물리적 원리와 결함 제어 수율 공학을 완벽히 다룹니다.",
+      "curriculumLabTitle": "2nm Gate-All-Around (GAA) MBCFET Transistor 8-Step Process Integration Simulation",
+      "curriculumObjectives": [
+        "산화막 성장의 Deal-Grove 모델을 통해 선형 및 포물선 영역의 산화막 성장 두께를 정량 계산할 수 있다.",
+        "Rayleigh 해상도 공식을 바탕으로 ASML High-NA (0.55 NA) EUV 노광 장비의 최소 선폭(CD) 및 초점 심도(DOF)를 계산할 수 있다.",
+        "원자층 식각(ALE)과 원자층 증착(ALD)의 자기제한적 표면 반응(Self-limiting reaction) 메커니즘을 분석할 수 있다.",
+        "구리 배선 형성을 위한 듀얼 다마신(Dual Damascene) 공정과 CMP Preston 연마 속도 수식을 이해하고 2nm GAA 소자 제조 시퀀스를 설계할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-4-packaging-test",
+      "order": 4,
+      "titleKo": "첨단 패키징(2.5D/3D Chiplet) 및 ATE 양산 테스트 공학",
+      "titleEn": "Advanced Packaging (2.5D/3D Chiplet) & ATE Mass-Production Test",
+      "roleDefinition": "제조 완료된 웨이퍼 상의 개별 다이를 전기적으로 선별(EDS/Wafer Probing)하고, 무어의 법칙 한계를 돌파하기 위해 서로 다른 기능의 다이(로직, 메모리, 아날로그)를 초미세 피치 인터포저 및 하이브리드 본딩을 통해 단일 시스템 패키지로 통합(2.5D/3D 이종 집적)한 후, 최종 패키지 수준(FT/SLT)에서 극단적인 열/전기적 스트레스 하에 완벽한 전기적 기능을 자동화 시험 장비(ATE)로 보증하여 시장에 출하하는 직무입니다.",
+      "keyCareerProfiles": [
+        "Advanced Packaging Architecture Engineer (첨단 패키징 설계 엔지니어)",
+        "Package Physical / Thermal-Mechanical Engineer (열/응력 해석 엔지니어)",
+        "Automated Test Equipment (ATE) Test Development Engineer (양산 테스트 엔지니어)",
+        "Product Engineering (PE) / Yield Specialist (제품 양산 수율 관리 엔지니어)",
+        "Reliability & Qualification Engineer (신뢰성 및 품질 보증 엔지니어)"
+      ],
+      "requiredCompetencies": [
+        "첨단 패키징 기술: 2.5D Silicon Interposer (TSV), 3D Wafer-on-Wafer (WoW), Hybrid Bonding, Fan-Out Wafer-Level Packaging (FOWLP).",
+        "테스트 엔지니어링: ATE 아키텍처, 프로브 카드(Probe Card) 설계, 켈빈 콘택트, 스캔 테스트 벡터 디버깅, 번인(Burn-in) 스트레스.",
+        "열 및 기계적 신뢰성 해석: ANSYS Mechanical / Icepak을 활용한 열팽창계수(CTE) 불일치 휨(Warpage) 및 열저항($\\theta_{JA}, \\theta_{JC}$) 해석.",
+        "신뢰성 표준: JEDEC 표준, AEC-Q100 (차량용 신뢰성), 고온 동작 수명 시험(HTOL), 온도 사이클 시험(TC)."
+      ],
+      "industryStandardToolchain": [
+        {
+          "toolName": "Advantest V93000 / Teradyne UltraFLEXplus",
+          "category": "Automated Test Equipment (ATE)",
+          "purpose": "수천 핀 이상의 고속 디지털/RF/전원 핀을 갖는 SoC의 웨이퍼 프로빙 및 파이널 테스트를 초고속 병렬 수행."
+        },
+        {
+          "toolName": "Cadence Clarity / Ansys HFSS & Icepak",
+          "category": "Package SI/PI & Thermal",
+          "purpose": "패키지 기판 및 실리콘 인터포저의 3D 전자계 고주파 신호/전력 무결성 및 접합부 방열 해석."
+        },
+        {
+          "toolName": "Synopsys PrimeYield / Galaxy Custom Compiler",
+          "category": "Test Data Analysis",
+          "purpose": "수백만 개의 칩 테스트 로그 빅데이터를 실시간 분석하여 파운드리 결함 공정 피드백 제공."
+        }
+      ],
+      "stepByStepWorkflow": [
+        {
+          "stepNumber": 1,
+          "name": "Wafer Level EDS (Electrical Die Sorting) Testing",
+          "description": "프로브 카드의 미세 니들을 웨이퍼 패드에 접촉하여 DC 전압/전류 특성, 기능 로직 및 DRAM 결함 셀을 선별하고 레이저 퓨즈 커팅으로 리던던시(Redundancy) 복구."
+        },
+        {
+          "stepNumber": 2,
+          "name": "Wafer Thinning, Dicing & TSV Processing",
+          "description": "웨이퍼를 30~50µm 두께로 초정밀 백그라인딩하고 실리콘 관통 전극(TSV)을 노출시킨 후 고정밀 다이싱으로 양품 다이(Known Good Die, KGD) 분리."
+        },
+        {
+          "stepNumber": 3,
+          "name": "2.5D / 3D Chiplet Assembly & Hybrid Bonding",
+          "description": "실리콘 인터포저 상에 고대역폭 메모리(HBM)와 메인 로직 다이를 1µm 미만의 구리-구리 직접 접합(Hybrid Bonding)으로 초고밀도 실장."
+        },
+        {
+          "stepNumber": 4,
+          "name": "Epoxy Molding, BGA Ball Mount & Heat Spreader Attachment",
+          "description": "에폭시 몰딩 화합물(EMC)로 다이를 보호 밀봉하고 바닥면에 솔더 볼(BGA)을 융착하며 상부에 고열전도성 방열 뚜껑(Heat Spreader) 장착."
+        },
+        {
+          "stepNumber": 5,
+          "name": "Final Test (FT) & High-Temperature Burn-In (HTOL)",
+          "description": "패키징된 칩을 고온($125^\\circ\\text{C}$) 및 과전압 환경에서 번인 챔버에 투입하여 초기 불량(Infant Mortality)을 가속 스크리닝."
+        },
+        {
+          "stepNumber": 6,
+          "name": "System-Level Test (SLT) & Final Outgoing Inspection",
+          "description": "실제 고객사 완제품 메인보드 소켓 환경에서 OS 부팅, 고부하 그래픽 및 AI 벤치마크 워크로드를 100% 무에러 통과한 칩만 테이프 앤 릴(Tape & Reel)로 패킹."
+        }
+      ],
+      "coreMathAndPhysicsFormulas": [
+        {
+          "formulaName": "아레니우스 수명 가속 계수 수식 (Arrhenius Acceleration Factor for Burn-in)",
+          "typesetMath": "AF = \\frac{t_{\\text{use}}}{t_{\\text{stress}}} = \\exp\\left[ \\frac{E_a}{k_B} \\left( \\frac{1}{T_{\\text{use}}} - \\frac{1}{T_{\\text{stress}}} \\right) \\right] \\times \\left( \\frac{V_{\\text{stress}}}{V_{\\text{use}}} \\right)^\\gamma",
+          "description": "고온($T_{\\text{stress}}$) 및 과전압($V_{\\text{stress}}$) 스트레스 조건 하에서 몇 시간의 번인 테스트가 실제 통상 사용 조건 하의 수년치 작동 시간에 상응하는지를 계산하는 신뢰성 공학 공식."
+        },
+        {
+          "formulaName": "패키지 다단계 열저항 네트워크 수식 (Thermal Resistance Network)",
+          "typesetMath": "T_j = T_a + P_{\\text{total}} \\cdot \\theta_{\\text{JA}} = T_a + P_{\\text{total}} \\cdot \\left(\\theta_{\\text{JC}} + \\theta_{\\text{TIM}} + \\theta_{\\text{Heatsink}}\\right)",
+          "description": "실리콘 다이 활성 접합부(Junction)에서 발생한 총 발열 전력($P_{\\text{total}}$)이 방열판을 거쳐 대기(Ambient)로 방출될 때 다이 최고 온도($T_j$)를 예측하는 열역학 옴의 법칙 모델."
+        }
+      ],
+      "signoffMetricsAndKPIs": [
+        "Package Assembly Yield: > 99.8% on advanced multi-chip 2.5D substrate assembly.",
+        "DPPM (Defective Parts Per Million): < 1 DPPM for automotive ASIL-D qualified products.",
+        "Test Time per Device: Optimized to < 3.5 seconds on ATE to maintain cost efficiency.",
+        "Coplanarity & Warpage: BGA ball coplanarity < 50µm across entire package temperature profile."
+      ],
+      "modernIndustryPractices": "TSMC CoWoS(Chip-on-Wafer-on-Substrate) 및 삼성전자 I-Cube 패키징 기술은 엔비디아 H100/B200과 같은 최첨단 AI 프로세서에서 1개의 메인 로직 다이 주위에 6~8개의 HBM3e/HBM4 메모리 다이를 초미세 마이크로범프로 통합하는 핵심 제조 인프라로 자리잡았습니다.",
+      "curriculumModuleId": "vlsi-stage-4-pkg-test",
+      "curriculumSummary": "무어의 법칙 한계를 극복하기 위해 다종 이종 칩을 하나의 패키지로 집적하는 2.5D 실리콘 인터포저(TSMC CoWoS, Intel EMIB), 범프리스 3D 하이브리드 본딩(Cu-Cu Direct Bonding), 고대역폭 메모리(HBM3e/HBM4) 적층 기술과, ATE(Advantest V93000 / Teradyne UltraFLEX) 기반의 웨이퍼 소트(Wafer Sort), 파이널 테스트(FT), HTOL 번인(Burn-in) 신뢰성 수명 가속 평가를 총망라합니다.",
+      "curriculumLabTitle": "AI Accelerator Chiplet + 8-Hi HBM 2.5D CoWoS Thermomechanical Warpage & Test Strategy",
+      "curriculumObjectives": [
+        "2.5D 실리콘 관통 전극(TSV) 인터포저와 고밀도 유기 인터포저(CoWoS-R)의 열기계적 워페이지(Warpage) 및 기생 RC 특성을 비교 분석할 수 있다.",
+        "1um 이하 피치의 Cu-Cu 직접 하이브리드 본딩(Hybrid Bonding) 공정 메커니즘과 계면 산화 방지 기술을 이해할 수 있다.",
+        "HBM3e/HBM4의 1024비트/2048비트 와이드 버스 아키텍처 및 DFI 물리 계층의 신호 무결성을 검증할 수 있다.",
+        "ATE 테스트베드에서 DFT 스캔 체인(Scan Chain), BIST, IDDQ 테스트 패턴을 인가하고 Arrhenius 가속 계수 수식으로 HTOL 번인 시간을 설계할 수 있다."
+      ]
+    }
+  ],
+  "embeddedStack": [
+    {
+      "pillarId": "pillar-1-mcu-soc-architecture",
+      "order": 1,
+      "titleKo": "마이크로컨트롤러 및 SoC 아키텍처",
+      "titleEn": "Microcontroller & SoC Architectures",
+      "coreArchitecturalPrinciples": "임베디드 제어기의 핵심은 높은 클록 주파수뿐만 아니라, 외부 이벤트에 대한 지연 시간의 '결정론적(Deterministic) 즉각 응답성'과 '초저전력 슬립 모드 복귀 능력'입니다. 하버드 아키텍처(Harvard Architecture)를 기반으로 명령어 버스(I-Code)와 데이터 버스(D-Code)를 물리적으로 분리하여 동시 접근을 가능케 하며, 내부 TCM(Tightly-Coupled Memory)을 배치하여 캐시 미스 없는 제로 대기 시간(Zero-Wait State) 연산을 보장합니다.",
+      "deepTechnicalBreakdown": {
+        "armCortexMProfiles": [
+          {
+            "core": "Cortex-M0+",
+            "pipeline": "2-stage in-order",
+            "fpu": "없음 (소프트웨어 에뮬레이션)",
+            "target": "초저전력 스마트 센서, 8/16비트 MCU 대체, 면적/전력 극소화."
+          },
+          {
+            "core": "Cortex-M3",
+            "pipeline": "3-stage in-order",
+            "fpu": "없음",
+            "target": "범용 산업용 제어기, 표준 통신 게이트웨이, 하드웨어 나눗셈기 탑재."
+          },
+          {
+            "core": "Cortex-M4",
+            "pipeline": "3-stage in-order",
+            "fpu": "단정밀도(Single-Precision, FPv4-SP)",
+            "target": "디지털 신호 제어, 모터 FOC 벡터 제어, 1사이클 MAC 및 SIMD 명령어 지원."
+          },
+          {
+            "core": "Cortex-M7",
+            "pipeline": "6-stage superscalar (듀얼 이슈)",
+            "fpu": "단정밀도/배정밀도(Double-Precision, FPv5)",
+            "target": "최대 480~600MHz 고성능 산업용 HMI, 고정밀 오디오 DSP, L1 캐시 및 DTCM/ITCM 내장."
+          },
+          {
+            "core": "Cortex-M33 / M55",
+            "pipeline": "3-stage / 4-stage",
+            "fpu": "FPv5 + Helium 벡터 확장(M55)",
+            "target": "ARM TrustZone 하드웨어 보안 격리, 온디바이스 에지 TinyML 추론 가속."
+          }
+        ],
+        "riscvAlternative": "오픈소스 RISC-V ISA (RV32IMAFCB)는 라이선스 비용 없이 전용 연산 명령어(Custom Extension)를 추가할 수 있어, 최근 모터 제어 전용 코어 및 자동차용 락스텝 코어로 급속 확산 중 (예: ESP32-C3/C6, SiFive FE310).",
+        "hardwareSubsystems": [
+          "중첩 벡터형 인터럽트 제어기 (NVIC): 하드웨어 기반 인터럽트 우선순위 판정, 테일 체이닝(Tail-chaining: 인터럽트 복귀 시 레지스터 팝 생략 후 바로 다음 ISR 진입)으로 지연 시간 12사이클 억제.",
+          "직접 메모리 접근 (DMA) 컨트롤러: CPU 개입 없이 ADC 변환 데이터, SPI/UART 통신 버퍼를 메모리로 초고속 순환(Circular Buffer) 전송.",
+          "고분해능 타이머 (HRTIM): 서브 나노초(최대 184ps) PWM 분해능을 제공하여 고주파 공진형 LLC 컨버터 및 위상 천이 풀브리지 정밀 게이트 제어.",
+          "메모리 보호 장치 (MPU): 태스크별 접근 가능 메모리 영역을 하드웨어적으로 강제 분할하여 널 포인터 참조 및 스택 오버플로우 시 버스 폴트(Bus Fault) 발생."
+        ]
+      },
+      "keyEquationsAndMathematicalModels": [
+        {
+          "name": "인터럽트 지연 시간 수식 (Interrupt Latency Equation)",
+          "typesetMath": "T_{\\text{latency}} = T_{\\text{jitter}} + T_{\\text{stacking}} + T_{\\text{tail-chain}} = \\frac{N_{\\text{cycles}}}{f_{\\text{clk}}} \\approx \\frac{12}{f_{\\text{clk}}} \\quad (\\text{ARM Cortex-M 기준})",
+          "description": "외부 핀에서 에지 트리거 신호가 발생한 순간부터 ISR 핸들러의 첫 번째 어셈블리 명령어가 실행되기까지 소요되는 하드웨어 사이클 수."
+        }
+      ],
+      "industryStandardHardwareAndSoftware": "STMicroelectronics STM32H7 / STM32G4 (전력전자 특화), NXP S32K3 / i.MX RT1170 (크로스오버 MCU), TI TMS320F28379D (Delfino 듀얼코어 C2000 DSP), Microchip SAM E70, Espressif ESP32-S3.",
+      "productionPitfallsAndBestPractices": "DMA 버퍼를 L1 데이터 캐시가 활성화된 Cortex-M7에서 운용할 때 캐시 일관성(Coherency) 불일치로 데이터 오염이 발생하므로, DMA 전용 SRAM 영역을 MPU에서 Non-cacheable(Shared)로 설정하거나 명시적 Cache Invalidate/Clean 매크로를 호출해야 합니다.",
+      "curriculumModuleId": "embedded-pillar-1-mcu",
+      "curriculumSummary": "실시간 제어 시스템의 핵심인 ARM Cortex-M4/M7/M33 프로세서 코어 마이크로아키텍처를 심층 분석합니다. 12사이클 고정 지연 시간을 보장하는 중첩 벡터형 인터럽트 제어기(NVIC)의 테일 체이닝(Tail-chaining), 대기 상태(Zero Wait-State) 없는 긴밀 결합 메모리(TCM), 듀얼 뱅크 플래시의 라이브 펌웨어 업데이트(RWW), 원형 DMA 핑퐁 버퍼링 및 고해상도 타이머(HRTIM)를 이용한 서브 나노초 PWM 제어 기법을 마스터합니다.",
+      "curriculumLabTitle": "Bare-Metal Cortex-M4 DMA-driven 1MSPS ADC Audio DSP Streamer",
+      "curriculumObjectives": [
+        "ARM Cortex-M 파이프라인 구조와 3단계/6단계 슈퍼스칼라 분기 예측 동작을 이해할 수 있다.",
+        "NVIC의 12사이클 결정론적 테일 체이닝(Tail-chaining) 및 Late-arriving 인터럽트 선점 메커니즘을 분석할 수 있다.",
+        "ITCM/DTCM 메모리 매핑 및 L1 캐시 일관성(Cache Coherency)과 MPU 메모리 보호 설정을 완수할 수 있다.",
+        "DMA 원형 핑퐁 버퍼 및 ADC 하드웨어 트리거링을 구성하여 CPU 개입 없는 고속 스트리밍 파이프라인을 구축할 수 있다."
+      ]
+    },
+    {
+      "pillarId": "pillar-2-rtos-firmware-kernel",
+      "order": 2,
+      "titleKo": "실시간 운영체제(RTOS) 및 저수준 펌웨어 엔진",
+      "titleEn": "Real-Time Operating Systems (RTOS) & Low-Level Firmware Architecture",
+      "coreArchitecturalPrinciples": "실시간 운영체제는 일반 범용 OS(Windows, Linux)와 달리 '평균 처리량의 극대화'가 아닌 '마감 시간(Deadline)의 결정론적 보장'을 위해 존재합니다. 하드웨어 타이머 틱(SysTick)에 기반한 우선순위 기반 선점형(Preemptive Priority-Based) 스케줄링을 수행하며, 메모리 동적 할당을 지양하고 모든 태스크와 자원을 컴파일 타임에 정적으로 할당하여 단편화와 예측 불가능한 지연을 원천 차단합니다.",
+      "deepTechnicalBreakdown": {
+        "schedulingTheorems": "주기적 실시간 태스크 집합의 스케줄링 가능성은 속도 단조 스케줄링(RMS: 주기가 짧을수록 높은 우선순위 부여)과 최단 마감시간 우선(EDF) 정리로 엄밀히 입증됩니다.",
+        "concurrencyAndSynchronization": [
+          "세마포어(Semaphore): 이진(Binary) 세마포어를 통한 인터럽트-태스크 간 지연 작업 동기화, 카운팅(Counting) 세마포어를 통한 유한 자원 풀 관리.",
+          "뮤텍스(Mutex): 상호 배제 락으로, 우선순위 역전(Priority Inversion) 방지를 위한 우선순위 상속(Priority Inheritance) 프로토콜 필수 지원.",
+          "메시지 큐(Message Queue): 스레드 안전(Thread-Safe)한 FIFO 링 버퍼를 통해 ISR과 태스크 간 복사(Copy-by-Value/Reference) 방식으로 데이터 교환.",
+          "이벤트 그룹(Event Groups): 24비트 플래그의 비트 단위 OR/AND 대기 연산을 통한 다중 조건 분기 동기화."
+        ],
+        "productionRTOSMatrix": [
+          {
+            "rtos": "FreeRTOS",
+            "footprint": "4~9 KB ROM, < 1 KB RAM",
+            "scheduler": "선점형 라운드로빈 우선순위",
+            "features": "오픈소스 글로벌 표준, AWS IoT 통합, 정적 메모리 할당(FreeRTOS v10+)."
+          },
+          {
+            "rtos": "Zephyr RTOS",
+            "footprint": "15~50 KB ROM",
+            "scheduler": "다중 선점/협력 스케줄러",
+            "features": "리눅스 재단 주도, DeviceTree & Kconfig 기반 하드웨어 추상화, BLE/IPv6 네이티브 스택."
+          },
+          {
+            "rtos": "AUTOSAR Classic (CP)",
+            "footprint": "모듈별 수십~수백 KB",
+            "scheduler": "OSEK/VDX 기반 정적 우선순위",
+            "features": "차량용 ISO 26262 ASIL-D 표준, BSW/RTE/MCAL 3계층 아키텍처, 캔 통신 스택 통합."
+          }
+        ],
+        "bareMetalBootFlow": [
+          "전원 인가 및 리셋 벡터 페치: 하드웨어가 0x0000_0000 번지에서 주 스택 포인터(MSP) 초기값 로드 후 0x0000_0004 번지의 Reset_Handler 주소로 PC 점프.",
+          "스타트업 어셈블리 (.s): 시스템 클록 PLL 설정, FPU 코프로세서 활성화 (CPACR 레지스터).",
+          "C 런타임 환경 초기화: Flash에 저장된 초기화 변수(.data 섹션)를 SRAM으로 메모리 복사, 미초기화 변수(.bss 섹션)를 0으로 memset 루프 수행.",
+          "링커 스크립트 (.ld): FLASH, RAM, CCM-RAM, DTCM의 시작 주소와 크기를 정의하고, 힙(Heap)과 스택(Stack)의 충돌 방지 경계선 확정.",
+          "main() 함수 진입 및 RTOS 커널 스케줄러 기동 (vTaskStartScheduler())."
+        ]
+      },
+      "keyEquationsAndMathematicalModels": [
+        {
+          "name": "류-레이랜드 속도 단조 스케줄링(RMS) 최대 CPU 이용률 상한식 (Liu-Layland Bound)",
+          "typesetMath": "U = \\sum_{i=1}^{n} \\frac{C_i}{T_i} \\le n \\left(2^{1/n} - 1\\right), \\quad \\lim_{n \\to \\infty} U \\approx \\ln 2 \\approx 69.3\\%",
+          "description": "$n$개의 독립적인 주기적 실시간 태스크 집합에서 각 태스크의 최악 실행 시간 $C_i$와 주기 $T_i$에 대해, 이 부등식을 만족하면 어떤 상황에서도 모든 태스크의 마감 시간 준수가 수학적으로 보장됨."
+        }
+      ],
+      "industryStandardHardwareAndSoftware": "GCC ARM Embedded Toolchain, IAR Embedded Workbench for ARM, Keil MDK-ARM, SEGGER Embedded Studio, PC-lint Plus (MISRA C:2012 준수 검사).",
+      "productionPitfallsAndBestPractices": "우선순위 역전(Priority Inversion) 방지: 낮은 우선순위 태스크가 뮤텍스를 쥔 채 중간 우선순위 태스크에 의해 선점되면 고우선순위 태스크가 무한 대기하는 현상이 발생하므로, 반드시 우선순위 상속(Priority Inheritance) 속성이 켜진 뮤텍스를 사용해야 합니다.",
+      "curriculumModuleId": "embedded-pillar-2-rtos",
+      "curriculumSummary": "선점형 우선순위 스케줄링(Preemptive Priority Scheduling), Rate Monotonic Scheduling(RMS)의 Liu-Layland 스케줄링 가능성 경계 조건, 우선순위 역전(Priority Inversion)과 우선순위 상속 프로토콜(PIP), FreeRTOS 커널 내부 구조(TCB, 준비 큐, vTaskDelayUntil의 지터 없는 주기 보장, 세마포어와 뮤텍스의 본질적 차이) 및 GCC 링커 스크립트(.ld)를 통한 메모리 섹션 배치와 MPU 기반 제로 카피 펌웨어 아키텍처를 심층 마스터합니다.",
+      "curriculumLabTitle": "Zero-Copy Multi-Task FreeRTOS Sensor Hub with Priority Inheritance Mutex",
+      "curriculumObjectives": [
+        "Liu-Layland RMS 스케줄링 수식을 적용하여 멀티태스크 시스템의 실시간 마감 시간(Deadline) 충족을 수학적으로 증명할 수 있다.",
+        "우선순위 역전(Priority Inversion) 현상을 분석하고 우선순위 상속(Priority Inheritance) 뮤텍스를 구현할 수 있다.",
+        "FreeRTOS 커널 원시 프리미티브(vTaskDelayUntil, xQueueSend, EventGroup)를 사용하여 지터 없는 제어 태스크를 설계할 수 있다.",
+        "GCC 링커 스크립트(.ld)에서 .text, .rodata, .data, .bss, 스택 및 힙 영역을 정의하고 메모리 누수 및 스택 오버플로를 방어할 수 있다."
+      ]
+    },
+    {
+      "pillarId": "pillar-3-interconnect-bus-protocols",
+      "order": 3,
+      "titleKo": "임베디드 상호연결 및 버스/네트워크 프로토콜",
+      "titleEn": "Interconnect & Bus Protocols (Chip-level to Industrial Network)",
+      "coreArchitecturalPrinciples": "임베디드 시스템 내외부의 데이터 교환은 전송 거리, 대역폭, 노이즈 내성, 신호선 수의 트레이드오프에 따라 다층적으로 구성됩니다. 칩 내부 보드 레벨에서는 핀 수를 줄이는 직렬 동기 버스(SPI, I2C)가 지배적이며, 차량 및 산업 플랜트에서는 공통 모드 노이즈(Common-Mode Noise)를 물리적으로 상쇄하는 차동 전압(Differential Signaling) 기반의 강력한 필드버스(CAN, RS-485, Industrial Ethernet)가 요구됩니다.",
+      "deepTechnicalBreakdown": {
+        "boardLevelBuses": [
+          {
+            "bus": "UART / USART",
+            "type": "비동기 직렬 (Tx, Rx 2선)",
+            "dataRate": "최대 10 Mbps",
+            "features": "시작 비트(0), 8 데이터 비트, 패리티 비트, 정지 비트(1). 송수신 클록 비동기화로 인해 클록 오차율 허용 한계는 반드시 2% 이내여야 함."
+          },
+          {
+            "bus": "I2C (Inter-Integrated Circuit)",
+            "type": "동기 양방향 오픈 드레인 (SDA, SCL 2선)",
+            "dataRate": "100k (Standard), 400k (Fast), 1M (Fast+), 3.4M (High-Speed)",
+            "features": "7비트/10비트 슬레이브 주소 지정, 클록 스트레칭(Clock Stretching) 지원, 풀업 저항($R_p$) 필수 연결."
+          },
+          {
+            "bus": "SPI (Serial Peripheral Interface)",
+            "type": "전이중 동기 4선식 (SCLK, MOSI, MISO, CS#)",
+            "dataRate": "최대 50~100 MHz",
+            "features": "마스터-슬레이브 구조, CPOL(클록 극성) 및 CPHA(클록 위상) 조합에 따른 4가지 모드(Mode 0~3), 프로토콜 오버헤드가 없어 초고속 센서/플래시 통신에 적합."
+          },
+          {
+            "bus": "QSPI / OSPI",
+            "type": "Quad (4-bit) / Octal (8-bit) SPI",
+            "dataRate": "최대 200~400 MB/s",
+            "features": "DDR(Double Data Rate) 전송 지원, XIP(eXecute-In-Place) 기능을 통해 외장 NOR 플래시 메모리에 있는 펌웨어 코드를 내부 SRAM 복사 없이 직접 실행."
+          }
+        ],
+        "fieldAndAutomotiveBuses": [
+          {
+            "bus": "CAN (Controller Area Network) 2.0B",
+            "topology": "차동 2선 (CAN_H, CAN_L), 양단 $120\\Omega$ 종단 저항",
+            "speed": "최대 1 Mbps (40m 이내)",
+            "arbitration": "CSMA/CD 비파괴 비트 단위 우선순위 중재 (도미넌트 0이 리세시브 1을 덮어씀), 11비트(표준)/29비트(확장) ID, 8바이트 페이로드, CRC-15."
+          },
+          {
+            "bus": "CAN-FD (Flexible Data-rate)",
+            "topology": "CAN과 동일한 물리 계층",
+            "speed": "중재 구간 500 kbps, 데이터 페이로드 구간 2~8 Mbps 가속",
+            "arbitration": "최대 64바이트 페이로드 지원, BRS(Bit Rate Switch) 비트를 통해 데이터 전송 구간에서만 클록을 배속하여 전송 효율 대폭 증대."
+          },
+          {
+            "bus": "RS-485 & Modbus RTU",
+            "topology": "차동 반이중 2선 (A, B), 멀티드롭 버스",
+            "speed": "최대 10 Mbps (장거리 시 1.2km @ 100kbps)",
+            "arbitration": "마스터-슬레이브 폴링 구조, $-7\\text{V} \\sim +12\\text{V}$ 넓은 공통 모드 전압 수용 능력, CRC-16 에러 검출, 산업용 인버터 및 PLC 표준."
+          },
+          {
+            "bus": "산업용 이더넷 (EtherCAT)",
+            "topology": "표준 이더넷 100BASE-TX (CAT5e 전이중)",
+            "speed": "100 Mbps 실시간 처리",
+            "arbitration": "On-the-fly 프레임 처리 (슬레이브 칩이 이더넷 프레임을 수신하면서 지연 없이 즉각 데이터를 읽고 쓴 후 다음 노드로 전달), 마이크로초 이하 동기화."
+          }
+        ]
+      },
+      "keyEquationsAndMathematicalModels": [
+        {
+          "name": "I2C 버스 풀업 저항 허용 범위 산출 공식 (I2C Pull-Up Resistor Limits)",
+          "typesetMath": "R_{p,\\min} = \\frac{V_{\\text{dd}} - V_{ol}}{I_{ol}}, \\quad R_{p,\\max} = \\frac{t_r}{0.8473 \\cdot C_{\\text{bus}}}",
+          "description": "$V_{ol}, I_{ol}$: 출력 로우 전압 및 싱크 전류, $t_r$: 표준 규격 최대 상승 시간(Fast Mode 기준 300ns), $C_{\\text{bus}}$: 모든 핀 및 PCB 트레이스 기생 커패시턴스의 총합. 이 범위 내에서 풀업 저항을 선정해야 신호 왜곡 및 통신 단절을 방지."
+        }
+      ],
+      "industryStandardHardwareAndSoftware": "Microchip MCP2515/MCP2518 (외장 CAN/CAN-FD 컨트롤러), TI TCAN1042 / TJA1051 (CAN 트랜시버), Maxim MAX485 (RS-485), Beckhoff ET1100 (EtherCAT 슬레이브 ASIC).",
+      "productionPitfallsAndBestPractices": "I2C 버스 락업(Bus Lockup): 슬레이브가 SDA 핀을 로우(Low)로 당긴 상태에서 마스터 MCU가 리셋되면 SDA 라인이 영구적으로 멈추는 현상이 발생합니다. 해결책으로 부팅 시 SCL 라인에 9개 이상의 클록 펄스를 소프트웨어 GPIO 토글로 인가하여 슬레이브의 내부 FSM을 강제 초기화해야 합니다.",
+      "curriculumModuleId": "embedded-pillar-3-bus",
+      "curriculumSummary": "칩 내부 레지스터 제어부터 자동차/산업용 분산 네트워크까지 아우르는 직렬 통신 프로토콜을 다룹니다. UART 보레이트 오차율 계산, I2C 오픈 드레인 풀업 저항 상한/하한 계산 및 슬레이브 버스 멈춤(Hang-up) 9-클록 복구 시퀀스, SPI 4가지 모드(CPOL, CPHA) 타이밍, 그리고 ISO 11898 표준 CAN 2.0B 및 CAN-FD의 우성/열성 비트 중재 메커니즘과 전파 지연 예산(Propagation Delay Budget) 설계를 심층 학습합니다.",
+      "curriculumLabTitle": "High-Speed CAN-FD to SPI Gateway with Hardware CRC Verification",
+      "curriculumObjectives": [
+        "UART 클록 분주기(BRR) 분수 분주 연산 및 허용 누적 보레이트 오차 한계(±2%)를 검증할 수 있다.",
+        "I2C 버스 커패시턴스(Cb)와 상승 시간(tr) 제약 조건에 따른 풀업 저항(Rp,min, Rp,max)을 정량 계산하고 9-클록 SDA 복구 루틴을 구현할 수 있다.",
+        "SPI 모드 0, 1, 2, 3의 클록 극성(CPOL)과 위상(CPHA)에 따른 셋업/홀드 타이밍 마진을 분석할 수 있다.",
+        "CAN/CAN-FD 비트 타이밍 세그먼트(Sync, Prop, Phase1, Phase2)와 비파괴 비트 중재 및 전파 지연 마진을 설계할 수 있다."
+      ]
+    },
+    {
+      "pillarId": "pillar-4-jtag-debugging-trace",
+      "order": 4,
+      "titleKo": "온칩 디버깅, 추적 장비 및 하드웨어 인더루프(HIL)",
+      "titleEn": "On-Chip Debugging, Trace Infrastructure & Hardware-in-the-Loop",
+      "coreArchitecturalPrinciples": "현대 SoC/MCU는 수백 핀의 BGA 패키지로 실장되어 외부에서 내부 신호를 오실로스코프로 직접 프로빙하는 것이 불가능합니다. 따라서 실리콘 내부에 IEEE 1149.1 JTAG 및 ARM CoreSight 온칩 디버그 매크로셀을 집적하여, CPU 코어를 중단(Halt)시키고 레지스터와 메모리를 비침습적으로 관찰하며, 실행 흐름을 실시간으로 무손실 추적(Trace)하는 하드웨어 디버그 인프라가 필수적입니다.",
+      "deepTechnicalBreakdown": {
+        "jtagTapArchitecture": [
+          "JTAG 5대 물리 신호: TCK(클록), TMS(모드 선택), TDI(데이터 입력), TDO(데이터 출력), nTRST(선택적 비동기 리셋).",
+          "TAP(Test Access Port) 컨트롤러 16-상태 유한 상태 기계(FSM): Test-Logic-Reset, Run-Test/Idle, Select-DR-Scan, Capture-DR, Shift-DR, Exit1-DR, Pause-DR, Exit2-DR, Update-DR 및 IR 스캔 분기.",
+          "경계 스캔(Boundary Scan) 레지스터 (BSR): 칩의 각 I/O 패드와 내부 로직 사이에 스캔 셀을 삽입하여, 칩을 기판에서 떼어내지 않고도 EXTEST 명령어로 PCB 트레이스의 단선(Open) 및 납땜 단락(Bridge)을 전기적으로 100% 검출."
+        ],
+        "swdProtocol": "ARM 전용 직렬 와이어 디버그(Serial Wire Debug): 기존 5핀 JTAG을 단 2선(SWDIO: 양방향 데이터, SWCLK: 클록)으로 축소. 패킷 기반 트랜잭션과 패리티 비트 검증을 통해 핀 수가 제한된 소형 패키지에서 고속 디버깅 제공.",
+        "realTimeTracing": [
+          "ITM (Instrumentation Trace Macrocell): 소스코드 내 `printf` 디버그 문자열을 소프트웨어 레지스터에 기록하면 CPU 정지 없이 SWO(단선 출력) 핀으로 전송.",
+          "DWT (Data Watchpoint and Trace): 특정 변수 메모리 주소에 데이터 쓰기가 발생할 때 하드웨어 워치포인트를 가동하여 변수 변경 이력 실시간 로깅.",
+          "ETM (Embedded Trace Macrocell): 프로세서가 실행하는 모든 명령어의 분기 경로와 사이클을 전용 병렬 고속 트레이스 포트(Trace Port)로 실시간 스트리밍하여 완전한 코드 커버리지(MC/DC) 분석."
+        ],
+        "hilSimulationTesting": [
+          "개념: 실제 제어기(ECU/MCU) 하드웨어를 실제 전동기나 배터리 팩 대신 수학적 동특성 모델을 실시간 구동하는 FPGA 시뮬레이터와 물리적 입출력 와이어로 연결.",
+          "고장 주입(Fault Injection): 전원 단락, 접지 단락, 센서 신호 단선, 와이어 노이즈 왜곡을 안전한 실험실 환경에서 인위적으로 주입하여 ISO 26262 기능 안전성 검증."
+        ]
+      },
+      "keyEquationsAndMathematicalModels": [
+        {
+          "name": "JTAG 클록 분주 및 최대 디버그 대역폭 수식",
+          "typesetMath": "f_{\\text{TCK,max}} \\le \\frac{f_{\\text{CPU}}}{6} \\quad (\\text{동기화 마진}), \\quad \\text{Throughput} = \\frac{32 \\text{ bits}}{35 \\text{ cycles}} \\times f_{\\text{TCK}}",
+          "description": "온칩 디버그 모듈(AP) 내부 클록 동기화 제약으로 인해 CPU 주파수에 따라 설정 가능한 최대 JTAG/SWD 클록 주파수와 실효 메모리 읽기/쓰기 대역폭."
+        }
+      ],
+      "industryStandardHardwareAndSoftware": "SEGGER J-Link PRO / Ultra+, STMicroelectronics ST-LINK V3, Lauterbach TRACE32 (자동차 및 방산 표준 하이엔드 디버거), dSPACE SCALEXIO / Speedgoat 실시간 HIL 타깃 머신, Vector CANoe.",
+      "productionPitfallsAndBestPractices": "양산 펌웨어 릴리스 시 JTAG/SWD 핀의 물리적 잠금(Readout Protection, ROP Level 2): 보안 퓨즈를 설정하지 않고 출하할 경우 해커가 JTAG 포트를 통해 플래시 메모리 전체를 덤프하거나 지적 재산권(IP)을 탈취할 수 있으므로, 최종 양산 플래싱 단계에서 디버그 포트를 영구 비활성화해야 합니다.",
+      "curriculumModuleId": "embedded-pillar-4-debug",
+      "curriculumSummary": "실리콘 칩 내부의 실행 상태를 외부 정지 없이 투명하게 관찰하고 양산 결함을 진단하는 IEEE 1149.1 JTAG 16-상태 TAP Controller 유한상태머신(FSM), 경계 스캔 레지스터(BSR)를 통한 BSDL 기반 PCB 오픈/쇼트 자동 검사, 2선식 SWD(Serial Wire Debug) 프로토콜, ETM/ITM 실시간 명령어 하드웨어 트레이스 및 차량용 HIL(Hardware-in-the-Loop) 실시간 검증 환경을 총체적으로 다룹니다.",
+      "curriculumLabTitle": "Automated JTAG Boundary Scan Test & ETM Real-Time Profiling",
+      "curriculumObjectives": [
+        "IEEE 1149.1 표준 JTAG TAP 컨트롤러 16개 상태 전이도(FSM)와 TMS 신호 제어 시퀀스를 완벽히 분석할 수 있다.",
+        "경계 스캔 레지스터(BSR) 및 BSDL 파일을 활용하여 BGA 패키지 하단 냉땜 및 배선 단락 결함을 진단할 수 있다.",
+        "SWD 2선식(SWCLK, SWDIO) 패킷 구조와 패리티/턴어라운드(Turnaround) 비트 타이밍을 디코드할 수 있다.",
+        "ARM ETM(Embedded Trace Macrocell)을 구성하여 CPU 동작 정지(Halt) 없는 실시간 인스트럭션 추적 및 프로파일링을 수행할 수 있다."
+      ]
+    },
+    {
+      "pillarId": "pillar-5-pcb-hardware-design",
+      "order": 5,
+      "titleKo": "고신뢰성 PCB 회로 설계 및 신호/전력 무결성 (SI/PI)",
+      "titleEn": "High-Speed PCB Circuit Design & Signal/Power Integrity (SI/PI)",
+      "coreArchitecturalPrinciples": "신호의 상승 시간(Rise Time, $t_r$)이 신호선 전파 지연 시간($t_d$)의 2배 미만으로 짧아지는 순간, PCB 트레이스는 더 이상 이상적인 단락 회로가 아니라 '분포 정수 전송선로(Transmission Line)'로 돌변합니다. 고속 PCB 설계의 핵심은 연속적인 접지 기준면(GND Reference Plane)을 유지하여 신호 리턴 전류 경로(Return Current Path) 루프 면적을 극소화하고, 전원 분배망(PDN)의 임피던스를 전 주파수 대역에서 타깃 임피던스 이하로 평탄화하는 것입니다.",
+      "deepTechnicalBreakdown": {
+        "multilayerStackup": [
+          "4계층 표준 스택업: Layer 1 (고속 신호) - Layer 2 (완전 접지면 GND) - Layer 3 (전원면 Power) - Layer 4 (저속 제어 신호).",
+          "6/8계층 고속 스택업: Signal - GND - Signal - Power - GND - Signal 구조로 구성하여 모든 고속 신호선이 최소 하나의 완전한 접지 기준면과 얇은 절연체(Prepreg)를 사이에 두고 바로 인접하도록 배치."
+        ],
+        "signalIntegrityMechanisms": [
+          "반사(Reflection) 방지: 소스 측 직렬 종단 저항($R_s = Z_0 - R_{\\text{driver}}$)을 드라이버 핀 바로 앞에 배치하여 전송선로 입력단에서 반사파 흡수.",
+          "크로스토크(Crosstalk) 억제: 3W 규칙 준수(두 신호 트레이스 중심 간 간격 $S \\ge 3W$). 가드 트레이스(Guard Trace) 및 비아 스티칭 배치.",
+          "차동 페어(Differential Pair) 라우팅: USB, CAN, PCIe, 이더넷 라우팅 시 두 신호선 간의 차동 임피던스($100\\Omega \\pm 10\\%$) 유지, 인트라 페어 스큐(Intra-pair Skew) 길이 오차 $\\le 5\\text{ mil}$ 엄격 매칭."
+        ],
+        "powerIntegrityDesign": [
+          "PDN 타깃 임피던스: 전원 노이즈 허용 리플($\\Delta V$)과 순간 최대 스위칭 전류($\\Delta I$)로부터 $Z_{\\text{target}}$ 도출.",
+          "다단계 디커플링 커패시터 어레이: 벌크 탄탈/전해 커패시터($10\\sim 100\\mu\\text{F}$, 저주파 수십 kHz 보상) $\\to$ 고주파 MLCC($0.1\\mu\\text{F} \\sim 1\\mu\\text{F}$, 수십 MHz 보상) $\\to$ 초저 ESL 0402/0201 커패시터(수백 MHz 보상)를 MCU 전원 핀 바로 밑 비아에 직결 실장."
+        ],
+        "emcEsdProtection": [
+          "ESD 방호: 커넥터 입력부에 초저 커패시턴스($<0.5\\text{pF}$) TVS(Transient Voltage Suppressor) 다이오드를 배치하여 8kV 접촉 방전 차단.",
+          "공통 모드 초크(CMC): 고속 차동 통신 라인의 동위상 스위칭 노이즈 방사 차단."
+        ]
+      },
+      "keyEquationsAndMathematicalModels": [
+        {
+          "name": "표면 마이크로스트립 라인 특성 임피던스 경험식 (IPC-2141 Microstrip Impedance)",
+          "typesetMath": "Z_{0,\\text{microstrip}} \\approx \\frac{87}{\\sqrt{\\varepsilon_r + 1.41}} \\ln \\left( \\frac{5.98 \\, h}{0.8 \\, w + t} \\right) \\quad [\\Omega]",
+          "description": "$h$: 신호선과 접지면 사이 유전체 두께, $w$: 트레이스 폭, $t$: 동박 두께(1 oz = 35µm), $\\varepsilon_r$: FR-4 기판 비유전율($\\approx 4.2 \\sim 4.5$). 트레이스 폭과 절연체 두께의 비율로 $50\\Omega$ 임피던스를 정밀 설계."
+        },
+        {
+          "name": "전송선로 전압 반사 계수 공식 (Transmission Line Reflection Coefficient)",
+          "typesetMath": "\\Gamma = \\frac{Z_L - Z_0}{Z_L + Z_0}, \\quad V_{\\text{reflected}} = \\Gamma \\cdot V_{\\text{incident}}",
+          "description": "$Z_L$: 부하 단자 임피던스, $Z_0$: 전송선로 특성 임피던스. $Z_L = Z_0$일 때 $\\Gamma = 0$이 되어 신호 반사 및 링잉(Ringing)이 완전히 소멸."
+        },
+        {
+          "name": "전원 분배망 타깃 임피던스 공식 (PDN Target Impedance Equation)",
+          "typesetMath": "Z_{\\text{target}} = \\frac{V_{\\text{dd}} \\times \\Delta V_{\\text{ripple}}\\%}{\\Delta I_{\\text{transient}}} = \\frac{0.8\\text{ V} \\times 5\\%}{10\\text{ A}} = 4\\text{ m}\\Omega",
+          "description": "디지털 코어가 순간적으로 과도 스위칭 전류를 소모할 때 전원 전압이 허용 리플 마진을 벗어나지 않기 위해 PDN이 만족해야 하는 최대 임피던스 상한값."
+        }
+      ],
+      "industryStandardHardwareAndSoftware": "Altium Designer, Cadence Allegro PCB Editor, Siemens PADS Professional, KiCad (오픈소스), ANSYS SIwave / HFSS (3D 전자기계 및 고속 SI/PI 시뮬레이션).",
+      "productionPitfallsAndBestPractices": "접지면 분할(Split Ground Plane) 슬릿 횡단: 신호선이 분할된 아날로그 접지와 디지털 접지 사이의 빈 공간을 건너갈 경우, 리턴 전류가 거대한 루프를 형성하여 루프 인덕턴스가 폭증하고 극심한 EMI 방사 및 신호 링잉을 유발합니다. 고속 신호선은 반드시 단일의 연속된 기준 접지면 위로만 배선해야 합니다.",
+      "curriculumModuleId": "embedded-pillar-5-pcb",
+      "curriculumSummary": "수백 MHz부터 수 GHz 고주파 디지털 회로의 신호 품질을 결정짓는 고신뢰성 다층 PCB 설계 기술을 다룹니다. 마이크로스트립(Microstrip) 및 스트립라인(Stripline)의 50옴 특성 임피던스(Z0) 수식 유도, 전송선로 반사 계수(Gamma)와 종단 저항(Termination), 3W 크로스토크 억제 규칙, 차동 신호 쌍(Differential Pair) 등길이 스큐 매칭, 그리고 전력 분배망(PDN) 목표 임피던스(Ztarget) 및 디커플링 커패시터 공진 주파수(SRF) 최적화를 종합 분석합니다.",
+      "curriculumLabTitle": "6-Layer DDR4/Ethernet High-Speed PCB Layout & PDN Decoupling Optimization",
+      "curriculumObjectives": [
+        "FR-4 유전율(Er)과 층간 높이(h), 동박 두께(t)를 기반으로 50옴 마이크로스트립 배선 폭(w)을 정밀 계산할 수 있다.",
+        "전송선로 반사 계수(Gamma)를 계산하고 스터브 및 종단 저항(직렬 댐핑, 병렬 테브난)을 배치할 수 있다.",
+        "차동 신호선(LVDS, USB, Ethernet, DDR)의 인트라 페어 스큐(Intra-pair Skew)를 피코초 단위로 길이 매칭할 수 있다.",
+        "PDN 목표 임피던스(Ztarget)를 계산하고 초저 ESL 디커플링 커패시터 배치를 통해 스위칭 노이즈(Power Sag)를 억제할 수 있다."
+      ]
+    }
+  ],
+  "powerGridRoadmap": [
+    {
+      "stageId": "stage-1-power-flow-grid",
+      "order": 1,
+      "titleKo": "전력 조류 계산 및 계통 해석 (Power Flow & Grid Analysis)",
+      "titleEn": "Power Flow & Grid Analysis",
+      "roleDefinition": "대규모 복합 전력망의 정상 상태 운용 전압, 전류 및 전력 조류를 해석하기 위해 비선형 전력 방정식을 정식화하고 뉴턴-랩슨법으로 해를 도출하는 계통 계획 및 운용 엔지니어링 과정",
+      "keyCareerProfiles": [
+        "전력계통 해석 엔지니어 (Power Systems Analysis Engineer)",
+        "EMS/SCADA 계통 운영관제사 (Grid Operations Specialist)",
+        "송전망 확장 계획 연구원 (Transmission Planning Researcher)",
+        "계통 해석 소프트웨어 개발자 (Power Flow Solver Developer)"
+      ],
+      "requiredCompetencies": [
+        "모선 어드미턴스 행렬(Y_bus) 구축 및 희소 행렬 연산 능력",
+        "Slack, PV, PQ 모선 분류 및 비선형 전력 불일치량 계산",
+        "자코비안(Jacobian) 행렬 구성 및 뉴턴-랩슨 수치해석 구현",
+        "발전기 무효전력(Q-Limit) 한계 위반 시 모선 전환 제어 기법"
+      ],
+      "industryStandardToolchain": [
+        "PSS/E (Siemens Power System Simulator for Engineering)",
+        "ETAP (Electrical Transient Analyzer Program)",
+        "MATPOWER / pandapower (Python/MATLAB Grid Solvers)",
+        "DIgSILENT PowerFactory"
+      ],
+      "stepByStepWorkflow": [
+        "1. 송전선로 파이 등가 파라미터 및 변압기 탭비 데이터 취합",
+        "2. 대규모 모선 어드미턴스 행렬 Y_bus 토폴로지 구축",
+        "3. Slack, PV, PQ 모선 초기 추정값 설정 (Flat Start: 1.0 p.u., 0도)",
+        "4. 전력 불일치 벡터 및 자코비안 편미분 행렬 계산",
+        "5. LU 분해를 통한 모선 전압 크기/위상각 갱신 및 2차 수렴 판정",
+        "6. 선로 조류 및 과부하 마진(MVA Thermal Rating) 사인오프"
+      ],
+      "coreMathAndPhysicsFormulas": [
+        "모선 전력 조류 방정식: P_i = |V_i| sum |V_k| (G_ik cos theta_ik + B_ik sin theta_ik)",
+        "자코비안 행렬 연립방정식: [Delta P, Delta Q]^T = J * [Delta delta, Delta |V|/|V|]^T"
+      ],
+      "signoffMetricsAndKPIs": [
+        "최대 전력 불일치량(Mismatch) < 1.0e-5 p.u. 이내 수렴",
+        "모든 모선 전압 프로파일이 정격의 0.95 ~ 1.05 p.u. 유지",
+        "모든 송전선로 용량 점유율 80% 이하 (N-1 상정고장 안전율 확보)"
+      ],
+      "modernIndustryPractices": "재생에너지 변동성에 대응하기 위해 정적 조류 계산을 넘어 초당 수십 회의 준동적(Quasi-Dynamic) 시계열 조류 해석과 DC 최적 조류 계산(OPF)이 계통 관제에 기본 적용되고 있습니다.",
+      "curriculumModuleId": "power-stage-1-flow",
+      "curriculumSummary": "대규모 복합 전력망의 정상 상태(Steady-State) 운용을 해석하는 전력 조류(Power Flow) 해석 기법을 심층적으로 다룹니다. 모선 어드미턴스 행렬(Y_bus)의 토폴로지 구축, 슬랙 모선(Slack), 발전기 모선(PV), 부하 모선(PQ)의 수학적 정식화, 뉴턴-랩슨(Newton-Raphson) 2차 비선형 수치해석 알고리즘, 자코비안(Jacobian) 행렬 구성 및 유효/무효 전력 불일치량(Mismatch) 수렴 판정을 다룹니다.",
+      "curriculumLabTitle": "IEEE 14-Bus Newton-Raphson Power Flow Solver Implementation",
+      "curriculumObjectives": [
+        "송전선로 파이(pi) 등가 모델과 변압기 탭비를 반영한 대규모 모선 어드미턴스 행렬(Y_bus)을 구축할 수 있다.",
+        "슬랙(Slack), PV, PQ 모선의 기지량과 미지량을 정의하고 전력 수급 비선형 연립 방정식을 정식화할 수 있다.",
+        "자코비안(Jacobian) 편미분 행렬의 4개 서브 블록(J11, J12, J21, J22)을 유도하고 수치해석적 성질을 분석할 수 있다.",
+        "IEEE 14-모선 계통을 대상으로 뉴턴-랩슨 조류 계산기를 구현하고 모선 전압 프로파일과 선로 조류/손실을 분석할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-2-faults-protection",
+      "order": 2,
+      "titleKo": "대칭 좌표법 및 전력 보호 계전 시스템 (Symmetrical Faults & Protection)",
+      "titleEn": "Symmetrical Faults & Protection Systems",
+      "roleDefinition": "낙뢰, 절연 파괴 등으로 발생하는 3상 대칭 단락 및 1선 지락 고장을 대칭 좌표법으로 정량 해석하고, 디지털 보호 계전기(IED)와 차단기 간의 반한시 시간 협조 및 비율 차동 보호를 설계하는 전력 보호 엔지니어링 과정",
+      "keyCareerProfiles": [
+        "보호 계전기 설계 엔지니어 (Protection & Control Engineer)",
+        "변전소 시운전 및 계전 시험원 (Substation Relay Commissioning Engineer)",
+        "고장 진단 및 사고 분석관 (Fault Analysis Specialist)",
+        "전력 설비 신뢰성 평가원 (Grid Reliability Assessor)"
+      ],
+      "requiredCompetencies": [
+        "Fortescue 대칭 좌표법(영상, 정상, 역상) 불평형 고장 해석",
+        "1선 지락 고장 시 3개 대칭 회로망 직렬 결합 및 단락 전류 계산",
+        "ANSI 50/51 과전류 계전기 TCC 곡선 설계 및 CTI 시간 협조 마진 확보",
+        "ANSI 87 변압기 비율 차동 보호 및 2차 고조파 여자 돌입 억동 설계"
+      ],
+      "industryStandardToolchain": [
+        "SEL-5030 AcSELerator QuickSet (Schweitzer Engineering Labs)",
+        "OMICRON Test Universe (계전기 시험 자동화 장비)",
+        "ETAP Relay Coordination Module",
+        "ASPEN OneLiner (고장 해석 전문 소프트웨어)"
+      ],
+      "stepByStepWorkflow": [
+        "1. 전원, 변압기, 송전선의 정상/역상/영상 임피던스 데이터베이스 구축",
+        "2. 3상 단락 및 1선 지락(SLG) 최대/최소 고장 전류 산출",
+        "3. 변류기(CT) 포화 여부 및 2차 회로 부담(Burden) 검증",
+        "4. 하류 및 상류 ANSI 51 과전류 계전기 픽업 및 시간 다이얼(TDS) 설정",
+        "5. 상하류 협조 시간 간격(CTI >= 0.3초) TCC 곡선 시뮬레이션",
+        "6. ANSI 87 비율 차동 계전기 듀얼 슬로프 및 고조파 억동 파라미터 정정"
+      ],
+      "coreMathAndPhysicsFormulas": [
+        "Fortescue 대칭 좌표 변환: [Va, Vb, Vc]^T = A * [V0, V1, V2]^T (a = e^(j 2pi/3))",
+        "1선 지락 고장 전류: I_f = 3*I_a0 = 3*E_a / (Z1 + Z2 + Z0 + 3*Zf)",
+        "IEC 60255 과전류 트립 시간: t = [A / ((I/Is)^p - 1)] * TDS"
+      ],
+      "signoffMetricsAndKPIs": [
+        "상하류 계전기간 CTI 마진 >= 0.30초 전 구간 충족",
+        "1선 지락 고장 시 단락 전류 차단 시간 < 0.1초 (주보호 동작 시)",
+        "변압기 여자 돌입 시험 시 2차 고조파 억동으로 인한 오트립 0건"
+      ],
+      "modernIndustryPractices": "디지털 변전소 IED는 종래의 유도형 원판 계전기 대신 초고속 DSP와 광통신을 채택하여 고장 파형을 초당 96샘플 이상 레코딩(COMTRADE)하고 광역 차동 계전(Line Current Differential)을 수행합니다.",
+      "curriculumModuleId": "power-stage-2-faults",
+      "curriculumSummary": "전력 계통에서 낙뢰, 절연 파괴 등으로 발생하는 단락 및 지락 고장을 해석하기 위한 대칭 좌표법(Fortescue Symmetrical Components: 영상, 정상, 역상 분해)과, 변전소 차단기 및 디지털 보호 계전기(IED)의 정합 기술을 다룹니다. 3상 대칭 단락 고장과 1선 지락(SLG: Single Line-to-Ground) 고장 계산, ANSI 50/51 과전류 보호 계전기 반한시 트립 곡선 협조, 그리고 변압기/발전기 내부 단락을 보호하는 ANSI 87 비율 차동 계전기(Percentage Differential Relay) 듀얼 슬로프 설계를 마스터합니다.",
+      "curriculumLabTitle": "Transmission Line 3-Phase Short Circuit & SLG Fault Protection Coordination",
+      "curriculumObjectives": [
+        "Fortescue 변환 행렬을 이용하여 불평형 3상 전압/전류를 정상(Positive), 역상(Negative), 영상(Zero) 대칭 성분으로 분해할 수 있다.",
+        "1선 지락 고장(SLG) 발생 시 3개 대칭 회로망의 직렬 연결 조건을 유도하고 지락 단락 전류 크기를 계산할 수 있다.",
+        "IEC 60255 / IEEE C37.112 표준 반한시성 과전류 계전기(ANSI 51)의 시간-전류 곡선(TCC)과 시간 협조 마진(CTI)을 설계할 수 있다.",
+        "변압기 여자 돌입 전류(Inrush Current)의 2고조파 억동(Second-Harmonic Restraint) 및 ANSI 87 비율 차동 계전기 억동 특성을 구성할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-3-inverters-renewables",
+      "order": 3,
+      "titleKo": "전력 변환 및 신재생 인버터 공학 (Inverters & Renewable Energy)",
+      "titleEn": "Inverters & Renewable Energy Systems",
+      "roleDefinition": "태양광, 풍력, BESS의 직류 전력을 60Hz 대규모 전력망에 고효율·저왜곡으로 주입하기 위해 고속 스위칭 반도체(SiC/GaN), MPPT, 동기 회전 좌표계(dq) 전류 제어 및 LCL 능동 필터를 설계하는 전력전자 제어 과정",
+      "keyCareerProfiles": [
+        "계통연계형 인버터 펌웨어 엔지니어 (Grid-Tied Inverter FW Engineer)",
+        "전력전자 하드웨어 설계자 (Power Electronics Hardware Designer)",
+        "신재생 에너지 계통연계 전문가 (Renewable Interconnection Specialist)",
+        "BESS 전력변환시스템(PCS) 연구원 (Energy Storage PCS Researcher)"
+      ],
+      "requiredCompetencies": [
+        "태양전지 P-V 특성 분석 및 Incremental Conductance MPPT 알고리즘",
+        "Clarke/Park 변환 및 dq 동기 회전 좌표계 비간섭 전류 제어",
+        "SRF-PLL 기반 계통 전압 위상 동기화 및 역률 1.0 제어",
+        "LCL 계통 필터 공진 해석 및 가상 저항 능동 감쇠(Active Damping)"
+      ],
+      "industryStandardToolchain": [
+        "MATLAB/Simulink Simscape Electrical",
+        "PLECS Standalone & Blockset",
+        "TI Code Composer Studio (C2000 DSP MCU)",
+        "dSPACE / RT-LAB (실시간 제어기 HIL)"
+      ],
+      "stepByStepWorkflow": [
+        "1. 태양광 패널 P-V 및 I-V 곡선 모델링과 MPPT 제어기 설계",
+        "2. 3상 2레벨/3레벨 전압형 인버터(VSI) IGBT/SiC 토폴로지 선정",
+        "3. 계통연계 3차 LCL 필터 인덕턴스 및 커패시턴스 파라미터 계산",
+        "4. 3상 계통 전압 추종 SRF-PLL 제어기 이득 주파수 응답 튜닝",
+        "5. dq 회전 좌표계 유효/무효 전류 PI 제어 루프 및 역기전력 피드포워드 구성",
+        "6. 100kW 정격 출력 시 계통 주입 전류 THD < 3% 규격 검증"
+      ],
+      "coreMathAndPhysicsFormulas": [
+        "MPPT 증분 전도도 조건: dI/dV + I/V = 0",
+        "동기 좌표계 전력: P = 1.5 * v_d * i_d,  Q = -1.5 * v_d * i_q",
+        "LCL 공진 주파수: f_res = (1 / 2*pi) * sqrt((L1 + L2) / (L1 * L2 * C))"
+      ],
+      "signoffMetricsAndKPIs": [
+        "계통 주입 전류 총 고조파 왜구율(THD) < 3.0% (IEEE 519 기준)",
+        "MPPT 추종 효율 >= 99.5% (정상 상태 진동 없는 고정밀 제어)",
+        "계통 이상 전압/주파수 발생 시 0.16초 이내 단독 운전 방지(Anti-Islanding) 트립"
+      ],
+      "modernIndustryPractices": "신재생 발전원 비중이 급증함에 따라 기존의 계통 추종형(Grid-Following) 인버터에서 계통의 주파수와 전압을 스스로 형성하고 가상 관성(Virtual Inertia)을 제공하는 계통 형성형(Grid-Forming) 인버터로 기술 패러다임이 진화하고 있습니다.",
+      "curriculumModuleId": "power-stage-3-inverter",
+      "curriculumSummary": "태양광 PV 및 풍력 발전을 전력망에 안정적으로 연계하기 위한 3상 계통연계형 인버터(Grid-Tied Inverter)의 전력전자 제어 이론을 종합 다룹니다. 최대 전력점 추종(MPPT: Perturb & Observe, Incremental Conductance), 3상 dq 동기 회전 좌표계 변환(Clarke & Park Transform)을 통한 유효전력(id) 및 무효전력(iq) 완전 비간섭 독자 제어, 위상 동기 루프(SRF-PLL), 그리고 고조파를 억제하는 3차 LCL 필터의 공진 감쇠(Resonance Damping) 기법을 심층 분석합니다.",
+      "curriculumLabTitle": "100kW Solar PV Grid-Tied Inverter with dq-Axis Current Controller & LCL Filter",
+      "curriculumObjectives": [
+        "일사량 및 온도 변화에 따른 태양전지 P-V 특성 곡선에서 Incremental Conductance(dI/dV + I/V = 0) MPPT 알고리즘을 구현할 수 있다.",
+        "Clarke(abc -> alpha-beta) 및 Park(alpha-beta -> dq) 좌표 변환을 통해 교류 3상 전류를 직류 제어량으로 분리할 수 있다.",
+        "SRF-PLL(Synchronous Reference Frame PLL)을 설계하여 왜곡 계통 전압에서도 계통 위상각 theta를 0 오차로 추종할 수 있다.",
+        "LCL 계통 연계 필터의 공진 주파수를 계산하고 가상 저항(Virtual Resistor) 능동 감쇠(Active Damping) 제어기를 설계할 수 있다."
+      ]
+    },
+    {
+      "stageId": "stage-4-smart-grid-substation",
+      "order": 4,
+      "titleKo": "스마트 그리드 및 디지털 변전소 (Smart Grid & Digital Substation)",
+      "titleEn": "Smart Grid & Digital Substation",
+      "roleDefinition": "전력 계통의 실시간 통신 및 제어 자동화를 위해 IEC 61850 프로세스 버스, GOOSE 초저지연 트립 프로토콜, Sampled Values(SV) 디지털 계측 스트림, IEEE C37.118 PMU 기반 광역 위상 감시(WAMS) 및 마이크로그리드 블랙 스타트를 구축하는 미래 전력망 통신 융합 과정",
+      "keyCareerProfiles": [
+        "디지털 변전소 자동화 엔지니어 (Substation Automation Engineer)",
+        "스마트그리드 통신 프로토콜 설계자 (Smart Grid Communication Architect)",
+        "WAMS 광역 전력망 감시원 (Wide-Area Monitoring Specialist)",
+        "마이크로그리드 제어 시스템 연구원 (Microgrid Control System Researcher)"
+      ],
+      "requiredCompetencies": [
+        "IEC 61850-8-1 (MMS/GOOSE) 및 IEC 61850-9-2 (Sampled Values) 프레임 구조",
+        "EtherType 0x88B8 / 0x88BA 및 IEEE 802.1Q VLAN 우선순위 태깅",
+        "IEEE 1588 PTP / IRIG-B 기반 서브 마이크로초 정밀 시각 동기화",
+        "IEEE C37.118 싱크로페이저(PMU) 전체 벡터 오차(TVE < 1%) 검증"
+      ],
+      "industryStandardToolchain": [
+        "Wireshark (IEC 61850 GOOSE/SV Packet Dissectors)",
+        "Open61850 / libIEC61850 (Open-Source Protocol Stacks)",
+        "Siemens SICAM PAS / ABB MicroSCADA",
+        "Qualitrol / Arbiter Systems PMU Calibrators"
+      ],
+      "stepByStepWorkflow": [
+        "1. 변전소 통신 아키텍처(Process Bus 및 Station Bus) 토폴로지 설계",
+        "2. Merging Unit(MU)을 통한 4800Hz / 14400Hz SV 아날로그 샘플 광패킷 스트리밍",
+        "3. IED 보호 차단 연동을 위한 GOOSE 데이터셋(DataSet) 및 통신 제어 블록(GoCB) 정의",
+        "4. 고장 신호 발생 시 StNum 증분 및 4ms 이내 차단 명령 수신 지연 검증",
+        "5. GPS 연동 PMU를 설치하여 대륙간 동기 페이저 수집 및 TVE < 1% 확인",
+        "6. 광역 정전 모의 시 BESS 드룹 제어 기반 단독 마이크로그리드 블랙 스타트 완결"
+      ],
+      "coreMathAndPhysicsFormulas": [
+        "PMU 동기 페이저 전체 벡터 오차: TVE = sqrt(((Xr - Xhat_r)^2 + (Xi - Xhat_i)^2) / (Xr^2 + Xi^2)) <= 1.0%",
+        "GOOSE 버스트 지수 백오프 재전송: T_k = min(T_min * 2^k, T_max) (T_min = 2ms, T_max = 4s)"
+      ],
+      "signoffMetricsAndKPIs": [
+        "GOOSE 트립 메시지 전송 지연 시간 < 3.0ms (IEC 61850 Type 1A Class P2/3 규격)",
+        "Sampled Values(SV) 패킷 손실률 0.000% (PRP/HSR 무중단 이중화 통신 보증)",
+        "변전소 전체 시각 동기 오차 < 1.0 마이크로초 (IEEE 1588 PTP Power Profile)"
+      ],
+      "modernIndustryPractices": "변전소 내부의 물리적 케이블을 90% 이상 제거한 완전 디지털 변전소는 IEC 62439-3 PRP(병렬 이중화 프로토콜)와 HSR(고가용성 원형 링 프로토콜)을 적용하여 단 하나의 패킷 손실 없는 제로 지연 스위칭 통신망을 구축하고 있습니다.",
+      "curriculumModuleId": "power-stage-4-smartgrid",
+      "curriculumSummary": "전력망의 디지털 대전환을 이끄는 IEC 61850 변전소 자동화 통신 표준, 구리 케이블을 광케이블로 대체하는 프로세스 버스(Process Bus), 4밀리초 미만의 초저지연 트립 명령을 보장하는 GOOSE(Generic Object Oriented Substation Events) 멀티캐스트, 4800Hz 고속 디지털 전류/전압 스트림인 Sampled Values(SV), IEEE C37.118 표준 위상측정장치(PMU) 기반 광역 전력망 감시(WAMS), 그리고 분산 전원의 단독운전 방지 및 마이크로그리드 블랙 스타트(Black-Start) 제어를 마스터합니다.",
+      "curriculumLabTitle": "Digital Substation IEC 61850 GOOSE Trip Simulation & Microgrid Black-Start Control",
+      "curriculumObjectives": [
+        "IEC 61850 변전소 아키텍처의 스테이션 버스(Station Bus 8-1)와 프로세스 버스(Process Bus 9-2 LE)를 구별하고 이더넷 프레임을 분석할 수 있다.",
+        "GOOSE 프로토콜의 EtherType(0x88B8), VLAN 우선순위 태그 및 상태 수식(StNum, SqNum) 재전송 메커니즘을 구성할 수 있다.",
+        "Merging Unit(MU)이 발행하는 4800Hz / 14400Hz Sampled Values(SV: EtherType 0x88BA) 데이터 스트림을 디코드할 수 있다.",
+        "IEEE C37.118 준수 PMU의 GPS/PTP 동기화 원리와 전체 벡터 오차(TVE < 1%) 판정 및 마이크로그리드 블랙 스타트 시퀀스를 구현할 수 있다."
+      ]
+    }
+  ]
+}

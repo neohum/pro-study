@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["lang", "name", "version", "overview", "grammar", "functions"],
   "properties": {
-    "lang": { "enum": ["c", "go", "rust", "python", "typescript", "javascript"] },
+    "lang": { "enum": ["c", "go", "rust", "python", "typescript", "javascript", "lisp", "nasm"] },
     "name": { "type": "string", "minLength": 1 },
     "version": { "type": "string", "minLength": 1 },
     "overview": { "type": "string", "minLength": 1 },
@@ -23,7 +23,10 @@
           "category": { "type": "string", "minLength": 1 },
           "summary": { "type": "string", "minLength": 1 },
           "syntax": { "type": "string", "minLength": 1 },
-          "example": { "type": "string", "minLength": 1 }
+          "example": { "type": "string", "minLength": 1 },
+          "explanation": { "type": "string" },
+          "pitfalls": { "type": "string" },
+          "practice": { "type": "string" }
         }
       }
     },

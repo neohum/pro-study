@@ -203,11 +203,12 @@ class MainActivity : AppCompatActivity() {
         currentLang = lang
         for ((key, btn) in tabButtons) {
             val isSelected = (key == lang)
+            btn.backgroundTintList = null
             if (isSelected) {
-                btn.setBackgroundColor(Color.BLACK)
+                btn.setBackgroundResource(R.drawable.bg_eink_button_selected)
                 btn.setTextColor(Color.WHITE)
             } else {
-                btn.setBackgroundColor(Color.TRANSPARENT)
+                btn.setBackgroundResource(R.drawable.bg_eink_button_unselected)
                 btn.setTextColor(Color.BLACK)
             }
         }

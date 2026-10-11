@@ -107,6 +107,11 @@
       dbSteps: [-40, -20, 0, 20, 40]
     });
 
+    // High-contrast E-ink border around plot
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(axes.padL, axes.padT, axes.plotW, axes.plotH);
+
     // Map points to canvas coordinates
     const minExp = 1;
     const maxExp = 6;

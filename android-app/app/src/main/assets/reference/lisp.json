@@ -1,0 +1,539 @@
+{
+  "lang": "lisp",
+  "name": "Common Lisp",
+  "version": "ANSI Common Lisp (ANSI X3.226-1994)",
+  "overview": "Common Lisp는 완전한 코드-데이터 동형성(Homoiconicity), 컴파일 타임 매크로 메타프로그래밍, CLOS(Common Lisp Object System), 강력한 조건-재시작(Condition-Restart) 시스템 및 동적 대화형 REPL을 갖춘 표현력 높은 산업용 표준 다중 패러다임 언어입니다.",
+  "grammar": [
+    {
+      "id": "lisp-s-expressions",
+      "title": "1. S-식(S-expressions)과 전위 표기법: 아톰, 리스트, 리더 구문",
+      "category": "기초 문법 & S-식",
+      "summary": "Lisp의 모든 프로그램 코드는 심볼, 숫자, 문자열 등의 아톰(Atoms)과 소괄호로 감싼 리스트(Lists)로 구성되는 S-식(Symbolic Expressions)으로 표현됩니다. 연산자가 맨 앞에 위치하는 전위 표기법(Prefix Notation)을 따르며, 코드와 데이터의 구조가 완전히 일치하는 코드-데이터 동형성(Homoiconicity)을 가집니다.",
+      "syntax": "(operator arg1 arg2 ...)\n'symbol ; 인용(Quote): 평가하지 않고 심볼/리스트 데이터 그대로 취급\n; 한 줄 주석\n#| 블록\n   주석 |#",
+      "example": ";; 1. 기본 산술 및 중첩 전위 연산\n(+ 1 2 3 4)             ; 10\n(* (+ 2 3) (- 10 4))     ; 5 * 6 = 30\n\n;; 2. 아톰(Atoms)과 리스트(Lists)\n42                       ; 정수 아톰\n\"Hello, Lisp\"            ; 문자열 아톰\n'apple                   ; 심볼 아톰 (인용되어 평가 방지)\n'(1 2 3 4)               ; 데이터 리스트 (인용됨)\n\n;; 3. 코드와 데이터의 상호 변환\n(defparameter *code* '(+ 10 20))\n(eval *code*)            ; 30 (데이터 리스트를 Lisp 엔진이 코드로 직접 실행)",
+      "explanation": "Lisp 리더(Reader)는 텍스트를 읽어 메모리 상의 Lisp 데이터 구조(S-식)로 변환하고, 평가기(Evaluator)가 이를 실행합니다. 괄호의 첫 번째 요소는 함수 또는 특수 연산자/매크로 이름이며, 나머지는 인수입니다. 작은따옴표(')는 `(quote ...)`의 문법 설탕으로 평가를 방지합니다.",
+      "pitfalls": "데이터로 다루려는 리스트 앞에 따옴표(')를 빠뜨리면 Lisp 평가기가 첫 번째 원소를 함수 이름으로 간주하고 호출을 시도하여 `UNDEFINED-FUNCTION` 에러가 발생합니다. 예: `(1 2 3)` -> 에러, `'(1 2 3)` -> 정상 리스트.",
+      "practice": "문제: Common Lisp에서 S-식 `(* (+ 3 4) 2)`의 최종 평가 결과값은 얼마일까요?\n정답: 14"
+    },
+    {
+      "id": "lisp-vars-special",
+      "title": "2. 전역 변수 선언: defvar, defparameter와 동적 스코프(*earmuffs*)",
+      "category": "변수와 바인딩",
+      "summary": "전역 변수는 defvar와 defparameter로 선언합니다. 관례적으로 이름 앞뒤에 별표(*earmuffs*)를 붙이며, 이들은 동적 스코프(Dynamic Scope / Special Variable)를 갖습니다. 즉, 런타임 호출 스택 내에서 let으로 일시 재바인딩할 수 있습니다.",
+      "syntax": "(defparameter *name* value) ; 재로드 시에도 항상 값을 갱신\n(defvar *cache* default)     ; 이미 바인딩되어 있다면 재평가 시 값을 유지",
+      "example": ";; 1. defparameter와 defvar\n(defparameter *server-port* 8080) ; 항상 8080으로 재설정\n(defvar *request-count* 0)         ; 초기 1회만 설정되며 코드 재평가 시 유지\n\n;; 2. 동적 스코프(Dynamic Scoping)의 강력함\n(defparameter *debug-mode* nil)\n\n(defun log-message (msg)\n  (when *debug-mode*\n    (format t \"[DEBUG] ~A~%\" msg)))\n\n(defun process-request ()\n  (log-message \"요청 처리 시작...\"))\n\n;; 일반 호출 (출력 없음)\n(process-request)\n\n;; let으로 동적 변수를 임시 오버라이딩 (함수 내부의 깊은 호출 스택 전체에 전파)\n(let ((*debug-mode* t))\n  (process-request)) ; [DEBUG] 요청 처리 시작... 출력됨!\n\n;; 블록을 벗어나면 원래 값(nil)으로 자동 복원\n(print *debug-mode*) ; NIL",
+      "explanation": "C나 Python의 정적 스코프와 달리 Lisp의 Special Variable은 런타임 콜스택을 따라 유효 범위가 결정되는 동적 스코프(Dynamic Scope)를 가집니다. `*earmuffs*` 관례는 로컬 렉시컬 변수와 동적 변수가 우발적으로 이름 충돌을 일으키지 않도록 보호하는 필수적인 규범입니다.",
+      "pitfalls": "defvar는 REPL에서 소스코드를 수정하고 다시 로드(C-c C-k)해도 기존에 할당된 값이 덮어써지지 않습니다. 개발 중 계속 값을 갱신해야 하는 설정 변수는 반드시 `defparameter`를 써야 합니다.",
+      "practice": "문제: Common Lisp에서 동적 스코프를 갖는 전역 변수(Special Variable)의 이름 앞뒤에 관례적으로 붙이는 별표 기호의 별칭은 무엇일까요?\n정답: earmuffs (이어머프, 예: *var*)"
+    },
+    {
+      "id": "lisp-vars-lexical",
+      "title": "3. 로컬 변수 바인딩: let, let*과 렉시컬 스코프(Lexical Scope)",
+      "category": "변수와 바인딩",
+      "summary": "let 구문은 블록 내에서만 유효한 로컬 변수를 병렬(동시)로 바인딩합니다. let* 구문은 선언된 순서대로 순차 바인딩하므로 앞서 선언된 변수의 값을 뒤의 변수 초기화 식에서 바로 참조할 수 있습니다. 렉시컬 변수는 클로저를 형성합니다.",
+      "syntax": "(let ((var1 val1)\n      (var2 val2))\n  body...)\n\n(let* ((x 10)\n       (y (* x 2))) ; x 참조 가능\n  body...)",
+      "example": ";; 1. let의 병렬 바인딩 특성\n(let ((x 1)\n      (y 2))\n  ;; 두 변수가 동시에 바인딩되므로 변수 스왑 가능\n  (let ((x y)\n        (y x))\n    (format t \"x: ~D, y: ~D~%\" x y))) ; x: 2, y: 1\n\n;; 2. let*의 순차 바인딩 특성\n(let* ((base-price 1000)\n       (tax (* base-price 0.1))\n       (total (+ base-price tax)))\n  (format t \"총 결제액: ~F~%\" total)) ; 1100.0\n\n;; 3. 렉시컬 클로저(Lexical Closure) 생성\n(defun make-counter (initial)\n  (let ((count initial))\n    (lambda ()\n      (incf count)\n      count)))\n\n(defparameter *c1* (make-counter 10))\n(format t \"카운트: ~D~%\" (funcall *c1*)) ; 11\n(format t \"카운트: ~D~%\" (funcall *c1*)) ; 12",
+      "explanation": "let 바인딩 리스트의 모든 초기화 식은 바인딩이 일어나기 전의 외부 환경에서 먼저 평가됩니다. 따라서 `(let ((a 1) (b (+ a 1))))`은 에러가 발생하며, 이전 바인딩 결과를 활용하려면 반드시 `let*`을 사용해야 합니다. 내부 함수는 자신이 정의된 렉시컬 환경의 변수를 캡처하여 클로저가 됩니다.",
+      "pitfalls": "앞 변수의 계산 결과를 뒤 변수에서 바로 써야 하는 상황에서 실수로 `let*` 대신 `let`을 쓰면 상위 스코프에 동명의 변수가 없거나 언바운드 에러(`UNBOUND-VARIABLE`)가 발생합니다.",
+      "practice": "문제: 앞서 선언된 로컬 변수의 값을 그 다음 변수의 초기화 식에서 순차적으로 참조할 수 있도록 지원하는 Lisp 바인딩 매크로는 무엇일까요?\n정답: let*"
+    },
+    {
+      "id": "lisp-setf-assignment",
+      "title": "4. 일반화된 대입 연산자: setf와 장소(Places)",
+      "category": "변수와 바인딩",
+      "summary": "setf는 단순 변수뿐 아니라 임의의 데이터 구조 내 '장소(Place)'에 값을 할당하는 일반화된 대입(Generalized Assignment) 매크로입니다. 변수, 리스트의 car/cdr, 배열의 aref, 해시 테이블의 gethash 등 조회에 쓰이는 표현식 그대로에 값을 쓸 수 있습니다.",
+      "syntax": "(setf place value)\n(setf place1 val1 place2 val2 ...)",
+      "example": ";; 1. 기본 변수 값 대입\n(defparameter *num* 10)\n(setf *num* 20)\n\n;; 2. 리스트의 Place 갱신\n(defparameter *items* (list 'a 'b 'c))\n(setf (car *items*) 'alpha)     ; 첫 번째 원소 수정\n(setf (cadr *items*) 'beta)     ; 두 번째 원소 수정\n(format t \"리스트: ~A~%\" *items*) ; (ALPHA BETA C)\n\n;; 3. 배열과 해시테이블의 Place 갱신\n(defparameter *arr* (make-array 3 :initial-element 0))\n(setf (aref *arr* 1) 99)        ; 1번 인덱스 대입\n\n(defparameter *ht* (make-hash-table))\n(setf (gethash :title *ht*) \"Common Lisp\") ; 해시 테이블 삽입/수정\n(format t \"해시 조회: ~A~%\" (gethash :title *ht*))",
+      "explanation": "Lisp의 장소(Place) 개념은 '읽기 함수(Accessor)'의 형태를 그대로 '쓰기 위치'로 전용할 수 있도록 컴파일러가 역동작 함수를 매핑해주는 아키텍처입니다. `(setf (car x) v)`는 내부적으로 `(rplaca x v)` 같은 저수준 뮤테이션 코드로 자동 확장됩니다.",
+      "pitfalls": "초기 Lisp의 `setq`는 단순 심볼 변수에만 값을 대입할 수 있습니다. `(setq (car x) 10)`처럼 복합 데이터 구조의 장소에 값을 쓰려고 하면 문법 에러가 발생하므로 현대 Lisp에서는 항상 `setf`를 기본으로 씁니다.",
+      "practice": "문제: Common Lisp에서 변수뿐 아니라 (car x), (aref a 0) 등 메모리 상의 임의의 위치(Place)에 값을 쓸 수 있게 해주는 일반화된 대입 매크로는 무엇일까요?\n정답: setf"
+    },
+    {
+      "id": "lisp-functions-defun",
+      "title": "5. 함수 정의(defun)와 명시적 반환(return-from)",
+      "category": "함수",
+      "summary": "defun 매크로를 사용하여 전역 일급 함수를 정의합니다. 함수의 마지막 식이 자동으로 반환값으로 평가되며, 중간에 조기 탈출이 필요할 때는 함수 이름으로 명명된 블록에서 (return-from func-name value)를 호출합니다.",
+      "syntax": "(defun function-name (param1 param2 ...)\n  \"선택적 독스트링(Documentation String)\"\n  body-forms...)\n\n(return-from function-name return-value)",
+      "example": "(defun clamp (val min-val max-val)\n  \"주어진 val을 [min-val, max-val] 범위 내로 제한한다.\"\n  (cond\n    ((< val min-val) min-val)\n    ((> val max-val) max-val)\n    (t val)))\n\n;; return-from을 이용한 조기 탈출(Early Return)\n(defun find-first-negative (numbers)\n  \"리스트에서 첫 번째 음수를 발견하면 즉시 반환한다.\"\n  (dolist (n numbers nil) ; 못 찾으면 nil 반환\n    (when (< n 0)\n      (return-from find-first-negative n)))) ; 함수 조기 탈출\n\n(format t \"Clamp: ~D~%\" (clamp 15 0 10)) ; 10\n(format t \"첫 음수: ~D~%\" (find-first-negative '(3 8 -5 2 -9))) ; -5\n\n;; 함수의 독스트링 조회\n(documentation 'clamp 'function)",
+      "explanation": "defun으로 함수를 정의하면 함수 본문 전체가 암묵적으로 `(block function-name ...)`으로 감싸집니다. 따라서 `(return-from function-name value)`를 호출하면 깊은 중첩 루프나 조건문 내부에서도 함수 즉시 탈출이 가능합니다.",
+      "pitfalls": "Common Lisp에는 C나 Python 스타일의 전역 `return` 키워드가 단독으로 존재하지 않습니다. 반드시 `(return-from function-name value)`처럼 탈출 대상 블록의 이름을 명시하거나 `(return ...)`을 지원하는 loop/dolist 블록 내부에서만 써야 합니다.",
+      "practice": "문제: Common Lisp 함수 내부에서 특정 값을 반환하며 즉시 함수를 빠져나오기 위해 사용하는 특수 연산자는 무엇일까요?\n정답: return-from"
+    },
+    {
+      "id": "lisp-function-params",
+      "title": "6. 고급 매개변수 리스트 (&optional, &key, &rest, &aux)",
+      "category": "함수",
+      "summary": "Common Lisp의 함수 인자 목록(Lambda List)은 기본값을 갖는 선택 인자(&optional), 키워드로 넘기는 인자(&key), 가변 위치 인자를 리스트로 묶는 나머지 인자(&rest), 로컬 임시 변수를 바인딩하는 보조 인자(&aux)를 조합하여 매우 정교하게 구성할 수 있습니다.",
+      "syntax": "(defun func (req &optional (opt def opt-p) &rest r &key (k def k-p) &aux (temp expr))\n  ...)",
+      "example": ";; 1. &optional과 공급 여부 플래그 (supplied-p)\n(defun greet (name &optional (greeting \"안녕하세요\" greeting-supplied-p))\n  (if greeting-supplied-p\n      (format nil \"[맞춤 인사] ~A, ~A!\" greeting name)\n      (format nil \"~A, ~A!\" greeting name)))\n\n;; 2. &key (키워드 인수)와 &rest (가변 인수)\n(defun build-server (host &key (port 8080) (secure t) &rest extra-tags)\n  (format nil \"~A:~D [보안: ~A] 태그: ~A\" host port secure extra-tags))\n\n(format t \"~A~%\" (greet \"철수\"))\n(format t \"~A~%\" (greet \"영희\" \"반갑습니다\"))\n(format t \"~A~%\" (build-server \"api.pro.io\" :port 443 :secure t 'v2 'prod))",
+      "explanation": "선택 인자나 키워드 인자에서 `(param default-val supplied-p)` 튜플을 선언하면 호출자가 해당 인자를 명시적으로 전달했는지(T) 기본값이 적용되었는지(NIL)를 불리언 플래그로 정확하게 판별할 수 있습니다.",
+      "pitfalls": "`&optional`과 `&key`를 동일한 함수 시그니처에 혼합해서 사용하면 위치 인자가 키워드 심볼을 인수로 집어삼켜 호출 구문 해석이 극도로 모호해집니다. 표준 ANSI Lisp 스타일 가이드에서는 둘의 혼용을 엄격히 금지합니다.",
+      "practice": "문제: Common Lisp 매개변수 목록에서 임의 개수의 가변 인자를 하나의 리스트로 묶어서 받기 위해 사용하는 람다 리스트 키워드는 무엇일까요?\n정답: &rest"
+    },
+    {
+      "id": "lisp-lambda-funcall",
+      "title": "7. 람다 식, 함수 인용(#' / function)과 funcall, apply",
+      "category": "함수형 프로그래밍",
+      "summary": "Common Lisp는 심볼의 함수 셀과 값 셀이 분리된 Lisp-2 언어입니다. 따라서 함수를 값으로 다루거나 람다를 인용할 때는 #' (function 특수 연산자)를 사용하며, 함수 객체를 호출할 때는 funcall(인자 직접 전달) 또는 apply(마지막 인자 리스트 펼침)를 사용합니다.",
+      "syntax": "(lambda (x y) (+ x y))\n#'function-name ; (function function-name)의 축약형\n(funcall fn-obj arg1 arg2)\n(apply fn-obj arg1 '(arg2 arg3))",
+      "example": ";; 1. 람다 식(익명 함수)의 직접 호출\n(format t \"람다 결과: ~D~%\"\n        ((lambda (a b) (* (+ a b) 2)) 3 4)) ; 14\n\n;; 2. 함수 인용(#' / FUNCTION)\n(defun square (x) (* x x))\n(defparameter *fn* #'square) ; 함수 셀에서 square 함수 객체를 꺼내 변수에 저장\n\n;; 3. funcall vs apply\n(format t \"funcall: ~D~%\" (funcall *fn* 5))        ; 25\n(format t \"funcall lambda: ~D~%\"\n        (funcall #'(lambda (x y) (+ (* x 10) y)) 3 7)) ; 37\n\n;; apply는 마지막 인자로 전달된 리스트를 펼쳐서(Spread) 인수로 공급\n(defparameter *nums* '(1 2 3 4 5))\n(format t \"apply 합계: ~D~%\" (apply #'+ *nums*))   ; (+ 1 2 3 4 5) = 15\n(format t \"apply 혼합: ~D~%\" (apply #'+ 100 200 *nums*)) ; 315",
+      "explanation": "Scheme(Lisp-1)과 달리 Common Lisp(Lisp-2)에서는 변수 이름과 함수 이름이 서로 다른 네임스페이스에 공존할 수 있습니다. 예컨대 `(let ((list '(1 2 3))) (list list))`는 변수 `list`와 함수 `list`가 충돌 없이 동시에 동작합니다. 따라서 함수 객체를 일급 값으로 취급할 때는 `#'` 기호가 필수적입니다.",
+      "pitfalls": "변수에 함수 객체를 담아두고 `(*fn* 10)`처럼 괄호의 첫머리에 직접 넣고 호출하면 함수 셀에서 심볼 `*fn*`을 찾으려 하므로 Undefined Function 에러가 발생합니다. 변수에 담긴 함수 객체는 반드시 `(funcall var ...)`나 `(apply var ...)`로 호출해야 합니다.",
+      "practice": "문제: Common Lisp에서 심볼의 함수 셀에 접근하여 함수 객체를 추출할 때 사용하는 특수 연산자 `(function f)`의 축약 기호는 무엇일까요?\n정답: #'"
+    },
+    {
+      "id": "lisp-cons-cells",
+      "title": "8. 콘스 셀(Cons Cell)과 도트 페어: cons, car, cdr의 메모리 구조",
+      "category": "리스트 & 데이터 구조",
+      "summary": "Lisp의 핵심 기본 단위는 두 개의 포인터(CAR, CDR)로 구성된 콘스 셀(Cons Cell)입니다. cons 함수로 두 아톰을 묶으면 도트 페어(Dotted Pair, 예: (A . B))가 되고, CDR이 nil로 끝나는 일련의 콘스 셀 체인이 바로 정규 리스트(Proper List)입니다.",
+      "syntax": "(cons a b)         ; (A . B) 생성\n(car cons-cell)    ; 첫 번째 슬롯 참조\n(cdr cons-cell)    ; 두 번째 슬롯 참조",
+      "example": ";; 1. 도트 페어(Dotted Pair)\n(defparameter *pair* (cons 'name \"Lisp\"))\n(format t \"페어: ~S~%\" *pair*)      ; (NAME . \"Lisp\")\n(format t \"CAR: ~A, CDR: ~A~%\"\n        (car *pair*) (cdr *pair*)) ; CAR: NAME, CDR: Lisp\n\n;; 2. 콘스 셀 체인으로 리스트 만들기\n;; (1 2 3)의 실체는 (1 . (2 . (3 . NIL)))\n(defparameter *lst* (cons 1 (cons 2 (cons 3 nil))))\n(format t \"리스트 출력: ~A~%\" *lst*) ; (1 2 3)\n(format t \"CDR의 CDR: ~A~%\" (cdr (cdr *lst*))) ; (3)\n\n;; 3. 연관 리스트(A-list: Association List)\n(defparameter *alist* '((:kr . \"한국\") (:us . \"미국\") (:jp . \"일본\")))\n(format t \"KR 조회: ~A~%\" (cdr (assoc :kr *alist*))) ; \"한국\"",
+      "explanation": "역사적으로 CAR은 'Contents of Address Register', CDR은 'Contents of Decrement Register'의 약어입니다. 정규 리스트에서 car는 현재 원소를 가리키고, cdr은 다음 콘스 셀(또는 마지막의 경우 빈 리스트 `nil`)을 가리킵니다.",
+      "pitfalls": "리스트의 맨 끝 cdr이 nil이 아닌 아톰으로 끝나면 정규 리스트(Proper list)가 아니라 부적격 리스트(Improper list)가 되어 `length`나 `mapcar` 같은 표준 리스트 함수 호출 시 에러를 유발합니다.",
+      "practice": "문제: 두 개의 포인터를 가진 Lisp의 가장 기초적인 메모리 셀 구조를 지칭하는 용어는 무엇일까요?\n정답: Cons Cell (콘스 셀)"
+    },
+    {
+      "id": "lisp-list-processing",
+      "title": "9. 기본 리스트 조작 (cadr, caddr, list, append, copy-list와 메모리 공유)",
+      "category": "리스트 & 데이터 구조",
+      "summary": "list로 새 리스트를 생성하고, append로 리스트들을 결합하며, copy-list로 최상위 콘스 체인을 복제합니다. car와 cdr의 조합인 cadr, caddr 등 합성 접근자를 제공합니다. 특히 append는 마지막 인자의 콘스 셀을 그대로 메모리 공유한다는 점에 유의해야 합니다.",
+      "syntax": "(list el1 el2 ...)\n(append list1 list2 ...)\n(copy-list lst)\n(cadr lst)  ; (car (cdr lst)) - 두 번째 원소\n(caddr lst) ; (car (cdr (cdr lst))) - 세 번째 원소",
+      "example": ";; 1. cadr, caddr 등 축약 합성자\n(defparameter *data* '(10 20 30 40 50))\n(format t \"두 번째: ~D~%\" (cadr *data*))  ; 20\n(format t \"세 번째: ~D~%\" (caddr *data*)) ; 30\n(format t \"두 번째 이후 꼬리: ~A~%\" (cddr *data*)) ; (30 40 50)\n\n;; 2. list vs append\n(defparameter *l1* '(1 2))\n(defparameter *l2* '(3 4))\n(format t \"list: ~A~%\" (list *l1* *l2*))     ; ((1 2) (3 4)) 중첩 리스트\n(format t \"append: ~A~%\" (append *l1* *l2*)) ; (1 2 3 4) 평탄화 결합\n\n;; 3. append의 메모리 공유와 copy-list\n(defparameter *a* '(x y))\n(defparameter *b* '(z w))\n(defparameter *c* (append *a* *b*))\n;; *c*는 *a*의 원소들은 새 콘스 셀로 복사하지만, 마지막 인자인 *b*는 주소를 그대로 공유함\n(setf (car *b*) 'CHANGED)\n(format t \"*c*에 반영된 변경: ~A~%\" *c*) ; (X Y CHANGED W)",
+      "explanation": "Common Lisp은 `caar`, `cadr`, `cdar`, `cddr`부터 최대 4단계 깊이(`cadddr` 등)까지 내장 합성 접근자를 표준으로 제공합니다. `append` 연산 시 마지막 인자는 복사되지 않고 직결되므로 마지막 리스트를 파괴적으로 수정하면 결합 리스트에도 부작용이 전파됩니다.",
+      "pitfalls": "파괴적 리스트 수정 함수인 `nconc`는 기존 리스트의 마지막 cdr 포인터를 강제로 변경합니다. 인용된 상수 리스트(`'(1 2)`)에 nconc를 적용하면 미정의 동작(컴파일러 최적화 메모리 오염)이 발생하므로 반드시 새로 할당된 리스트에만 써야 합니다.",
+      "practice": "문제: Lisp에서 `(car (cdr lst))`를 단 하나의 축약된 내장 함수 이름으로 호출할 때의 함수명은 무엇일까요?\n정답: cadr"
+    },
+    {
+      "id": "lisp-list-predicates",
+      "title": "10. 리스트 판별과 인덱스 접근 (null, listp, consp, nth, nthcdr)",
+      "category": "리스트 & 데이터 구조",
+      "summary": "빈 리스트 여부(null / not), 리스트인지 여부(listp), 콘스 셀인지 여부(consp)를 검사하며, 0-기반 인덱스로 n번째 원소를 꺼내는 nth와 n번째 cdr 서브리스트를 얻는 nthcdr을 제공합니다.",
+      "syntax": "(null x)    ; x가 nil이면 T\n(consp x)   ; x가 실제 콘스 셀이면 T (nil은 거짓)\n(listp x)   ; x가 콘스 셀이거나 nil이면 T\n(nth n lst) ; n번째 원소 (0부터 시작)\n(nthcdr n lst)",
+      "example": ";; 1. nil, consp, listp의 미묘한 차이\n(format t \"null nil: ~A~%\" (null nil))       ; T\n(format t \"consp nil: ~A~%\" (consp nil))     ; NIL (nil은 아톰)\n(format t \"consp '(1): ~A~%\" (consp '(1)))   ; T\n(format t \"listp nil: ~A~%\" (listp nil))     ; T (nil은 빈 '리스트'이기도 함!)\n(format t \"listp 42: ~A~%\" (listp 42))       ; NIL\n\n;; 2. nth와 nthcdr (0-기반 인덱스)\n(defparameter *alphabet* '(a b c d e f))\n(format t \"0번째: ~A~%\" (nth 0 *alphabet*))       ; A\n(format t \"3번째: ~A~%\" (nth 3 *alphabet*))       ; D\n(format t \"3번째 이후: ~A~%\" (nthcdr 3 *alphabet*)) ; (D E F)\n\n;; nth는 setf의 Place로도 사용 가능\n(setf (nth 1 *alphabet*) 'B-UPDATED)\n(format t \"수정 후: ~A~%\" *alphabet*) ; (A B-UPDATED C D E F)",
+      "explanation": "Lisp에서 `nil`과 `()`와 `'()`는 완전히 동일한 싱글턴 객체이며, 불리언 거짓(False)이자 동시에 빈 리스트(Empty List)입니다. `consp`는 실제 힙에 할당된 2-슬롯 콘스 셀에 대해서만 T를 반환하고, `listp`는 콘스 셀과 `nil` 모두에 대해 T를 반환합니다.",
+      "pitfalls": "nth 함수는 C 배열처럼 O(1) 인덱싱을 하는 것이 아니라 앞에서부터 차례대로 포인터를 따라가는 선형 탐색(O(n))을 수행합니다. 빈번한 랜덤 액세스가 필요하다면 리스트가 아닌 벡터(Vector)를 써야 합니다.",
+      "practice": "문제: Common Lisp에서 `nil`에 대해 `consp`는 NIL을 반환하지만, `listp`는 무엇을 반환할까요?\n정답: T"
+    },
+    {
+      "id": "lisp-equality-predicates",
+      "title": "11. 4가지 동등성 판별 술어 (eq, eql, equal, equalp)",
+      "category": "연산자 & 동등성",
+      "summary": "Common Lisp는 4단계의 엄밀한 동등성 비교를 제공합니다: eq(메모리 포인터 주소 일치), eql(eq + 동일 타입/값의 숫자나 문자), equal(동일한 텍스트 문자열이나 동일 구조의 리스트), equalp(대소문자 무시, 정수 1과 부동소수 1.0의 관용적 일치 허용).",
+      "syntax": "(eq x y)     ; 물리적 동일 포인터\n(eql x y)    ; eq + 수치/문자 동등성 (Lisp 기본 비교)\n(equal x y)  ; 구조적 동등성 (문자열, 리스트)\n(equalp x y) ; 관용적 동등성 (대소문자 무시, 타입 변환 수치 일치)",
+      "example": ";; 1. eq: 심볼 비교에 최적 (포인터 일치)\n(eq 'apple 'apple)             ; T\n(eq (list 1 2) (list 1 2))     ; NIL (힙에 각각 새로 할당됨)\n\n;; 2. eql: 숫자와 문자 비교의 표준 (Common Lisp의 디폴트 술어)\n(eql 42 42)                    ; T\n(eql #\\a #\\a)                  ; T\n(eql 3 3.0)                    ; NIL (타입이 다름: 정수 vs 부동소수)\n\n;; 3. equal: 문자열과 리스트의 구조적 동등성\n(equal \"hello\" \"hello\")         ; T (eql은 문자열 비교 시 NIL 반환)\n(equal '(1 (2 3)) '(1 (2 3)))  ; T (내부 트리 구조와 원소 일치)\n(equal \"ABC\" \"abc\")             ; NIL (대소문자 구분)\n\n;; 4. equalp: 가장 관용적인 비교\n(equalp \"ABC\" \"abc\")            ; T (문자열 대소문자 무시)\n(equalp 3 3.0)                 ; T (타입이 달라도 수치 값이 같으면 참)\n(equalp #(1 2 3) '(1 2 3))     ; NIL (배열과 리스트는 서로 다른 시퀀스 타입)",
+      "explanation": "Common Lisp의 case 구문, member, assoc, make-hash-table 등 대부분의 함수는 기본 동등성 검사기로 `eql`을 사용합니다. 따라서 문자열을 키로 해시 테이블을 만들거나 검색할 때는 반드시 `:test 'equal`을 지정해야 합니다.",
+      "pitfalls": "두 문자열의 일치 여부를 검사할 때 `(eq str1 str2)`나 `(eql str1 str2)`를 쓰면 내용이 같아도 주소가 달라 NIL이 반환됩니다. 문자열은 반드시 `equal`이나 `string=`를 써야 합니다.",
+      "practice": "문제: Common Lisp에서 두 문자열의 내용이 같은지 비교할 때 사용할 수 있는 구조적 동등성 판별 술어는 무엇일까요?\n정답: equal (또는 string=)"
+    },
+    {
+      "id": "lisp-conditionals-if-when",
+      "title": "12. 기본 조건문과 단방향 가드 (if, when, unless)",
+      "category": "제어 흐름",
+      "summary": "if는 (if test then else)로 오직 하나의 then 식과 하나의 else 식만 취합니다. 여러 식을 순차 실행해야 하는 단방향 조건 분기에는 암묵적 progn이 내장된 when(참일 때)과 unless(거짓일 때)를 관용적으로 사용합니다.",
+      "syntax": "(if condition then-form [else-form])\n(when condition form1 form2 ...)\n(unless condition form1 form2 ...)",
+      "example": ";; 1. if 구문 (단일 then과 단일 else)\n(defparameter *age* 20)\n(defparameter *status*\n  (if (>= *age* 19)\n      \"성인\"\n      \"미성년자\"))\n(format t \"상태: ~A~%\" *status*)\n\n;; if에서 여러 문장을 실행하려면 progn으로 감싸야 함\n(if (> *age* 18)\n    (progn\n      (format t \"성인 인증 완료~%\")\n      'allowed)\n    'denied)\n\n;; 2. when (조건이 참일 때 여러 식을 순차 실행하는 단방향 가드)\n(defparameter *logged-in* t)\n(when *logged-in*\n  (format t \"환영합니다!~%\")\n  (format t \"대시보드를 로드합니다.~%\"))\n\n;; 3. unless (조건이 거짓일 때 실행)\n(defparameter *cart-empty* nil)\n(unless *cart-empty*\n  (format t \"주문 결제를 진행합니다.~%\"))",
+      "explanation": "Lisp에서는 `nil`만 거짓(False)으로 평가되고, `nil`이 아닌 모든 값(심지어 0, \"\", 빈 벡터 `#()` 포함)은 참(Truthy)으로 평가됩니다. if 식에서 else 분기를 생략하고 조건이 거짓이면 자동으로 `nil`이 반환됩니다.",
+      "pitfalls": "`if` 식의 then 위치에 두 개 이상의 식을 연속해서 나열하면 두 번째 식이 else 분기로 잘못 해석되어 로직이 완전히 망가집니다. 여러 식을 실행할 때는 `progn`으로 묶거나 `when`을 쓰세요.",
+      "practice": "문제: Common Lisp에서 조건이 참(True)일 때 여러 개의 표현식을 암묵적인 progn으로 순차 실행할 수 있도록 지원하는 제어 매크로는 무엇일까요?\n정답: when"
+    },
+    {
+      "id": "lisp-conditionals-cond-case",
+      "title": "13. 다중 분기 조건문 (cond, case, typecase)",
+      "category": "제어 흐름",
+      "summary": "cond는 Lisp의 고전적이고 범용적인 다중 분기문으로 조건-표현식 쌍들을 순차 평가합니다. case는 키 값의 eql 일치 여부를 매칭하며, typecase는 값의 런타임 데이터 타입(integer, float, string, cons 등)에 따라 분기합니다.",
+      "syntax": "(cond\n  (test1 form1 ...)\n  (test2 form2 ...)\n  (t default-form))\n\n(case keyform\n  (key1 form1 ...)\n  ((key2 key3) form2 ...)\n  (otherwise default-form))\n\n(typecase valform\n  (type1 form1 ...)\n  (t default-form))",
+      "example": ";; 1. cond (순차 다중 조건문)\n(defun evaluate-grade (score)\n  (cond\n    ((>= score 90) \"A 등급 (우수)\")\n    ((>= score 80) \"B 등급 (보통)\")\n    ((>= score 70) \"C 등급 (통과)\")\n    (t \"F 등급 (재수강)\"))) ; t는 항상 참인 디폴트 분기\n\n;; 2. case (심볼/상수 키 일치 분기, eql 비교)\n(defun handle-command (cmd)\n  (case cmd\n    (:start (format nil \"시스템 가동\"))\n    ((:stop :quit) (format nil \"시스템 정지\"))\n    (:restart (format nil \"재부팅 진행\"))\n    (otherwise (format nil \"알 수 없는 명령: ~A\" cmd))))\n\n;; 3. typecase (런타임 데이터 타입 기반 분기)\n(defun describe-datum (x)\n  (typecase x\n    (integer (format nil \"정수: ~D (2배=~D)\" x (* x 2)))\n    (string (format nil \"문자열: '~A' (길이=~D)\" x (length x)))\n    (list (format nil \"리스트: 길이 ~D\" (length x)))\n    (t \"기타 미확인 타입\")))\n\n(format t \"~A~%\" (evaluate-grade 85))\n(format t \"~A~%\" (handle-command :stop))\n(format t \"~A~%\" (describe-datum \"Common Lisp\"))",
+      "explanation": "case 매크로의 키는 평가되지 않는 리터럴입니다. 따라서 `(case x ('foo ...))`처럼 따옴표를 붙이면 심볼 `foo`가 아니라 따옴표가 붙은 리스트 `(quote foo)`와 매칭을 시도하게 되므로 따옴표 없이 심볼이나 키워드를 써야 합니다.",
+      "pitfalls": "cond에서 각 절(clause)을 감싸는 괄호를 빼먹으면 `cond: ill-formed clause` 에러가 발생합니다. 각 절은 반드시 `(condition form1 form2 ...)` 형태의 리스트여야 합니다.",
+      "practice": "문제: Common Lisp에서 주어진 값의 런타임 자료형(integer, string, cons 등)에 따라 다중 분기를 수행하는 구문은 무엇일까요?\n정답: typecase"
+    },
+    {
+      "id": "lisp-iteration-loop-simple",
+      "title": "14. 루프 매크로 기본과 제어 (무한 loop, return, do 구문)",
+      "category": "반복문",
+      "summary": "loop 매크로는 인자 없이 본문만 나열하면 무한 루프를 돌며, (return [value])을 만나면 루프 블록을 빠져나와 값을 반환합니다. 간단한 반복 실행이나 폴링, 상태 머신 루프에 활용됩니다.",
+      "syntax": "(loop\n  body...\n  (when exit-condition\n    (return result)))",
+      "example": ";; 1. 기본 무한 loop와 return\n(defparameter *counter* 0)\n(defparameter *result*\n  (loop\n    (incf *counter*)\n    (format t \"카운트: ~D~%\" *counter*)\n    (when (>= *counter* 3)\n      (return \"루프 목표 달성 완료!\"))))\n\n(format t \"반환 결과: ~A~%\" *result*)\n\n;; 2. do 키워드를 포함한 단순 반복\n(loop repeat 3 do\n  (format t \"반복 실행 신호 발송~%\"))",
+      "explanation": "Lisp의 loop는 단순한 C 스타일 무한 루프부터 영어 문장 형태의 거대한 반복 표현식까지 폭넓게 확장되는 특수 매크로입니다. 인자 없이 식들만 나열되면 암묵적인 무한 루프 블록을 형성하며 `(return val)`로 탈출합니다.",
+      "pitfalls": "단순 loop 본문에서 탈출 조건(`return` 또는 `return-from`)을 설정하지 않으면 무한 루프에 빠져 REPL이 응답 불능 상태가 되므로 반드시 종료 조건을 마련해야 합니다.",
+      "practice": "문제: Common Lisp의 단순 `(loop ...)` 블록을 중간에 빠져나오면서 특정 결과값을 반환할 때 사용하는 매크로는 무엇일까요?\n정답: return"
+    },
+    {
+      "id": "lisp-iteration-loop-extended",
+      "title": "15. 확장 LOOP 매크로 (for-in, across, while, collect, sum, into)",
+      "category": "반복문 & 미니 DSL",
+      "summary": "Common Lisp의 확장 loop 매크로는 강력한 영어 문장 형태의 미니 언어(DSL)입니다. for-in(리스트), across(벡터), from-to(수열) 순회, while/until 가드, collect(리스트 수집), sum/count/maximize 집계, into(누적 변수 지정)를 지원합니다.",
+      "syntax": "(loop for var in list\n      for idx from 0\n      when (predicate-p var)\n        collect (transform var) into results\n        and sum var into total\n      finally (return (values results total)))",
+      "example": ";; 1. 리스트 순회, 필터링, collect 수집\n(defparameter *evens*\n  (loop for x from 1 to 10\n        when (evenp x)\n        collect (* x x)))\n(format t \"1~10 짝수 제곱: ~A~%\" *evens*) ; (4 16 36 64 100)\n\n;; 2. 벡터(across)와 리스트(in) 동시 순회 및 집계\n(defparameter *names* '(\"Alice\" \"Bob\" \"Charlie\"))\n(defparameter *scores* #(95 88 92))\n\n(loop for name in *names*\n      for score across *scores*\n      count (> score 90) into honors-count\n      sum score into total-score\n      maximize score into highest-score\n      finally\n        (format t \"우수자 수: ~D, 총점: ~D, 최고점: ~D~%\"\n                honors-count total-score highest-score))\n\n;; 3. while 조건 가드\n(defparameter *fibs*\n  (loop for a = 0 then b\n        and b = 1 then (+ a b)\n        while (< a 50)\n        collect a))\n(format t \"50 미만 피보나치: ~A~%\" *fibs*) ; (0 1 1 2 3 5 8 13 21 34)",
+      "explanation": "확장 loop 절은 컴파일 시점에 최적화된 저수준 tagbody/go 루프로 확장되므로 함수 호출 오버헤드가 전혀 없는 극도로 빠른 기계어 코드로 컴파일됩니다. `collect`, `sum`, `count`, `maximize`, `minimize` 등의 키워드를 조합하여 복잡한 데이터 변환 및 통계를 단 한 문장으로 끝낼 수 있습니다.",
+      "pitfalls": "확장 loop 절에서 `for x in lst`와 `do (print x)` 사이에 소괄호를 잘못 치면 syntax error가 발생합니다. loop 절 내부의 DSL 키워드들은 소괄호 없이 공백으로 나열해야 합니다.",
+      "practice": "문제: Common Lisp의 확장 loop 매크로에서 순회 중 특정 조건에 맞는 원소들을 모아 새로운 리스트로 생성해 반환할 때 사용하는 키워드는 무엇일까요?\n정답: collect"
+    },
+    {
+      "id": "lisp-iteration-dotimes-dolist",
+      "title": "16. 정형 반복문과 범용 루프 (dotimes, dolist, do/do*)",
+      "category": "반복문",
+      "summary": "0부터 n-1까지 카운팅하는 dotimes, 리스트의 각 원소를 순회하는 dolist, 그리고 초기화·갱신·종료 조건 및 반환식을 명시하는 고전적 범용 루프인 do와 do*(순차 갱신)를 제공합니다.",
+      "syntax": "(dotimes (var count [result]) body...)\n(dolist (var list [result]) body...)\n(do ((var init step) ...)\n    (end-test [result])\n  body...)",
+      "example": ";; 1. dotimes (0부터 N-1까지 반복)\n(format t \"dotimes 카운트: \")\n(dotimes (i 4 (format t \"완료!~%\"))\n  (format t \"~D \" i)) ; 0 1 2 3 완료!\n\n;; 2. dolist (리스트 원소 순회)\n(defparameter *fruits* '(\"사과\" \"바나나\" \"체리\"))\n(dolist (item *fruits*)\n  (format t \"과일: ~A~%\" item))\n\n;; 3. do 루프 (C의 for문과 유사한 범용 반복문)\n;; (do ((변수 초기값 갱신식) ...) (종료조건 반환식) 본문...)\n(defparameter *sum*\n  (do ((i 1 (1+ i))        ; i는 1부터 시작해 매 루프마다 1씩 증가\n       (acc 0 (+ acc i)))  ; acc는 0부터 시작해 매 루프마다 i를 더함\n      ((> i 10) acc)       ; i가 10을 초과하면 acc를 반환하고 종료\n    ;; 본문은 비워둘 수도 있음\n    ))\n(format t \"1부터 10까지의 합: ~D~%\" *sum*) ; 55",
+      "explanation": "dotimes와 dolist는 가장 파이써닉/리스픽한 단순 순회 매크로로 내부적으로 변수 바인딩과 탈출 제어를 깔끔하게 추상화합니다. do 매크로는 여러 루프 변수를 동시에 병렬 갱신할 수 있는 고전적이지만 가장 유연한 반복 프리미티브입니다.",
+      "pitfalls": "dotimes의 루프 변수는 0부터 시작하여 count-1까지 실행됩니다. `(dotimes (i 5))`는 1~5가 아니라 0, 1, 2, 3, 4를 순회하므로 1-기반 인덱스가 필요할 때는 `(1+ i)`를 써야 합니다.",
+      "practice": "문제: 리스트의 모든 요소를 순차적으로 순회하며 반복 본문을 실행할 때 사용하는 전형적인 Lisp 반복 구문은 무엇일까요?\n정답: dolist"
+    },
+    {
+      "id": "lisp-macros-defmacro",
+      "title": "17. 매크로 시스템과 메타프로그래밍 (defmacro와 컴파일 타임 코드 변환)",
+      "category": "매크로 & 메타프로그래밍",
+      "summary": "defmacro는 인자를 평가하지 않고 원시 S-식(코드 트리) 형태로 전달받아, 컴파일 타임에 새로운 Lisp 코드로 변환(Macro Expansion)하는 코드 생성기입니다. 이를 통해 언어 자체의 구문과 제어 구조를 원하는 대로 무한히 확장할 수 있습니다.",
+      "syntax": "(defmacro macro-name (param1 param2 ... &body body)\n  \"컴파일 타임에 실행되어 새 코드를 반환하는 생성 함수\"\n  `(...))",
+      "example": ";; 새로운 제어 구조: unless의 반대인 when-not 매크로 만들기\n(defmacro when-not (condition &body body)\n  \"condition이 거짓일 때 body 문장들을 순차 실행한다.\"\n  `(if (not ,condition)\n       (progn\n         ,@body)))\n\n;; 사용 예시\n(defparameter *is-ready* nil)\n(when-not *is-ready*\n  (format t \"준비 대기 중...~%\")\n  (format t \"리소스를 초기화합니다.~%\"))\n\n;; 값 스왑 매크로 만들기\n(defmacro swap (a b)\n  (let ((temp (gensym \"TEMP-\")))\n    `(let ((,temp ,a))\n       (setf ,a ,b)\n       (setf ,b ,temp))))\n\n(defparameter *x* 10)\n(defparameter *y* 99)\n(swap *x* *y*)\n(format t \"스왑 결과: x=~D, y=~D~%\" *x* *y*) ; x=99, y=10",
+      "explanation": "C의 텍스트 기반 전처리기(#define)와 달리 Lisp 매크로는 완전한 Lisp 엔진의 모든 기능(루프, 함수 호출, 정규식 등)을 컴파일 타임에 동원하여 유효한 Lisp AST(S-식)를 직접 조작하고 생성합니다. Lisp는 사실상 '코드를 작성하는 코드를 작성하는 언어'입니다.",
+      "pitfalls": "함수와 매크로의 차이를 이해하지 못하고 단순 연산에 매크로를 남용하면 코드 크기가 비대해지고 디버깅이 어려워집니다. 인자의 평가 시점을 제어하거나 새로운 문법 구문을 만들 때만 매크로를 써야 합니다.",
+      "practice": "문제: Common Lisp에서 컴파일 타임에 구문 트리(S-식)를 입력받아 새로운 코드로 치환하는 사용자 정의 매크로를 정의할 때 사용하는 키워드는 무엇일까요?\n정답: defmacro"
+    },
+    {
+      "id": "lisp-macros-quasiquote",
+      "title": "18. 준인용(Backquote `), 언인용(Comma ,), 스플라이싱(Comma-at ,@)",
+      "category": "매크로 & 메타프로그래밍",
+      "summary": "매크로 템플릿 작성을 위한 3총사입니다. 백쿼트(`)는 기본적으로 코드 템플릿을 인용하되, 내부에서 콤마(,)가 붙은 식은 값을 평가하여 끼워 넣고, 콤마-앳(,@)은 평가된 리스트의 괄호를 풀어서 주변 리스트에 원소들을 펼쳐 병합(Splicing)합니다.",
+      "syntax": "`(... ,expr ... ,@list-expr ...)",
+      "example": "(defparameter *name* 'Alice)\n(defparameter *scores* '(90 85 95))\n\n;; 1. 콤마(,)는 단일 값 대입\n(defparameter *t1* `(student ,*name*))\n(format t \"t1: ~A~%\" *t1*) ; (STUDENT ALICE)\n\n;; 2. 콤마-앳(,@)은 리스트 원소들을 괄호 없이 펼쳐 삽입(Splicing)\n(defparameter *t2* `(student ,*name* ,@*scores*))\n(format t \"t2 (스플라이싱): ~A~%\" *t2*) ; (STUDENT ALICE 90 85 95)\n\n;; 비교: 콤마만 쓰면 리스트가 괄호째 중첩됨\n(defparameter *t3* `(student ,*name* ,*scores*))\n(format t \"t3 (일반 콤마): ~A~%\" *t3*) ; (STUDENT ALICE (90 85 95))",
+      "explanation": "백쿼트 문법이 없던 시절에는 `(list 'if (list 'not cond) (cons 'progn body))`처럼 번거롭게 cons와 list 함수를 중첩해야 했습니다. 백쿼트 템플릿은 생성될 코드의 최종 모양을 눈으로 보면서 필요한 부분만 콤마로 치환할 수 있게 해줍니다.",
+      "pitfalls": "스플라이싱 연산자(`,@`) 뒤에는 반드시 평가 결과가 '리스트'인 표현식이 와야 합니다. 숫자나 심볼 같은 원자값에 `,@`를 적용하면 리더(Reader) 에러나 매크로 확장 에러가 발생합니다.",
+      "practice": "문제: Lisp 준인용(백쿼트) 템플릿 내부에서 평가된 리스트의 바깥 괄호를 벗겨내고 그 안의 원소들을 상위 리스트에 펼쳐서 삽입할 때 사용하는 기호는 무엇일까요?\n정답: ,@ (콤마-앳 / Splicing Unquote)"
+    },
+    {
+      "id": "lisp-macros-macroexpand",
+      "title": "19. 매크로 디버깅(macroexpand-1)과 변수 포획 방지(gensym)",
+      "category": "매크로 & 메타프로그래밍",
+      "summary": "macroexpand-1을 통해 매크로 호출이 실제로 어떤 코드로 확장되는지 단계별로 검증할 수 있습니다. 또한 매크로가 생성한 로컬 변수가 호출자 측의 변수명과 충돌하는 변수 포획(Variable Capture) 버그를 방지하기 위해 반드시 gensym으로 고유 심볼을 생성해야 합니다.",
+      "syntax": "(macroexpand-1 '(macro-call args...))\n(gensym [prefix-string]) ; 충돌 불가능한 고유 비인턴 심볼 생성",
+      "example": ";; 변수 포획(Variable Capture) 위험이 있는 나쁜 매크로\n;; (defmacro bad-repeat (n &body body)\n;;   `(let ((i 0)) ; 호출자가 변수명 i를 쓰고 있다면 충돌 발생!\n;;      (while (< i ,n) ...)))\n\n;; 안전한 매크로 작성법 (gensym 사용)\n(defmacro n-times (count &body body)\n  \"호출자 환경의 변수와 절대 충돌하지 않는 고유 심볼 생성\"\n  (let ((g-count (gensym \"COUNT-\"))\n        (g-i (gensym \"INDEX-\")))\n    `(let ((,g-count ,count))\n       (dotimes (,g-i ,g-count)\n         ,@body))))\n\n;; macroexpand-1로 확장 결과 확인하기\n(pprint (macroexpand-1 '(n-times 3 (format t \"안녕~%\"))))\n;; 출력 예: (LET ((#:COUNT-1024 3))\n;;          (DOTIMES (#:INDEX-1025 #:COUNT-1024)\n;;            (FORMAT T \"안녕~%\")))",
+      "explanation": "gensym이 반환하는 심볼(예: `#:COUNT-1024`)은 어떤 패키지에도 소속(Intern)되지 않은 유일무이한 Uninterned Symbol입니다. 따라서 호출자 코드에서 어떤 이름의 로컬 변수를 사용하고 있든 간에 이름 충돌이 물리적으로 불가능합니다.",
+      "pitfalls": "매크로 인자를 확장 코드 안에서 2번 이상 그대로 나열하면(예: `(* ,x ,x)`), 호출자가 `(square (incf count))`를 넘겼을 때 count가 2번 증가하는 이중 평가(Double Evaluation) 부작용이 발생합니다. 반드시 gensym 변수에 1회 평가 후 바인딩해야 합니다.",
+      "practice": "문제: Common Lisp에서 매크로 내부 임시 변수명의 변수 포획(Variable Capture) 충돌을 완벽히 방지하기 위해 호출하는 고유 심볼 생성 함수는 무엇일까요?\n정답: gensym"
+    },
+    {
+      "id": "lisp-higher-order-map",
+      "title": "20. 고차 함수 매핑: mapcar, mapcan, mapc",
+      "category": "함수형 프로그래밍",
+      "summary": "mapcar는 리스트의 원소에 함수를 적용한 결과 리스트를 생성합니다. mapcan은 결과 리스트들을 nconc로 이어 붙여 스플라이싱 플랫맵을 수행하며, mapc는 결과 리스트를 만들지 않고 오직 부작용(Side Effect)만을 위해 순회하여 메모리를 절약합니다.",
+      "syntax": "(mapcar fn list1 [list2 ...])\n(mapcan fn list1 [list2 ...])\n(mapc fn list1 [list2 ...])",
+      "example": ";; 1. mapcar (기본 리스트 매핑)\n(defparameter *nums* '(1 2 3 4 5))\n(format t \"1씩 증가: ~A~%\"\n        (mapcar #'1+ *nums*)) ; (2 3 4 5 6)\n\n;; 여러 리스트 병렬 매핑\n(format t \"병렬 합산: ~A~%\"\n        (mapcar #'+ '(1 2 3) '(10 20 30))) ; (11 22 33)\n\n;; 2. mapcan (플랫맵: 리스트들을 nconc로 결합)\n(defparameter *pairs*\n  (mapcan #'(lambda (x) (list x (* x 10))) '(1 2 3)))\n(format t \"mapcan 결과: ~A~%\" *pairs*) ; (1 10 2 20 3 30)\n\n;; 3. mapc (부작용 순회, 메모리 할당 없음)\n(mapc #'(lambda (item)\n          (format t \">> 출력: ~A~%\" item))\n      '(\"first\" \"second\" \"third\"))",
+      "explanation": "mapcar는 함수형 프로그래밍의 핵심 도구로 원본 리스트를 손상시키지 않고 새로운 변환 리스트를 반환합니다. mapcan은 filter + map의 조합을 단번에 구현할 수 있어 조건에 맞지 않으면 nil을 반환함으로써 자동 필터링 플랫맵을 만듭니다.",
+      "pitfalls": "mapcan은 내부적으로 파괴적인 `nconc`를 사용하여 결과를 병합합니다. 따라서 람다 함수가 정적 리터럴 리스트(예: `'(a b)`)를 반환하면 메모리가 오염되므로 반드시 `(list ...)`로 새로 생성된 리스트를 반환해야 합니다.",
+      "practice": "문제: Common Lisp에서 리스트의 각 요소에 함수를 적용하여 새로운 결과 리스트를 만들어내는 가장 대표적인 고차 매핑 함수는 무엇일까요?\n정답: mapcar"
+    },
+    {
+      "id": "lisp-higher-order-filter-reduce",
+      "title": "21. 시퀀스 필터링과 축약: remove-if, remove-if-not, find-if, reduce",
+      "category": "함수형 프로그래밍",
+      "summary": "remove-if는 술어를 만족하는 원소를 제거하고, remove-if-not은 술어를 만족하는 원소만 남깁니다. find-if는 조건을 만족하는 첫 번째 원소를 찾습니다. reduce는 이항 함수를 시퀀스 전체에 누적 적용하여 단일 값으로 축약(폴딩)합니다.",
+      "syntax": "(remove-if predicate sequence &key from-end count start end)\n(remove-if-not predicate sequence)\n(find-if predicate sequence)\n(reduce function sequence &key initial-value from-end)",
+      "example": "(defparameter *data* '(1 2 3 4 5 6 7 8 9 10))\n\n;; 1. remove-if와 remove-if-not (필터링)\n(defparameter *odds* (remove-if #'evenp *data*))     ; 짝수 제거 -> 홀수만 남김\n(defparameter *evens* (remove-if-not #'evenp *data*)) ; 짝수만 남김\n(format t \"홀수: ~A~%\" *odds*)   ; (1 3 5 7 9)\n(format t \"짝수: ~A~%\" *evens*)  ; (2 4 6 8 10)\n\n;; 2. find-if (조건 검색)\n(defparameter *found* (find-if #'(lambda (x) (> x 5)) *data*))\n(format t \"5 초과 첫 원소: ~D~%\" *found*) ; 6\n\n;; 3. reduce (폴딩 / 누적 축약)\n(defparameter *sum* (reduce #'+ *data* :initial-value 0))\n(defparameter *fact* (reduce #'* '(1 2 3 4 5)))\n(format t \"합계: ~D, 팩토리얼(5!): ~D~%\" *sum* *fact*) ; 55, 120",
+      "explanation": "Common Lisp의 시퀀스 함수들은 리스트뿐만 아니라 벡터와 문자열에도 동일하게 동작합니다. remove-if 계열은 원본을 변형하지 않는 비파괴적 함수이므로 안전하며, 고성능이 필요할 때는 파괴적 버전인 `delete-if`를 선택할 수 있습니다.",
+      "pitfalls": "빈 시퀀스에 대해 `initial-value` 없이 `reduce`를 호출하면 함수에 따라 0개 인자로 호출을 시도하거나 에러가 발생할 수 있으므로 항상 `:initial-value`를 명시하는 것이 안전합니다.",
+      "practice": "문제: Common Lisp에서 시퀀스의 모든 원소를 이항 함수를 통해 하나의 값으로 누적 집계(폴딩)하는 고차 함수의 이름은 무엇일까요?\n정답: reduce"
+    },
+    {
+      "id": "lisp-multiple-values",
+      "title": "22. 다중 반환값 (Multiple Values: values, multiple-value-bind, multiple-value-list, nth-value)",
+      "category": "값과 런타임",
+      "summary": "Common Lisp 함수는 리스트나 객체 패킹 오버헤드 없이 여러 개의 값을 직접 반환할 수 있습니다. values로 다중 값을 방출하고, multiple-value-bind로 각각의 변수에 수신하며, nth-value로 특정 순번의 반환값을 바로 추출합니다.",
+      "syntax": "(values val1 val2 ...)\n(multiple-value-bind (var1 var2 ...) values-producing-form\n  body...)\n(nth-value n form)\n(multiple-value-list form)",
+      "example": ";; 1. values를 이용한 몫과 나머지 동시 반환\n(defun div-mod (dividend divisor)\n  \"몫과 나머지를 다중 값으로 반환한다.\"\n  (values (floor dividend divisor)\n          (mod dividend divisor)))\n\n;; 2. multiple-value-bind로 분별 수신\n(multiple-value-bind (q r) (div-mod 17 5)\n  (format t \"17 / 5 => 몫: ~D, 나머지: ~D~%\" q r)) ; 몫: 3, 나머지: 2\n\n;; 3. 일반적인 단일 값 문맥에서는 첫 번째 값만 자동 채택됨 (투명성)\n(format t \"단일 컨텍스트: ~D~%\" (+ 10 (div-mod 17 5))) ; 10 + 3 = 13\n\n;; 4. nth-value와 multiple-value-list\n(format t \"나머지만 추출: ~D~%\" (nth-value 1 (div-mod 17 5))) ; 2\n(format t \"리스트로 묶기: ~A~%\" (multiple-value-list (div-mod 17 5))) ; (3 2)",
+      "explanation": "다중 값(Multiple Values)은 Lisp의 획기적인 발명품입니다. 튜플이나 배열 같은 힙 객체를 전혀 할당하지 않고 CPU 레지스터를 통해 여러 값을 즉시 전달하므로 가비지 컬렉션(GC) 부하가 0입니다. 다중 값을 기대하지 않는 일반 수식에서는 첫 번째 값만 사용됩니다.",
+      "pitfalls": "일반 `let` 구문으로 다중 반환 함수를 감싸면 오직 첫 번째 값만 변수에 할당되고 나머지 값들은 조용히 버려집니다. 두 번째 이후의 값을 받으려면 반드시 `multiple-value-bind`를 써야 합니다.",
+      "practice": "문제: Common Lisp 함수에서 튜플 생성 오버헤드 없이 0개 이상의 다중 값을 호출자에게 방출할 때 사용하는 특수 연산자는 무엇일까요?\n정답: values"
+    },
+    {
+      "id": "lisp-sequences-vectors",
+      "title": "23. 시퀀스와 배열/벡터 (make-array, aref, vector, adjustable)",
+      "category": "데이터 구조 & 시퀀스",
+      "summary": "벡터(1차원 배열)는 O(1) 인덱스 접근이 가능한 연속 메모리 구조입니다. make-array로 생성하고 aref로 읽고 쓰며, :adjustable t와 :fill-pointer를 지정하여 동적으로 길이가 늘어나는 동적 벡터(vector-push-extend)를 만들 수 있습니다.",
+      "syntax": "(make-array dimensions :initial-element val :adjustable t :fill-pointer t)\n(vector el1 el2 ...)\n#(el1 el2 ...) ; 벡터 리터럴\n(aref array idx...)",
+      "example": ";; 1. 고정 크기 벡터와 aref 접근\n(defparameter *v* (vector 10 20 30 40))\n(format t \"2번 인덱스: ~D~%\" (aref *v* 2)) ; 30\n(setf (aref *v* 2) 99)\n(format t \"수정 후: ~A~%\" *v*) ; #(10 20 99 40)\n\n;; 2. 2차원 배열\n(defparameter *grid* (make-array '(2 3) :initial-element 0))\n(setf (aref *grid* 0 1) 7)\n(format t \"(0, 1) 원소: ~D~%\" (aref *grid* 0 1)) ; 7\n\n;; 3. 동적 가변 벡터 (Dynamic Vector)\n(defparameter *dyn-vec*\n  (make-array 2 :adjustable t :fill-pointer 0))\n\n(vector-push-extend \"Alpha\" *dyn-vec*)\n(vector-push-extend \"Beta\" *dyn-vec*)\n(vector-push-extend \"Gamma\" *dyn-vec*) ; 크기 자동 확장!\n(format t \"동적 벡터 길이: ~D, 내용: ~A~%\"\n        (length *dyn-vec*) *dyn-vec*) ; 길이: 3, #(Alpha Beta Gamma)",
+      "explanation": "Lisp의 배열(Array)은 다차원 데이터와 동적 크기 변경을 모두 지원합니다. `vector-push-extend`는 버퍼가 꽉 찼을 때 C++의 std::vector처럼 기하급수적으로 내부 메모리를 재할당하여 빠른 amortized O(1) 추가를 제공합니다.",
+      "pitfalls": "리터럴 벡터 문법 `#(1 2 3)`으로 선언된 배열은 불변 상수 데이터일 수 있으므로 `setf (aref ...)`로 수정하려고 하면 구현체에 따라 런타임 오류가 발생할 수 있습니다. 수정할 벡터는 `make-array`로 생성하세요.",
+      "practice": "문제: Common Lisp에서 배열의 특정 인덱스 원소를 조회하거나 setf와 함께 값을 대입할 때 사용하는 범용 배열 접근 함수는 무엇일까요?\n정답: aref"
+    },
+    {
+      "id": "lisp-strings",
+      "title": "24. 문자열, 문자와 format 포맷팅 (~A, ~S, ~D, ~%)",
+      "category": "문자열 & I/O",
+      "summary": "문자열은 특수화된 문자 벡터(vector of character)입니다. 문자는 #\\a, #\\Space 리터럴로 표기하며 char로 접근합니다. format 함수는 사람이 읽는 형태(~A), 기계가 다시 읽는 형태(~S), 10진수(~D), 개행(~%), 반복 루프(~{~}) 등의 강력한 서식 지시자를 갖추고 있습니다.",
+      "syntax": "#\\char-literal ; 문자 (예: #\\x, #\\Newline, #\\Space)\n(char string index)\n(format destination control-string args...)",
+      "example": ";; 1. 문자와 문자열 조작\n(defparameter *str* \"Common Lisp\")\n(format t \"0번째 문자: ~S~%\" (char *str* 0)) ; #\\C\n(format t \"문자열 비교: ~A~%\" (string= *str* \"Common Lisp\")) ; T\n(format t \"대소문자 무시: ~A~%\" (string-equal *str* \"common lisp\")) ; T\n\n;; 2. format 함수의 강력한 지시자\n;; ~A: Aesthetic (사람용), ~S: Standard (Lisp 리더용 따옴표 포함)\n;; ~D: Decimal (정수), ~F: Float (실수), ~%: 개행\n(format t \"~A: ~S, 점수: ~D, 평균: ~,2F~%\"\n        \"이름\" \"Alice\" 95 91.666)\n\n;; 3. destination이 nil이면 콘솔 출력 대신 포맷팅된 문자열 반환\n(defparameter *msg* (format nil \"사용자: ~A (ID: ~D)\" \"홍길동\" 101))\n(format t \"생성된 문자열: ~A~%\" *msg*)\n\n;; 4. 반복 지시자 (~{~})와 구분자 (~^)\n(defparameter *csv*\n  (format nil \"~{~A~^, ~}\" '(\"Apple\" \"Banana\" \"Cherry\")))\n(format t \"CSV: ~A~%\" *csv*) ; Apple, Banana, Cherry",
+      "explanation": "Common Lisp의 `format` 제어 문자열은 단순한 printf를 뛰어넘는 튜링 완전 수준의 미니 서식 언어입니다. 조건 분기(`~:[...~]`), 복수형 처리(`~P`), 리스트 반복 순회(`~{~}`)까지 제어 문자열 내부에서 프로그래밍하듯 처리할 수 있습니다.",
+      "pitfalls": "`format`의 첫 번째 인자로 `t`를 주면 표준 출력(`*standard-output*`)으로 출력하고 `nil`을 반환합니다. 결과를 문자열로 저장하고 싶다면 첫 번째 인자로 반드시 `nil`을 주어야 합니다.",
+      "practice": "문제: Common Lisp의 format 함수에서 출력 결과를 콘솔에 찍지 않고 완성된 문자열 객체로 반환받으려면 첫 번째 인자로 무엇을 전달해야 할까요?\n정답: nil"
+    },
+    {
+      "id": "lisp-hash-tables",
+      "title": "25. 해시 테이블 (make-hash-table, gethash, remhash, clrhash)",
+      "category": "데이터 구조",
+      "summary": "고성능 키-값 저장소로 make-hash-table로 생성하며 키 비교 동등성(:test 'eq, 'eql, 'equal, 'equalp)을 지정할 수 있습니다. gethash는 조회된 값과 함께 해당 키가 실제로 존재했는지를 불리언 다중 반환값으로 알려줍니다.",
+      "syntax": "(make-hash-table :test 'equal)\n(gethash key hash-table [default-value])\n(setf (gethash key hash-table) new-value)\n(remhash key hash-table)\n(clrhash hash-table)",
+      "example": ";; 문자열 키를 사용하기 위해 :test 'equal 지정\n(defparameter *users* (make-hash-table :test 'equal))\n\n;; 1. 데이터 삽입 및 갱신\n(setf (gethash \"alice\" *users*) '(:role :admin :level 10))\n(setf (gethash \"bob\" *users*) '(:role :user :level 3))\n\n;; 2. gethash의 다중 반환값 (값, 존재여부-boolean)\n(multiple-value-bind (val exists-p) (gethash \"alice\" *users*)\n  (if exists-p\n      (format t \"Alice 정보: ~A~%\" val)\n      (format t \"존재하지 않는 사용자입니다.~%\")))\n\n;; 존재하지 않는 키 조회\n(format t \"기본값 제공: ~A~%\"\n        (gethash \"unknown\" *users* \"등록 안 됨\")) ; 등록 안 됨\n\n;; 3. 삭제와 크기 확인\n(remhash \"bob\" *users*)\n(format t \"테이블 크기: ~D~%\" (hash-table-count *users*)) ; 1",
+      "explanation": "해시 테이블의 키로 문자열이나 복합 리스트를 쓸 때는 `:test 'equal`을 지정해야 하고, 대소문자를 구분하지 않는 문자열 키에는 `:test 'equalp`를 지정해야 합니다. 기본값은 `eql`이므로 문자열을 키로 넣으면 검색이 실패합니다.",
+      "pitfalls": "해시 테이블에 값이 `nil`로 저장되어 있는 경우와 키 자체가 아예 존재하지 않는 경우 모두 `(gethash key table)`의 첫 번째 반환값은 `nil`입니다. 둘을 확실히 구분하려면 반드시 `multiple-value-bind`로 두 번째 불리언 반환값(`present-p`)을 확인해야 합니다.",
+      "practice": "문제: Common Lisp의 gethash 함수에서 특정 키를 조회할 때, 키에 매핑된 값 외에 해당 키가 테이블에 실제로 존재하는지 여부를 알려주는 두 번째 반환값의 타입은 무엇일까요?\n정답: 불리언 (Boolean / T 또는 NIL)"
+    },
+    {
+      "id": "lisp-clos-classes",
+      "title": "26. CLOS 객체 지향: 클래스 정의(defclass)와 인스턴스화(make-instance)",
+      "category": "CLOS (객체 시스템)",
+      "summary": "CLOS(Common Lisp Object System)는 클래스 정의 defclass와 인스턴스 생성 make-instance를 제공합니다. 슬롯(Slots)은 :initarg(생성자 인자), :accessor(게터/세터 생성), :initform(기본값) 등을 명시하며 다중 상속을 기본 지원합니다.",
+      "syntax": "(defclass class-name (super-classes...)\n  ((slot-name :initarg :arg-name\n              :initform default-expr\n              :accessor accessor-name)))\n\n(make-instance 'class-name :arg-name value ...)",
+      "example": ";; 1. 클래스 정의\n(defclass person ()\n  ((name\n    :initarg :name\n    :accessor person-name\n    :documentation \"사람의 이름\")\n   (age\n    :initarg :age\n    :initform 0\n    :accessor person-age\n    :documentation \"나이 (기본값 0)\")))\n\n;; 2. 상속을 통한 하위 클래스 정의\n(defclass employee (person)\n  ((employee-id\n    :initarg :id\n    :accessor emp-id)\n   (salary\n    :initarg :salary\n    :initform 3000\n    :accessor emp-salary)))\n\n;; 3. 인스턴스 생성\n(defparameter *emp*\n  (make-instance 'employee\n                 :name \"홍길동\"\n                 :age 32\n                 :id \"EMP-001\"))\n\n;; 4. accessor를 통한 조회 및 수정\n(format t \"직원: ~A (나이: ~D, 사번: ~A, 급여: ~D)~%\"\n        (person-name *emp*)\n        (person-age *emp*)\n        (emp-id *emp*)\n        (emp-salary *emp*))\n\n(incf (emp-salary *emp*) 500) ; setf 장소로 동작\n(format t \"인상 후 급여: ~D~%\" (emp-salary *emp*)) ; 3500",
+      "explanation": "CLOS는 클래스 내부에 함수를 속박하지 않습니다. 클래스는 순수한 '데이터 상태(슬롯)'의 청사진일 뿐이며, 동작 로직은 독립된 제네릭 함수와 메서드가 담당합니다. `:accessor foo`를 지정하면 읽기 함수 `(foo obj)`와 대입 장소 `(setf (foo obj) val)`가 자동 생성됩니다.",
+      "pitfalls": "슬롯에 `:initform`이나 `:initarg`를 제공하지 않고 인스턴스를 생성하면 슬롯이 언바운드(Unbound) 상태로 남게 됩니다. 이 상태에서 슬롯을 읽으려고 하면 `UNBOUND-SLOT` 에러가 발생하므로 기본값을 정의하거나 생성자에서 필히 공급해야 합니다.",
+      "practice": "문제: CLOS에서 클래스의 인스턴스를 새롭게 생성할 때 클래스 이름 심볼과 초기화 인자들을 넘겨 호출하는 표준 함수는 무엇일까요?\n정답: make-instance"
+    },
+    {
+      "id": "lisp-clos-methods",
+      "title": "27. CLOS 제네릭 함수와 메서드 조합 (:before, :after, :around)",
+      "category": "CLOS (객체 시스템)",
+      "summary": "CLOS에서 메서드는 클래스 내부에 종속되지 않고 독립적인 제네릭 함수(defgeneric)의 특수화 형태로 존재하며 다중 디스패치(Multiple Dispatch)를 지원합니다. 또한 주 메서드 실행 전후를 가로채는 :before, :after, :around 보조 메서드 조합을 제공합니다.",
+      "syntax": "(defgeneric generic-name (arg1 arg2 ...))\n(defmethod generic-name ((arg1 type1) arg2 ...)\n  body...)\n(defmethod generic-name :before ((arg1 type1) ...))\n(defmethod generic-name :after ((arg1 type1) ...))\n(defmethod generic-name :around ((arg1 type1) ...)\n  (call-next-method))",
+      "example": ";; 1. 제네릭 함수 선언\n(defgeneric describe-role (obj)\n  (:documentation \"객체의 역할을 서술하는 제네릭 인터페이스\"))\n\n;; 2. 주 메서드(Primary Method) 구현\n(defmethod describe-role ((p person))\n  (format t \"[기본 사람] 이름: ~A~%\" (person-name p)))\n\n(defmethod describe-role ((e employee))\n  (format t \"[회사 직원] 사번: ~A, 직책 업무 수행 중~%\" (emp-id e)))\n\n;; 3. 보조 메서드 (Auxiliary Methods: :before, :after)\n(defmethod describe-role :before ((e employee))\n  (format t \">> (로그) 직원 역할 조회 시작...~%\"))\n\n(defmethod describe-role :after ((e employee))\n  (format t \">> (감사) 조회가 정상 완료되었습니다.~%\"))\n\n;; 호출 테스트\n(describe-role *emp*)",
+      "explanation": "Java나 C++의 단일 디스패치(Single Dispatch)와 달리, CLOS는 메서드의 모든 매개변수 타입 조합에 따라 실행할 메서드를 결정하는 다중 디스패치(Multiple Dispatch)를 지원합니다. 또한 `:before`, `:after`, `:around`와 `(call-next-method)`를 통해 객체 지향과 AOP(관점 지향 프로그래밍)를 완벽히 통합합니다.",
+      "pitfalls": "하위 클래스의 주 메서드에서 상위 클래스의 주 메서드를 함께 실행하고 싶다면 메서드 본문 내부에서 `(call-next-method)`를 명시적으로 호출해야 합니다. 호출하지 않으면 상위 클래스의 주 메서드가 가려집니다(Shadowing).",
+      "practice": "문제: CLOS 메서드 조합에서 상위 클래스에 정의된 다음 우선순위 메서드를 호출하기 위해 사용하는 내장 함수는 무엇일까요?\n정답: call-next-method"
+    },
+    {
+      "id": "lisp-condition-system",
+      "title": "28. 조건 시스템 (Condition System: error, handler-case, restart-case)",
+      "category": "예외 & 조건 시스템",
+      "summary": "전통적인 try-catch 언어와 달리, Lisp의 조건 시스템은 에러 발생 지점에서 콜스택을 풀지 않은 채 복구 전략을 선택할 수 있는 강력한 재시작(Restart) 메커니즘을 제공합니다. error/warn으로 조건을 알리고 handler-case나 restart-case로 복구합니다.",
+      "syntax": "(error \"에러 메시지\")\n(handler-case expression\n  (error-type (err-var) handling-code))\n\n(restart-case risky-code\n  (restart-name (args) recovery-code))",
+      "example": ";; 1. 기본 handler-case (전통적인 try-catch와 유사한 스택 풀기 방식)\n(defun safe-divide (a b)\n  (handler-case (/ a b)\n    (division-by-zero ()\n      (format t \"[경고] 0으로 나누기 감지, 0 반환~%\")\n      0)))\n\n(format t \"10 / 2 = ~D~%\" (safe-divide 10 2)) ; 5\n(format t \"10 / 0 = ~D~%\" (safe-divide 10 0)) ; 0\n\n;; 2. Lisp의 진가: restart-case (콜스택을 보존한 채 복구 지점 제공)\n(defun parse-int-or-retry (str)\n  (restart-case\n      (parse-integer str)\n    (return-zero ()\n      :report \"0을 기본값으로 반환합니다.\"\n      0)\n    (use-value (new-val)\n      :report \"새 정수 값을 입력받아 사용합니다.\"\n      new-val)))\n\n;; 상위 핸들러에서 복구 전략(Restart) 선택\n(defparameter *parsed*\n  (handler-bind ((error #'(lambda (c)\n                            (declare (ignore c))\n                            (invoke-restart 'use-value 999))))\n    (parse-int-or-retry \"숫자아님\")))\n(format t \"재시작 복구 결과: ~D~%\" *parsed*) ; 999",
+      "explanation": "전통적 예외 처리는 에러가 감지되면 즉시 스택 프레임을 파괴(Unwind)하며 상위 catch 블록으로 도망칩니다. 반면 Lisp의 조건 시스템은 에러 발생 지점의 런타임 환경과 콜스택을 그대로 얼려둔 상태에서 상위 정책 결정자가 준비된 재시작(Restart) 옵션 중 하나를 선택해 그 자리에서 복구 후 계속 진행할 수 있게 합니다.",
+      "pitfalls": "단순 에러 처리에는 `handler-case`가 직관적이지만, 대규모 서버나 장기 실행 배치 작업에서는 스택이 파괴되지 않고 재시작을 유도할 수 있는 `handler-bind`와 `restart-case`의 조합을 활용해야 진정한 장애 탄력성을 얻을 수 있습니다.",
+      "practice": "문제: Common Lisp에서 스택을 파괴하지 않고 예외 발생 지점에 복구 옵션을 정의해두는 매크로의 이름은 무엇일까요?\n정답: restart-case"
+    },
+    {
+      "id": "lisp-packages",
+      "title": "29. 패키지와 모듈 시스템: defpackage, in-package, export, use-package",
+      "category": "모듈 & 패키지",
+      "summary": "Common Lisp의 패키지 시스템은 심볼(Symbol)의 네임스페이스를 관리하여 이름 충돌을 방지합니다. defpackage로 패키지를 정의하고 export할 공용 API를 지정하며, in-package로 활성 패키지를 전환합니다. 외부에서는 pkg:symbol 형태로 접근합니다.",
+      "syntax": "(defpackage :package-name\n  (:use :common-lisp)\n  (:export :public-sym1 :public-sym2))\n(in-package :package-name)",
+      "example": ";; 1. 모듈 패키지 정의\n(defpackage :math-utils\n  (:use :common-lisp)\n  (:export :factorial\n           :fibonacci))\n\n(in-package :math-utils)\n\n;; 내부 구현 (패키지 외부 비공개 함수)\n(defun calc-fact (n acc)\n  (if (<= n 1) acc (calc-fact (1- n) (* n acc))))\n\n;; 외부에 공개(export)된 공용 API 함수\n(defun factorial (n)\n  (calc-fact n 1))\n\n(defun fibonacci (n)\n  (if (< n 2) n (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))\n\n;; 2. 사용자 패키지 환경으로 복귀 및 호출\n(in-package :cl-user)\n\n;; 공용 심볼은 단일 콜론(:)으로 접근\n(format t \"5! = ~D~%\" (math-utils:factorial 5)) ; 120\n\n;; 비공개 내부 심볼은 이중 콜론(::)으로 접근 가능 (디버깅/테스트용)\n(format t \"내부 함수: ~D~%\" (math-utils::calc-fact 4 1)) ; 24",
+      "explanation": "Lisp의 패키지는 파일 경로 기반이 아니라 심볼 테이블(Symbol Table) 기반입니다. Lisp 리더는 토큰을 읽을 때 현재 `*package*`에 등록된 심볼을 찾아 매핑합니다. `:export`된 심볼은 `pkg:sym` 단일 콜론으로, 비공개 심볼은 `pkg::sym` 이중 콜론으로 접근할 수 있습니다.",
+      "pitfalls": "defpackage에서 `:use :common-lisp`를 빠뜨리면 `+`, `defun`, `format` 등 표준 Lisp 함수와 특수 연산자 심볼을 인식하지 못해 문법 에러가 발생합니다.",
+      "practice": "문제: Common Lisp 패키지 외부에서 해당 패키지가 export하지 않은 내부 비공개 심볼에 강제로 접근할 때 사용하는 콜론 구분자 표기는 무엇일까요?\n정답: :: (이중 콜론, 예: pkg::internal-symbol)"
+    }
+  ],
+  "functions": [
+    {
+      "name": "car",
+      "signature": "(car list)",
+      "module": "common-lisp",
+      "description": "콘스 셀 또는 리스트의 첫 번째 요소(CAR 포인터가 가리키는 값)를 반환합니다. 인자가 nil이면 nil을 반환합니다.",
+      "example": "(car '(a b c)) ; A"
+    },
+    {
+      "name": "cdr",
+      "signature": "(cdr list)",
+      "module": "common-lisp",
+      "description": "콘스 셀의 두 번째 요소 또는 리스트에서 첫 번째 원소를 제외한 나머지 꼬리 리스트를 반환합니다. 인자가 nil이면 nil을 반환합니다.",
+      "example": "(cdr '(a b c)) ; (B C)"
+    },
+    {
+      "name": "cons",
+      "signature": "(cons object-1 object-2)",
+      "module": "common-lisp",
+      "description": "두 개의 객체를 결합하여 첫 번째 슬롯(CAR)에 object-1, 두 번째 슬롯(CDR)에 object-2를 갖는 새로운 콘스 셀을 메모리에 생성합니다.",
+      "example": "(cons 1 '(2 3)) ; (1 2 3)"
+    },
+    {
+      "name": "list",
+      "signature": "(list &rest objects)",
+      "module": "common-lisp",
+      "description": "전달받은 모든 인수들을 순서대로 담아 마지막이 nil로 끝나는 새로운 정규 리스트(Proper List)를 생성하여 반환합니다.",
+      "example": "(list :x 10 :y 20) ; (:X 10 :Y 20)"
+    },
+    {
+      "name": "append",
+      "signature": "(append &rest lists)",
+      "module": "common-lisp",
+      "description": "인자로 전달된 여러 리스트들을 결합하여 하나의 새 리스트로 연결합니다. 마지막 인자를 제외한 앞선 리스트들의 콘스 셀을 새로 복사합니다.",
+      "example": "(append '(1 2) '(3 4) '(5)) ; (1 2 3 4 5)"
+    },
+    {
+      "name": "length",
+      "signature": "(length sequence)",
+      "module": "common-lisp",
+      "description": "임의의 시퀀스(리스트, 벡터, 문자열)의 전체 길이(원소 개수)를 정수로 반환합니다.",
+      "example": "(length \"Common Lisp\") ; 11"
+    },
+    {
+      "name": "reverse",
+      "signature": "(reverse sequence)",
+      "module": "common-lisp",
+      "description": "원본 시퀀스를 변경하지 않고, 원소들의 순서를 역순으로 뒤집은 새로운 시퀀스를 생성하여 반환합니다.",
+      "example": "(reverse '(1 2 3 4)) ; (4 3 2 1)"
+    },
+    {
+      "name": "mapcar",
+      "signature": "(mapcar function list &rest more-lists)",
+      "module": "common-lisp",
+      "description": "하나 이상의 리스트에서 동일 인덱스의 원소들을 꺼내 지정된 함수에 순차 적용하고 그 결과값들로 구성된 새 리스트를 생성합니다.",
+      "example": "(mapcar #'* '(1 2 3) '(10 20 30)) ; (10 40 90)"
+    },
+    {
+      "name": "mapcan",
+      "signature": "(mapcan function list &rest more-lists)",
+      "module": "common-lisp",
+      "description": "리스트 원소들에 함수를 적용하여 반환된 결과 리스트들을 nconc를 통해 단일 평탄화 리스트로 병합(플랫맵)하여 반환합니다.",
+      "example": "(mapcan #'(lambda (x) (and (numberp x) (list x))) '(a 1 b 2)) ; (1 2)"
+    },
+    {
+      "name": "reduce",
+      "signature": "(reduce function sequence &key key from-end start end initial-value)",
+      "module": "common-lisp",
+      "description": "이항 함수를 시퀀스의 원소들에 왼쪽부터 오른쪽으로(또는 from-end) 누적 적용하여 단일 결과값으로 축약(폴딩)합니다.",
+      "example": "(reduce #'+ '(1 2 3 4 5) :initial-value 0) ; 15"
+    },
+    {
+      "name": "member",
+      "signature": "(member item list &key key test test-not)",
+      "module": "common-lisp",
+      "description": "리스트에서 지정한 item과 일치하는 첫 번째 원소를 탐색하고, 해당 원소부터 시작하는 서브리스트를 반환합니다. 없으면 nil을 반환합니다.",
+      "example": "(member 'b '(a b c d)) ; (B C D)"
+    },
+    {
+      "name": "assoc",
+      "signature": "(assoc item alist &key key test test-not)",
+      "module": "common-lisp",
+      "description": "연관 리스트(A-list: 키와 값의 콘스 쌍 리스트)에서 CAR가 item과 일치하는 첫 번째 쌍((key . val))을 탐색하여 반환합니다.",
+      "example": "(assoc :host '((:port . 8080) (:host . \"localhost\"))) ; (:HOST . \"localhost\")"
+    },
+    {
+      "name": "gethash",
+      "signature": "(gethash key hash-table &optional default)",
+      "module": "common-lisp",
+      "description": "해시 테이블에서 key에 대응하는 값을 조회합니다. 다중 반환값으로 매핑된 값과 키의 실제 존재 여부 불리언(T/NIL)을 함께 반환합니다.",
+      "example": "(multiple-value-bind (val found) (gethash \"id\" table) ...)"
+    },
+    {
+      "name": "remhash",
+      "signature": "(remhash key hash-table)",
+      "module": "common-lisp",
+      "description": "해시 테이블에서 지정한 key와 연관된 엔트리를 완전히 제거합니다. 키가 존재하여 제거되었으면 T, 없었으면 NIL을 반환합니다.",
+      "example": "(remhash \"temp-token\" *session-table*)"
+    },
+    {
+      "name": "format",
+      "signature": "(format destination control-string &rest args)",
+      "module": "common-lisp",
+      "description": "제어 문자열(control-string)의 포맷 지시자(~A, ~S, ~D, ~%, ~{~})를 해석하여 서식화된 문자열을 출력 스트림에 쓰거나(t) 문자열로 반환(nil)합니다.",
+      "example": "(format nil \"Hello, ~A! (~D)\" \"Lisp\" 2026) ; \"Hello, Lisp! (2026)\""
+    },
+    {
+      "name": "print",
+      "signature": "(print object &optional output-stream)",
+      "module": "common-lisp",
+      "description": "개행 문자 하나를 먼저 출력한 후, Lisp 리더가 다시 읽을 수 있는 인쇄 표현형으로 객체를 출력하고 공백 하나를 덧붙인 뒤 객체 자신을 반환합니다.",
+      "example": "(print '(1 2 3)) ; 콘솔에 개행 후 (1 2 3) 출력"
+    },
+    {
+      "name": "read",
+      "signature": "(read &optional input-stream eof-error-p eof-value recursive-p)",
+      "module": "common-lisp",
+      "description": "입력 스트림에서 다음 파싱 가능한 완전한 S-식을 읽어들여 평가되지 않은 Lisp 데이터 객체 형태로 변환하여 반환합니다.",
+      "example": "(with-input-from-string (s \"(+ 10 20)\") (read s)) ; (+ 10 20) 심볼 리스트 반환"
+    },
+    {
+      "name": "values",
+      "signature": "(values &rest values)",
+      "module": "common-lisp",
+      "description": "단일 함수 호출에서 0개 이상의 다중 값을 호출자에게 동시에 반환합니다. 수신 측에서 multiple-value-bind 등을 통해 분별 수신할 수 있습니다.",
+      "example": "(values 100 \"SUCCESS\" t)"
+    },
+    {
+      "name": "multiple-value-list",
+      "signature": "(multiple-value-list form)",
+      "module": "common-lisp",
+      "description": "form이 산출한 모든 다중 반환값들을 모아서 하나의 새로운 표준 리스트로 묶어 반환합니다.",
+      "example": "(multiple-value-list (floor 17 5)) ; (3 2)"
+    },
+    {
+      "name": "error",
+      "signature": "(error datum &rest arguments)",
+      "module": "common-lisp",
+      "description": "지정된 오류 조건(Condition) 또는 포맷 문자열로 에러를 시그널링하고, 처리되지 않으면 Lisp 인터랙티브 디버거로 즉시 진입합니다.",
+      "example": "(error \"유효하지 않은 계정 ID: ~A\" id)"
+    },
+    {
+      "name": "warn",
+      "signature": "(warn datum &rest arguments)",
+      "module": "common-lisp",
+      "description": "경고 조건(Warning Condition)을 발생시키고 표준 오류 스트림에 경고 메시지를 출력한 뒤 프로그램을 중단 없이 계속 실행합니다.",
+      "example": "(warn \"설정 파일이 없어 기본값을 사용합니다.\")"
+    },
+    {
+      "name": "sleep",
+      "signature": "(sleep seconds)",
+      "module": "common-lisp",
+      "description": "지정된 초(정수 또는 초 단위 부동소수점 실수) 동안 현재 실행 스레드를 일시 정지(블로킹)합니다.",
+      "example": "(sleep 0.5) ; 0.5초(500ms) 동안 대기"
+    },
+    {
+      "name": "elt",
+      "signature": "(elt sequence index)",
+      "module": "common-lisp",
+      "description": "임의의 시퀀스(리스트, 1차원 배열/벡터, 문자열)에서 0부터 시작하는 지정 index에 위치한 요소를 조회하거나 setf 장소로 수정합니다.",
+      "example": "(elt #(10 20 30) 1) ; 20"
+    },
+    {
+      "name": "subseq",
+      "signature": "(subseq sequence start &optional end)",
+      "module": "common-lisp",
+      "description": "시퀀스의 [start, end) 반열린 구간에 해당하는 부분 시퀀스를 얕은 복사본으로 새로 슬라이싱하여 반환합니다.",
+      "example": "(subseq \"Common Lisp\" 0 6) ; \"Common\""
+    },
+    {
+      "name": "find-if",
+      "signature": "(find-if predicate sequence &key from-end start end key)",
+      "module": "common-lisp",
+      "description": "술어(predicate) 함수를 만족하는 시퀀스 내의 첫 번째 요소를 탐색하여 반환하며, 만족하는 요소가 없으면 nil을 반환합니다.",
+      "example": "(find-if #'oddp '(2 4 7 8 10)) ; 7"
+    },
+    {
+      "name": "remove-if",
+      "signature": "(remove-if test sequence &key from-end start end count key)",
+      "module": "common-lisp",
+      "description": "원본 시퀀스를 손상시키지 않고, 술어 test를 만족하는 모든 원소를 걸러내어 제외한 새로운 시퀀스를 반환합니다.",
+      "example": "(remove-if #'zerop '(0 1 0 2 0 3)) ; (1 2 3)"
+    },
+    {
+      "name": "funcall",
+      "signature": "(funcall function &rest args)",
+      "module": "common-lisp",
+      "description": "첫 번째 인자로 주어진 함수 객체(또는 함수 심볼)에 이후에 나열된 인수들을 직접 매개변수로 전달하여 함수를 실행합니다.",
+      "example": "(funcall #'+ 10 20 30) ; 60"
+    },
+    {
+      "name": "apply",
+      "signature": "(apply function &rest args-and-list)",
+      "module": "common-lisp",
+      "description": "함수를 호출하되 마지막 인자로 넘겨진 리스트를 개별 인수로 펼쳐서(Spread) 앞선 인수들과 함께 함수에 전달 실행합니다.",
+      "example": "(apply #'+ 1 2 '(3 4 5)) ; 15"
+    },
+    {
+      "name": "make-hash-table",
+      "signature": "(make-hash-table &key test size rehash-size rehash-threshold)",
+      "module": "common-lisp",
+      "description": "새로운 해시 테이블을 할당 생성합니다. 키 비교를 위한 동등성 검사 방식(:test 'eq, 'eql, 'equal, 'equalp)을 지정할 수 있습니다.",
+      "example": "(make-hash-table :test 'equal :size 100)"
+    },
+    {
+      "name": "make-array",
+      "signature": "(make-array dimensions &key element-type initial-element initial-contents adjustable fill-pointer)",
+      "module": "common-lisp",
+      "description": "지정된 차원과 크기(dimensions)를 갖는 새로운 다차원 배열 또는 1차원 벡터를 생성합니다. 동적 크기 조절 옵션을 지원합니다.",
+      "example": "(make-array '(3 3) :initial-element 0)"
+    }
+  ]
+}
