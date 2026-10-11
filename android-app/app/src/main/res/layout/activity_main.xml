@@ -103,7 +103,7 @@
 
                 <Button
                     android:id="@+id/btn_tab_all"
-                    style="@style/EinkButton.Primary"
+                    style="@style/EinkButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="6dp"

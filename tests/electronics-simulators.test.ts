@@ -1,5 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 // Load Electronics simulator modules
 const LogicSim = require('../site/web/static/simulators/electronics/logic-sim.js');

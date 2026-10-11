@@ -92,8 +92,8 @@
 
     ctx.clearRect(0, 0, width, height);
 
-    // Background panel
-    ctx.fillStyle = '#f8fafc';
+    // Pure crisp white canvas background
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, width, height);
 
     ctx.save();
@@ -103,7 +103,7 @@
 
     // Power Rails (L1 Hot at top, N Neutral at bottom)
     const hotY = 55;
-    const neutralY = height - 40;
+    const neutralY = height - 35;
 
     ctx.strokeStyle = '#dc2626'; // Hot rail red
     ctx.lineWidth = 3;
@@ -113,137 +113,228 @@
     ctx.stroke();
     ctx.fillStyle = '#dc2626';
     ctx.font = 'bold 11px sans-serif';
-    ctx.fillText('L1 (220V)', width - 25, hotY - 5);
+    ctx.fillText('L1 (220V)', width - 30, hotY - 6);
 
     ctx.strokeStyle = '#2563eb'; // Neutral rail blue
+    ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(30, neutralY);
     ctx.lineTo(width - 30, neutralY);
     ctx.stroke();
     ctx.fillStyle = '#2563eb';
-    ctx.fillText('N (0V)', width - 25, neutralY + 15);
+    ctx.fillText('N (0V)', width - 30, neutralY + 16);
 
     // Component Positions
     // Column 1: Stop / Emergency Button
     // Column 2: Forward Branch (PB_fwd, MC_fwd contact, MC_rev b-contact, MC_fwd coil)
     // Column 3: Reverse Branch (PB_rev, MC_rev contact, MC_fwd b-contact, MC_rev coil)
     // Column 4: Motor & Lamps visual status
-
-    const col1X = 70;
-    const col2X = 180;
-    const col3X = 320;
-    const col4X = 460;
+    const col1X = 65;
+    const col2X = 165;
+    const col3X = 285;
+    const col4X = 415;
 
     // --- Branch 1: Stop Switch (NC) ---
-    const stopColor = s.pbStop || s.eStop ? '#cbd5e1' : '#22c55e';
-    ctx.strokeStyle = stopColor;
+    ctx.strokeStyle = s.pbStop || s.eStop ? '#94a3b8' : '#0f172a';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(col1X, hotY);
-    ctx.lineTo(col1X, hotY + 30);
+    ctx.lineTo(col1X, hotY + 28);
     ctx.stroke();
 
-    // Draw NC contact symbol
-    ctx.fillStyle = s.pbStop ? '#ef4444' : '#64748b';
-    ctx.fillRect(col1X - 15, hotY + 30, 30, 20);
+    // Draw NC contact box: White background, 2px solid #0f172a, #0f172a text
     ctx.fillStyle = '#ffffff';
-    ctx.font = '10px sans-serif';
-    ctx.fillText(s.pbStop ? 'OPEN' : 'STOP', col1X - 14, hotY + 44);
+    ctx.fillRect(col1X - 22, hotY + 28, 44, 22);
+    ctx.strokeStyle = s.pbStop || s.eStop ? '#dc2626' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col1X - 22, hotY + 28, 44, 22);
 
+    ctx.fillStyle = s.pbStop || s.eStop ? '#dc2626' : '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText(s.pbStop ? 'OPEN' : 'STOP', col1X - 16, hotY + 43);
+
+    // Wire from Stop switch to branches
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(col1X, hotY + 50);
-    ctx.lineTo(col1X, hotY + 80);
-    ctx.lineTo(col3X + 40, hotY + 80);
+    ctx.lineTo(col1X, hotY + 75);
+    ctx.lineTo(col3X, hotY + 75);
     ctx.stroke();
 
     // --- Branch 2: Forward Circuit ---
-    const fwdLive = !s.pbStop && !s.eStop;
     const fwdEnergized = s.mcFwd;
 
-    // Draw PB1 and Self-holding contact
-    ctx.strokeStyle = fwdEnergized ? '#dc2626' : '#94a3b8';
+    // Wire to PB1
+    ctx.strokeStyle = fwdEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(col2X, hotY + 80);
-    ctx.lineTo(col2X, hotY + 110);
+    ctx.moveTo(col2X, hotY + 75);
+    ctx.lineTo(col2X, hotY + 105);
     ctx.stroke();
 
-    // PB Fwd box
-    ctx.fillStyle = s.pbFwdStart ? '#22c55e' : (fwdEnergized ? '#3b82f6' : '#e2e8f0');
-    ctx.fillRect(col2X - 25, hotY + 110, 50, 22);
-    ctx.fillStyle = '#0f172a';
-    ctx.fillText('PB-FWD', col2X - 22, hotY + 125);
-
-    // Interlock contact (MC_rev b-contact)
-    ctx.strokeStyle = '#94a3b8';
-    ctx.beginPath();
-    ctx.moveTo(col2X, hotY + 132);
-    ctx.lineTo(col2X, hotY + 155);
-    ctx.stroke();
-
-    ctx.fillStyle = s.mcRev ? '#ef4444' : '#22c55e'; // if MC_rev is on, b-contact opens (red)
-    ctx.fillRect(col2X - 25, hotY + 155, 50, 18);
+    // PB-FWD box: White background, 2px solid #0f172a, #0f172a text
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(s.mcRev ? 'MC2-b [열림]' : 'MC2-b [닫힘]', col2X - 24, hotY + 168);
+    ctx.fillRect(col2X - 28, hotY + 105, 56, 22);
+    ctx.strokeStyle = s.pbFwdStart || fwdEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col2X - 28, hotY + 105, 56, 22);
+    ctx.fillStyle = s.pbFwdStart || fwdEnergized ? '#16a34a' : '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('PB-FWD', col2X - 22, hotY + 120);
 
-    // MC1 Coil
+    // Wire to MC2-b interlock contact
+    ctx.strokeStyle = fwdEnergized ? '#16a34a' : '#0f172a';
     ctx.beginPath();
-    ctx.moveTo(col2X, hotY + 173);
+    ctx.moveTo(col2X, hotY + 127);
+    ctx.lineTo(col2X, hotY + 150);
+    ctx.stroke();
+
+    // MC2-b contact box
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(col2X - 32, hotY + 150, 64, 20);
+    ctx.strokeStyle = s.mcRev ? '#dc2626' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col2X - 32, hotY + 150, 64, 20);
+    ctx.fillStyle = s.mcRev ? '#dc2626' : '#0f172a';
+    ctx.font = 'bold 9px sans-serif';
+    ctx.fillText(s.mcRev ? 'MC2-b[열림]' : 'MC2-b[닫힘]', col2X - 28, hotY + 164);
+
+    // Wire to MC1 Coil and Neutral
+    ctx.strokeStyle = fwdEnergized ? '#16a34a' : '#0f172a';
+    ctx.beginPath();
+    ctx.moveTo(col2X, hotY + 170);
+    ctx.lineTo(col2X, hotY + 192);
+    ctx.moveTo(col2X, hotY + 224);
     ctx.lineTo(col2X, neutralY);
     ctx.stroke();
 
+    // MC1 Coil
+    ctx.fillStyle = '#ffffff';
     ctx.beginPath();
-    ctx.arc(col2X, hotY + 200, 16, 0, 2 * Math.PI);
-    ctx.fillStyle = fwdEnergized ? '#22c55e' : '#f1f5f9';
+    ctx.arc(col2X, hotY + 208, 16, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.strokeStyle = '#334155';
+    ctx.strokeStyle = fwdEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
     ctx.stroke();
-    ctx.fillStyle = fwdEnergized ? '#ffffff' : '#0f172a';
-    ctx.fillText('MC-1', col2X - 14, hotY + 204);
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('MC-1', col2X - 13, hotY + 212);
 
-    // --- Branch 4: Motor & Lamp Status Display ---
-    ctx.fillStyle = '#ffffff';
-    ctx.strokeStyle = '#cbd5e1';
-    ctx.lineWidth = 1.5;
-    ctx.fillRect(col4X - 20, 80, width - col4X - 20, height - 140);
-    ctx.strokeRect(col4X - 20, 80, width - col4X - 20, height - 140);
+    // --- Branch 3: Reverse Circuit ---
+    const revEnergized = s.mcRev;
 
-    ctx.fillStyle = '#1e293b';
-    ctx.font = 'bold 12px sans-serif';
-    ctx.fillText('3상 전동기 및 램프 상태', col4X, 105);
-
-    // Motor Icon
+    // Wire to PB2
+    ctx.strokeStyle = revEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(col4X + 40, 160, 30, 0, 2 * Math.PI);
-    ctx.fillStyle = s.motorState === 'FWD' ? '#22c55e' : (s.motorState === 'REV' ? '#f59e0b' : '#64748b');
-    ctx.fill();
+    ctx.moveTo(col3X, hotY + 75);
+    ctx.lineTo(col3X, hotY + 105);
+    ctx.stroke();
+
+    // PB-REV box: White background, 2px solid #0f172a, #0f172a text
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14px sans-serif';
-    ctx.fillText('M (3~)', col4X + 22, 165);
+    ctx.fillRect(col3X - 28, hotY + 105, 56, 22);
+    ctx.strokeStyle = s.pbRevStart || revEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col3X - 28, hotY + 105, 56, 22);
+    ctx.fillStyle = s.pbRevStart || revEnergized ? '#16a34a' : '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('PB-REV', col3X - 20, hotY + 120);
+
+    // Wire to MC1-b interlock contact
+    ctx.strokeStyle = revEnergized ? '#16a34a' : '#0f172a';
+    ctx.beginPath();
+    ctx.moveTo(col3X, hotY + 127);
+    ctx.lineTo(col3X, hotY + 150);
+    ctx.stroke();
+
+    // MC1-b contact box
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(col3X - 32, hotY + 150, 64, 20);
+    ctx.strokeStyle = s.mcFwd ? '#dc2626' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col3X - 32, hotY + 150, 64, 20);
+    ctx.fillStyle = s.mcFwd ? '#dc2626' : '#0f172a';
+    ctx.font = 'bold 9px sans-serif';
+    ctx.fillText(s.mcFwd ? 'MC1-b[열림]' : 'MC1-b[닫힘]', col3X - 28, hotY + 164);
+
+    // Wire to MC2 Coil and Neutral
+    ctx.strokeStyle = revEnergized ? '#16a34a' : '#0f172a';
+    ctx.beginPath();
+    ctx.moveTo(col3X, hotY + 170);
+    ctx.lineTo(col3X, hotY + 192);
+    ctx.moveTo(col3X, hotY + 224);
+    ctx.lineTo(col3X, neutralY);
+    ctx.stroke();
+
+    // MC2 Coil
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(col3X, hotY + 208, 16, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.strokeStyle = revEnergized ? '#16a34a' : '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('MC-2', col3X - 13, hotY + 212);
+
+    // --- Branch 4: Motor & Lamp Status Display Box ---
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(col4X - 10, 75, width - col4X - 10, height - 125);
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(col4X - 10, 75, width - col4X - 10, height - 125);
 
     ctx.fillStyle = '#0f172a';
-    ctx.font = '12px sans-serif';
-    ctx.fillText(`상태: ${s.motorState}`, col4X + 85, 155);
-    ctx.font = '11px sans-serif';
-    ctx.fillStyle = '#64748b';
-    const desc = s.motorState === 'FWD' ? '정회전 운전 중 (시계방향)' : s.motorState === 'REV' ? '역회전 운전 중 (반시계방향)' : '정지 상태';
-    ctx.fillText(desc, col4X + 85, 175);
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('3상 전동기 및 램프 상태', col4X + 6, 98);
+
+    // Motor Icon
+    const motorStatusColor = s.motorState === 'FWD' ? '#16a34a' : (s.motorState === 'REV' ? '#d97706' : '#64748b');
+    ctx.beginPath();
+    ctx.arc(col4X + 40, 150, 28, 0, 2 * Math.PI);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.strokeStyle = motorStatusColor;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.fillText('M (3~)', col4X + 22, 155);
+
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(`상태: ${s.motorState}`, col4X + 80, 142);
+    ctx.font = '10px sans-serif';
+    ctx.fillStyle = '#475569';
+    const desc = s.motorState === 'FWD' ? '정회전 (시계방향)' : s.motorState === 'REV' ? '역회전 (반시계방향)' : '정지 상태';
+    ctx.fillText(desc, col4X + 80, 160);
 
     // Lamps
     ctx.beginPath();
-    ctx.arc(col4X + 25, 215, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = s.lampGreen ? '#22c55e' : '#e2e8f0';
+    ctx.arc(col4X + 20, 202, 8, 0, 2 * Math.PI);
+    ctx.fillStyle = s.lampGreen ? '#16a34a' : '#ffffff';
     ctx.fill();
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
     ctx.fillStyle = '#0f172a';
-    ctx.fillText('운전 램프 (RL)', col4X + 45, 219);
+    ctx.font = '11px sans-serif';
+    ctx.fillText('운전 램프 (RL)', col4X + 36, 206);
 
     ctx.beginPath();
-    ctx.arc(col4X + 25, 240, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = s.lampRed ? '#ef4444' : '#e2e8f0';
+    ctx.arc(col4X + 20, 226, 8, 0, 2 * Math.PI);
+    ctx.fillStyle = s.lampRed ? '#dc2626' : '#ffffff';
     ctx.fill();
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
     ctx.fillStyle = '#0f172a';
-    ctx.fillText('정지 램프 (GL)', col4X + 45, 244);
+    ctx.font = '11px sans-serif';
+    ctx.fillText('정지 램프 (GL)', col4X + 36, 230);
 
     ctx.restore();
     return s;

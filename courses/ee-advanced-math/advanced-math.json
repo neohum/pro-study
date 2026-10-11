@@ -1,0 +1,1700 @@
+{
+  "title": "전기·전자공학 핵심 공학수학 심층 유도 및 지배 방정식",
+  "titleEn": "Advanced Engineering Mathematics for Electrical & Electronics Engineering: Deep Derivations and Governing Equations",
+  "version": "1.0.0",
+  "metadata": {
+    "targetAudience": "전기·전자공학 연구자, 대학원생, 하드웨어·통신·제어 시스템 수석 엔지니어",
+    "description": "전자기학의 맥스웰 방정식과 파동 동역학, 회로 과도 상태 2계 상미분방정식, 라플라스 변환과 s-평면 안정성, 푸리에 해석과 깁스 현상, 제어이론의 코시 편각 원리와 나이퀴스트/루스-후르비츠 안정도 판정법, 정보이론의 섀넌 채널 용량 한계, 반도체 물리의 표류-확산 및 쇼클리 다이오드 방정식에 이르는 전기·전자공학 8대 핵심 기둥의 엄밀한 수학적 유도, 물리적 직관 및 실제 엔지니어링 응용 분석의 집대성.",
+    "totalModules": 8,
+    "mathEngine": "KaTeX / LaTeX (AMS-LaTeX compliant)",
+    "notationConventions": {
+      "vectorNotation": "굵은 볼드체 벡터 (예: \\mathbf{E}, \\mathbf{B}, \\mathbf{H}, \\mathbf{D}, \\mathbf{J}, \\mathbf{S})",
+      "complexVariable": "s = \\sigma + j\\omega, \\; j = \\sqrt{-1} (전기공학 표준 j 표기)",
+      "frequencyVariables": "\\omega (각주파수, rad/s), \\; f (주파수, Hz), \\; \\omega = 2\\pi f",
+      "phasorNotation": "시정현파 정현 진동 e^{j\\omega t} 기준 복소 진폭 표현",
+      "units": "국제단위계 (SI Unit System)"
+    }
+  },
+  "modules": [
+    {
+      "id": "mod-01-maxwell",
+      "moduleNumber": 1,
+      "titleKo": "맥스웰 방정식의 심층 유도, 전자기파 파동방정식 및 포인팅 정리",
+      "titleEn": "Maxwell's Equations, Electromagnetic Wave Equation & Poynting's Theorem",
+      "category": "전자기학 및 파동역학 (Electromagnetics & Wave Dynamics)",
+      "overview": "맥스웰 방정식(Maxwell's Equations)은 정전기학과 정자기학의 개별 법칙들을 4개의 통합 미분/적분 방정식으로 체계화하고, 전하 보존 법칙과의 모순을 해결하기 위해 변위 전류(Displacement Current)를 도입함으로써 전자기파의 존재와 빛의 전자기적 본질을 수학적으로 입증한 고전 전자기학의 정점이다. 본 모듈에서는 미분형과 적분형 맥스웰 방정식의 수학적 등가성, 변위 전류 밀도의 필연적 유도 과정, 무손실 균질 매질에서의 벡터 파동방정식(d'Alembert 방정식) 유도 및 횡전자기파(TEM) 해석, 그리고 전자기 에너지 보존 법칙을 정량화하는 포인팅 정리(Poynting's Theorem)의 엄밀한 유도를 전개한다.",
+      "governingEquations": [
+        {
+          "name": "가우스 법칙 (전기장, Gauss's Law for Electricity)",
+          "differentialForm": "\\nabla \\cdot \\mathbf{D} = \\rho_v",
+          "integralForm": "\\oint_{\\partial V} \\mathbf{D} \\cdot d\\mathbf{A} = \\iiint_V \\rho_v \\, dV = Q_{\\text{enc}}",
+          "explanation": "폐곡면을 통과하는 총 전속 밀도의 발산은 폐공간 내부의 자유 전하 밀도와 일치하며, 전하가 전속선의 원천(Source) 또는 흡인원(Sink)임을 나타낸다.",
+          "physicalSignificance": "정전하의 공간적 분포가 전기장을 형성하는 근원적 메커니즘을 규정하며, 쿨롱의 법칙(Coulomb's Law)을 일반화한 연속체 역학적 표현이다."
+        },
+        {
+          "name": "가우스 법칙 (자기장, Gauss's Law for Magnetism)",
+          "differentialForm": "\\nabla \\cdot \\mathbf{B} = 0",
+          "integralForm": "\\oint_{\\partial V} \\mathbf{B} \\cdot d\\mathbf{A} = 0",
+          "explanation": "임의의 폐곡면을 통과하는 순 자기 선속은 항상 0이며, 자속선은 시작점과 끝점이 없이 스스로 닫힌 연속적인 루프를 형성함을 의미한다.",
+          "physicalSignificance": "자기 단극자(Magnetic Monopole)의 부존재를 선언하며, 자기장의 발산원이 존재하지 않아 자기 벡터 포텐셜 A의 도입(B = curl A)을 수학적으로 보장한다."
+        },
+        {
+          "name": "패러데이-렌츠 유도 법칙 (Faraday-Lenz Law of Induction)",
+          "differentialForm": "\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}",
+          "integralForm": "\\oint_{\\partial S} \\mathbf{E} \\cdot d\\boldsymbol{\\ell} = -\\frac{d}{dt} \\iint_S \\mathbf{B} \\cdot d\\mathbf{A} = -\\frac{d\\Phi_B}{dt}",
+          "explanation": "시간에 따라 변화하는 자기장은 공간에 회전하는 비보존성 전계(Vortex Electric Field)를 형성하며, 회전 방향은 자속 변화를 방해하는 방향(Lenz의 법칙)이다.",
+          "physicalSignificance": "정전기장의 보존성(curl E = 0) 한계를 극복하고, 시변 전자기장에서 전기장과 자기장의 상호 결합(Coupling)을 규정하는 핵심 동역학 방정식이다."
+        },
+        {
+          "name": "앙페르-맥스웰 법칙 (Ampère-Maxwell Law)",
+          "differentialForm": "\\nabla \\times \\mathbf{H} = \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}",
+          "integralForm": "\\oint_{\\partial S} \\mathbf{H} \\cdot d\\boldsymbol{\\ell} = \\iint_S \\left(\\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}\\right) \\cdot d\\mathbf{A} = I_{\\text{enc}} + I_D",
+          "explanation": "자계의 회전은 전도 전류 밀도(J_c)뿐만 아니라 시간에 따라 변화하는 전속 밀도의 시간 변화율인 변위 전류 밀도(dD/dt)에 의해서도 유도된다.",
+          "physicalSignificance": "축전기 유전체 내부와 같은 비도전 공간에서도 회전 자계가 발생함을 설명하며, 전기장과 자기장의 자기 재생산적 파동 전파 메커니즘을 완성한다."
+        }
+      ],
+      "constitutiveRelations": [
+        {
+          "formula": "\\mathbf{D} = \\varepsilon \\mathbf{E} = \\varepsilon_0 \\varepsilon_r \\mathbf{E} = \\varepsilon_0 \\mathbf{E} + \\mathbf{P}",
+          "name": "전기적 구성방정식 (Dielectric Constitutive Relation)",
+          "description": "진공 유전율 epsilon_0와 매질의 상대 유전율 epsilon_r, 매질의 전기 분극 벡터 P 사이의 선형 응답 관계."
+        },
+        {
+          "formula": "\\mathbf{B} = \\mu \\mathbf{H} = \\mu_0 \\mu_r \\mathbf{H} = \\mu_0 (\\mathbf{H} + \\mathbf{M})",
+          "name": "자기적 구성방정식 (Magnetic Constitutive Relation)",
+          "description": "진공 투자율 mu_0와 상대 투자율 mu_r, 매질의 자화 벡터 M 사이의 선형 응답 관계."
+        },
+        {
+          "formula": "\\mathbf{J}_c = \\sigma \\mathbf{E}",
+          "name": "옴의 법칙 미분형 (Microscopic Ohm's Law)",
+          "description": "도전율 sigma를 갖는 선형 저항성 매질에서 전기장과 전도 전류 밀도 사이의 국소적 비례 관계."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-01-displacement-current",
+          "title": "변위 전류(Displacement Current)의 수학적 필연성 및 유도",
+          "targetResult": "\\nabla \\times \\mathbf{H} = \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}",
+          "prerequisites": [
+            "벡터 미적분학 항등식: 임의의 매끄러운 벡터장에 대해 div(curl A) = 0",
+            "전하 보존 법칙(연속 방정식): div(J) + d(rho_v)/dt = 0",
+            "정전기 가우스 법칙: div(D) = rho_v"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "고전 앙페르 법칙의 발산(Divergence) 계산",
+              "mathExpression": "\\nabla \\cdot (\\nabla \\times \\mathbf{H}) = \\nabla \\cdot \\mathbf{J}_c",
+              "mathematicalExplanation": "고전 정자계(Magnetostatics)에서 수립된 앙페르 회로 법칙의 미분형은 curl H = J_c 이다. 이 식의 양변에 발산 연산자(nabla dot)를 취한다. 벡터 해석학의 기본 항등식에 의해 임의의 연속적으로 2계 미분 가능한 벡터장에 대해 curl의 발산은 항등적으로 0이다: \\nabla \\cdot (\\nabla \\times \\mathbf{H}) \\equiv 0. 따라서 고전 앙페르 법칙이 성립하려면 \\nabla \\cdot \\mathbf{J}_c = 0 이어야 한다.",
+              "physicalInterpretation": "정전류(Steady Current) 조건에서는 전류의 시작과 끝이 없는 폐회로가 형성되므로 전류 밀도의 공간 발산이 0이다. 하지만 축전기가 충전되거나 전하가 국소적으로 축적/고갈되는 시변 시스템에서는 발산이 0이 되지 않는다.",
+              "engineeringApplication": "DC 전원 시스템 및 저주파 회로에서는 정전류 가정이 유효하지만, 고주파 스위칭 회로나 안테나 급전선에서는 성립하지 않는다."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "전하 보존 법칙(전하 연속 방정식)과의 충돌 확인",
+              "mathExpression": "\\nabla \\cdot \\mathbf{J}_c + \\frac{\\partial \\rho_v}{\\partial t} = 0 \\iff \\nabla \\cdot \\mathbf{J}_c = -\\frac{\\partial \\rho_v}{\\partial t}",
+              "mathematicalExplanation": "단위 체적 내에서 흘러나가는 순 전하량은 체적 내부의 총전하 감소율과 정확히 같아야 한다는 물리적 공리(전하 보존 법칙)로부터 연속 방정식 \\nabla \\cdot \\mathbf{J}_c = -\\partial \\rho_v / \\partial t 가 성립한다. 시변계에서는 d(rho_v)/dt != 0 이므로, 고전 앙페르 법칙의 결과(div J_c = 0)와 직접적인 수학적 모순이 발생한다.",
+              "physicalInterpretation": "축전기 극판에 교류 전류가 유입될 때 극판 표면의 전하 밀도는 시간에 따라 변한다. 극판 사이의 공간은 절연체(유전체)이므로 전도 전류 J_c = 0 이지만, 극판으로 들어오는 도선에는 J_c != 0 이 흐른다. 즉 폐곡면 적분 시 곡면의 선택에 따라 전류가 달라지는 불일치가 발생한다.",
+              "engineeringApplication": "RF 임피던스 설계 및 고속 PCB 전송선로에서 신호 귀환경로(Return Path) 분석 시 기생 용량 전류 해석의 이론적 기초가 된다."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "가우스 법칙을 결합한 변위 전류 밀도 항의 수학적 도출",
+              "mathExpression": "\\nabla \\cdot \\mathbf{J}_c = -\\frac{\\partial}{\\partial t} (\\nabla \\cdot \\mathbf{D}) = -\\nabla \\cdot \\left(\\frac{\\partial \\mathbf{D}}{\\partial t}\\right)",
+              "mathematicalExplanation": "가우스 법칙 \\rho_v = \\nabla \\cdot \\mathbf{D} 를 전하 연속 방정식에 대입한다. 공간 미분(nabla)과 시간 미분(d/dt)은 독립 변수이므로 클레로 정리(Clairaut's Theorem)에 의해 미분 순서를 교환할 수 있다: \\nabla \\cdot \\mathbf{J}_c + \\nabla \\cdot \\left(\\frac{\\partial \\mathbf{D}}{\\partial t}\\right) = 0 \\implies \\nabla \\cdot \\left( \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t} \\right) = 0. 이제 총 유효 전류 밀도를 \\mathbf{J}_{\\text{tot}} = \\mathbf{J}_c + \\mathbf{J}_D 라 정의하면, \\nabla \\cdot \\mathbf{J}_{\\text{tot}} = 0 이 항상 항등적으로 성립한다.",
+              "physicalInterpretation": "전하가 축적되는 공간에서는 전속 밀도 D의 시간 변화율이 전도 전류의 결손분을 완벽하게 보상하여 전류의 연속성을 물리적으로 회복시킨다. 이를 맥스웰은 '변위 전류(Displacement Current)'라 명명하였다.",
+              "engineeringApplication": "교류 회로에서 축전기를 통과하는 임피던스 Z_C = 1/(j omega C)가 존재하는 물리적 근거이며, 유전체 변위 전류가 자계를 생성함을 증명한다."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "수정된 앙페르-맥스웰 방정식의 최종 완성",
+              "mathExpression": "\\nabla \\times \\mathbf{H} = \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}",
+              "mathematicalExplanation": "총 유효 전류 밀도 \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t} 를 자계의 회전원(Curl Source)으로 설정함으로써, 양변에 발산을 취해도 \\nabla \\cdot (\\nabla \\times \\mathbf{H}) = \\nabla \\cdot (\\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}) = 0 이 되어 수학적 무모순성(Consistency)이 완벽히 충족된다.",
+              "physicalInterpretation": "자계는 실제 전하의 이동(전도 전류)뿐만 아니라 전기장의 시간적 진동(변위 전류)에 의해서도 유도된다. 이로써 패러데이 법칙(시변 자계 -> 유도 전계)과 완벽한 상호 대칭성을 이루게 되며 파동 형성의 기반이 마련된다.",
+              "engineeringApplication": "마이크로파 도파관(Waveguide) 모드 해석 및 안테나 방사 전력(Radiation Power) 산출의 지배 방정식으로 활용된다."
+            }
+          ],
+          "conclusion": "변위 전류 밀도 dD/dt의 도입은 전하 보존 법칙과 벡터 해석학적 무모순성을 충족하기 위한 수학적 필연이며, 전자기파의 전파를 가능하게 하는 근본 원리이다."
+        },
+        {
+          "derivationId": "deriv-02-em-wave-equation",
+          "title": "무전하·무전류 자유공간에서의 전자기파 벡터 파동방정식 유도",
+          "targetResult": "\\nabla^2 \\mathbf{E} - \\mu \\varepsilon \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} = 0, \\quad \\nabla^2 \\mathbf{H} - \\mu \\varepsilon \\frac{\\partial^2 \\mathbf{H}}{\\partial t^2} = 0",
+          "prerequisites": [
+            "선형, 균질, 등방성, 비도전성 무손실 매질 조건 (rho_v = 0, J_c = 0, sigma = 0, epsilon = const, mu = const)",
+            "맥스웰 방정식: curl E = -mu * dH/dt, curl H = epsilon * dE/dt",
+            "벡터 라플라시안 항등식: curl(curl A) = grad(div A) - laplacian(A)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "무손실 비도전성 매질에서의 맥스웰 방정식 단순화",
+              "mathExpression": "\\nabla \\cdot \\mathbf{E} = 0, \\quad \\nabla \\cdot \\mathbf{H} = 0, \\quad \\nabla \\times \\mathbf{E} = -\\mu \\frac{\\partial \\mathbf{H}}{\\partial t}, \\quad \\nabla \\times \\mathbf{H} = \\varepsilon \\frac{\\partial \\mathbf{E}}{\\partial t}",
+              "mathematicalExplanation": "원천 전하와 전류가 없는 자유 공간 또는 절연 매질에서는 rho_v = 0, J_c = 0 이며, 선형 구성 방정식 \\mathbf{D} = \\varepsilon \\mathbf{E}, \\mathbf{B} = \\mu \\mathbf{H} 를 적용하여 전기장과 자기장에 대한 4개의 단순화된 1계 편미분 방정식계를 구성한다.",
+              "physicalInterpretation": "외부 여기(Excitation) 원천 없이 공간 자체에 존재하는 전자기장의 순수 동역학적 상호작용만을 분리하여 관찰할 수 있는 수학적 틀을 제공한다.",
+              "engineeringApplication": "위성 통신 자유공간 전파 손실(FSPL) 계산, 전자기 차폐실 내부 공진 모드 해석의 기본 모델이다."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "패러데이 법칙에 회전(Curl) 연산자 적용",
+              "mathExpression": "\\nabla \\times (\\nabla \\times \\mathbf{E}) = \\nabla \\times \\left(-\\mu \\frac{\\partial \\mathbf{H}}{\\partial t}\\right) = -\\mu \\frac{\\partial}{\\partial t}(\\nabla \\times \\mathbf{H})",
+              "mathematicalExplanation": "패러데이 유도 법칙의 양변에 회전 연산자(nabla cross)를 취한다. 공간 좌표 미분과 시간 미분은 독립이므로 미분 연산 순서를 교환하여 시간 미분 기호 밖으로 mu와 편미분을 배치한다.",
+              "physicalInterpretation": "전기장의 이중 회전(회전의 회전) 특성을 시변 자기장의 공간적 회전 변화와 직접 결합시키는 연산이다.",
+              "engineeringApplication": "수치 전자계 해석(FEM, FDTD)에서 2차 벡터 파동방정식을 정식화하는 출발점이다."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "앙페르-맥스웰 법칙 대입 및 2계 시간 도함수 형성",
+              "mathExpression": "-\\mu \\frac{\\partial}{\\partial t}(\\nabla \\times \\mathbf{H}) = -\\mu \\frac{\\partial}{\\partial t}\\left(\\varepsilon \\frac{\\partial \\mathbf{E}}{\\partial t}\\right) = -\\mu \\varepsilon \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2}",
+              "mathematicalExplanation": "앞서 정리한 앙페르-맥스웰 식 \\nabla \\times \\mathbf{H} = \\varepsilon \\frac{\\partial \\mathbf{E}}{\\partial t} 를 우변의 회전 자계 항에 직접 대입한다. mu와 epsilon이 공간/시간에 무관한 상수이므로 시간에 대한 2계 편미분 항 -\\mu \\varepsilon \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} 이 도출된다.",
+              "physicalInterpretation": "전기장의 공간적 비틀림이 자기장을 만들고, 그 자기장의 시간 변화가 다시 전기장의 2차 가속을 유도함을 보여준다.",
+              "engineeringApplication": "광통신 단일모드 광섬유(SMF) 내부 전파 모드 해석의 시간조화 파동 분산 방정식의 기초가 된다."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "벡터 라플라시안 항등식 전개 및 가우스 법칙 적용",
+              "mathExpression": "\\nabla \\times (\\nabla \\times \\mathbf{E}) = \\nabla(\\nabla \\cdot \\mathbf{E}) - \\nabla^2 \\mathbf{E} = \\nabla(0) - \\nabla^2 \\mathbf{E} = -\\nabla^2 \\mathbf{E}",
+              "mathematicalExplanation": "좌변에 벡터 해석학의 중요 항등식 \\nabla \\times (\\nabla \\times \\mathbf{A}) \\equiv \\nabla(\\nabla \\cdot \\mathbf{A}) - \\nabla^2 \\mathbf{A} 를 적용한다. 자유 공간에서 가우스 법칙에 의해 \\nabla \\cdot \\mathbf{E} = 0 이므로 첫 번째 항인 기울기(Gradient) 항은 정확히 소거되어 단순한 벡터 라플라시안 항 -\\nabla^2 \\mathbf{E} 만 남게 된다.",
+              "physicalInterpretation": "자유 전하가 없는 공간에서는 종파(Longitudinal Wave, div E != 0) 성분이 존재할 수 없으며, 순수한 횡파(Transverse Wave)만이 존재함을 의미한다.",
+              "engineeringApplication": "TEM(Transverse Electromagnetic) 전송선로(동축 케이블, 마이크로스트립)의 횡방향 정전계 라플라스 방정식 해법과 직결된다."
+            },
+            {
+              "stepNumber": 5,
+              "stepTitle": "달랑베르 파동방정식의 확립 및 광속의 해석적 도출",
+              "mathExpression": "-\\nabla^2 \\mathbf{E} = -\\mu \\varepsilon \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} \\implies \\nabla^2 \\mathbf{E} - \\frac{1}{v^2}\\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} = 0, \\quad v = \\frac{1}{\\sqrt{\\mu \\varepsilon}}",
+              "mathematicalExplanation": "양변의 음의 부호를 소거하고 표준 3차원 파동방정식 형태 \\nabla^2 \\psi - \\frac{1}{v^2}\\frac{\\partial^2 \\psi}{\\partial t^2} = 0 과 대조하면, 전파 속도 v 가 매질의 구성 파라미터로 완전히 결정됨을 알 수 있다: v = \\frac{1}{\\sqrt{\\mu \\varepsilon}}. 진공의 경우 mu_0 = 4*pi*10^-7 H/m, epsilon_0 = 8.854*10^-12 F/m 를 대입하면: c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 2.99792458 \\times 10^8 \\, \\text{m/s}. 동일한 수학적 절차를 자기장 H에 대해서도 수행하면 완벽히 대칭적인 자기 파동방정식: \\nabla^2 \\mathbf{H} - \\mu \\varepsilon \\frac{\\partial^2 \\mathbf{H}}{\\partial t^2} = 0 이 얻어진다.",
+              "physicalInterpretation": "전자기력의 기본 상수들로부터 유도된 파동 속도가 실험적으로 측정된 빛의 속도와 오차 범위 내에서 일치함으로써, 빛 자체가 가시광선 영역의 전자기파임을 역사상 최초로 수학적으로 입증한 혁명적 결과이다.",
+              "engineeringApplication": "RF 회로 기판의 신호 지연(Time Delay, TD = sqrt(epsilon_r)/c), 안테나 위상 배열 제어, 광대역 통신 채널 모델링에 필수적이다."
+            },
+            {
+              "stepNumber": 6,
+              "stepTitle": "단색 평면파 해(Plane Wave Solution)와 고유 임피던스(Intrinsic Impedance)",
+              "mathExpression": "\\mathbf{E}(z, t) = \\hat{\\mathbf{x}} E_0 \\cos(\\omega t - kz), \\quad \\mathbf{H}(z, t) = \\hat{\\mathbf{y}} \\frac{E_0}{\\eta} \\cos(\\omega t - kz), \\quad \\eta = \\sqrt{\\frac{\\mu}{\\varepsilon}}",
+              "mathematicalExplanation": "+z 방향으로 진행하는 x-편파 균일 평면파를 가정하고 패러데이 법칙 \\nabla \\times \\mathbf{E} = -\\mu \\frac{\\partial \\mathbf{H}}{\\partial t} 에 대입하면: \\frac{\\partial E_x}{\\partial z}\\hat{\\mathbf{y}} = -\\mu \\frac{\\partial H_y}{\\partial t}\\hat{\\mathbf{y}} \\implies -k E_0 \\sin(\\omega t - kz) = \\mu \\omega H_0 \\sin(\\omega t - kz). 따라서 E_0 / H_0 = \\mu \\omega / k = \\mu v = \\sqrt{\\mu / \\varepsilon} \\equiv \\eta 가 성립한다. 진공 고유 임피던스는 \\eta_0 = \\sqrt{\\frac{\\mu_0}{\\varepsilon_0}} \\approx 120\\pi \\approx 376.73 \\, \\Omega 이다.",
+              "physicalInterpretation": "전기장과 자기장은 공간적으로 서로 수직(E cross H 가 진행 방향)이며 시간적으로 완전히 동상(In-phase)이다. 고유 임피던스는 전계 강도(V/m)와 자계 강도(A/m)의 비로서 옴(Ohm)의 차원을 갖는 매질 고유의 파동 저항이다.",
+              "engineeringApplication": "안테나 방사 임피던스 정합, 레이돔(Radome) 반사 방지 유전체 코팅(Quarter-wave transformer), EMI 흡수체 설계의 핵심 지표이다."
+            }
+          ],
+          "conclusion": "맥스웰의 미분 방정식으로부터 직교하는 횡전자기파(TEM)의 벡터 파동방정식이 완벽히 유도되며, 진공 중 빛의 속도 c와 고유 임피던스 eta_0는 매질의 유전율과 투자율에 의해 유일하게 결정된다."
+        },
+        {
+          "derivationId": "deriv-03-poynting-theorem",
+          "title": "포인팅 정리(Poynting's Theorem) 및 전자기 에너지 보존 법칙의 엄밀한 유도",
+          "targetResult": "-\\nabla \\cdot (\\mathbf{E} \\times \\mathbf{H}) = \\mathbf{J} \\cdot \\mathbf{E} + \\frac{\\partial}{\\partial t}\\left( \\frac{1}{2}\\varepsilon |\\mathbf{E}|^2 + \\frac{1}{2}\\mu |\\mathbf{H}|^2 \\right)",
+          "prerequisites": [
+            "벡터 해석학의 외적 발산 항등식: div(A cross B) = B dot curl(A) - A dot curl(B)",
+            "맥스웰 회전 방정식: curl E = -dB/dt, curl H = J + dD/dt",
+            "가우스 발산 정리: 체적적분 div(F) dV = 폐곡면적분 F dot dA"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "포인팅 벡터의 발산 항등식 전개",
+              "mathExpression": "\\nabla \\cdot (\\mathbf{E} \\times \\mathbf{H}) = \\mathbf{H} \\cdot (\\nabla \\times \\mathbf{E}) - \\mathbf{E} \\cdot (\\nabla \\times \\mathbf{H})",
+              "mathematicalExplanation": "전계 E와 자계 H의 외적으로 정의되는 벡터장의 발산에 3차원 벡터 해석 항등식을 적용한다. 이 식은 공간을 통한 전자기 전력 흐름 밀도의 순 유출률을 계산하기 위한 대수적 출발점이다.",
+              "physicalInterpretation": "특정 영역에서 단위 체적당 빠져나가는 전자기 전력속(Power Flux)을 계의 국소적 회전 특성과 연결한다.",
+              "engineeringApplication": "RF 안테나의 원역장(Far-field) 방사 전력 패턴 측정 및 SAR(Specific Absorption Rate) 인체 흡수율 평가의 기반이다."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "맥스웰 방정식 대입을 통한 전자기장 결합 항 변환",
+              "mathExpression": "\\nabla \\cdot (\\mathbf{E} \\times \\mathbf{H}) = \\mathbf{H} \\cdot \\left(-\\frac{\\partial \\mathbf{B}}{\\partial t}\\right) - \\mathbf{E} \\cdot \\left(\\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t}\\right)",
+              "mathematicalExplanation": "curl E 자리에 패러데이 법칙 -\\frac{\\partial \\mathbf{B}}{\\partial t} 를 대입하고, curl H 자리에 앙페르-맥스웰 법칙 \\mathbf{J}_c + \\frac{\\partial \\mathbf{D}}{\\partial t} 를 대입한다. 전도 전류 J_c는 오믹 손실(줄열)을 유발하고, 시변 전속 및 자속 항은 저장된 에너지의 시간 변화율을 형성한다.",
+              "physicalInterpretation": "전자기장의 공간적 에너지 발산이 전하의 가속(일)과 내부 저장된 장(Field) 에너지의 감소로 전이되는 물리적 메커니즘을 명시한다.",
+              "engineeringApplication": "초고주파 도파관 내부의 도체벽 표면 전류 저항 손실과 유전체 손실탄젠트(tan delta)에 의한 발열 해석에 적용된다."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "전자기장 에너지 밀도의 시간 도함수 변환",
+              "mathExpression": "\\mathbf{E} \\cdot \\frac{\\partial \\mathbf{D}}{\\partial t} = \\mathbf{E} \\cdot \\left(\\varepsilon \\frac{\\partial \\mathbf{E}}{\\partial t}\\right) = \\frac{\\partial}{\\partial t}\\left(\\frac{1}{2}\\varepsilon |\\mathbf{E}|^2\\right), \\quad \\mathbf{H} \\cdot \\frac{\\partial \\mathbf{B}}{\\partial t} = \\frac{\\partial}{\\partial t}\\left(\\frac{1}{2}\\mu |\\mathbf{H}|^2\\right)",
+              "mathematicalExplanation": "선형 매질에서 체인 룰(Chain Rule)을 적용한다: \\frac{\\partial}{\\partial t}(\\mathbf{E} \\cdot \\mathbf{E}) = 2\\mathbf{E} \\cdot \\frac{\\partial \\mathbf{E}}{\\partial t}. 따라서 \\varepsilon \\mathbf{E} \\cdot \\frac{\\partial \\mathbf{E}}{\\partial t} = \\frac{\\partial}{\\partial t}\\left(\\frac{1}{2}\\varepsilon E^2\\right) 이며, 자기장에 대해서도 완전히 동일하게 \\mu \\mathbf{H} \\cdot \\frac{\\partial \\mathbf{H}}{\\partial t} = \\frac{\\partial}{\\partial t}\\left(\\frac{1}{2}\\mu H^2\\right) 이다.",
+              "physicalInterpretation": "전계 에너지 밀도 u_E = (1/2)*epsilon*E^2 와 자계 에너지 밀도 u_H = (1/2)*mu*H^2 의 정의가 자연스럽게 유도되며, 총 전자기 에너지 밀도 u_{EM} = u_E + u_H 의 시간 변화율이 수식에 나타난다.",
+              "engineeringApplication": "LC 공진기 내부에서 전계 에너지(커패시터)와 자계 에너지(인덕터) 간의 주기적 상호 교환 메커니즘을 수학적으로 규명한다."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "미분형 포인팅 정리의 완성",
+              "mathExpression": "-\\nabla \\cdot \\mathbf{S} = \\mathbf{J}_c \\cdot \\mathbf{E} + \\frac{\\partial u_{EM}}{\\partial t}, \\quad \\text{where } \\mathbf{S} \\equiv \\mathbf{E} \\times \\mathbf{H}, \\; u_{EM} \\equiv \\frac{1}{2}\\left(\\varepsilon |\\mathbf{E}|^2 + \\mu |\\mathbf{H}|^2\\right)",
+              "mathematicalExplanation": "포인팅 벡터 \\mathbf{S} = \\mathbf{E} \\times \\mathbf{H} 를 정의하고 식을 정리하여 음의 부호를 좌변으로 이항한다. 이 식은 에너지에 대한 국소적 연속 방정식의 형태를 띤다.",
+              "physicalInterpretation": "국소 체적 내부로 유입되는 전자기 전력(-div S)은 내부의 전하에 한 일(줄열 손실 J dot E)과 체적 내 전자기장에 축적되는 에너지의 증가율(d(u_EM)/dt)의 합과 정확히 일치한다.",
+              "engineeringApplication": "무선 전력 전송(WPT) 시스템의 근역장(Near-field) 전력 전달 밀도 분석 및 안테나 방사 저항 R_rad 계산에 직결된다."
+            },
+            {
+              "stepNumber": 5,
+              "stepTitle": "적분형 포인팅 정리 및 복소 포인팅 벡터(Complex Poynting Vector)",
+              "mathExpression": "-\\oint_{\\partial V} \\mathbf{S} \\cdot d\\mathbf{A} = \\iiint_V (\\mathbf{J}_c \\cdot \\mathbf{E}) \\, dV + \\frac{d}{dt}\\iiint_V u_{EM} \\, dV, \\quad \\mathbf{S}_{av} = \\frac{1}{2}\\text{Re}\\{\\mathbf{E} \\times \\mathbf{H}^*\\}",
+              "mathematicalExplanation": "임의의 체적 V에 대해 미분형 방정식의 양변을 적분하고 가우스 발산 정리를 적용한다. 시정현파(Sinusoidal) 정상 상태에서는 페이저(Phasor) 표현을 사용하여 시간 평균 전력 밀도인 복소 포인팅 벡터 \\mathbf{S}_{av} = \\frac{1}{2}\\text{Re}\\{\\mathbf{E} \\times \\mathbf{H}^*\\} 를 유도한다.",
+              "physicalInterpretation": "폐곡면을 뚫고 들어오는 총 순 전력은 시스템 내부에서 열로 변환되는 줄 손실 전력과 공간에 충전되는 무효 전자기 에너지의 시간 변동분의 총합이다. 복소 포인팅 벡터의 실수부는 유효 전력 흐름, 허수부는 무효 전력 진동을 나타낸다.",
+              "engineeringApplication": "5G/6G 밀리미터파 어레이 안테나의 지향성(Directivity), 이득(Gain) 계산 및 전력선 전자기파 누설 방지 설계의 필수 수단이다."
+            }
+          ],
+          "conclusion": "포인팅 정리는 맥스웰 방정식의 필연적 귀결로서 전자기 에너지의 보존 및 공간적 이동을 엄밀하게 증명하며, 전파 공학 및 안테나 시스템의 근본 해석 도구이다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "고주파 전송선로 및 기판 설계 (High-Speed PCB Design)",
+          "application": "특성 임피던스 Z_0 정합 및 TEM 모드 유지",
+          "details": "맥스웰 방정식의 전송선로 한계 모델(Telegrapher's Equation)을 통해 마이크로스트립 라인의 폭과 유전체 두께를 조절하여 신호 반사를 방지하는 50옴 정합을 실현."
+        },
+        {
+          "domain": "무선 통신 및 레이더 (RF & Radar Engineering)",
+          "application": "안테나 방사 패턴 및 포인팅 전력속 밀도 측정",
+          "details": "복소 포인팅 벡터의 구면 적분을 통해 안테나의 총 복사 전력(TRP)과 유효 등방성 복사 전력(EIRP)을 도출하여 통신 링크 마진 확보."
+        },
+        {
+          "domain": "전력 변환 및 전자기 적합성 (EMC/EMI)",
+          "application": "변위 전류 누설에 의한 공통 모드(Common-mode) 노이즈 제어",
+          "details": "스위칭 소자의 급격한 dv/dt가 히트싱크 접지 기생 커패시턴스를 통해 유도하는 변위 전류 경로를 예측하고 차폐 및 필터 설계."
+        }
+      ],
+      "summary": "맥스웰 방정식은 전자기 상호작용의 4대 기본 법칙을 완전하게 체계화하며, 변위 전류를 통한 전자기파 파동방정식의 유도와 포인팅 정리를 통한 에너지 보존 법칙의 엄밀한 수학적 완결성을 제공한다."
+    },
+    {
+      "id": "mod-02-rlc-ode",
+      "moduleNumber": 2,
+      "titleKo": "2계 RLC 과도 상태 미분방정식의 완전 해석적 유도 및 감쇠 동역학",
+      "titleEn": "2nd-Order RLC Transient ODEs & Complete Analytic Damping Dynamics",
+      "category": "회로망 과도해석 및 동역학 (Circuit Transients & System Dynamics)",
+      "overview": "RLC 회로는 인덕터의 자기장 에너지와 커패시터의 정전기장 에너지 간의 상호 교환 및 저항에서의 오믹 손실(열 발산)에 의해 지배되는 전형적인 2계 선형 시불변(LTI) 동적 시스템이다. 본 모듈에서는 키르히호프 법칙(KVL/KCL)으로부터 유도되는 2계 상미분방정식(ODE)을 감쇠비(Damping Ratio, zeta)와 비감쇠 고유진동수(Natural Frequency, omega_0)의 표준 2차 정규형으로 정식화하고, 과감쇠(Overdamped), 임계감쇠(Critically Damped), 저감쇠(Underdamped)의 3가지 상태에 대한 완전한 해석적 폐형태(Closed-form) 해, 초기조건에 따른 계수 결정, 오버슈트(Overshoot) 및 정정시간(Settling Time)의 수학적 극한을 엄밀히 전개한다.",
+      "governingEquations": [
+        {
+          "name": "직렬 RLC 회로 2계 미분방정식 (Series RLC ODE)",
+          "differentialForm": "L \\frac{d^2 i(t)}{dt^2} + R \\frac{di(t)}{dt} + \\frac{1}{C} i(t) = \\frac{dv_s(t)}{dt}",
+          "standardForm": "\\frac{d^2 x(t)}{dt^2} + 2\\zeta \\omega_0 \\frac{dx(t)}{dt} + \\omega_0^2 x(t) = f(t)",
+          "explanation": "직렬 루프에 KVL을 적용하고 시간에 대해 1회 미분하여 전류 i(t) 또는 커패시터 전압 v_C(t)에 대해 도출된 2계 선형 미분방정식.",
+          "physicalSignificance": "인덕터 전압(L di/dt), 저항 전압(R i), 커패시터 전압(q/C)의 합이 소스 전압과 균형을 이루는 에너지 보존 동역학을 표현한다."
+        },
+        {
+          "name": "병렬 RLC 회로 2계 미분방정식 (Parallel RLC ODE)",
+          "differentialForm": "C \\frac{d^2 v(t)}{dt^2} + \\frac{1}{R} \\frac{dv(t)}{dt} + \\frac{1}{L} v(t) = \\frac{di_s(t)}{dt}",
+          "standardForm": "\\frac{d^2 v(t)}{dt^2} + 2\\alpha \\frac{dv(t)}{dt} + \\omega_0^2 v(t) = 0 \\quad (\\alpha = \\frac{1}{2RC})",
+          "explanation": "병렬 노드에 KCL을 적용하고 시간에 대해 1회 미분하여 노드 전압 v(t) 또는 인덕터 전류 i_L(t)에 대해 도출된 2계 미분방정식.",
+          "physicalSignificance": "커패시터 변위전류, 저항 전도전류, 인덕터 자기전류의 총합이 0이 되는 전하 보존 동역학을 표현한다."
+        },
+        {
+          "name": "특성 방정식 및 표준 매개변수 (Characteristic Equation & Canonical Parameters)",
+          "differentialForm": "s^2 + 2\\alpha s + \\omega_0^2 = 0 \\iff s^2 + 2\\zeta \\omega_0 s + \\omega_0^2 = 0",
+          "standardForm": "\\omega_0 = \\frac{1}{\\sqrt{LC}}, \\quad \\alpha = \\begin{cases} \\frac{R}{2L} & (\\text{Series}) \\\\ \\frac{1}{2RC} & (\\text{Parallel}) \\end{cases}, \\quad \\zeta = \\frac{\\alpha}{\\omega_0}, \\quad Q = \\frac{1}{2\\zeta} = \\frac{\\omega_0}{2\\alpha}",
+          "explanation": "고유치 문제의 특성근(Characteristic Roots) 위치를 결정하는 무차원 감쇠비(zeta), 비감쇠 고유진동수(omega_0), 네퍼 주파수(alpha) 및 양호도(Q).",
+          "physicalSignificance": "특성근의 복소 평면상 실수부는 감쇠율을, 허수부는 진동 주파수를 결정하며 시스템의 과도응답 형태를 완전히 지배한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-02-canonical-form",
+          "title": "RLC 회로의 KVL로부터 2차 표준 미분방정식 및 특성근 유도",
+          "targetResult": "s_{1,2} = -\\alpha \\pm \\sqrt{\\alpha^2 - \\omega_0^2} = -\\zeta \\omega_0 \\pm \\omega_0 \\sqrt{\\zeta^2 - 1}",
+          "prerequisites": [
+            "키르히호프 전압 법칙 (KVL): sum(v_k) = 0",
+            "이상적 소자 V-I 관계식: v_R = R*i, v_L = L*di/dt, i = C*dv_C/dt",
+            "상수계수 동차 선형 상미분방정식의 지수 시도해법 x(t) = e^{st}"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "직렬 RLC 루프에 KVL 적용 및 적분-미분 방정식 수립",
+              "mathExpression": "v_L(t) + v_R(t) + v_C(t) = v_s(t) \\implies L \\frac{di(t)}{dt} + R i(t) + \\frac{1}{C}\\int_{-\\infty}^t i(\\tau) d\\tau = v_s(t)",
+              "mathematicalExplanation": "전하 q(t)에 대해 i(t) = dq/dt 이며 v_C(t) = q(t)/C 이다. 루프를 일주하는 전압 강하의 총합은 인가 전압과 같다. 양변을 시간 t에 대해 1차 미분한다.",
+              "physicalInterpretation": "시간에 따른 전압의 순간 변화율과 소자 내 에너지 변동의 평형 조건을 정식화한다.",
+              "engineeringApplication": "스위칭 컨버터의 전원 투입 순간 루프 인덕턴스와 평활 커패시터에 의한 돌입 전류(Inrush Current) 분석 모델."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "2계 동차 상미분방정식 표준형 정돈",
+              "mathExpression": "\\frac{d^2 i(t)}{dt^2} + \\frac{R}{L}\\frac{di(t)}{dt} + \\frac{1}{LC} i(t) = 0",
+              "mathematicalExplanation": "전원 전압이 일정(DC)한 자유 응답(Natural Response) 구간에서는 dv_s/dt = 0 이다. 최고차항 계수인 L로 양변을 나누면 2계 표준 상미분방정식이 형성된다.",
+              "physicalInterpretation": "외부 구동력 없이 회로에 초기에 축적되어 있던 전자기 에너지가 저항에 의해 감쇠 방출되는 자율 시스템의 동역학이다.",
+              "engineeringApplication": "회로 차단기(Circuit Breaker) 개방 후 발생하는 과도 회복 전압(Transient Recovery Voltage)의 자유 공진 주파수 산출."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "지수형 기저해 대입 및 대수 특성방정식 유도",
+              "mathExpression": "i(t) = A e^{st} \\implies (s^2 + 2\\alpha s + \\omega_0^2) A e^{st} = 0 \\implies s^2 + 2\\zeta \\omega_0 s + \\omega_0^2 = 0",
+              "mathematicalExplanation": "선형 시불변 미분 연산자의 고유함수(Eigenfunction)인 e^{st}를 대입하면, 미분 연산 d/dt가 대수적 곱셈 s로 사상되어 2차 대수방정식 s^2 + (R/L)s + 1/(LC) = 0 이 얻어진다. \\alpha = \\frac{R}{2L}, \\omega_0 = \\frac{1}{\\sqrt{LC}}, \\zeta = \\frac{\\alpha}{\\omega_0} 를 대입하여 정규화한다.",
+              "physicalInterpretation": "시간 영역에서의 연속 미분 연산이 복소 주파수 s-영역에서의 2차 다항식 근 찾기 문제로 완벽히 단순화된다.",
+              "engineeringApplication": "상태공간 모델의 시스템 행렬 A의 고유치(Eigenvalue) 해석 및 근궤적(Root Locus)의 출발점."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "근의 공식을 통한 특성근 및 동작 영역 구분",
+              "mathExpression": "s_{1,2} = -\\zeta \\omega_0 \\pm \\omega_0 \\sqrt{\\zeta^2 - 1} = -\\alpha \\pm \\sqrt{\\alpha^2 - \\omega_0^2}",
+              "mathematicalExplanation": "2차 방정식의 근의 공식에 의해 특성근 s_1, s_2가 유도된다. 판별식 Delta = zeta^2 - 1 의 부호에 따라 3가지 구별되는 동역학적 영역이 발생한다: 1) zeta > 1 (Delta > 0): 서로 다른 두 음의 실근 (과감쇠, Overdamped)\n2) zeta = 1 (Delta = 0): 음의 중근 (임계감쇠, Critically Damped)\n3) 0 <= zeta < 1 (Delta < 0): 켤레 복소수 근 (저감쇠, Underdamped)",
+              "physicalInterpretation": "저항에 의한 에너지 발산율(alpha)과 L-C 간 에너지 상호교환율(omega_0)의 상대적 크기가 회로의 진동 여부를 결정한다.",
+              "engineeringApplication": "스위치 모드 파워 서플라이(SMPS)의 출력 LC 필터 댐핑 저항 선정 기준(zeta >= 0.707 권장)."
+            }
+          ],
+          "conclusion": "RLC 회로의 과도 응답은 특성방정식의 판별식 부호, 즉 감쇠비 zeta의 값에 의해 세 가지의 근본적으로 상이한 동역학적 궤적으로 분기된다."
+        },
+        {
+          "derivationId": "deriv-02-underdamped-solution",
+          "title": "저감쇠 상태(0 <= zeta < 1)의 완전 해석해, 오버슈트 및 정정시간 유도",
+          "targetResult": "x(t) = e^{-\\alpha t}\\left[ C_1 \\cos(\\omega_d t) + C_2 \\sin(\\omega_d t) \\right], \\quad M_p = \\exp\\left(-\\frac{\\pi \\zeta}{\\sqrt{1-\\zeta^2}}\\right)",
+          "prerequisites": [
+            "감쇠비 범위: 0 <= zeta < 1",
+            "오일러 공식: e^{j theta} = cos(theta) + j sin(theta)",
+            "감쇠 고유진동수: omega_d = omega_0 * sqrt(1 - zeta^2)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "켤레 복소수 특성근과 오일러 공식을 통한 실수 기저 전개",
+              "mathExpression": "s_{1,2} = -\\alpha \\pm j \\omega_d, \\quad \\omega_d = \\omega_0 \\sqrt{1 - \\zeta^2}",
+              "mathematicalExplanation": "zeta < 1 일 때 \\sqrt{\\zeta^2 - 1} = j \\sqrt{1 - \\zeta^2} 이므로 특성근은 켤레 복소수 쌍이 된다. 일반해 x(t) = K_1 e^{(-\\alpha + j \\omega_d)t} + K_2 e^{(-\\alpha - j \\omega_d)t} = e^{-\\alpha t}(K_1 e^{j\\omega_d t} + K_2 e^{-j\\omega_d t}) 에 오일러 공식을 적용하고 실수 상수로 결합하면: x(t) = e^{-\\alpha t} \\left[ C_1 \\cos(\\omega_d t) + C_2 \\sin(\\omega_d t) \\right] = X_m e^{-\\alpha t} \\cos(\\omega_d t - \\phi).",
+              "physicalInterpretation": "시간에 따라 감쇠 진폭 e^{-alpha t}를 갖는 포락선(Envelope) 내부에서 주파수 omega_d로 정현파 진동이 진행된다.",
+              "engineeringApplication": "고주파 RLC 공진 탱크 회로의 링잉(Ringing) 전압 파형 및 EMI 방사 스펙트럼 분석."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "초기 조건(x(0) = X_0, x'(0) = V_0)에 따른 적분 상수 해석적 결정",
+              "mathExpression": "C_1 = X_0, \\quad C_2 = \\frac{V_0 + \\alpha X_0}{\\omega_d}",
+              "mathematicalExplanation": "t = 0 대입: x(0) = e^0 [C_1 \\cos(0) + C_2 \\sin(0)] = C_1 = X_0. x(t)의 1차 도함수를 구한다: \\dot{x}(t) = -\\alpha e^{-\\alpha t}[C_1 \\cos(\\omega_d t) + C_2 \\sin(\\omega_d t)] + e^{-\\alpha t}[-\\omega_d C_1 \\sin(\\omega_d t) + \\omega_d C_2 \\cos(\\omega_d t)]. t = 0 대입: \\dot{x}(0) = -\\alpha C_1 + \\omega_d C_2 = V_0 \\implies C_2 = \\frac{V_0 + \\alpha X_0}{\\omega_d}.",
+              "physicalInterpretation": "초기 변위와 초기 속도(초기 전압 및 초기 전류)가 진동의 위상각 phi와 초기 합성 진폭을 고유하게 결정한다.",
+              "engineeringApplication": "차폐 릴레이 접점 개폐 시 접점 바운싱과 아크 방전을 억제하기 위한 초기 충전 상태 분석."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "단위 계단 응답(Step Response)에서의 피크 시간(Peak Time) 엄밀 유도",
+              "mathExpression": "\\frac{dx(t)}{dt} = 0 \\implies \\sin(\\omega_d t) = 0 \\implies t_p = \\frac{\\pi}{\\omega_d} = \\frac{\\pi}{\\omega_0 \\sqrt{1 - \\zeta^2}}",
+              "mathematicalExplanation": "단위 계단 입력에 대한 응답 x(t) = 1 - e^{-\\zeta \\omega_0 t}\\left(\\cos\\omega_d t + \\frac{\\zeta}{\\sqrt{1-\\zeta^2}}\\sin\\omega_d t\\right) 의 극값을 찾기 위해 미분한다: \\dot{x}(t) = \\frac{\\omega_0}{\\sqrt{1-\\zeta^2}} e^{-\\zeta \\omega_0 t} \\sin(\\omega_d t) = 0. e^{-\\zeta \\omega_0 t} \\neq 0 이므로 \\sin(\\omega_d t) = 0 이어야 하며, t > 0 에서 첫 번째 최댓값(First Peak)은 \\omega_d t = \\pi 일 때 도달하므로 t_p = \\frac{\\pi}{\\omega_d} 이다.",
+              "physicalInterpretation": "시스템이 목표 정상 상태값을 처음으로 지나쳐 최대 변위에 도달하는 물리적 시간은 오직 감쇠 고유진동수 omega_d의 반주기(pi/omega_d)에 의해 결정된다.",
+              "engineeringApplication": "모터 서보 제어기 및 DC-DC 레귤레이터의 과도응답 상승 성능 평가 시 피크 도달 시간 규격 사양."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "최대 오버슈트(Maximum Percent Overshoot, M_p)의 엄밀 유도",
+              "mathExpression": "M_p = x(t_p) - 1 = \\exp\\left( -\\zeta \\omega_0 \\frac{\\pi}{\\omega_d} \\right) = \\exp\\left( -\\frac{\\pi \\zeta}{\\sqrt{1 - \\zeta^2}} \\right)",
+              "mathematicalExplanation": "t_p = \\frac{\\pi}{\\omega_d} 를 단위 계단 응답 식에 대입한다: \\cos(\\omega_d t_p) = \\cos(\\pi) = -1, \\quad \\sin(\\omega_d t_p) = \\sin(\\pi) = 0. 따라서 x(t_p) = 1 - e^{-\\zeta \\omega_0 \\frac{\\pi}{\\omega_d}}(-1) = 1 + \\exp\\left(-\\frac{\\pi \\zeta}{\\sqrt{1-\\zeta^2}}\\right). 정상상태 값 1을 차감하면 정규화된 최대 오버슈트 M_p = \\exp\\left(-\\frac{\\pi \\zeta}{\\sqrt{1-\\zeta^2}}\\right) 가 정확히 도출된다.",
+              "physicalInterpretation": "오버슈트의 크기는 비감쇠 고유진동수 omega_0와 무관하며, 오직 무차원 감쇠비 zeta만의 단조 감소 함수이다.",
+              "engineeringApplication": "전력용 전력반도체(IGBT/SiC MOSFET) 턴오프 시 발생하는 V_ds 전압 스파이크 오버슈트 억제(소자 항복 전압 마진 확보)."
+            },
+            {
+              "stepNumber": 5,
+              "stepTitle": "정정 시간(Settling Time, t_s)의 지수 포락선 기준 유도",
+              "mathExpression": "t_s(2\\%) \\approx \\frac{4}{\\zeta \\omega_0} = \\frac{4}{\\alpha}, \\quad t_s(5\\%) \\approx \\frac{3}{\\zeta \\omega_0} = \\frac{3}{\\alpha}",
+              "mathematicalExplanation": "오차 포락선 \\exp(-\\zeta \\omega_0 t_s) = 0.02 (2\\% 허용 오차)를 취하면, -\\zeta \\omega_0 t_s = \\ln(0.02) \\approx -3.912 \\approx -4 \\implies t_s \\approx \\frac{4}{\\zeta \\omega_0}. 5\\% 오차 기준일 때는 \\ln(0.05) \\approx -2.996 \\approx -3 \\implies t_s \\approx \\frac{3}{\\zeta \\omega_0} 이다.",
+              "physicalInterpretation": "정정 시간은 지수 감쇠 시정수 tau = 1/alpha = 1/(zeta*omega_0)의 배수로 주어지며, 감쇠 인자 alpha가 클수록 회로는 빠르게 안정된다.",
+              "engineeringApplication": "ADC 프런트엔드 샘플앤홀드(S/H) 회로의 정정 시간 요구사항 및 고속 통신 DAC 안정화 시간 설계."
+            }
+          ],
+          "conclusion": "저감쇠 RLC 회로의 과도 응답은 주파수 omega_d의 진동과 지수 포락선 e^{-alpha t}의 곱으로 기술되며, 오버슈트는 감쇠비 zeta에만 의존하고 정정시간은 감쇠인자 alpha에 반비례한다."
+        },
+        {
+          "derivationId": "deriv-02-critically-damped",
+          "title": "임계감쇠 상태(zeta = 1)의 중근 해 유도 및 비진동 최단 수렴성 증명",
+          "targetResult": "x(t) = (C_1 + C_2 t) e^{-\\omega_0 t}, \\quad C_1 = X_0, \\; C_2 = V_0 + \\omega_0 X_0",
+          "prerequisites": [
+            "감쇠비 조건: zeta = 1 (alpha = omega_0)",
+            "중근 조건: s_1 = s_2 = -omega_0",
+            "차수 축소법(Reduction of Order) 또는 매개변수 변환법"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "특성 방정식 중근 발생 및 기저해의 부족 확인",
+              "mathExpression": "(s + \\omega_0)^2 = 0 \\implies s_1 = s_2 = -\\omega_0",
+              "mathematicalExplanation": "zeta = 1 일 때 특성방정식은 s^2 + 2\\omega_0 s + \\omega_0^2 = (s + \\omega_0)^2 = 0 이 된다. 단일 지수해 x_1(t) = e^{-\\omega_0 t} 만으로는 2차원 해공간을 생성할 수 없으므로(선형 독립인 두 번째 기저해 필요), 차수 축소법을 적용하여 두 번째 해를 탐색한다.",
+              "physicalInterpretation": "회로의 감쇠율과 고유 진동수가 완벽한 임계 균형을 이루어 진동이 시작되려는 찰나에 억제되는 상태이다.",
+              "engineeringApplication": "차량 현가장치(Suspension), 지진계(Seismometer), 아날로그 계측기 바늘(Galvanometer)의 무오버슈트 최단 지시 설계."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "차수 축소법을 통한 두 번째 선형 독립 기저해 도출",
+              "mathExpression": "x(t) = v(t) e^{-\\omega_0 t} \\implies \\frac{d^2 v(t)}{dt^2} = 0 \\implies v(t) = C_1 + C_2 t",
+              "mathematicalExplanation": "미지의 함수 v(t)를 도입하여 x(t) = v(t) e^{-\\omega_0 t} 라 두고 1차 및 2차 도함수를 구한다: \\dot{x} = (\\dot{v} - \\omega_0 v)e^{-\\omega_0 t}, \\quad \\ddot{x} = (\\ddot{v} - 2\\omega_0 \\dot{v} + \\omega_0^2 v)e^{-\\omega_0 t}. 원래 미분방정식 \\ddot{x} + 2\\omega_0 \\dot{x} + \\omega_0^2 x = 0 에 대입하면: [ (\\ddot{v} - 2\\omega_0 \\dot{v} + \\omega_0^2 v) + 2\\omega_0 (\\dot{v} - \\omega_0 v) + \\omega_0^2 v ] e^{-\\omega_0 t} = 0. 괄호 내부를 정리하면 \\ddot{v}(t) = 0 이 된다. 2회 적분하면 v(t) = C_1 + C_2 t 가 얻어지므로 일반해는 x(t) = (C_1 + C_2 t) e^{-\\omega_0 t} 이다.",
+              "physicalInterpretation": "시간 t의 1차 비례 항이 지수 감쇠 함수와 곱해져, 초기에는 일시적 상승이 발생할 수 있으나 지수함수의 압도적인 감소율에 의해 단조 수렴한다.",
+              "engineeringApplication": "스너버(Snubber) 회로에서 스위칭 소자에 인가되는 스트레스를 최소화하면서 최단 시간에 에너지를 방전시키는 최적 저항값 결정."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "초기 조건에 따른 계수 결정 및 극한 정리와의 일관성 검증",
+              "mathExpression": "C_1 = X_0, \\quad C_2 = V_0 + \\omega_0 X_0 \\implies x(t) = [X_0 + (V_0 + \\omega_0 X_0)t] e^{-\\omega_0 t}",
+              "mathematicalExplanation": "t = 0 대입: x(0) = C_1 = X_0. \\dot{x}(t) = C_2 e^{-\\omega_0 t} - \\omega_0 (C_1 + C_2 t) e^{-\\omega_0 t}. \\dot{x}(0) = C_2 - \\omega_0 C_1 = V_0 \\implies C_2 = V_0 + \\omega_0 X_0. 과감쇠 해 x(t) = \\frac{V_0 - s_2 X_0}{s_1 - s_2}e^{s_1 t} + \\frac{s_1 X_0 - V_0}{s_1 - s_2}e^{s_2 t} 에서 s_1, s_2 \\to -\\omega_0 로 로피탈 정리(L'Hôpital's Rule)를 적용하여 극한을 취해도 정확히 동일한 결과가 도출된다.",
+              "physicalInterpretation": "과감쇠 해의 두 실수 특성근이 하나로 융합되는 수학적 극한이 임계감쇠 해와 완벽하게 일치함을 보증한다.",
+              "engineeringApplication": "디지털 클록 분배망의 터미네이션 저항(Series Termination) 정합: 오버슈트 링잉을 제거하고 천이 시간(Slew Rate)을 최적화."
+            }
+          ],
+          "conclusion": "임계감쇠 상태는 진동(오버슈트)이 전혀 발생하지 않으면서도 평형점으로 복귀하는 속도가 모든 비진동 응답 중 가장 빠른 물리적 최적 상태이다."
+        },
+        {
+          "derivationId": "deriv-02-overdamped-solution",
+          "title": "과감쇠 상태(zeta > 1)의 완전 해석해 및 지배 극점(Dominant Pole) 거동",
+          "targetResult": "x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}, \\quad s_{1,2} = -\\alpha \\pm \\sqrt{\\alpha^2 - \\omega_0^2}",
+          "prerequisites": [
+            "감쇠비 범위: zeta > 1 (alpha > omega_0)",
+            "판별식: alpha^2 - omega_0^2 > 0",
+            "두 음의 실수 특성근: 0 > s_1 > -\u0007lpha > s_2"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "서로 다른 두 음의 실근 및 지수 감쇠 일반해",
+              "mathExpression": "s_1 = -\\alpha + \\sqrt{\\alpha^2 - \\omega_0^2}, \\quad s_2 = -\\alpha - \\sqrt{\\alpha^2 - \\omega_0^2}, \\quad x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}",
+              "mathematicalExplanation": "\\alpha > \\omega_0 이므로 근호 내부가 양수이다. 두 근 s_1, s_2는 모두 음의 실수이며 |s_2| > |s_1| 의 관계를 만족한다. 일반해는 순수 지수 감쇠 함수들의 선형 결합이다.",
+              "physicalInterpretation": "저항에 의한 에너지 소모율이 너무 커서 인덕터와 커패시터 사이의 에너지 진동이 완전히 억제되며, 느리고 둔탁한 감쇠 방전이 일어난다.",
+              "engineeringApplication": "과도한 댐핑 저항을 갖는 전원단 필터에서 스위치 오프 시 전압 방전 지연 시간 산출."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "초기 조건에 따른 진폭 계수 A_1, A_2의 결정",
+              "mathExpression": "A_1 = \\frac{V_0 - s_2 X_0}{s_1 - s_2}, \\quad A_2 = \\frac{s_1 X_0 - V_0}{s_1 - s_2}",
+              "mathematicalExplanation": "x(0) = A_1 + A_2 = X_0, \\quad \\dot{x}(0) = s_1 A_1 + s_2 A_2 = V_0. 이 2원 1차 연립방정식을 크래머 공식(Cramer's Rule) 또는 대입법으로 풀면 유일한 해 A_1, A_2가 얻어진다.",
+              "physicalInterpretation": "두 독립된 감쇠 모드 각각이 초기 조건에 따라 여기되는 비중을 나타낸다.",
+              "engineeringApplication": "고전압 차단 장치(HVDC Circuit Breaker) 방전 저항 뱅크 설계."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "지배 극점(Dominant Pole) 근사 및 점근 거동",
+              "mathExpression": "t \\gg \\frac{1}{|s_2|} \\implies x(t) \\approx A_1 e^{s_1 t} = A_1 \\exp\\left( -[\\alpha - \\sqrt{\\alpha^2 - \\omega_0^2}] t \\right)",
+              "mathematicalExplanation": "|s_2| \\gg |s_1| 이므로 e^{s_2 t} 항은 극도로 빠르게 0으로 소멸한다. 따라서 시스템의 장기(Long-term) 과도 응답은 허수축에 훨씬 가까운 지배 극점 s_1에 의해 독점적으로 결정된다. \\alpha \\gg \\omega_0 일 때 테일러 전개 \\sqrt{\\alpha^2 - \\omega_0^2} \\approx \\alpha - \\frac{\\omega_0^2}{2\\alpha} 를 적용하면 s_1 \\approx -\\frac{\\omega_0^2}{2\\alpha} = -\\frac{1}{RC} (직렬의 경우)가 되어 시스템은 1차 RC 완화 시스템처럼 거동한다.",
+              "physicalInterpretation": "과감쇠 상태는 임계감쇠 상태보다 오히려 평형점에 도달하는 속도가 훨씬 느리며, 저항이 증가할수록 복귀 시간이 무한히 길어진다.",
+              "engineeringApplication": "제어 시스템 차수 축소(Model Order Reduction) 및 dominant pole placement 기법의 회로적 검증."
+            }
+          ],
+          "conclusion": "과감쇠 회로는 비진동 특성을 유지하지만, 빠른 극점의 조기 소멸 후 느린 지배 극점(s_1)에 의해 복귀 시간이 지연되는 특성을 지닌다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "전력 전자 (Power Electronics)",
+          "application": "RCD 클램프 및 RC 스너버 설계",
+          "details": "Flyback 컨버터 누설 인덕턴스(Leakage L)와 스위치 기생 커패시턴스에 의한 공진 전압 스파이크를 임계감쇠(zeta = 1)로 억제하여 스위치 파손 방지."
+        },
+        {
+          "domain": "고속 디지털 하드웨어 (High-Speed Digital)",
+          "application": "신호 무결성(Signal Integrity) 직렬 종단 저항(Series Resistor)",
+          "details": "구동 드라이버 임피던스와 선로 임피던스를 일치시켜 zeta = 1 조건을 형성, 오버슈트/언더슈트에 의한 논리 반전 에러(Logic glitch) 원천 차단."
+        },
+        {
+          "domain": "전력망 계통 보호 (Power Grid Protection)",
+          "application": "차단기 과도 회복 전압(TRV) 제어",
+          "details": "단락 사고 차단 시 계통의 L-C 회로에서 발생하는 고주파 재기호(Re-ignition) 현상을 방지하기 위해 션트 저항을 통한 최적 댐핑 부여."
+        }
+      ],
+      "summary": "2계 RLC 과도 응답은 특성근의 위치에 따라 감쇠비 zeta를 매개로 저감쇠, 임계감쇠, 과감쇠의 3가지 명확한 수학적 영역으로 나뉘며, 최단 시간 무오버슈트 응답은 zeta = 1에서 달성된다."
+    },
+    {
+      "id": "mod-03-laplace-splane",
+      "moduleNumber": 3,
+      "titleKo": "라플라스 변환, s-평면 극점-영점 기하학 및 브롬위치 역변환 적분",
+      "titleEn": "Laplace Transform, s-Plane Pole-Zero Geometry & Bromwich Inversion Integral",
+      "category": "복소해석학 및 시스템 변환론 (Complex Analysis & Transform Methods)",
+      "overview": "라플라스 변환(Laplace Transform)은 시간 영역의 선형 시불변(LTI) 미분방정식을 복소 주파수 평면(s-평면)의 대수방정식으로 사상하는 해석학적 핵심 도구이다. 본 모듈에서는 양방향 및 단방향 라플라스 변환의 수렴 영역(ROC)의 수학적 특성, 푸리에 역변환으로부터 복소 선적분 형태의 브롬위치 역변환 적분(Bromwich Inversion Integral)을 엄밀하게 유도하고, 코시 유수 정리(Cauchy's Residue Theorem)와 요르단 보조정리(Jordan's Lemma)를 이용한 폐경로 적분 해법, 그리고 s-평면 상의 극점(Pole)과 영점(Zero)의 기하학적 배치가 시간 영역 임펄스 응답 $h(t)$와 유계 입력-유계 출력(BIBO) 안정성에 미치는 엄밀한 필요충분조건을 증명한다.",
+      "governingEquations": [
+        {
+          "name": "단방향 라플라스 변환 (Unilateral Laplace Transform)",
+          "formula": "\\mathcal{L}\\{f(t)\\} = F(s) \\equiv \\int_{0^-}^{\\infty} f(t) e^{-st} \\, dt, \\quad s = \\sigma + j\\omega \\in \\mathbb{C}",
+          "explanation": "시간 t = 0^- 직전의 초기 상태를 자연스럽게 포함하는 적분 변환으로, 인과적(Causal) 시스템의 초기값 문제 해결에 최적화된 형태.",
+          "physicalSignificance": "실수 감쇠 인자 e^{-sigma t}를 정현파 e^{-j omega t}에 곱함으로써, 푸리에 변환이 불가능한 지수적으로 발산하거나 무한히 지속되는 신호까지 수렴 영역(ROC)으로 포섭한다."
+        },
+        {
+          "name": "브롬위치 복소 역변환 적분 (Bromwich Inversion Formula)",
+          "formula": "f(t) = \\mathcal{L}^{-1}\\{F(s)\\} = \\frac{1}{2\\pi j} \\int_{\\sigma - j\\infty}^{\\sigma + j\\infty} F(s) e^{st} \\, ds, \\quad \\sigma \\in \\text{ROC}",
+          "explanation": "복소 s-평면에서 ROC 내부의 수직 직선 s = sigma를 따라 정의되는 복소 주파수 선적분.",
+          "physicalSignificance": "시간 신호 f(t)가 연속적인 무한 개의 복소 지수 함수 기저 e^{st}의 연속 가중 중첩(Fourier 합성의 일반화)으로 분해됨을 나타낸다."
+        },
+        {
+          "name": "유리 함수 전달함수의 극점-영점 분해 (Pole-Zero Factorization)",
+          "formula": "H(s) = \\frac{Y(s)}{X(s)} = \\frac{B(s)}{A(s)} = \\frac{b_m s^m + \\dots + b_0}{a_n s^n + \\dots + a_0} = K \\frac{\\prod_{i=1}^m (s - z_i)}{\\prod_{k=1}^n (s - p_k)}",
+          "explanation": "시스템의 임펄스 응답의 라플라스 변환으로, 분모의 근 p_k를 극점(Poles), 분자의 근 z_i를 영점(Zeros)이라 한다.",
+          "physicalSignificance": "극점은 시스템 고유의 자연 모드(Natural Modes)와 감쇠율/진동수를 결정하고, 영점은 특정 복소 주파수 입력의 전달을 완전 차단하는 노치(Notch) 필터링 특성을 결정한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-03-bromwich-integral",
+          "title": "푸리에 역변환으로부터 브롬위치 복소 역변환 적분의 엄밀한 유도",
+          "targetResult": "f(t) = \\frac{1}{2\\pi j} \\int_{\\sigma - j\\infty}^{\\sigma + j\\infty} F(s) e^{st} \\, ds",
+          "prerequisites": [
+            "푸리에 변환 쌍: G(omega) = int g(t) e^{-j omega t} dt, g(t) = (1/2pi) int G(omega) e^{j omega t} d(omega)",
+            "수렴 영역(ROC): int |f(t)| e^{-sigma t} dt < infty 인 실수 sigma 의 집합",
+            "복소 변수 치환: s = sigma + j omega, ds = j d(omega)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "지수 감쇠 신호 도입 및 푸리에 변환 적용",
+              "mathExpression": "g(t) \\equiv f(t) e^{-\\sigma t}, \\quad G(\\omega) = \\mathcal{F}\\{g(t)\\} = \\int_{-\\infty}^{\\infty} \\left[ f(t) e^{-\\sigma t} \\right] e^{-j\\omega t} \\, dt",
+              "mathematicalExplanation": "\\sigma \\in \\text{ROC} 에 대해 f(t) e^{-\\sigma t} 는 절대적분 가능(L1 공간에 속함)하므로 푸리에 변환이 보장된다. 지수법칙에 의해 e^{-\\sigma t} e^{-j\\omega t} = e^{-(\\sigma + j\\omega)t} 이다. 따라서 G(\\omega) = \\int_{-\\infty}^{\\infty} f(t) e^{-(\\sigma + j\\omega)t} \\, dt = F(\\sigma + j\\omega) = F(s) 가 성립한다.",
+              "physicalInterpretation": "라플라스 변환은 복소 평면의 특정 수직선 s = sigma + j omega 상에서 평가된 지수 감쇠 보정 신호의 푸리에 변환과 본질적으로 동일하다.",
+              "engineeringApplication": "정현파 정상상태 해석(s = j omega)과 과도상태 복소 해석(s = sigma + j omega)을 하나의 수학적 프레임워크로 통합."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "푸리에 역변환 정리를 통한 g(t)의 복원",
+              "mathExpression": "g(t) = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} G(\\omega) e^{j\\omega t} \\, d\\omega = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} F(\\sigma + j\\omega) e^{j\\omega t} \\, d\\omega",
+              "mathematicalExplanation": "g(t)가 유계 변동 및 연속인 점에서 푸리에 역변환 공식을 적용한다. G(omega) 자리에 F(sigma + j omega)를 직접 대입한다.",
+              "physicalInterpretation": "시간 영역 신호 g(t)를 무한한 주파수 성분들의 연속 적분으로 재합성한다.",
+              "engineeringApplication": "스펙트럼 분석기에서 변조 신호의 대역폭과 기저대역 복원 원리."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "감쇠 인자 상쇄 및 원 신호 f(t) 표현",
+              "mathExpression": "f(t) = e^{\\sigma t} g(t) = e^{\\sigma t} \\left[ \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} F(\\sigma + j\\omega) e^{j\\omega t} \\, d\\omega \\right] = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} F(\\sigma + j\\omega) e^{(\\sigma + j\\omega)t} \\, d\\omega",
+              "mathematicalExplanation": "g(t) = f(t) e^{-\\sigma t} 이므로 양변에 e^{\\sigma t} 를 곱한다. sigma는 적분 변수 omega에 대해 상수이므로 적분 기호 내부로 들어가 e^{\\sigma t} e^{j\\omega t} = e^{(\\sigma + j\\omega)t} 가 된다.",
+              "physicalInterpretation": "감쇠 보정 인자를 원래 신호에 역으로 곱하여 원형의 시간 파형 f(t)를 완벽히 복원한다.",
+              "engineeringApplication": "과도 응답 신호의 지수적 상승/하강 포락선 복원."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "복소 변수 치환을 통한 브롬위치 복소 선적분 완성",
+              "mathExpression": "s = \\sigma + j\\omega \\implies ds = j\\,d\\omega \\iff d\\omega = \\frac{ds}{j}, \\quad f(t) = \\frac{1}{2\\pi j} \\int_{\\sigma - j\\infty}^{\\sigma + j\\infty} F(s) e^{st} \\, ds",
+              "mathematicalExplanation": "적분 변수를 실수 omega에서 복소수 s로 치환한다. \\sigma 는 고정된 실수이므로 ds = j d\\omega 가 성립하며, 적분 구간은 \\omega = -\\infty \\to +\\infty 에서 s = \\sigma - j\\infty \\to \\sigma + j\\infty 로 사상된다. 따라서 적분 계수 1/(2\\pi)에 1/j 가 곱해져 \\frac{1}{2\\pi j} 가 되며, 유명한 브롬위치 역변환 선적분 공식이 유도된다.",
+              "physicalInterpretation": "복소 평면에서 ROC 내부를 관통하는 수직 직선(브롬위치 윤곽선)을 따라 무한대까지 선적분함으로써 임의의 시간 함수를 복원할 수 있다.",
+              "engineeringApplication": "초고속 전송선로(Distributed Transmission Line) 및 파동 방정식의 s-영역 정확한 해석적 시간 응답 산출."
+            }
+          ],
+          "conclusion": "브롬위치 역변환 적분은 푸리에 역변환의 복소 평면 확장이며, 실수축상의 감쇠 인자 sigma와 허수축상의 진동수 omega를 결합한 복소 선적분으로 시간 신호를 재합성한다."
+        },
+        {
+          "derivationId": "deriv-03-residue-evaluation",
+          "title": "코시 유수 정리(Residue Theorem) 및 요르단 보조정리를 이용한 폐경로 적분 해법",
+          "targetResult": "f(t) = \\sum_{k=1}^N \\text{Res}\\left[ F(s) e^{st}, \\, p_k \\right] \\cdot u(t)",
+          "prerequisites": [
+            "코시 유수 정리: oint_Gamma F(s) e^{st} ds = 2pi*j * sum Res[F(s)e^{st}, p_k]",
+            "요르단 보조정리(Jordan's Lemma): t > 0 일 때 좌반평면 무한 반원호 적분 극한 = 0",
+            "단순극 및 고차극 유수 공식"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "좌반평면 폐경로(Bromwich Contour) 설정",
+              "mathExpression": "\\Gamma = C_{\\text{Bromwich}} \\cup C_R, \\quad C_R = \\{ s \\in \\mathbb{C} \\mid s = \\sigma + R e^{j\\theta}, \\; \\theta \\in [\\pi/2, 3\\pi/2] \\}",
+              "mathematicalExplanation": "인과적 신호(t > 0)에 대해, 브롬위치 수직선 (\\sigma - jR \\to \\sigma + jR)과 좌반평면(LHP)으로 둘러쳐지는 반경 R의 거대 반원호 C_R로 닫힌 반시계방향 폐경로 Gamma를 구성한다. ROC가 \\text{Re}(s) > \\sigma_0 이면 F(s)의 모든 극점은 직선 s = sigma의 왼쪽에 위치하므로 폐경로 내부에 완전히 포함된다.",
+              "physicalInterpretation": "인과율(t < 0 에서 f(t) = 0)을 물리적으로 보장하기 위해 극점들을 모두 포괄하는 복소 적분 경로를 설정한다.",
+              "engineeringApplication": "아날로그 필터 및 제어 시스템의 인과적 임펄스 응답 생성의 수학적 보장."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "요르단 보조정리를 통한 반원호 적분의 소멸 증명",
+              "mathExpression": "\\lim_{R \\to \\infty} \\left| \\int_{C_R} F(s) e^{st} \\, ds \\right| = 0 \\quad (\\text{for } t > 0)",
+              "mathematicalExplanation": "F(s)가 진분수(Strictly Proper, \\lim_{|s| \\to \\infty} |F(s)| = 0)라 가정하자. C_R 상에서 s = \\sigma + R e^{j\\theta} = \\sigma + R(\\cos\\theta + j\\sin\\theta) 이며, \\theta \\in [\\pi/2, 3\\pi/2] 구간에서 \\cos\\theta \\le 0 이다. 따라서 |e^{st}| = e^{\\sigma t} e^{R t \\cos\\theta} 이며, t > 0 이고 R \\to \\infty 일 때 R t \\cos\\theta \\to -\\infty 이므로 피적분함수의 지수 항이 지수적으로 0으로 붕괴한다. ML 부등식과 조르단 부등식에 의해 반원호 상의 선적분 극한값은 엄밀하게 0으로 수렴한다.",
+              "physicalInterpretation": "무한 고주파 및 강한 감쇠 영역의 원호 경로는 시간 t > 0의 에너지에 아무런 기여를 하지 못함을 증명한다.",
+              "engineeringApplication": "고주파 대역통과 필터에서 기생 고조파 차단 한계 해석."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "코시 유수 정리 적용 및 잔여 유수합 산출",
+              "mathExpression": "\\oint_\\Gamma F(s) e^{st} \\, ds = \\int_{\\sigma - j\\infty}^{\\sigma + j\\infty} F(s) e^{st} \\, ds + 0 = 2\\pi j \\sum_{k=1}^N \\text{Res}\\left[ F(s) e^{st}, \\, p_k \\right]",
+              "mathematicalExplanation": "폐경로 전체의 적분은 브롬위치 적분과 반원호 적분의 합이다. 반원호 적분이 0이 되므로, 브롬위치 역변환은 코시 유수 정리에 의해 폐경로 내부 극점들에 대한 유수(Residue)들의 총합에 2\\pi j 를 곱한 것과 정확히 일치한다. 앞서 정의된 계수 1/(2\\pi j)와 상쇄되어 f(t) = \\sum \\text{Res}[F(s)e^{st}, p_k] 가 완성된다.",
+              "physicalInterpretation": "연속적인 복소 선적분이 극점 위치에서의 국소적 유수들의 유한한 대수적 합으로 축약된다.",
+              "engineeringApplication": "부분분수 전개(Partial Fraction Expansion)를 통한 수동 소자 회로망 합성(Foster/Cauer 네트워크 합성)."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "단순극 및 고차극에서의 유수 계산 공식",
+              "mathExpression": "\\text{Res}[F(s)e^{st}, p_k] = \\begin{cases} \\lim_{s \\to p_k} (s - p_k) F(s) e^{st} & (\\text{Simple Pole}) \\\\ \\frac{1}{(m-1)!} \\lim_{s \\to p_k} \\frac{d^{m-1}}{ds^{m-1}}\\left[ (s - p_k)^m F(s) e^{st} \\right] & (\\text{Pole of order } m) \\end{cases}",
+              "mathematicalExplanation": "단순극인 경우 분모의 1차 영점을 소거하고 s = p_k를 대입하면 A_k e^{p_k t} 형태의 지수 모드가 생성된다. m차 다중극인 경우 m-1회 미분에 의해 t^{m-1} e^{p_k t} 형태의 다항식-지수 결합 모드가 생성된다.",
+              "physicalInterpretation": "단순극은 순수 감쇠 진동을 일으키며, 중근 극점은 시간 비례 계수 t를 동반하여 임계감쇠 또는 불안정 공진 발산을 유도한다.",
+              "engineeringApplication": "OP-Amp 피드백 회로 및 PLL 위상 검파기에서 다중극 형성에 따른 시스템 불안정(공진 발산) 방지."
+            }
+          ],
+          "conclusion": "브롬위치 적분은 코시 유수 정리와 요르단 보조정리에 의해 극점들에서의 유수의 합으로 엄밀하게 계산되며, 이것이 부분분수 전개법의 해석학적 본질이다."
+        },
+        {
+          "derivationId": "deriv-03-splane-stability",
+          "title": "s-평면 극점-영점 기하학과 BIBO 안정성의 수학적 동치 조건",
+          "targetResult": "\\text{BIBO Stable} \\iff \\forall k, \\; \\text{Re}(p_k) < 0 \\iff \\text{LHP Poles Only}",
+          "prerequisites": [
+            "BIBO(Bounded-Input Bounded-Output) 안정성 정의: |x(t)| <= M_x < infty => |y(t)| <= M_y < infty",
+            "컨볼루션 부등식: |y(t)| <= M_x * int_0^infty |h(tau)| dtau",
+            "임펄스 응답 모드 전개: h(t) = sum A_k e^{(sigma_k + j omega_k)t}"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "BIBO 안정성의 필요충분조건 증명 (L1 임펄스 응답)",
+              "mathExpression": "\\int_{0}^{\\infty} |h(t)| \\, dt < \\infty \\iff \\text{BIBO Stability}",
+              "mathematicalExplanation": "충분조건: |y(t)| = |\\int_0^\\infty h(\\tau) x(t-\\tau) d\\tau| \\le \\int_0^\\infty |h(\\tau)| |x(t-\\tau)| d\\tau \\le M_x \\int_0^\\infty |h(\\tau)| d\\tau < \\infty. 필요조건: 입력 신호를 x(t - \\tau) = \\text{sgn}(h(\\tau)) 로 설정하면 y(t) = \\int_0^\\infty |h(\\tau)| d\\tau 가 되므로, 임펄스 응답의 절대적분 불가능 시 출력이 유계 입력에 대해 무한대로 발산한다.",
+              "physicalInterpretation": "과거의 모든 충격에 대한 시스템의 반응 강도의 절대 총합이 유한해야만 유한한 입력에 대해 출력이 폭주하지 않는다.",
+              "engineeringApplication": "FIR 필터의 무조건적 안정성 및 IIR 필터의 발산 여부 스크리닝의 기본 정리."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "극점의 실수부에 따른 모드 거동 및 LHP 조건 유도",
+              "mathExpression": "h(t) = \\sum_{k=1}^n A_k e^{p_k t} = \\sum_{k=1}^n A_k e^{\\sigma_k t} e^{j\\omega_k t} \\implies |e^{p_k t}| = e^{\\sigma_k t}",
+              "mathematicalExplanation": "\\int_0^\\infty |h(t)| dt 가 수렴하기 위한 필요충분조건은 모든 지수항의 실수부 \\sigma_k = \\text{Re}(p_k) 가 엄격히 음수(\\sigma_k < 0)여야 한다. \\sigma_k > 0 이면 e^{\\sigma_k t} \\to \\infty 로 발산하여 불안정하며, \\sigma_k = 0 (허수축)인 경우 단순극이면 비감쇠 지속 진동(적분 무한대, 한계 안정), 다중극이면 t e^{j\\omega t} 로 선형 발산한다.",
+              "physicalInterpretation": "극점이 s-평면의 좌반평면(LHP)에 위치해야만 시간 영역에서 에너지가 지수적으로 감쇠하여 평형점으로 수렴한다.",
+              "engineeringApplication": "폐루프 서보 전동기 제어기 튜닝 시 위상각 여유 및 안정도 한계 지점 규정."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "ROC와 허수축(j omega) 포함 관계의 해석학적 일치",
+              "mathExpression": "\\{ s = j\\omega \\mid \\omega \\in \\mathbb{R} \\} \\subset \\text{ROC} \\iff \\text{BIBO Stability}",
+              "mathematicalExplanation": "인과적 시스템의 ROC는 가장 오른쪽에 위치한 극점의 실수부보다 큰 반평면 {Re(s) > max Re(p_k)} 이다. 모든 극점이 LHP에 있으면 max Re(p_k) < 0 이므로 허수축 Re(s) = 0 은 ROC 내부에 완벽히 포함된다. 허수축이 ROC에 포함된다는 것은 시스템의 주파수 응답 H(j omega)가 절대 수렴하여 잘 정의됨을 의미한다.",
+              "physicalInterpretation": "안정한 시스템만이 지속적인 정현파 입력에 대해 유한한 이득과 위상차를 갖는 주파수 응답(Bode 선도)을 물리적으로 생성할 수 있다.",
+              "engineeringApplication": "통신 채널 등화기(Equalizer) 설계 및 안정적인 최소 위상(Minimum-phase) 시스템 검증."
+            }
+          ],
+          "conclusion": "선형 시불변 시스템이 BIBO 안정한 필요충분조건은 모든 극점이 엄격히 좌반평면(LHP)에 존재하는 것이며, 이는 ROC가 j omega 허수축을 포함하는 것과 해석학적으로 동치이다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "아날로그 능동 필터 설계 (Active Filter Design)",
+          "application": "버터워스 및 체비쇼프 필터 s-평면 극점 배치",
+          "details": "주파수 통과대역 리플과 차단 감쇠율을 만족하기 위해 단위 원주상 LHP에 극점들을 대칭 배열(Butterworth poles)하여 필터 전달함수 도출."
+        },
+        {
+          "domain": "위상잠금루프 (PLL, Phase-Locked Loop)",
+          "application": "루프 필터 s-도메인 안정도 및 댐핑 계수 설계",
+          "details": "2차/3차 PLL 폐루프 전달함수의 극점 위치를 조정하여 위상 여유 45도 이상 확보 및 지터 피킹(Jitter Peaking) 억제."
+        },
+        {
+          "domain": "산업용 서보 모터 드라이브 (Industrial Motor Drives)",
+          "application": "근궤적법(Root Locus) 기반 이득 스케줄링",
+          "details": "비례적분(PI) 속도 제어기의 비례 이득 K_p 증가에 따른 폐루프 극점 이동 궤적을 추적하여 허수축 침범 방지."
+        }
+      ],
+      "summary": "라플라스 변환은 브롬위치 복소 선적분을 통해 미분방정식을 대수적 극점-영점 기하학으로 환원하며, 모든 극점이 좌반평면에 위치할 때 시스템의 절대적 안정성(BIBO)이 보장된다."
+    },
+    {
+      "id": "mod-04-fourier-analysis",
+      "moduleNumber": 4,
+      "titleKo": "푸리에 급수, 연속시간 푸리에 변환 및 깁스 현상의 엄밀한 해석",
+      "titleEn": "Fourier Series, Continuous-Time Fourier Transform & Rigorous Gibbs Analysis",
+      "category": "조화해석 및 신호 처리 (Harmonic Analysis & Signal Processing)",
+      "overview": "조화해석학(Harmonic Analysis)은 임의의 주기적 또는 비주기적 신호를 직교하는 복소 지수함수 기저들의 가중 선형 결합으로 분해하여 주파수 영역에서 신호와 시스템의 상호작용을 규명하는 신호처리의 수학적 초석이다. 본 모듈에서는 푸리에 급수 수렴의 충분조건인 디리클레 조건(Dirichlet Conditions), 주기 $T \to \\infty$ 극한을 통한 연속시간 푸리에 변환(CTFT)의 엄밀한 적분 극한 유도, 힐베르트 공간 $L^2(\\mathbb{R})$에서의 파세발 정리(Parseval's Identity)에 의한 에너지 보존성 증명, 푸리에 합성곱 정리(Convolution Theorem), 그리고 불연속 지점에서 절단된 푸리에 급수가 수렴하지 않고 영구적인 피크 오버슈트를 남기는 깁스 현상(Gibbs Phenomenon)의 사인 적분(Sine Integral, Si) 함수를 이용한 정량적 극한 계산을 엄밀하게 전개한다.",
+      "governingEquations": [
+        {
+          "name": "복소 지수 푸리에 급수 (Complex Exponential Fourier Series)",
+          "formula": "f(t) = \\sum_{n=-\\infty}^{\\infty} c_n e^{j n \\omega_0 t}, \\quad c_n = \\frac{1}{T}\\int_{-T/2}^{T/2} f(t) e^{-j n \\omega_0 t} \\, dt, \\quad \\omega_0 = \\frac{2\\pi}{T}",
+          "explanation": "주기 T를 갖는 주기 신호를 기본 주파수 omega_0의 정수배 고조파(Harmonics) 복소 기저들의 이산 무한급수로 분해한 표현식.",
+          "physicalSignificance": "신호가 지닌 총 전력이 무한 개의 이산 스펙트럼 선(Line Spectrum)들에 어떻게 배분되어 있는지를 정량화한다."
+        },
+        {
+          "name": "연속시간 푸리에 변환 쌍 (Continuous-Time Fourier Transform Pair)",
+          "formula": "F(\\omega) = \\int_{-\\infty}^{\\infty} f(t) e^{-j\\omega t} \\, dt, \\quad f(t) = \\frac{1}{2\\pi} \\int_{-\\infty}^{\\infty} F(\\omega) e^{j\\omega t} \\, d\\omega",
+          "explanation": "비주기 에너지 신호를 연속적인 주파수 밀도 스펙트럼 F(omega)로 사상하고 다시 시간 신호로 재합성하는 쌍대 적분 변환.",
+          "physicalSignificance": "시간 영역에서의 국소화와 주파수 영역에서의 대역폭 사이의 상호 제약(불확정성 원리)을 지배하는 기저 변환이다."
+        },
+        {
+          "name": "파세발-플랑슈렐 에너지 보존 정리 (Parseval-Plancherel Theorem)",
+          "formula": "E = \\int_{-\\infty}^{\\infty} |f(t)|^2 \\, dt = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} |F(\\omega)|^2 \\, d\\omega = \\int_{-\\infty}^{\\infty} |F(2\\pi f)|^2 \\, df",
+          "explanation": "시간 영역에서의 총 신호 에너지(신호 크기의 제곱 적분)는 주파수 영역에서의 에너지 스펙트럼 밀도(ESD) 적분과 엄밀히 일치함을 증명하는 등거리 사상(Isometry) 정리.",
+          "physicalSignificance": "푸리에 변환이 L^2 힐베르트 공간의 내적과 놈(Norm)을 완벽하게 보존하는 유니터리(Unitary) 변환임을 증명한다."
+        }
+      ],
+      "dirichletConditions": [
+        {
+          "condition": "절대 적분 가능성 (Absolute Integrability)",
+          "math": "\\int_{T} |f(t)| \\, dt < \\infty \\quad \\text{or} \\quad \\int_{-\\infty}^{\\infty} |f(t)| \\, dt < \\infty",
+          "explanation": "주기 구간(또는 전 실수 구간)에서 신호의 면적이 유한해야 하며, 이는 푸리에 계수 또는 스펙트럼 밀도가 발산하지 않고 유계임을 보장한다."
+        },
+        {
+          "condition": "유한 극값 조건 (Finite Extrema in any Finite Interval)",
+          "math": "\\text{Number of local maxima and minima in any finite period } T < \\infty",
+          "explanation": "신호가 유한 구간 내에서 무한히 격렬하게 진동하지 않아야 함을 의미하며 (예: sin(1/t)와 같은 병리적 진동 배제), 변동의 유계성을 부여한다."
+        },
+        {
+          "condition": "유한 불연속점 조건 (Finite Discontinuities of Finite Magnitude)",
+          "math": "\\text{Number of jump discontinuities in period } T < \\infty \\quad \\text{with } |f(t^+) - f(t^-)| < \\infty",
+          "explanation": "신호에 존재하는 불연속점의 개수가 유한해야 하고 각 불연속점에서의 좌우 극한값이 유한한 제1종 불연속점(Jump Discontinuity)이어야 한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-04-fs-to-ft",
+          "title": "주기 무한대 극한(T -> infty)을 통한 푸리에 변환의 엄밀한 리만 적분 유도",
+          "targetResult": "F(\\omega) = \\lim_{T \\to \\infty} \\int_{-T/2}^{T/2} f(t) e^{-j\\omega t} \\, dt, \\quad f(t) = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} F(\\omega) e^{j\\omega t} \\, d\\omega",
+          "prerequisites": [
+            "복소 푸리에 급수 표현: f(t) = sum c_n e^{j n omega_0 t}",
+            "기본 주파수와 주기 관계: omega_0 = 2*pi / T",
+            "리만-스틸체스 적분의 정의: lim_{Delta omega -> 0} sum g(omega_n) Delta omega = int g(omega) d(omega)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "주기 신호의 푸리에 급수 계수 대입 및 재구성",
+              "mathExpression": "f_T(t) = \\sum_{n=-\\infty}^{\\infty} c_n e^{j n \\omega_0 t}, \\quad c_n = \\frac{1}{T} \\int_{-T/2}^{T/2} f_T(\\tau) e^{-j n \\omega_0 \\tau} \\, d\\tau",
+              "mathematicalExplanation": "주기 T를 갖는 신호 f_T(t)의 복소 푸리에 급수 전개식에 계수 c_n의 정의식을 직접 대입한다: f_T(t) = \\sum_{n=-\\infty}^{\\infty} \\left[ \\frac{1}{T} \\int_{-T/2}^{T/2} f_T(\\tau) e^{-j n \\omega_0 \\tau} \\, d\\tau \\right] e^{j n \\omega_0 t}.",
+              "physicalInterpretation": "주기 신호는 이산 주파수 omega_n = n*omega_0 에서의 무한 고조파 성분들의 가중 합으로 완벽히 표현된다.",
+              "engineeringApplication": "스위칭 전원 변환기(PWM 인버터)의 고조파 차수별 고조파 왜곡률(THD) 분석."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "주파수 증분 Delta omega의 도입 및 식의 재배열",
+              "mathExpression": "\\omega_0 = \\frac{2\\pi}{T} \\implies \\frac{1}{T} = \\frac{\\omega_0}{2\\pi} \\equiv \\frac{\\Delta\\omega}{2\\pi}, \\quad \\omega_n \\equiv n \\omega_0 = n \\Delta\\omega",
+              "mathematicalExplanation": "1/T 을 \\frac{\\Delta\\omega}{2\\pi} 로 치환하고 합 기호 내부로 배치한다: f_T(t) = \\sum_{n=-\\infty}^{\\infty} \\left[ \\frac{1}{2\\pi} \\int_{-T/2}^{T/2} f_T(\\tau) e^{-j \\omega_n \\tau} \\, d\\tau \\right] e^{j \\omega_n t} \\Delta\\omega.",
+              "physicalInterpretation": "주파수 축 상에서 인접한 스펙트럼 선 사이의 간격이 정확히 Delta omega = 2*pi/T 임을 명시한다.",
+              "engineeringApplication": "FFT(고속 푸리에 변환)의 주파수 분해능(Bin Resolution, delta f = f_s / N = 1/T_obs)의 수학적 근거."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "포락선 스펙트럼 함수 F(omega) 정의",
+              "mathExpression": "F_T(\\omega) \\equiv \\int_{-T/2}^{T/2} f_T(\\tau) e^{-j \\omega \\tau} \\, d\\tau \\implies f_T(t) = \\frac{1}{2\\pi} \\sum_{n=-\\infty}^{\\infty} F_T(\\omega_n) e^{j \\omega_n t} \\Delta\\omega",
+              "mathematicalExplanation": "적분 항을 연속 함수 F_T(\\omega) 로 정의하면, 푸리에 급수 합은 주파수 축 상에서 폭 \\Delta\\omega 를 갖는 구간별 직사각형 면적의 합, 즉 전형적인 리만 합(Riemann Sum) 형태로 정확하게 구조화된다.",
+              "physicalInterpretation": "이산 스펙트럼 선들의 끝점이 연속적인 포락선 함수 F_T(omega)의 샘플값과 정확히 일치함을 보여준다.",
+              "engineeringApplication": "주기적 펄스 열의 선 스펙트럼이 단일 펄스의 연속 sinc 스펙트럼의 샘플링된 형태임을 설명."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "주기 무한대 극한(T -> infty) 취득 및 리만 적분으로의 전이",
+              "mathExpression": "T \\to \\infty \\implies \\Delta\\omega = \\frac{2\\pi}{T} \\to d\\omega, \\quad \\omega_n \\to \\omega, \\quad f_T(t) \\to f(t)",
+              "mathematicalExplanation": "주기 T가 무한대로 가면, 주기 신호는 단일 비주기 신호 f(t)가 되고, 주파수 간격 \\Delta\\omega 는 미분소 d\\omega 로 수렴한다. 리만 적분의 정의에 의해 무한합은 연속 적분으로 엄밀히 수렴한다: f(t) = \\lim_{\\Delta\\omega \\to 0} \\frac{1}{2\\pi} \\sum_{n=-\\infty}^{\\infty} F_T(\\omega_n) e^{j \\omega_n t} \\Delta\\omega = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} F(\\omega) e^{j\\omega t} \\, d\\omega. 동시에 적분 구간 [-T/2, T/2] 는 (-\\infty, \\infty) 로 확장되어 F(\\omega) = \\int_{-\\infty}^{\\infty} f(t) e^{-j\\omega t} \\, dt 가 도출된다.",
+              "physicalInterpretation": "비주기 신호는 주기가 무한대인 주기 신호의 극한이며, 이산적 선 스펙트럼이 무한히 빽빽해져 연속적인 주파수 밀도 스펙트럼으로 융합된다.",
+              "engineeringApplication": "임펄스 응답, 과도 펄스 등 비주기적 신호의 통신 대역폭 해석 및 전송 선로 과도 파형 분석."
+            }
+          ],
+          "conclusion": "연속시간 푸리에 변환 쌍은 주기 T가 무한대로 발산할 때 복소 푸리에 급수의 리만 합이 연속 리만 적분으로 엄밀히 수렴하는 수학적 극한의 결과이다."
+        },
+        {
+          "derivationId": "deriv-04-parsevals-theorem",
+          "title": "힐베르트 공간 L^2(R) 내적과 푸리에 역변환을 통한 파세발(플랑슈렐) 정리의 증명",
+          "targetResult": "\\int_{-\\infty}^{\\infty} |f(t)|^2 \\, dt = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} |F(\\omega)|^2 \\, d\\omega",
+          "prerequisites": [
+            "힐베르트 공간 L^2(R) 복소 내적 정의: <f, g> = int f(t) g*(t) dt",
+            "푸리에 역변환 공식: g*(t) = (1/2pi) int G*(omega) e^{-j omega t} d(omega)",
+            "푸비니 정리(Fubini's Theorem): 절대적분 가능한 다중 적분의 적분 순서 교환 가능"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "두 신호의 시간 영역 복소 내적 정의",
+              "mathExpression": "\\langle f, g \\rangle \\equiv \\int_{-\\infty}^{\\infty} f(t) g^*(t) \\, dt",
+              "mathematicalExplanation": "에너지 신호 f(t), g(t) \\in L^2(\\mathbb{R}) 에 대한 표준 르베그 내적을 수립한다. g^*(t) 는 g(t)의 복소 켤레(Complex Conjugate)이다.",
+              "physicalInterpretation": "두 신호 간의 상호 상관 에너지(Cross-correlation Energy) 또는 상호 에너지 정량을 정의한다.",
+              "engineeringApplication": "레이더 및 무선 통신 수신기에서 정합 필터(Matched Filter)의 신호 검출 최적화."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "g*(t)의 푸리에 역변환 적분 대입",
+              "mathExpression": "g(t) = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} G(\\omega) e^{j\\omega t} \\, d\\omega \\implies g^*(t) = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} G^*(\\omega) e^{-j\\omega t} \\, d\\omega",
+              "mathematicalExplanation": "g(t)의 푸리에 역변환 표현식의 양변에 복소 켤레를 취한다. 실수 주파수 변수 omega에 대해 [e^{j\\omega t}]^* = e^{-j\\omega t} 이므로 적분핵의 부호가 반전된다.",
+              "physicalInterpretation": "공액 복소 신호의 시간 파형을 역위상의 복소 지수함수 기저들의 연속 결합으로 변환한다.",
+              "engineeringApplication": "음의 주파수 대역 스펙트럼의 대칭성(Hermitian Symmetry) 보증."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "푸비니 정리를 이용한 이중 적분 순서 교환",
+              "mathExpression": "\\int_{-\\infty}^{\\infty} f(t) \\left[ \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} G^*(\\omega) e^{-j\\omega t} \\, d\\omega \\right] dt = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} G^*(\\omega) \\left[ \\int_{-\\infty}^{\\infty} f(t) e^{-j\\omega t} \\, dt \\right] d\\omega",
+              "mathematicalExplanation": "피적분함수가 절대 적분 가능하므로 푸비니 정리에 의해 시간 적분과 주파수 적분의 순서를 교환한다. G^*(\\omega) 는 시간 t와 무관하므로 안쪽의 시간 적분 기호 밖으로 분리된다.",
+              "physicalInterpretation": "시간 영역에서의 에너지 축적과 주파수 영역에서의 스펙트럼 중첩의 수학적 대칭성을 입증한다.",
+              "engineeringApplication": "DSP 알고리즘에서 시간-주파수 2차원 필터링 연산량 감축."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "내부 푸리에 변환 인식 및 등거리 사상(Isometry) 완성",
+              "mathExpression": "\\int_{-\\infty}^{\\infty} f(t) e^{-j\\omega t} \\, dt = F(\\omega) \\implies \\int_{-\\infty}^{\\infty} f(t) g^*(t) \\, dt = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} F(\\omega) G^*(\\omega) \\, d\\omega",
+              "mathematicalExplanation": "괄호 내부의 시간 적분은 정확히 F(\\omega) 의 정의식이다. 따라서 일반화된 파세발 항등식 \\langle f, g \\rangle = \\frac{1}{2\\pi} \\langle F, G \\rangle 이 증명된다. 이제 특수 경우로서 g(t) = f(t) 를 대입하면, G(\\omega) = F(\\omega) 이므로: \\int_{-\\infty}^{\\infty} |f(t)|^2 \\, dt = \\frac{1}{2\\pi}\\int_{-\\infty}^{\\infty} |F(\\omega)|^2 \\, d\\omega.",
+              "physicalInterpretation": "신호가 시간축 상에서 소모하는 총 에너지는 주파수 축 상에 분포된 모든 에너지 스펙트럼 밀도 |F(omega)|^2의 총합과 한 치의 오차도 없이 동일하다.",
+              "engineeringApplication": "통신 채널 잡음 전력(Noise Power N = N_0 * B) 산출 및 스펙트럼 마스크(Spectral Mask) 준수 규격 검증."
+            }
+          ],
+          "conclusion": "파세발 정리는 푸리에 변환이 힐베르트 공간의 놈(Norm)을 상수로 보존하는 유니터리 변환임을 증명하며, 시간 영역과 주파수 영역의 에너지 보존 법칙을 수학적으로 완결한다."
+        },
+        {
+          "derivationId": "deriv-04-convolution-theorem",
+          "title": "주파수 영역 합성곱 정리(Convolution Theorem)의 엄밀 유도",
+          "targetResult": "\\mathcal{F}\\{(f * h)(t)\\} = F(\\omega) \\cdot H(\\omega)",
+          "prerequisites": [
+            "시간 영역 합성곱(Convolution Integral): y(t) = (f * h)(t) = int f(tau) h(t - tau) dtau",
+            "이중 적분 변수 치환: u = t - tau, dt = du",
+            "지수 법칙: e^{-j omega t} = e^{-j omega (u + tau)} = e^{-j omega u} * e^{-j omega tau}"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "합성곱 출력 신호의 푸리에 변환 적분식 전개",
+              "mathExpression": "Y(\\omega) = \\int_{-\\infty}^{\\infty} y(t) e^{-j\\omega t} \\, dt = \\int_{-\\infty}^{\\infty} \\left[ \\int_{-\\infty}^{\\infty} f(\\tau) h(t - \\tau) \\, d\\tau \\right] e^{-j\\omega t} \\, dt",
+              "mathematicalExplanation": "LTI 시스템의 출력 y(t) = \\int_{-\\infty}^{\\infty} f(\\tau) h(t-\\tau) d\\tau 를 푸리에 변환의 적분핵 e^{-j omega t}와 결합하여 2중 적분으로 정식화한다.",
+              "physicalInterpretation": "시스템의 임펄스 응답 h(t)와 입력 신호 f(t)의 복잡한 시간 지연 중첩에 대한 주파수 성분을 추출한다.",
+              "engineeringApplication": "오디오 이퀄라이저, 이미지 블러링 필터 등 선형 시스템의 신호 왜곡 분석."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "적분 순서 교환 및 변수 치환",
+              "mathExpression": "Y(\\omega) = \\int_{-\\infty}^{\\infty} f(\\tau) \\left[ \\int_{-\\infty}^{\\infty} h(t - \\tau) e^{-j\\omega t} \\, dt \\right] d\\tau, \\quad u \\equiv t - \\tau \\implies t = u + \\tau, \\; dt = du",
+              "mathematicalExplanation": "적분 순서를 교환하여 내부 적분을 시간 변수 t에 대해 모은다. 새로운 변수 u = t - \\tau 를 도입하면, 적분 구간은 여전히 (-\\infty, \\infty) 이며 e^{-j\\omega t} = e^{-j\\omega (u + \\tau)} = e^{-j\\omega \\tau} e^{-j\\omega u} 로 완전 분해된다.",
+              "physicalInterpretation": "시간 지연 t - tau가 주파수 영역에서는 단순한 선형 위상 지연 e^{-j omega tau}로 완전히 분리됨을 확인한다.",
+              "engineeringApplication": "선형 위상(Linear Phase) FIR 필터의 군지연(Group Delay) 해석."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "두 독립 푸리에 적분의 곱으로의 인수분해",
+              "mathExpression": "Y(\\omega) = \\left[ \\int_{-\\infty}^{\\infty} f(\\tau) e^{-j\\omega \\tau} \\, d\\tau \\right] \\cdot \\left[ \\int_{-\\infty}^{\\infty} h(u) e^{-j\\omega u} \\, du \\right] = F(\\omega) \\cdot H(\\omega)",
+              "mathematicalExplanation": "tau에 대한 적분과 u에 대한 적분은 완전히 서로 독립인 단일 푸리에 적분으로 분리된다. 첫 번째 항은 F(\\omega) 이고, 두 번째 항은 시스템의 주파수 응답 H(\\omega) 이다. 따라서 시간 영역의 복잡한 적분 연산(합성곱)이 주파수 영역에서 단순한 대수적 점별 곱(Pointwise Product)으로 사상된다.",
+              "physicalInterpretation": "LTI 시스템은 특정 주파수의 정현파 입력에 대해 새로운 주파수를 전혀 생성하지 않으며, 오직 그 주파수의 진폭을 |H(omega)|배 스케일링하고 위상을 angle H(omega)만큼 지연시킬 뿐이다.",
+              "engineeringApplication": "고속 푸리에 변환(FFT)을 이용한 고속 합성곱(Fast Convolution via Overlap-Add/Overlap-Save) 알고리즘 구현."
+            }
+          ],
+          "conclusion": "합성곱 정리는 시간 영역의 미분 및 적분 결합 시스템 해석을 주파수 영역의 대수적 전달함수 곱셈으로 치환하여 신호처리의 계산 효율성을 획기적으로 개선한다."
+        },
+        {
+          "derivationId": "deriv-04-gibbs-phenomenon",
+          "title": "단위 계단 도약 불연속점에서의 깁스 현상(Gibbs Phenomenon) 및 17.9% 오버슈트의 엄밀한 유도",
+          "targetResult": "\\lim_{N \\to \\infty} S_N\\left(\\frac{\\pi}{N}\\right) = \\frac{1}{\\pi} \\int_0^\\pi \\frac{\\sin u}{u} \\, du = \\frac{1}{\\pi} \\text{Si}(\\pi) \\approx 0.58949 \\implies 17.898\\% \\text{ Overshoot}",
+          "prerequisites": [
+            "구형파(Square Wave) 주기 신호의 푸리에 급수: f(t) = (4/pi) sum_{k=1}^N sin((2k-1)t) / (2k-1)",
+            "디리클레 적분핵(Dirichlet Kernel): sum_{k=1}^N cos((2k-1)t) = sin(2Nt) / (2 sin t)",
+            "사인 적분 함수: Si(x) = int_0^x (sin u / u) du, Si(pi) approx 1.851937"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "단위 도약을 갖는 구형파의 제N차 부분합 수립",
+              "mathExpression": "f(t) = \\begin{cases} 1/2 & (0 < t < \\pi) \\\\ -1/2 & (-\\pi < t < 0) \\end{cases} \\implies S_N(t) = \\frac{2}{\\pi}\\sum_{k=1}^N \\frac{\\sin((2k-1)t)}{2k-1}",
+              "mathematicalExplanation": "높이 1의 도약 불연속점(\\Delta = 1)을 갖는 기함수 구형파를 정의한다. 대칭성에 의해 직류 성분과 코사인 항은 0이며, 홀수차 정현파만 포함하는 N차 절단 푸리에 부분합 S_N(t)를 구성한다.",
+              "physicalInterpretation": "유한한 대역폭(N차 고조파 차단)을 갖는 이상적 저역통과 필터를 통과한 이상적 디지털 구형파 신호의 파형이다.",
+              "engineeringApplication": "DAC 복원 필터의 차단 특성에 따른 디지털 신호 ringing 및 오버슈트 발생 원인 규명."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "미분을 통한 첫 번째 국소 극대점(First Peak) 위치 계산",
+              "mathExpression": "\\frac{d S_N(t)}{dt} = \\frac{2}{\\pi} \\sum_{k=1}^N \\cos((2k-1)t) = \\frac{2}{\\pi} \\frac{\\sin(2Nt)}{2\\sin t} = \\frac{\\sin(2Nt)}{\\pi \\sin t} = 0",
+              "mathematicalExplanation": "S_N(t)를 시간 t에 대해 1차 미분한다. 코사인 합 공식 \\sum_{k=1}^N \\cos((2k-1)t) = \\frac{\\sin(2Nt)}{2\\sin t} 를 적용한다. t > 0 에서 첫 번째 영점(도함수 = 0)은 분자 \\sin(2Nt) = 0 에서 발생하므로, 2N t_1 = \\pi \\implies t_1 = \\frac{\\pi}{2N} (주기 2pi 스케일에서 t_1 = \\pi/N) 이 극댓점의 위치이다.",
+              "physicalInterpretation": "고조파의 개수 N이 증가할수록 첫 번째 오버슈트가 발생하는 시점 t_1은 불연속점에 한없이 가깝게 밀착된다.",
+              "engineeringApplication": "고주파 PCB 패턴에서 급격한 에지 상승 시간(Rise time)에 따른 링잉 펄스 폭 축소 해석."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "극댓값의 적분 변환 및 N -> infty 극한 취득",
+              "mathExpression": "S_N(t_1) = \\int_0^{t_1} \\frac{\\sin(2Nt)}{\\pi \\sin t} \\, dt = \\frac{1}{\\pi}\\int_0^{\\pi/2N} \\frac{\\sin(2Nt)}{\\sin t} \\, dt",
+              "mathematicalExplanation": "t \\to 0 근방에서 테일러 전개에 의해 \\sin t \\approx t 이다. 새로운 적분 변수 u = 2Nt (du = 2N dt)를 도입하면: t = 0 \\implies u = 0, \\quad t = \\frac{\\pi}{2N} \\implies u = \\pi. 따라서 적분은 다음과 같이 변환된다: \\lim_{N \\to \\infty} S_N(t_1) = \\lim_{N \\to \\infty} \\frac{1}{\\pi}\\int_0^\\pi \\frac{\\sin u}{u / (2N)} \\frac{du}{2N} = \\frac{1}{\\pi}\\int_0^\\pi \\frac{\\sin u}{u} \\, du = \\frac{1}{\\pi}\\text{Si}(\\pi).",
+              "physicalInterpretation": "N이 무한대로 증가하더라도 피크의 크기는 0으로 사라지지 않고, 유명한 윌브라함-깁스 상수(Wilbraham-Gibbs Constant)로 정확히 수렴한다.",
+              "engineeringApplication": "필터 설계 시 창 함수(Window Function, Hanning/Blackman)를 적용하여 깁스 진동을 감쇠시키는 이론적 근거."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "오버슈트 백분율의 정량적 산출 및 불균등 수렴성(Non-uniform Convergence) 증명",
+              "mathExpression": "\\text{Peak Value} = \\frac{1}{\\pi}\\text{Si}(\\pi) \\approx \\frac{1.851937}{3.14159265} \\approx 0.5894898 \\implies \\frac{0.58949 - 0.5}{0.5} \\approx 17.898\\%",
+              "mathematicalExplanation": "원래 신호의 양의 평탄부 높이는 0.5이다. 피크 높이는 약 0.58949이므로, 도약 계단 반폭(0.5) 대비 초과율은 \\frac{0.08949}{0.5} \\times 100\\% \\approx 17.898\\% 이다. (전체 도약 높이 \\Delta = 1 기준으로는 8.949% 오버슈트). 이는 푸리에 급수가 L^2 노름(에너지 기준)으로는 평균 제곱 수렴(\\lim \\|f - S_N\\|_2 = 0)하지만, 균등 노름(Uniform Norm) 기준으로는 수렴하지 않음(\\lim \\sup |f(t) - S_N(t)| \\approx 0.0895 \\neq 0)을 엄밀히 증명한다.",
+              "physicalInterpretation": "불연속점 주변에서 에너지 적분 오차는 0으로 수렴하지만, 불연속점 바로 옆에서 발생하는 순간적 최대 스파이크 전압 오차는 영원히 소멸하지 않는다.",
+              "engineeringApplication": "고속 ADC 입력단 프런트엔드에서 클리핑(Clipping) 왜곡 방지를 위한 다이내믹 레인지 헤드룸(Headroom) 18% 확보 설계."
+            }
+          ],
+          "conclusion": "깁스 현상은 L^2 수렴과 균등 수렴 사이의 해석학적 괴리에서 기인하며, 불연속 도약점에서 N차 부분합의 최대 오버슈트는 N에 무관하게 항상 약 17.898%로 잔존한다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "디지털 신호 처리 (Digital Signal Processing, DSP)",
+          "application": "FIR 필터 윈도우 설계 (Windowed-Sinc Filter)",
+          "details": "이상적 구형파 벽돌형(Brick-wall) 주파수 응답의 시간 영역 싱크 함수를 직사각형 창으로 절단할 때 생기는 깁스 리플을 완화하기 위해 카이저(Kaiser) 창 적용."
+        },
+        {
+          "domain": "무선 통신 시스템 (Wireless Communications)",
+          "application": "OFDM 직교 주파수 분할 다중화",
+          "details": "시간 영역의 부반송파 심볼들을 역고속 푸리에 변환(IFFT)을 통해 직교 다중화하고 수신기에서 FFT로 각 반송파의 심볼 데이터를 복원."
+        },
+        {
+          "domain": "전력 품질 및 전력 변환 (Power Quality & Harmonics)",
+          "application": "계통 고조파 필터링 및 능동 전력 필터(APF)",
+          "details": "인버터 비선형 부하에 의해 발생하는 6k±1차 고조파 전류 성분을 고속 푸리에 변환으로 추출하여 보상 전류를 실시간 주입."
+        }
+      ],
+      "summary": "푸리에 해석은 디리클레 조건을 만족하는 신호를 기저 주파수로 분해하며, 주기 무한대 극한의 CTFT 및 파세발 에너지 보존을 보장하되 불연속점에서는 17.9%의 깁스 오버슈트가 필연적으로 발생한다."
+    },
+    {
+      "id": "mod-05-cauchy-nyquist",
+      "moduleNumber": 5,
+      "titleKo": "코시 편각 원리, 나이퀴스트 안정도 판정법 및 주파수 영역 안정성 마진",
+      "titleEn": "Cauchy's Argument Principle, Nyquist Stability Criterion & Stability Margins",
+      "category": "현대 제어이론 및 복소함수론 (Control Theory & Complex Function Theory)",
+      "overview": "피드백 제어 시스템의 핵심 과제는 개루프(Open-loop) 주파수 특성만을 이용하여 폐루프(Closed-loop) 시스템의 안정성을 판별하고, 외란이나 파라미터 변동에 대한 강인성(Robustness)을 정량화하는 것이다. 본 모듈에서는 복소해석학의 정점인 코시의 편각 원리(Cauchy's Argument Principle)를 폐곡선 선적분과 대수적 유수 정리로부터 엄밀하게 유도하고, 우반평면(RHP) 전체를 둘러싸는 나이퀴스트 D-윤곽선의 등각사상(Conformal Mapping)을 통해 임계점 $(-1 + j0)$에 대한 일주수 관계식 $Z = N + P$ 를 도출하며, 이득 여유(Gain Margin)와 위상 여유(Phase Margin)의 기하학적/대수적 유도를 완결한다.",
+      "governingEquations": [
+        {
+          "name": "폐루프 특성 방정식 및 루프 전달함수 (Closed-Loop Characteristic Equation)",
+          "formula": "1 + L(s) = 0 \\iff 1 + G(s)H(s) = 0 \\implies T(s) = \\frac{G(s)}{1 + L(s)}",
+          "explanation": "플랜트 G(s)와 피드백 센서 H(s)의 곱으로 정의되는 개루프 전달함수 L(s)에 대한 음귀환 폐루프 시스템의 분모 다항식.",
+          "physicalSignificance": "폐루프 극점(Closed-loop Poles)은 1 + L(s) = 0 의 해이며, 개루프 전달함수가 -1이 되는 복소 주파수에서 시스템은 무한대 이득을 갖고 발산한다."
+        },
+        {
+          "name": "코시 편각 원리 (Cauchy's Argument Principle)",
+          "formula": "\\frac{1}{2\\pi j}\\oint_\\Gamma \\frac{f'(s)}{f(s)} \\, ds = \\frac{1}{2\\pi} \\Delta_\\Gamma \\arg f(s) = Z - P = N",
+          "explanation": "유리형 함수 f(s)가 단순 폐곡선 Gamma 내부에서 갖는 영점의 개수 Z와 극점의 개수 P의 차이는 f(s)의 복소 평면상 원점 일주 횟수 N과 엄밀히 일치한다.",
+          "physicalSignificance": "복소 함수의 도함수 적분이 기하학적 회전 위상각의 누적량으로 사상되는 위상수학적(Topological) 불변성을 규정한다."
+        },
+        {
+          "name": "나이퀴스트 안정도 관계식 (Nyquist Stability Criterion)",
+          "formula": "Z = N + P \\quad (\\text{Stability Condition: } Z = 0 \\iff N = -P)",
+          "explanation": "Z는 우반평면(RHP) 폐루프 극점 수, P는 RHP 개루프 극점 수, N은 L(s) 궤적이 임계점 (-1 + j0)을 반시계방향(CCW)으로 일주하는 횟수.",
+          "physicalSignificance": "폐루프가 안정하려면(Z = 0), 나이퀴스트 선도가 임계점 -1을 시계방향으로 P번(즉 CCW로 -P번) 둘러싸야 함을 선언한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-05-cauchy-argument",
+          "title": "유수 정리(Residue Theorem)로부터 코시 편각 원리의 엄밀 유도",
+          "targetResult": "\\frac{1}{2\\pi j}\\oint_\\Gamma \\frac{f'(s)}{f(s)} \\, ds = Z - P = N",
+          "prerequisites": [
+            "코시 유수 정리: oint_Gamma g(s) ds = 2pi*j * sum Res[g(s), p_k]",
+            "유리형 함수(Meromorphic Function)의 영점과 극점 주변 국소 전개",
+            "로그 미분법: d/ds [ln f(s)] = f'(s) / f(s)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "영점(Zero) 근방에서의 로그 미분 유수 계산",
+              "mathExpression": "f(s) = (s - z_i)^m g(s), \\quad g(z_i) \\neq 0 \\implies \\frac{f'(s)}{f(s)} = \\frac{m}{s - z_i} + \\frac{g'(s)}{g(s)}",
+              "mathematicalExplanation": "f(s)가 점 z_i에서 m차 영점을 갖는다고 하자. 여기서 g(s)는 z_i 근방에서 해석적이며 0이 아니다. f(s)에 자연로그를 취하고 미분(또는 곱의 미분 후 f로 나눔)하면: \\frac{f'(s)}{f(s)} = \\frac{m(s-z_i)^{m-1}g(s) + (s-z_i)^m g'(s)}{(s-z_i)^m g(s)} = \\frac{m}{s - z_i} + \\frac{g'(s)}{g(s)}. g'(s)/g(s)는 z_i에서 해석적이므로, 점 z_i에서 f'(s)/f(s)의 유수는 단순극 형태의 계수인 정확히 +m (영점의 중복도)이다: \\text{Res}\\left[ \\frac{f'(s)}{f(s)}, \\, z_i \\right] = m.",
+              "physicalInterpretation": "영점을 지날 때 복소 함수의 위상각은 급격히 증가하며, 그 회전 방향과 강도가 +m의 유수로 부호화된다.",
+              "engineeringApplication": "시스템 최소 위상(Minimum-phase) 영점과 비최소 위상(RHP) 영점의 판별 기준."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "극점(Pole) 근방에서의 로그 미분 유수 계산",
+              "mathExpression": "f(s) = (s - p_k)^{-n} h(s), \\quad h(p_k) \\neq 0 \\implies \\frac{f'(s)}{f(s)} = -\\frac{n}{s - p_k} + \\frac{h'(s)}{h(s)}",
+              "mathematicalExplanation": "f(s)가 점 p_k에서 n차 극점을 갖는다고 하자. 동일하게 로그 도함수를 구하면: \\frac{f'(s)}{f(s)} = \\frac{-n}{s - p_k} + \\frac{h'(s)}{h(s)}. 따라서 극점 p_k에서 f'(s)/f(s)의 유수는 정확히 -n (극점의 중복도에 음의 부호를 붙인 값)이다: \\text{Res}\\left[ \\frac{f'(s)}{f(s)}, \\, p_k \\right] = -n.",
+              "physicalInterpretation": "극점을 지날 때 복소 함수의 위상각은 역방향(음의 방향)으로 회전하며, -n의 유수로 기여한다.",
+              "engineeringApplication": "개루프 불안정 극점을 갖는 자기부상 열차, 도립진자(Inverted Pendulum) 시스템의 제어 가능성 분석."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "코시 유수 정리를 통한 총 유수 합산",
+              "mathExpression": "\\frac{1}{2\\pi j}\\oint_\\Gamma \\frac{f'(s)}{f(s)} \\, ds = \\sum_{i=1}^k \\text{Res}\\left[\\frac{f'}{f}, z_i\\right] + \\sum_{l=1}^r \\text{Res}\\left[\\frac{f'}{f}, p_l\\right] = \\sum m_i - \\sum n_l = Z - P",
+              "mathematicalExplanation": "코시 유수 정리에 의해 단순 폐경로 Gamma를 따라 적분한 값은 경로 내부의 모든 고립 특이점 유수의 합에 2\\pi j 를 곱한 것이다. 따라서 1/(2\\pi j)를 곱하면 폐경로 내부 영점의 총 개수 Z에서 극점의 총 개수 P를 뺀 정수값 Z - P 가 정확히 도출된다.",
+              "physicalInterpretation": "복소 선적분의 결과가 복소수가 아닌 순수한 대수적 정수(Integer Count)로 떨어진다는 심오한 위상수학적 성질이다.",
+              "engineeringApplication": "전송선로 공진 모드의 모드 수 카운팅 및 전자기 캐비티 내부 특이점 계수."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "기하학적 복소 평면 위상각 회전수(Winding Number)로의 사상",
+              "mathExpression": "\\oint_\\Gamma \\frac{f'(s)}{f(s)} \\, ds = \\oint_\\Gamma d \\ln f(s) = \\oint_\\Gamma d(\\ln|f(s)| + j \\arg f(s)) = j \\Delta_\\Gamma \\arg f(s)",
+              "mathematicalExplanation": "복소수 f(s)를 극좌표 형태 f(s) = |f(s)| e^{j \\arg f(s)} 로 표현하면, \\ln f(s) = \\ln|f(s)| + j \\arg f(s) 이다. 폐경로를 한 바퀴 완전히 돌아 제자리로 오면 크기 |f(s)|는 원래 값으로 복귀하므로 \\oint d\\ln|f(s)| = 0 이다. 반면 편각(위상)의 순수 변화량 \\Delta_\\Gamma \\arg f(s) 는 2\\pi 의 정수배 2\\pi N 이 된다. 따라서 \\frac{1}{2\\pi j} [j \\Delta_\\Gamma \\arg f(s)] = \\frac{1}{2\\pi} (2\\pi N) = N 이 성립하며, N = Z - P 가 증명된다.",
+              "physicalInterpretation": "s가 Gamma를 따라 시계방향/반시계방향으로 1회 순환할 때, f(s) 평면 상의 궤적 벡터가 원점(0,0)을 감싸는 총 순 회전수(일주수)가 영점과 극점의 차이와 같다.",
+              "engineeringApplication": "주파수 궤적의 기하학적 시각화를 통한 시스템 안정도의 직관적 진단."
+            }
+          ],
+          "conclusion": "코시 편각 원리는 복소 선적분을 통해 폐경로 내부의 영점과 극점 수의 차이를 복소 사상면 상의 원점 일주수 N으로 완벽하게 변환하는 복소해석학적 기본 정리이다."
+        },
+        {
+          "derivationId": "deriv-05-nyquist-stability",
+          "title": "나이퀴스트 D-윤곽선 등각사상과 임계점 (-1 + j0) 안정도 판정식의 유도",
+          "targetResult": "Z = N + P \\quad (\\text{Asymptotic Stability} \\iff Z = 0 \\implies N = -P)",
+          "prerequisites": [
+            "폐루프 특성 함수 정의: F(s) = 1 + L(s)",
+            "나이퀴스트 D-윤곽선: 허수축 s = j omega (-infty to +infty) + 우반구 무한 반원호",
+            "임계점 치환: 1 + L(s) = 0 <=> L(s) = -1 + j0"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "우반평면(RHP) 전체를 포괄하는 나이퀴스트 D-윤곽선 설정",
+              "mathExpression": "\\Gamma_N = \\{ s = j\\omega \\mid \\omega \\in [-R, R] \\} \\cup \\{ s = R e^{j\\theta} \\mid \\theta \\in [\\pi/2, -\\pi/2] \\}, \\quad R \\to \\infty",
+              "mathematicalExplanation": "불안정한 극점이 존재할 수 있는 전체 영역인 개방 우반평면(Open RHP, \\text{Re}(s) > 0)을 시계방향(Clockwise, CW)으로 포위하는 윤곽선 Gamma_N을 정의한다. 만약 L(s)가 허수축상에 극점(예: 순수 적분기 s = 0)을 가지면 반경 epsilon -> 0+ 인 극미세 반원호를 우반평면 쪽으로 우회(Indentation)시켜 특이점을 배제한다.",
+              "physicalInterpretation": "시스템의 모든 가상적 불안정 모드(우반평면 극점)가 갇히는 복소 공간의 감옥을 정의한다.",
+              "engineeringApplication": "적분 제어기(I-controller)를 포함하는 Type 1, Type 2 피드백 시스템의 나이퀴스트 궤적 완성."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "특성 함수 F(s) = 1 + L(s)에 편각 원리 적용",
+              "mathExpression": "F(s) = 1 + L(s) = 1 + \\frac{N_L(s)}{D_L(s)} = \\frac{D_L(s) + N_L(s)}{D_L(s)}",
+              "mathematicalExplanation": "1) F(s)의 극점: D_L(s) = 0 의 근이므로 개루프 전달함수 L(s)의 극점과 정확히 일치한다. 따라서 RHP 내부 F(s)의 극점 수는 개루프 RHP 극점 수 P와 같다.\\n2) F(s)의 영점: D_L(s) + N_L(s) = 0 의 근이므로 폐루프 특성방정식 1 + L(s) = 0 의 해, 즉 폐루프 극점과 정확히 일치한다. RHP 내부 F(s)의 영점 수를 Z라 하자.\\n코시 편각 원리에 의해, F(s)의 궤적이 원점을 반시계방향(CCW)으로 도는 횟수는 N = Z - P 이다.",
+              "physicalInterpretation": "1 + L(s)라는 단 하나의 함수 안에 개루프 동역학(분모)과 폐루프 동역학(분자)이 공존함을 밝힌다.",
+              "engineeringApplication": "개루프 측정 데이터로부터 미지의 폐루프 극점 분포를 역추정하는 비파괴 안정성 시험."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "L(s) 평면으로의 평행이동과 임계점 (-1 + j0)의 발견",
+              "mathExpression": "F(s) = 0 \\iff 1 + L(s) = 0 \\iff L(s) = -1 + j0",
+              "mathematicalExplanation": "실제 측정하고 그리기 쉬운 함수는 F(s)가 아니라 개루프 전달함수 L(s)이다. 사상 관계 L(s) = F(s) - 1 은 복소 평면상에서 단순히 좌표계를 실수축으로 -1만큼 평행이동(Translation)한 것이다. 따라서 F(s) 평면에서 원점 (0, 0)을 일주하는 행위는 L(s) 평면에서 임계점 (-1 + j0)을 일주하는 행위와 완벽히 동치이다. 그러므로 L(s)가 (-1 + j0)을 반시계방향으로 도는 횟수 N에 대해 Z = N + P 가 성립한다.",
+              "physicalInterpretation": "피드백 신호의 이득이 1(|L|=1)이고 위상 반전이 180도(angle L = -180 deg)가 되는 지점이 바로 -1이며, 이 점이 폐루프 발산의 임계 핵이다.",
+              "engineeringApplication": "나이퀴스트 플롯 측정기(Vector Network Analyzer)를 통한 실시간 피드백 루프 안정성 디스플레이."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "폐루프 점근 안정도의 판정 정리 확립",
+              "mathExpression": "\\text{Closed-Loop Stability} \\iff Z = 0 \\iff N = -P",
+              "mathematicalExplanation": "폐루프 시스템이 점근적으로 안정(BIBO 안정)하기 위한 필요충분조건은 RHP 폐루프 극점이 전무해야 하므로 Z = 0 이다. 따라서 Z = N + P = 0 이므로 N = -P 이어야 한다. 여기서 N은 반시계방향(CCW) 일주수이므로, N = -P 라는 것은 나이퀴스트 선도가 (-1 + j0)을 시계방향(CW)으로 정확히 P번 감싸야 함을 의미한다. 특수한 경우로서, 개루프 시스템이 이미 안정(P = 0)하다면, N = 0 이어야 하므로 L(s)의 궤적은 임계점 (-1 + j0)을 결코 둘러싸지 않아야 한다.",
+              "physicalInterpretation": "개루프가 본질적으로 불안정한 시스템(P > 0)이라도 적절한 음귀환을 걸어 -1점을 반대 방향으로 둘러싸게 만듦으로써 폐루프를 완벽히 안정화할 수 있다.",
+              "engineeringApplication": "불안정한 전투기 공기역학(Fly-by-wire) 시스템 및 자기부상 고속철도의 피드백 안정화 증명."
+            }
+          ],
+          "conclusion": "나이퀴스트 안정도 판정법은 복소 등각사상을 통해 개루프 주파수 응답 곡선의 임계점 (-1 + j0) 일주수(N)와 개루프 불안정 극점 수(P)만으로 폐루프의 절대 안정성(Z = 0)을 판정하는 완벽한 기하학적 해법이다."
+        },
+        {
+          "derivationId": "deriv-05-margins",
+          "title": "주파수 영역 안정성 척도: 이득 여유(GM)와 위상 여유(PM)의 대수적 유도",
+          "targetResult": "GM = \\frac{1}{|L(j\\omega_{pc})|}, \\quad PM = 180^\\circ + \\angle L(j\\omega_{gc})",
+          "prerequisites": [
+            "위상 교차 주파수(Phase Crossover Frequency): angle L(j omega_pc) = -180 deg",
+            "이득 교차 주파수(Gain Crossover Frequency): |L(j omega_gc)| = 1 (0 dB)",
+            "임계점 (-1 + j0)과의 유클리드 거리 및 감도 함수(Sensitivity Function) 피크 M_s"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "위상 교차 주파수 omega_pc 및 이득 여유(Gain Margin) 유도",
+              "mathExpression": "\\angle L(j\\omega_{pc}) = -\\pi \\implies L(j\\omega_{pc}) = -|L(j\\omega_{pc})|, \\quad GM = \\frac{1}{|L(j\\omega_{pc})|}, \\quad GM_{dB} = -20\\log_{10}|L(j\\omega_{pc})|",
+              "mathematicalExplanation": "위상각이 정확히 -180도가 되는 주파수 \\omega_{pc}에서 개루프 벡터는 음의 실수축 상에 놓인다. 이 상태에서 시스템이 임계점 -1에 도달하여 발산하려면 루프 이득이 K배 증가하여 K |L(j\\omega_{pc})| = 1 이 되어야 한다. 따라서 시스템이 불안정해지기 직전까지 추가로 허용할 수 있는 이득의 승수적 여유가 바로 이득 여유 GM 이다.",
+              "physicalInterpretation": "증폭기나 제어기의 파라미터 드리프트나 전원 전압 변동으로 이득이 상승할 때 발산하지 않고 견딜 수 있는 이득의 안전 계수이다.",
+              "engineeringApplication": "오디오 파워 앰프의 발진(Oscillation) 방지를 위한 GM >= 6 dB (2배) 확보 설계."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "이득 교차 주파수 omega_gc 및 위상 여유(Phase Margin) 유도",
+              "mathExpression": "|L(j\\omega_{gc})| = 1 \\implies L(j\\omega_{gc}) = e^{j \\angle L(j\\omega_{gc})}, \\quad PM = \\pi + \\angle L(j\\omega_{gc}) = 180^\\circ + \\angle L(j\\omega_{gc})",
+              "mathematicalExplanation": "이득의 크기가 정확히 1 (0 dB)인 주파수 \\omega_{gc}에서 개루프 궤적은 복소 평면의 단위 원(Unit Circle)과 교차한다. 이 상태에서 시스템이 임계점 -1에 닿으려면 순수 시간 지연 e^{-j\\omega\\tau_d} 등에 의해 추가적인 음의 위상각 -\\theta 가 인가되어 \\angle L(j\\omega_{gc}) - \\theta = -180^\\circ 가 되어야 한다. 따라서 발진 직전까지 허용되는 추가 위상 지연각의 한계치가 위상 여유 PM 이다.",
+              "physicalInterpretation": "센서 신호 전송 지연, 계산 딜레이(ADC/DSP 지연) 등 제어 루프 내부의 기생 시지연에 대한 시스템의 저항력을 나타낸다.",
+              "engineeringApplication": "스위칭 전원 공급장치(SMPS) 제어 루프에서 PM >= 45도 ~ 60도 확보를 통한 최적 감쇠(zeta approx 0.5 ~ 0.7) 보증."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "임계점과의 최근접 거리와 최대 감도 피크(Sensitivity Peak, M_s)",
+              "mathExpression": "d_{\\min} = \\min_{\\omega} |1 + L(j\\omega)| = \\frac{1}{\\max_{\\omega} |S(j\\omega)|} = \\frac{1}{M_s}, \\quad S(s) \\equiv \\frac{1}{1 + L(s)}",
+              "mathematicalExplanation": "나이퀴스트 선도와 임계점 (-1 + j0) 사이의 유클리드 거리는 복소 벡터 |1 + L(j\\omega)| 이다. 이 거리의 역수가 바로 민감도 함수 S(s)의 크기이다. GM과 PM이 아무리 크더라도 선도가 -1 근방으로 깊게 파고들면 M_s 가 매우 커져 심각한 공진 피크와 저감쇠 진동을 유발한다. 따라서 현대 강인 제어에서는 d_{\\min} \\ge 0.5 (즉 M_s \\le 2.0 = +6 dB)를 필수 설계 기준으로 삼는다.",
+              "physicalInterpretation": "GM과 PM의 1차원적 마진의 한계를 넘어, 복소 평면 상에서 2차원적으로 임계점과의 최단 안전거리를 방어선으로 설정한다.",
+              "engineeringApplication": "로봇 매니퓰레이터 및 항공우주 H-infinity 강인 제어(Robust Control) 사양 규정."
+            }
+          ],
+          "conclusion": "이득 여유와 위상 여유는 나이퀴스트 곡선이 임계점 -1에 접근하는 한계를 각각 축방향과 각도방향으로 측정한 지표이며, 감도 피크 M_s는 2차원 공간적 최단 거리를 정량화한다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "전력 계통 분산 전원 (Grid-Connected Inverters)",
+          "application": "계통 임피던스 변동에 따른 상호작용 불안정성 판별",
+          "details": "계통 인덕턴스 증가 시 인버터 출력 LCL 필터 공진점 이동에 따른 나이퀴스트 선도 일주를 감시하여 능동 댐핑(Active Damping) 파라미터 자동 튜닝."
+        },
+        {
+          "domain": "아날로그 집적 회로 (Analog IC Design)",
+          "application": "다단 OP-Amp 밀러 보상(Miller Frequency Compensation)",
+          "details": "밀러 커패시터를 삽입하여 지배 극점 분리(Pole Splitting)를 유도, 이득 교차 주파수에서 위상 여유 60도를 확보하여 단위 이득 버퍼 안정성 달성."
+        },
+        {
+          "domain": "정밀 모션 제어 (Precision Motion Control)",
+          "application": "공진 모드를 갖는 플렉서블 기구물의 노치 필터 설계",
+          "details": "기구적 비틀림 공진 주파수에서 나이퀴스트 선도가 임계점 -1 주위를 우회하도록 대역 차단 노치 필터를 직렬 삽입."
+        }
+      ],
+      "summary": "코시 편각 원리는 복소 선적분의 위상 회전량을 특이점 차수로 사상하며, 나이퀴스트 판정법은 개루프 주파수 응답 곡선의 임계점 (-1+j0) 일주 관계 Z = N + P 로 폐루프 안정성을 완전 판정한다."
+    },
+    {
+      "id": "mod-06-bode-routh-hurwitz",
+      "moduleNumber": 6,
+      "titleKo": "보드 선도 대수 해석 및 루스-후르비츠 안정도 판정법의 대수적 증명",
+      "titleEn": "Bode Plots Algebraic Synthesis & Routh-Hurwitz Algebraic Stability Proof",
+      "category": "주파수 영역 설계 및 대수적 안정도 판별 (Frequency Domain Design & Algebraic Stability)",
+      "overview": "선형 제어 시스템의 안정성 해석에서 보드 선도(Bode Plot)는 주파수 응답의 크기와 위상을 로그 스케일의 점근선으로 시각화하는 강력한 그래픽 기법인 반면, 루스-후르비츠(Routh-Hurwitz) 안정도 판정법은 고차 특성 다항식의 근을 직접 구하지 않고 다항식 계수의 대수적 배열(Routh Array)만을 통해 우반평면(RHP) 극점의 정확한 개수를 판별하는 해석적 대수 알고리즘이다. 본 모듈에서는 보드 선도의 점근적 합성 원리, 다항식 유클리드 호제법과 코시 지수(Cauchy Index)로부터 도출되는 루스 배열 구성의 대수적 필연성, 제1열 부호 변화수와 RHP 극점 수의 일치 증명, 그리고 0 피벗(Zero Pivot) 및 전행 0(All-Zero Row) 특이 케이스(Singular Cases)의 보조 다항식을 통한 엄밀한 해석적 해법을 제시한다.",
+      "governingEquations": [
+        {
+          "name": "보드 표준 인수분해 형태 (Bode Canonical Factored Form)",
+          "formula": "L(j\\omega) = \\frac{K_0 (j\\omega)^{\\pm p} \\prod_{i=1}^m \\left(1 + j\\frac{\\omega}{\\omega_{z,i}}\\right)}{\\prod_{k=1}^n \\left(1 + j\\frac{\\omega}{\\omega_{p,k}}\\right) \\prod_{l=1}^q \\left[ 1 + 2\\zeta_l \\left(j\\frac{\\omega}{\\omega_{n,l}}\\right) + \\left(j\\frac{\\omega}{\\omega_{n,l}}\\right)^2 \\right]}",
+          "explanation": "주파수 응답을 DC/Bode 이득 K_0, 원점 극점/영점, 1차 실수 인자, 2차 복소 공액 인자로 완전 정규화한 표준형.",
+          "physicalSignificance": "로그 변환(20 log10)에 의해 복잡한 유리함수의 곱셈과 나눗셈이 각 인자들의 단순 대수적 덧셈/뺄셈(dB 합산)으로 분해된다."
+        },
+        {
+          "name": "특성 다항식 및 스토돌라(Stodola) 필요조건",
+          "formula": "P(s) = a_n s^n + a_{n-1} s^{n-1} + \\dots + a_1 s + a_0 = 0 \\quad (a_n > 0)",
+          "explanation": "폐루프 시스템의 분모 특성 다항식. 모든 극점이 LHP에 존재하기 위한 필요조건은 모든 계수가 엄격히 양수(a_i > 0)여야 함.",
+          "physicalSignificance": "단 하나의 계수라도 부호가 반대이거나 0이면(결손항 발생), 최소 하나 이상의 극점이 RHP 또는 허수축 상에 존재함을 즉각 보장한다."
+        },
+        {
+          "name": "후르비츠 행렬식 (Hurwitz Determinants)",
+          "formula": "\\Delta_k = \\det \\begin{pmatrix} a_{n-1} & a_{n-3} & a_{n-5} & \\dots \\\\ a_n & a_{n-2} & a_{n-4} & \\dots \\\\ 0 & a_{n-1} & a_{n-3} & \\dots \\\\ \\vdots & \\vdots & \\vdots & \\ddots \\end{pmatrix}_{k \\times k} > 0 \\quad (\\forall k = 1, \\dots, n)",
+          "explanation": "다항식 계수들로 구성된 정방행렬의 주 부분 행렬식(Principal Minors)들이 모두 양수여야 한다는 후르비츠의 안정도 필요충분조건.",
+          "physicalSignificance": "루스 배열의 제1열 원소들은 연속적인 후르비츠 행렬식들의 비(Ratio)로 표현되며, 대수적 양의 정부호성(Positive Definiteness)을 입증한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-06-bode-asymptotes",
+          "title": "보드 선도(Bode Plot)의 로그 분해 및 점근적 기울기 합성 법칙 유도",
+          "targetResult": "20\\log_{10}|L(j\\omega)| = \\sum 20\\log_{10}|\\text{Zeros}| - \\sum 20\\log_{10}|\\text{Poles}|, \\quad \\text{Slope} = \\pm 20 \\, \\text{dB/dec}",
+          "prerequisites": [
+            "로그 함수의 덧셈 정리: log(A * B / C) = log A + log B - log C",
+            "데시벨(Decibel) 정의: |L|_{dB} = 20 log10 |L|",
+            "점근적 극한: omega << omega_c 일 때 1 + j omega/omega_c approx 1, omega >> omega_c 일 때 1 + j omega/omega_c approx j omega/omega_c"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "1차 극점 인자의 크기 및 위상 로그 분해",
+              "mathExpression": "H_p(j\\omega) = \\frac{1}{1 + j \\frac{\\omega}{\\omega_0}} \\implies |H_p|_{dB} = -20\\log_{10}\\sqrt{1 + \\left(\\frac{\\omega}{\\omega_0}\\right)^2} = -10\\log_{10}\\left[ 1 + \\left(\\frac{\\omega}{\\omega_0}\\right)^2 \\right]",
+              "mathematicalExplanation": "단일 극점 인자의 크기에 20 \\log_{10} 을 취한다. 위상각은 \\angle H_p(j\\omega) = -\\arctan\\left(\\frac{\\omega}{\\omega_0}\\right) 이다.",
+              "physicalInterpretation": "단일 에너지 저장 소자(RC 회로의 커패시터 전하 충전 지연 등)가 갖는 고유한 필터링 특성이다.",
+              "engineeringApplication": "1차 저역통과 필터(LPF)의 차단 주파수(Cutoff Frequency) 정의."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "저주파 및 고주파 점근선(Asymptotes)의 수학적 극한",
+              "mathExpression": "\\begin{cases} \\omega \\ll \\omega_0: & |H_p|_{dB} \\approx -10\\log_{10}(1) = 0 \\, \\text{dB} \\\\ \\omega \\gg \\omega_0: & |H_p|_{dB} \\approx -10\\log_{10}\\left(\\frac{\\omega}{\\omega_0}\\right)^2 = -20\\log_{10}(\\omega) + 20\\log_{10}(\\omega_0) \\end{cases}",
+              "mathematicalExplanation": "\\omega \\gg \\omega_0 구간에서 주파수가 10배(1 decade) 증가하면: -20\\log_{10}(10\\omega) = -20\\log_{10}(\\omega) - 20 \\, \\text{dB}. 따라서 고주파 점근선의 기울기는 정확히 -20 dB/decade (-6 dB/octave)가 된다. 코너 주파수 \\omega = \\omega_0 에서의 실제 크기는 -10\\log_{10}(2) \\approx -3.0103 \\, \\text{dB} 로서 점근선 교점 대비 3 dB 오차가 발생한다.",
+              "physicalInterpretation": "코너 주파수 이하에서는 신호가 왜곡 없이 그대로 통과하지만, 코너 주파수 이상에서는 주파수에 정비례하여 신호 전압이 1/10로 감쇠한다.",
+              "engineeringApplication": "필터 감쇠율 규격 산출 및 주파수 대역폭(Bandwidth) 오차 보정."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "위상 선도의 3구간 점근적 근사",
+              "mathExpression": "\\angle H_p(j\\omega) \\approx \\begin{cases} 0^\\circ & (\\omega \\le 0.1\\omega_0) \\\\ -45^\\circ \\log_{10}\\left(\\frac{\\omega}{0.1\\omega_0}\\right) & (0.1\\omega_0 < \\omega < 10\\omega_0) \\\\ -90^\\circ & (\\omega \\ge 10\\omega_0) \\end{cases}",
+              "mathematicalExplanation": "\\arctan(0.1) \\approx 5.7^\\circ \\approx 0^\\circ, \\quad \\arctan(1) = 45^\\circ, \\quad \\arctan(10) \\approx 84.3^\\circ \\approx 90^\\circ. 따라서 코너 주파수 전후 1 decade (0.1\\omega_0 에서 10\\omega_0) 사이에서 위상은 1 decade당 정확히 -45도의 선형 기울기로 감소하며, 코너 주파수에서는 정확히 -45도이다.",
+              "physicalInterpretation": "크기 감쇠(-3 dB)가 본격화되기 훨씬 전인 1/10 주파수부터 위상 지연이 선제적으로 누적됨을 의미한다.",
+              "engineeringApplication": "궤환 제어기에서 위상 지연에 의한 안정도 잠식(위상 여유 감소)을 조기 감지하는 원리."
+            }
+          ],
+          "conclusion": "보드 선도는 전달함수의 복잡한 유리식을 20 dB/dec 단위의 점근선 기울기 합산으로 선형화하여 주파수 해석과 보상기(Lead-Lag Compensator) 설계를 극도로 단순화한다."
+        },
+        {
+          "derivationId": "deriv-06-routh-array-derivation",
+          "title": "다항식 코시 지수(Cauchy Index)와 루스 배열(Routh Array)의 대수적 증명",
+          "targetResult": "\\text{Number of RHP Roots} = \\text{Number of Sign Changes in 1st Column of Routh Array}",
+          "prerequisites": [
+            "다항식의 우/기함수 분해: P(s) = P_e(s) + P_o(s)",
+            "스텀의 정리(Sturm's Theorem) 및 코시 지수 I_{-\\infty}^{\\infty} R(x)",
+            "다항식 나눗셈 호제법: P_{k-1}(s) = q_k(s) P_k(s) - P_{k+1}(s)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "특성 다항식의 실수부-허수부 분해",
+              "mathExpression": "P(j\\omega) = [a_n(j\\omega)^n + a_{n-2}(j\\omega)^{n-2} + \\dots] + [a_{n-1}(j\\omega)^{n-1} + a_{n-3}(j\\omega)^{n-3} + \\dots] \\equiv U(\\omega) + j V(\\omega)",
+              "mathematicalExplanation": "s = j\\omega 를 대입하면 s^2 = -\\omega^2, s^4 = \\omega^4 등으로 인해 짝수차수 항들은 실수 다항식 U(\\omega) 를 구성하고, 홀수차수 항들은 허수 다항식 j V(\\omega) 를 구성한다. n이 짝수이면 U(\\omega)는 s^n 항을 포함하고, n이 홀수이면 V(\\omega)가 s^n 항을 포함한다.",
+              "physicalInterpretation": "복소 주파수축 상에서 다항식의 궤적이 실수축과 허수축을 교차하는 거동을 분리한다.",
+              "engineeringApplication": "나이퀴스트 궤적의 실수축 교차점(허수부 = 0) 계산."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "코시 지수(Cauchy Index)와 RHP 극점 수의 연결",
+              "mathExpression": "I_{-\\infty}^{\\infty} \\frac{V(\\omega)}{U(\\omega)} = n_L - n_R",
+              "mathematicalExplanation": "코시의 정리에 의해 유리함수 V(\\omega)/U(\\omega) 가 -\\infty 에서 +\\infty 로 갈 때 음에서 양으로 부호가 바뀐 횟수에서 양에서 음으로 바뀐 횟수를 뺀 값(Cauchy Index)은 좌반평면 근의 개수 n_L 과 우반평면 근의 개수 n_R 의 차이와 정확히 일치한다: I_{-\\infty}^{\\infty} \\frac{V(\\omega)}{U(\\omega)} = n_L - n_R = n - 2 n_R. 따라서 코시 지수를 구하면 우반평면 근의 개수 n_R = \\frac{1}{2}(n - I_{-\\infty}^\\infty) 를 알 수 있다.",
+              "physicalInterpretation": "특성 다항식이 허수축을 따라 올라갈 때 실수부와 허수부가 원점을 번갈아 감싸는 위상 인터레이싱(Hermite-Biehler Theorem) 특성을 정량화한다.",
+              "engineeringApplication": "다변수 강인 제어에서 카리토노프(Kharitonov) 정리의 이론적 토대."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "유클리드 호제법을 통한 연속 다항식 차수 강하 및 계수 배열 형성",
+              "mathExpression": "R_{k-1}(s) = (q_k s) R_k(s) - R_{k+1}(s) \\implies b_1 = \\frac{a_{n-1}a_{n-2} - a_n a_{n-3}}{a_{n-1}}, \\quad b_2 = \\frac{a_{n-1}a_{n-4} - a_n a_{n-5}}{a_{n-1}}",
+              "mathematicalExplanation": "스텀 체인(Sturm Chain)을 생성하기 위해 다항식 유클리드 나눗셈을 수행한다. R_0(s) = P_e(s), R_1(s) = P_o(s) 로 두고 순차적으로 1차 나눗셈 몫 q_k s 와 나머지 -R_{k+1}(s) 를 구한다. 이 나눗셈 알고리즘의 각 단계 최고차 계수들을 2차원 표로 정리한 것이 바로 루스 배열(Routh Array)이다: \\begin{matrix} s^n: & a_n & a_{n-2} & a_{n-4} & \\dots \\\\ s^{n-1}: & a_{n-1} & a_{n-3} & a_{n-5} & \\dots \\\\ s^{n-2}: & b_1 & b_2 & b_3 & \\dots \\\\ s^{n-3}: & c_1 & c_2 & \\dots & \\dots \\end{matrix} 여기서 각 행의 원소는 앞선 두 행의 2x2 행렬식 연산: b_1 = -\\frac{\\det \\begin{pmatrix} a_n & a_{n-2} \\\\ a_{n-1} & a_{n-3} \\end{pmatrix}}{a_{n-1}} 로 계산된다.",
+              "physicalInterpretation": "복잡한 다항식의 근을 풀지 않고 오직 4칙 연산(가감승제)만을 이용하여 근의 공간적 분포를 판별하는 고전 대수학의 결정체이다.",
+              "engineeringApplication": "임베디드 제어기 MCU에서 연산 부하가 큰 근 탐색 알고리즘 대신 초고속 실시간 안정도 판별 루틴으로 사용."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "루스 정리의 완성: 제1열 부호 변화와 RHP 근의 일치",
+              "mathExpression": "\\text{Sign Changes}(a_n, a_{n-1}, b_1, c_1, \\dots) = n_R",
+              "mathematicalExplanation": "스텀의 정리에 의해 스텀 수열의 부호 변화수는 코시 지수와 직결된다. 루스 배열의 제1열 원소들 [c_{k,1}] 은 연속적인 후르비츠 행렬식들의 비 \\Delta_k / \\Delta_{k-1} 와 일치한다. 따라서 제1열에 부호 변화가 1회 발생할 때마다 코시 지수가 2만큼 감소하며, 이는 우반평면 근 n_R 이 1개씩 증가함을 의미한다. 그러므로 제1열의 부호 변화 횟수는 RHP에 위치한 불안정 특성근의 총 개수와 완벽하게 일치한다.",
+              "physicalInterpretation": "제1열의 모든 숫자가 양수를 유지해야만 모든 극점이 안전한 좌반평면(LHP)에 존재할 수 있다.",
+              "engineeringApplication": "PID 제어기의 비례 이득 K_p, 적분 시간 T_i, 미분 시간 T_d의 허용 안정 범위(Stability Boundary) 도출."
+            }
+          ],
+          "conclusion": "루스 배열은 다항식 유클리드 나눗셈의 계수들을 행렬식 형태로 체계화한 알고리즘이며, 제1열의 부호 변화 횟수는 특성방정식의 RHP 불안정 근의 개수를 정확히 지시한다."
+        },
+        {
+          "derivationId": "deriv-06-routh-special-cases",
+          "title": "루스 배열의 특이 케이스(Zero Pivot 및 All-Zero Row)의 엄밀한 대수적 해법",
+          "targetResult": "\\text{Case 1: } a_{k,1} \\to \\varepsilon > 0, \\quad \\text{Case 2: Auxiliary Polynomial } A(s) \\implies \\frac{dA(s)}{ds}",
+          "prerequisites": [
+            "0으로 나누기(Division by zero) 회피를 위한 섭동법(Perturbation Method)",
+            "다항식 역변환 치환: s = 1/z",
+            "대칭근(Symmetric Roots)을 지배하는 짝수차 보조 다항식 A(s)"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "특이 케이스 1: 특정 행의 첫 번째 원소만 0인 경우 (Zero Pivot)",
+              "mathExpression": "c_{k,1} = 0 \\implies \\text{Substitute } c_{k,1} \\leftarrow \\varepsilon > 0 \\quad (\\varepsilon \\to 0^+)",
+              "mathematicalExplanation": "특정 행의 첫 번째 원소가 0이면 다음 행 계산 시 분모가 0이 되어 알고리즘이 중단된다. 해법 A (입실론 섭동법): 0 대신 극미세 양수 \\varepsilon 을 대입하고 배열 완성을 계속한다. 마지막에 \\varepsilon \\to 0^+ 극한을 취해 제1열 원소들의 부호를 판별한다.\\n해법 B (다항식 반전): 원래 특성방정식에 s = 1/z 를 대입하여 계수 순서가 정반대인 다항식 Q(z) = a_0 z^n + a_1 z^{n-1} + \\dots + a_n = 0 을 만들어 루스 배열을 재구성한다. z의 RHP 근 개수는 s의 RHP 근 개수와 엄밀히 동일하다.",
+              "physicalInterpretation": "극점이 허수축에 존재하지는 않지만, 대수적 연산 과정에서 일시적으로 피벗이 소멸하는 특이점을 극복하는 수학적 테크닉이다.",
+              "engineeringApplication": "디지털 제어 시스템에서 z-도메인 특성 다항식을 이선형 변환(Bilinear Transform)할 때 발생하는 0 피벗 해결."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "특이 케이스 2: 특정 행의 모든 원소가 0인 경우 (All-Zero Row)",
+              "mathExpression": "\\text{Row } s^k: 0 \\quad 0 \\quad \\dots \\implies A(s) = \\sum_{m} \\alpha_m s^{2m}, \\quad \\frac{dA(s)}{ds} = \\sum_{m} 2m \\alpha_m s^{2m-1}",
+              "mathematicalExplanation": "한 행 전체가 0이 되는 현상은 원점에 대해 완전한 기하학적 대칭을 이루는 근들이 존재할 때만 발생한다: 1) 허수축 상의 켤레 복소근 (\\pm j\\omega_0)\\n2) 실수축 상의 크기가 같고 부호가 반대인 실근 쌍 (\\pm \\sigma_0)\\n3) 원점 대칭인 4중 복소근 (\\pm \\sigma_0 \\pm j\\omega_0)\\n해법: 0이 된 행 바로 윗 행의 계수들로 짝수차 보조 다항식 A(s) 를 구성한다. A(s)를 s에 대해 1차 미분한 \\frac{dA(s)}{ds} 의 계수들로 0이 된 행을 대체하여 루스 배열을 계속 전개한다.",
+              "physicalInterpretation": "원래 다항식이 P(s) = A(s) * Q(s) 로 인수분해되며, A(s)의 근들이 지속 발진(비감쇠 진동) 또는 대칭 발산을 일으킴을 적나라하게 드러낸다.",
+              "engineeringApplication": "오실레이터(발진기) 회로에서 지속 발진 조건(바크하우젠 발진 조건)이 성립하는 임계 발진 주파수 omega_osc 산출."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "보조 다항식 A(s)의 인수분해를 통한 허수축 진동 주파수 직접 산출",
+              "mathExpression": "A(s) = \\beta_1 s^2 + \\beta_0 = 0 \\implies s = \\pm j \\sqrt{\\frac{\\beta_0}{\\beta_1}} \\equiv \\pm j \\omega_{\\text{osc}}",
+              "mathematicalExplanation": "전체 0행이 발생했을 때, 만약 루스 배열의 나머지 부분에서 추가적인 부호 변화가 없다면, A(s)의 근은 모두 순허수축 근 \\pm j\\omega 이다. 따라서 A(s) = 0 의 해를 직접 구함으로써 시스템이 한계 안정(Marginally Stable) 상태에서 지속적으로 진동하는 고유 진동수를 정확한 닫힌 형태로 추출할 수 있다.",
+              "physicalInterpretation": "피드백 루프 이득이 정확히 발진 한계(임계 안정점)에 도달했을 때의 한계 이득 K_mar 과 발진 주파수 omega_osc를 동시에 제공한다.",
+              "engineeringApplication": "지능형 발전기 여조기(PSS, Power System Stabilizer)에서 저주파 전력 동요(0.2~2 Hz) 댐핑 튜닝."
+            }
+          ],
+          "conclusion": "루스 배열의 특이 케이스들은 알고리즘의 실패가 아니라 시스템 내부에 원점 대칭근이나 순허수 극점이 존재함을 알리는 결정적 신호이며, 보조 다항식 미분을 통해 완벽히 해결된다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "DC-DC 전력 변환기 제어 (DC-DC Converter Loop Tuning)",
+          "application": "Type-III 보상기 보드 선도 설계 및 루스 안정도 마진 확인",
+          "details": "벅/부스트 컨버터의 전압 모드/전류 모드 제어에서 ESR 영점과 공진 극점을 보상하기 위해 영점 2개와 극점 2개를 배치하고 루스 배열로 전 대역 안정도 검증."
+        },
+        {
+          "domain": "전력 계통 동특성 (Power System Dynamics)",
+          "application": "다기 계통(Multi-machine) 전기기계적 진동 모드 감시",
+          "details": "발전기 동요 방정식(Swing Equation)의 고차 특성 다항식에 루스 판정법을 적용하여 댐핑 토크 계수가 음수가 되는 저주파 진동 위험 차단."
+        },
+        {
+          "domain": "산업용 로봇 관절 제어 (Robotic Manipulator Control)",
+          "application": "다자유도 관절 PID 제어기 이득 상한 결정",
+          "details": "부하 관성 변동에 따른 3차 폐루프 전달함수의 루스 배열 조건(a1*a2 > a0*a3)을 만족하는 최대 허용 미분 이득 K_d 제한."
+        }
+      ],
+      "summary": "보드 선도는 주파수 영역의 이득과 위상을 시각적 점근선으로 설계하게 하며, 루스-후르비츠 판정법은 특성 다항식의 대수적 배열을 통해 RHP 극점의 개수와 임계 발진 주파수를 완벽히 판별한다."
+    },
+    {
+      "id": "mod-07-shannon-capacity",
+      "moduleNumber": 7,
+      "titleKo": "섀넌 정보 엔트로피, 상호정보량 및 가우스 채널 용량 정리의 엄밀한 유도",
+      "titleEn": "Shannon Information Entropy, Mutual Information & Gaussian Channel Capacity Derivation",
+      "category": "정보이론 및 통신 한계론 (Information Theory & Communication Limits)",
+      "overview": "클로드 섀넌(Claude E. Shannon)의 1948년 기념비적 논문은 정보의 불확실성을 열역학적 엔트로피 개념과 결합하여 수학적으로 공리화하고, 잡음이 존재하는 통신 채널에서 임의로 작은 오류 확률(Arbitrarily Small Error Probability)로 정보를 전송할 수 있는 궁극의 물리적 전송 속도 상한인 채널 용량(Channel Capacity, C)을 규명하였다. 본 모듈에서는 정보량과 미분 엔트로피의 공리적 정의, 상호정보량(Mutual Information)의 정의, 평균 송신 전력 제약 하에서 가우스 확률분포가 미분 엔트로피를 극대화한다는 쿨백-라이블러 발산(KL-Divergence) 증명, 나이퀴스트 표본화 정리(Nyquist Sampling Theorem)를 결합한 섀넌-하틀리 정리(Shannon-Hartley Theorem) $C = B \\log_2(1 + S/N)$ 의 엄밀한 유도, 그리고 대역폭 $B \to \\infty$ 극한에서의 궁극적 섀넌 한계 $E_b/N_0 \\ge \\ln 2 \u0007pprox -1.59 \\, \text{dB}$ 의 유도를 완결한다.",
+      "governingEquations": [
+        {
+          "name": "섀넌 이산 정보 엔트로피 (Shannon Discrete Entropy)",
+          "formula": "H(X) \\equiv -\\sum_{i=1}^n P(x_i) \\log_2 P(x_i) = \\mathbb{E}\\left[ \\log_2 \\frac{1}{P(X)} \\right] \\quad [\\text{bits}]",
+          "explanation": "이산 확률변수 X가 갖는 평균 불확실성(Average Uncertainty) 또는 평균 자기 정보량(Self-Information).",
+          "physicalSignificance": "신호원을 왜곡 없이 무손실 압축(Lossless Compression)할 때 필요한 심볼당 최소 평균 비트 수의 절대 하한이다."
+        },
+        {
+          "name": "상호정보량 (Mutual Information)",
+          "formula": "I(X; Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) = D_{KL}(P_{XY} \\,\\|\\, P_X P_Y) \\ge 0",
+          "explanation": "수신 신호 Y를 관측함으로써 얻게 되는 송신 신호 X에 대한 불확실성의 감소량.",
+          "physicalSignificance": "송신단과 수신단이 채널을 통해 공유하는 유효 정보량이며, 채널의 입력 분포를 변화시켜 이를 최대화한 값이 채널 용량이다."
+        },
+        {
+          "name": "섀넌-하틀리 가우스 채널 용량 공식 (Shannon-Hartley Theorem)",
+          "formula": "C = B \\log_2\\left( 1 + \\frac{S}{N} \\right) = B \\log_2\\left( 1 + \\frac{S}{N_0 B} \\right) \\quad [\\text{bits/second}]",
+          "explanation": "대역폭 B Hz, 신호 전력 S, 가산 백색 가우스 잡음(AWGN) 전력 N을 갖는 채널에서 달성 가능한 최대 무오류 전송률.",
+          "physicalSignificance": "대역폭(B)과 신호 대 잡음비(SNR = S/N) 간의 근본적인 엔지니어링 교환(Trade-off) 한계를 선언하는 통신 공학의 최고 원리이다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-07-max-entropy-gaussian",
+          "title": "전력(분산) 제약 조건 하에서 가우스 분포의 미분 엔트로피 극대화 증명",
+          "targetResult": "\\max_{f_X: \\mathbb{E}[X^2] \\le \\sigma^2} h(X) = \\frac{1}{2}\\log_2(2\\pi e \\sigma^2) \\iff X \\sim \\mathcal{N}(0, \\sigma^2)",
+          "prerequisites": [
+            "미분 엔트로피 정의: h(f) = -int f(x) ln f(x) dx (자연로그 nats 기준)",
+            "쿨백-라이블러 발산(상대 엔트로피)의 비음수성(Gibbs' Inequality): D_KL(f || g) >= 0",
+            "전력 제약식: int x^2 f(x) dx = sigma^2 및 확률 정규화: int f(x) dx = 1"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "가우스 확률밀도함수 g(x)와 상대 엔트로피 정의",
+              "mathExpression": "g(x) = \\frac{1}{\\sqrt{2\\pi}\\sigma} \\exp\\left(-\\frac{x^2}{2\\sigma^2}\\right), \\quad D_{KL}(f \\,\\|\\, g) \\equiv \\int_{-\\infty}^{\\infty} f(x) \\ln\\frac{f(x)}{g(x)} \\, dx \\ge 0",
+              "mathematicalExplanation": "분산 \\sigma^2 을 갖는 임의의 미지의 확률밀도함수를 f(x)라 하고, 동일한 분산 \\sigma^2 을 갖는 정규(가우스) 분포를 g(x)라 하자. 정보 부등식(Information Inequality)에 의해 쿨백-라이블러 발산은 항상 0 이상이며, 등호는 거의 모든 곳(almost everywhere)에서 f(x) = g(x) 일 때만 성립한다.",
+              "physicalInterpretation": "임의의 분포 f(x)와 기준 가우스 분포 g(x) 사이의 통계적 거리(비유사도)를 정의한다.",
+              "engineeringApplication": "신호 검출 이론에서 가설 검정(Likelihood Ratio Test)의 오차 지수(Chernoff Information) 산출."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "상대 엔트로피 적분의 두 항 분해",
+              "mathExpression": "D_{KL}(f \\,\\|\\, g) = \\int_{-\\infty}^{\\infty} f(x) \\ln f(x) \\, dx - \\int_{-\\infty}^{\\infty} f(x) \\ln g(x) \\, dx = -h_e(f) - \\int_{-\\infty}^{\\infty} f(x) \\ln g(x) \\, dx",
+              "mathematicalExplanation": "\\ln(f/g) = \\ln f - \\ln g 로 분해한다. 첫 번째 적분은 f의 미분 엔트로피의 음수(-h_e(f))이다. 두 번째 교차 적분을 계산하기 위해 \\ln g(x) 를 전개한다: \\ln g(x) = \\ln\\left( \\frac{1}{\\sqrt{2\\pi}\\sigma} \\right) - \\frac{x^2}{2\\sigma^2} = -\\frac{1}{2}\\ln(2\\pi\\sigma^2) - \\frac{x^2}{2\\sigma^2}.",
+              "physicalInterpretation": "불확실성의 척도인 엔트로피와 분포의 형태 차이에 의한 왜곡을 명확히 대수적으로 분리한다.",
+              "engineeringApplication": "통신 채널의 비가우스성(Non-Gaussianity) 왜곡도 평가."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "전력 제약 조건 대입 및 교차 적분의 불변성 증명",
+              "mathExpression": "\\int_{-\\infty}^{\\infty} f(x) \\ln g(x) \\, dx = -\\frac{1}{2}\\ln(2\\pi\\sigma^2) \\int_{-\\infty}^{\\infty} f(x) \\, dx - \\frac{1}{2\\sigma^2} \\int_{-\\infty}^{\\infty} x^2 f(x) \\, dx",
+              "mathematicalExplanation": "f(x)는 확률분포이므로 \\int f(x) dx = 1 이며, 전력 제약에 의해 \\int x^2 f(x) dx = \\sigma^2 이다. 이를 대입하면: \\int f(x) \\ln g(x) dx = -\\frac{1}{2}\\ln(2\\pi\\sigma^2)(1) - \\frac{1}{2\\sigma^2}(\\sigma^2) = -\\frac{1}{2}\\ln(2\\pi\\sigma^2) - \\frac{1}{2} = -\\frac{1}{2}\\ln(2\\pi e \\sigma^2). 놀랍게도 이 적분값은 f(x)의 세부적인 분포 형태와 완전히 무관하게 오직 분산 \\sigma^2 에 의해서만 고정되며, 이는 정확히 가우스 분포 자체의 엔트로피의 음수(-h_e(g))와 일치한다!",
+              "physicalInterpretation": "주어진 전력(분산) 한도 내에서 가우스 분포에 대해 취한 기대치는 분포의 고차 모멘트에 영향을 받지 않는 불변량이다.",
+              "engineeringApplication": "중심극한정리(CLT)에 의해 수많은 독립 잡음 원천이 합성될 때 왜 엔트로피가 극대화되는지를 설명."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "엔트로피 부등식 완성 및 가우스 최적성 확립",
+              "mathExpression": "D_{KL}(f \\,\\|\\, g) = -h_e(f) - (-h_e(g)) = h_e(g) - h_e(f) \\ge 0 \\implies h_e(f) \\le h_e(g)",
+              "mathematicalExplanation": "D_{KL}(f \\| g) \\ge 0 이므로 즉시 h_e(f) \\le h_e(g) 가 성립한다. 자연로그 밑 e에서 밑 2로 기저를 변환하면: h(X) \\le \\frac{1}{2}\\log_2(2\\pi e \\sigma^2) \\quad [\\text{bits}]. 등호는 오직 f(x) = g(x), 즉 X가 순수 가우스 분포를 따를 때만 성립한다.",
+              "physicalInterpretation": "동일한 평균 전력을 갖는 모든 물리적 신호 중 가우스 신호가 가장 거대한 무작위성과 불확실성(엔트로피)을 갖는다. 역으로 통신 관점에서는 동일한 전력 하에서 가장 많은 정보를 실어 나를 수 있는 최적의 신호이다.",
+              "engineeringApplication": "OFDM 신호의 시간 영역 파형이 중심극한정리에 의해 가우스 분포에 근접하여 채널 용량에 접근하는 이론적 배경."
+            }
+          ],
+          "conclusion": "전력 제약 하에서 연속 확률변수의 미분 엔트로피를 극대화하는 유일한 분포는 가우스 분포이며, 그 최댓값은 정확히 (1/2)*log2(2*pi*e*sigma^2) bits이다."
+        },
+        {
+          "derivationId": "deriv-07-shannon-hartley-derivation",
+          "title": "AWGN 채널의 상호정보량 극대화 및 섀넌-하틀리 용량 공식 유도",
+          "targetResult": "C = B \\log_2\\left( 1 + \\frac{S}{N} \\right) \\quad [\\text{bits/s}]",
+          "prerequisites": [
+            "가산 가우스 잡음 채널 모델: Y = X + N, N ~ N(0, N_power)",
+            "신호 평균 전력 제약: E[X^2] <= S, 신호와 잡음의 독립성: E[X*N] = 0",
+            "나이퀴스트 표본화 정리: 대역폭 B의 기저대역 신호는 초당 2B개의 독립 표본을 가짐"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "AWGN 채널의 입출력 관계 및 조건부 엔트로피 전개",
+              "mathExpression": "Y = X + N, \\quad I(X; Y) = h(Y) - h(Y|X)",
+              "mathematicalExplanation": "수신 신호 Y는 송신 신호 X와 독립 잡음 N의 합이다. 송신 신호 X가 특정 값 x로 주어졌을 때 조건부 엔트로피는: h(Y | X = x) = h(x + N | X = x) = h(N). 잡음 N은 송신 신호 X와 통계적으로 독립이므로 x의 값에 의존하지 않는다. 따라서 h(Y|X) = h(N) 이 되며, 상호정보량은 i(X; Y) = h(Y) - h(N) 으로 단순화된다.",
+              "physicalInterpretation": "수신 신호의 전체 불확실성(h(Y))에서 채널 잡음 자체가 생성한 본질적 불확실성(h(N))을 제거한 순수 정보만이 수신자에게 전달된다.",
+              "engineeringApplication": "RF 수신기 LNA(저잡음 증폭기) 설계에서 잡음 지수(NF)를 낮추어 h(N)을 억제해야 하는 이유."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "잡음 엔트로피의 산출 및 수신 신호 총 전력 제약",
+              "mathExpression": "h(N) = \\frac{1}{2}\\log_2(2\\pi e \\sigma_N^2), \\quad \\mathbb{E}[Y^2] = \\mathbb{E}[X^2] + \\mathbb{E}[N^2] \\le S + \\sigma_N^2",
+              "mathematicalExplanation": "잡음 N이 평균 0, 분산 \\sigma_N^2 = N_{\\text{power}} 인 가우스 잡음이므로 잡음 엔트로피는 고정 상수이다. 수신 신호의 분산은 독립성에 의해 \\mathbb{E}[Y^2] = \\mathbb{E}[(X+N)^2] = \\mathbb{E}[X^2] + 2\\mathbb{E}[X]\\mathbb{E}[N] + \\mathbb{E}[N^2] = S + N_{\\text{power}} 이다.",
+              "physicalInterpretation": "수신 신호의 총 전력은 송신 신호 전력과 채널 잡음 전력의 단순 산술 합으로 제한된다.",
+              "engineeringApplication": "수신기 ADC의 포화(Clipping)를 방지하기 위한 자동 이득 제어(AGC) 루프 설계."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "표본당 채널 용량(C_sample)의 극대화 도출",
+              "mathExpression": "C_{\\text{sample}} = \\max_{f_X: \\mathbb{E}[X^2]\\le S} [h(Y)] - h(N) = \\frac{1}{2}\\log_2\\left( 2\\pi e (S + N_{\\text{power}}) \\right) - \\frac{1}{2}\\log_2\\left( 2\\pi e N_{\\text{power}} \\right)",
+              "mathematicalExplanation": "h(N)은 상수이므로 I(X; Y)를 극대화하는 것은 출력 엔트로피 h(Y)를 극대화하는 것과 같다. 앞선 정리(가우스의 최대 엔트로피성)에 의해 총 전력 S + N_{power} 이하에서 h(Y)가 최대가 되려면 Y가 가우스 분포를 따라야 한다. Y = X + N 에서 독립 가우스 잡음 N과의 합이 가우스가 되기 위한 필요충분조건은 송신 신호 X 또한 가우스 분포 X \\sim \\mathcal{N}(0, S) 를 따르는 것이다. 로그의 뺄셈을 결합하면: C_{\\text{sample}} = \\frac{1}{2}\\log_2\\left( \\frac{2\\pi e (S + N_{\\text{power}})}{2\\pi e N_{\\text{power}}} \\right) = \\frac{1}{2}\\log_2\\left( 1 + \\frac{S}{N_{\\text{power}}} \\right) \\quad [\\text{bits/sample}].",
+              "physicalInterpretation": "1회의 채널 사용(표본 1개 전송)당 무오류로 보낼 수 있는 최대 정보 비트 수가 SNR의 로그 함수로 완벽히 도출된다.",
+              "engineeringApplication": "변조 방식의 성운도(Constellation) 설계 시 가우스 형태를 모사하는 확률적 성형(Probabilistic Constellation Shaping, PCS)."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "나이퀴스트 표본화 정리를 결합한 연속 시간 대역폭 확장",
+              "mathExpression": "f_s = 2B \\, [\\text{samples/second}], \\quad C = 2B \\times C_{\\text{sample}} = 2B \\times \\frac{1}{2}\\log_2\\left(1 + \\frac{S}{N}\\right) = B \\log_2\\left(1 + \\frac{S}{N}\\right)",
+              "mathematicalExplanation": "나이퀴스트-섀넌 표본화 정리에 의해, 기저대역 대역폭 B Hz를 갖는 연속 시간 대역제한 신호는 초당 정확히 2B개의 독립적인 직교 표본(Sinc 기저 보간)으로 시간 손실 없이 완전히 표현된다. 따라서 초당 전송 가능한 총 비트 수(Channel Capacity C)는 초당 표본 수와 표본당 비트 용량의 곱이다: C = 2B \\times \\frac{1}{2}\\log_2\\left(1 + \\frac{S}{N}\\right) = B \\log_2\\left(1 + \\frac{S}{N}\\right) \\quad [\\text{bits/s}].",
+              "physicalInterpretation": "대역폭 B는 시간당 전송 가능한 독립적 자유도(차원수)를 부여하고, SNR은 각 차원당 보낼 수 있는 비트 심도를 부여한다.",
+              "engineeringApplication": "5G New Radio (NR) 및 Wi-Fi 7에서 대역폭 확장(160MHz -> 320MHz) 및 변조 차수(4096-QAM)를 통한 최대 수율(Throughput) 계산."
+            }
+          ],
+          "conclusion": "섀넌-하틀리 정리는 대역제한 가우스 채널에서 초당 전송 가능한 정보의 절대 물리적 상한이 대역폭 B와 1 + S/N의 로그 곱으로 엄밀하게 결정됨을 입증한다."
+        },
+        {
+          "derivationId": "deriv-07-infinite-bandwidth-limit",
+          "title": "무한 대역폭 극한(B -> infty) 및 궁극적 섀넌 한계(Eb/N0 >= -1.59 dB) 유도",
+          "targetResult": "\\lim_{B \\to \\infty} C(B) = \\frac{S}{N_0 \\ln 2} \\approx 1.4427 \\frac{S}{N_0}, \\quad \\left(\\frac{E_b}{N_0}\\right)_{\\min} = \\ln 2 \\approx -1.59 \\, \\text{dB}",
+          "prerequisites": [
+            "잡음 전력의 대역폭 비례: N = N_0 * B (N_0는 단측 잡음 전력 스펙트럼 밀도 [W/Hz])",
+            "로그 극한 공식: lim_{x -> 0} (1/x) * ln(1 + x) = 1",
+            "비트당 에너지 E_b와 송신 전력 S의 관계: S = E_b * C"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "대역폭에 비례하는 총 잡음 전력 대입",
+              "mathExpression": "C(B) = B \\log_2\\left( 1 + \\frac{S}{N_0 B} \\right) = \\frac{B}{\\ln 2} \\ln\\left( 1 + \\frac{S}{N_0 B} \\right)",
+              "mathematicalExplanation": "백색 잡음의 총 전력은 대역폭에 비례하므로 N = N_0 B 이다. 밑 변환 공식 \\log_2(x) = \\frac{\\ln x}{\\ln 2} 를 적용하여 자연로그 형태로 변환한다.",
+              "physicalInterpretation": "대역폭 B를 무한히 넓히면 신호를 보낼 수 있는 자유도는 무한히 증가하지만, 동시에 채널로 유입되는 총 잡음 전력 N 또한 무한히 증가하는 상충 관계가 발생한다.",
+              "engineeringApplication": "초광대역(UWB, Ultra-Wideband) 및 위성 통신 링크 버짓 수립."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "무한 대역폭 극한(B -> infty)에서의 미적분학적 수렴 계산",
+              "mathExpression": "u \\equiv \\frac{S}{N_0 B} \\to 0 \\quad (\\text{as } B \\to \\infty) \\implies \\lim_{B \\to \\infty} C(B) = \\frac{S}{N_0 \\ln 2} \\lim_{u \\to 0} \\frac{\\ln(1 + u)}{u} = \\frac{S}{N_0 \\ln 2}",
+              "mathematicalExplanation": "B \\to \\infty 일 때 u = \\frac{S}{N_0 B} \\to 0 이다. 미분의 정의 또는 로피탈 정리에 의해 \\lim_{u \\to 0} \\frac{\\ln(1+u)}{u} = 1 이다. 따라서 극한값은 상수로 수렴한다: C_{\\infty} = \\frac{S}{N_0 \\ln 2} = \\frac{1}{\\ln 2} \\frac{S}{N_0} \\approx 1.442695 \\frac{S}{N_0} \\quad [\\text{bits/s}].",
+              "physicalInterpretation": "대역폭을 무한대로 넓혀도 전송 속도를 무한히 올릴 수는 없으며, 오직 가용한 신호 전력 대 잡음 스펙트럼 밀도 비(S/N_0)에 의해 엄격한 유한 상한이 부과된다.",
+              "engineeringApplication": "대역폭이 극도로 풍부한 밀리미터파/테라헤르츠 통신에서 대역폭 확장의 한계 효용 평가."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "비트당 에너지 E_b 도입 및 주파수 효율(Spectral Efficiency) 관계식 전개",
+              "mathExpression": "S = E_b \\cdot C \\implies \\frac{C}{B} = \\log_2\\left( 1 + \\frac{E_b}{N_0} \\frac{C}{B} \\right) \\implies \\frac{E_b}{N_0} = \\frac{2^{C/B} - 1}{C/B}",
+              "mathematicalExplanation": "초당 C 비트를 전송할 때 1비트 전송에 소비되는 신호 에너지를 E_b 라 하면, 총 송신 전력은 S = E_b C [J/s = W] 이다. 이를 섀넌 공식에 대입하여 스펙트럼 효율 \\eta \\equiv C/B [bits/s/Hz] 에 대해 풀면 \\frac{E_b}{N_0} = \\frac{2^\\eta - 1}{\\eta} 가 얻어진다.",
+              "physicalInterpretation": "단위 대역폭당 더 높은 비트 전송률(고효율)을 얻으려면 비트당 에너지(Eb/N0)가 지수함수적으로 증가해야 함을 보여준다.",
+              "engineeringApplication": "DVB-S2 위성 방송 표준 및 6G 비지상파 네트워크(NTN)의 적응형 변복조(AMC) 테이블 최적화."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "궁극적 섀넌 한계 (Ultimate Shannon Bound) 도출",
+              "mathExpression": "\\lim_{C/B \\to 0} \\frac{E_b}{N_0} = \\lim_{\\eta \\to 0} \\frac{2^\\eta - 1}{\\eta} = \\left. \\frac{d(2^\\eta)}{d\\eta} \\right|_{\\eta=0} = \\ln 2 \\approx 0.69315",
+              "mathematicalExplanation": "스펙트럼 효율 \\eta \\to 0 (즉 B \\to \\infty 인 전력 제한 영역)에서 로피탈 정리를 적용한다. 선형 스케일 값은 \\ln 2 \\approx 0.693147 이며, 이를 데시벨(dB)로 변환하면: \\left(\\frac{E_b}{N_0}\\right)_{\\min,\\text{dB}} = 10 \\log_{10}(\\ln 2) \\approx 10 \\times (-0.15917) \\approx -1.5917 \\, \\text{dB}.",
+              "physicalInterpretation": "어떠한 정교한 오류정정 부호(ECC)를 사용하더라도, E_b/N_0 가 -1.59 dB 미만인 극한의 잡음 환경에서는 오류 없는 통신이 물리적으로 절대 불가능함을 선언하는 우주적 한계이다.",
+              "engineeringApplication": "보이저(Voyager) 탐사선, 제임스 웹 우주망원경(JWST) 심우주 통신의 링크 버짓 마진 임계값 기준."
+            }
+          ],
+          "conclusion": "무한 대역폭 극한에서 채널 용량은 S/(N0*ln 2)로 점근 수렴하며, 무오류 통신을 위한 최소 비트당 신호 대 잡음비는 -1.59 dB라는 확고한 물리적 하한선을 갖는다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "최신 무선 이동통신 (5G/6G Massive MIMO)",
+          "application": "다중 안테나 공간 다중화 채널 용량 산출",
+          "details": "단일 안테나 섀넌 공식을 다중입출력(MIMO) 특이값 분해(SVD) 행렬로 확장하여 공간 스트림별 워터필링(Water-filling) 전력 할당을 통한 기지국 전송량 극대화."
+        },
+        {
+          "domain": "차세대 채널 코딩 (Modern Channel Coding)",
+          "application": "LDPC 및 폴라(Polar) 부호의 섀넌 한계 접근 설계",
+          "details": "5G eMBB 제어 채널(Polar)과 데이터 채널(LDPC)에서 섀넌 용량 한계와의 간극(Shannon Gap)을 0.5 dB 이내로 압축하는 부호화율(Code Rate) 최적화."
+        },
+        {
+          "domain": "심우주 통신 (Deep Space Communications)",
+          "application": "초저 SNR(-1 dB 근방) 극한 환경 통신 링크",
+          "details": "수십억 km 거리의 탐사선 통신에서 전력 제약 한계를 극복하기 위해 초대형 파라볼라 안테나와 초광대역 스프레드 스펙트럼 기법 결합."
+        }
+      ],
+      "summary": "섀넌의 채널 용량 정리는 가우스 분포의 엔트로피 극대화와 나이퀴스트 표본화 정리를 결합하여 C = B*log2(1+S/N)을 도출하며, 대역폭 무한대 극한에서 Eb/N0 >= -1.59 dB라는 통신 공학의 절대 불변 한계를 확립한다."
+    },
+    {
+      "id": "mod-08-semiconductor-shockley",
+      "moduleNumber": 8,
+      "titleKo": "반도체 표류-확산 수송 방정식 및 쇼클리 이상 다이오드 방정식의 엄밀한 유도",
+      "titleEn": "Semiconductor Drift-Diffusion Transport & Shockley Ideal Diode Equation Derivation",
+      "category": "고체물리학 및 반도체 수송이론 (Solid-State Physics & Semiconductor Transport)",
+      "overview": "반도체 소자 물리학은 고체 결정 격자 내부에서 전하 운반자(전자 및 정공)가 전계에 의해 가속되는 표류(Drift) 현상과 농도 불균일성에 의해 퍼져나가는 확산(Diffusion) 현상의 상호작용을 지배하는 수송 이론을 기반으로 한다. 본 모듈에서는 열적 평형 상태(Thermal Equilibrium)에서의 볼츠만 통계와 미시적 세부 균형(Detailed Balance)으로부터 아인슈타인 관계식(Einstein Relation)을 엄밀하게 도출하고, 전하 보존을 기술하는 연속 방정식(Continuity Equation)으로부터 소수 운반자 정상상태 확산 상미분방정식을 정식화하며, 접합 법칙(Law of the Junction) 경계조건을 적용한 경계값 문제(BVP)의 해석적 해법을 통해 고체 전자공학의 가장 유명한 지배 방정식인 쇼클리 다이오드 방정식 $I = I_0 \\left(e^{V/V_T} - 1\right)$의 완전한 유도를 완결한다.",
+      "governingEquations": [
+        {
+          "name": "표류-확산 전류 밀도 방정식 (Drift-Diffusion Current Equations)",
+          "formula": "\\begin{aligned} \\mathbf{J}_n &= q n \\mu_n \\boldsymbol{\\mathcal{E}} + q D_n \\nabla n \\\\ \\mathbf{J}_p &= q p \\mu_p \\boldsymbol{\\mathcal{E}} - q D_p \\nabla p \\end{aligned}, \\quad \\mathbf{J}_{\\text{tot}} = \\mathbf{J}_n + \\mathbf{J}_p",
+          "explanation": "전자와 정공에 대해 전기장 E에 의한 표류 항(드리프트)과 농도 구배 nabla n, nabla p에 의한 확산 항의 벡터 합.",
+          "physicalSignificance": "반도체 내부의 전하 흐름이 정전기력(쿨롱력)과 통계역학적 무작위 열운동(브라운 운동)의 이중 메커니즘으로 구동됨을 나타낸다."
+        },
+        {
+          "name": "아인슈타인 수송 관계식 (Einstein Relation)",
+          "formula": "\\frac{D_n}{\\mu_n} = \\frac{D_p}{\\mu_p} = \\frac{k_B T}{q} \\equiv V_T \\approx 25.85 \\, \\text{mV} \\quad (\\text{at } T = 300 \\, \\text{K})",
+          "explanation": "운반자의 확산 계수 D와 이동도 mu 사이의 비율이 볼츠만 상수 k_B, 절대온도 T, 기본 전하량 q에 의해서만 결정되는 열전압 V_T와 정확히 일치함.",
+          "physicalSignificance": "미시적 충돌 산란에 의한 이동성(이동도)과 열적 요동에 의한 공간적 분산성(확산 계수)이 열역학적 평형 상태에서 동일한 분자운동론적 근원을 가짐을 증명한다."
+        },
+        {
+          "name": "쇼클리 이상 다이오드 방정식 (Shockley Ideal Diode Equation)",
+          "formula": "I = I_0 \\left( \\exp\\left( \\frac{q V_a}{\\eta k_B T} \\right) - 1 \\right) = I_0 \\left( \\exp\\left( \\frac{V_a}{\\eta V_T} \\right) - 1 \\right)",
+          "explanation": "인가 전압 V_a에 따른 PN 접합 다이오드의 비선형 순방향 및 역방향 전류-전압(I-V) 특성 곡선.",
+          "physicalSignificance": "확산 전위 장벽의 변화에 따라 공핍 영역 가장자리로 주입되는 소수 운반자의 농도가 지수함수적으로 변조되어 나타나는 정류(Rectification) 특성을 완벽히 기술한다."
+        }
+      ],
+      "derivations": [
+        {
+          "derivationId": "deriv-08-einstein-relation",
+          "title": "열적 평형 세부 균형(Detailed Balance)으로부터 아인슈타인 관계식의 엄밀 유도",
+          "targetResult": "\\frac{D_n}{\\mu_n} = \\frac{k_B T}{q} = V_T",
+          "prerequisites": [
+            "열적 평형 상태 조건: 순 전하 전류 밀도 J_n = 0, J_p = 0",
+            "정전기 포텐셜과 전계의 관계: E = -grad phi = -d phi / dx",
+            "맥스웰-볼츠만 운반자 통계: n(x) = n_i * exp(q [phi(x) - phi_F] / (k_B T))"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "열평형 상태의 순 전류 제로 조건 수립",
+              "mathExpression": "J_n(x) = q n(x) \\mu_n \\mathcal{E}(x) + q D_n \\frac{dn(x)}{dx} = 0",
+              "mathematicalExplanation": "외부 전압이나 빛의 여기가 없는 열적 평형 상태에서는 미시적 가역성 원리(Microscopic Reversibility)에 의해 전자의 순 표류 전류와 순 확산 전류가 정확하게 상쇄되어 알짜 전류 밀도가 0이어야 한다.",
+              "physicalInterpretation": "내부 전계에 의해 끌려가는 전자의 흐름과 농도 차이에 의해 역으로 확산하려는 전자의 흐름이 완벽한 동적 평형을 이룬다.",
+              "engineeringApplication": "PN 접합 무바이어스 상태에서 공핍층(Depletion Region)의 자발적 형성 및 에너지 밴드 휨(Band Bending) 해석."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "볼츠만 캐리어 분포의 공간 도함수 전개",
+              "mathExpression": "n(x) = n_i \\exp\\left( \\frac{q (\\phi(x) - \\phi_F)}{k_B T} \\right) \\implies \\frac{dn(x)}{dx} = n(x) \\cdot \\frac{q}{k_B T} \\frac{d\\phi(x)}{dx}",
+              "mathematicalExplanation": "열평형 상태에서 페르미 준위 E_F = -q \\phi_F 는 공간에 대해 일정(상수)하다. 합성함수 미분법(Chain Rule)을 적용하여 공간 x에 대해 1차 도함수를 구하면, 포텐셜의 공간 도함수 d\\phi/dx 가 곱해진 형태로 전개된다.",
+              "physicalInterpretation": "전도대 전자 농도의 공간적 변화율은 정전기 포텐셜의 기울기에 의해 직접 변조된다.",
+              "engineeringApplication": "불균일 도핑(Graded Doping) 반도체에서 내장 전계(Built-in Electric Field) 생성 메커니즘."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "전계 E = -d phi / dx 대입 및 대수적 소거",
+              "mathExpression": "\\frac{d\\phi(x)}{dx} = -\\mathcal{E}(x) \\implies \\frac{dn(x)}{dx} = -n(x) \\frac{q}{k_B T} \\mathcal{E}(x)",
+              "mathematicalExplanation": "정전기학의 기본 관계식 \\mathcal{E} = -\\frac{d\\phi}{dx} 를 대입한다. 이를 1단계의 제로 전류 방정식에 대입하면: q n \\mu_n \\mathcal{E} + q D_n \\left( -n \\frac{q}{k_B T} \\mathcal{E} \\right) = 0.",
+              "physicalInterpretation": "표류를 유발하는 구동력(E)과 확산을 유발하는 구동력(dn/dx)이 동일한 정전기적 포텐셜 구배로부터 파생됨을 연결한다.",
+              "engineeringApplication": "MOSFET 채널 내부의 준-페르미 준위(Quasi-Fermi Level) 분리 해석의 수학적 기반."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "아인슈타인 관계식의 최종 분리 완성",
+              "mathExpression": "q n \\mathcal{E} \\left[ \\mu_n - D_n \\frac{q}{k_B T} \\right] = 0 \\implies \\frac{D_n}{\\mu_n} = \\frac{k_B T}{q} \\equiv V_T",
+              "mathematicalExplanation": "0이 아닌 공통 인수 q n \\mathcal{E} 로 양변을 나누면: \\mu_n = D_n \\frac{q}{k_B T} \\iff \\frac{D_n}{\\mu_n} = \\frac{k_B T}{q}. 정공에 대해서도 완전히 동일한 절차를 적용하면 \\frac{D_p}{\\mu_p} = \\frac{k_B T}{q} 가 도출된다.",
+              "physicalInterpretation": "확산 계수와 이동도의 비는 반도체 물질의 종류(Si, Ge, GaAs 등)나 도핑 농도에 무관하게 오직 시스템의 절대온도 T에만 비례하는 보편적 열역학 상수이다.",
+              "engineeringApplication": "Hall 측정 장비로 이동도 mu를 측정한 후 아인슈타인 관계식을 통해 확산 계수 D를 직접 환산하여 소자 시뮬레이션(TCAD) 파라미터로 입력."
+            }
+          ],
+          "conclusion": "아인슈타인 관계식은 열평형 세부 균형으로부터 유도되며, 입자의 이동도와 확산 계수를 절대온도 T의 선형 함수로 연결하는 고체 물리 수송의 핵심 축이다."
+        },
+        {
+          "derivationId": "deriv-08-continuity-diffusion-ode",
+          "title": "연속 방정식으로부터 유사 중성 영역 소수 운반자 정상상태 확산 미분방정식 유도",
+          "targetResult": "D_p \\frac{d^2 \\Delta p_n(x)}{dx^2} - \\frac{\\Delta p_n(x)}{\\tau_p} = 0 \\implies \\frac{d^2 \\Delta p_n(x)}{dx^2} - \\frac{\\Delta p_n(x)}{L_p^2} = 0, \\quad L_p \\equiv \\sqrt{D_p \\tau_p}",
+          "prerequisites": [
+            "1차원 전하 연속 방정식: d(p)/dt = -(1/q) d(J_p)/dx + (G_p - R_p)",
+            "SRH(Shockley-Read-Hall) 저수준 주입 재결합 모델: R_p - G_p = Delta p_n / tau_p",
+            "유사 중성(Quasi-neutral) 영역 조건: 공간 전하 밀도 approx 0, 전계 E approx 0"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "미소 체적 전하 보존 및 연속 방정식 수립",
+              "mathExpression": "\\frac{\\partial p}{\\partial t} = -\\frac{1}{q} \\frac{\\partial J_p}{\\partial x} + (G_p - R_p)",
+              "mathematicalExplanation": "단위 체적 내의 정공 농도의 시간당 변화율은 공간적 전류 유출 구배(-(1/q) dJ_p/dx)와 순 생성-재결합율(G_p - R_p)의 합과 같다.",
+              "physicalInterpretation": "반도체 내부 전하의 소멸과 생성을 엄밀하게 고려한 질량-전하 연속체 보존 법칙이다.",
+              "engineeringApplication": "광다이오드(Photodiode)에서 광생성 운반자(Generation G_p)에 의한 광전류 형성 해석."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "유사 중성 영역에서의 순수 확산 전류 근사",
+              "mathExpression": "\\mathcal{E} \\approx 0 \\implies J_p(x) \\approx -q D_p \\frac{\\partial p}{\\partial x} = -q D_p \\frac{\\partial (\\Delta p_n)}{\\partial x}",
+              "mathematicalExplanation": "공핍 영역 바깥의 n-타입 벌크 영역(유사 중성 영역)에서는 다수 운반자(전자)가 풍부하여 전계가 0에 가깝게 차폐된다(\\mathcal{E} \\approx 0). 따라서 표류 항이 소멸하고 순수 확산 전류만 지배적이 된다. 또한 열평형 정공 농도 p_{n0} 는 공간적으로 균일하므로 \\frac{\\partial p}{\\partial x} = \\frac{\\partial (p_{n0} + \\Delta p_n)}{\\partial x} = \\frac{\\partial \\Delta p_n}{\\partial x} 이다.",
+              "physicalInterpretation": "중성 영역에서 주입된 잉여 정공은 오직 무작위 열 확산에 의해서만 농도가 낮은 깊은 곳으로 이동한다.",
+              "engineeringApplication": "BJT(바이폴라 접합 트랜지스터) 베이스 영역의 소수 운반자 수송 모델링."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "저수준 주입 재결합 모델 및 정상 상태 적용",
+              "mathExpression": "\\frac{\\partial p}{\\partial t} = 0, \\quad R_p - G_p = \\frac{\\Delta p_n(x)}{\\tau_p}",
+              "mathematicalExplanation": "DC 바이어스 인가 하의 정상 상태(Steady-State)이므로 \\frac{\\partial p}{\\partial t} = 0 이다. 저수준 주입(Low-level injection: \\Delta p_n \\ll n_{n0}) 조건에서 재결합률은 잉여 소수 운반자 농도 \\Delta p_n 에 선형 비례하며, 비례 상수는 소수 운반자 수명 \\tau_p 의 역수이다.",
+              "physicalInterpretation": "주입된 잉여 정공은 n형 영역 내부의 풍부한 전자들과 조우하여 평균적으로 수명 tau_p 시간 후에 소멸(재결합)한다.",
+              "engineeringApplication": "실리콘 웨이퍼 제조 공정에서 결함 준위 제어 및 캐리어 수명(Carrier Lifetime) 측정."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "1차원 정칙 2계 선형 ODE 및 확산 거리(Diffusion Length) 정의",
+              "mathExpression": "-\\frac{1}{q} \\frac{d}{dx}\\left( -q D_p \\frac{d\\Delta p_n}{dx} \\right) - \\frac{\\Delta p_n}{\\tau_p} = 0 \\implies D_p \\frac{d^2 \\Delta p_n(x)}{dx^2} - \\frac{\\Delta p_n(x)}{\\tau_p} = 0 \\implies \\frac{d^2 \\Delta p_n(x)}{dx^2} = \\frac{\\Delta p_n(x)}{L_p^2}",
+              "mathematicalExplanation": "전류 밀도 미분항을 전개하여 음의 부호들을 소거한다. 확산 거리(Diffusion Length)를 L_p \\equiv \\sqrt{D_p \\tau_p} 로 정의하면, 표준 2계 동차 상미분방정식 \\frac{d^2 \\Delta p_n}{dx^2} - \\frac{1}{L_p^2}\\Delta p_n = 0 이 완성된다. 특성근은 s = \\pm 1/L_p 이며, 일반해는 \\Delta p_n(x) = C_1 e^{-(x-x_n)/L_p} + C_2 e^{(x-x_n)/L_p} 이다.",
+              "physicalInterpretation": "확산 거리 L_p는 소수 운반자가 재결합하여 완전히 소멸하기 전까지 순수 확산 운동으로 이동할 수 있는 평균적인 통계적 침투 깊이를 나타낸다.",
+              "engineeringApplication": "태양전지(Solar Cell) 기판 두께를 전자/정공 확산 거리 L_n, L_p 이상으로 설계하여 양자 효율(Quantum Efficiency) 극대화."
+            }
+          ],
+          "conclusion": "유사 중성 영역에서 소수 운반자의 공간적 감쇠는 확산 계수와 재결합 수명의 기하평균인 확산 거리 L_p를 시정수로 갖는 2계 확산 미분방정식에 의해 완벽히 지배된다."
+        },
+        {
+          "derivationId": "deriv-08-shockley-diode-equation",
+          "title": "접합 법칙 경계조건 및 쇼클리 다이오드 I-V 특성 방정식의 완전 유도",
+          "targetResult": "I = I_0 \\left( \\exp\\left(\\frac{q V_a}{k_B T}\\right) - 1 \\right), \\quad I_0 = q A n_i^2 \\left( \\frac{D_p}{L_p N_D} + \\frac{D_n}{L_n N_A} \\right)",
+          "prerequisites": [
+            "내장 전위(Built-in Potential): V_bi = V_T * ln(N_A * N_D / n_i^2)",
+            "접합 법칙(Law of the Junction): p_n(x_n) = p_{n0} * exp(V_a / V_T)",
+            "반무한(Long-Base) 다이오드 경계조건: x -> infty 일 때 Delta p_n(x) -> 0"
+          ],
+          "steps": [
+            {
+              "stepNumber": 1,
+              "stepTitle": "인가 바이어스 V_a에 따른 에너지 장벽 저하와 접합 법칙 수립",
+              "mathExpression": "p_n(x_n) = p_{n0} \\exp\\left( \\frac{q V_a}{k_B T} \\right) \\implies \\Delta p_n(x_n) = p_n(x_n) - p_{n0} = p_{n0}\\left( \\exp\\left(\\frac{q V_a}{k_B T}\\right) - 1 \\right)",
+              "mathematicalExplanation": "공핍층 양단의 총 포텐셜 장벽은 열평형 시 V_{bi} 에서 순방향 전압 V_a 인가 시 V_{bi} - V_a 로 낮아진다. 공핍 영역 내부에서 준-페르미 준위가 일정하게 유지된다는 이상적 쇼클리 가정에 의해, 공핍층 가장자리 x = x_n 에서 주입된 정공 농도는 열평형 농도 p_{n0} 의 \\exp(q V_a / k_B T) 배로 기하급수적으로 폭증한다. 따라서 잉여 정공 농도는 \\Delta p_n(x_n) = p_{n0}(e^{V_a/V_T} - 1) 이 된다.",
+              "physicalInterpretation": "낮아진 에너지 문턱을 넘어 다수의 정공이 n 영역으로 쏟아져 들어가는(소수 운반자 주입, Carrier Injection) 현상을 정량화한다.",
+              "engineeringApplication": "LED(발광 다이오드) 발광 강도 제어 및 반도체 레이저의 문턱 주입 전류 계산."
+            },
+            {
+              "stepNumber": 2,
+              "stepTitle": "경계조건 적용을 통한 잉여 운반자 농도 분포 결정",
+              "mathExpression": "\\lim_{x \\to \\infty} \\Delta p_n(x) = 0 \\implies C_2 = 0 \\implies \\Delta p_n(x) = p_{n0}\\left( e^{V_a / V_T} - 1 \\right) \\exp\\left( -\\frac{x - x_n}{L_p} \\right)",
+              "mathematicalExplanation": "일반해 \\Delta p_n(x) = C_1 e^{-(x-x_n)/L_p} + C_2 e^{(x-x_n)/L_p} 에 물리적 유계 경계조건(x \\to \\infty 에서 발산 배제)을 적용하면 C_2 = 0 이다. x = x_n 에서의 경계조건 \\Delta p_n(x_n) 을 대입하면 C_1 이 결정되어 완벽한 단일 지수 감쇠 공간 프로파일이 도출된다.",
+              "physicalInterpretation": "주입된 정공들은 접합면에서 멀어질수록 전자들과 만나 소멸하므로 농도가 거리 L_p를 특성 길이로 하여 지수적으로 감쇠한다.",
+              "engineeringApplication": "BJT 트랜지스터에서 베이스 폭 W_B가 확산 거리 L_B보다 훨씬 좁아야 하는(W_B << L_B) 물리적 이유."
+            },
+            {
+              "stepNumber": 3,
+              "stepTitle": "공핍층 경계면(x = x_n)에서의 정공 확산 전류 밀도 계산",
+              "mathExpression": "J_p(x_n) = -q D_p \\left. \\frac{d\\Delta p_n}{dx} \\right|_{x = x_n} = -q D_p \\left( -\\frac{1}{L_p} \\right) \\Delta p_n(x_n) = \\frac{q D_p p_{n0}}{L_p}\\left( e^{V_a / V_T} - 1 \\right)",
+              "mathematicalExplanation": "확산 법칙에 공간 도함수 \\left.\\frac{d\\Delta p_n}{dx}\\right|_{x_n} = -\\frac{1}{L_p} \\Delta p_n(x_n) 을 대입한다. 두 개의 음의 부호(-)가 곱해져 순 양(+)의 전류가 형성된다.",
+              "physicalInterpretation": "농도 구배의 기울기가 클수록(L_p가 짧을수록, 전압 V_a가 높을수록) 단위 시간당 접합을 건너 확산해 들어가는 정공의 수가 급증한다.",
+              "engineeringApplication": "쇼키 다이오드(Schottky Diode)와 PN 다이오드의 전류 주입 메커니즘 차이점 비교."
+            },
+            {
+              "stepNumber": 4,
+              "stepTitle": "p영역 전자 전류 합성 및 총 전류 밀도 공식 도출",
+              "mathExpression": "J_n(-x_p) = \\frac{q D_n n_{p0}}{L_n}\\left( e^{V_a / V_T} - 1 \\right) \\implies J_{\\text{tot}} = J_p(x_n) + J_n(-x_p) = \\left( \\frac{q D_p p_{n0}}{L_p} + \\frac{q D_n n_{p0}}{L_n} \\right)\\left( e^{V_a / V_T} - 1 \\right)",
+              "mathematicalExplanation": "완벽히 대칭적인 방식으로 p영역(x = -x_p)으로 주입되는 전자 확산 전류 밀도 J_n(-x_p)를 구한다. 이상적 공핍 영역 내부에서는 재결합 및 생성이 없으므로 공핍층을 통과하는 전류는 보존된다. 따라서 접합을 흐르는 총 전류 밀도는 두 소수 운반자 확산 전류의 합이다.",
+              "physicalInterpretation": "다이오드를 흐르는 총 전류는 p에서 n으로 넘어가는 정공 전류와 n에서 p로 넘어가는 전자 전류의 결합이다.",
+              "engineeringApplication": "비대칭 도핑(P+N 접합)을 통해 한쪽 운반자 전류(정공)만을 일방적으로 우세하게 만드는 이미터 주입 효율(Emitter Injection Efficiency) 설계."
+            },
+            {
+              "stepNumber": 5,
+              "stepTitle": "역포화 전류 I_0 정식화 및 쇼클리 다이오드 방정식 완성",
+              "mathExpression": "p_{n0} = \\frac{n_i^2}{N_D}, \\quad n_{p0} = \\frac{n_i^2}{N_A} \\implies I_0 \\equiv q A n_i^2 \\left( \\frac{D_p}{L_p N_D} + \\frac{D_n}{L_n N_A} \\right), \\quad I = I_0 \\left( \\exp\\left(\\frac{V_a}{\\eta V_T}\\right) - 1 \\right)",
+              "mathematicalExplanation": "질량 작용 법칙(Law of Mass Action: n*p = n_i^2)을 대입하여 평형 소수 농도를 진성 캐리어 농도 n_i와 도핑 농도로 치환한다. 접합 단면적 A를 곱하면 총 전류 I가 얻어지며, 실제 재결합-생성 전류의 기여를 반영하는 이상 계수(Ideality Factor) \\eta 를 지수에 도입하여 완벽한 쇼클리 다이오드 방정식을 완성한다.",
+              "physicalInterpretation": "V_a >> V_T 일 때 전류는 전압에 대해 지수함수적으로 급증(순방향 도통)하고, V_a < 0 이며 |V_a| >> V_T 일 때 e^{V_a/V_T} -> 0 이 되어 극미세한 음의 역포화 전류 -I_0 만이 흐르는 완벽한 일방통행 정류 특성을 보여준다.",
+              "engineeringApplication": "반도체 정류 다이오드, 클램퍼, 스위칭 소자 모델링 및 SPICE Diode Compact Model(Is, N, Rs 파라미터)의 이론적 토대."
+            }
+          ],
+          "conclusion": "쇼클리 다이오드 방정식은 소수 운반자의 확산 미분방정식과 접합 법칙 경계조건을 결합하여 엄밀하게 유도되며, 반도체 정류 작용의 근본 물리 메커니즘을 규정한다."
+        }
+      ],
+      "engineeringApplications": [
+        {
+          "domain": "전력용 반도체 소자 (Power Semiconductor Devices)",
+          "application": "역회복 시간(Reverse Recovery Time, t_rr) 및 Q_rr 최적화",
+          "details": "다이오드 턴오프 시 유사 중성 영역에 축적된 잉여 소수 운반자 전하(Q_rr = I_F * tau)의 신속한 재결합을 위해 백금(Pt)/전자선 조사를 통한 캐리어 수명 단축."
+        },
+        {
+          "domain": "초고집적 디지털 CMOS 집적회로 (VLSI Logic)",
+          "application": "서브스레숄드 스윙(Subthreshold Swing, SS) 한계 해석",
+          "details": "MOSFET이 약반전(Weak Inversion) 상태일 때 드레인 전류가 쇼클리 확산 메커니즘에 의해 지배되므로, 이론적 상온 최소 SS 한계인 S = (ln 10) * V_T approx 60 mV/dec 가 도출됨."
+        },
+        {
+          "domain": "광전 소자 및 신재생 에너지 (Photovoltaics & Optoelectronics)",
+          "application": "태양전지 개방회로 전압(V_oc) 및 곡선 인자(Fill Factor)",
+          "details": "광생성 단락전류 I_sc 하에서 쇼클리 방정식을 풀어 V_oc = eta * V_T * ln(I_sc / I_0 + 1) 을 도출하고 역포화 전류 I_0 감소를 통한 변환 효율 극대화."
+        }
+      ],
+      "summary": "반도체 수송 이론은 아인슈타인 관계식과 연속 방정식에 기반하여 유사 중성 영역의 2계 소수 운반자 확산 방정식을 정립하고, 접합 법칙 경계값 문제를 풀어 쇼클리 다이오드 방정식 I = I0(exp(V/Vt)-1)을 엄밀하게 완성한다."
+    }
+  ],
+  "crossDisciplinarySynthesis": [
+    {
+      "interconnection": "맥스웰 방정식과 집중 상수 RLC 회로의 연결 (Field to Lumped Circuits)",
+      "mathematicalBridging": "준정적(Quasi-static) 근사 (회로 크기 d << 파장 lambda) 하에서, 패러데이 법칙 curl E = -dB/dt는 KVL sum(v) = 0으로 수렴하고, 앙페르-맥스웰 법칙 curl H = J + dD/dt는 KCL sum(i) = 0으로 수렴한다. 포인팅 정리의 체적 적분은 집중 소자 R의 줄 손실(i^2 R)과 L, C의 자기/정전 에너지 저장((1/2) L i^2 + (1/2) C v^2)으로 완전 사상된다."
+    },
+    {
+      "interconnection": "라플라스 s-평면과 푸리에 주파수 영역의 연결 (s-Plane to Fourier Continuum)",
+      "mathematicalBridging": "라플라스 복소 평면 s = sigma + j*omega에서 실수 감쇠축 sigma = 0인 허수축(j*omega 축)으로의 사상이 곧 푸리에 변환이다. 시스템의 BIBO 안정성이 보장될 때(모든 극점이 LHP에 존재)에만 허수축이 ROC에 포함되며, 이때 시스템의 안정적인 주파수 응답 함수 H(j*omega)가 정의되어 보드 선도 및 나이퀴스트 궤적으로 직결된다."
+    },
+    {
+      "interconnection": "복소해석학(코시 편각 원리)과 피드백 제어 안정성의 연결 (Complex Analysis to Control Stability)",
+      "mathematicalBridging": "코시 유수 정리의 로그 도함수 선적분(편각 원리)은 우반평면(RHP)의 불안정 극점과 영점의 위상 회전량을 사상하며, 이는 개루프 주파수 응답 L(j*omega)의 임계점 (-1+j0) 일주수 관계 Z = N + P로 구체화되어 복소 해석학의 기하학적 정리가 하드웨어 서보 제어기 및 전력 그리드 안정성 판정의 절대적 도구로 진화한다."
+    },
+    {
+      "interconnection": "정보이론적 통신 한계와 반도체 물리 한계의 연결 (Shannon Capacity to Semiconductor Physics)",
+      "mathematicalBridging": "쇼클리 수송 이론에 따른 MOSFET 스위칭 속도와 이동도(mu), 기생 커패시턴스는 통신 프런트엔드의 최대 아날로그 대역폭 B를 제한하고, 소자의 열잡음(Johnson-Nyquist noise N_0 = k_B T)은 수신 SNR을 결정한다. 섀넌 정리 C = B*log2(1+S/N)은 반도체 물리학이 제공하는 하드웨어 대역폭과 SNR 한계 위에서 수학적으로 달성 가능한 궁극의 데이터 전송률 상한을 정량화한다."
+    }
+  ],
+  "glossaryOfMathematicalSymbols": [
+    {
+      "symbol": "\\nabla",
+      "name": "Nabla / Del Operator",
+      "definition": "3차원 공간 편미분 벡터 연산자 (Gradient, Divergence, Curl 생성)"
+    },
+    {
+      "symbol": "\\mathbf{S}",
+      "name": "Poynting Vector",
+      "definition": "전자기 단위 면적당 전력속 밀도 벡터 [W/m^2]"
+    },
+    {
+      "symbol": "\\omega_0",
+      "name": "Undamped Natural Angular Frequency",
+      "definition": "비감쇠 고유 각진동수 [rad/s] = 1/sqrt(LC)"
+    },
+    {
+      "symbol": "\\zeta",
+      "name": "Damping Ratio",
+      "definition": "무차원 감쇠비 = alpha / omega_0"
+    },
+    {
+      "symbol": "s",
+      "name": "Complex Frequency",
+      "definition": "라플라스 복소 변수 s = sigma + j*omega [s^-1]"
+    },
+    {
+      "symbol": "\\text{ROC}",
+      "name": "Region of Convergence",
+      "definition": "라플라스 적분이 절대 수렴하는 복소 s-평면 상의 영역"
+    },
+    {
+      "symbol": "\\text{Si}(x)",
+      "name": "Sine Integral Function",
+      "definition": "Si(x) = int_0^x (sin u / u) du (깁스 현상 오버슈트 계산에 활용)"
+    },
+    {
+      "symbol": "L(s)",
+      "name": "Open-Loop Transfer Function",
+      "definition": "개루프 전달함수 = G(s)*H(s)"
+    },
+    {
+      "symbol": "N",
+      "name": "Encirclement Count",
+      "definition": "나이퀴스트 선도가 임계점 (-1+j0)을 반시계방향(CCW)으로 일주하는 순 횟수"
+    },
+    {
+      "symbol": "H(X)",
+      "name": "Shannon Entropy",
+      "definition": "확률변수 X의 평균 정보량 / 불확실성 [bits]"
+    },
+    {
+      "symbol": "I(X; Y)",
+      "name": "Mutual Information",
+      "definition": "확률변수 X와 Y가 공유하는 유효 정보량 [bits]"
+    },
+    {
+      "symbol": "C",
+      "name": "Channel Capacity",
+      "definition": "통신 채널의 최대 무오류 정보 전송 속도 상한 [bits/s]"
+    },
+    {
+      "symbol": "V_T",
+      "name": "Thermal Voltage",
+      "definition": "열전압 = k_B * T / q approx 25.85 mV (at 300 K)"
+    },
+    {
+      "symbol": "L_p, L_n",
+      "name": "Diffusion Lengths",
+      "definition": "소수 운반자 확산 거리 = sqrt(D * tau) [m]"
+    },
+    {
+      "symbol": "I_0",
+      "name": "Reverse Saturation Current",
+      "definition": "다이오드 열평형 역방향 포화 누설 전류 [A]"
+    }
+  ]
+}

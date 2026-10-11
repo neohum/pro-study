@@ -1,0 +1,618 @@
+/* ==========================================================================
+   cpu-sim.css — 8-bit Virtual Computer & CPU Simulator Styling
+   Pure WHITE High-Contrast Outlined E-ink Theme & Flaticon UIcons Support
+   ========================================================================== */
+
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
+
+:root {
+  --cpu-bg: #ffffff;
+  --cpu-bg-surface: #ffffff;
+  --cpu-bg-elevated: #f8fafc;
+  --cpu-border: #0f172a;
+  --cpu-border-highlight: #0f172a;
+  --cpu-fg: #0f172a;
+  --cpu-fg-muted: #334155;
+  --cpu-accent: #2563eb;
+  --cpu-accent-hover: #1d4ed8;
+  --cpu-cyan: #0284c7;
+  --cpu-green: #16a34a;
+  --cpu-amber: #d97706;
+  --cpu-rose: #dc2626;
+  --cpu-led-on: #16a34a;
+  --cpu-led-off: #f1f5f9;
+  --cpu-bus-active: #2563eb;
+  --cpu-radius-sm: 6px;
+  --cpu-radius-md: 10px;
+  --cpu-radius-lg: 14px;
+  --cpu-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --cpu-font-mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Consolas, "D2Coding", monospace;
+  box-sizing: border-box;
+}
+
+.cpu-sim-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: var(--cpu-bg);
+  color: var(--cpu-fg);
+  font-family: var(--cpu-font-sans);
+  border-radius: var(--cpu-radius-lg);
+  border: 1.5px solid #0f172a;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06);
+  box-sizing: border-box;
+}
+
+.cpu-sim-wrapper *,
+.cpu-sim-wrapper *::before,
+.cpu-sim-wrapper *::after {
+  box-sizing: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Top Header Bar
+   -------------------------------------------------------------------------- */
+.cpu-sim-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background-color: var(--cpu-bg-surface);
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-md);
+}
+
+.cpu-sim-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--cpu-fg);
+}
+
+.cpu-sim-title i {
+  font-size: 1.35rem;
+  color: #0f172a;
+}
+
+.cpu-sim-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpu-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: var(--cpu-font-mono);
+  border-radius: 9999px;
+  border: 1.5px solid #0f172a;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.cpu-badge-bus {
+  background-color: #f0f9ff;
+  color: #0369a1;
+  border-color: #0f172a;
+}
+
+.cpu-badge-addr {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border-color: #0f172a;
+}
+
+.cpu-badge-clock {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border-color: #0f172a;
+}
+
+.cpu-badge-halted {
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+  animation: cpu-pulse-glow 1.5s infinite;
+}
+
+@keyframes cpu-pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.03); }
+}
+
+/* --------------------------------------------------------------------------
+   Canvas Container
+   -------------------------------------------------------------------------- */
+.cpu-sim-canvas-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 480px;
+  background-color: #ffffff;
+  border-radius: var(--cpu-radius-md);
+  border: 1.5px solid #0f172a;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.cpu-sim-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* --------------------------------------------------------------------------
+   Control Dashboard
+   -------------------------------------------------------------------------- */
+.cpu-sim-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 18px;
+  background-color: var(--cpu-bg-surface);
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-md);
+}
+
+.cpu-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.cpu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--cpu-font-sans);
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+}
+
+.cpu-btn:hover:not(:disabled) {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1.5px solid #0f172a;
+}
+
+.cpu-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.cpu-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  border-color: #94a3b8;
+}
+
+.cpu-btn-primary {
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+}
+
+.cpu-btn-primary:hover:not(:disabled) {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1.5px solid #0f172a;
+}
+
+.cpu-btn-running {
+  background-color: #0f172a;
+  border: 1.5px solid #0f172a;
+  color: #ffffff;
+}
+
+.cpu-btn-running:hover:not(:disabled) {
+  background-color: #1e293b;
+  border: 1.5px solid #0f172a;
+  color: #ffffff;
+}
+
+.cpu-btn-accent {
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+}
+
+.cpu-btn-accent:hover:not(:disabled) {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1.5px solid #0f172a;
+}
+
+.cpu-btn-warn {
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+}
+
+.cpu-btn-warn:hover:not(:disabled) {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1.5px solid #0f172a;
+}
+
+.cpu-btn-danger {
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
+}
+
+.cpu-btn-danger:hover:not(:disabled) {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: 1.5px solid #dc2626;
+}
+
+.cpu-btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
+
+/* Settings and Preset Row */
+.cpu-settings-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1.5px solid #0f172a;
+}
+
+.cpu-setting-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--cpu-fg-muted);
+}
+
+.cpu-setting-item label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  color: var(--cpu-fg);
+}
+
+.cpu-setting-item label i {
+  color: #0f172a;
+}
+
+.cpu-select {
+  padding: 6px 12px;
+  font-size: 0.84rem;
+  font-family: var(--cpu-font-sans);
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-sm);
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: border-color 0.15s;
+}
+
+.cpu-select:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Workspace: Assembly Editor & RAM Inspector
+   -------------------------------------------------------------------------- */
+.cpu-sim-workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .cpu-sim-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cpu-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-md);
+  overflow: hidden;
+}
+
+.cpu-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #f8fafc;
+  border-bottom: 1.5px solid #0f172a;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+.cpu-panel-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cpu-panel-header i {
+  color: #0f172a;
+}
+
+.cpu-ram-info {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cpu-panel-body {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 10px;
+  flex: 1;
+  background-color: #ffffff;
+}
+
+/* Assembly Code Editor */
+.cpu-asm-editor {
+  width: 100%;
+  height: 280px;
+  padding: 12px;
+  font-family: var(--cpu-font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-sm);
+  resize: vertical;
+  outline: none;
+  tab-size: 2;
+  white-space: pre;
+  box-sizing: border-box;
+}
+
+.cpu-asm-editor:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.2);
+}
+
+.cpu-asm-status {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-family: var(--cpu-font-mono);
+  font-weight: 600;
+  border-radius: var(--cpu-radius-sm);
+  background-color: #f8fafc;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.cpu-asm-status.error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.cpu-asm-status.success {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border-color: #16a34a;
+}
+
+/* RAM Table */
+.cpu-ram-table-wrapper {
+  max-height: 318px;
+  overflow-y: auto;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-sm);
+  background-color: #ffffff;
+}
+
+.cpu-ram-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--cpu-font-mono);
+  font-size: 0.8rem;
+  text-align: left;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.cpu-ram-table th {
+  position: sticky;
+  top: 0;
+  padding: 8px 10px;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+  border-bottom: 1.5px solid #0f172a;
+  z-index: 1;
+}
+
+.cpu-ram-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+}
+
+.cpu-ram-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.cpu-ram-table tr.active-mar {
+  background-color: #e0f2fe !important;
+  color: #0f172a;
+}
+
+.cpu-ram-table tr.active-mar td {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cpu-ram-table tr.active-mar td:first-child {
+  border-left: 4px solid #0284c7;
+}
+
+.cpu-ram-table tr.active-pc {
+  background-color: #fef3c7 !important;
+  color: #0f172a;
+}
+
+.cpu-ram-table tr.active-pc td {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cpu-ram-table tr.active-pc td:first-child {
+  border-left: 4px solid #d97706;
+}
+
+.cpu-ram-table tr.active-pc.active-mar {
+  background-color: #dcfce7 !important;
+  color: #0f172a;
+}
+
+.cpu-ram-table tr.active-pc.active-mar td:first-child {
+  border-left: 4px solid #16a34a;
+}
+
+.cpu-ram-editable {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  font-weight: 600;
+}
+
+.cpu-ram-editable:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.cpu-ram-addr-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.cpu-ram-disasm {
+  color: #0369a1;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Instruction Set & Reference Accordion
+   -------------------------------------------------------------------------- */
+.cpu-reference-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1.5px solid #0f172a;
+  border-radius: var(--cpu-radius-md);
+  overflow: hidden;
+}
+
+.cpu-reference-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: #f8fafc;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #0f172a;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1.5px solid #0f172a;
+}
+
+.cpu-reference-header i {
+  color: #0f172a;
+}
+
+.cpu-reference-body {
+  padding: 14px;
+  overflow-x: auto;
+  background-color: #ffffff;
+}
+
+.cpu-isa-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.cpu-isa-table th,
+.cpu-isa-table td {
+  padding: 8px 12px;
+  border: 1px solid #0f172a;
+  text-align: left;
+}
+
+.cpu-isa-table th {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.cpu-isa-table td {
+  color: #0f172a;
+}
+
+.cpu-isa-table td code {
+  font-family: var(--cpu-font-mono);
+  color: #0f172a;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.cpu-isa-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}

@@ -110,7 +110,7 @@
       ctx.lineTo(x, padT + plotH);
       ctx.stroke();
 
-      ctx.fillStyle = '#64748b';
+      ctx.fillStyle = '#0f172a';
       ctx.font = '10px sans-serif';
       ctx.fillText(`${v}V`, x - 8, padT + plotH + 15);
     }
@@ -122,20 +122,20 @@
       ctx.lineTo(padL + plotW, y);
       ctx.stroke();
 
-      ctx.fillStyle = '#64748b';
+      ctx.fillStyle = '#0f172a';
       ctx.font = '10px sans-serif';
       ctx.fillText(`${c}mA`, padL - 38, y + 4);
     }
 
-    // Border
-    ctx.strokeStyle = '#94a3b8';
+    // High-contrast E-ink Border
+    ctx.strokeStyle = '#0f172a';
     ctx.lineWidth = 1.5;
     ctx.strokeRect(padL, padT, plotW, plotH);
 
     // Draw Family of IV Curves
     for (const c of res.curves) {
       const isSelected = c.ib_uA === res.activeIb_uA;
-      ctx.strokeStyle = isSelected ? '#2563eb' : '#94a3b8';
+      ctx.strokeStyle = isSelected ? '#2563eb' : '#64748b';
       ctx.lineWidth = isSelected ? 2.5 : 1.5;
       ctx.beginPath();
       for (let i = 0; i < c.points.length; i++) {
@@ -149,7 +149,7 @@
 
       // Label at end of curve
       const last = c.points[c.points.length - 1];
-      ctx.fillStyle = isSelected ? '#1d4ed8' : '#64748b';
+      ctx.fillStyle = isSelected ? '#2563eb' : '#0f172a';
       ctx.font = isSelected ? 'bold 10px sans-serif' : '10px sans-serif';
       const labelY = (padT + plotH) - (last.ic / maxIc) * plotH;
       ctx.fillText(`Ib=${c.ib_uA}µA`, padL + plotW - 48, labelY - 4);
@@ -189,6 +189,8 @@
     ctx.fillText(`Q-point (${res.qPoint.vce.toFixed(1)}V, ${res.qPoint.ic_mA.toFixed(1)}mA)`, qX + 10, qY - 5);
 
     // Header info
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 12px sans-serif';
     ctx.fillText(`📊 BJT 특성 곡선 & 직류 부하선 | Vcc=${res.Vcc}V, Rc=${res.Rc}Ω, β=${res.beta} | 상태: ${res.qPoint.region}`, padL, 20);
 
     ctx.restore();

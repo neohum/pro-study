@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>3상 전압형 인버터(VSI) &amp; 유도 전동기 동역학 시뮬레이터 (SPWM / SVPWM)</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --accent: #0f172a;
+      --border: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      padding: 20px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-header {
+      width: 100%;
+      max-width: 1200px;
+      margin-bottom: 20px;
+    }
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+    .sim-mount {
+      width: 100%;
+      max-width: 1200px;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1 class="page-title">⚡⚙️ 3상 DC-AC 전압형 인버터 &amp; 유도 전동기 동역학 시뮬레이터</h1>
+    <p class="page-subtitle">
+      SPWM 및 SVPWM 공간 벡터 변조, 6-스위치 H-브리지 인버터 동작, 3상 유도 전동기 Runge-Kutta 4차(RK4) 전자기 토크 및 회전 가속도 미분방정식 해석
+    </p>
+  </header>
+
+  <main class="sim-mount" id="inverter-motor-container"></main>
+
+  <script src="inverter-motor.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.inverterSim = InverterMotorSim.init('#inverter-motor-container', {
+        initialPreset: 'standard_5kw',
+        modulationMode: 'SPWM'
+      });
+    });
+  </script>
+</body>
+</html>

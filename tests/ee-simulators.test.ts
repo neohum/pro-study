@@ -1,11 +1,15 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
 
 // Load EE simulator modules
 const RLCTransientSim = require('../site/web/static/simulators/ee/rlc-transient.js');
 const PhasorPowerSim = require('../site/web/static/simulators/ee/phasor-power.js');
 const ThreePhaseSim = require('../site/web/static/simulators/ee/three-phase.js');
 const RelaySequenceSim = require('../site/web/static/simulators/ee/relay-sequence.js');
+const InverterMotorSim = require('../site/web/static/simulators/ee/inverter-motor.js');
 
 test('EE Sim 1: RLC Transient Response Damping and Conservation', () => {
   // 1. Underdamped test: R=10, L=0.1, C=100uF => alpha=50, omega0=316.2 => underdamped
@@ -103,3 +107,36 @@ test('EE Sim 4: Relay Sequence Logic State Machine (Self-Holding & Interlock)', 
   assert.strictEqual(s.motorState, 'STOP');
   assert.strictEqual(s.lampRed, true);
 });
+
+test('EE Sim 5: 3-Phase Inverter SPWM/SVPWM and Motor Dynamics ODE', () => {
+  // Test SPWM Instantaneous Computation
+  const spwm = InverterMotorSim.computePWMInstant(0.005, {
+    frequency: 60,
+    carrierFreq: 5000,
+    modulationIndex: 0.85,
+    modulationMode: 'SPWM',
+    Vdc: 540
+  });
+
+  assert.strictEqual(spwm.switches.length, 6, '6 switches must be computed');
+  assert.strictEqual(spwm.legs.length, 3, '3 phase legs must be computed');
+  assert.ok(spwm.vll_rms_fund > 0, 'Fundamental RMS line voltage must be positive');
+
+  // Test SVPWM mode: DC utilization should be higher or equal
+  const svpwm = InverterMotorSim.computePWMInstant(0.005, {
+    frequency: 60,
+    carrierFreq: 5000,
+    modulationIndex: 0.85,
+    modulationMode: 'SVPWM',
+    Vdc: 540
+  });
+  assert.ok(svpwm.vll_rms_fund >= spwm.vll_rms_fund, 'SVPWM DC voltage utilization should be higher or equal');
+
+  // Test Induction Motor Thevenin Torque and RK4 integration
+  const preset = InverterMotorSim.MOTOR_PRESETS.standard_5kw;
+  const mData = InverterMotorSim.computeMotorTorqueAndCurrent(180, { frequency: 60 }, preset, 220);
+  assert.ok(mData.Te !== undefined && !isNaN(mData.Te), 'Electromagnetic torque must be valid number');
+  assert.ok(mData.I1 > 0, 'Stator current must be positive');
+  assert.ok(mData.efficiency >= 0 && mData.efficiency <= 100, 'Efficiency must be in [0, 100]% range');
+});
+

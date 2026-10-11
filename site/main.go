@@ -269,6 +269,12 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /math", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/static/math/viewer.html", http.StatusFound)
 	})
+	mux.HandleFunc("GET /math-ee", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/static/math-ee/index.html", http.StatusFound)
+	})
+	mux.HandleFunc("GET /math-ee/", func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/static/math-ee/index.html", http.StatusFound)
+	})
 	mux.HandleFunc("GET /ref", s.handleReference)
 	mux.HandleFunc("GET /ref/{lang}", s.handleReference)
 	mux.HandleFunc("GET /trace/go", s.handleTourTrace)

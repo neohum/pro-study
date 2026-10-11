@@ -65,7 +65,7 @@
 
             <Button
                 android:id="@+id/btn_ref_tab_c"
-                style="@style/EinkButton.Primary"
+                style="@style/EinkButton"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
                 android:layout_marginEnd="6dp"
@@ -118,6 +118,24 @@
                 android:textSize="12sp" />
 
             <Button
+                android:id="@+id/btn_ref_tab_lisp"
+                style="@style/EinkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="6dp"
+                android:text="Lisp"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_ref_tab_nasm"
+                style="@style/EinkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginEnd="6dp"
+                android:text="NASM (x86_64)"
+                android:textSize="12sp" />
+
+            <Button
                 android:id="@+id/btn_ref_tab_math"
                 style="@style/EinkButton.Primary"
                 android:layout_width="wrap_content"
@@ -163,7 +181,7 @@
 
             <Button
                 android:id="@+id/btn_mode_grammar"
-                style="@style/EinkButton.Primary"
+                style="@style/EinkButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

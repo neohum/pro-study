@@ -43,7 +43,9 @@ class ReferenceRepository(private val context: Context) {
         "rust" to "Rust",
         "python" to "Python",
         "typescript" to "TypeScript",
-        "javascript" to "JavaScript"
+        "javascript" to "JavaScript",
+        "lisp" to "Lisp",
+        "nasm" to "NASM (x86_64)"
     )
 
     fun getReference(lang: String): ReferenceDoc? {

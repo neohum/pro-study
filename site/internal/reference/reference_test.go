@@ -17,8 +17,8 @@ func TestLoadReferences(t *testing.T) {
 		t.Fatalf("Load 실패: %v", err)
 	}
 
-	if len(store.List()) != 6 {
-		t.Fatalf("6개 언어가 로드되어야 하나 %d개 로드됨", len(store.List()))
+	if len(store.List()) != 8 {
+		t.Fatalf("8개 언어가 로드되어야 하나 %d개 로드됨", len(store.List()))
 	}
 
 	for _, lang := range TargetLangs {
