@@ -1,6 +1,6 @@
 ---
 plan: lang-study-site
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

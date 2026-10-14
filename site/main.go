@@ -29,6 +29,7 @@ import (
 	"pro-study/site/internal/doctor"
 	"pro-study/site/internal/guide"
 	"pro-study/site/internal/idea"
+	"pro-study/site/internal/mathcs"
 	"pro-study/site/internal/opener"
 	"pro-study/site/internal/progress"
 	"pro-study/site/internal/reference"
@@ -163,9 +164,10 @@ type server struct {
 	port     string
 	lanInfo  apk.LANIPInfo
 	allowLAN bool
-	refStore  *reference.Store
-	tourStore *tour.Store
-	ideaStore *idea.Store
+	refStore    *reference.Store
+	tourStore   *tour.Store
+	ideaStore   *idea.Store
+	mathcsStore *mathcs.Store
 }
 
 func newServer(root string, port string, allowLAN bool) (*server, error) {
@@ -203,6 +205,12 @@ func newServer(root string, port string, allowLAN bool) (*server, error) {
 	}
 	s.ideaStore = ideaStore
 
+	mathcsStore, err := mathcs.Load(root)
+	if err != nil {
+		log.Printf("경고: CS 수학 필사(math-cs) 로드 실패: %v", err)
+	}
+	s.mathcsStore = mathcsStore
+
 	s.runner = runner.New()
 	s.runner.OnDone = func(job *runner.Job, res runner.Result) {
 		if err := s.store.Record(job.Project.ID, job.Stage, res.OK, res.Passed, res.Total); err != nil {
@@ -219,7 +227,7 @@ func newServer(root string, port string, allowLAN bool) (*server, error) {
 		},
 	}
 	s.tmpl = map[string]*template.Template{}
-	for _, page := range []string{"home", "project", "doctor", "apk", "reference", "trace", "ideas"} {
+	for _, page := range []string{"home", "project", "doctor", "apk", "reference", "trace", "ideas", "math_cs"} {
 		t, err := template.New("layout").Funcs(funcs).ParseFS(web.Templates, "templates/layout.html", "templates/"+page+".html")
 		if err != nil {
 			return nil, err
@@ -275,6 +283,16 @@ func (s *server) routes() http.Handler {
 	mux.HandleFunc("GET /math-ee/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/static/math-ee/index.html", http.StatusFound)
 	})
+	mux.HandleFunc("GET /math-cs", s.handleMathCS)
+	mux.HandleFunc("GET /trace/math-cs", s.handleMathCS)
+	mux.HandleFunc("GET /trace/math-cs/{lesson}", s.handleMathCS)
+	mux.HandleFunc("GET /trace/math", s.handleMathCS)
+	mux.HandleFunc("GET /trace/math/{lesson}", s.handleMathCS)
+	mux.HandleFunc("GET /api/math-cs/lesson/{lesson}", s.handleAPIMathCSLesson)
+	mux.HandleFunc("GET /api/math-cs/progress", s.handleAPIMathCSProgress)
+	mux.HandleFunc("POST /api/math-cs/progress", s.handleAPIMathCSProgressPost)
+	mux.HandleFunc("GET /math/progress", s.handleAPIMathCSProgress)
+	mux.HandleFunc("POST /math/progress", s.handleAPIMathCSProgressPost)
 	mux.HandleFunc("GET /ref", s.handleReference)
 	mux.HandleFunc("GET /ref/{lang}", s.handleReference)
 	mux.HandleFunc("GET /trace/go", s.handleTourTrace)
@@ -561,6 +579,130 @@ func (s *server) handleAPITourLesson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, 200, lesson)
+}
+
+type mathCSStageGroup struct {
+	ID      string
+	Title   string
+	Lessons []*mathcs.Lesson
+}
+
+func (s *server) handleMathCS(w http.ResponseWriter, r *http.Request) {
+	if s.mathcsStore == nil {
+		http.Error(w, "CS 수학 필사 콘텐츠가 로드되지 않았습니다", 500)
+		return
+	}
+	manifest := s.mathcsStore.Manifest()
+	lessons := s.mathcsStore.AllLessons()
+	if len(lessons) == 0 {
+		http.Error(w, "CS 수학 필사 레슨이 없습니다", 404)
+		return
+	}
+
+	lessonID := r.PathValue("lesson")
+	if lessonID == "" {
+		lessonID = r.URL.Query().Get("lesson")
+	}
+	if lessonID == "" {
+		lessonID = lessons[0].ID
+	}
+
+	cur, ok := s.mathcsStore.GetLesson(lessonID)
+	if !ok {
+		http.NotFound(w, r)
+		return
+	}
+
+	selectedLang := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("lang")))
+	if selectedLang == "" {
+		selectedLang = "python"
+	}
+
+	stageTitleMap := map[string]string{
+		"stage1-middle":        "Stage 1: 기초 이산수학 & 대수",
+		"stage2-common-high":   "Stage 2: 함수·삼각함수 & 파동",
+		"stage3-advanced-high": "Stage 3: 미적분 & 수치해석",
+		"stage4-linear-algebra": "Stage 4: 선형대수학 & 행렬",
+		"stage5-discrete-math":  "Stage 5: 이산수학 & 암호학",
+		"stage6-optimization":   "Stage 6: 다변수 미적분 & AI 최적화",
+		"stage7-stats-numerical": "Stage 7: 확률·정보이론 & 수치해석",
+	}
+	for _, st := range manifest.Stages {
+		stageTitleMap[st.ID] = st.Title
+	}
+
+	var stageGroups []mathCSStageGroup
+	stageIndex := map[string]int{}
+	for _, l := range lessons {
+		idx, exists := stageIndex[l.Stage]
+		if !exists {
+			title := stageTitleMap[l.Stage]
+			if title == "" {
+				title = l.Stage
+			}
+			idx = len(stageGroups)
+			stageIndex[l.Stage] = idx
+			stageGroups = append(stageGroups, mathCSStageGroup{
+				ID:    l.Stage,
+				Title: title,
+			})
+		}
+		stageGroups[idx].Lessons = append(stageGroups[idx].Lessons, l)
+	}
+
+	lessonBytes, _ := json.Marshal(cur)
+	progBytes, _ := json.Marshal(s.mathcsStore.AllProgress())
+
+	s.render(w, "math_cs", map[string]any{
+		"Title":         cur.TitleKo + " · CS 수학-코드 2중 필사",
+		"Manifest":      manifest,
+		"Lessons":       lessons,
+		"StageGroups":   stageGroups,
+		"CurrentLesson": cur,
+		"SelectedLang":  selectedLang,
+		"LessonJSON":    template.JS(lessonBytes),
+		"ProgressJSON":  template.JS(progBytes),
+	})
+}
+
+func (s *server) handleAPIMathCSLesson(w http.ResponseWriter, r *http.Request) {
+	if s.mathcsStore == nil {
+		jsonError(w, 500, "math-cs 저장소가 초기화되지 않았습니다")
+		return
+	}
+	lessonID := r.PathValue("lesson")
+	lesson, ok := s.mathcsStore.GetLesson(lessonID)
+	if !ok {
+		jsonError(w, 404, "레슨을 찾을 수 없습니다: "+lessonID)
+		return
+	}
+	writeJSON(w, 200, lesson)
+}
+
+func (s *server) handleAPIMathCSProgress(w http.ResponseWriter, r *http.Request) {
+	if s.mathcsStore == nil {
+		writeJSON(w, 200, map[string]any{})
+		return
+	}
+	writeJSON(w, 200, s.mathcsStore.AllProgress())
+}
+
+func (s *server) handleAPIMathCSProgressPost(w http.ResponseWriter, r *http.Request) {
+	if s.mathcsStore == nil {
+		jsonError(w, 500, "math-cs 저장소가 초기화되지 않았습니다")
+		return
+	}
+	var payload mathcs.ProgressPayload
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
+		jsonError(w, 400, "잘못된 요청 형식입니다: "+err.Error())
+		return
+	}
+	updated, err := s.mathcsStore.UpdateProgress(payload)
+	if err != nil {
+		jsonError(w, 400, err.Error())
+		return
+	}
+	writeJSON(w, 200, updated)
 }
 
 func (s *server) handleAPK(w http.ResponseWriter, r *http.Request) {

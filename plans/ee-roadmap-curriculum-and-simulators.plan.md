@@ -1,6 +1,6 @@
 ---
 plan: ee-roadmap-curriculum-and-simulators
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

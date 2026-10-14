@@ -1,6 +1,6 @@
 ---
 plan: color-eink-contrast-and-white-simulators
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

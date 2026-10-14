@@ -1,6 +1,6 @@
 ---
 plan: math-programming-transcription
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

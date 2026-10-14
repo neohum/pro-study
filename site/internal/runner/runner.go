@@ -411,6 +411,9 @@ var allowedBases = map[string]bool{
 	"python3": true,
 	"node":    true,
 	"tsc":     true,
+	"sbcl":    true,
+	"nasm":    true,
+	"ld":      true,
 }
 
 func isBuildArtifact(tok string) bool {
@@ -433,7 +436,7 @@ func checkAllowed(argv []string) error {
 	}
 	base := strings.TrimSuffix(strings.ToLower(tok), ".exe")
 	if !allowedBases[base] {
-		return fmt.Errorf("허용되지 않는 명령: %q (허용: gcc, go, rustc, cargo, python, node, tsc, build/...)", tok)
+		return fmt.Errorf("허용되지 않는 명령: %q (허용: gcc, go, rustc, cargo, python, node, tsc, sbcl, nasm, ld, build/...)", tok)
 	}
 	return nil
 }

@@ -150,3 +150,29 @@ func TestTreeAndReadFile(t *testing.T) {
 		t.Errorf("ReadFile(dir) should fail")
 	}
 }
+
+func TestLoadRepository80Projects(t *testing.T) {
+	repoRoot, err := filepath.Abs(filepath.Join("..", "..", ".."))
+	if err != nil {
+		t.Fatal(err)
+	}
+	c, problems, err := Load(repoRoot)
+	if err != nil {
+		t.Fatalf("Load(%s) error: %v", repoRoot, err)
+	}
+	if len(problems) != 0 {
+		t.Fatalf("expected 0 catalog problems, got %d: %v", len(problems), problems)
+	}
+	if len(c.Langs) != 8 {
+		t.Fatalf("expected 8 languages, got %d", len(c.Langs))
+	}
+	for _, l := range c.Langs {
+		if len(l.Projects) != 10 {
+			t.Errorf("language %s (%s): expected 10 projects, got %d", l.Key, l.Name, len(l.Projects))
+		}
+	}
+	if total := len(c.All()); total != 80 {
+		t.Fatalf("expected 80 total projects across 8 languages, got %d", total)
+	}
+}
+
