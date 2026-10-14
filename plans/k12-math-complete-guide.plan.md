@@ -1,6 +1,6 @@
 ---
 plan: k12-math-complete-guide
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

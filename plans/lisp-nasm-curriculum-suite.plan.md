@@ -1,6 +1,6 @@
 ---
 plan: lisp-nasm-curriculum-suite
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

@@ -84,6 +84,10 @@
       renderInverterSim();
     }
 
+    if (window.ProStudyReviewDeck && typeof window.ProStudyReviewDeck.injectHeaderAndSimulatorButtons === 'function') {
+      window.ProStudyReviewDeck.injectHeaderAndSimulatorButtons();
+    }
+
     triggerKaTeX();
   }
 

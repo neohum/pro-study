@@ -1,0 +1,385 @@
+{{define "content"}}
+<link rel="stylesheet" href="/static/math-ee/katex/katex.min.css">
+<link rel="stylesheet" href="/static/math-ee/viewer.css">
+
+<style>
+  .mathcs-eink-shell {
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 12px auto;
+    max-width: 1360px;
+    box-shadow: none !important;
+  }
+  .mathcs-header-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+  .mathcs-grid {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 960px) {
+    .mathcs-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .mathcs-sidebar {
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    border-radius: 8px;
+    padding: 14px;
+    height: fit-content;
+  }
+  .mathcs-stage-box {
+    border-bottom: 2px solid #cbd5e1;
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  .mathcs-stage-box:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  .mathcs-stage-title {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+  .mathcs-lesson-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .mathcs-lesson-btn:hover {
+    background: #f1f5f9;
+  }
+  .mathcs-lesson-btn.active {
+    background: #0f172a !important;
+    color: #ffffff !important;
+  }
+  .mathcs-card {
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: none !important;
+  }
+  .mathcs-section-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mathcs-symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+  }
+  .mathcs-symbol-item {
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    border-radius: 6px;
+    padding: 12px;
+  }
+  .mathcs-symbol-badge {
+    display: inline-block;
+    background: #0f172a;
+    color: #ffffff;
+    font-family: var(--font-mono, monospace);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .mathcs-trace-box {
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    border-radius: 6px;
+    padding: 14px;
+    margin-top: 10px;
+  }
+  .mathcs-ghost-line {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.96rem;
+    font-weight: 700;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 2px dashed #0f172a;
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .mathcs-input {
+    width: 100%;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.96rem;
+    font-weight: 700;
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    border-radius: 4px;
+    padding: 10px 12px;
+    outline: none;
+  }
+  .mathcs-input.mismatch {
+    border-color: #b91c1c;
+    background: #fef2f2;
+  }
+  .mathcs-input.matched {
+    border-color: #15803d;
+    background: #f0fdf4;
+  }
+  .mathcs-lang-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .mathcs-lang-tab {
+    padding: 6px 12px;
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .mathcs-lang-tab.active {
+    background: #0f172a !important;
+    color: #ffffff !important;
+  }
+  .mathcs-status-pill {
+    display: inline-block;
+    border: 2px solid #0f172a;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    background: #ffffff;
+    color: #0f172a;
+  }
+  .mathcs-status-pill.done {
+    background: #0f172a;
+    color: #ffffff;
+  }
+</style>
+
+<div class="mathcs-eink-shell" id="mathCsApp" data-current-lesson="{{.CurrentLesson.ID}}" data-initial-lang="{{.SelectedLang}}">
+  <div class="mathcs-header-banner">
+    <div>
+      <div style="font-size:0.85rem;font-weight:800;color:#334155;margin-bottom:4px;">E-INK HIGH-CONTRAST DUAL TRANSCRIPTION SUITE</div>
+      <h1 style="font-size:1.45rem;font-weight:900;color:#0f172a;margin-bottom:6px;">📐 {{.Manifest.Title}}</h1>
+      <p style="font-size:0.92rem;color:#334155;">{{.Manifest.Description}}</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <span class="mathcs-status-pill" id="overallProgressBadge">완료 진도: 계산 중...</span>
+      <button type="button" class="btn-action" id="btnOpenReviewDeck" onclick="window.ProStudyReviewDeck && window.ProStudyReviewDeck.openModal()">
+        🗂️ 복습 카드 덱 (<span id="reviewDeckCount">0</span>)
+      </button>
+    </div>
+  </div>
+
+  <div class="mathcs-grid">
+    <!-- 좌측 Stage 1~4 및 전체 레슨 목록 사이드바 -->
+    <aside class="mathcs-sidebar" aria-label="CS 수학 필사 커리큘럼 목록">
+      <div style="font-weight:900;font-size:1rem;border-bottom:2px solid #0f172a;padding-bottom:8px;margin-bottom:12px;">
+        📚 Stage별 필사 레슨 ({{len .Lessons}}개)
+      </div>
+
+      {{range .StageGroups}}
+      <div class="mathcs-stage-box" data-stage-id="{{.ID}}">
+        <div class="mathcs-stage-title">{{.Title}}</div>
+        {{range .Lessons}}
+        <a href="/trace/math-cs/{{.ID}}?lang={{$.SelectedLang}}"
+           class="mathcs-lesson-btn {{if eq .ID $.CurrentLesson.ID}}active{{end}}"
+           data-lesson-id="{{.ID}}">
+          <span>#{{.Order}} {{.TitleKo}}</span>
+        </a>
+        {{end}}
+      </div>
+      {{end}}
+    </aside>
+
+    <!-- 우측 메인 2중 필사 워크스페이스 -->
+    <section class="mathcs-main">
+      <!-- 1. 레슨 개요 및 핵심 개념 -->
+      <article class="mathcs-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+          <span class="mathcs-status-pill">{{.CurrentLesson.Stage}} · Module #{{.CurrentLesson.Order}}</span>
+          <span style="font-size:0.84rem;font-weight:700;color:#334155;">{{.CurrentLesson.KoreanCurriculumUnit}}</span>
+        </div>
+        <h2 style="font-size:1.35rem;font-weight:900;margin-bottom:4px;">{{.CurrentLesson.TitleKo}}</h2>
+        <div style="font-size:0.9rem;color:#334155;font-weight:700;margin-bottom:12px;">{{.CurrentLesson.TitleEn}}</div>
+        <p style="font-size:0.95rem;line-height:1.7;margin-bottom:12px;">{{.CurrentLesson.MathExplanation}}</p>
+        <div style="border:2px solid #0f172a;border-left:6px solid #0f172a;padding:10px 14px;border-radius:6px;font-size:0.9rem;background:#ffffff;">
+          <strong>💻 CS 알고리즘 직관:</strong> {{.CurrentLesson.CSIntuition}}
+        </div>
+      </article>
+
+      <!-- 2. 수식 기호 해부도 (Symbol Anatomy Guide) -->
+      <article class="mathcs-card" id="symbolAnatomySection">
+        <div class="mathcs-section-title">
+          <span>🔍 수식 기호 해부도 (Symbol Anatomy)</span>
+          <span style="font-size:0.82rem;font-weight:700;">기호 하나하나의 뜻과 어원을 분해합니다</span>
+        </div>
+        <div class="mathcs-symbol-grid">
+          {{range .CurrentLesson.SymbolGuide}}
+          <div class="mathcs-symbol-item">
+            <div class="mathcs-symbol-badge">{{.Symbol}}</div>
+            <div style="font-weight:800;font-size:0.92rem;margin-bottom:4px;">{{.Name}}</div>
+            <div style="font-size:0.85rem;color:#334155;line-height:1.5;">{{.Meaning}}</div>
+          </div>
+          {{end}}
+        </div>
+      </article>
+
+      <!-- 3. Track A: LaTeX 수식 필사 (Formula Transcription) -->
+      <article class="mathcs-card" id="formulaTraceSection">
+        <div class="mathcs-section-title">
+          <span>✍️ [Track 1] LaTeX 수식 정합 필사</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="mathcs-status-pill" id="formulaTraceStatus">미완료</span>
+            <button type="button" class="btn-action" id="btnBookmarkFormula">🔖 복습 카드 담기</button>
+          </div>
+        </div>
+        <div id="formulaListContainer">
+          {{range $idx, $f := .CurrentLesson.MathFormulasToTrace}}
+          <div style="border:2px solid #0f172a;border-radius:6px;padding:12px;margin-bottom:10px;">
+            <div style="font-weight:800;font-size:0.92rem;margin-bottom:4px;">공식 {{$idx}}: {{$f.Title}}</div>
+            <div style="font-size:1.15rem;margin:8px 0;">$$ {{$f.Latex}} $$</div>
+            <div style="font-size:0.85rem;color:#334155;">{{$f.Explanation}}</div>
+          </div>
+          {{end}}
+        </div>
+        <div class="mathcs-trace-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-weight:800;font-size:0.9rem;">현재 필사할 LaTeX 수식 (<span id="formulaStepIdx">1</span>/<span id="formulaStepTotal">1</span>)</span>
+            <button type="button" class="btn-action" id="btnFillFormulaGhost" style="padding:4px 10px;font-size:0.8rem;">자동 입력(검증 테스트)</button>
+          </div>
+          <div class="mathcs-ghost-line" id="formulaGhostTarget"></div>
+          <input type="text" id="formulaTraceInput" class="mathcs-input" autocomplete="off" spellcheck="false"
+                 placeholder="위 LaTeX 수식을 그대로 타이핑하고 Enter를 누르세요...">
+          <div id="formulaFeedback" style="margin-top:8px;font-size:0.85rem;font-weight:700;"></div>
+        </div>
+      </article>
+
+      <!-- 4. Track B: 다국어 코드 필사 (Python, C, Go, Rust, JS, TS, Lisp) -->
+      <article class="mathcs-card" id="codeTraceSection">
+        <div class="mathcs-section-title">
+          <span>💻 [Track 2] 다국어 알고리즘 코드 타이핑 필사</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="mathcs-status-pill" id="codeTraceStatus">미완료</span>
+            <button type="button" class="btn-action" id="btnBookmarkCode">🔖 코드 복습 카드 담기</button>
+          </div>
+        </div>
+
+        <div class="mathcs-lang-tabs" role="tablist" aria-label="코드 필사 언어 선택">
+          <button type="button" class="mathcs-lang-tab" data-lang="python">Python</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="c">C23</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="go">Go</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="rust">Rust</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="javascript">JS</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="typescript">TS</button>
+          <button type="button" class="mathcs-lang-tab" data-lang="lisp">Common Lisp</button>
+        </div>
+
+        <div style="border:2px solid #0f172a;border-radius:6px;padding:12px;margin-bottom:12px;background:#ffffff;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <strong id="codeEntryFile" style="font-family:monospace;font-size:0.9rem;">main.py</strong>
+            <span id="codeImplNotes" style="font-size:0.82rem;color:#334155;font-weight:700;"></span>
+          </div>
+          <pre id="codeFullPreview" style="font-family:monospace;font-size:0.88rem;line-height:1.5;overflow-x:auto;border-top:2px solid #cbd5e1;padding-top:8px;"></pre>
+        </div>
+
+        <div class="mathcs-trace-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-weight:800;font-size:0.9rem;">코드 한 줄 필사 (<span id="codeLineIdx">1</span>/<span id="codeLineTotal">1</span>줄)</span>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-action" id="btnResetCodeTrace" style="padding:4px 10px;font-size:0.8rem;">처음부터</button>
+              <button type="button" class="btn-action" id="btnCompleteCodeLine" style="padding:4px 10px;font-size:0.8rem;">한 줄 완성</button>
+            </div>
+          </div>
+          <div class="mathcs-ghost-line" id="codeGhostTarget"></div>
+          <input type="text" id="codeTraceInput" class="mathcs-input" autocomplete="off" spellcheck="false"
+                 placeholder="위 코드 라인을 정확히 타이핑하고 Enter를 누르세요...">
+          <div id="codeTraceFeedback" style="margin-top:8px;font-size:0.85rem;font-weight:700;"></div>
+        </div>
+      </article>
+
+      <!-- 5. Level 2: 수식 빈칸 유도 검증 (Fill-in-the-blank Derivation) -->
+      <article class="mathcs-card" id="fillBlankSection">
+        <div class="mathcs-section-title">
+          <span>🧩 [Level 2] 수식 빈칸 유도 검증 (Fill-in-the-Blank)</span>
+          <span class="mathcs-status-pill" id="blankStatusPill">미완료</span>
+        </div>
+        {{if .CurrentLesson.FillBlank}}
+        <div style="font-size:1.1rem;border:2px solid #0f172a;padding:12px;border-radius:6px;margin-bottom:10px;">
+          $$ {{.CurrentLesson.FillBlank.LatexTemplate}} $$
+        </div>
+        <div style="font-size:0.86rem;color:#334155;margin-bottom:12px;">💡 힌트: {{.CurrentLesson.FillBlank.Hint}}</div>
+        <div id="blankInputsContainer" style="display:grid;gap:10px;margin-bottom:12px;"></div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button type="button" class="btn-action" id="btnCheckBlanks">✅ 빈칸 유도 정답 확인</button>
+          <button type="button" class="btn-action" id="btnRevealBlanks">정답 채우기</button>
+          <span id="blankVerifyFeedback" style="font-size:0.88rem;font-weight:800;"></span>
+        </div>
+        {{end}}
+      </article>
+
+      <!-- 6. Level 3: 체크포인트 개념 퀴즈 (Checkpoint Quizzes) -->
+      <article class="mathcs-card" id="checkpointQuizSection">
+        <div class="mathcs-section-title">
+          <span>🏆 [Level 3] 체크포인트 진단 퀴즈</span>
+          <span class="mathcs-status-pill" id="quizStatusPill">미응시</span>
+        </div>
+        <div id="quizListContainer"></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center;">
+          <button type="button" class="btn-action" id="btnSubmitQuiz">📝 퀴즈 채점 및 진도 저장</button>
+          <span id="quizResultSummary" style="font-weight:800;font-size:0.92rem;"></span>
+        </div>
+      </article>
+    </section>
+  </div>
+</div>
+
+<script>
+  window.__MATH_CS_LESSON__ = {{.LessonJSON}};
+  window.__MATH_CS_PROGRESS__ = {{.ProgressJSON}};
+</script>
+<script src="/static/math-ee/katex/katex.min.js"></script>
+<script src="/static/math-ee/katex/auto-render.min.js"></script>
+<script src="/static/math-ee/review-bookmarks.js"></script>
+<script src="/static/math-ee/math-cs-tracer.js"></script>
+{{end}}

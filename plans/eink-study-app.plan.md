@@ -1,6 +1,6 @@
 ---
 plan: eink-study-app
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---

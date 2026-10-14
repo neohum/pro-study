@@ -1,6 +1,6 @@
 ---
 plan: lang-reference-and-tour-tracing
-status: approved
+status: done
 risk: medium
 owner: neohum
 ---
