@@ -12,11 +12,19 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
+import android.widget.Toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import com.prostudy.eink.data.ContentRepository
 import com.prostudy.eink.data.model.ProjectDetail
 import com.prostudy.eink.data.model.ProjectSummary
 import com.prostudy.eink.ui.catalog.ProjectAdapter
 import com.prostudy.eink.ui.code.CodeViewer
+import com.prostudy.eink.update.UpdateChecker
+import com.prostudy.eink.update.UpdateInfo
 import com.prostudy.eink.util.EinkHelper
 
 class MainActivity : AppCompatActivity() {
@@ -62,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         setupBackNavigation()
 
         selectTab(null)
+        checkForUpdate()
     }
 
     private fun bindViews() {
@@ -312,5 +321,53 @@ class MainActivity : AppCompatActivity() {
             root.setBackgroundColor(Color.WHITE)
             root.invalidate()
         }, 120)
+    }
+
+    private fun checkForUpdate() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val checker = UpdateChecker(this@MainActivity)
+            val info = checker.check()
+            if (info != null && checker.isNewer(info)) {
+                withContext(Dispatchers.Main) {
+                    if (!isFinishing && !isDestroyed) {
+                        showUpdateDialog(checker, info)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showUpdateDialog(checker: UpdateChecker, info: UpdateInfo) {
+        val sizeMb = if (info.sizeBytes > 0) {
+            String.format("%.1f MB", info.sizeBytes / (1024.0 * 1024.0))
+        } else {
+            "알 수 없음"
+        }
+        val message = "새로운 버전(v${info.versionName})이 출시되었습니다.\n업데이트하시겠습니까?\n\n크기: $sizeMb"
+
+        AlertDialog.Builder(this)
+            .setTitle("앱 업데이트 알림")
+            .setMessage(message)
+            .setPositiveButton("지금 업데이트") { _, _ ->
+                startDownloadAndInstall(checker, info)
+            }
+            .setNegativeButton("나중에", null)
+            .show()
+    }
+
+    private fun startDownloadAndInstall(checker: UpdateChecker, info: UpdateInfo) {
+        Toast.makeText(this, "업데이트 다운로드를 시작합니다...", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val apk = checker.download(info)
+            withContext(Dispatchers.Main) {
+                if (apk != null && apk.exists()) {
+                    checker.rememberBuild(info)
+                    val intent = checker.installerIntent(apk)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "업데이트 다운로드에 실패했습니다.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }
