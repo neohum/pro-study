@@ -9,9 +9,10 @@ import assert from 'node:assert/strict';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const ROOT_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const MathCsTracer = require(
   path.join(ROOT_DIR, 'site', 'web', 'static', 'math-ee', 'math-cs-tracer.js'),
@@ -56,7 +57,10 @@ function isWithinRadius(
 
 // 3. 비트마스크 집합
 class BitSet {
-  constructor(public readonly mask: bigint = 0n) {}
+  readonly mask: bigint;
+  constructor(mask: bigint = 0n) {
+    this.mask = mask;
+  }
   add(elem: number): BitSet {
     return new BitSet(this.mask | (1n << BigInt(elem)));
   }
