@@ -39,14 +39,37 @@ data class Stroke(
     private var cachedPath: Path? = null
 
     fun addPoint(p: InkPoint) {
+        val size = points.size
         points.add(p)
-        cachedPath = null
+        val path = cachedPath ?: Path().also { cachedPath = it }
+        if (size == 0) {
+            path.moveTo(p.x, p.y)
+        } else {
+            val prev = points[size - 1]
+            val midX = (prev.x + p.x) / 2f
+            val midY = (prev.y + p.y) / 2f
+            path.quadTo(prev.x, prev.y, midX, midY)
+        }
+    }
+
+    fun finish(lastPoint: InkPoint? = null) {
+        lastPoint?.let { addPoint(it) }
+        val path = cachedPath ?: toPath()
+        if (points.size == 1) {
+            path.lineTo(points[0].x + 0.1f, points[0].y + 0.1f)
+        } else if (points.size > 1) {
+            val last = points.last()
+            path.lineTo(last.x, last.y)
+        }
     }
 
     fun toPath(): Path {
         cachedPath?.let { return it }
         val path = Path()
-        if (points.isEmpty()) return path
+        if (points.isEmpty()) {
+            cachedPath = path
+            return path
+        }
 
         path.moveTo(points[0].x, points[0].y)
         if (points.size == 1) {

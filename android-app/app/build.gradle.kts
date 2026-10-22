@@ -43,6 +43,15 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        jniLibs {
+            pickFirsts += "lib/**/libc++_shared.so"
+        }
+    }
 }
 
 dependencies {
@@ -56,4 +65,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
+
+    implementation("com.onyx.android.sdk:onyxsdk-pen:1.4.11") {
+        exclude(group = "com.android.support")
+    }
+    implementation("com.onyx.android.sdk:onyxsdk-device:1.1.11") {
+        exclude(group = "com.android.support")
+    }
 }

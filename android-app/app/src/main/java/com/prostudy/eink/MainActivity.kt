@@ -40,11 +40,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPenToggle: Button
     private lateinit var btnClearDetailInk: Button
     private lateinit var btnViewGuide: Button
-    private lateinit var btnViewStarter: Button
-    private lateinit var btnViewSolution: Button
     private lateinit var btnViewTrace: Button
     private lateinit var tvReaderBody: TextView
     private lateinit var inkingOverlay: InkingOverlayView
+    private lateinit var scrollTextContent: androidx.core.widget.NestedScrollView
 
     // 따라쓰기 뷰
     private lateinit var btnTraceBack: Button
@@ -56,15 +55,16 @@ class MainActivity : AppCompatActivity() {
 
     private var currentLang = "c"
     private var currentProject: ProjectDetail? = null
-    private var currentDetailMode = DetailMode.GUIDE
-
-    private enum class DetailMode {
-        GUIDE, STARTER, SOLUTION
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+            android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+        )
         setContentView(R.layout.activity_main)
+
+        com.prostudy.eink.ui.ink.OnyxEPDHelper.initApp(this)
 
         repository = ContentRepository(this)
 
@@ -89,11 +89,10 @@ class MainActivity : AppCompatActivity() {
         btnPenToggle = findViewById(R.id.btn_pen_toggle)
         btnClearDetailInk = findViewById(R.id.btn_clear_detail_ink)
         btnViewGuide = findViewById(R.id.btn_view_guide)
-        btnViewStarter = findViewById(R.id.btn_view_starter)
-        btnViewSolution = findViewById(R.id.btn_view_solution)
         btnViewTrace = findViewById(R.id.btn_view_trace)
         tvReaderBody = findViewById(R.id.tv_reader_body)
         inkingOverlay = findViewById(R.id.inking_overlay)
+        scrollTextContent = findViewById(R.id.scroll_text_content)
 
         btnTraceBack = findViewById(R.id.btn_trace_back)
         tvTraceTitle = findViewById(R.id.tv_trace_title)
@@ -138,6 +137,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 스크롤 변경 시 잉킹 오버레이의 오프셋 동기화 (손가락 스크롤과 필기 획 일치)
+        scrollTextContent.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            inkingOverlay.scrollYOffset = scrollY
+        }
+
         // 상세 뒤로가기
         btnDetailBack.setOnClickListener {
             showCatalog()
@@ -149,15 +153,24 @@ class MainActivity : AppCompatActivity() {
             btnPenToggle.text = if (inkingOverlay.isEraserMode) "지우개" else "펜"
         }
 
+        // 상세 펜 버튼 롱클릭: 전용 펜 / 터치 필기 토글 (스타일러스 없는 기기 테스트 지원)
+        btnPenToggle.setOnLongClickListener {
+            inkingOverlay.forceTouchDrawing = !inkingOverlay.forceTouchDrawing
+            val msg = if (inkingOverlay.forceTouchDrawing) "손가락 필기 허용 모드 (테스트용)" else "전용 펜 전용 필기 모드 (Palm Rejection 활성)"
+            android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
+            true
+        }
+
         // 상세 필기 전체 지우기
         btnClearDetailInk.setOnClickListener {
             inkingOverlay.clearAll()
         }
 
-        // 상세 하위 탭 전환
-        btnViewGuide.setOnClickListener { switchDetailMode(DetailMode.GUIDE) }
-        btnViewStarter.setOnClickListener { switchDetailMode(DetailMode.STARTER) }
-        btnViewSolution.setOnClickListener { switchDetailMode(DetailMode.SOLUTION) }
+        // 상세 탭 전환
+        btnViewGuide.setOnClickListener {
+            // 가이드 탭 클릭 시 스크롤 맨 위로 이동
+            scrollTextContent.smoothScrollTo(0, 0)
+        }
 
         // 따라쓰기 화면 열기
         btnViewTrace.setOnClickListener {
@@ -166,6 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         // 따라쓰기 뒤로가기
         btnTraceBack.setOnClickListener {
+            codeTraceView.strokeManager.saveToFile("trace_${currentProject?.id}")
             containerTracing.visibility = View.GONE
             containerDetail.visibility = View.VISIBLE
         }
@@ -182,10 +196,17 @@ class MainActivity : AppCompatActivity() {
             btnTraceEraser.text = if (codeTraceView.isEraserMode) "펜으로 전환" else "지우개"
         }
 
+        // 따라쓰기 지우개 버튼 롱클릭: 터치 필기 모드 토글
+        btnTraceEraser.setOnLongClickListener {
+            codeTraceView.forceTouchDrawing = !codeTraceView.forceTouchDrawing
+            val msg = if (codeTraceView.forceTouchDrawing) "손가락 필기 허용 모드 (테스트용)" else "전용 펜 전용 필기 모드 (Palm Rejection 활성)"
+            android.widget.Toast.makeText(this, msg, android.widget.Toast.LENGTH_SHORT).show()
+            true
+        }
+
         // 따라쓰기 전체 삭제
         btnTraceClear.setOnClickListener {
-            codeTraceView.strokeManager.clear()
-            codeTraceView.invalidate()
+            codeTraceView.clearAll()
         }
     }
 
@@ -203,47 +224,21 @@ class MainActivity : AppCompatActivity() {
         containerTracing.visibility = View.GONE
 
         tvDetailTitle.text = "[${detail.lang.uppercase()}] ${detail.title}"
-        switchDetailMode(DetailMode.GUIDE)
+        tvReaderBody.text = detail.readme
+        tvReaderBody.typeface = android.graphics.Typeface.DEFAULT
 
-        // 이전 세션 필기 복원
-        inkingOverlay.strokeManager.loadFromFile("detail_${detail.id}")
+        // 스크롤 및 잉킹 복원
+        scrollTextContent.scrollTo(0, 0)
+        inkingOverlay.scrollYOffset = 0
+        inkingOverlay.strokeManager.loadFromFile("detail_guide_${detail.id}")
         inkingOverlay.invalidate()
-    }
-
-    private fun switchDetailMode(mode: DetailMode) {
-        currentDetailMode = mode
-        val p = currentProject ?: return
-
-        // 탭 스타일 초기화
-        btnViewGuide.setBackgroundColor(if (mode == DetailMode.GUIDE) Color.BLACK else Color.TRANSPARENT)
-        btnViewGuide.setTextColor(if (mode == DetailMode.GUIDE) Color.WHITE else Color.BLACK)
-
-        btnViewStarter.setBackgroundColor(if (mode == DetailMode.STARTER) Color.BLACK else Color.TRANSPARENT)
-        btnViewStarter.setTextColor(if (mode == DetailMode.STARTER) Color.WHITE else Color.BLACK)
-
-        btnViewSolution.setBackgroundColor(if (mode == DetailMode.SOLUTION) Color.BLACK else Color.TRANSPARENT)
-        btnViewSolution.setTextColor(if (mode == DetailMode.SOLUTION) Color.WHITE else Color.BLACK)
-
-        when (mode) {
-            DetailMode.GUIDE -> {
-                tvReaderBody.text = p.readme
-                tvReaderBody.typeface = android.graphics.Typeface.DEFAULT
-            }
-            DetailMode.STARTER -> {
-                val code = p.starterCode[p.entry] ?: p.starterCode.values.firstOrNull() ?: "(스켈레톤 코드 없음)"
-                tvReaderBody.text = code
-                tvReaderBody.typeface = android.graphics.Typeface.MONOSPACE
-            }
-            DetailMode.SOLUTION -> {
-                val code = p.solutionCode[p.entry] ?: p.solutionCode.values.firstOrNull() ?: "(정답 코드 없음)"
-                tvReaderBody.text = code
-                tvReaderBody.typeface = android.graphics.Typeface.MONOSPACE
-            }
-        }
     }
 
     private fun openTraceMode() {
         val p = currentProject ?: return
+        // 상세 가이드 필기 임시 저장
+        inkingOverlay.strokeManager.saveToFile("detail_guide_${p.id}")
+
         containerDetail.visibility = View.GONE
         containerTracing.visibility = View.VISIBLE
 
@@ -265,7 +260,7 @@ class MainActivity : AppCompatActivity() {
     private fun showCatalog() {
         // 필기 저장
         currentProject?.let { p ->
-            inkingOverlay.strokeManager.saveToFile("detail_${p.id}")
+            inkingOverlay.strokeManager.saveToFile("detail_guide_${p.id}")
             codeTraceView.strokeManager.saveToFile("trace_${p.id}")
         }
 
@@ -278,6 +273,7 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (containerTracing.visibility == View.VISIBLE) {
+                    codeTraceView.strokeManager.saveToFile("trace_${currentProject?.id}")
                     containerTracing.visibility = View.GONE
                     containerDetail.visibility = View.VISIBLE
                 } else if (containerDetail.visibility == View.VISIBLE) {
@@ -294,17 +290,19 @@ class MainActivity : AppCompatActivity() {
      */
     private fun flashScreenRefresh() {
         val root = findViewById<View>(R.id.root_layout)
+        com.prostudy.eink.ui.ink.OnyxEPDHelper.fullRefresh(root)
         root.setBackgroundColor(Color.BLACK)
         Handler(Looper.getMainLooper()).postDelayed({
             root.setBackgroundColor(Color.WHITE)
             root.invalidate()
+            com.prostudy.eink.ui.ink.OnyxEPDHelper.fullRefresh(root)
         }, 120)
     }
 
     override fun onPause() {
         super.onPause()
         currentProject?.let { p ->
-            inkingOverlay.strokeManager.saveToFile("detail_${p.id}")
+            inkingOverlay.strokeManager.saveToFile("detail_guide_${p.id}")
             codeTraceView.strokeManager.saveToFile("trace_${p.id}")
         }
     }

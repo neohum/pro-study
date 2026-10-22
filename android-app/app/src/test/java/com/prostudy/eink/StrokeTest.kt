@@ -38,4 +38,35 @@ class StrokeTest {
         // 300, 300 지점은 멀리 떨어져 있으므로 false
         assertFalse(stroke.intersects(300f, 300f, 10f))
     }
+
+    @Test
+    fun testStrokeMultiplePointsDistanceAndProperties() {
+        val stroke = Stroke(
+            color = 0xFF112233.toInt(),
+            baseWidth = 5.0f,
+            isEraser = false
+        )
+        stroke.addPoint(InkPoint(10f, 20f, 0.5f, 1000L))
+        stroke.addPoint(InkPoint(30f, 40f, 0.9f, 2000L))
+
+        assertEquals(2, stroke.points.size)
+        assertEquals(0xFF112233.toInt(), stroke.color)
+        assertEquals(5.0f, stroke.baseWidth, 0.001f)
+        assertFalse(stroke.isEraser)
+
+        assertEquals(10f, stroke.points[0].x, 0.001f)
+        assertEquals(20f, stroke.points[0].y, 0.001f)
+        assertEquals(0.5f, stroke.points[0].pressure, 0.001f)
+
+        assertEquals(30f, stroke.points[1].x, 0.001f)
+        assertEquals(40f, stroke.points[1].y, 0.001f)
+        assertEquals(0.9f, stroke.points[1].pressure, 0.001f)
+
+        // Near point 1 (within 5px)
+        assertTrue(stroke.intersects(12f, 22f, 5f))
+        // Near point 2 (within 5px)
+        assertTrue(stroke.intersects(28f, 38f, 5f))
+        // Far away point
+        assertFalse(stroke.intersects(100f, 100f, 5f))
+    }
 }

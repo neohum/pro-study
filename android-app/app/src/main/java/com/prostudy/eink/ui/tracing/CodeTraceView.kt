@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.view.InputDevice
 import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
@@ -32,6 +33,20 @@ class CodeTraceView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        com.prostudy.eink.ui.ink.OnyxEPDHelper.applyFastDrawingMode(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        com.prostudy.eink.ui.ink.OnyxEPDHelper.stopFastDrawingMode(this)
+    }
+
     val strokeManager = StrokeManager(context)
 
     var codeLines: List<String> = emptyList()
@@ -49,6 +64,7 @@ class CodeTraceView @JvmOverloads constructor(
         }
 
     var isEraserMode: Boolean = false
+    var forceTouchDrawing: Boolean = false // 기기에 스타일러스가 없을 때 테스트/수동 허용용
 
     // 스크롤 제어
     private val scroller = OverScroller(context)
@@ -104,21 +120,34 @@ class CodeTraceView @JvmOverloads constructor(
     private var activeStroke: Stroke? = null
     private var isStylusActive = false
 
+    private fun isStylusOrEraserEvent(event: MotionEvent, pointerIndex: Int): Boolean {
+        if (forceTouchDrawing) return true
+
+        val toolType = event.getToolType(pointerIndex)
+        if (toolType == MotionEvent.TOOL_TYPE_STYLUS || toolType == MotionEvent.TOOL_TYPE_ERASER) {
+            return true
+        }
+
+        val buttonState = event.buttonState
+        if ((buttonState and MotionEvent.BUTTON_STYLUS_PRIMARY) != 0 ||
+            (buttonState and MotionEvent.BUTTON_STYLUS_SECONDARY) != 0) {
+            return true
+        }
+
+        return false
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
-        val contentHeight = ((codeLines.size + 4) * lineHeightPx + paddingTopPx).toInt()
-        val minHeight = MeasureSpec.getSize(heightMeasureSpec)
-        setMeasuredDimension(width, max(contentHeight, minHeight))
+        val height = MeasureSpec.getSize(heightMeasureSpec)
+        setMeasuredDimension(width, height)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val action = event.actionMasked
         val pointerIndex = event.actionIndex
         val toolType = event.getToolType(pointerIndex)
-
-        val isStylusOrEraser = (toolType == MotionEvent.TOOL_TYPE_STYLUS ||
-                toolType == MotionEvent.TOOL_TYPE_ERASER ||
-                (event.buttonState and MotionEvent.BUTTON_STYLUS_PRIMARY != 0))
+        val isStylusOrEraser = isStylusOrEraserEvent(event, pointerIndex)
 
         // 1. 손가락 터치(FINGER) -> 본문 스크롤 처리
         if (!isStylusOrEraser) {
@@ -132,6 +161,7 @@ class CodeTraceView @JvmOverloads constructor(
             val rawY = event.y
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
+                    parent?.requestDisallowInterceptTouchEvent(true)
                     if (!scroller.isFinished) {
                         scroller.abortAnimation()
                     }
@@ -155,6 +185,7 @@ class CodeTraceView @JvmOverloads constructor(
                         fling(-yVel)
                         velocityTracker?.recycle()
                         velocityTracker = null
+                        parent?.requestDisallowInterceptTouchEvent(false)
                         return true
                     }
                 }
@@ -176,6 +207,8 @@ class CodeTraceView @JvmOverloads constructor(
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 isStylusActive = true
+                parent?.requestDisallowInterceptTouchEvent(true)
+
                 if (effectiveEraser) {
                     if (strokeManager.removeStrokesNear(docX, docY)) {
                         invalidate()
@@ -221,9 +254,11 @@ class CodeTraceView @JvmOverloads constructor(
 
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isStylusActive = false
+                parent?.requestDisallowInterceptTouchEvent(false)
+
                 if (!effectiveEraser) {
                     activeStroke?.let { stroke ->
-                        stroke.addPoint(InkPoint(docX, docY, pressure))
+                        stroke.finish(InkPoint(docX, docY, pressure))
                         strokeManager.addStroke(stroke)
                         activeStroke = null
                         invalidate()
@@ -237,13 +272,16 @@ class CodeTraceView @JvmOverloads constructor(
     }
 
     private fun scrollByOffset(dy: Float) {
-        val maxScroll = max(0f, (codeLines.size * lineHeightPx + paddingTopPx * 2) - height)
+        val totalContentHeight = (codeLines.size + 4) * lineHeightPx + paddingTopPx
+        val maxScroll = max(0f, totalContentHeight - height)
         scrollYOffset = (scrollYOffset + dy).coerceIn(-maxScroll, 0f)
         invalidate()
     }
 
     private fun fling(yVelocity: Float) {
-        val maxScroll = max(0f, (codeLines.size * lineHeightPx + paddingTopPx * 2) - height)
+        val totalContentHeight = (codeLines.size + 4) * lineHeightPx + paddingTopPx
+        val maxScroll = max(0f, totalContentHeight - height)
+        if (maxScroll <= 0f) return
         scroller.fling(
             0, (-scrollYOffset).toInt(),
             0, yVelocity.toInt(),
@@ -303,5 +341,23 @@ class CodeTraceView @JvmOverloads constructor(
         }
 
         canvas.restore()
+    }
+
+    fun undo(): Boolean {
+        val res = strokeManager.undo()
+        if (res) invalidate()
+        return res
+    }
+
+    fun redo(): Boolean {
+        val res = strokeManager.redo()
+        if (res) invalidate()
+        return res
+    }
+
+    fun clearAll() {
+        strokeManager.clear()
+        activeStroke = null
+        invalidate()
     }
 }
