@@ -6,6 +6,13 @@
         "scripts/loop/mcp-harness.ts"
       ],
       "env": {}
+    },
+    "agent-desktop": {
+      "command": "agent-desktop",
+      "args": [
+        "mcp"
+      ],
+      "env": {}
     }
   }
 }
