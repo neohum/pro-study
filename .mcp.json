@@ -18,6 +18,13 @@
       "command": "codebase-memory-mcp",
       "args": [],
       "env": {}
+    },
+    "agent-browser": {
+      "command": "agent-browser",
+      "args": [
+        "mcp"
+      ],
+      "env": {}
     }
   }
 }
